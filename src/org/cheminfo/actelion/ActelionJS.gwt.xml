@@ -1,0 +1,8 @@
+<module rename-to="actelion">
+	<inherits name="org.cheminfo.actelion.jre.Jre" />
+	<inherits name="org.timepedia.exporter.Exporter" />
+    <inherits name="com.actelion.research" />
+    <entry-point class="org.cheminfo.actelion.client.Actelion" />
+    <set-property name="export" value="yes" />
+    <set-property name="user.agent" value="safari" />
+</module>

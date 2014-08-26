@@ -1,0 +1,22 @@
+{
+  "name": "gwt-api-exporter",
+  "version": "0.0.0",
+  "description": "gwt-api-exporter ================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/targos/gwt-api-exporter.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/targos/gwt-api-exporter/issues"
+  },
+  "homepage": "https://github.com/targos/gwt-api-exporter",
+  "dependencies": {
+    "stdio": "^0.2.2"
+  }
+}
