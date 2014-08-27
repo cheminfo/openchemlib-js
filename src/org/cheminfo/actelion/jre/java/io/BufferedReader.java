@@ -134,8 +134,11 @@ public class BufferedReader extends Reader {
                     this.savedNextChar = nextChar;
                 }
             }
-
+            
             if (!eol) {
+                if(nextChar == -1) {
+                	break;
+                }
                 sb.append((char) nextChar);
                 nextChar = read();
             }
