@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/targos/gwt-api-exporter",
   "dependencies": {
-    "stdio": "^0.2.2"
+    "stdio": "^0.2.2",
+    "underscore": "^1.7.0"
   }
 }
