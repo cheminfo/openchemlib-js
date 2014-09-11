@@ -1,20 +1,19 @@
 package org.cheminfo.actelion.client;
 
-//import java.io.Reader;
-//import java.io.StringReader;
+import java.io.StringReader;
 
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
-//import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.chem.StereoMolecule;
 import com.google.gwt.core.client.JavaScriptObject;
 
 @ExportPackage(value="actelion")
 @Export
 public class SDFileParser implements Exportable {
 
-	
+	com.actelion.research.io.SDFileParser parser;
 //	public static JavaScriptObject parseString(String sdfile) {
 //		return parse(new StringReader(sdfile));
 //	}
@@ -36,6 +35,40 @@ public class SDFileParser implements Exportable {
 //			molfile: molfile
 //		};
 //	}-*/;
+	
+	public SDFileParser(String sdf) {
+		this(sdf, null);
+	}
+	
+	public SDFileParser(String sdf, String[] fields) {
+		parser = new com.actelion.research.io.SDFileParser(new StringReader(sdf), fields);
+	}
+	
+	public boolean next() {
+		return parser.next();
+	}
+	
+	public Molecule getMolecule() {
+		return new Molecule(parser.getMolecule());
+	}
+	
+	public String getField(String name) {
+		String[] names = parser.getFieldNames();
+		for(int i = 0; i < names.length; i++) {
+			if(names[i].equals(name)) {
+				return parser.getFieldData(i);
+			}
+		}
+		return null;
+	}
+	
+	public String[] getFieldNames() {
+		return parser.getFieldNames();
+	}
+	
+	public String getFieldData(int idx) {
+		return parser.getFieldData(idx);
+	}
 	
 	public static JavaScriptObject parseString(String sdfile, JavaScriptObject options) {
 		return parseNative(sdfile, options);
