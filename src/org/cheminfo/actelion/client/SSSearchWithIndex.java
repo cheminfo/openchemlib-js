@@ -15,6 +15,10 @@ public class SSSearchWithIndex implements Exportable {
 	
 	public SSSearchWithIndex() {}
 	
+	public static String[] getKeyIDCode() {
+		return SSSearcherWithIndex.cKeyIDCode;
+	}
+	
 	public void setFragment(Molecule fragment) {
 		StereoMolecule mol = fragment.getStereoMolecule();
 		this.searcher.setFragment(mol, searcher.createIndex(mol));
