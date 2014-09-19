@@ -52,6 +52,10 @@ public class SDFileParser implements Exportable {
 		return new Molecule(parser.getMolecule());
 	}
 	
+	public String getMolfile() {
+		return parser.getNextMolFile();
+	}
+	
 	public String getField(String name) {
 		String[] names = parser.getFieldNames();
 		for(int i = 0; i < names.length; i++) {
