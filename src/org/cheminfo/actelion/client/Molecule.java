@@ -89,6 +89,19 @@ public class Molecule implements Exportable {
 		act_mol.setFragment(isFragment);
 	}
 	
+	public int getFragmentNumbers() {
+		return act_mol.getFragmentNumbers(new int[act_mol.getAllAtoms()], false);
+	}
+	
+	public Molecule[] getFragments() {
+		StereoMolecule[] fragments = act_mol.getFragments();
+		Molecule[] newFragments = new Molecule[fragments.length];
+		for(int i = 0; i < fragments.length; i++) {
+			newFragments[i] = new Molecule(fragments[i]);
+		}
+		return newFragments;
+	}
+	
 	/* public methods after this line will not be accessible from javascript */
 	@NoExport
 	public StereoMolecule getStereoMolecule() {
