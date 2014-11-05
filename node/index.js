@@ -5,7 +5,8 @@ var _ = require('underscore');
 var ops = stdio.getopt({
     input: {key: 'i', args: 1, mandatory: true},
     output: {key: 'o', default: 'output.js', args: 1},
-    exports: {key: 'e', default: 'GWT', args: 1}
+    exports: {key: 'e', default: 'GWT', args: 1},
+    package: {key: 'p', args: 1}
 });
 
 var input;
@@ -27,6 +28,20 @@ var final = template({
     gwtContent: '\n'+contentWithoutComments,
     exportsName: exportsName
 });
+
+if(ops.package) {
+    var pkg = require(ops.package);
+    var commentStr = [
+        '/**',
+        ' * ' + pkg.name + ' - ' + pkg.description,
+        ' * @version v' + pkg.version,
+        ' * @date ' + (new Date()).toISOString(),
+        ' * @link ' + pkg.homepage,
+        ' * @license ' + pkg.license,
+        '*/'
+    ];
+    final = commentStr.join('\n') + '\n' + final;
+}
 
 try {
     fs.writeFileSync(ops.output, final);

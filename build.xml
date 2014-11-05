@@ -43,9 +43,11 @@
 			<arg line="-i" />
 			<arg value="${buildFile}" />
 			<arg line="-o" />
-			<arg value="../output.js" />
+			<arg value="../lib.js" />
 			<arg line="-e" />
 			<arg value="actelion" />
+			<arg line="-p" />
+			<arg value="../package.json" />
 		</exec> 
 	</target>
 	<target name="all-min">
