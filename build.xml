@@ -5,6 +5,7 @@
 			<classpath>
 				<pathelement location="src"/>
 				<pathelement location="../actelion2013/source" />
+				<pathelement location="../actelion-ext/src" />
 				<pathelement location="${gwt}/gwt-dev.jar" />
 				<pathelement location="${gwt}/gwt-user.jar" />
 				<pathelement location="gwtexporter-2.5.1.jar" />
@@ -22,6 +23,7 @@
 			<classpath>
 				<pathelement location="src"/>
 				<pathelement location="../actelion2013/source" />
+				<pathelement location="../actelion-ext/src" />
 				<pathelement location="${gwt}/gwt-dev.jar" />
 				<pathelement location="${gwt}/gwt-user.jar" />
 				<pathelement location="gwtexporter-2.5.1.jar" />
