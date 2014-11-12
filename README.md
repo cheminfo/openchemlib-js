@@ -5,6 +5,9 @@
 [Molecule](#molecule)  
 [SDF parser](#sdfileparser)  
 [Substructure search](#sssearch)  
+[Substructure search with index](#sssearchwithindex)
+
+---------------------------------------
 
 ### Molecule
 
@@ -98,6 +101,8 @@ TODO
 #### p.getRotatableBondCount() | p.rotatableBondCount
 #### p.getStereoCenterCount() | p.stereoCenterCount
 
+---------------------------------------
+
 ### SDFileParser
 
 #### new SDFileParser(sdf, [fields])
@@ -139,6 +144,8 @@ Returns the content of the field `name` from the current record or null
 
 Returns the list of field names for the entire sdf
 
+---------------------------------------
+
 ### SSSearch
 
 Basic substructure search
@@ -166,6 +173,8 @@ __Arguments__
 #### search.isFragmentInMolecule()
 
 Returns true if the set fragment is in the target molecule, false otherwise
+
+---------------------------------------
 
 ### SSSearchWithIndex
 
