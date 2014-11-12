@@ -2,9 +2,9 @@
 
 ## Documentation
 
-[Molecule](#Molecule)
-[SDF parser](#SDFileParser)
-[Substructure search](#SSSearch)
+[Molecule](#molecule)  
+[SDF parser](#sdfileparser)  
+[Substructure search](#sssearch)  
 
 ### Molecule
 
@@ -48,11 +48,11 @@ Returns a string representation of the coordinates of the atoms in the molecule
 
 #### molecule.getMolecularFormula() | molecule.molecularFormula
 
-Returns a [MolecularFormula](#MolecularFormula) object
+Returns a [MolecularFormula](#molecularformula) object
 
 #### molecule.getProperties() | molecule.properties
 
-Returns a [MoleculeProperties](#MoleculeProperties) object
+Returns a [MoleculeProperties](#moleculeproperties) object
 
 #### molecule.getIndex() | molecule.index
 
@@ -125,7 +125,7 @@ while(parser.next()) {
 
 #### parser.getMolecule()
 
-Returns the current [`Molecule`](#Molecule)
+Returns the current [`Molecule`](#molecule)
 
 #### parser.getMolfile()
 
@@ -153,7 +153,7 @@ Set the `fragment` to search
 
 __Arguments__
 
-* `fragment` - [Molecule](#Molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#molecule.setFragment) first
+* `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
 
 #### search.setMolecule(molecule)
 
@@ -161,7 +161,7 @@ Set the target `molecule` in which the search will be done
 
 __Arguments__
 
-* `molecule` - [Molecule](#Molecule) instance to set as target molecule
+* `molecule` - [Molecule](#molecule) instance to set as target molecule
 
 #### search.isFragmentInMolecule()
 
@@ -185,7 +185,7 @@ Set the `fragment` to search
 
 __Arguments__
 
-* `fragment` - [Molecule](#Molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#molecule.setFragment) first
+* `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
 * `index` - If the index for this fragment was computed previously, it can be provided here to save time
 
 #### search.setMolecule(molecule, [index])
@@ -194,7 +194,7 @@ Set the target `molecule` in which the search will be done
 
 __Arguments__
 
-* `molecule` - [Molecule](#Molecule) instance to set as target molecule
+* `molecule` - [Molecule](#molecule) instance to set as target molecule
 * `index` - If the index for this fragment was computed previously, it can be provided here to save time
 
 #### search.isFragmentInMolecule()
