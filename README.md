@@ -49,6 +49,10 @@ Returns the ID Code if the molecule
 
 Returns a string representation of the coordinates of the atoms in the molecule
 
+#### molecule.getIDCodeAndCoordinates()
+
+Returns an object with both the idcode and coordinates
+
 #### molecule.getMolecularFormula() | molecule.molecularFormula
 
 Returns a [MolecularFormula](#molecularformula) object

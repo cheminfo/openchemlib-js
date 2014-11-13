@@ -1,3 +1,8 @@
+HEAD
+==================
+
+* add molecule.getIDCodeAndCoordinates()
+
 1.2.0 / 2014-11-11
 ==================
 

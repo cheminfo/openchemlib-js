@@ -80,6 +80,14 @@ public class Molecule implements Exportable {
 		return act_mol.getIDCoordinates();
 	}
 	
+	public native JavaScriptObject getIDCodeAndCoordinates() /*-{
+		var mol = this.@org.cheminfo.actelion.client.Molecule::act_mol;
+		return {
+			idCode: mol.@com.actelion.research.chem.StereoMolecule::getIDCode()(),
+			coordinates: mol.@com.actelion.research.chem.StereoMolecule::getIDCoordinates()()
+		};
+	}-*/;
+	
 	@Getter
 	public MolecularFormula getMolecularFormula() {
 		if(formula == null) {
