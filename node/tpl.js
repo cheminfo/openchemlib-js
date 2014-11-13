@@ -3,7 +3,11 @@ function getExports(parent, navigator) {
     //<%= gwtContent %>
 
     gwtOnLoad();
-    return $wnd['<%= exportsName %>'];
+    var toReturn = $wnd['<%= exportsName %>'];
+
+    toReturn.version = '<%= version %>';
+
+    return toReturn;
 }
 
 (function loadFromGWT() {

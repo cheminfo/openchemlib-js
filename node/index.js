@@ -13,24 +13,26 @@ var input;
 try {
     input = fs.readFileSync(ops.input).toString();
 } catch(e) {
-    console.error("Could not read input file ("+ops.input+").");
+    console.error('Could not read input file ('+ops.input+').');
     process.exit(1);
 }
 
-var contentWithoutHtml = input.replace(/<\/?[a-z]+>/gi,"").replace("<meta charset=\"UTF-8\" />","");
-var contentWithoutComments = contentWithoutHtml.replace(/<!--/g,"").replace(/-->/g,"");
+var contentWithoutHtml = input.replace(/<\/?[a-z]+>/gi,'').replace('<meta charset="UTF-8" />','');
+var contentWithoutComments = contentWithoutHtml.replace(/<!--/g,'').replace(/-->/g,'');
 
 var exportsName = ops.exports;
 
 var template = _.template(fs.readFileSync(__dirname+'/tpl.js').toString());
 
+var pkg = ops.package ? require(ops.package) : null;
+
 var final = template({
     gwtContent: '\n'+contentWithoutComments,
-    exportsName: exportsName
+    exportsName: exportsName,
+    version: pkg ? pkg.version : ''
 });
 
-if(ops.package) {
-    var pkg = require(ops.package);
+if(pkg) {
     var commentStr = [
         '/**',
         ' * ' + pkg.name + ' - ' + pkg.description,
@@ -45,8 +47,8 @@ if(ops.package) {
 
 try {
     fs.writeFileSync(ops.output, final);
-    console.log("File "+ops.output+" written.")
+    console.log('File '+ops.output+' written.')
 } catch(e) {
-    console.error("Could not write output file ("+ops.output+").");
+    console.error('Could not write output file ('+ops.output+').');
     process.exit(1);
 }
