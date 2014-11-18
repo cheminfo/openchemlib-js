@@ -34,7 +34,7 @@ public class SSSearchWithIndex implements Exportable {
 	}
 	
 	public void setMolecule(Molecule molecule, int[] index) {
-		this.searcher.setFragment(molecule.getStereoMolecule(), index);
+		this.searcher.setMolecule(molecule.getStereoMolecule(), index);
 	}
 	
 	public boolean isFragmentInMolecule() {
