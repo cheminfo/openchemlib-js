@@ -1,7 +1,8 @@
-HEAD
+1.2.1 / 2014-11-18
 ==================
 
 * add molecule.getIDCodeAndCoordinates()
+* fix bug with SSSearchWithIndex
 
 1.2.0 / 2014-11-11
 ==================

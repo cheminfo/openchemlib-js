@@ -1,6 +1,6 @@
 {
   "name": "actelion",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Manipulate molecules",
   "main": "lib.js",
   "repository": {
