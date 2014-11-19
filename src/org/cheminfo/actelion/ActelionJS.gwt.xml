@@ -1,4 +1,4 @@
-<module rename-to="actelion">
+<module>
 	<inherits name="org.cheminfo.actelion.jre.Jre" />
 	<inherits name="org.timepedia.exporter.Exporter" />
     <inherits name="com.actelion.research" />
