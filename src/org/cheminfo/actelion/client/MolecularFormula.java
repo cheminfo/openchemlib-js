@@ -1,30 +1,29 @@
 package org.cheminfo.actelion.client;
 
-import org.timepedia.exporter.client.Exportable;
-import org.timepedia.exporter.client.Getter;
-
 import com.actelion.research.chem.ExtendedMolecule;
+import com.google.gwt.core.client.js.*;
 
-public class MolecularFormula extends com.actelion.research.chem.MolecularFormula implements Exportable {
+@JsType
+public class MolecularFormula extends com.actelion.research.chem.MolecularFormula {
 
 	public MolecularFormula(ExtendedMolecule mol) {
 		super(mol);
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public double getAbsoluteWeight() {
 		return super.getAbsoluteWeight();
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public double getRelativeWeight() {
 		return super.getRelativeWeight();
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public String getFormula() {
 		return super.getFormula();
 	}

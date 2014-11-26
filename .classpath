@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry excluding="org/cheminfo/actelion/jre/" kind="src" path="src"/>
 	<classpathentry kind="src" path="src/org/cheminfo/actelion/jre"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/GWT 2.7.0-rc1"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="gwtexporter-2.5.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/actelion2013"/>

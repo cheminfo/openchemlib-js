@@ -6,18 +6,14 @@ import java.util.Vector;
 
 import org.cheminfo.chem.DiastereotopicAtomID;
 import org.cheminfo.chem.HydrogenHandler;
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportPackage;
-import org.timepedia.exporter.client.Exportable;
-import org.timepedia.exporter.client.Getter;
-import org.timepedia.exporter.client.NoExport;
 
 import com.actelion.research.chem.*;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.js.*;
 
-@ExportPackage(value="actelion")
-@Export
-public class Molecule implements Exportable {
+@JsType
+@JsExport("actelion.Molecule")
+public class Molecule {
 	
 	private static Services services = Services.getInstance();
 	
@@ -70,12 +66,12 @@ public class Molecule implements Exportable {
 		return creator.getMolfile();
 	}
 	
-	@Getter
+	@JsProperty
 	public String getIDCode() {
 		return act_mol.getIDCode();
 	}
 	
-	@Getter
+	@JsProperty
 	public String getIDCoordinates() {
 		return act_mol.getIDCoordinates();
 	}
@@ -88,7 +84,7 @@ public class Molecule implements Exportable {
 		};
 	}-*/;
 	
-	@Getter
+	@JsProperty
 	public MolecularFormula getMolecularFormula() {
 		if(formula == null) {
 			formula = new MolecularFormula(act_mol);
@@ -96,7 +92,7 @@ public class Molecule implements Exportable {
 		return formula;
 	}
 	
-	@Getter
+	@JsProperty
 	public MoleculeProperties getProperties() {
 		if(properties == null) {
 			properties = new MoleculeProperties(act_mol);
@@ -104,7 +100,7 @@ public class Molecule implements Exportable {
 		return properties;
 	}
 	
-	@Getter
+	@JsProperty
 	public int[] getIndex() {
 		return services.getSSSearcherWithIndex().createIndex(act_mol);
 	}
@@ -138,9 +134,9 @@ public class Molecule implements Exportable {
 		HydrogenHandler.expandAllHydrogens(act_mol);
 	}
 	
-	public JavaScriptObject[] getDiastereotopicAtomIDs() {
+	/*public JavaScriptObject[] getDiastereotopicAtomIDs() {
 		return getDiastereotopicAtomIDs(null);
-	}
+	}*/
 	
 	public JavaScriptObject[] getDiastereotopicAtomIDs(String element) {
 		String[] diaIDs = getDiastereotopicAtomIDsArray();
@@ -173,17 +169,17 @@ public class Molecule implements Exportable {
 	}
 	
 	/* public methods after this line will not be accessible from javascript */
-	@NoExport
+	@JsNoExport
 	public StereoMolecule getStereoMolecule() {
 		return act_mol;
 	}
 	
-	@NoExport
+	@JsNoExport
 	public String[] getDiastereotopicAtomIDsArray() {
 		return DiastereotopicAtomID.getAtomIds(act_mol);
 	}
 	
-	@NoExport
+	@JsNoExport
 	public native JavaScriptObject getDiastereotopicAtomID(String diaID, int[] linkedAtoms, String element) /*-{
 		return {
 			id: diaID,

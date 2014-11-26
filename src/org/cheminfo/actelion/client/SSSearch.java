@@ -1,17 +1,14 @@
 package org.cheminfo.actelion.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportPackage;
-import org.timepedia.exporter.client.Exportable;
-
 import com.actelion.research.chem.SSSearcher;
+import com.google.gwt.core.client.js.*;
 
-@ExportPackage(value="actelion")
-@Export
-public class SSSearch implements Exportable {
+@JsType
+public class SSSearch {
 	
 	private SSSearcher searcher = new SSSearcher();
 	
+	@JsExport("actelion.SSSearch")
 	public SSSearch() {}
 	
 	public void setFragment(Molecule fragment) {

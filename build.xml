@@ -15,6 +15,12 @@
 			<arg value="OBF"/>
 			<arg line="-optimize" />
 			<arg value="9"/>
+			<arg line="-XnocheckCasts" />
+			<arg line="-XnoclassMetadata" />
+			<arg line="-nocheckAssertions" />
+			<arg line="-XjsInteropMode" />
+			<arg value="JS" />
+			<!--<arg line="-XclosureCompiler" />-->
 			<arg value="org.cheminfo.actelion.ActelionJS" />
 		</java>
 	</target>

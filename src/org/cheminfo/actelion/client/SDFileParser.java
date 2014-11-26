@@ -2,44 +2,20 @@ package org.cheminfo.actelion.client;
 
 import java.io.StringReader;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportPackage;
-import org.timepedia.exporter.client.Exportable;
-
-import com.actelion.research.chem.StereoMolecule;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.js.*;
 
-@ExportPackage(value="actelion")
-@Export
-public class SDFileParser implements Exportable {
+@JsType
+public class SDFileParser {
 
-	com.actelion.research.io.SDFileParser parser;
-//	public static JavaScriptObject parseString(String sdfile) {
-//		return parse(new StringReader(sdfile));
-//	}
-//	
-//	private static JavaScriptObject parse(Reader reader) {
-//		JavaScriptObject resultArray = JavaScriptObject.createArray();
-//		com.actelion.research.io.SDFileParser parser = new com.actelion.research.io.SDFileParser(reader);
-//		
-//		while (parser.next()) {
-//			addMolecule(resultArray, parser.getMolecule(), parser.getNextMolFile());
-//		}
-//		
-//		return resultArray;
-//	}
-//	
-//	private static native void addMolecule(JavaScriptObject array, StereoMolecule mol, String molfile) /*-{
-//		array[array.length] = {
-//			molecule: new $wnd.actelion.Molecule(mol),
-//			molfile: molfile
-//		};
-//	}-*/;
+	private com.actelion.research.io.SDFileParser parser;
 	
+	@JsExport("actelion.SDFileParser")
 	public SDFileParser(String sdf) {
 		this(sdf, null);
 	}
 	
+	@JsExport("actelion.SDFileParserFields")
 	public SDFileParser(String sdf, String[] fields) {
 		parser = new com.actelion.research.io.SDFileParser(new StringReader(sdf), fields);
 	}

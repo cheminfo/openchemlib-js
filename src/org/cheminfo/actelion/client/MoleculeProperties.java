@@ -1,55 +1,54 @@
 package org.cheminfo.actelion.client;
 
-import org.timepedia.exporter.client.Exportable;
-import org.timepedia.exporter.client.Getter;
-
 import com.actelion.research.chem.PropertyCalculator;
 import com.actelion.research.chem.StereoMolecule;
+import com.google.gwt.core.client.js.*;
 
-public class MoleculeProperties extends PropertyCalculator implements Exportable {
+@JsType
+public class MoleculeProperties extends PropertyCalculator {
 
 	public MoleculeProperties(StereoMolecule mol) {
 		super(mol);
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public int getAcceptorCount() {
 		return super.getAcceptorCount();
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public int getDonorCount() {
 		return super.getDonorCount();
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public double getLogP() {
 		return super.getLogP();
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public double getLogS() {
 		return super.getLogS();
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public double getPolarSurfaceArea() {
 		return super.getPolarSurfaceArea();
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public int getRotatableBondCount() {
 		return super.getRotatableBondCount();
 	}
 	
 	@Override
-	@Getter
+	@JsProperty
 	public int getStereoCenterCount() {
 		return super.getStereoCenterCount();
 	}
