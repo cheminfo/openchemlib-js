@@ -23,7 +23,7 @@ public class Molecule {
 	private MolecularFormula formula = null;
 	
 	public Molecule() {
-		this(new StereoMolecule());
+		this(new StereoMolecule(32, 32));
 	}
 	
 	public Molecule(StereoMolecule mol) {
