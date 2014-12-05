@@ -12,7 +12,8 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.*;
 
 @JsType
-@JsExport("actelion.Molecule")
+@JsNamespace("$wnd.actelion")
+@JsExport
 public class Molecule {
 	
 	private static Services services = Services.getInstance();
@@ -41,21 +42,15 @@ public class Molecule {
 		return mol;
 	}
 	
-	public static Molecule fromIDCode(String idcode) {
-		return fromIDCode(idcode, true);
-	}
-	
-	public static Molecule fromIDCode(String idcode, boolean ensure2DCoordinates) {
-		Molecule mol = new Molecule();
-		services.getIDCodeParser(ensure2DCoordinates).parse(mol.act_mol, idcode);
-		return mol;
-	}
-	
-	public static Molecule fromIDCode(String idcode, String coordinates) {
-		Molecule mol = new Molecule();
-		services.getIDCodeParser(false).parse(mol.act_mol, idcode, coordinates);
-		return mol;
-	}
+	public static native Molecule fromIDCode(String idcode, JavaScriptObject coordinates) /*-{
+		if (arguments.length === 1) {
+			return @org.cheminfo.actelion.client.Molecule::fromIDCode(Ljava/lang/String;Z)(idcode, true);
+		} else if(typeof coordinates === 'boolean') {
+			return @org.cheminfo.actelion.client.Molecule::fromIDCode(Ljava/lang/String;Z)(idcode, coordinates);
+		} else {
+			return @org.cheminfo.actelion.client.Molecule::fromIDCode(Ljava/lang/String;Ljava/lang/String;)(idcode, coordinates);
+		}
+	}-*/;
 	
 	public String toSmiles() {
 		return services.getSmilesCreator().generateSmiles(act_mol);
@@ -134,15 +129,33 @@ public class Molecule {
 		HydrogenHandler.expandAllHydrogens(act_mol);
 	}
 	
-	/*public JavaScriptObject[] getDiastereotopicAtomIDs() {
-		return getDiastereotopicAtomIDs(null);
-	}*/
+	public native JavaScriptObject[] getDiastereotopicAtomIDs(JavaScriptObject element) /*-{
+		element = element || '';
+		return this.@org.cheminfo.actelion.client.Molecule::getDiastereotopicAtomIDs(Ljava/lang/String;)(element);
+	}-*/;
 	
+	/* public methods after this line will not be accessible from javascript */
+	
+	@JsNoExport
+	public static Molecule fromIDCode(String idcode, boolean ensure2DCoordinates) {
+		Molecule mol = new Molecule();
+		services.getIDCodeParser(ensure2DCoordinates).parse(mol.act_mol, idcode);
+		return mol;
+	}
+	
+	@JsNoExport
+	public static Molecule fromIDCode(String idcode, String coordinates) {
+		Molecule mol = new Molecule();
+		services.getIDCodeParser(false).parse(mol.act_mol, idcode, coordinates);
+		return mol;
+	}
+	
+	@JsNoExport
 	public JavaScriptObject[] getDiastereotopicAtomIDs(String element) {
 		String[] diaIDs = getDiastereotopicAtomIDsArray();
 		HashMap<String, Vector<Integer>> result=new HashMap<String, Vector<Integer>>();
 		for (int i=0; i<diaIDs.length; i++) {
-			if (element==null || element.equals("") || act_mol.getAtomLabel(i).equals(element)) {
+			if (element == null || element.equals("") || act_mol.getAtomLabel(i).equals(element)) {
 				String diaID=diaIDs[i];
 				if (result.containsKey(diaID)) {
 					result.get(diaID).add(i);
@@ -168,7 +181,6 @@ public class Molecule {
 		return toReturn;
 	}
 	
-	/* public methods after this line will not be accessible from javascript */
 	@JsNoExport
 	public StereoMolecule getStereoMolecule() {
 		return act_mol;

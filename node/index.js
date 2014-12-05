@@ -17,8 +17,21 @@ try {
     process.exit(1);
 }
 
-var contentWithoutHtml = input.replace(/<\/?[a-z]+>/gi,'').replace('<meta charset="UTF-8" />','');
-var contentWithoutComments = contentWithoutHtml.replace(/<!--/g,'').replace(/-->/g,'');
+var idx = input.indexOf('onScriptDownloaded');
+if (idx === -1) {
+    console.error('This is not a correct GWT obfuscated file.');
+    process.exit(1);
+}
+
+var str2 = input.substring(idx+19, input.length-3); // remove wrapping function
+
+var arr;
+eval('arr = ' + str2);
+
+var gwtString = arr.join(''); // Get pyramidal code
+
+var missingFuncIdxReg = /[^\n\r]*(function [a-zA-Z]{1,2}\(\)\{})/;
+gwtString = gwtString.replace(missingFuncIdxReg, '\n$1'); // Remove first line but keep last function definition
 
 var exportsName = ops.exports;
 
@@ -27,7 +40,7 @@ var template = _.template(fs.readFileSync(__dirname+'/tpl.js').toString());
 var pkg = ops.package ? require(ops.package) : null;
 
 var final = template({
-    gwtContent: '\n'+contentWithoutComments,
+    gwtContent: '\n'+gwtString,
     exportsName: exportsName,
     version: pkg ? pkg.version : ''
 });

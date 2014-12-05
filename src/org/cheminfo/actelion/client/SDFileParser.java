@@ -6,16 +6,13 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.*;
 
 @JsType
+@JsNamespace("$wnd.actelion")
+@JsExport
 public class SDFileParser {
 
 	private com.actelion.research.io.SDFileParser parser;
 	
-	@JsExport("actelion.SDFileParser")
-	public SDFileParser(String sdf) {
-		this(sdf, null);
-	}
-	
-	@JsExport("actelion.SDFileParserFields")
+	@JsExport
 	public SDFileParser(String sdf, String[] fields) {
 		parser = new com.actelion.research.io.SDFileParser(new StringReader(sdf), fields);
 	}

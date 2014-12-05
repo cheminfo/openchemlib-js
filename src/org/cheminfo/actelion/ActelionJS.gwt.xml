@@ -1,4 +1,4 @@
-<module>
+<module rename-to="actelion">
 	<inherits name="org.cheminfo.actelion.jre.Jre" />
     <inherits name="com.actelion.research" />
     <inherits name="org.cheminfo.chem" />

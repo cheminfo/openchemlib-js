@@ -11,10 +11,6 @@
 
 ### Molecule
 
-#### new Molecule()
-
-Create a new empty `Molecule` instance
-
 #### Molecule.fromSmiles(smiles)
 
 Parse the provided `smiles` and return a `Molecule`
@@ -41,11 +37,11 @@ Returns a smiles string
 
 Returns a molfile (V2000) string
 
-#### molecule.getIDCode() | molecule.iDCode
+#### molecule.getIDCode()
 
 Returns the ID Code if the molecule
 
-#### molecule.getIDCoordinates() | molecule.iDCoordinates
+#### molecule.getIDCoordinates()
 
 Returns a string representation of the coordinates of the atoms in the molecule
 
@@ -53,15 +49,15 @@ Returns a string representation of the coordinates of the atoms in the molecule
 
 Returns an object with both the idcode and coordinates
 
-#### molecule.getMolecularFormula() | molecule.molecularFormula
+#### molecule.getMolecularFormula()
 
 Returns a [MolecularFormula](#molecularformula) object
 
-#### molecule.getProperties() | molecule.properties
+#### molecule.getProperties()
 
 Returns a [MoleculeProperties](#moleculeproperties) object
 
-#### molecule.getIndex() | molecule.index
+#### molecule.getIndex()
 
 Returns the int[] index array used for substructure search
 
@@ -91,19 +87,19 @@ TODO
 
 ### MolecularFormula
 
-#### mf.getAbsoluteWeight() | mf.absoluteWeight
-#### mf.getRelativeWeight() | mf.relativeWeight
-#### mf.getFormula() | mf.formula
+#### mf.getAbsoluteWeight()
+#### mf.getRelativeWeight()
+#### mf.getFormula()
 
 ### MoleculeProperties
 
-#### p.getAcceptorCount() | p.acceptorCount
-#### p.getDonorCount() | p.donorCount
-#### p.getLogP() | p.logP
-#### p.getLogS() | p.logS
-#### p.getPolarSurfaceArea() | p.polarSurfaceArea
-#### p.getRotatableBondCount() | p.rotatableBondCount
-#### p.getStereoCenterCount() | p.stereoCenterCount
+#### p.getAcceptorCount()
+#### p.getDonorCount()
+#### p.getLogP()
+#### p.getLogS()
+#### p.getPolarSurfaceArea()
+#### p.getRotatableBondCount()
+#### p.getStereoCenterCount()
 
 ---------------------------------------
 
@@ -188,6 +184,10 @@ Fast substructure search with index filtering
 
 Returns an array of the 512 idcodes that are used for the index
 
+#### SSSearchWithIndex.getTanimotoSimilarity(index1, index2)
+
+Returns the Tanimoto similarity between the two indexes
+
 #### new SSSearchWithIndex()
 
 Create a new substructure searcher
@@ -213,11 +213,3 @@ __Arguments__
 #### search.isFragmentInMolecule()
 
 Returns true if the set fragment is in the target molecule, false otherwise
-
-#### search.getTanimotoSimilarity(index1, index2)
-
-Returns the Tanimoto similarity between the two indexes
-
-#### search.getTanimotoSimilarity(molecule1, molecule2)
-
-Returns the Tanimoto similarity between the two molecules. Note that the indexes will be computed everytime this method is called

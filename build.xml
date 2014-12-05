@@ -1,5 +1,5 @@
 <project name="actelionJS" default="all-min">
-	<property name="gwt" location="../GWT/2.7.0-rc1" />
+	<property name="gwt" location="../GWT/2.7.0" />
 	<target name="compile-min">
 		<java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
 			<classpath>
@@ -8,7 +8,6 @@
 				<pathelement location="../actelion-ext/src" />
 				<pathelement location="${gwt}/gwt-dev.jar" />
 				<pathelement location="${gwt}/gwt-user.jar" />
-				<pathelement location="gwtexporter-2.5.1.jar" />
 			</classpath>
 			<jvmarg value="-Xmx512m"/>
 			<arg line="-style" />
@@ -32,7 +31,6 @@
 				<pathelement location="../actelion-ext/src" />
 				<pathelement location="${gwt}/gwt-dev.jar" />
 				<pathelement location="${gwt}/gwt-user.jar" />
-				<pathelement location="gwtexporter-2.5.1.jar" />
 			</classpath>
 			<jvmarg value="-Xmx512m"/>
 			<arg line="-style" />
@@ -44,7 +42,7 @@
 		<exec executable="npm" dir="node">
 			<arg value="update" />
 		</exec>
-		<fileset dir="war/actelion" includes="*.cache.html" id="buildFile" />
+		<fileset dir="war/actelion" includes="*.cache.js" id="buildFile" />
 		<pathconvert property="buildFile" refid="buildFile"></pathconvert>
 		<exec failonerror="true" executable="node" dir="node">
 			<arg value="index.js" />

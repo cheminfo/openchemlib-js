@@ -4,11 +4,12 @@ import com.actelion.research.chem.SSSearcher;
 import com.google.gwt.core.client.js.*;
 
 @JsType
+@JsNamespace("$wnd.actelion")
+@JsExport
 public class SSSearch {
 	
 	private SSSearcher searcher = new SSSearcher();
 	
-	@JsExport("actelion.SSSearch")
 	public SSSearch() {}
 	
 	public void setFragment(Molecule fragment) {
