@@ -138,16 +138,12 @@ public class Molecule {
 	
 	@JsNoExport
 	public static Molecule fromIDCode(String idcode, boolean ensure2DCoordinates) {
-		Molecule mol = new Molecule();
-		services.getIDCodeParser(ensure2DCoordinates).parse(mol.act_mol, idcode);
-		return mol;
+		return new Molecule(services.getIDCodeParser(ensure2DCoordinates).getCompactMolecule(idcode));
 	}
 	
 	@JsNoExport
 	public static Molecule fromIDCode(String idcode, String coordinates) {
-		Molecule mol = new Molecule();
-		services.getIDCodeParser(false).parse(mol.act_mol, idcode, coordinates);
-		return mol;
+		return new Molecule(services.getIDCodeParser(false).getCompactMolecule(idcode, coordinates));
 	}
 	
 	@JsNoExport
