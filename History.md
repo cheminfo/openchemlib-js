@@ -2,7 +2,9 @@
 ==================
 
 * GWT 2.7
-* No more javascript getters
+* no more javascript getters
+* initialize molecule with 32 length arrays
+* improve IDCode parser performance
 
 1.2.1 / 2014-11-18
 ==================
