@@ -35,6 +35,13 @@
 			<jvmarg value="-Xmx512m"/>
 			<arg line="-style" />
 			<arg value="DETAILED"/>
+			<arg line="-optimize" />
+			<arg value="9"/>
+			<arg line="-XnocheckCasts" />
+			<arg line="-XnoclassMetadata" />
+			<arg line="-nocheckAssertions" />
+			<arg line="-XjsInteropMode" />
+			<arg value="JS" />
 			<arg value="org.cheminfo.actelion.ActelionJS" />
 		</java>
 	</target>
