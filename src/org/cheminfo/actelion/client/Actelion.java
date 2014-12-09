@@ -6,7 +6,6 @@ public class Actelion implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-
 	}
 
 }

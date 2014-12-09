@@ -1,13 +1,16 @@
 <project name="actelionJS" default="all-min">
 	<property name="gwt" location="../GWT/2.7.0" />
+	<path id="project.class.path">
+		<pathelement location="src"/>
+		<pathelement location="../actelion2013/source" />
+		<pathelement location="../actelion-ext/src" />
+		<pathelement location="${gwt}/gwt-dev.jar" />
+		<pathelement location="${gwt}/gwt-user.jar" />
+	</path>
 	<target name="compile-min">
 		<java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
 			<classpath>
-				<pathelement location="src"/>
-				<pathelement location="../actelion2013/source" />
-				<pathelement location="../actelion-ext/src" />
-				<pathelement location="${gwt}/gwt-dev.jar" />
-				<pathelement location="${gwt}/gwt-user.jar" />
+				<path refid="project.class.path"/>
 			</classpath>
 			<jvmarg value="-Xmx512m"/>
 			<arg line="-style" />
@@ -26,11 +29,7 @@
 	<target name="compile">
 		<java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
 			<classpath>
-				<pathelement location="src"/>
-				<pathelement location="../actelion2013/source" />
-				<pathelement location="../actelion-ext/src" />
-				<pathelement location="${gwt}/gwt-dev.jar" />
-				<pathelement location="${gwt}/gwt-user.jar" />
+				<path refid="project.class.path"/>
 			</classpath>
 			<jvmarg value="-Xmx512m"/>
 			<arg line="-style" />
@@ -74,5 +73,17 @@
 			<target name="compile" />
 			<target name="export" />
 		</antcall>
+	</target>
+	<target name="devmode" description="Run development mode">
+		<java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
+			<classpath>
+				<path refid="project.class.path"/>
+			</classpath>
+			<jvmarg value="-Xmx256M"/>
+			<arg value="-startupUrl"/>
+			<arg value="Hello.html"/>
+		    <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+			<arg value="org.cheminfo.actelion.ActelionJSDev"/>
+		</java>
 	</target>
 </project>
