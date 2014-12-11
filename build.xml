@@ -82,6 +82,8 @@
 			<jvmarg value="-Xmx256M"/>
 			<arg value="-startupUrl"/>
 			<arg value="Hello.html"/>
+			<arg line="-XjsInteropMode" />
+			<arg value="JS" />
 		    <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
 			<arg value="org.cheminfo.actelion.ActelionJSDev"/>
 		</java>

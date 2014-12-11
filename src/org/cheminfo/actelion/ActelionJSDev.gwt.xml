@@ -1,4 +1,4 @@
-<module rename-to="actelion-dev">
+<module rename-to="actelionDev">
 	<inherits name="com.google.gwt.user.UI" />
 	<inherits name="org.cheminfo.actelion.jre.Jre" />
     <inherits name="com.actelion.research" />
