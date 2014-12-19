@@ -10,11 +10,11 @@ import com.google.gwt.core.client.js.*;
 @JsExport
 public class SDFileParser {
 
-	private com.actelion.research.io.SDFileParser parser;
+	private com.actelion.research.chem.io.SDFileParser parser;
 	
 	@JsExport
 	public SDFileParser(String sdf, String[] fields) {
-		parser = new com.actelion.research.io.SDFileParser(new StringReader(sdf), fields);
+		parser = new com.actelion.research.chem.io.SDFileParser(new StringReader(sdf), fields);
 	}
 	
 	public boolean next() {

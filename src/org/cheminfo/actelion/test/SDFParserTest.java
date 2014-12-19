@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.actelion.research.chem.StereoMolecule;
-import com.actelion.research.io.SDFileParser;
+import com.actelion.research.chem.io.SDFileParser;
 
 import org.cheminfo.actelion.client.Molecule;
 
