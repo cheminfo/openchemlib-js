@@ -125,6 +125,10 @@ public class Molecule {
 		return newFragments;
 	}
 	
+	public void ensureHelperArrays(int required) {
+		act_mol.ensureHelperArrays(required);
+	}
+	
 	public void expandHydrogens() {
 		HydrogenHandler.expandAllHydrogens(act_mol);
 	}
