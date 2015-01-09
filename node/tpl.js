@@ -15,7 +15,7 @@ function getExports($wnd) {
     // Start GWT code <%= gwtContent %>
     // End GWT code
 
-    var toReturn = $wnd['<%= exportsName %>'];
+    var toReturn = $wnd<%= exportsName %>;
 
     toReturn.version = '<%= version %>';
 
@@ -44,7 +44,13 @@ function getExports($wnd) {
                 return getExports(fakeWindow);
             });
         } else { // Global
-            window['<%= exportsName %>'] = getExports(fakeWindow);
+            var path = <%= exportsPath %>,
+                l = path.length - 1,
+                obj = window;
+            for (var i = 0; i < l; i++) {
+                obj = obj[path[i]] || (obj[path[i]] = {});
+            }
+            obj[path[l]] = getExports(fakeWindow);
         }
     }
 
