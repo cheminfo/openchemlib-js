@@ -1,4 +1,9 @@
-2.0.1 / 2014-12-05
+2.0.2 / 2014-12-22
+==================
+
+* fix bugs in SMILES parser
+
+2.0.1 / 2014-12-19
 ==================
 
 * add molecule.ensureHelperArrays
