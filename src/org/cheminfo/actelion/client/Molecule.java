@@ -32,7 +32,10 @@ public class Molecule {
 	
 	public static Molecule fromSmiles(String smiles) throws Exception {
 		Molecule mol = new Molecule();
-		services.getSmilesParser().parse(mol.act_mol, smiles);
+		services.getSmilesParser().parse(mol.act_mol, smiles.getBytes(), false, true);
+		CoordinateInventor inv = services.getCoordinateInventor();
+		inv.setRandomSeed(0);
+		inv.invent(mol.act_mol);
 		return mol;
 	}
 	
