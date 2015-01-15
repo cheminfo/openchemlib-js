@@ -1,3 +1,9 @@
+2.0.5 / 2015-01-15
+==================
+
+* SMILES parser : custom coordinate inventor
+* update java library
+
 2.0.4 / 2015-01-12
 ==================
 
