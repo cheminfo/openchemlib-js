@@ -44,13 +44,19 @@ public class Molecule {
 	}
 	
 	public static native Molecule fromIDCode(String idcode, JavaScriptObject coordinates) /*-{
-		if (arguments.length === 1) {
-			return @org.cheminfo.actelion.client.Molecule::fromIDCode(Ljava/lang/String;Z)(idcode, true);
-		} else if(typeof coordinates === 'boolean') {
-			return @org.cheminfo.actelion.client.Molecule::fromIDCode(Ljava/lang/String;Z)(idcode, coordinates);
-		} else {
-			return @org.cheminfo.actelion.client.Molecule::fromIDCode(Ljava/lang/String;Ljava/lang/String;)(idcode, coordinates);
+		var mol;
+		if (typeof coordinates === 'undefined') {
+			coordinates = true;
 		}
+		if (typeof coordinates === 'boolean') {
+			mol = @org.cheminfo.actelion.client.Molecule::fromIDCode(Ljava/lang/String;Z)(idcode, false);
+			if (coordinates === true) {
+				mol.@org.cheminfo.actelion.client.Molecule::inventCoordinates()();
+			}
+		} else if(typeof coordinates === 'string') {
+			mol = @org.cheminfo.actelion.client.Molecule::fromIDCode(Ljava/lang/String;Ljava/lang/String;)(idcode, coordinates);
+		}
+		return mol;
 	}-*/;
 	
 	public String toSmiles() {
