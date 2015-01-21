@@ -1,3 +1,8 @@
+2.0.7 / 2015-01-21
+==================
+
+* ensure invented coordinates are always the same
+
 2.0.6 / 2015-01-19
 ==================
 
