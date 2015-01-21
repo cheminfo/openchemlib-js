@@ -33,9 +33,7 @@ public class Molecule {
 	public static Molecule fromSmiles(String smiles) throws Exception {
 		Molecule mol = new Molecule();
 		services.getSmilesParser().parse(mol.act_mol, smiles.getBytes(), false, true);
-		CoordinateInventor inv = services.getCoordinateInventor();
-		inv.setRandomSeed(0);
-		inv.invent(mol.act_mol);
+		mol.inventCoordinates();
 		return mol;
 	}
 	
@@ -104,7 +102,10 @@ public class Molecule {
 	}
 	
 	public void inventCoordinates() {
-		services.getCoordinateInventor().invent(act_mol);
+		CoordinateInventor inventor = services.getCoordinateInventor();
+		inventor.setRandomSeed(0);
+		inventor.invent(act_mol);
+		act_mol.setStereoBondsFromParity();
 	}
 	
 	public boolean isFragment() {
