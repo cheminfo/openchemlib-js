@@ -1,8 +1,0 @@
-<module rename-to="actelion">
-	<inherits name="org.cheminfo.actelion.jre.Jre" />
-    <inherits name="com.actelion.research" />
-    <inherits name="org.cheminfo.chem" />
-    <inherits name='com.google.gwt.user.UserAgent'/>
-    <entry-point class="org.cheminfo.actelion.client.Actelion" />
-    <set-property name="user.agent" value="safari" />
-</module>

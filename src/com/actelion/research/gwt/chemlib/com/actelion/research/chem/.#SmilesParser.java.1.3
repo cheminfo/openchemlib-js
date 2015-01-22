@@ -1,0 +1,767 @@
+/*
+ * @(#)SmilesParser.java
+ *
+ * Copyright 1997-2001 Actelion Ltd., Inc. All Rights Reserved.
+ * 
+ * This software is the proprietary information of Actelion Pharmaceuticals, Ltd.
+ * Use is subject to license terms.
+ * 
+ * @author Thomas Sander
+ */
+
+package com.actelion.research.chem;
+
+import java.util.TreeMap;
+
+import com.actelion.research.util.ArrayUtils;
+
+
+public class SmilesParser {
+	private static final int MAX_BRACKET_LEVELS = 64;
+	private static final int MAX_RE_CONNECTIONS = 64;
+	private StereoMolecule mMol;
+	private boolean[] mIsAromaticBond;
+	private int[] mExplicitHydrogens;
+
+	/**
+	 * Parses the given smiles into the molecule, creates proper atom coordinates
+	 * to reflect correct double bond geometries and translates tetrahedral and allene
+	 * parities into up/down-bonds.
+	 * @param mol
+	 * @param smiles
+	 * @throws Exception
+	 */
+    public void parse(StereoMolecule mol, String smiles) throws Exception {
+        parse(mol, smiles.getBytes(), true, true);
+        }
+
+	public void parse(StereoMolecule mol, byte[] smiles) throws Exception {
+		parse(mol, smiles, true, true);
+		}
+
+	public void parse(StereoMolecule mol, byte[] smiles, boolean createCoordinates, boolean readStereoFeatures) throws Exception {
+		mMol = mol;
+		mMol.deleteMolecule();
+
+		TreeMap<Integer,THParity> parityMap = null;
+
+		int[] baseAtom = new int[MAX_BRACKET_LEVELS];
+		baseAtom[0] = -1;
+
+		int[] reconnection = new int[MAX_RE_CONNECTIONS];
+		for (int i=0; i<MAX_RE_CONNECTIONS; i++)
+			reconnection[i] = -1;
+
+		mExplicitHydrogens = new int[mMol.getMaxAtoms()];
+
+		int position = 0;
+		int atomMass = 0;
+		int fromAtom = -1;
+		boolean squareBracketOpen = false;
+		boolean percentFound = false;
+		boolean smartsFeatureFound = false;
+		int bracketLevel = 0;
+		int smilesLength = smiles.length;
+		int bondType = Molecule.cBondTypeSingle;
+
+		while (position < smilesLength) {
+			char theChar = (char)smiles[position++];
+
+			if (Character.isLetter(theChar) || theChar == '*') {
+				int atomicNo = 0;
+				int explicitHydrogens = 0;
+				boolean isWildCard = false;
+				if (squareBracketOpen) {
+				    if (theChar == 'R' && Character.isDigit((char)smiles[position])) {
+				        int noOfDigits = Character.isDigit((char)smiles[position+1]) ? 2 : 1;
+                        atomicNo = Molecule.getAtomicNoFromLabel(new String(smiles, position-1, 1+noOfDigits));
+                        position += noOfDigits;
+				        }
+				    else if (Character.isLowerCase((char)smiles[position])) {
+						atomicNo = Molecule.getAtomicNoFromLabel(new String(smiles, position-1, 2));
+						position++;
+						}
+					else
+						atomicNo = Molecule.getAtomicNoFromLabel(new String(smiles, position-1, 1));
+
+					if (smiles[position] == 'H') {
+						position++;
+						explicitHydrogens = 1;
+						if (Character.isDigit((char)smiles[position])) {
+							explicitHydrogens = smiles[position] - '0';
+							position++;
+							}
+						}
+					}
+				else if (theChar == '*') {
+					atomicNo = 6;
+					isWildCard = true;
+					}
+				else {
+					switch (Character.toUpperCase(theChar)) {
+					case 'B':
+						if (position < smilesLength && smiles[position] == 'r') {
+							atomicNo = 35;
+							position++;
+							}
+						else
+							atomicNo = 5;
+						break;
+					case 'C':
+						if (position < smilesLength && smiles[position] == 'l') {
+							atomicNo = 17;
+							position++;
+							}
+						else
+							atomicNo = 6;
+						break;
+					case 'F':
+						atomicNo = 9;
+						break;
+					case 'I':
+						atomicNo = 53;
+						break;
+					case 'N':
+						atomicNo = 7;
+						break;
+					case 'O':
+						atomicNo = 8;
+						break;
+					case 'P':
+						atomicNo = 15;
+						break;
+					case 'S':
+						atomicNo = 16;
+						break;
+						}
+					}
+
+				if (atomicNo == 0)
+					throw new Exception("SmilesParser: unknown element label found");
+
+				THParity parity = (parityMap == null) ? null : parityMap.get(baseAtom[bracketLevel]);
+				if (parity != null)
+					parity.addNeighbor(position, atomicNo==1 && atomMass==0);
+
+				while (mExplicitHydrogens.length <= mMol.getAllAtoms())
+					ArrayUtils.resize(mExplicitHydrogens, mExplicitHydrogens.length*2);
+
+				if (atomicNo==1 && atomMass==0) {
+					// There are two kinds of explicit hydrogens: [H] and [NH+].
+					// Both are treated the same way, i.e. counted and used for valence checks.
+					// If the first atom of the smiles is a hydrogen, then it is assigned to the first non-H-atom.
+					int atom = (baseAtom[bracketLevel] == -1) ? 0 : baseAtom[bracketLevel];
+					mExplicitHydrogens[atom]++;
+					}
+				else {
+					int atom = mMol.addAtom(atomicNo);
+					if (isWildCard) {
+						smartsFeatureFound = true;
+						mMol.setAtomQueryFeature(atom, Molecule.cAtomQFAny, true);
+						}
+					else {
+							// mark aromatic atoms
+						mMol.setAtomMarker(atom, Character.isLowerCase(theChar));
+						}
+	
+					mExplicitHydrogens[atom] += explicitHydrogens;
+					fromAtom = baseAtom[bracketLevel];
+					if (baseAtom[bracketLevel] != -1) {
+						mMol.addBond(atom, baseAtom[bracketLevel], bondType);
+						}
+					bondType = Molecule.cBondTypeSingle;
+					baseAtom[bracketLevel] = atom;
+					if (atomMass != 0) {
+						mMol.setAtomMass(atom, atomMass);
+						atomMass = 0;
+						}
+					}
+				continue;
+				}
+
+			if (theChar == '=') {
+				bondType = Molecule.cBondTypeDouble;
+				continue;
+				}
+
+			if (theChar == '#') {
+				bondType = Molecule.cBondTypeTriple;
+				continue;
+				}
+
+			if (Character.isDigit(theChar)) {
+				int number = theChar - '0';
+				if (squareBracketOpen) {
+					while (position < smilesLength
+					 && Character.isDigit((char)smiles[position])) {
+						number = 10 * number + smiles[position] - '0';
+						position++;
+						}
+					atomMass = number;
+					}
+				else {
+					while (percentFound
+					 && position < smilesLength
+					 && Character.isDigit((char)smiles[position])) {
+						number = 10 * number + smiles[position] - '0';
+						position++;
+						}
+					percentFound = false;
+					if (reconnection[number] == -1) {
+						reconnection[number] = baseAtom[bracketLevel];
+						}
+					else {
+						THParity parity = (parityMap == null) ? null : parityMap.get(baseAtom[bracketLevel]);
+						if (parity != null)
+							parity.addNeighbor(position, false);
+
+						mMol.addBond(baseAtom[bracketLevel], reconnection[number], bondType);
+						reconnection[number] = -1;	// for number reusage
+						}
+					bondType = Molecule.cBondTypeSingle;
+					}
+				continue;
+				}
+
+			if (theChar == '+') {
+				if (!squareBracketOpen)
+					throw new Exception("SmilesParser: '+' found outside brackets");
+				int charge = 1;
+				while (smiles[position] == '+') {
+					charge++;
+					position++;
+					}
+				if (charge == 1 && Character.isDigit((char)smiles[position])) {
+					charge = smiles[position] - '0';
+					position++;
+					}
+				mMol.setAtomCharge(baseAtom[bracketLevel], charge);
+				continue;
+				}
+
+			if (theChar == '-') {
+				if (!squareBracketOpen)
+					throw new Exception("SmilesParser: '-' found outside brackets");
+				int charge = -1;
+				while (smiles[position] == '-') {
+					charge--;
+					position++;
+					}
+				if (charge == -1 && Character.isDigit((char)smiles[position])) {
+					charge = '0' - smiles[position];
+					position++;
+					}
+				mMol.setAtomCharge(baseAtom[bracketLevel], charge);
+				continue;
+				}
+
+			if (theChar == '(') {
+				if (baseAtom[bracketLevel] == -1)
+					throw new Exception("Smiles with leading parenthesis are not supported");
+				baseAtom[bracketLevel+1] = baseAtom[bracketLevel];
+				bracketLevel++;
+				continue;
+				}
+
+			if (theChar == ')') {
+				bracketLevel--;
+				continue;
+				}
+
+			if (theChar == '[') {
+				if (squareBracketOpen)
+					throw new Exception("SmilesParser: nested square brackets found");
+				squareBracketOpen = true;
+				continue;
+				}
+
+			if (theChar == ']') {
+				if (!squareBracketOpen)
+					throw new Exception("SmilesParser: closing bracket without opening one");
+				squareBracketOpen = false;
+				continue;
+				}
+
+			if (theChar == '%') {
+				percentFound = true;
+				continue;
+				}
+
+			if (theChar == '.') {
+				if (bracketLevel != 0)
+					throw new Exception("SmilesParser: '.' found within brackets");
+				baseAtom[0] = -1;
+				for (int i=0; i<mMol.getMaxAtoms(); i++)
+					reconnection[i] = -1;
+				continue;
+				}
+
+			if (theChar == ':') {
+				if (!squareBracketOpen)
+					throw new Exception("SmilesParser: ':' found outside brackets");
+				int mapNo = 0;
+				while (Character.isDigit((char)smiles[position])) {
+					mapNo = 10 * mapNo + smiles[position] - '0';
+					position++;
+					}
+				mMol.setAtomMapNo(baseAtom[bracketLevel], mapNo, false);
+				continue;
+				}
+
+			if (theChar == '/' || theChar == '\\') {
+				continue;	// neglect double bond stereo information for now
+				}
+
+			if (theChar == '@') {
+							// neglect tetrahedral stereo information for now
+				boolean isClockwise = false;
+				if (smiles[position] == '@') {
+					isClockwise = true;
+					position++;
+					}
+
+				if (readStereoFeatures) {
+					if (parityMap == null)
+						parityMap = new TreeMap<Integer,THParity>();
+	
+					THParity parity = new THParity(baseAtom[bracketLevel], fromAtom, isClockwise);
+					parityMap.put(baseAtom[bracketLevel], parity);
+					}
+
+				if (smiles[position] == 'H') {
+					position++;
+					}
+				
+				continue;
+				}
+
+			throw new Exception("SmilesParser: unexpected character found: '"+theChar+"'");
+			}
+
+		locateAromaticDoubleBonds();
+
+		if (createCoordinates || readStereoFeatures) {
+			new CoordinateInventor().invent(mMol);
+
+			if (readStereoFeatures) {
+				if (parityMap != null) {
+					for (THParity parity:parityMap.values())
+						mMol.setAtomParity(parity.mCentralAtom, parity.calculateParity(), false);
+
+					mMol.setParitiesValid(0);
+					}
+
+				mMol.setStereoBondsFromParity();
+				mMol.setUnknownParitiesToExplicitlyUnknown();
+				}
+			}
+
+		if (smartsFeatureFound)
+			mMol.setFragment(true);
+		}
+
+
+	private void locateAromaticDoubleBonds() throws Exception {
+		mMol.ensureHelperArrays(Molecule.cHelperNeighbours);
+		mIsAromaticBond = new boolean[mMol.getMaxAtoms()];
+
+			// assume all ring bonds to be aromatic if the ring consists of aromatic atoms only
+		RingCollection ringSet = new RingCollection(mMol, RingCollection.MODE_SMALL_RINGS_ONLY);
+		boolean[] isAromaticRing = new boolean[ringSet.getSize()];
+		for (int ring=0; ring<ringSet.getSize(); ring++) {
+			int[] ringAtom = ringSet.getRingAtoms(ring);
+			isAromaticRing[ring] = true;
+			for (int i=0; i<ringAtom.length; i++) {
+				if (!mMol.isMarkedAtom(ringAtom[i])) {
+					isAromaticRing[ring] = false;
+					break;
+					}
+				}
+			if (isAromaticRing[ring]) {
+				int[] ringBond = ringSet.getRingBonds(ring);
+				for (int i=0; i<ringBond.length; i++)
+					mIsAromaticBond[ringBond[i]] = true;
+				}
+			}
+
+			// Smiles may contain double-bonded hetero atoms attached exocyclic to
+			// aromatic atoms. These are changes to the singled bonded di-polar structure.
+		for (int atom=0; atom<mMol.getAtoms(); atom++) {
+			if (mMol.isMarkedAtom(atom) && mMol.getAtomPi(atom) > 0) {
+				for (int i=0; i<mMol.getConnAtoms(atom); i++) {
+					int connAtom = mMol.getConnAtom(atom, i);
+					int connBond = mMol.getConnBond(atom, i);
+					if ((mMol.getBondOrder(connBond) > 1)
+					 && !mIsAromaticBond[connBond]
+					 && mMol.isElectronegative(connAtom)) {
+						if (mMol.getBondType(connBond) == Molecule.cBondTypeTriple)
+							mMol.setBondType(connBond, Molecule.cBondTypeDouble);
+						else
+							mMol.setBondType(connBond, Molecule.cBondTypeSingle);
+
+						mMol.setAtomCharge(atom, mMol.getAtomCharge(atom) + 1);
+						mMol.setAtomCharge(connAtom, mMol.getAtomCharge(connAtom) - 1);
+						break;
+						}
+					}
+				}
+			}
+
+		mMol.ensureHelperArrays(Molecule.cHelperRings);	// to accomodate for the structure changes
+
+			// Some Smiles contain 'aromatic' rings with atoms not being compatible
+			// with a PI-bond. These include: tertiary non-charged nitrogen, [nH],
+			// sulfur, non-charged oxygen, charged carbon, etc...
+			// All these atoms and attached bonds are marked as handled to avoid
+			// attached bonds to be promoted (changed to double bond) later.
+		for (int ring=0; ring<ringSet.getSize(); ring++) {
+			if (isAromaticRing[ring]) {
+				int[] ringAtom = ringSet.getRingAtoms(ring);
+				for (int i=0; i<ringAtom.length; i++) {
+					if (!qualifiesForPi(ringAtom[i])) {
+						mMol.setAtomMarker(ringAtom[i], false);// mark: atom aromaticity handled
+						for (int j=0; j<mMol.getConnAtoms(ringAtom[i]); j++)
+							mIsAromaticBond[mMol.getConnBond(ringAtom[i], j)] = false;
+						}
+					}
+				}
+			}
+
+		promoteObviousBonds();
+
+			// find conjugation breaking atoms in remaining fully aromatic 5-membered rings
+		for (int ring=0; ring<ringSet.getSize(); ring++) {
+			if (isAromaticRing[ring] && ringSet.getRingSize(ring) == 5) {
+				int[] ringAtom = ringSet.getRingAtoms(ring);
+				int heteroAtom = -1;
+				boolean nonPiAtomsFound = false;
+				for (int i=0; i<ringAtom.length; i++) {
+					if (mMol.isMarkedAtom(ringAtom[i])) {
+						if (mMol.getAtomicNo(ringAtom[i]) != 6
+							  || mMol.getAtomCharge(ringAtom[i]) < 0
+							  || mMol.getAtomPi(ringAtom[i]) > 0) {
+							heteroAtom = ringAtom[i];
+							}
+						}
+					else
+						nonPiAtomsFound = true;
+					}
+				if (heteroAtom != -1 && !nonPiAtomsFound) {	// e.g. in azulene
+					mMol.setAtomMarker(heteroAtom, false);
+					for (int i=0; i<mMol.getConnAtoms(heteroAtom); i++)
+						mIsAromaticBond[mMol.getConnBond(heteroAtom, i)] = false;
+					}
+				}
+			}
+
+			// find conjugation breaking atoms in remaining fully aromatic 7-membered rings
+		for (int ring=0; ring<ringSet.getSize(); ring++) {
+			if (isAromaticRing[ring] && ringSet.getRingSize(ring) == 7) {
+				int[] ringAtom = ringSet.getRingAtoms(ring);
+				boolean nonPiAtomsFound = false;
+				for (int i=0; i<ringAtom.length; i++) {
+					if ((mMol.getAtomicNo(ringAtom[i]) == 6 && mMol.getAtomCharge(ringAtom[i]) > 0)
+					 || mMol.getAtomPi(ringAtom[i]) > 0) {
+						if (nonPiAtomsFound)
+							throw new Exception("Aromatic 7-membered ring with more than one positive atom");
+						mMol.setAtomMarker(ringAtom[i], false);
+						nonPiAtomsFound = true;
+						for (int j=0; j<mMol.getConnAtoms(ringAtom[i]); j++)
+							mIsAromaticBond[mMol.getConnBond(ringAtom[i], j)] = false;
+						}
+					}
+				}
+			}
+
+			// fill in conjugated double bonds in 5- and 7-membered rings
+		for (int ring=0; ring<ringSet.getSize(); ring++) {
+			if (isAromaticRing[ring]
+			 && (ringSet.getRingSize(ring) == 5 || ringSet.getRingSize(ring) == 7)) {
+				int[] ringBond = ringSet.getRingBonds(ring);
+				int bondIndex = -1;	// find index of one bond attached to conjugation breaking atom
+				for (int i=0; i<ringBond.length; i++) {
+					if (!mIsAromaticBond[ringBond[i]]) {
+						bondIndex = i;
+						break;
+						}
+					}
+				if (bondIndex != -1) {
+					boolean lastBondWasDouble = false;
+					for (int i=0; i<ringBond.length; i++) {
+						bondIndex = (bondIndex == 0) ? ringBond.length-1 : bondIndex-1;
+						if (mIsAromaticBond[ringBond[bondIndex]]) {
+							if (lastBondWasDouble)
+								lastBondWasDouble = false;
+							else {
+								promoteBond(ringBond[bondIndex]);
+								lastBondWasDouble = true;
+								}
+							}
+						else {
+							lastBondWasDouble = false;
+							}
+						}
+					}
+				}
+			}
+
+		promoteObviousBonds();
+
+			// handle annelated 6-membered ring
+		boolean qualifyingBondFound;
+		do {
+			qualifyingBondFound = false;
+			for (int ring=0; ring<ringSet.getSize(); ring++) {
+				if (isAromaticRing[ring] && ringSet.getRingSize(ring) == 6) {
+					int[] ringBond = ringSet.getRingBonds(ring);
+					for (int i=0; i<ringBond.length; i++) {
+						int bond = ringBond[i];
+
+						if (mIsAromaticBond[bond]) {
+							int aromaticConnBonds = 0;
+							for (int j=0; j<2; j++) {
+								int bondAtom = mMol.getBondAtom(j, bond);
+								for (int k=0; k<mMol.getConnAtoms(bondAtom); k++)
+									if (mIsAromaticBond[mMol.getConnBond(bondAtom, k)])
+										aromaticConnBonds++;
+								}
+
+							if (aromaticConnBonds == 6) {
+								promoteBond(bond);
+								promoteObviousBonds();
+								qualifyingBondFound = true;
+								break;
+								}
+							}
+						}
+					}
+				if (qualifyingBondFound)
+					break;
+				}
+			} while (qualifyingBondFound);
+
+			// handle remaining azulenes (qualifyingNo=5) and simple rings (qualifyingNo=4)
+		for (int qualifyingNo=5; qualifyingNo>=4; qualifyingNo--) {
+			do {
+				qualifyingBondFound = false;
+				for (int bond=0; bond<mMol.getBonds(); bond++) {
+					if (mIsAromaticBond[bond]) {
+						int aromaticConnBonds = 0;
+						for (int i=0; i<2; i++) {
+							int bondAtom = mMol.getBondAtom(i, bond);
+							for (int j=0; j<mMol.getConnAtoms(bondAtom); j++)
+								if (mIsAromaticBond[mMol.getConnBond(bondAtom, j)])
+									aromaticConnBonds++;
+							}
+
+						if (aromaticConnBonds == qualifyingNo) {
+							promoteBond(bond);
+							promoteObviousBonds();
+							qualifyingBondFound = true;
+							break;
+							}
+						}
+					}
+				} while (qualifyingBondFound);
+			}
+
+		for (int bond=0; bond<mMol.getBonds(); bond++)
+			if (mIsAromaticBond[bond])
+				throw new Exception("Assignment of aromatic double bonds failed");
+		for (int atom=0; atom<mMol.getAtoms(); atom++)
+			if (mMol.isMarkedAtom(atom))
+				throw new Exception("Assignment of aromatic double bonds failed");
+		}
+
+
+	private boolean qualifiesForPi(int atom) {
+		if ((mMol.getAtomicNo(atom) == 16 && mMol.getAtomCharge(atom) <= 0)
+		 || (mMol.getAtomicNo(atom) == 6 && mMol.getAtomCharge(atom) != 0)
+		 || (mMol.getFreeValence(atom) - mExplicitHydrogens[atom] < 1)
+		 || !mMol.isMarkedAtom(atom))	// already marked as hetero-atom of another ring
+			return false;
+
+		if (mMol.getAtomicNo(atom) != 6
+		 && mMol.getAtomicNo(atom) != 7
+		 && mMol.getAtomicNo(atom) != 8
+		 && mMol.getAtomicNo(atom) != 16)
+			return false;
+
+		return true;
+		}
+
+
+	private void promoteBond(int bond) {
+		if (mMol.getBondType(bond) == Molecule.cBondTypeSingle)
+			mMol.setBondType(bond, Molecule.cBondTypeDouble);
+
+		for (int i=0; i<2; i++) {
+			int bondAtom = mMol.getBondAtom(i, bond);
+			mMol.setAtomMarker(bondAtom, false);
+			for (int j=0; j<mMol.getConnAtoms(bondAtom); j++)
+				mIsAromaticBond[mMol.getConnBond(bondAtom, j)] = false;
+			}
+		}
+
+
+	private void promoteObviousBonds() {
+			// handle bond orders of aromatic bonds along the chains attached to 5- or 7-membered ring
+		boolean terminalAromaticBondFound;
+		do {
+			terminalAromaticBondFound = false;
+			for (int bond=0; bond<mMol.getBonds(); bond++) {
+				if (mIsAromaticBond[bond]) {
+					boolean isTerminalAromaticBond = false;
+					for (int i=0; i<2; i++) {
+						boolean aromaticNeighbourFound = false;
+						int bondAtom = mMol.getBondAtom(i, bond);
+						for (int j=0; j<mMol.getConnAtoms(bondAtom); j++) {
+							if (bond != mMol.getConnBond(bondAtom, j)
+							 && mIsAromaticBond[mMol.getConnBond(bondAtom, j)]) {
+								aromaticNeighbourFound = true;
+								break;
+								}
+							}
+						if (!aromaticNeighbourFound) {
+							isTerminalAromaticBond = true;
+							break;
+							}
+						}
+
+					if (isTerminalAromaticBond) {
+						terminalAromaticBondFound = true;
+						promoteBond(bond);
+						}
+					}
+				}
+			} while (terminalAromaticBondFound);
+		}
+
+
+	private class EZParity {
+		
+		}
+
+	private class THParity {
+		int mCentralAtom,mFromAtom,mNeighborCount;
+		int[] mNeighborPosition;
+		boolean[] mNeighborIsHydrogen;
+		boolean mIsClockwise,mError;
+
+		/**
+		 * Instantiates a new parity object during smiles traversal.
+		 * @param centralAtom index of atoms processed
+		 * @param fromAtom index of parent atom of centralAtom (-1 if centralAtom is first atom in smiles)
+		 * @param isClockwise true if central atom is marked with @@ rather than @
+		 */
+		public THParity(int centralAtom, int fromAtom, boolean isClockwise) {
+			mCentralAtom = centralAtom;
+			mFromAtom = fromAtom;
+			mIsClockwise = isClockwise;
+			mNeighborCount = 0;
+			mNeighborIsHydrogen = new boolean[4];
+			mNeighborPosition = new int[4];
+			}
+
+		/**
+		 * Adds a currently traversed neighbor or ring closure to parity object,
+		 * which belongs to the neighbor's parent atom.
+		 * In case of a ring closure the bond closure digit's position in the smiles
+		 * rather than the neighbor's position is the relevant position used for parity
+		 * determination.
+		 * @param atom
+		 * @param position
+		 */
+		public void addNeighbor(int position, boolean isHydrogen) {
+			if (mNeighborCount == 4
+			 || (mNeighborCount == 3 && mFromAtom != -1)) {
+				mError = true;
+				return;
+				}
+
+			mNeighborIsHydrogen[mNeighborCount] = isHydrogen;
+			mNeighborPosition[mNeighborCount] = position;
+			mNeighborCount++;
+			}
+
+		public int calculateParity() {
+			if (mError)
+				return Molecule.cAtomParityUnknown;
+
+			boolean hasExplicitHydrogen = (mFromAtom != -1 && mMol.getAtomicNo(mFromAtom) == 1 && mMol.getAtomMass(mFromAtom) == 0);
+			for (int i=0; i<mNeighborCount; i++) {
+				if (mNeighborIsHydrogen[i]) {
+					if (hasExplicitHydrogen)
+						return Molecule.cAtomParityUnknown;
+					hasExplicitHydrogen = true;
+					}
+				}
+
+			int nonHydrogenNeighborCount = mNeighborCount + ((mFromAtom != -1) ? 1 : 0) - (hasExplicitHydrogen ? 1 : 0);
+			if (nonHydrogenNeighborCount < 3 || nonHydrogenNeighborCount > 4)
+				return Molecule.cAtomParityUnknown;
+
+			boolean hasImplicitHydrogen = (nonHydrogenNeighborCount == 3 && !hasExplicitHydrogen);
+
+			// hydrogens are moved to the end of the atom list. If the hydrogen passes an odd number of
+			// neighbor atoms on its way to the list end, we are effectively inverting the atom order.
+			boolean isHydrogenTraversalInversion = false;
+
+			if (hasExplicitHydrogen) {
+				for (int i=0; i<mNeighborCount; i++) {
+					if (mNeighborIsHydrogen[i]) {
+						isHydrogenTraversalInversion = (((mNeighborCount - i) & 1) == 0);
+						break;
+						}
+					}
+				}
+			else if (hasImplicitHydrogen) {
+				if (mFromAtom == -1)
+					// If centralAtom is first atom in smiles then the implicit hydrogen is from-atom by convention:
+					// It passes an ODD number of atoms when travelling to the end of the neighbor list.
+					isHydrogenTraversalInversion = true;
+				else
+					// If there is a from-atom then the implicit hydrogen is the central atom's first neighbor by convention:
+					// It passes an EVEN number of atoms (2) when travelling to the end of the neighbor list.
+					isHydrogenTraversalInversion = false;
+				}
+
+			if (mFromAtom == -1 && !hasImplicitHydrogen) {
+				// If we have no implicit hydrogen and the central atom is the first atom in the smiles,
+				// then we assume that we have to take the first neighbor as from-atom (not described in Daylight theory manual).
+				// Assumption: take the first neighbor as front atom, i.e. skip it when comparing positions
+				for (int i=1; i<mNeighborCount; i++)
+					mNeighborPosition[i-1] = mNeighborPosition[i];
+				mNeighborCount--;
+				}
+
+			boolean isInverseOrder = ((mNeighborPosition[0] > mNeighborPosition[1]) && (mNeighborPosition[1] > mNeighborPosition[2]))
+								  || ((mNeighborPosition[1] > mNeighborPosition[2]) && (mNeighborPosition[2] > mNeighborPosition[0]))
+								  || ((mNeighborPosition[2] > mNeighborPosition[0]) && (mNeighborPosition[0] > mNeighborPosition[1]));
+			return (mIsClockwise ^ isInverseOrder ^ isHydrogenTraversalInversion) ? Molecule.cAtomParity1 : Molecule.cAtomParity2;
+			}
+		}
+
+	public static void main(String[] args) {
+		System.out.println("Alanine test:");
+		final String[] alanine = {	"N[C@@]([H])(C)C(=O)O",	"N[C@]([H])(C)C(=O)O",
+									"N[C@@H](C)C(=O)O",		"N[C@H](C)C(=O)O",
+									"N[C@H](C(=O)O)C",		"N[C@@H](C(=O)O)C",
+									"[H][C@](N)(C)C(=O)O",	"[H][C@@](N)(C)C(=O)O",
+									"[C@H](N)(C)C(=O)O",	"[C@@H](N)(C)C(=O)O" };
+
+		StereoMolecule mol = new StereoMolecule();
+		for (String smiles:alanine) {
+			try {
+				new SmilesParser().parse(mol, smiles);
+				mol.ensureHelperArrays(Molecule.cHelperCIP);
+				for (int atom=0; atom<mol.getAtoms(); atom++)
+					if (mol.isAtomStereoCenter(atom))
+						System.out.println("atom:"+atom+" parity:"+mol.getAtomParity(atom)+" CIP:"+mol.getAtomCIPParity(atom));
+				}
+			catch (Exception e) {
+				System.out.println("Exception: "+e.getMessage());
+				}
+			}
+		}
+	}

@@ -1,9 +1,7 @@
 <project name="actelionJS" default="all-min">
-	<property name="gwt" location="../GWT/2.7.0" />
+	<property name="gwt" location="/usr/local/gwt/2.7.0" />
 	<path id="project.class.path">
 		<pathelement location="src"/>
-		<pathelement location="../actelion2013/source" />
-		<pathelement location="../actelion-ext/src" />
 		<pathelement location="${gwt}/gwt-dev.jar" />
 		<pathelement location="${gwt}/gwt-user.jar" />
 	</path>
@@ -23,7 +21,7 @@
 			<arg line="-XjsInteropMode" />
 			<arg value="JS" />
 			<!--<arg line="-XclosureCompiler" />-->
-			<arg value="org.cheminfo.actelion.ActelionJS" />
+			<arg value="com.actelion.research.gwt.Full" />
 		</java>
 	</target>
 	<target name="compile">
@@ -41,14 +39,14 @@
 			<arg line="-nocheckAssertions" />
 			<arg line="-XjsInteropMode" />
 			<arg value="JS" />
-			<arg value="org.cheminfo.actelion.ActelionJS" />
+			<arg value="com.actelion.research.gwt.Full" />
 		</java>
 	</target>
 	<target name="export">
 		<exec executable="npm" dir="node">
 			<arg value="update" />
 		</exec>
-		<fileset dir="war/actelion" includes="*.cache.js" id="buildFile" />
+		<fileset dir="war/actelionFull" includes="*.cache.js" id="buildFile" />
 		<pathconvert property="buildFile" refid="buildFile"></pathconvert>
 		<exec failonerror="true" executable="node" dir="node">
 			<arg value="index.js" />
@@ -57,7 +55,7 @@
 			<arg line="-o" />
 			<arg value="../lib.js" />
 			<arg line="-e" />
-			<arg value="actelion" />
+			<arg value="actchem" />
 			<arg line="-p" />
 			<arg value="../package.json" />
 		</exec> 
@@ -85,7 +83,7 @@
 			<arg line="-XjsInteropMode" />
 			<arg value="JS" />
 		    <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
-			<arg value="org.cheminfo.actelion.ActelionJSDev"/>
+			<arg value="com.actelion.research.gwt.Full"/>
 		</java>
 	</target>
 </project>

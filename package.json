@@ -1,13 +1,13 @@
 {
   "name": "actelion",
-  "version": "2.0.7",
+  "version": "3.0.0-alpha1",
   "description": "Manipulate molecules",
   "main": "lib.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/cheminfo/actelion-js.git"
   },
-  "license": "TBD",
+  "license": "BSD",
   "bugs": {
     "url": "https://github.com/cheminfo/actelion-js/issues"
   },

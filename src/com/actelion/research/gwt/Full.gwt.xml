@@ -1,0 +1,4 @@
+<module rename-to="actelionFull">
+	<inherits name="com.actelion.research.gwt.Core" />
+    <inherits name="com.actelion.research.gwt.StructureViewer" />
+</module>

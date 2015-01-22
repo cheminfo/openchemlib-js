@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/cheminfo/actelion/jre/" kind="src" path="src"/>
-	<classpathentry kind="src" path="src/org/cheminfo/actelion/jre"/>
+	<classpathentry excluding="com/actelion/research/gwt/cheminfo/|com/actelion/research/gwt/chemlib/|com/actelion/research/gwt/jre/|org/cheminfo/actelion/jre/|com/actelion/research/gwt/jre/|com/actelion/research/gwt/cheminfo/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src/com/actelion/research/gwt/cheminfo"/>
+	<classpathentry kind="src" path="src/com/actelion/research/gwt/jre"/>
+	<classpathentry kind="src" path="src/com/actelion/research/gwt/chemlib"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/actelion2013"/>
-	<classpathentry kind="src" path="/actelion-ext"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
