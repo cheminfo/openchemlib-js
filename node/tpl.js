@@ -1,6 +1,6 @@
 function getExports($wnd) {
 
-    var $doc = {};
+    var $doc = $wnd.document;
     var $gwt = {};
     var navigator = {
         userAgent: 'webkit'
@@ -24,13 +24,13 @@ function getExports($wnd) {
 
 (function loadFromGWT() {
 
-    var fakeWindow = {
-    };
+    var fakeWindow = {};
 
     if (typeof module !== 'undefined' && module.exports) { // NodeJS
         var timers = require('timers');
         fakeWindow.setTimeout = timers.setTimeout;
         fakeWindow.clearTimeout = timers.clearTimeout;
+        fakeWindow.document = {};
         module.exports = getExports(fakeWindow);
     } else { // Browser
         fakeWindow.setTimeout = function () {
@@ -39,6 +39,7 @@ function getExports($wnd) {
         fakeWindow.clearTimeout = function () {
             return window.clearTimeout.apply(window, arguments);
         };
+        fakeWindow.document = window.document;
         if (typeof define === 'function' && define.amd) { // AMD
             define(function () {
                 return getExports(fakeWindow);
