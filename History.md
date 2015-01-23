@@ -1,3 +1,8 @@
+3.0.0-alpha2 / 2015-01-23
+=========================
+
+* add support for displayMode options in javascript
+
 3.0.0-alpha1 / 2015-01-22
 =========================
 
