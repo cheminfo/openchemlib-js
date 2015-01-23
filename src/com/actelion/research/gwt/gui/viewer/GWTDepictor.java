@@ -68,8 +68,13 @@ public class GWTDepictor extends AbstractDepictor
 
     public GWTDepictor(Context2d ctx, StereoMolecule mol)
     {
-        super(mol);
-        this.ctx = ctx;
+        this(ctx, mol, 0);
+    }
+    
+    public GWTDepictor(Context2d ctx, StereoMolecule mol, int displayMode)
+    {
+    	super(mol, displayMode);
+    	this.ctx = ctx;
     }
 
 
