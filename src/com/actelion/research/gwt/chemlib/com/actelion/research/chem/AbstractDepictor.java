@@ -106,6 +106,7 @@ public abstract class AbstractDepictor {
     public static final int cDModeShowSymmetryDiastereotopic = 0x0200;
     public static final int cDModeShowSymmetryEnantiotopic = 0x0400;
 	public static final int	cDModeNoImplicitAtomLabelColors = 0x0800;
+	public static final int	cDModeNoStereoProblem = 0x1000;
 
 	private static final float cFactorTextSize = 0.6f;
 	private static final float cFactorChiralTextSize = 0.5f;
@@ -472,7 +473,7 @@ public abstract class AbstractDepictor {
 				explicitAtomColors = true;
 			if (mMol.isSelectedAtom(atom))
 				mAtomColor[atom] = Molecule.cAtomColorRed;
-			if (mMol.getStereoProblem(atom))
+			if (mMol.getStereoProblem(atom) && (mDisplayMode & cDModeNoStereoProblem) == 0)
 				mAtomColor[atom] = Molecule.cAtomColorMagenta;
 			}
 
@@ -1657,8 +1658,8 @@ public abstract class AbstractDepictor {
 
 		if (propStr != null) {
 			setTextSize((mpLabelSize*2+1)/3);
-			x = getAtomX(atom) + ((labelWidth + getStringWidth(propStr)) / 2.0f);
-			y = getAtomY(atom) - ((getTextSize()*3+4)/8);
+			x = getAtomX(atom) + ((labelWidth + getStringWidth(propStr)) / 2.0f + 1);
+			y = getAtomY(atom) - ((getTextSize()*4-4)/8);
 			mpDrawString(x,y,propStr,drawAtoms,true);
 			setTextSize(mpLabelSize);
 			}
@@ -1669,7 +1670,7 @@ public abstract class AbstractDepictor {
 		if (isoStr != null) {
 			setTextSize((mpLabelSize*2+1)/3);
 			x = getAtomX(atom) - ((labelWidth + getStringWidth(isoStr)) / 2.0f);
-			y = getAtomY(atom) - ((getTextSize()*3+4)/8);
+			y = getAtomY(atom) - ((getTextSize()*4-4)/8);
 			mpDrawString(x,y,isoStr,drawAtoms,true);
 			setTextSize(mpLabelSize);
 			}
@@ -1687,7 +1688,7 @@ public abstract class AbstractDepictor {
 
 		if (mapStr != null) {
 			setTextSize((mpLabelSize*2+1)/3);
-			x = getAtomX(atom) + ((labelWidth + getStringWidth(mapStr)) / 2.0f);
+			x = getAtomX(atom) + ((labelWidth + getStringWidth(mapStr)) / 2.0f + 1);
 			y = getAtomY(atom) + ((getTextSize()*3+4)/8);
 			int theColor = mCurrentColor;
 			setColor(mMol.isAutoMappedAtom(atom) ? Molecule.cAtomColorDarkGreen : Molecule.cAtomColorDarkRed);

@@ -74,6 +74,8 @@ public class SmilesParser {
 				int atomicNo = 0;
 				int explicitHydrogens = -1;
 				boolean isWildCard = false;
+				boolean parityFound = false;
+				boolean isClockwise = false;
 				if (squareBracketOpen) {
 					if (theChar == 'R' && Character.isDigit(smiles[position])) {
 						int noOfDigits = Character.isDigit(smiles[position+1]) ? 2 : 1;
@@ -85,6 +87,15 @@ public class SmilesParser {
 						atomicNo = Molecule.getAtomicNoFromLabel(new String(smiles, position-1, labelLength));
 						position += labelLength-1;
 						explicitHydrogens = 0;
+						}
+
+					if (smiles[position] == '@') {
+						position++;
+						if (smiles[position] == '@') {
+							isClockwise = true;
+							position++;
+							}
+						parityFound = true;
 						}
 
 					if (smiles[position] == 'H') {
@@ -163,7 +174,7 @@ public class SmilesParser {
 					}
 
 				fromAtom = baseAtom[bracketLevel];
-				if (baseAtom[bracketLevel] != -1) {
+				if (baseAtom[bracketLevel] != -1 && bondType != Molecule.cBondTypeDeleted) {
 					mMol.addBond(atom, baseAtom[bracketLevel], bondType);
 					}
 				bondType = Molecule.cBondTypeSingle;
@@ -173,6 +184,18 @@ public class SmilesParser {
 					atomMass = 0;
 					}
 
+				if (readStereoFeatures && parityFound) {
+					if (parityMap == null)
+						parityMap = new TreeMap<Integer,THParity>();
+
+					parityMap.put(baseAtom[bracketLevel], new THParity(atom, fromAtom, isClockwise));
+					}
+
+				continue;
+				}
+
+			if (theChar == '.') {
+				bondType = Molecule.cBondTypeDeleted;
 				continue;
 				}
 
@@ -287,14 +310,14 @@ public class SmilesParser {
 				continue;
 				}
 
-			if (theChar == '.') {
+/*			if (theChar == '.') {
 				if (bracketLevel != 0)
 					throw new Exception("SmilesParser: '.' found within brackets");
 				baseAtom[0] = -1;
 //				for (int i=0; i<reconnection.length; i++)	we allow reconnections between fragments separated by '.'
 //					reconnection[i] = -1;
 				continue;
-				}
+				}*/
 
 			if (theChar == ':') {
 				if (!squareBracketOpen) {
@@ -322,28 +345,6 @@ public class SmilesParser {
 				continue;	// encode backslash temporarily in bondType
 				}
 
-			if (theChar == '@') {
-				boolean isClockwise = false;
-				if (smiles[position] == '@') {
-					isClockwise = true;
-					position++;
-					}
-
-				if (readStereoFeatures) {
-					if (parityMap == null)
-						parityMap = new TreeMap<Integer,THParity>();
-	
-					THParity parity = new THParity(baseAtom[bracketLevel], fromAtom, isClockwise);
-					parityMap.put(baseAtom[bracketLevel], parity);
-					}
-
-				if (smiles[position] == 'H') {
-					position++;
-					}
-				
-				continue;
-				}
-
 			throw new Exception("SmilesParser: unexpected character found: '"+theChar+"'");
 			}
 
@@ -354,9 +355,20 @@ public class SmilesParser {
 			if (mol.getAtomCustomLabel(atom) != null) {	// if we have the exact number of hydrogens
 				if (!mMol.isMarkedAtom(atom)) {	// don't correct aromatic atoms
 					int explicitHydrogen = mMol.getAtomCustomLabelBytes(atom)[0];
-					if (Molecule.cAtomValence[mMol.getAtomicNo(atom)] != null
-					 && mMol.getFreeValence(atom) != explicitHydrogen)
-						mMol.setAtomAbnormalValence(atom, mMol.getOccupiedValence(atom)+explicitHydrogen);
+					if (Molecule.cAtomValence[mMol.getAtomicNo(atom)] != null) {
+						boolean compatibleValenceFound = false;
+						int usedValence = mMol.getOccupiedValence(atom) - mMol.getElectronValenceCorrection(atom);
+						for (byte valence:Molecule.cAtomValence[mMol.getAtomicNo(atom)]) {
+							if (usedValence <= valence) {
+								compatibleValenceFound = true;
+								if (valence != usedValence+explicitHydrogen)
+									mMol.setAtomAbnormalValence(atom, usedValence+explicitHydrogen);
+								break;
+								}
+							}
+						if (!compatibleValenceFound)
+							mMol.setAtomAbnormalValence(atom, usedValence+explicitHydrogen);
+						}
 					}
 				}
 			}
@@ -461,7 +473,7 @@ public class SmilesParser {
 		// promote fully delocalized 6-membered rings
 		for (int ring=0; ring<ringSet.getSize(); ring++) {
 			if (isAromaticRing[ring] && ringSet.getRingSize(ring) == 6) {
-				int[] ringBond = ringSet.getRingAtoms(ring);
+				int[] ringBond = ringSet.getRingBonds(ring);
 				boolean isFullyDelocalized = true;
 				for (int bond:ringBond) {
 					if (!mIsAromaticBond[bond]) {
@@ -763,7 +775,8 @@ public class SmilesParser {
 			if (mError)
 				return Molecule.cAtomParityUnknown;
 
-			boolean hasExplicitHydrogen = (mFromAtom != -1 && mMol.getAtomicNo(mFromAtom) == 1 && mMol.getAtomMass(mFromAtom) == 0);
+			boolean fromAtomIsHydrogen = (mFromAtom != -1 && mMol.getAtomicNo(mFromAtom) == 1 && mMol.getAtomMass(mFromAtom) == 0);
+			boolean hasExplicitHydrogen = fromAtomIsHydrogen;
 			for (int i=0; i<mNeighborCount; i++) {
 				if (mNeighborIsHydrogen[i]) {
 					if (hasExplicitHydrogen)
@@ -782,7 +795,10 @@ public class SmilesParser {
 			// neighbor atoms on its way to the list end, we are effectively inverting the atom order.
 			boolean isHydrogenTraversalInversion = false;
 
-			if (hasExplicitHydrogen) {
+			if (fromAtomIsHydrogen) {
+				isHydrogenTraversalInversion = ((mNeighborCount & 1) != 0);
+				}
+			else if (hasExplicitHydrogen) {
 				for (int i=0; i<mNeighborCount; i++) {
 					if (mNeighborIsHydrogen[i]) {
 						isHydrogenTraversalInversion = (((mNeighborCount - i) & 1) == 0);
@@ -818,74 +834,54 @@ public class SmilesParser {
 		}
 
 	public static void main(String[] args) {
-		System.out.println("Alanine test:");
-		final String[] alanine = {	"N[C@@]([H])(C)C(=O)O",	"N[C@]([H])(C)C(=O)O",
-									"N[C@@H](C)C(=O)O",		"N[C@H](C)C(=O)O",
-									"N[C@H](C(=O)O)C",		"N[C@@H](C(=O)O)C",
-									"[H][C@](N)(C)C(=O)O",	"[H][C@@](N)(C)C(=O)O",
-									"[C@H](N)(C)C(=O)O",	"[C@@H](N)(C)C(=O)O" };
+		System.out.println("ID-code equivalence test:");
+		final String[][] data = { {	"N[C@@]([H])(C)C(=O)O",	"S-alanine",	"gGX`BDdwMUM@@" },
+								  { "N[C@@H](C)C(=O)O",		"S-alanine",	"gGX`BDdwMUM@@" },
+								  { "N[C@H](C(=O)O)C",		"S-alanine",	"gGX`BDdwMUM@@" },
+								  { "[H][C@](N)(C)C(=O)O",	"S-alanine",	"gGX`BDdwMUM@@" },
+								  { "[C@H](N)(C)C(=O)O",	"S-alanine",	"gGX`BDdwMUM@@" },
+								  { "N[C@]([H])(C)C(=O)O",	"R-alanine",	"gGX`BDdwMUL`@" },
+								  { "N[C@H](C)C(=O)O",		"R-alanine",	"gGX`BDdwMUL`@" },
+								  { "N[C@@H](C(=O)O)C",		"R-alanine",	"gGX`BDdwMUL`@" },
+								  { "[H][C@@](N)(C)C(=O)O",	"R-alanine",	"gGX`BDdwMUL`@" },
+								  { "[C@@H](N)(C)C(=O)O",	"R-alanine",	"gGX`BDdwMUL`@" },
+								  { "CCCC",					"butane",		"gC`@Dij@@" },
+								  { "C1C.CC1",				"butane",		"gC`@Dij@@" },
+								  { "[CH3][CH2][CH2][CH3]",	"butane",		"gC`@Dij@@" },
+								  { "C-C-C-C",				"butane",		"gC`@Dij@@" },
+								  { "C12.C1.CC2",			"butane",		"gC`@Dij@@" },
+								  { "[Na+].[Cl-]",			"NaCl",			"eDARHm@zd@@" },
+								  { "[Na+]-[Cl-]",			"NaCl",			"eDARHm@zd@@" },
+								  { "[Na+]1.[Cl-]1",		"NaCl",			"eDARHm@zd@@" },
+								  { "c1ccccc1",				"benzene",		"gFp@DiTt@@@" },
+								  { "C1=C-C=C-C=C1",		"benzene",		"gFp@DiTt@@@" },
+								  { "C1:C:C:C:C:C:1",		"benzene",		"gFp@DiTt@@@" },
+								  { "c1ccncc1",				"pyridine",		"gFx@@eJf`@@@" },
+								  { "[nH]1cccc1",			"pyrrole",		"gKX@@eKcRp@" },
+								  { "N1C=C-C=C1",			"pyrrole",		"gKX@@eKcRp@" },
+								  { "[H]n1cccc1",			"pyrrole",		"gKX@@eKcRp@" },
+								  { "[H]n1cccc1",			"pyrrole",		"gKX@@eKcRp@" },
+								  { "c1cncc1",				"pyrrole no [nH]", "error" },
+								  { "[13CH4]",				"C13-methane",	"fH@FJp@" },
+								  { "[35ClH]",				"35-chlorane",	"fHdP@qX`" },
+								  { "[35Cl-]",				"35-chloride",	"fHtPxAbq@" },
+								  { "[Na+].[O-]c1ccccc1",	"Na-phenolate",	"daxHaHCPBXyAYUn`@@@" },
+								  { "c1cc([O-].[Na+])ccc1",	"Na-phenolate",	"daxHaHCPBXyAYUn`@@@" },
+									};
 
 		StereoMolecule mol = new StereoMolecule();
-		for (String smiles:alanine) {
+		for (String[] test:data) {
 			try {
-				new SmilesParser().parse(mol, smiles);
-				mol.ensureHelperArrays(Molecule.cHelperCIP);
-				for (int atom=0; atom<mol.getAtoms(); atom++)
-					if (mol.isAtomStereoCenter(atom))
-						System.out.println("atom:"+atom+" parity:"+mol.getAtomParity(atom)+" CIP:"+mol.getAtomCIPParity(atom));
+				new SmilesParser().parse(mol, test[0]);
+				String idcode = new Canonizer(mol).getIDCode();
+				if (test[2].equals("error"))
+					System.out.println("Should create error! "+test[1]+" smiles:"+test[0]+" idcode:"+idcode);
+				else if (!test[2].equals(idcode))
+					System.out.println("ERROR! "+test[1]+" smiles:"+test[0]+" is:"+idcode+" must:"+test[2]);
 				}
 			catch (Exception e) {
-				System.out.println("Exception: "+e.getMessage());
-				}
-			}
-
-		System.out.println("Test for butane:");
-		final String[] butane = {	"CCCC", "C1C.CC1", "[CH3][CH2][CH2][CH3]", "C-C-C-C","C12.C1.CC2" };
-		for (String smiles:butane) {
-			try {
-				new SmilesParser().parse(mol, smiles);
-				System.out.println(new MolecularFormula(mol).getFormula());
-				}
-			catch (Exception e) {
-				System.out.println("Exception: "+e.getMessage());
-				}
-			}
-		
-	
-		System.out.println("Test for NaCl:");
-		final String[] nacl = {	"[Na+][Cl-]", "[Na+]-[Cl-]", "[Na+]1.[Cl-]1" };
-		for (String smiles:nacl) {
-			try {
-				new SmilesParser().parse(mol, smiles);
-				System.out.println(new MolecularFormula(mol).getFormula());
-				}
-			catch (Exception e) {
-				System.out.println("Exception: "+e.getMessage());
-				}
-			}
-		
-		System.out.println("Test for aromatic:");
-		final String[] benzene = {	"c1ccccc1", "C1=C-C=C-C=C1", "C1:C:C:C:C:C:1",
-									"c1ccncc1", "c1cncc1", "c1cncn1", "[nH]1cccc1", "N1C=C-C=C1", "[H]n1cccc1"};
-		for (String smiles:benzene) {
-			try {
-				new SmilesParser().parse(mol, smiles);
-				System.out.println(new MolecularFormula(mol).getFormula());
-				}
-			catch (Exception e) {
-				System.out.println("Exception: "+e.getMessage());
-				}
-			}
-
-		System.out.println("Test for isotopes:");
-		final String[] isotopes = {	"[13CH4]", "[35ClH]", "[35Cl-]" };
-		for (String smiles:isotopes) {
-			try {
-				new SmilesParser().parse(mol, smiles);
-				System.out.println(new MolecularFormula(mol).getFormula());
-				}
-			catch (Exception e) {
-				System.out.println("Exception: "+e.getMessage());
+				if (!test[2].equals("error"))
+					System.out.println("ERROR! "+test[1]+" smiles:"+test[0]+" exception:"+e.getMessage());
 				}
 			}
 		}
