@@ -1,3 +1,14 @@
+3.0.0-alpha3 / 2015-01-26
+=========================
+
+* update chemlib
+ * Depictor : new flag to allow suppression of stereo problems
+ * Depictor : fix superscript locations
+ * SMILES parser : @ indicators in smiles don't conflict anymore with implicit hydrogens as in [N@H]
+ * SMILES parser : handling of '.' was improved
+ * SMILES parser : detection of unusual valences was improved
+* add noStereoProblem option to drawStructure
+
 3.0.0-alpha2 / 2015-01-23
 =========================
 
