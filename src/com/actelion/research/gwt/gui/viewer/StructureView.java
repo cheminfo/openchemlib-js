@@ -100,6 +100,7 @@ public class StructureView //
     	if (options.inflateToHighResAVBL) displayMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToHighResAVBL;
     	if (options.noTabus) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoTabus;
     	if (options.highlightQueryFeatures) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeHiliteAllQueryFeatures;
+    	if (options.noStereoProblem) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoStereoProblem;
     	@com.actelion.research.gwt.gui.viewer.StructureView::drawStructure(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)(id, idcode, coordinates, displayMode);
     }-*/;
 
