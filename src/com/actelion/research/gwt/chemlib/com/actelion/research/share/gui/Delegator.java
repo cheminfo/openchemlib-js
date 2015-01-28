@@ -1,6 +1,6 @@
 /*
  * Project: DD_jfx
- * @(#)Foo.java
+ * @(#)Delegator.java
  *
  * Copyright (c) 1997- 2014
  * Actelion Pharmaceuticals Ltd.

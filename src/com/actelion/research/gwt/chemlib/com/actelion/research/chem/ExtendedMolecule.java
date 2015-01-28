@@ -1350,16 +1350,20 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
     /**
-     * This tells the molecule that earlier calculated atom/bond parities are still valid.
-     * If helperStereoBits!=0 then CIP parities and/or symmetry ranks can be declared valid as well.
-     * Should be called if no coordinates are available but the parities are valid nevertheless.
-     * Is used by the IDCodeParser after idcode parsing without coordinates.
+     * Atom stereo parities and bond E/Z-parities are properties that are usually perceived
+     * from up/down-bonds and atom coordinates, respectively. This is done during the helper
+     * array calculation triggered by ensureHelperArrays(cHelperParities).<br>
+     * This method tells the molecule that current atom/bond parities are valid, even if the
+     * stereo perception not has been performed. In addition to the stereo parities on may
+     * declare CIP parities and/or symmetry ranks also to be valid (helperStereoBits != 0).
+     * This method should be called if no coordinates are available but the parities are valid
+     * nevertheless, e.g. when the IDCodeParser parses an idcode without coordinates.
      * (Note: After idcode parsing unknown stereo centers have parities cAtomParityNone
-     * instead of cAtomParityUnknown and caling isStereoCenter(atom) returns false!!!)
-     * This prevents the Canonizer to run the stereo recognition again when
-     * ensureHelperArrays(cHelperParities or higher) is called.
-     * May also be called after filling valences with hydrogen atoms, which have no coordinates,
-     * to tell the molecule that the earlier created stereo flags are still valid.
+     * instead of cAtomParityUnknown. Thus, calling isStereoCenter(atom) returns false!!!)
+     * Declaring parities valid prevents the Canonizer to run the stereo recognition again when
+     * ensureHelperArrays(cHelperParities or higher) is called.<br>
+     * May also be called after filling valences with explicit hydrogen atoms, which have no
+     * coordinates, to tell the molecule that the earlier created stereo flags are still valid.
 	 * @param helperStereoBits 0 or combinations of cHelperBitCIP,cHelperBitSymmetry...,cHelperBitIncludeNitrogenParities
      */
     public void setParitiesValid(int helperStereoBits) {

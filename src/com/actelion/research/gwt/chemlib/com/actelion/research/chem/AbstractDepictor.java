@@ -1678,7 +1678,7 @@ public abstract class AbstractDepictor {
 		if (infoStr != null) {
 			setTextSize((mpLabelSize*2+1)/3);
 			x = getAtomX(atom) - ((labelWidth + getStringWidth(infoStr)) / 2.0f);
-			y = getAtomY(atom) + ((getTextSize()*3+4)/8);
+			y = getAtomY(atom) + ((getTextSize()*4+4)/8);
 			int theColor = mCurrentColor;
 			setColor(Molecule.cAtomColorRed);
 			mpDrawString(x,y,infoStr,drawAtoms,false);
@@ -1689,7 +1689,7 @@ public abstract class AbstractDepictor {
 		if (mapStr != null) {
 			setTextSize((mpLabelSize*2+1)/3);
 			x = getAtomX(atom) + ((labelWidth + getStringWidth(mapStr)) / 2.0f + 1);
-			y = getAtomY(atom) + ((getTextSize()*3+4)/8);
+			y = getAtomY(atom) + ((getTextSize()*4+4)/8);
 			int theColor = mCurrentColor;
 			setColor(mMol.isAutoMappedAtom(atom) ? Molecule.cAtomColorDarkGreen : Molecule.cAtomColorDarkRed);
 			mpDrawString(x,y,mapStr,drawAtoms,true);
@@ -1795,7 +1795,7 @@ public abstract class AbstractDepictor {
 
 			if (hNoWidth > 0) {
 				x = chax + ((hydrogenWidth + hNoWidth) / 2.0f);
-				y = chay + (getTextSize() / 4.0f);
+				y = chay + ((getTextSize()*4+4)/8);
 				mpDrawString(x,y,hNoStr,drawAtoms,true);
 				setTextSize(mpLabelSize);
 				}
