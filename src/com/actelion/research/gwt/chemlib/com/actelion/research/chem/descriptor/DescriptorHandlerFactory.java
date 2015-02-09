@@ -18,18 +18,17 @@
 
 package com.actelion.research.chem.descriptor;
 
-import com.actelion.research.chem.StereoMolecule;
-
 public interface DescriptorHandlerFactory extends ISimilarityHandlerFactory {
-	
-    /**
-     * @return null if shortName is null or invalid.
-     */
-    public DescriptorHandler<Object, StereoMolecule> getDefaultDescriptorHandler(String shortName);
 
     /**
      * @return null if shortName is null or invalid.
      */
-    public DescriptorHandler<Object, StereoMolecule> create(String shortName);
-    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public DescriptorHandler getDefaultDescriptorHandler(String shortName);
+
+    /**
+     * @return null if shortName is null or invalid.
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public DescriptorHandler create(String shortName);
 }

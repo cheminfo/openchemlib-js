@@ -250,7 +250,7 @@ System.out.println();
 	 * Fastest check, whether the molecule contains the fragment.
 	 * This method uses cCountModeExistance and therefore does not create
 	 * any retrievable match list, i.e. mapping from fragment atoms to molecule atoms.
-	 * @param matchMode combination of cMatchAtomCharge, cMatchAtomMass, cMatchDBondToDelocalized, cMatchAromDBondToDelocalized
+	 * @param matchMode cDefaultMatchMode or combination of cMatchAtomCharge, cMatchAtomMass, cMatchDBondToDelocalized, cMatchAromDBondToDelocalized
 	 * @return whether fragment was found as sub-structure in molecule
 	 */
 	public boolean isFragmentInMolecule(int matchMode) {
@@ -275,7 +275,7 @@ System.out.println();
 	 * are counted and listed only once. If count mode is different from cCountModeExistance,
 	 * then an atom mapping from fragment to molecule is collected and can be retrieved with getMatchList().
 	 * @param countMode one of cCountModeExistance, cCountModeFirstMatch, cCountModeOverlapping, cCountModeRigorous
-	 * @param matchMode combination of cMatchAtomCharge, cMatchAtomMass, cMatchDBondToDelocalized, cMatchAromDBondToDelocalized
+	 * @param matchMode cDefaultMatchMode or combination of cMatchAtomCharge, cMatchAtomMass, cMatchDBondToDelocalized, cMatchAromDBondToDelocalized
 	 * @return count of sub-structure matches of fragment in molecule
 	 */
     public int findFragmentInMolecule(int countMode, int matchMode) {
@@ -290,7 +290,7 @@ System.out.println();
 	 * are counted and listed only once. If count mode is different from cCountModeExistance,
 	 * then an atom mapping from fragment to molecule is collected and can be retrieved with getMatchList().
 	 * @param countMode one of cCountModeExistance, cCountModeFirstMatch, cCountModeOverlapping, cCountModeRigorous
-	 * @param matchMode combination of cMatchAtomCharge, cMatchAtomMass, cMatchDBondToDelocalized, cMatchAromDBondToDelocalized
+	 * @param matchMode cDefaultMatchMode or combination of cMatchAtomCharge, cMatchAtomMass, cMatchDBondToDelocalized, cMatchAromDBondToDelocalized
 	 * @param atomExcluded defines atoms of molecule to be excluded from sub-structure matching
 	 * @return count of sub-structure matches of fragment in molecule
 	 */
@@ -462,11 +462,13 @@ System.out.println();
 		if (fragmentConnAtoms > moleculeConnAtoms)
 			return false;
 
+/* In order to explicitly search and match attachment points (e.g. used by search substructure and replace)
+ * this behaviour was changed. TLS 29 Jan 2015
 		if (mFragment.getAtomicNo(fragmentAtom) == 0)	// attachment points match on any atom
 			return true;
 		if (mMolecule.getAtomicNo(moleculeAtom) == 0)	// real fragment atoms cannot match on attachment points in molecule
 			return false;
-
+*/
 		int moleculeQF = mMolecule.getAtomQueryFeatures(moleculeAtom);
 		int fragmentQF = mFragment.getAtomQueryFeatures(fragmentAtom);
 

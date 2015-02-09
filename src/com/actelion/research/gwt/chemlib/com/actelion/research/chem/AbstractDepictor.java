@@ -1713,7 +1713,7 @@ public abstract class AbstractDepictor {
 			return;
 
 		float hindrance[] = new float[4];
-		for (int i=0; i<mMol.getConnAtoms(atom); i++) {
+		for (int i=0; i<mMol.getAllConnAtoms(atom); i++) {
 			int bnd = mMol.getConnBond(atom,i);
 			for (int j=0; j<2; j++) {
 				if (mMol.getBondAtom(j,bnd) == atom) {

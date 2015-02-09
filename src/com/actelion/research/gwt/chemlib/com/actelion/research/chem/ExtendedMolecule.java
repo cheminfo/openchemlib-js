@@ -819,14 +819,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * Removes all unconnected fragments except for the largest one.
 	 * If small fragments were removed, then canonizeCharge() is called to
 	 * neutralize charges after potential removal of counter ions.
-	 * @return true, if fragments were removed
+	 * @return atom mapping from old to new indexnull if no fragments were removed
 	 */
-    public boolean stripSmallFragments() {
+    public int[] stripSmallFragments() {
     	int[] fragmentNo = new int[mAllAtoms];
     	int fragmentCount = getFragmentNumbers(fragmentNo, false);
 
 		if (fragmentCount <= 1)
-			return false;
+			return null;
 
 		int[] fragmentSize = new int[fragmentCount];
 		for (int atom=0; atom<mAllAtoms; atom++)
@@ -849,12 +849,12 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			if (fragmentNo[mBondAtom[0][bond]] != largestFragment)
 				mBondType[bond] = cBondTypeDeleted;	// mark for delete
 
-		compressMolTable();
+		int[] atomMap = compressMolTable();
 		mValidHelperArrays = cHelperNone;
 
 		try { canonizeCharge(true); } catch (Exception e) {}
 
-		return true;
+		return atomMap;
 		}
 
 
@@ -2229,7 +2229,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * Canonizes charge distribution in single- and multifragment molecules.
 	 * Neutralizes positive and an equal amount of negative charges on electronegative atoms,
 	 * provided these are not on 1,2-dipolar structures, in order to ideally achieve a neutral molecule.
-	 * This method does not change the overall charge of the molecule.
+	 * This method does not change the overall charge of the molecule. It does not change the number of
+	 * explicit atoms or bonds or their connectivity except bond orders.
 	 * @return remaining overall molecule charge
 	 */
 	public int canonizeCharge(boolean allowUnbalancedCharge) throws Exception {

@@ -927,8 +927,9 @@ public class Molecule implements Serializable {
 	/**
 	 * High level function for constructing a molecule.
 	 * @param mol
+	 * @return atom mapping from original mol to this molecule after incorporation of mol
 	 */
-	public void addMolecule(Molecule mol) {
+	public int[] addMolecule(Molecule mol) {
 	    int[] atomMap = new int[mol.mAllAtoms];
         int esrGroupCountAND = renumberESRGroups(cESRTypeAnd);
         int esrGroupCountOR = renumberESRGroups(cESRTypeOr);
@@ -943,6 +944,7 @@ public class Molecule implements Serializable {
 		mChirality = cChiralityUnknown;
 		mIsFragment |= mol.mIsFragment;
 		mValidHelperArrays = cHelperNone;
+		return atomMap;
 		}
 
 
@@ -950,8 +952,9 @@ public class Molecule implements Serializable {
 	 * High level function for constructing a molecule.
 	 * @param substituent
 	 * @param connectionAtom
+	 * @return atom mapping from substituent to this molecule after addition of substituent
 	 */
-	public void addSubstituent(Molecule substituent, int connectionAtom) {
+	public int[] addSubstituent(Molecule substituent, int connectionAtom) {
 		int[] atomMap = new int[substituent.mAllAtoms];
         int esrGroupCountAND = renumberESRGroups(cESRTypeAnd);
         int esrGroupCountOR = renumberESRGroups(cESRTypeOr);
@@ -968,6 +971,7 @@ public class Molecule implements Serializable {
         mIsRacemate = (mIsRacemate && substituent.mIsRacemate);
 		mChirality = cChiralityUnknown;
 		mValidHelperArrays = cHelperNone;
+		return atomMap;
 		}
 
 
@@ -3336,8 +3340,10 @@ public class Molecule implements Serializable {
 		int newAtmNo[] = new int[mAllAtoms];
 		int atomDest = 0;
 		for (int atom=0; atom<mAllAtoms; atom++) {
-			newAtmNo[atom] = atomDest;
-			if (mAtomicNo[atom] == -1) continue;
+			if (mAtomicNo[atom] == -1) {
+				newAtmNo[atom] = -1;
+				continue;
+				}
 			if (atomDest < atom) {
 				mAtomicNo[atomDest] = mAtomicNo[atom];
 				mAtomCharge[atomDest] = mAtomCharge[atom];
@@ -3353,6 +3359,7 @@ public class Molecule implements Serializable {
                 if (mAtomCustomLabel != null)
                     mAtomCustomLabel[atomDest] = mAtomCustomLabel[atom];
 				}
+			newAtmNo[atom] = atomDest;
 			atomDest++;
 			}
 		mAllAtoms = atomDest;
