@@ -21,6 +21,7 @@ package com.actelion.research.gwt.gui.viewer;
 import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.IDCodeParser;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.gwt.core.Molecule;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -39,7 +40,7 @@ import java.util.Map;
 @JsType
 @JsNamespace("$wnd.actchem")
 @JsExport
-public class StructureView //
+public class StructureView
 {
     @JsExport
     public static void showStructures(String cssClass)
@@ -87,7 +88,18 @@ public class StructureView //
     }
     
     @JsExport
-    public static native void drawStructure(String id, String idcode, String coordinates, JavaScriptObject options)/*-{
+    public static void drawStructure(String id, String idcode, String coordinates, JavaScriptObject options)
+    {
+    	drawStructure(id, idcode, coordinates, getDisplayMode(options));
+    }
+    
+    @JsExport
+    public static void drawMolecule(CanvasElement el, Molecule mol, JavaScriptObject options)
+    {
+    	drawMolecule(el, mol, getDisplayMode(options));
+    }
+    
+    private static native int getDisplayMode(JavaScriptObject options)/*-{
     	options = options || {};
     	var displayMode = 0;
     	if (options.suppressChiralText) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeSuppressChiralText;
@@ -101,7 +113,7 @@ public class StructureView //
     	if (options.noTabus) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoTabus;
     	if (options.highlightQueryFeatures) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeHiliteAllQueryFeatures;
     	if (options.noStereoProblem) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoStereoProblem;
-    	@com.actelion.research.gwt.gui.viewer.StructureView::drawStructure(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)(id, idcode, coordinates, displayMode);
+    	return displayMode;
     }-*/;
 
     private static void drawStructure(String id, String idcode, String coordinates, int displayMode)
@@ -112,6 +124,16 @@ public class StructureView //
             StructureElement.drawIDCode(ce,idcode,coordinates, displayMode);
         }
     }
+    
+    private static void drawStructure(CanvasElement el, String idcode, String coordinates, int displayMode)
+    {
+    	StructureElement.drawIDCode(el,idcode,coordinates, displayMode);
+    }
+    
+    private static void drawMolecule(CanvasElement el, Molecule mol, int displayMode)
+    {
+    	StructureElement.drawMolecule(el, mol, displayMode);
+    }
 
 }
 
@@ -121,7 +143,6 @@ class StructureElement
     private Canvas canvas;
 
     static {
-//        Log.console("Calling Static on StructureElement");
         initObserver();
     }
 
@@ -133,11 +154,9 @@ class StructureElement
     }
 
     private native static void initObserver() /*-{
-        console.log("initObserver()");
         $wnd.struct$observer = new MutationObserver(function (mutations)
         {
-            mutations.forEach(function (mutation)
-            {
+            mutations.forEach(function (mutation) {
                 @com.actelion.research.gwt.gui.viewer.StructureElement::notify(Ljava/lang/Object;)(mutation.target);
             });
         });
@@ -146,9 +165,7 @@ class StructureElement
 
     private native void observeDataChange(Element el) /*-{
         var config = {attributes: true, attributeOldValue: true, attributeFilter: ['data-idcode']}
-//        console.log("inst Init observer " + $wnd.struct$observer);
         $wnd.struct$observer.observe(el, config);
-//        console.log("Init observer: done");
     }-*/;
 
     public static void notify(Object o)
@@ -189,14 +206,20 @@ class StructureElement
 
             AbstractDepictor depictor = new GWTDepictor(ctx, mol, displayMode);
             depictor.validateView(null,
-//                new Rectangle2D.Float(0, 0, (float) width, (float) height), 0);
             new Rectangle2D.Float(0, 0, (float) width, (float) height), AbstractDepictor.cModeInflateToMaxAVBL);
             ctx.clearRect(0, 0, width, height);
             depictor.paint(ctx);
-//            System.out.println("Molecule is " + mol);
         } else {
             ctx.clearRect(0, 0, width, height);
         }
+    }
+    
+    private static void drawMolecule(Context2d ctx, StereoMolecule mol, int width, int height, int displayMode)
+    {
+    	AbstractDepictor depictor = new GWTDepictor(ctx, mol, displayMode);
+    	depictor.validateView(null, new Rectangle2D.Float(0, 0, (float) width, (float) height), AbstractDepictor.cModeInflateToMaxAVBL);
+    	ctx.clearRect(0, 0, width, height);
+    	depictor.paint(ctx);
     }
 
 
@@ -205,11 +228,6 @@ class StructureElement
         Element el = canvas.getCanvasElement();
         String idcode = el.getAttribute("data-idcode");
         Context2d ctx = canvas.getContext2d();
-/*
-        Log.console("Canvas size " +
-        canvas.getCoordinateSpaceWidth() + "/" +
-            canvas.getCoordinateSpaceHeight());
-*/
         drawMolecule(ctx, idcode,
             canvas.getCoordinateSpaceWidth(),
             canvas.getCoordinateSpaceHeight());
@@ -230,30 +248,13 @@ class StructureElement
                 canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight(), displayMode);
         }
     }
-/*
-    private void drawMolecule(Context2d ctx, String idcode, int width, int height)
+    
+    public static void drawMolecule(CanvasElement el, Molecule mol, int displayMode)
     {
-        if (idcode != null && idcode.trim().length() > 0) {
-            StereoMolecule mol = new StereoMolecule();
-            IDCodeParser parser = new IDCodeParser();
-            String[] elements = idcode.split(" ");
-            if (elements == null || elements.length == 1)
-                parser.parse(mol, idcode);
-            else
-                parser.parse(mol, elements[0], elements[1]);
-
-            AbstractDepictor depictor = new GWTDepictor(ctx, mol);
-            depictor.validateView(null,
-                new Rectangle2D.Float(0, 0, (float) width, (float) height), AbstractDepictor.cModeInflateToMaxAVBL);
-            ctx.clearRect(0, 0, width, height);
-            depictor.paint(ctx);
-            System.out.println("Molecule is " + mol);
-        } else {
-            ctx.clearRect(0, 0, width, height);
-        }
+    	Canvas canvas = Canvas.wrap(el);
+    	Context2d ctx = canvas.getContext2d();
+    	drawMolecule(ctx, mol.getStereoMolecule(),
+                canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight(), displayMode);
     }
-*/
-
 
 }
-
