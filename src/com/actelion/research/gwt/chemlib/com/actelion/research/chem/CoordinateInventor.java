@@ -129,9 +129,11 @@ public class CoordinateInventor {
 				}
 			}
 
-		if (mAtoms != 0) {	// otherwise it is H2, which shall be kept
-			mMol.setAllAtoms(mAtoms);	// get rid of useless hydrogens
-			mMol.setAllBonds(mBonds);
+		if ((mMode & MODE_REMOVE_HYDROGEN) != 0) {
+			if (mAtoms != 0) {	// otherwise it is H2, which shall be kept
+				mMol.setAllAtoms(mAtoms);	// get rid of useless hydrogens
+				mMol.setAllBonds(mBonds);
+				}
 			}
 		}
 
@@ -1765,7 +1767,7 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 				int current = 0;
 				int highest = 0;
 				while (current <= highest) {
-					for (int i=0; i<mMol.getConnAtoms(graphAtom[current]); i++) {
+					for (int i=0; i<mConnAtoms[graphAtom[current]]; i++) {
 						int candidate = mMol.getConnAtom(graphAtom[current], i);
 	
 						if (!isOnSide[candidate] && candidate != atom2) {

@@ -30,7 +30,6 @@
 package com.actelion.research.gwt.gui.viewer;
 
 import com.google.gwt.core.client.EntryPoint;
-//import org.timepedia.exporter.client.ExporterUtil;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>
@@ -42,13 +41,10 @@ public class StructureViewer implements EntryPoint
      */
     public void onModuleLoad()
     {
-//        ExporterUtil.exportAll();
-//        GWT.create(StructureView.class);
         onLoadImpl();
     }
 
     private native void onLoadImpl() /*-{
-        console.log("Calling Global structureViewLoaded ");
        if ($wnd.structureViewLoaded && typeof $wnd.structureViewLoaded == 'function') $wnd.structureViewLoaded();
      }-*/;
 

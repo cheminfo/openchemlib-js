@@ -51,19 +51,56 @@ public class IDCodeParser {
 		mEnsure2DCoordinates = ensure2DCoordinates;
 		}
 
+	/**
+	 * Creates and returns a molecule from the idcode with its atom and bond arrays being
+	 * just as large as needed to hold the molecule. Use this to conserve memory if no
+	 * atoms or bonds are added to the molecule afterwards. This version of the method
+	 * allows to pass idcode and atom coordinates in one String object.
+	 * @param idcode null or idcode, which may contain coordinates separated by a space character
+	 * @return
+	 */
 	public StereoMolecule getCompactMolecule(String idcode) {
-		return (idcode == null || idcode.length() == 0) ? null : getCompactMolecule(idcode.getBytes(), null);
+		if (idcode == null || idcode.length() == 0)
+			return null;
+		int index = idcode.indexOf(' ');
+		if (index > 0 && index < idcode.length()-1)
+			return getCompactMolecule(idcode.substring(0, index).getBytes(), idcode.substring(index+1).getBytes());
+		else
+			return getCompactMolecule(idcode.getBytes(), null);
 		}
 
+	/**
+	 * Creates and returns a molecule from the idcode with its atom and bond arrays being
+	 * just as large as needed to hold the molecule. Use this to conserve memory if no
+	 * atoms or bonds are added to the molecule afterwards.
+	 * @param idcode may be null
+	 * @return
+	 */
 	public StereoMolecule getCompactMolecule(byte[] idcode) {
 		return getCompactMolecule(idcode, null);
 		}
 
+	/**
+	 * Creates and returns a molecule from the idcode with its atom and bond arrays being
+	 * just as large as needed to hold the molecule. Use this to conserve memory if no
+	 * atoms or bonds are added to the molecule afterwards.
+	 * @param idcode may be null
+	 * @param coordinates may be null
+	 * @return
+	 */
 	public StereoMolecule getCompactMolecule(String idcode, String coordinates) {
 		return (idcode == null) ? null : getCompactMolecule(idcode.getBytes(),
 							(coordinates == null) ? null : coordinates.getBytes());
 		}
 
+	/**
+	 * Creates and returns a molecule from the idcode with its atom and bond arrays being
+	 * just as large as needed to hold the molecule. Use this to conserve memory if no
+	 * atoms or bonds are added to the molecule afterwards.
+	 * @param idcode may be null
+	 * @param coordinates may be null
+	 * @return
+	 */
 	public StereoMolecule getCompactMolecule(byte[] idcode, byte[] coordinates) {
 		if (idcode == null)
 			return null;
@@ -83,20 +120,56 @@ public class IDCodeParser {
 		return mol;
 		}
 
+	/**
+	 * Parses the idcode and populates the given molecule to represent the passed idcode.
+	 * This version of the method allows to pass idcode and atom coordinates in one String object.
+	 * @param mol molecule object to be filled with the idcode content
+	 * @param idcode null or idcode, which may contain coordinates separated by a space character
+	 * @return
+	 */
 	public void parse(StereoMolecule mol, String idcode) {
-		parse(mol, (idcode == null) ? null : idcode.getBytes(), null);
+		if (idcode == null || idcode.length() == 0) {
+			parse(mol, (byte[])null, (byte[])null);
+			return;
+			}
+
+		int index = idcode.indexOf(' ');
+		if (index > 0 && index < idcode.length()-1)
+			parse(mol, idcode.substring(0, index).getBytes(), idcode.substring(index+1).getBytes());
+		else
+			parse(mol, idcode.getBytes(), null);
 		}
 
+	/**
+	 * Parses the idcode and populates the given molecule to represent the passed idcode.
+	 * @param mol molecule object to be filled with the idcode content
+	 * @param idcode may be null
+	 * @return
+	 */
 	public void parse(StereoMolecule mol, byte[] idcode) {
 		parse(mol, idcode, null);
 		}
 
+	/**
+	 * Parses the idcode and populates the given molecule to represent the passed idcode.
+	 * @param mol molecule object to be filled with the idcode content
+	 * @param idcode may be null
+	 * @param coordinates may be null
+	 * @return
+	 */
 	public void parse(StereoMolecule mol, String idcode, String coordinates) {
 		byte[] idcodeBytes = (idcode == null) ? null : idcode.getBytes();
 		byte[] coordinateBytes = (coordinates == null) ? null : coordinates.getBytes();
 		parse(mol, idcodeBytes, coordinateBytes);
 		}
 
+	/**
+	 * Parses the idcode and populates the given molecule to represent the passed idcode.
+	 * @param mol molecule object to be filled with the idcode content
+	 * @param idcode may be null
+	 * @param coordinates may be null
+	 * @return
+	 */
 	public void parse(StereoMolecule mol, byte[] idcode, byte[] coordinates) {
 		int version = Canonizer.cIDCodeVersion2;
 		mMol = mol;

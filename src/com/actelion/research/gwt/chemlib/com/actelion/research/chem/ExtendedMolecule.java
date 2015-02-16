@@ -819,14 +819,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * Removes all unconnected fragments except for the largest one.
 	 * If small fragments were removed, then canonizeCharge() is called to
 	 * neutralize charges after potential removal of counter ions.
-	 * @return true, if fragments were removed
+	 * @return atom mapping from old to new indexnull if no fragments were removed
 	 */
-    public boolean stripSmallFragments() {
+    public int[] stripSmallFragments() {
     	int[] fragmentNo = new int[mAllAtoms];
     	int fragmentCount = getFragmentNumbers(fragmentNo, false);
 
 		if (fragmentCount <= 1)
-			return false;
+			return null;
 
 		int[] fragmentSize = new int[fragmentCount];
 		for (int atom=0; atom<mAllAtoms; atom++)
@@ -849,12 +849,12 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			if (fragmentNo[mBondAtom[0][bond]] != largestFragment)
 				mBondType[bond] = cBondTypeDeleted;	// mark for delete
 
-		compressMolTable();
+		int[] atomMap = compressMolTable();
 		mValidHelperArrays = cHelperNone;
 
 		try { canonizeCharge(true); } catch (Exception e) {}
 
-		return true;
+		return atomMap;
 		}
 
 
@@ -2229,7 +2229,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * Canonizes charge distribution in single- and multifragment molecules.
 	 * Neutralizes positive and an equal amount of negative charges on electronegative atoms,
 	 * provided these are not on 1,2-dipolar structures, in order to ideally achieve a neutral molecule.
-	 * This method does not change the overall charge of the molecule.
+	 * This method does not change the overall charge of the molecule. It does not change the number of
+	 * explicit atoms or bonds or their connectivity except bond orders.
 	 * @return remaining overall molecule charge
 	 */
 	public int canonizeCharge(boolean allowUnbalancedCharge) throws Exception {
@@ -2476,14 +2477,19 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * Usually explicit hydrogen atoms could be removed without changing a molecule,
-	 * because the removal would just change them from explicit to implicit ones.
+	 * Usually explicit hydrogen atoms can be removed without changing a molecule,
+	 * because the removal just convert explicit into implicit hydrogen atoms.
 	 * Exceptions are hydrogen with isotop information, hydrogens not connected to a non-H atom,
-	 * hydrogens carrying a custom label and hydrogens whose existence implicitly defines another
+	 * hydrogens carrying a custom label and hydrogens whose existence implicitly defines a neighbour
 	 * atom to have an abnormal valence.<br>
 	 * This method moves all simple hydrogen atoms and associated bonds to the end of the atom/bond tables.
 	 * It sets mAtoms to exclude simple hydrogen atoms and mBonds to exclude bonds leading to them.
-	 * mConnAtoms/mConnBonds/mConnBondOrder are neither used nor updated.
+	 * Simple hydrogens are not deleted, though. They are always displayed and the stereo perception
+	 * still considers up/down bonds leading to hydrogen atoms. Most other functions, however, can
+	 * happily neglect them.<br>
+	 * mConnAtoms/mConnBonds/mConnBondOrder are neither used nor updated.<br>
+	 * <b>Note:</b> This method changes the order among the non-hydrogen atoms. To translate to the original
+	 * order use getHandleHydrogenMap() before calling ensureHelperArrays() if the original atom order is relevant.
 	 */
 	private void handleHydrogens() {
 		// find all hydrogens that are connected to a non-H atom and therefore can be implicit		
@@ -2550,7 +2556,48 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		mBonds = lastNonHBond + 1;
 		}
 
-	private boolean isSimpleHydrogen(int atom) {
+	/**
+	 * If ensureHelperArrays() (and with it handleHydrogens()) was not called yet
+	 * on a fresh molecule and if the molecule contains simple hydrogen atoms within
+	 * non-hydrogens atoms, then this function returns a map from current atom indexes
+	 * to those new atom indexes that would result from a call to handleHydrogens.
+	 * @return
+	 */
+	public int[] getHandleHydrogenMap() {
+		int[] map = new int[mAllAtoms];
+
+		boolean[] isSimpleHydrogen = new boolean[mAllAtoms];
+		for (int bond=0; bond<mAllBonds; bond++)
+			for (int i=0; i<2; i++)
+				if (isSimpleHydrogen(mBondAtom[i][bond]) && !isSimpleHydrogen(mBondAtom[1-i][bond]))
+					isSimpleHydrogen[mBondAtom[i][bond]] = true;
+		
+		int lastNonHAtom = mAllAtoms-1;
+		while (lastNonHAtom >= 0 && isSimpleHydrogen[lastNonHAtom]) {
+			map[lastNonHAtom] = lastNonHAtom;
+			lastNonHAtom--;
+			}
+
+		for (int atom=0; atom<=lastNonHAtom; atom++) {
+			if (isSimpleHydrogen[atom]) {
+				map[atom] = lastNonHAtom;
+				map[lastNonHAtom] = atom;
+
+				lastNonHAtom--;
+				while (lastNonHAtom >= 0 && isSimpleHydrogen[lastNonHAtom]) {
+					map[lastNonHAtom] = lastNonHAtom;
+					lastNonHAtom--;
+					}
+				}
+			else {
+				map[atom] = atom;
+				}
+			}
+
+		return map;
+		}
+
+	public boolean isSimpleHydrogen(int atom) {
 		return mAtomicNo[atom] == 1 && mAtomMass[atom] == 0
 			&& (mAtomCustomLabel == null || mAtomCustomLabel[atom] == null);
 		}

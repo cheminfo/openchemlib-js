@@ -53,9 +53,10 @@ public class SmilesParser {
 		int[] baseAtom = new int[MAX_BRACKET_LEVELS];
 		baseAtom[0] = -1;
 
-		int[] reconnection = new int[MAX_RE_CONNECTIONS];
+		int[] ringClosureAtom = new int[MAX_RE_CONNECTIONS];
+		int[] ringClosurePosition = new int[MAX_RE_CONNECTIONS];
 		for (int i=0; i<MAX_RE_CONNECTIONS; i++)
-			reconnection[i] = -1;
+			ringClosureAtom[i] = -1;
 
 		int position = 0;
 		int atomMass = 0;
@@ -153,10 +154,6 @@ public class SmilesParser {
 				if (atomicNo == 0)
 					throw new Exception("SmilesParser: unknown element label found");
 
-				THParity parity = (parityMap == null) ? null : parityMap.get(baseAtom[bracketLevel]);
-				if (parity != null)
-					parity.addNeighbor(position, atomicNo==1 && atomMass==0);
-
 				int atom = mMol.addAtom(atomicNo);	// this may be a hydrogen, if defined as [H]
 				if (isWildCard) {
 					smartsFeatureFound = true;
@@ -167,7 +164,7 @@ public class SmilesParser {
 					}
 
 				// put explicitHydrogen into atomCustomLabel to keep atom-relation when hydrogens move to end of atom list in handleHydrogen()
-				if (explicitHydrogens != -1) {
+				if (explicitHydrogens != -1 && atomicNo != 1) {	// no custom labels for hydrogen to get useful results in getHandleHydrogenMap()
 					byte[] bytes = new byte[1];
 					bytes[0] = (byte)explicitHydrogens;
 					mMol.setAtomCustomLabel(atom, bytes);
@@ -184,11 +181,18 @@ public class SmilesParser {
 					atomMass = 0;
 					}
 
-				if (readStereoFeatures && parityFound) {
-					if (parityMap == null)
-						parityMap = new TreeMap<Integer,THParity>();
+				if (readStereoFeatures) {
+					THParity parity = (parityMap == null) ? null : parityMap.get(fromAtom);
+					if (parity != null)	// if previous atom is a stereo center
+						parity.addNeighbor(atom, position, atomicNo==1 && atomMass==0);
 
-					parityMap.put(baseAtom[bracketLevel], new THParity(atom, fromAtom, isClockwise));
+					if (parityFound) {	// if this atom is a stereo center
+						if (parityMap == null)
+							parityMap = new TreeMap<Integer,THParity>();
+	
+						// using position as hydrogenPosition is close enough
+						parityMap.put(atom, new THParity(atom, fromAtom, explicitHydrogens, position, isClockwise));
+						}
 					}
 
 				continue;
@@ -228,17 +232,23 @@ public class SmilesParser {
 						}
 					percentFound = false;
 					if (number >= MAX_RE_CONNECTIONS)
-						throw new Exception("SmilesParser: Reconnection number out of range");
-					if (reconnection[number] == -1) {
-						reconnection[number] = baseAtom[bracketLevel];
+						throw new Exception("SmilesParser: ringClosureAtom number out of range");
+					if (ringClosureAtom[number] == -1) {
+						ringClosureAtom[number] = baseAtom[bracketLevel];
+						ringClosurePosition[number] = position-1;
 						}
 					else {
-						THParity parity = (parityMap == null) ? null : parityMap.get(baseAtom[bracketLevel]);
-						if (parity != null)
-							parity.addNeighbor(position, false);
+						if (readStereoFeatures && parityMap != null) {
+							THParity parity = parityMap.get(ringClosureAtom[number]);
+							if (parity != null)
+								parity.addNeighbor(baseAtom[bracketLevel], ringClosurePosition[number], false);
+							parity = parityMap.get(baseAtom[bracketLevel]);
+							if (parity != null)
+								parity.addNeighbor(ringClosureAtom[number], position-1, false);
+							}
 
-						mMol.addBond(baseAtom[bracketLevel], reconnection[number], bondType);
-						reconnection[number] = -1;	// for number re-usage
+						mMol.addBond(baseAtom[bracketLevel], ringClosureAtom[number], bondType);
+						ringClosureAtom[number] = -1;	// for number re-usage
 						}
 					bondType = Molecule.cBondTypeSingle;
 					}
@@ -314,8 +324,8 @@ public class SmilesParser {
 				if (bracketLevel != 0)
 					throw new Exception("SmilesParser: '.' found within brackets");
 				baseAtom[0] = -1;
-//				for (int i=0; i<reconnection.length; i++)	we allow reconnections between fragments separated by '.'
-//					reconnection[i] = -1;
+//				for (int i=0; i<ringClosureAtom.length; i++)	we allow ringClosures between fragments separated by '.'
+//					ringClosureAtom[i] = -1;
 				continue;
 				}*/
 
@@ -347,6 +357,8 @@ public class SmilesParser {
 
 			throw new Exception("SmilesParser: unexpected character found: '"+theChar+"'");
 			}
+
+		int[] handleHydrogenAtomMap = mMol.getHandleHydrogenMap();
 
 		// If the number of explicitly defined hydrogens conflicts with the occupied and default valence, then set an abnormal valence.
 		mMol.setHydrogenProtection(true);	// We may have a fragment. Therefore, prevent conversion of explicit H into a query feature.
@@ -391,7 +403,7 @@ public class SmilesParser {
 			if (readStereoFeatures) {
 				if (parityMap != null) {
 					for (THParity parity:parityMap.values())
-						mMol.setAtomParity(parity.mCentralAtom, parity.calculateParity(), false);
+						mMol.setAtomParity(parity.mCentralAtom, parity.calculateParity(handleHydrogenAtomMap), false);
 
 					mMol.setParitiesValid(0);
 					}
@@ -730,8 +742,8 @@ public class SmilesParser {
 		}
 
 	private class THParity {
-		int mCentralAtom,mFromAtom,mNeighborCount;
-		int[] mNeighborPosition;
+		int mCentralAtom,mImplicitHydrogen,mFromAtom,mNeighborCount;
+		int[] mNeighborAtom,mNeighborPosition;
 		boolean[] mNeighborIsHydrogen;
 		boolean mIsClockwise,mError;
 
@@ -739,15 +751,31 @@ public class SmilesParser {
 		 * Instantiates a new parity object during smiles traversal.
 		 * @param centralAtom index of atoms processed
 		 * @param fromAtom index of parent atom of centralAtom (-1 if centralAtom is first atom in smiles)
+		 * @param implicitHydrogen Daylight syntax: hydrogen atoms defined within square bracket of other atom
 		 * @param isClockwise true if central atom is marked with @@ rather than @
 		 */
-		public THParity(int centralAtom, int fromAtom, boolean isClockwise) {
-			mCentralAtom = centralAtom;
-			mFromAtom = fromAtom;
-			mIsClockwise = isClockwise;
-			mNeighborCount = 0;
-			mNeighborIsHydrogen = new boolean[4];
-			mNeighborPosition = new int[4];
+		public THParity(int centralAtom, int fromAtom, int implicitHydrogen, int hydrogenPosition, boolean isClockwise) {
+			if (implicitHydrogen != 0 && implicitHydrogen != 1) {
+				mError = true;
+				}
+			else {
+				mCentralAtom = centralAtom;
+				mFromAtom = fromAtom;
+				mImplicitHydrogen = implicitHydrogen;
+				mIsClockwise = isClockwise;
+				mNeighborCount = 0;
+				mNeighborIsHydrogen = new boolean[4];
+				mNeighborAtom = new int[4];
+				mNeighborPosition = new int[4];
+
+				// If we have a fromAtom and we have an implicit hydrogen,
+				// then make the implicit hydrogen a normal neighbor.
+				if (fromAtom != -1 && implicitHydrogen == 1) {
+					// We put it at the end of the atom list with MAX_VALUE
+					addNeighbor(Integer.MAX_VALUE, hydrogenPosition, true);
+					mImplicitHydrogen = 0;
+					}
+				}
 			}
 
 		/**
@@ -756,10 +784,15 @@ public class SmilesParser {
 		 * In case of a ring closure the bond closure digit's position in the smiles
 		 * rather than the neighbor's position is the relevant position used for parity
 		 * determination.
-		 * @param atom
+		 * We need to track the atom, because neighbors are not necessarily added in atom
+		 * sequence (ring closure with connection back to stereo center).
 		 * @param position
+		 * @param isHydrogen
 		 */
-		public void addNeighbor(int position, boolean isHydrogen) {
+		public void addNeighbor(int atom, int position, boolean isHydrogen) {
+			if (mError)
+				return;
+
 			if (mNeighborCount == 4
 			 || (mNeighborCount == 3 && mFromAtom != -1)) {
 				mError = true;
@@ -767,106 +800,162 @@ public class SmilesParser {
 				}
 
 			mNeighborIsHydrogen[mNeighborCount] = isHydrogen;
+			mNeighborAtom[mNeighborCount] = atom;
 			mNeighborPosition[mNeighborCount] = position;
 			mNeighborCount++;
 			}
 
-		public int calculateParity() {
+		public int calculateParity(int[] handleHydrogenAtomMap) {
 			if (mError)
 				return Molecule.cAtomParityUnknown;
 
-			boolean fromAtomIsHydrogen = (mFromAtom != -1 && mMol.getAtomicNo(mFromAtom) == 1 && mMol.getAtomMass(mFromAtom) == 0);
-			boolean hasExplicitHydrogen = fromAtomIsHydrogen;
-			for (int i=0; i<mNeighborCount; i++) {
-				if (mNeighborIsHydrogen[i]) {
-					if (hasExplicitHydrogen)
-						return Molecule.cAtomParityUnknown;
-					hasExplicitHydrogen = true;
+			// We need to translate smiles-parse-time atom indexes to those that the molecule
+			// uses after calling handleHydrogens, which is called from ensureHelperArrays().
+			if (mFromAtom != -1)
+				mFromAtom = handleHydrogenAtomMap[mFromAtom];
+			for (int i=0; i<mNeighborCount; i++)
+				if (mNeighborAtom[i] != Integer.MAX_VALUE)
+					mNeighborAtom[i] = handleHydrogenAtomMap[mNeighborAtom[i]];
+
+			if (mFromAtom == -1 && mImplicitHydrogen == 0) {
+				// If we have no implicit hydrogen and the central atom is the first atom in the smiles,
+				// then we assume that we have to take the first neighbor as from-atom (not described in Daylight theory manual).
+				// Assumption: take the first neighbor as front atom, i.e. skip it when comparing positions
+				int minPosition = Integer.MAX_VALUE;
+				int minIndex = -1;
+				for (int i=0; i<mNeighborCount; i++) {
+					if (minPosition > mNeighborPosition[i]) {
+						minPosition = mNeighborPosition[i];
+						minIndex = i;
+						}
 					}
+				mFromAtom = mNeighborAtom[minIndex];
+				for (int i=minIndex+1; i<mNeighborCount; i++) {
+					mNeighborAtom[i-1] = mNeighborAtom[i];
+					mNeighborPosition[i-1] = mNeighborPosition[i];
+					mNeighborIsHydrogen[i-1] = mNeighborIsHydrogen[i];
+					}
+				mNeighborCount--;
 				}
 
-			int nonHydrogenNeighborCount = mNeighborCount + ((mFromAtom != -1) ? 1 : 0) - (hasExplicitHydrogen ? 1 : 0);
-			if (nonHydrogenNeighborCount < 3 || nonHydrogenNeighborCount > 4)
+			int totalNeighborCount = (mFromAtom == -1? 0 : 1) + mImplicitHydrogen + mNeighborCount;
+			if (totalNeighborCount > 4 || totalNeighborCount < 3)
 				return Molecule.cAtomParityUnknown;
 
-			boolean hasImplicitHydrogen = (nonHydrogenNeighborCount == 3 && !hasExplicitHydrogen);
+			// We look from the hydrogen towards the central carbon if the fromAtom is a hydrogen or
+			// if there is no fromAtom but the central atom has an implicit hydrogen.
+			boolean fromAtomIsHydrogen = (mFromAtom == -1 && mImplicitHydrogen == 1)
+									  || (mFromAtom != -1 && mMol.isSimpleHydrogen(mFromAtom));
+
+			int hydrogenNeighborIndex = -1;
+			for (int i=0; i<mNeighborCount; i++) {
+				if (mNeighborIsHydrogen[i]) {
+					if (hydrogenNeighborIndex != -1 || fromAtomIsHydrogen)
+						return Molecule.cAtomParityUnknown;
+					hydrogenNeighborIndex = i;
+					}
+				}
 
 			// hydrogens are moved to the end of the atom list. If the hydrogen passes an odd number of
 			// neighbor atoms on its way to the list end, we are effectively inverting the atom order.
 			boolean isHydrogenTraversalInversion = false;
+			if (hydrogenNeighborIndex != -1)
+				for (int i=0; i<mNeighborCount; i++)
+					if (!mNeighborIsHydrogen[i]
+					 && mNeighborAtom[hydrogenNeighborIndex] < mNeighborAtom[i])
+						isHydrogenTraversalInversion = !isHydrogenTraversalInversion;
 
-			if (fromAtomIsHydrogen) {
-				isHydrogenTraversalInversion = ((mNeighborCount & 1) != 0);
-				}
-			else if (hasExplicitHydrogen) {
-				for (int i=0; i<mNeighborCount; i++) {
-					if (mNeighborIsHydrogen[i]) {
-						isHydrogenTraversalInversion = (((mNeighborCount - i) & 1) == 0);
-						break;
-						}
+			// If fromAtom is not a hydrogen, we consider it moved to highest atom index,
+			// because
+			boolean fromAtomTraversalInversion = false;
+			if (mFromAtom != -1 && !fromAtomIsHydrogen)
+				for (int i=0; i<mNeighborCount; i++)
+					if (mFromAtom < mNeighborAtom[i])
+						fromAtomTraversalInversion = !fromAtomTraversalInversion;
+
+			int parity = (mIsClockwise
+						^ isInverseOrder(mNeighborAtom, mNeighborPosition, mNeighborCount)
+						^ fromAtomTraversalInversion
+						^ isHydrogenTraversalInversion) ?
+								Molecule.cAtomParity2 : Molecule.cAtomParity1;
+/*
+System.out.println();
+System.out.println("central:"+mCentralAtom+(mIsClockwise?" @@":" @")+" from:"
+				+((mFromAtom == -1)?"none":Integer.toString(mFromAtom))+" with "+mImplicitHydrogen+" hydrogens");
+System.out.print("neighbors: "+mNeighborAtom[0]+"("+mNeighborPosition[0]+(mNeighborIsHydrogen[0]?",H":",non-H")+")");
+for (int i=1; i<mNeighborCount; i++)
+	System.out.print(", "+mNeighborAtom[i]+"("+mNeighborPosition[i]+(mNeighborIsHydrogen[i]?",H":",non-H")+")");
+System.out.println();
+System.out.println("parity:"+parity);
+*/
+			return parity;
+			}
+
+		private boolean isInverseOrder(int[] atom, int[] position, int count) {
+			boolean inversion = false;
+			for (int i=1; i<count; i++) {
+				for (int j=0; j<i; j++) {
+					if (atom[j] > atom[i])
+						inversion = !inversion;
+					if (position[j] > position[i])
+						inversion = !inversion;
 					}
 				}
-			else if (hasImplicitHydrogen) {
-				if (mFromAtom == -1)
-					// If centralAtom is first atom in smiles then the implicit hydrogen is from-atom by convention:
-					// It passes an ODD number of atoms when travelling to the end of the neighbor list.
-					isHydrogenTraversalInversion = true;
-				else
-					// If there is a from-atom then the implicit hydrogen is the central atom's first neighbor by convention:
-					// It passes an EVEN number of atoms (2) when travelling to the end of the neighbor list.
-					isHydrogenTraversalInversion = false;
-				}
-
-			if (mFromAtom == -1 && !hasImplicitHydrogen) {
-				// If we have no implicit hydrogen and the central atom is the first atom in the smiles,
-				// then we assume that we have to take the first neighbor as from-atom (not described in Daylight theory manual).
-				// Assumption: take the first neighbor as front atom, i.e. skip it when comparing positions
-				for (int i=1; i<mNeighborCount; i++)
-					mNeighborPosition[i-1] = mNeighborPosition[i];
-				mNeighborCount--;
-				}
-
-			boolean isInverseOrder = ((mNeighborPosition[0] > mNeighborPosition[1]) && (mNeighborPosition[1] > mNeighborPosition[2]))
-								  || ((mNeighborPosition[1] > mNeighborPosition[2]) && (mNeighborPosition[2] > mNeighborPosition[0]))
-								  || ((mNeighborPosition[2] > mNeighborPosition[0]) && (mNeighborPosition[0] > mNeighborPosition[1]));
-			return (mIsClockwise ^ isInverseOrder ^ isHydrogenTraversalInversion) ? Molecule.cAtomParity1 : Molecule.cAtomParity2;
+			return inversion;
 			}
 		}
 
 	public static void main(String[] args) {
 		System.out.println("ID-code equivalence test:");
-		final String[][] data = { {	"N[C@@]([H])(C)C(=O)O",	"S-alanine",	"gGX`BDdwMUM@@" },
-								  { "N[C@@H](C)C(=O)O",		"S-alanine",	"gGX`BDdwMUM@@" },
-								  { "N[C@H](C(=O)O)C",		"S-alanine",	"gGX`BDdwMUM@@" },
-								  { "[H][C@](N)(C)C(=O)O",	"S-alanine",	"gGX`BDdwMUM@@" },
-								  { "[C@H](N)(C)C(=O)O",	"S-alanine",	"gGX`BDdwMUM@@" },
-								  { "N[C@]([H])(C)C(=O)O",	"R-alanine",	"gGX`BDdwMUL`@" },
-								  { "N[C@H](C)C(=O)O",		"R-alanine",	"gGX`BDdwMUL`@" },
-								  { "N[C@@H](C(=O)O)C",		"R-alanine",	"gGX`BDdwMUL`@" },
-								  { "[H][C@@](N)(C)C(=O)O",	"R-alanine",	"gGX`BDdwMUL`@" },
-								  { "[C@@H](N)(C)C(=O)O",	"R-alanine",	"gGX`BDdwMUL`@" },
-								  { "CCCC",					"butane",		"gC`@Dij@@" },
-								  { "C1C.CC1",				"butane",		"gC`@Dij@@" },
-								  { "[CH3][CH2][CH2][CH3]",	"butane",		"gC`@Dij@@" },
-								  { "C-C-C-C",				"butane",		"gC`@Dij@@" },
-								  { "C12.C1.CC2",			"butane",		"gC`@Dij@@" },
-								  { "[Na+].[Cl-]",			"NaCl",			"eDARHm@zd@@" },
-								  { "[Na+]-[Cl-]",			"NaCl",			"eDARHm@zd@@" },
-								  { "[Na+]1.[Cl-]1",		"NaCl",			"eDARHm@zd@@" },
-								  { "c1ccccc1",				"benzene",		"gFp@DiTt@@@" },
-								  { "C1=C-C=C-C=C1",		"benzene",		"gFp@DiTt@@@" },
-								  { "C1:C:C:C:C:C:1",		"benzene",		"gFp@DiTt@@@" },
-								  { "c1ccncc1",				"pyridine",		"gFx@@eJf`@@@" },
-								  { "[nH]1cccc1",			"pyrrole",		"gKX@@eKcRp@" },
-								  { "N1C=C-C=C1",			"pyrrole",		"gKX@@eKcRp@" },
-								  { "[H]n1cccc1",			"pyrrole",		"gKX@@eKcRp@" },
-								  { "[H]n1cccc1",			"pyrrole",		"gKX@@eKcRp@" },
-								  { "c1cncc1",				"pyrrole no [nH]", "error" },
-								  { "[13CH4]",				"C13-methane",	"fH@FJp@" },
-								  { "[35ClH]",				"35-chlorane",	"fHdP@qX`" },
-								  { "[35Cl-]",				"35-chloride",	"fHtPxAbq@" },
-								  { "[Na+].[O-]c1ccccc1",	"Na-phenolate",	"daxHaHCPBXyAYUn`@@@" },
-								  { "c1cc([O-].[Na+])ccc1",	"Na-phenolate",	"daxHaHCPBXyAYUn`@@@" },
+		final String[][] data = { {	"N[C@@]([H])(C)C(=O)O",	"S-alanine",		"gGX`BDdwMUM@@" },
+								  { "N[C@@H](C)C(=O)O",		"S-alanine",		"gGX`BDdwMUM@@" },
+								  { "N[C@H](C(=O)O)C",		"S-alanine",		"gGX`BDdwMUM@@" },
+								  { "[H][C@](N)(C)C(=O)O",	"S-alanine",		"gGX`BDdwMUM@@" },
+								  { "[C@H](N)(C)C(=O)O",	"S-alanine",		"gGX`BDdwMUM@@" },
+								  { "N[C@]([H])(C)C(=O)O",	"R-alanine",		"gGX`BDdwMUL`@" },
+								  { "N[C@H](C)C(=O)O",		"R-alanine",		"gGX`BDdwMUL`@" },
+								  { "N[C@@H](C(=O)O)C",		"R-alanine",		"gGX`BDdwMUL`@" },
+								  { "[H][C@@](N)(C)C(=O)O",	"R-alanine",		"gGX`BDdwMUL`@" },
+								  { "[C@@H](N)(C)C(=O)O",	"R-alanine",		"gGX`BDdwMUL`@" },
+								  { "C[C@H]1CCCCO1",		"S-Methyl-pyran",	"gOq@@eLm]UUH`@" },
+								  { "O1CCCC[C@@H]1C",		"S-Methyl-pyran",	"gOq@@eLm]UUH`@" },
+								  { "[C@H](F)(B)O",			"S-Methyl-oxetan",	"gCaDDICTBSURH@" },
+								  { "C1CO[C@H]1C",			"S-Methyl-oxetan",	"gKQ@@eLmUTb@" },
+								  { "C1CO[C@@H](C)1",		"S-Methyl-oxetan",	"gKQ@@eLmUTb@" },
+								  { "[C@H]1(C)CCO1",		"S-Methyl-oxetan",	"gKQ@@eLmUTb@" },
+								  { "[H][C@]1(C)CCO1",		"S-Methyl-oxetan",	"gKQ@@eLmUTb@" },
+								  { "[H][C@@]1(CCO1)C",		"S-Methyl-oxetan",	"gKQ@@eLmUTb@" },
+								  { "[C@@]1([H])(C)CCO1",	"S-Methyl-oxetan",	"gKQ@@eLmUTb@" },
+								  { "[C@]1(C)([H])CCO1",	"S-Methyl-oxetan",	"gKQ@@eLmUTb@" },
+								  { "C1[C@@H]2COC2=N1",		"oxetan-azetin",	"gGy@LDimDvfja`@" },
+								  { "CC(C)[C@@]12C[C@@H]1[C@@H](C)C(=O)C2", "alpha-thujone", "dmLH@@RYe~IfyjjjkDaIh@" },
+								  { "CN1CCC[C@H]1c2cccnc2",	"Nicotine",			"dcm@@@{IDeCEDUSh@UUECP@" },
+								  { "CC[C@H](O1)CC[C@@]12CCCO2", "2S,5R-Chalcogran", "dmLD@@qJZY|fFZjjjdbH`@" },
+								  { "CCCC",					"butane",			"gC`@Dij@@" },
+								  { "C1C.CC1",				"butane",			"gC`@Dij@@" },
+								  { "[CH3][CH2][CH2][CH3]",	"butane",			"gC`@Dij@@" },
+								  { "C-C-C-C",				"butane",			"gC`@Dij@@" },
+								  { "C12.C1.CC2",			"butane",			"gC`@Dij@@" },
+								  { "[Na+].[Cl-]",			"NaCl",				"eDARHm@zd@@" },
+								  { "[Na+]-[Cl-]",			"NaCl",				"error" },
+								  { "[Na+]1.[Cl-]1",		"NaCl",				"error" },
+								  { "c1ccccc1",				"benzene",			"gFp@DiTt@@@" },
+								  { "C1=C-C=C-C=C1",		"benzene",			"gFp@DiTt@@@" },
+								  { "C1:C:C:C:C:C:1",		"benzene",			"gFp@DiTt@@@" },
+								  { "c1ccncc1",				"pyridine",			"gFx@@eJf`@@@" },
+								  { "[nH]1cccc1",			"pyrrole",			"gKX@@eKcRp@" },
+								  { "N1C=C-C=C1",			"pyrrole",			"gKX@@eKcRp@" },
+								  { "[H]n1cccc1",			"pyrrole",			"gKX@@eKcRp@" },
+								  { "[H]n1cccc1",			"pyrrole",			"gKX@@eKcRp@" },
+								  { "c1cncc1",				"pyrrole no [nH]",	"error" },
+								  { "[13CH4]",				"C13-methane",		"fH@FJp@" },
+								  { "[35ClH]",				"35-chlorane",		"fHdP@qX`" },
+								  { "[35Cl-]",				"35-chloride",		"fHtPxAbq@" },
+								  { "[Na+].[O-]c1ccccc1",	"Na-phenolate",		"daxHaHCPBXyAYUn`@@@" },
+								  { "c1cc([O-].[Na+])ccc1",	"Na-phenolate",		"daxHaHCPBXyAYUn`@@@" },
+								  { "C[C@@](C)(O1)C[C@@H](O)[C@@]1(O2)[C@@H](C)[C@@H]3CC=C4[C@]3(C2)C(=O)C[C@H]5[C@H]4CC[C@@H](C6)[C@]5(C)Cc(n7)c6nc(C[C@@]89(C))c7C[C@@H]8CC[C@@H]%10[C@@H]9C[C@@H](O)[C@@]%11(C)C%10=C[C@H](O%12)[C@]%11(O)[C@H](C)[C@]%12(O%13)[C@H](O)C[C@@]%13(C)CO",
+									"Cephalostatin-1",
+									"gdKe@h@@K`H@XjKHuYlnoP\\bbdRbbVTLbTrJbRaQRRRbTJTRTrfrfTTOBPHtFODPhLNSMdIERYJmShLfs]aqy|uUMUUUUUUE@UUUUMUUUUUUTQUUTPR`nDdQQKB|RIFbiQeARuQt`rSSMNtGS\\ct@@" },
 									};
 
 		StereoMolecule mol = new StereoMolecule();

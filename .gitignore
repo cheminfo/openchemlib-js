@@ -3,3 +3,6 @@ war
 .settings/
 node/node_modules/
 .DS_Store
+.settings
+node_modules
+.idea
