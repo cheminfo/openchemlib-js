@@ -367,7 +367,8 @@ public class SmilesParser {
 			if (mol.getAtomCustomLabel(atom) != null) {	// if we have the exact number of hydrogens
 				if (!mMol.isMarkedAtom(atom)) {	// don't correct aromatic atoms
 					int explicitHydrogen = mMol.getAtomCustomLabelBytes(atom)[0];
-					if (Molecule.cAtomValence[mMol.getAtomicNo(atom)] != null) {
+					if (mMol.getAtomicNo(atom) < Molecule.cAtomValence.length
+					 && Molecule.cAtomValence[mMol.getAtomicNo(atom)] != null) {
 						boolean compatibleValenceFound = false;
 						int usedValence = mMol.getOccupiedValence(atom) - mMol.getElectronValenceCorrection(atom);
 						for (byte valence:Molecule.cAtomValence[mMol.getAtomicNo(atom)]) {
