@@ -2,6 +2,7 @@
 ===================
 
 * update chemlib
+* update gwt exporter (no more globals)
 
 3.0.0-alpha4 / 2015-02-06
 =========================

@@ -31,11 +31,4 @@
 		<nature>com.google.gwt.eclipse.core.gwtNature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>actelion2013</name>
-			<type>2</type>
-			<location>/home/mzasso/workspace/actelion2013/source</location>
-		</link>
-	</linkedResources>
 </projectDescription>
