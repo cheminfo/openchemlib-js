@@ -1,8 +1,9 @@
-3.0.0-alpha5 / HEAD
-===================
+3.0.0-alpha5 / 2015-02-27
+=========================
 
 * update chemlib
 * update gwt exporter (no more globals)
+* add options to Molecule.fromSmiles
 
 3.0.0-alpha4 / 2015-02-06
 =========================
