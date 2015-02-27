@@ -30,12 +30,12 @@ public class Molecule {
 		act_mol = mol;
 	}
 	
-	public static Molecule fromSmiles(String smiles) throws Exception {
-		Molecule mol = new Molecule();
-		services.getSmilesParser().parse(mol.act_mol, smiles.getBytes(), false, true);
-		mol.inventCoordinates();
-		return mol;
-	}
+	public static native Molecule fromSmiles(String smiles, JavaScriptObject options) throws Exception /*-{
+		options = options || {};
+		var coordinates = !options.noCoordinates;
+		var stereo = !options.noStereo;
+		return @com.actelion.research.gwt.core.Molecule::fromSmiles(Ljava/lang/String;ZZ)(smiles, coordinates, stereo);
+	}-*/;
 	
 	public static Molecule fromMolfile(String molfile) throws Exception {
 		Molecule mol = new Molecule();
@@ -148,6 +148,16 @@ public class Molecule {
 	}-*/;
 	
 	/* public methods after this line will not be accessible from javascript */
+	
+	@JsNoExport
+	public static Molecule fromSmiles(String smiles, boolean ensure2DCoordinates, boolean readStereoFeatures) throws Exception {
+		Molecule mol = new Molecule();
+		services.getSmilesParser().parse(mol.act_mol, smiles.getBytes(), false, readStereoFeatures);
+		if (ensure2DCoordinates) {
+			mol.inventCoordinates();
+		}
+		return mol;
+	}
 	
 	@JsNoExport
 	public static Molecule fromIDCode(String idcode, boolean ensure2DCoordinates) {

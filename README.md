@@ -11,9 +11,14 @@
 
 ### Molecule
 
-#### Molecule.fromSmiles(smiles)
+#### Molecule.fromSmiles(smiles, [options])
 
 Parse the provided `smiles` and return a `Molecule`
+
+__Options__
+
+* `noCoordinates` - do not compute coordinates (default: false). If true, computed coordinates are guaranteed to be always the same.
+* `noStereo` - do not parse stereo features (default: false). If true, coordinates will be computed but are not guaranteed to be always the same.
 
 #### Molecule.fromMolfile(molfile)
 
