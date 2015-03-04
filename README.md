@@ -1,4 +1,6 @@
-# actelion-js
+# openchemlib-js
+
+JavaScript interface with the [openchemlib](https://github.com/actelion/openchemlib) java library
 
 ## Documentation
 

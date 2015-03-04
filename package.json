@@ -1,17 +1,17 @@
 {
-  "name": "actelion",
+  "name": "openchemlib",
   "version": "3.0.0-alpha5",
   "description": "Manipulate molecules",
   "main": "lib.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/cheminfo/actelion-js.git"
+    "url": "git://github.com/cheminfo/openchemlib-js.git"
   },
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/cheminfo/actelion-js/issues"
+    "url": "https://github.com/cheminfo/openchemlib-js/issues"
   },
-  "homepage": "https://github.com/cheminfo/actelion-js",
+  "homepage": "https://github.com/cheminfo/openchemlib-js",
   "private": true,
   "devDependencies": {
     "gulp": "^3.8.10",

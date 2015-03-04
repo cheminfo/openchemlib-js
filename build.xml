@@ -1,4 +1,4 @@
-<project name="actelion-js" default="all-min">
+<project name="openchemlib-js" default="all-min">
     	<target name="compile-min">
 		<exec failonerror="true" executable="gulp">
 			<arg line="compile:min" />
