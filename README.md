@@ -15,12 +15,14 @@ JavaScript interface with the [openchemlib](https://github.com/actelion/openchem
 
 #### Molecule.fromSmiles(smiles, [options])
 
-Parse the provided `smiles` and return a `Molecule`
+Parse the provided `smiles` and return a `Molecule`.  
+By default, stereo features are parsed, which triggers itself a coordinate computation and coordinates are computed again after parsing to guarantee that they are always the same.  
+If you do not need stereo features and want the fastest parsing, use this method with `{noCoordinates: true, noStereo: true}`.
 
 __Options__
 
-* `noCoordinates` - do not compute coordinates (default: false). If true, computed coordinates are guaranteed to be always the same.
-* `noStereo` - do not parse stereo features (default: false). If true, coordinates will be computed but are not guaranteed to be always the same.
+* `noCoordinates` - disable extra coordinate computation (default: false).
+* `noStereo` - disable stereo features parsing (default: false).
 
 #### Molecule.fromMolfile(molfile)
 
