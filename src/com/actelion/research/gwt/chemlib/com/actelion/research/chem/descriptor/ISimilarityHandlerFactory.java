@@ -32,8 +32,6 @@
 */
 
 
-
-
 package com.actelion.research.chem.descriptor;
 
 public interface ISimilarityHandlerFactory {

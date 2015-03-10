@@ -32,8 +32,6 @@
 */
 
 
-
-
 package com.actelion.research.chem.io;
 
 import java.io.BufferedReader;

@@ -32,8 +32,6 @@
 */
 
 
-
-
 // Restriction: - Although bond query features are encoded into the idcode, idcodes of
 //				fragments with bond query features are not necessarily unique.
 //			  - Atom query features are(!) considered during atom priority assignment

@@ -39,6 +39,10 @@ import java.util.Vector;
 
 
 
+
+
+
+
 // Please rename this class
 public class DoubleVec implements Comparable<DoubleVec> {
 	
