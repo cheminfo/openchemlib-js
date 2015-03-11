@@ -15,6 +15,6 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.8.10",
-    "gwt-api-exporter": "^1.0.1"
+    "gwt-api-exporter": "^1.1.0"
   }
 }
