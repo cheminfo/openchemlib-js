@@ -6,7 +6,12 @@ var path = require('path');
 var fs = require('fs');
 var exporter = require('gwt-api-exporter');
 
-var config = require('./config.json');
+try {
+    var config = require('./config.json');
+} catch (e) {
+    console.error('config.json not found. You can copy config.default.json to start from an example.');
+    process.exit(1);
+}
 
 var classpath = ['src'];
 
@@ -30,6 +35,8 @@ gulp.task('build:min', ['compile:min'], build);
 gulp.task('export', build);
 
 gulp.task('default', ['build:min']);
+
+gulp.task('copy:openchemlib', copyOpenchemlib);
 
 function build(done) {
     var warDir = path.join('war', config.war);
@@ -77,4 +84,9 @@ function compile(mode) {
     return function () {
         child_process.execFileSync('java', args)
     }
+}
+
+function copyOpenchemlib() {
+    var chemlibDir = config.openchemlib;
+    // TODO copy java files from openchemlib
 }

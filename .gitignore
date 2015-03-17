@@ -1,7 +1,6 @@
 gwt-unitCache
-.settings/
-node/node_modules/
-.DS_Store
 .settings
+.DS_Store
 node_modules
 .idea
+config.json
