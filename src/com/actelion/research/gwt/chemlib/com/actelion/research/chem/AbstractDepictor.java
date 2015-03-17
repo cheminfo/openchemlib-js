@@ -31,7 +31,6 @@
 *
 */
 
-
 package com.actelion.research.chem;
 
 import com.actelion.research.util.ColorHelper;
@@ -172,7 +171,7 @@ public abstract class AbstractDepictor {
 	 * Defines additional atom text to be displayed in top right
 	 * position of some/all atom label. If the atom is charged, then
 	 * the atom text follows the charge information.
-	 * @param null or String array matching atom indexes (may contain null entries)
+	 * @param atomText null or String array matching atom indexes (may contain null entries)
 	 */
 	public void setAtomText(String[] atomText) {
 		mAtomText = atomText;
@@ -351,8 +350,20 @@ public abstract class AbstractDepictor {
 		return t;
 		}
 
+    // This might be overridden by subclasses (e.g. SVG Depictor)
+    protected void onDrawBond(int atom1, int atom2,float x1, float y1,float x2, float y2)
+    {
+        // NOOP
+    }
 
-	private void simpleCalculateBounds() {
+    // This might be overridden by subclasses (e.g. SVG Depictor)
+    protected void onDrawAtom(int atom, String symbol,float x, float y)
+    {
+        // NOOP
+    }
+
+
+    private void simpleCalculateBounds() {
 		float minx = getAtomX(0);	// determine size of molecule
 		float maxx = getAtomX(0);
 		float miny = getAtomY(0);
@@ -729,6 +740,8 @@ public abstract class AbstractDepictor {
 
 		int atom1 = mMol.getBondAtom(0,bnd);
 		int atom2 = mMol.getBondAtom(1,bnd);
+
+        onDrawBond(atom1,atom2,getAtomX(atom1),getAtomY(atom1),getAtomX(atom2),getAtomY(atom2));
 
 		if (mAlternativeCoords[atom1] == null) {
 			theLine.x1 = getAtomX(atom1);
@@ -1468,6 +1481,10 @@ public abstract class AbstractDepictor {
 	private void mpDrawAtom(int atom, boolean drawAtoms) {
 		float chax,chay,xdiff,ydiff,x,y;
 
+        if (drawAtoms)
+            onDrawAtom(atom,mMol.getAtomLabel(atom), getAtomX(atom), getAtomY(atom));
+
+
 		String propStr = null;
 		if (mMol.getAtomCharge(atom) != 0) {
 			String valStr = (Math.abs(mMol.getAtomCharge(atom)) == 1) ? ""
@@ -1663,7 +1680,7 @@ public abstract class AbstractDepictor {
 			atomStr = mMol.getAtomLabel(atom);
 
 		float labelWidth = 0.0f;
-		
+
 		if (atomStr != null) {
 			labelWidth = getStringWidth(atomStr);
 			mpDrawString(getAtomX(atom),getAtomY(atom),atomStr,drawAtoms,true);
