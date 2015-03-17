@@ -32,4 +32,5 @@
 */
 
 
+
 package com.actelion.research.share.gui.editor.actions;import com.actelion.research.chem.Molecule;import com.actelion.research.chem.StereoMolecule;import com.actelion.research.share.gui.editor.Model;/** * Project: * User: rufenec * Date: 1/28/13 * Time: 1:49 PM */public class UpBondAction extends NewBondAction{    public UpBondAction(Model model)    {        super(model);    }    public int getBondType()    {        return Molecule.cBondTypeUp;    }//    public void onAddBond(int src, int target)//    {//        StereoMolecule mol = model.getMol();//        mol.addBond(src, target, Molecule.cBondTypeUp);//        mol.ensureHelperArrays(Molecule.cHelperNeighbours);//    }////    public void onChangeBond(int bond)    {        StereoMolecule mol = model.getSelectedMolecule();        if (mol != null) {            mol.changeBond(bond, Molecule.cBondTypeUp);            mol.ensureHelperArrays(Molecule.cHelperNeighbours);        }    }}

@@ -1,3 +1,7 @@
+3.0.0-alpha6 / 2015-03-17
+=========================
+* fixed build errors for editor (missing class): this prevented exports
+
 3.0.0-alpha5 / 2015-02-27
 =========================
 
