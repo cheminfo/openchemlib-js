@@ -55,6 +55,7 @@ function build(done) {
         input: file,
         output: 'lib.js',
         exports: config.exports,
+        fake:config.fake,
         package: require('./package.json')
     }).then(function () {
         done();
