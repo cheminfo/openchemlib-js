@@ -59,7 +59,7 @@ function build(done) {
     var prom = [];
     for (var k = 0; k < modules.length; k++) {
         var mod = modules[k];
-        console.log('Exporting module ' + mod.name);
+        log('Exporting module ' + mod.name);
         var warDir = path.join('war', mod.war);
         var files = fs.readdirSync(warDir);
         var file;
@@ -91,7 +91,7 @@ function build(done) {
 function compile(mode) {
     return function () {
         for (var i = 0; i < modules.length; i++) {
-            console.log('Compiling module ' + modules[i].name);
+            log('Compiling module ' + modules[i].name);
             var args = [
                 '-Xmx512m',
                 '-cp', classpath,
@@ -112,8 +112,12 @@ function compile(mode) {
             if (verbose) {
                 args.push('-logLevel', 'DEBUG');
             }
-            var result = child_process.execFileSync('java', args).toString();
-            log(result);
+            var result = child_process.execFileSync('java', args);
+            if (verbose) {
+                var name = 'compile-' + modules[i].name + '.log';
+                log('Compilation log written to ' + name);
+                fs.writeFileSync('./' + name, result);
+            }
         }
     }
 }
