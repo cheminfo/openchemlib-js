@@ -125,10 +125,20 @@ function compile(mode) {
 function copyOpenchemlib() {
     var chemlibDir = config.openchemlib;
     var outDir = './src/com/actelion/research/gwt/chemlib/';
-    var chemlibClasses = require('./openchemlib-classes');
-    log('Copying ' + chemlibClasses.length + ' classes from openchemlib');
-    for (var i = 0; i < chemlibClasses.length; i++) {
-        fs.copySync(path.join(chemlibDir, chemlibClasses[i]), outDir + chemlibClasses[i]);
+    var modifiedDir = './openchemlib/modified/';
+
+    var chemlibClasses = require('./openchemlib/classes');
+
+    var toCopy = chemlibClasses.copy;
+    log('Copying ' + toCopy.length + ' classes from openchemlib');
+    for (var i = 0; i < toCopy.length; i++) {
+        fs.copySync(path.join(chemlibDir, toCopy[i]), outDir + toCopy[i]);
+    }
+
+    var modified = chemlibClasses.modified;
+    log('Copying ' + modified.length + ' modified classes');
+    for (var i = 0; i < modified.length; i++) {
+        fs.copySync(modifiedDir + modified[i], outDir + modified[i]);
     }
 }
 

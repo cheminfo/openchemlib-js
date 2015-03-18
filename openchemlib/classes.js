@@ -39,9 +39,27 @@ var classes = [
     'chem/prediction/SolubilityPredictor',
 
     'util/Angle',
-    'util/SortedList'
+    'util/SortedList',
+
+    // Requirements for Viewer
+    'chem/AbstractDepictor',
+    'chem/DepictorTransformation',
+
+    'share/gui/editor/geom/IDrawContext', // TODO not in ocl
+    'share/gui/editor/geom/IPolygon', // TODO not in ocl
+
+    'util/ColorHelper'
 ];
 
-module.exports = classes.map(function (file) {
+exports.copy = classes.map(getFilename);
+
+var modified = [
+    'chem/AbstractDrawingObject',
+    'chem/DepictorTransformation'
+];
+
+exports.modified = modified.map(getFilename);
+
+function getFilename(file) {
     return 'com/actelion/research/' + file + '.java';
-});
+}
