@@ -4,3 +4,5 @@ gwt-unitCache
 node_modules
 .idea
 config.json
+war/**
+!war/images
