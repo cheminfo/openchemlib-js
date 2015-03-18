@@ -109,6 +109,9 @@ function compile(mode) {
             } else {
                 args.push('PRETTY');
             }
+            if (verbose) {
+                args.push('-logLevel', 'DEBUG');
+            }
             var result = child_process.execFileSync('java', args).toString();
             log(result);
         }
