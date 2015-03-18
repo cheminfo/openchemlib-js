@@ -45,8 +45,8 @@ var classes = [
     'util/SortedList',
 
     // Requirements for Viewer
-    //'share/gui/editor/geom/IDrawContext', // TODO not in ocl
-    //'share/gui/editor/geom/IPolygon', // TODO not in ocl
+    'share/gui/editor/geom/IDrawContext', // TODO not in ocl
+    'share/gui/editor/geom/IPolygon', // TODO not in ocl
 
 ];
 
