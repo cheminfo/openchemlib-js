@@ -1,0 +1,20 @@
+[
+  {
+    "name": "full",
+    "war": "actelionFull",
+    "entrypoint": "com.actelion.research.gwt.Full",
+    "fake": false
+  },
+  {
+    "name": "core",
+    "war": "actelionCore",
+    "entrypoint": "com.actelion.research.gwt.Core",
+    "fake": true
+  },
+  {
+    "name": "viewer",
+    "war": "actelionStructureViewer",
+    "entrypoint": "com.actelion.research.gwt.actelionStructureViewer",
+    "fake": true
+  }
+]

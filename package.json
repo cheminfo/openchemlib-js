@@ -2,7 +2,7 @@
   "name": "openchemlib",
   "version": "3.0.0-alpha6",
   "description": "Manipulate molecules",
-  "main": "lib.js",
+  "main": "dist/openchemlib-core.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/cheminfo/openchemlib-js.git"
@@ -14,7 +14,9 @@
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "private": true,
   "devDependencies": {
+    "fs-extra": "^0.16.5",
     "gulp": "^3.8.10",
-    "gwt-api-exporter": "^1.1.0"
+    "gwt-api-exporter": "^1.1.0",
+    "minimist": "^1.1.1"
   }
 }
