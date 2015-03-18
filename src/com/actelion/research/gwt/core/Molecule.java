@@ -213,7 +213,6 @@ public class Molecule {
 		return act_mol;
 	}
 	
-	@JsNoExport
 	public String[] getDiastereotopicAtomIDsArray() {
 		return DiastereotopicAtomID.getAtomIds(act_mol);
 	}
