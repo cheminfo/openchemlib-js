@@ -1,5 +1,6 @@
 var classes = [
     // Requirements for Core
+    'chem/AbstractDepictor',
     'chem/AromaticityResolver',
     'chem/AtomFunctionAnalyzer',
     'chem/AtomTypeCalculator',
@@ -22,6 +23,7 @@ var classes = [
     'chem/SSSearcher',
     'chem/SSSearcherWithIndex',
     'chem/StereoMolecule',
+    'chem/SVGDepictor',
 
     'chem/descriptor/DescriptorHandler',
     'chem/descriptor/DescriptorHandlerFactory',
@@ -39,21 +41,19 @@ var classes = [
     'chem/prediction/SolubilityPredictor',
 
     'util/Angle',
+    'util/ColorHelper',
     'util/SortedList',
 
     // Requirements for Viewer
-    'chem/AbstractDepictor',
-    'chem/DepictorTransformation',
+    //'share/gui/editor/geom/IDrawContext', // TODO not in ocl
+    //'share/gui/editor/geom/IPolygon', // TODO not in ocl
 
-    'share/gui/editor/geom/IDrawContext', // TODO not in ocl
-    'share/gui/editor/geom/IPolygon', // TODO not in ocl
-
-    'util/ColorHelper'
 ];
 
 exports.copy = classes.map(getFilename);
 
 var modified = [
+    // Requirements for Core
     'chem/AbstractDrawingObject',
     'chem/DepictorTransformation'
 ];

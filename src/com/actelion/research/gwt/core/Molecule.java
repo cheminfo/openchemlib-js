@@ -1,5 +1,6 @@
 package com.actelion.research.gwt.core;
 
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
@@ -66,6 +67,13 @@ public class Molecule {
 	public String toMolfile() {
 		MolfileCreator creator = new MolfileCreator(act_mol);
 		return creator.getMolfile();
+	}
+	
+	public String toSVG(int width, int height, String id) {
+		SVGDepictor d = new SVGDepictor(act_mol, id);
+		d.validateView(null, new Rectangle2D.Float(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
+		d.paint(null);
+		return d.toString();
 	}
 	
 	@JsProperty
