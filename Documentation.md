@@ -1,8 +1,8 @@
 # Documentation
 
-[Molecule](#molecule)
-[SDF parser](#sdfileparser)
-[Substructure search](#sssearch)
+[Molecule](#molecule)  
+[SDF parser](#sdfileparser)  
+[Substructure search](#sssearch)  
 [Substructure search with index](#sssearchwithindex)
 
 ---------------------------------------
@@ -11,8 +11,8 @@
 
 ### Molecule.fromSmiles(smiles, [options])
 
-Parse the provided `smiles` and return a `Molecule`.
-By default, stereo features are parsed, which triggers itself a coordinate computation and coordinates are computed again after parsing to guarantee that they are always the same.
+Parse the provided `smiles` and return a `Molecule`.  
+By default, stereo features are parsed, which triggers itself a coordinate computation and coordinates are computed again after parsing to guarantee that they are always the same.  
 If you do not need stereo features and want the fastest parsing, use this method with `{noCoordinates: true, noStereo: true}`.
 
 __Options__
