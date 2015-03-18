@@ -124,7 +124,12 @@ function compile(mode) {
 
 function copyOpenchemlib() {
     var chemlibDir = config.openchemlib;
-    // TODO copy java files from openchemlib
+    var outDir = './src/com/actelion/research/gwt/chemlib/';
+    var chemlibClasses = require('./openchemlib-classes');
+    log('Copying ' + chemlibClasses.length + ' classes from openchemlib');
+    for (var i = 0; i < chemlibClasses.length; i++) {
+        fs.copySync(path.join(chemlibDir, chemlibClasses[i]), outDir + chemlibClasses[i]);
+    }
 }
 
 function log(value) {
