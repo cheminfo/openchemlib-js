@@ -8,6 +8,9 @@
     "molfile",
     "SMILES"
   ],
+  "scripts": {
+    "build": "gulp build:min"
+  },
   "main": "dist/openchemlib-core.js",
   "repository": {
     "type": "git",
