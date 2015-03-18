@@ -32,10 +32,6 @@
 */
 
 
-
-
-
-
 package com.actelion.research.share.gui.editor;
 
 import com.actelion.research.chem.*;

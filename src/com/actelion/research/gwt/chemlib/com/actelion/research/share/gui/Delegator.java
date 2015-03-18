@@ -32,6 +32,7 @@
 */
 
 
+
 package com.actelion.research.share.gui;
 
 public class Delegator<T>

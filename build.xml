@@ -24,6 +24,7 @@
 			<arg line="build:pretty" />
 		</exec>
 	</target>
+
 	<target name="devmode" description="Run development mode">
 		<java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
 			<classpath>
@@ -38,4 +39,18 @@
 			<arg value="com.actelion.research.gwt.Full"/>
 		</java>
 	</target>
+
+    <target name="javac">
+        <property name="src" value="src/com/actelion/reserach/gwt"/>
+        <delete dir="classes"/>
+        <mkdir dir="classes"/>
+        <javac srcdir="src" sourcepath="${src}/cheminfo:${src}/chemlib:${src}/jre" destdir="classes">
+            <classpath>
+                <fileset dir="/usr/local/gwt/2.7.0/">
+                    <include name="*.jar"></include>
+                </fileset>
+            </classpath>
+
+        </javac>
+    </target>
 </project>

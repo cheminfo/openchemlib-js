@@ -41,6 +41,9 @@ import java.io.ObjectInputStream;
 */
 
 
+
+
+
 public class SDFileMolecule extends StereoMolecule implements java.io.Serializable
 {
     static final long serialVersionUID = 0x2003CAFE;

@@ -40,6 +40,13 @@
 
 
 
+
+
+
+
+
+
+
 package com.actelion.research.util;
 
 public class DoubleFormat {

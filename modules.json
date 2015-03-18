@@ -14,7 +14,7 @@
   {
     "name": "viewer",
     "war": "actelionStructureViewer",
-    "entrypoint": "com.actelion.research.gwt.actelionStructureViewer",
+    "entrypoint": "com.actelion.research.gwt.StructureViewer",
     "fake": true
   }
 ]
