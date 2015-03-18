@@ -1,6 +1,8 @@
-3.0.0-alpha6 / 2015-03-17
+3.0.0-alpha6 / 2015-03-18
 =========================
+
 * fixed build errors for editor (missing class): this prevented exports
+* add SVG output
 
 3.0.0-alpha5 / 2015-02-27
 =========================

@@ -42,6 +42,10 @@ Returns a smiles string
 
 Returns a molfile (V2000) string
 
+### molecule.toSVG(width, height, id)
+
+Returns an SVG string
+
 ### molecule.getIDCode()
 
 Returns the ID Code if the molecule
