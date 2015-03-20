@@ -32,55 +32,12 @@
 */
 
 
+package com.actelion.research.chem.reaction;
 
+import com.actelion.research.chem.SSSearcher;
 
+public interface IReactionMapper
+{
+    Reaction matchReaction(Reaction r, SSSearcher sss);
 
-
-
-package com.actelion.research.chem;
-
-import java.util.ArrayList;
-
-public class DrawingObjectList extends ArrayList<AbstractDrawingObject> {
-    static final long serialVersionUID = 0x20060724;
-
-    public DrawingObjectList() {
-		super();
-		}
-
-	public DrawingObjectList(DrawingObjectList l) {
-		super();
-		try {
-			if (l != null) {
-				for (int i = 0; i < l.size(); i++)
-					add((AbstractDrawingObject) l.get(i).clone());
-			}
-		} catch (Exception e) {
-		} finally {
-
-		}
-	}
-
-	public DrawingObjectList(String objectString) {
-		super();
-		if (objectString == null || objectString.length() == 0)
-			return;
-
-		int index1 = 0;
-		int index2 = objectString.indexOf('\n');
-		while (index2 != -1) {
-            AbstractDrawingObject o = AbstractDrawingObject.instantiate(objectString.substring(index1, index2));
-			if (o != null)
-				add(o);
-			index1 = index2+1;
-			index2 = objectString.indexOf('\n', index1);
-			}
-		}
-
-	public String toString() {
-		StringBuffer objectString = new StringBuffer();
-		for (int i=0; i<size(); i++)
-			objectString.append(get(i).getDescriptor()+"\n");
-		return objectString.toString();
-		}
-	}
+}

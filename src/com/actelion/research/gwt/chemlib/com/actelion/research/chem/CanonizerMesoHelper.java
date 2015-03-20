@@ -34,8 +34,6 @@
 
 
 
-
-
 // This class handles the meso detection for the Canonizer class.
 
 package com.actelion.research.chem;

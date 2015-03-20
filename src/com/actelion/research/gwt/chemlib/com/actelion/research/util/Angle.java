@@ -33,22 +33,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.actelion.research.util;
-
 
 /**
  * This class provides various operations on angles,
@@ -56,7 +41,7 @@ package com.actelion.research.util;
  * from -pi >= v > pi.
  */
 public class Angle {
-	public final double TWO_PI = Math.PI + Math.PI;
+	public final double TWO_PI = Math.PI + Math.PI;          
 	private double  mValue;
 
 	public Angle() {
@@ -101,15 +86,15 @@ public class Angle {
 		return Math.tan(mValue);
 		}
 
-	public static Angle arcsin(double x) {
+	public static Angle	arcsin(double x) {
 		return new Angle(Math.asin(x));
 		}
 
-	public static Angle arccos(double x) {
+	public static Angle	arccos(double x) {
 		return new Angle(Math.acos(x));
 		}
 
-	public static Angle arctan(double y, double x) {
+	public static Angle	arctan(double y, double x) {
 		return new Angle(Math.atan2(y, x));
 		}
 
@@ -200,6 +185,7 @@ public class Angle {
 		}
 
 	public String toString() {
+//        return DoubleFormat.toString(toDegrees()) + " degrees";
 		return toDegrees() + " degrees";
 		}
 	}

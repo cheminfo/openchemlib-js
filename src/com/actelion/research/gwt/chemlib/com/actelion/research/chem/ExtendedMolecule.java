@@ -33,8 +33,6 @@
 
 
 
-
-
 package com.actelion.research.chem;
 
 import java.io.IOException;
@@ -97,6 +95,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * Copies a part of this Molecule into destMol, being defined by a mask of atoms to be included.
+	 * If not all atoms are copied, then destMol is set to be a substructure fragment.
 	 * @param destMol receives the part of this Molecule
 	 * @param includeAtom defines atoms to be copied; its size may be this.getAtoms() or this.getAllAtoms()
 	 * @param recognizeDelocalizedBonds defines whether disconnected delocalized bonds will keep their

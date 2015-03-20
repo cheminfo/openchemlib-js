@@ -44,18 +44,39 @@
 
 
 
+
+
 package java.awt;
+
+import java.awt.font.GlyphVector;
 
 public class Font
 {
     public static final int BOLD        = 1;
     public static final int PLAIN       = 0;
     public static final int ITALIC      = 2;
-    public Font(String s, int t, int size)
-    {}
+    private String name;
+    private int type ;
+    private int size;
+    public Font(String name, int type, int size)
+    {
+        this.name = name;
+        this.type = type;
+        this.size = size;
+    }
 
+    public String getName()
+    {
+        return name;
+    }
     public int getSize()
     {
-        return 0;
+        return size;
+    }
+
+    public GlyphVector createGlyphVector(java.awt.font.FontRenderContext frc, String str)
+    {
+
+        return new GlyphVector();
     }
 }

@@ -35,8 +35,7 @@
 package com.actelion.research.share.gui.editor;
 
 import com.actelion.research.chem.*;
-import com.actelion.research.chem.reaction.Reaction;
-import com.actelion.research.chem.reaction.ReactionMapper;
+import com.actelion.research.chem.reaction.*;
 import com.actelion.research.share.gui.editor.chem.IDepictor;
 import com.actelion.research.share.gui.editor.chem.IDrawingObject;
 import com.actelion.research.share.gui.editor.listeners.IChangeListener;
@@ -127,6 +126,8 @@ public abstract class Model
 
     private StereoMolecule[] mFragment;    // in case of MODE_MULTIPLE_FRAGMENTS contains valid stereo fragments
 //    private int mUpdateMode;
+    IReactionMapper mapper;
+
 
     public Model(int mode)
     {
@@ -745,6 +746,11 @@ public abstract class Model
         return fragmentCOG;
     }
 
+    public void setMapper(IReactionMapper mapper)
+    {
+        this.mapper = mapper;
+    }
+
     public void mapReaction(int atom, Point2D left, Point2D right)
     {
         StereoMolecule mol = getSelectedMolecule();
@@ -761,7 +767,8 @@ public abstract class Model
                     mol.setAtomMapNo(atom, freeMapNo, false);
                     mol.setAtomMapNo(dest, freeMapNo, false);
                 }
-                tryAutoMapReaction();
+                if (mapper != null)
+                    tryAutoMapReaction();
             }
         }
     }
@@ -1209,7 +1216,6 @@ public abstract class Model
     {
         //				new MoleculeAutoMapper(mMol).autoMap();
         SSSearcher sss = new MySSSearcher();
-        ReactionMapper mapper = new ReactionMapper();
 //        syncFragments();
 
         Reaction rxn = getReaction();//new Reaction(reaction);

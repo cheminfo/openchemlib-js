@@ -33,26 +33,11 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.actelion.research.util;
 
-import java.awt.*;
+import java.awt.Color;
 
-public class ColorHelper
-{
+public class ColorHelper {
 	/**
 	 * Creates an intermediate color between color c1 and color c2
 	 * in the RGB color space.
