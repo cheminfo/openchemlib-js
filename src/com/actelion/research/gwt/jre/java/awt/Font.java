@@ -32,34 +32,21 @@
 */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package java.awt;
 
+import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
+import java.awt.geom.Rectangle2D;
 
 public class Font
 {
     public static final int BOLD        = 1;
     public static final int PLAIN       = 0;
     public static final int ITALIC      = 2;
-
     private String name;
     private int type ;
     private int size;
+    static Object canvas =  null;
 
     public Font(String name, int type, int size)
     {
@@ -77,10 +64,28 @@ public class Font
         return size;
     }
 
-    public GlyphVector createGlyphVector(java.awt.font.FontRenderContext frc, String str)
-    {
+//    public GlyphVector createGlyphVector(java.awt.font.FontRenderContext frc, String str)
+//    {
+//
+//        return new GlyphVector();
+//    }
 
-        return new GlyphVector();
+    public Rectangle2D getStringBounds(String theString, FontRenderContext fontRenderContext)
+    {
+        double witdh = getStringWith(theString);
+        return new Rectangle.Double(0,0,witdh,0);
     }
-    
+
+    private native double getStringWith(String text) /*-{
+        var canvas = @java.awt.Font::canvas;
+        if (!canvas) {
+            canvas = $doc.createElement("canvas");
+            @java.awt.Font::canvas = canvas;
+        }
+        var f = "" + this.@java.awt.Font::size + "px " + this.@java.awt.Font::name;
+        var ctx = canvas.getContext("2d");
+        ctx.font = f;
+        var text = ctx.measureText(text); // TextMetrics object
+        return text.width;
+    }-*/;
 }

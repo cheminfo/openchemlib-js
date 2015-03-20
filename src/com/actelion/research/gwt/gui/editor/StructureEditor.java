@@ -46,10 +46,11 @@
 
 
 
+
+
 package com.actelion.research.gwt.gui.editor;
 
-import com.actelion.research.chem.IDCodeParser;
-import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.chem.*;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
@@ -67,6 +68,10 @@ import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.*;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 //import org.timepedia.exporter.client.Export;
 //import org.timepedia.exporter.client.Exportable;

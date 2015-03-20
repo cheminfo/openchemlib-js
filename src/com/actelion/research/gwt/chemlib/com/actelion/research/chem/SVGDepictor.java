@@ -35,12 +35,8 @@
 package com.actelion.research.chem;
 
 import java.awt.*;
-import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class SVGDepictor extends AbstractDepictor
@@ -181,8 +177,14 @@ public class SVGDepictor extends AbstractDepictor
     @Override
     protected float getStringWidth(String theString)
     {
-        GlyphVector mCurrentGlyphVector = currentFont.createGlyphVector(graphics.getFontRenderContext(), theString);
-        return (float) mCurrentGlyphVector.getLogicalBounds().getWidth();
+//        GlyphVector mCurrentGlyphVector = currentFont.createGlyphVector(graphics.getFontRenderContext(), theString);
+//        return (float) mCurrentGlyphVector.getLogicalBounds().getWidth();
+
+        float ret =  (float)currentFont.getStringBounds(theString,graphics.getFontRenderContext()).getWidth();
+        System.out.println("Line width for '" + theString + "' = " + ret);
+        return ret;
+
+
     }
 
     @Override
