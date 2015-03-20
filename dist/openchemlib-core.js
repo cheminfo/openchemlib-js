@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v3.0.0-alpha6
- * @date 2015-03-20T13:08:02.835Z
+ * @version v3.0.0-alpha8
+ * @date 2015-03-20T13:17:21.957Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD
 */
@@ -1045,7 +1045,7 @@ var f;typeof d=='string'?(f=e(new Error(d))):d instanceof Object&&'stack' in d?(
 
         var toReturn = $wnd["actchem"];
 
-        toReturn.version = '3.0.0-alpha6';
+        toReturn.version = '3.0.0-alpha8';
 
         return toReturn;
     }
