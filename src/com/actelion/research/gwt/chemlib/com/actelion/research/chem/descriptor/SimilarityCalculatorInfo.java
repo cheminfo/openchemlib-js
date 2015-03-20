@@ -33,6 +33,7 @@
 
 
 
+
 package com.actelion.research.chem.descriptor;
 
 public class SimilarityCalculatorInfo {

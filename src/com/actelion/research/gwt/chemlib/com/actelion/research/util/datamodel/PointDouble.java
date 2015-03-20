@@ -52,6 +52,7 @@ import java.awt.Point;
 
 
 
+
 public class PointDouble {
 	
 	public double x;
