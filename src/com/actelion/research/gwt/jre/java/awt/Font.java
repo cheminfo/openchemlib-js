@@ -51,11 +51,20 @@ public class Font
     public static final int BOLD        = 1;
     public static final int PLAIN       = 0;
     public static final int ITALIC      = 2;
+    
+    private String name;
+    
     public Font(String s, int t, int size)
-    {}
+    {
+    	name = s;
+    }
 
     public int getSize()
     {
         return 0;
+    }
+    
+    public String getName() {
+    	return name;
     }
 }
