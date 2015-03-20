@@ -1,4 +1,4 @@
-3.0.0-alpha7 / HEAD
+3.0.0-alpha7 / 2015-03-20
 =========================
 
 * update SVGDepictor
