@@ -1,3 +1,9 @@
+3.0.0-alpha7 / HEAD
+=========================
+
+* update SVGDepictor
+* expose molecule.getDiastereotopicAtomIDsArray
+
 3.0.0-alpha6 / 2015-03-18
 =========================
 
