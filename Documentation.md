@@ -92,7 +92,7 @@ Add all implicit hydrogens to the molecule
 
 ### molecule.getDiastereotopicAtomIDs([element])
 
-TODO
+### molecule.getDiastereotopicAtomIDsArray()
 
 ## MolecularFormula
 
