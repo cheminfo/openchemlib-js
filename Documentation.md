@@ -222,3 +222,63 @@ __Arguments__
 ### search.isFragmentInMolecule()
 
 Returns true if the set fragment is in the target molecule, false otherwise
+
+
+## StructureEditor
+
+### StructureEditor.createEditor(id)
+
+Create a chemical structure editor control at the DIV with the id of id.
+returns the editor control object
+
+### editor.getIDCode()
+
+Returns the current molecules IDCode
+
+### editor.setIDCode(idcode)
+
+Sets the editor content to this IDCode
+
+### editor.setFragment(set)
+
+Switches the current molecule in the editor in fragment mode
+
+### editor.isFragment()
+
+Returns whether or not the current molecule is a fragment
+
+### editor.getMolFile()
+
+Returns String consting of a MDL Molfile Version 2.0
+
+### editor.getMolFileV3()
+
+Returns String consting of a MDL Molfile Version 3.0
+
+### editor.setMolFile(molfile)
+
+Sets the editor content to the molecule represented by this Molfile (Version 2.0 or 3.0)
+
+### editor.getSmiles()
+
+Returns the Smiles string of the current molecule
+
+### editor.setSmiles(smiles)
+
+Sets the editor content to the molecule represented by the passed Smiles
+
+### editor.setAtomHightlightCallback(onAtomHighlight)
+
+Sets a callback function which is called whenever an atom is selected/unselected during mouse hover. The callback signature is: callback(atom,selected)
+
+### editor.setBondHightlightCallback(onBondHighlight)
+
+Sets a callback function which is called whenever an bond is selected/unselected during mouse hover. The callback signature is: callback(bond,selected)
+
+### editor.setChangeListenerCallback(changeMolecule)
+
+Sets a callback function which is called whenever the structure in the editor has been changed. The callback signature is: callback(newIdCode)
+
+
+
+

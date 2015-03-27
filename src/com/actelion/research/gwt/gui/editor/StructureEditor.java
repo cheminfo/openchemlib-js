@@ -32,22 +32,6 @@
 */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.*;
@@ -68,10 +52,6 @@ import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.*;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 
 //import org.timepedia.exporter.client.Export;
 //import org.timepedia.exporter.client.Exportable;
@@ -98,7 +78,7 @@ public class StructureEditor implements IChangeListener//,Exportable
     private Model model;
     private ToolBar<Element> toolBar;
     private DrawArea drawPane;
-    private InputElement idcodeTextElement ;
+    private InputElement idcodeTextElement;
 
 
     public StructureEditor()
@@ -106,7 +86,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         this("editor");
     }
 
-   @JsExport
+    @JsExport
     public StructureEditor(String id)
     {
 //        Log.println("StructureEditor ctor(): " + id);
@@ -118,10 +98,10 @@ public class StructureEditor implements IChangeListener//,Exportable
             String idcode = parent.getAttribute("data-idcode");
 
             toolBar = new ToolBarImpl(model);
-            Element toolBarElement = toolBar.create(parent, TOOLBARWIDTH, height-TEXTHEIGHT-5);
+            Element toolBarElement = toolBar.create(parent, TOOLBARWIDTH, height - TEXTHEIGHT - 5);
             parent.appendChild(toolBarElement);
             drawPane = new DrawArea(model);
-            Element drawAreaElement = drawPane.create(parent, (width - TOOLBARWIDTH), height-TEXTHEIGHT-5);
+            Element drawAreaElement = drawPane.create(parent, (width - TOOLBARWIDTH), height - TEXTHEIGHT - 5);
             parent.appendChild(drawAreaElement);
             idcodeTextElement = Document.get().createTextInputElement();
             idcodeTextElement.setId(id + "-idcode-element");
@@ -130,9 +110,9 @@ public class StructureEditor implements IChangeListener//,Exportable
 
             model.addChangeListener(this);
             System.out.println("Idcode is : " + idcode);
-            StereoMolecule mol = createMolecule(idcode, (width - TOOLBARWIDTH), height-TEXTHEIGHT-5);
+            StereoMolecule mol = createMolecule(idcode, (width - TOOLBARWIDTH), height - TEXTHEIGHT - 5);
             //mol.setFragment(false);
-            model.setValue(mol,true);
+            model.setValue(mol, true);
             setUpHandlers();
             setupMouseHandlers();
         }
@@ -160,7 +140,7 @@ public class StructureEditor implements IChangeListener//,Exportable
             if (idCode != null) {
                 String[] parts = idCode.split(" ");
                 if (parts.length > 1) {
-                    p.parse(mol, parts[0],parts[1]);
+                    p.parse(mol, parts[0], parts[1]);
                 } else
                     p.parse(mol, idCode);
                 model.setValue(mol, true);
@@ -214,7 +194,6 @@ public class StructureEditor implements IChangeListener//,Exportable
     }
 
 
-
     @JsProperty
     public void setAtomHightlightCallback(final JavaScriptObject atomHightlightCallback)
     {
@@ -224,7 +203,7 @@ public class StructureEditor implements IChangeListener//,Exportable
                 @Override
                 public void onHighlight(int atom, boolean selected)
                 {
-                    callFunc(atomHightlightCallback,atom,selected);
+                    callFuncIZ(atomHightlightCallback, atom, selected);
                 }
             });
         } else
@@ -240,11 +219,29 @@ public class StructureEditor implements IChangeListener//,Exportable
                 @Override
                 public void onHighlight(int bond, boolean selected)
                 {
-                    callFunc(bondHightlightCallback, bond, selected);
+                    callFuncIZ(bondHightlightCallback, bond, selected);
                 }
             });
         } else
             model.registerBondHighlightCallback(null);
+    }
+
+
+    @JsProperty
+    public void setChangeListenerCallback(final JavaScriptObject cb)
+    {
+        if (cb != null) {
+            model.addChangeListener(new IChangeListener()
+            {
+                @Override
+                public void onChange()
+                {
+                    String idcode = model.getIDCode();
+                    callFuncS(cb,idcode);
+
+                }
+            });
+        }
     }
 
     private StereoMolecule createMolecule(String idcode, int width, int height)
@@ -256,14 +253,14 @@ public class StructureEditor implements IChangeListener//,Exportable
             if (elements == null || elements.length == 1)
                 p.parse(mol, idcode);
             else
-                p.parse(mol,elements[0], elements[1]);
+                p.parse(mol, elements[0], elements[1]);
 
 
 //            new CoordinateInventor().invent(mol, true, true);
             mol.setStereoBondsFromParity();
             GWTDepictor depictor = new GWTDepictor(getContext2d(), mol);
             depictor.updateCoords(null,
-                    new java.awt.geom.Rectangle2D.Float(0, 0,(float) width, (float) height),
+                    new java.awt.geom.Rectangle2D.Float(0, 0, (float) width, (float) height),
                     GWTDepictor.cModeInflateToMaxAVBL
             );
 
@@ -316,10 +313,10 @@ public class StructureEditor implements IChangeListener//,Exportable
             public void onMouseMove(MouseMoveEvent event)
             {
                 boolean moved = mousePoint == null ? false :
-                    mousePoint.distance(event.getX(),event.getY()) > 1;
+                        mousePoint.distance(event.getX(), event.getY()) > 1;
 //                if (mousePoint != null)
 //                System.out.println("DrawPane on MouseMove: " + mousePoint.distance(event.getX(),event.getY()));
-                if (!drag && moved ) {
+                if (!drag && moved) {
                     onMouseMoved(event);
                 }
                 mousePoint = new Point2D.Double(event.getX(), event.getY());
@@ -389,7 +386,7 @@ public class StructureEditor implements IChangeListener//,Exportable
             if (a.onKeyPressed(keyEvent)) {
                 model.notifyChange();
 //                drawPane.draw();
-              a.paint(drawPane.getDrawContext());
+                a.paint(drawPane.getDrawContext());
             } else {
                 handleKeyEvent(keyEvent);
             }
@@ -514,7 +511,7 @@ public class StructureEditor implements IChangeListener//,Exportable
                 drawPane.setCursor(Style.Cursor.CROSSHAIR);
                 break;
             case ICursor.DEFAULT:
-                default:
+            default:
                 drawPane.setCursor(Style.Cursor.DEFAULT);
                 break;
         }
@@ -539,8 +536,12 @@ public class StructureEditor implements IChangeListener//,Exportable
     }
 
 
-    private native void callFunc(JavaScriptObject func, int param, boolean b) /*-{
-        func(param,b);
+    private native void callFuncIZ(JavaScriptObject func, int param, boolean b) /*-{
+        func(param, b);
+    }-*/;
+
+    private native void callFuncS(JavaScriptObject func, String f) /*-{
+        func(f);
     }-*/;
 
 }
