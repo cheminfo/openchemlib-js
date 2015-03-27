@@ -1,5 +1,5 @@
 <project name="openchemlib-js">
-	<target name="devmode" description="Run development mode">
+    <target name="devmode" description="Run development mode">
 		<java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
 			<classpath>
 				<path refid="project.class.path"/>
@@ -13,7 +13,7 @@
 			<arg value="com.actelion.research.gwt.Full"/>
 		</java>
 	</target>
-    <target name="javac">
+    <target name="compile">
         <property name="src" value="src/com/actelion/reserach/gwt"/>
         <delete dir="classes"/>
         <mkdir dir="classes"/>
@@ -23,7 +23,6 @@
                     <include name="*.jar"></include>
                 </fileset>
             </classpath>
-
         </javac>
     </target>
 </project>

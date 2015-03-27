@@ -31,7 +31,6 @@
 *
 */
 
-
 package com.actelion.research.share.gui.editor.actions;
 
 import com.actelion.research.share.gui.editor.Model;
