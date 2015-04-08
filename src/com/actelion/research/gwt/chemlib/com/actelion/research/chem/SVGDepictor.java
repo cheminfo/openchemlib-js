@@ -31,7 +31,6 @@
 *
 */
 
-
 package com.actelion.research.chem;
 
 import java.awt.*;
@@ -177,11 +176,7 @@ public class SVGDepictor extends AbstractDepictor
     @Override
     protected float getStringWidth(String theString)
     {
-//        GlyphVector mCurrentGlyphVector = currentFont.createGlyphVector(graphics.getFontRenderContext(), theString);
-//        return (float) mCurrentGlyphVector.getLogicalBounds().getWidth();
-
         float ret =  (float)currentFont.getStringBounds(theString,graphics.getFontRenderContext()).getWidth();
-        System.out.println("Line width for '" + theString + "' = " + ret);
         return ret;
 
 

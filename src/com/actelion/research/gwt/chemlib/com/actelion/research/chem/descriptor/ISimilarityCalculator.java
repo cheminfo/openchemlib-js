@@ -31,11 +31,6 @@
 *
 */
 
-
-
-
-
-
 package com.actelion.research.chem.descriptor;
 
 public interface ISimilarityCalculator<T extends Object> {

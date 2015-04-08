@@ -31,11 +31,6 @@
 *
 */
 
-
-
-
-
-
 package com.actelion.research.chem;
 
 import java.util.TreeMap;
@@ -518,10 +513,10 @@ public class SmilesParser {
 					promoteBond(ringBond[0]);
 					promoteBond(ringBond[2]);
 					promoteBond(ringBond[4]);
+					promoteObviousBonds();
 					}
 				}
 			}
-		promoteObviousBonds();
 
 			// handle remaining annelated rings (naphtalines, azulenes, etc.) starting from bridge heads (qualifyingNo=5)
 			// and then handle and simple rings (qualifyingNo=4)

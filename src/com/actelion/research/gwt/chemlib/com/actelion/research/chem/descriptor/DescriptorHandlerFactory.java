@@ -31,11 +31,6 @@
 *
 */
 
-
-
-
-
-
 package com.actelion.research.chem.descriptor;
 
 public interface DescriptorHandlerFactory extends ISimilarityHandlerFactory {
