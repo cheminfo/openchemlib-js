@@ -72,11 +72,11 @@ public class Font
 
     public Rectangle2D getStringBounds(String theString, FontRenderContext fontRenderContext)
     {
-        double witdh = getStringWith(theString);
-        return new Rectangle.Double(0,0,witdh,0);
+        double width = getStringWidth(theString);
+        return new Rectangle.Double(0, 0, width, 0);
     }
 
-    private native double getStringWith(String text) /*-{
+    private native double getStringWidth(String text) /*-{
         var canvas = @java.awt.Font::canvas;
         if (!canvas) {
             canvas = $doc.createElement("canvas");
