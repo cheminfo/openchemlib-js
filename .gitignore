@@ -6,3 +6,4 @@ node_modules
 config.json
 war/**
 !war/images
+*.log
