@@ -49,7 +49,7 @@ import java.awt.geom.Point2D;
  * Time: 3:42 PM
  */
 public class NewChainAction extends BondHighlightAction
-    //DrawAction
+        //DrawAction
 {
 
     //    private int theAtom = -1;
@@ -107,7 +107,8 @@ public class NewChainAction extends BondHighlightAction
         model.pushUndo();
         java.awt.geom.Point2D pt = new Point2D.Double(evt.getX(), evt.getY());
         StereoMolecule mol = model.getSelectedMolecule();
-        if (mol != null) {
+        //if (mol != null)
+        {
             if (numChainAtoms == 0) {
                 mol = model.getMoleculeAt(pt, false);
                 if (mol != null) {
@@ -137,6 +138,7 @@ public class NewChainAction extends BondHighlightAction
                 if (mChainAtom[0] != -1) {
                     mol.addBond(sourceAtom, mChainAtom[0], Molecule.cBondTypeSingle);
                 }
+                model.needsLayout(true);
             }
 
             if (numChainAtoms > 1) {
@@ -149,6 +151,7 @@ public class NewChainAction extends BondHighlightAction
                         mol.addBond(mChainAtom[i - 1], mChainAtom[i], Molecule.cBondTypeSingle);
                     }
                 }
+                model.needsLayout(true);
             }
             highlightAtom(mol, -1);
             ok = true;
@@ -234,7 +237,7 @@ public class NewChainAction extends BondHighlightAction
                     }
                 }
                 if (mChainAtomX[numChainAtoms - 1] != lastX
-                    || mChainAtomY[numChainAtoms - 1] != lastY) {
+                        || mChainAtomY[numChainAtoms - 1] != lastY) {
                     repaintNeeded = true;
                 }
             } else if (lastX != 0 || lastY != 0) {
@@ -252,15 +255,6 @@ public class NewChainAction extends BondHighlightAction
         if (mol != null) {
             if (!dragging) {
                 super.paint(ctx);
-//                int theBond = model.getSelectedBond();
-//                int theAtom = model.getSelectedAtom();
-//                if (theBond != -1) {
-//                    drawBondHighlight(ctx, mol, theBond);
-//                    return true;
-//                } else if (theAtom != -1) {
-//                    drawAtomHighlight(ctx, mol, theAtom);
-//                    return true;
-//                }
             } else {
                 int theAtom = model.getSelectedAtom();
                 drawChain(ctx, theAtom != -1 ? new Point2D.Double(mol.getAtomX(theAtom), mol.getAtomY(theAtom)) : origin);
@@ -272,31 +266,20 @@ public class NewChainAction extends BondHighlightAction
 
     private void drawChain(IDrawContext ctx, java.awt.geom.Point2D pt)
     {
-//        ctx.save();
-//        ctx.setStroke(builder.createBLACK());
-//        ctx.setLineWidth(1);
-//        ctx.setLineCap(builder.getDefaultStrokeLineCap());
-//        ctx.setLineJoin(builder.getDefaultStrokeLineJoin());
         if (numChainAtoms > 0) {
             drawLine(ctx, pt.getX(), pt.getY(), mChainAtomX[0], mChainAtomY[0]);
         }
         if (numChainAtoms > 1) {
-            //                    System.out.printf("Drawing %d bonds \n",numChainAtoms);
             for (int i = 1; i < numChainAtoms; i++) {
                 drawLine(ctx, mChainAtomX[i - 1], mChainAtomY[i - 1], mChainAtomX[i], mChainAtomY[i]);
             }
         }
-//        ctx.restore();
     }
 
 
     void drawLine(IDrawContext _ctx, double x1, double y1, double x2, double y2)
     {
-        _ctx.setStroke(IColor.BLACK);
-        _ctx.drawLine(x1,y1,x2,y2);
-//        _ctx.beginPath();
-//        _ctx.moveTo(x1, y1);
-//        _ctx.lineTo(x2, y2);
-//        _ctx.stroke();
+//        _ctx.setStroke(IColor.BLACK);
+        _ctx.drawLine(x1, y1, x2, y2);
     }
 }

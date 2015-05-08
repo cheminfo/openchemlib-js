@@ -69,10 +69,9 @@ public class ChangeAtomAction extends AtomHighlightAction
             mol.setAtomicNo(theAtom,theAtomNo);
         } else  {
             if (mol == null) {
-//                mol = new StereoMolecule();
                 mol = model.getMolecule();
-//                model.addMolecule(mol,null);
                 model.setSelectedMolecule(mol);
+                model.needsLayout(true);
             }
             int atom = mol.addAtom((float)pt.getX(),(float)pt.getY());
             mol.setAtomicNo(atom,theAtomNo);

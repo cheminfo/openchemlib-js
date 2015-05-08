@@ -50,12 +50,13 @@ import java.awt.geom.Point2D;
  */
 public abstract class DrawAction implements Action
 {
-    protected static GeomFactory builder = GeomFactory.getGeomFactory() ;
-
+    protected static final GeomFactory builder = GeomFactory.getGeomFactory();
     public static final double HIGHLIGHT_ATOM_DIAMETER = 20;
     public static final long HIGHLIGHT_STYLE = builder.createColor(.7, .8, 1, 0.8);// new Color(.7, .8, 1, 0.8);
     public static final int MAX_CONNATOMS = 8;
-
+    public static final String UNKNOWN = "<unknown>";
+    public static final String KEYSTROKEFONT = "Helvetica";
+    public static final int KEYSTROKEFONTSIZE = 24;
     protected Model model;
 
     public DrawAction(Model m)
@@ -64,11 +65,10 @@ public abstract class DrawAction implements Action
     }
 
 
-
     @Override
     public void onCommand()
     {
-        // NOOP
+        // NoOp
     }
 
     @Override
@@ -107,6 +107,7 @@ public abstract class DrawAction implements Action
 
     /**
      * returns the atom at the current point
+     *
      * @param pt
      * @return atom no or -1 if no atom there
      */
@@ -139,30 +140,8 @@ public abstract class DrawAction implements Action
     }
 
 
-//    int getBondAt(Point2D pt)
-//    {
-//        System.out.println(">>.getBondAt: " + pt);
-//        StereoMolecule mol = model.getMol(pt);
-//        if (mol != null) {
-////            for (int i = 0; i < mol.getAllBonds(); i++) {
-////                int source = mol.getBondAtom(0,i);
-////                int target = mol.getBondAtom(1,i);
-////                java.awt.geom.Line2D line =
-////                    new java.awt.geom.Line2D.Float (mol.getAtomX(source),mol.getAtomY(source),mol.getAtomX(target),mol.getAtomY(target));
-////                double dist = line.ptLineDist(pt.getX(),pt.getY());
-////                if (dist < )
-////                System.out.printf("Atom %d x=%f y=%f\n",System.identityHashCode(mol), mol.getAtomX(i),mol.getAtomY(i));
-////            }
-//////            System.out.println("<<<GetAtomAtomAt:");
-//////
-//            return mol.findBond((float) pt.getX(), (float) pt.getY());
-//        }
-//        return -1;
-//    }
-
     protected void drawBondHighlight(IDrawContext ctx, StereoMolecule mol, int theBond)
     {
-        //        int theBond = model.getSelectedBond();
         double x1 = mol.getAtomX(mol.getBondAtom(0, theBond));
         double y1 = mol.getAtomY(mol.getBondAtom(0, theBond));
         double x2 = mol.getAtomX(mol.getBondAtom(1, theBond));
@@ -173,77 +152,58 @@ public abstract class DrawAction implements Action
         ctx.setLineWidth(8);
         ctx.setStroke(HIGHLIGHT_STYLE);
 //        ctx.setStroke(IColor.BLUE);
-        ctx.drawLine(x1,y1,x2,y2);
-//        ctx.setLineWidth(8);
-//        ctx.beginPath();
-//        ctx.moveTo(x1, y1);
-//        ctx.lineTo(x2, y2);
-//        ctx.stroke();
-//        ctx.closePath();
+        ctx.drawLine(x1, y1, x2, y2);
         ctx.restore();
     }
 
-//    protected void highlightBond(StereoMolecule mol, int bond)
-//    {
-////        System.out.println("Hightight bond " + bond);
-//        model.setSelectedBond(bond);
-//        model.setSelectedMolecule(mol);
-//    }
 
     protected void highlightAtom(StereoMolecule mol, int atom)
     {
-//        System.out.println("Hightight atom " + atom);
         model.setSelectedMolecule(mol);
         model.setSelectedAtom(atom);
     }
 
 
-    protected void drawAtomHighlight(IDrawContext _ctx, StereoMolecule mol, int theAtom)
+    protected void drawAtomHighlight(IDrawContext ctx, StereoMolecule mol, int theAtom)
     {
-        drawAtomHighlightElement(_ctx, mol, theAtom);
-        if (model.getKeyStrokeBuffer().length()>0) {
-            drawAtomKeyStrokes(_ctx,mol,theAtom);
+        drawAtomHighlightElement(ctx, mol, theAtom);
+        if (model.getKeyStrokeBuffer().length() > 0) {
+            drawAtomKeyStrokes(ctx, mol, theAtom);
         }
     }
 
-    private void drawAtomHighlightElement(IDrawContext _ctx, StereoMolecule mol, int theAtom)
+    private void drawAtomHighlightElement(IDrawContext ctx, StereoMolecule mol, int theAtom)
     {
         java.awt.geom.Point2D highlightPoint = new Point2D.Double(mol.getAtomX(theAtom), mol.getAtomY(theAtom));
-
-//        _ctx.drawAtomHighlight(highlightPoint.getX() - HIGHLIGHT_ATOM_DIAMETER / 2, highlightPoint.getY() - HIGHLIGHT_ATOM_DIAMETER / 2);
-
-        _ctx.save();
-        _ctx.setFill(HIGHLIGHT_STYLE);
-        _ctx.fillElipse(
-            highlightPoint.getX() - HIGHLIGHT_ATOM_DIAMETER / 2, highlightPoint.getY() - HIGHLIGHT_ATOM_DIAMETER / 2,
-            HIGHLIGHT_ATOM_DIAMETER, HIGHLIGHT_ATOM_DIAMETER
-);
-        _ctx.restore();
+        ctx.save();
+        ctx.setFill(HIGHLIGHT_STYLE);
+        ctx.fillElipse(
+                highlightPoint.getX() - HIGHLIGHT_ATOM_DIAMETER / 2, highlightPoint.getY() - HIGHLIGHT_ATOM_DIAMETER / 2,
+                HIGHLIGHT_ATOM_DIAMETER, HIGHLIGHT_ATOM_DIAMETER
+        );
+        ctx.restore();
     }
 
 
-    protected void drawAtomKeyStrokes(IDrawContext _ctx, StereoMolecule mol, int theAtom)
+    protected void drawAtomKeyStrokes(IDrawContext ctx, StereoMolecule mol, int theAtom)
     {
 
         String s = model.getKeyStrokeBuffer().toString();
         int validity = model.getAtomKeyStrokeValidity(s);
         java.awt.geom.Point2D highlightPoint = new Point2D.Double(mol.getAtomX(theAtom), mol.getAtomY(theAtom));
 
-//        _ctx.drawAtomKeyStrokes(highlightPoint.getX(),highlightPoint.getY(),validity);
-
-        _ctx.save();
-        _ctx.setFill((
-            validity == Model.KEY_IS_ATOM_LABEL) ? IColor.BLACK
-            : (validity == Model.KEY_IS_SUBSTITUENT) ? IColor.BLUE
-            : (validity == Model.KEY_IS_VALID_START) ? IColor.GRAY : IColor.RED);
+        ctx.save();
+        ctx.setFill((
+                validity == Model.KEY_IS_ATOM_LABEL) ? IColor.BLACK
+                : (validity == Model.KEY_IS_SUBSTITUENT) ? IColor.BLUE
+                : (validity == Model.KEY_IS_VALID_START) ? IColor.GRAY : IColor.RED);
 
         if (validity == Model.KEY_IS_INVALID) {
-            s = s + "<unknown>";
+            s = s + UNKNOWN;
         }
-//        _ctx.setTextSize(24);
-        _ctx.setFont("Helvetica", 24);
-        _ctx.fillText(s, highlightPoint.getX(), highlightPoint.getY());
-        _ctx.restore();
+        ctx.setFont(KEYSTROKEFONT, KEYSTROKEFONTSIZE, false);
+        ctx.fillText(s, highlightPoint.getX(), highlightPoint.getY());
+        ctx.restore();
     }
 
     protected java.awt.geom.Point2D suggestNewX2AndY2(int atom)
@@ -302,8 +262,8 @@ public abstract class DrawAction implements Action
         }
         double avbl = mol.getAverageBondLength();
         return new Point2D.Double(
-            mol.getAtomX(atom) + avbl * Math.sin(newAngle),
-            mol.getAtomY(atom) + avbl * Math.cos(newAngle)
+                mol.getAtomX(atom) + avbl * Math.sin(newAngle),
+                mol.getAtomY(atom) + avbl * Math.cos(newAngle)
         );
     }
 

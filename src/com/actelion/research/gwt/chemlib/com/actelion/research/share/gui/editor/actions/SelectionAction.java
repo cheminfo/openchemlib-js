@@ -62,7 +62,7 @@ public class SelectionAction extends BondHighlightAction//DrawAction
     int bond = -1;
 //    private float[] mX, mY;
     IDrawingObject selectedOne;
-    boolean shift = false,duplicate = false;
+    boolean shift = false,duplicate = false,layout = false;
     public SelectionAction(Model model)
     {
         super(model);
@@ -80,6 +80,7 @@ public class SelectionAction extends BondHighlightAction//DrawAction
         polygon.add(pt);
 
         duplicate = false;
+        layout = false;
         selectedOne = null;
 
         last = origin = new Point2D.Double(pt.getX(), pt.getY());
@@ -102,6 +103,9 @@ public class SelectionAction extends BondHighlightAction//DrawAction
         atom = bond = -1;
         origin = last = null;
         duplicate = false;
+        if (layout)
+            model.needsLayout(true);
+        layout = false;
         return true;
     }
 
@@ -126,7 +130,7 @@ public class SelectionAction extends BondHighlightAction//DrawAction
                 duplicate = true;
                 duplicateSelected();
             }
-            model.analyzeReaction();
+            layout = true;
         } else {
             ok = trackHighLight(pt);
         }

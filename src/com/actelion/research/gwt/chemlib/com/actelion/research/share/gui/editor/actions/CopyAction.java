@@ -43,7 +43,7 @@ import com.actelion.research.share.gui.editor.chem.IArrow;
  * Date: 5/16/13
  * Time: 3:31 PM
  */
-public class CopyAction extends CommandAction
+public abstract class CopyAction extends CommandAction
 {
     public CopyAction(Model model)
     {
@@ -102,16 +102,19 @@ public class CopyAction extends CommandAction
         }
     }
 
-    private boolean copyReaction(boolean selectionOnly)
-    {
-//        ClipboardHandler mClipboardHandler = new ClipboardHandler();
-//        Reaction rx = selectionOnly ? getSelectedReaction() : model.getReaction();
-//        if (rx != null && mClipboardHandler != null) {
-//            return mClipboardHandler.copyReaction(rx);
-//        }
-//
-        return false;
-    }
+    public abstract boolean copyReaction(boolean selectionOnly);
+    public abstract boolean copyMolecule(boolean selectionOnly);
+
+//    private boolean copyReaction(boolean selectionOnly)
+//    {
+////       ClipboardHandler mClipboardHandler = new ClipboardHandler();
+////        Reaction rx = selectionOnly ? getSelectedReaction() : model.getReaction();
+////        if (rx != null && mClipboardHandler != null) {
+////            return mClipboardHandler.copyReaction(rx);
+////        }
+////
+//        return false;
+//    }
 
 //    private Reaction getSelectedReaction()
 //    {
@@ -131,18 +134,18 @@ public class CopyAction extends CommandAction
 //        return rxn;
 //    }
 
-    private boolean copyMolecule(boolean selectionOnly)
-    {
-//        ClipboardHandler mClipboardHandler = new ClipboardHandler();
-//        StereoMolecule mMol = model.getMolecule();
-//        if (mMol.getAllAtoms() != 0 && mClipboardHandler != null) {
-//            return mClipboardHandler.copyMolecule(selectionOnly ? getSelectedCopy(mMol) : mMol);
-//        }
-//
-        return false;
-    }
+//    private boolean copyMolecule(boolean selectionOnly)
+//    {
+////        ClipboardHandler mClipboardHandler = new ClipboardHandler();
+////        StereoMolecule mMol = model.getMolecule();
+////        if (mMol.getAllAtoms() != 0 && mClipboardHandler != null) {
+////            return mClipboardHandler.copyMolecule(selectionOnly ? getSelectedCopy(mMol) : mMol);
+////        }
+////
+//        return false;
+//    }
 
-    private StereoMolecule getSelectedCopy(StereoMolecule sourceMol)
+/*    private StereoMolecule getSelectedCopy(StereoMolecule sourceMol)
      {
          int atomCount = 0;
          for (int atom = 0; atom < sourceMol.getAllAtoms(); atom++) {
@@ -170,5 +173,5 @@ public class CopyAction extends CommandAction
          StereoMolecule destMol = new StereoMolecule(atomCount, bondCount);
          sourceMol.copyMoleculeByAtoms(destMol, includeAtom, false, null);
          return destMol;
-     }
+     }*/
 }

@@ -53,6 +53,7 @@ package com.actelion.research.gwt.gui.editor;
 import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.CoordinateInventor;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
@@ -78,17 +79,38 @@ public class GWTEditorModel extends Model
         return new GWTDepictor(null, mol);
     }
 
-    @Override
-    public void cleanReaction()
-    {
 
-    }
 
     @Override
     public void analyzeReaction()
     {
 
     }
+
+    @Override
+    public boolean copyMolecule(boolean selected)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean copyReaction(boolean selected)
+    {
+        return false;
+    }
+
+    @Override
+    public StereoMolecule pasteMolecule()
+    {
+        return null;
+    }
+
+    @Override
+    public Reaction pasteReaction()
+    {
+        return null;
+    }
+
     private void cleanupMultiFragmentCoordinates(boolean selectedOnly)
     {
 

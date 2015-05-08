@@ -132,8 +132,6 @@ public abstract class BondBaseAction extends BondHighlightAction
                 }
                 ok = true;
             } else if (mol == null) {
-//                System.out.println("BondBase on Mouse up null mol");
-//                mol = new StereoMolecule();
                 mol = model.getMolecule();
 //                model.addMolecule(mol, null);
                 model.setSelectedMolecule(mol);
@@ -141,48 +139,48 @@ public abstract class BondBaseAction extends BondHighlightAction
                 java.awt.geom.Point2D p = suggestNewX2AndY2(sourceAtom);
                 int t = mol.addAtom((float) p.getX() + mol.getAverageBondLength(), (float) pt.getY());
                 onAddBond(sourceAtom, t);
-                ok = true;
-            }
-        } /* dragging */ else if (mol != null) {
-            if (sourceAtom != -1) {
-                int t = selectedAtom;
-                if (t == -1) {
-                    double dx = origin.getX()-pt.getX();
-                    double dy = origin.getY()- pt.getY();
-                    java.awt.geom.Point2D p = pt;
-                    if (dx*dx+dy*dy < Model.MIN_BOND_LENGTH_SQUARE) {
-                        p = suggestNewX2AndY2(sourceAtom);
-                    }
-                    t = mol.addAtom((float) p.getX(), (float) p.getY(), 0.0f);
-                }
-                StereoMolecule tm = model.getMoleculeAt(pt, true);
-                if (mol == tm) {
-                    onAddBond(sourceAtom, t);
-                } else if (tm != null) {
-                    mol.addMolecule(tm);
-                    t = mol.findAtom((float) pt.getX(), (float) pt.getY());
-                    model.deleteMolecule(tm);
-                    onAddBond(sourceAtom, t);
-                }
-                ok = true;
-            } else {
-                int atom1 = mol.addAtom((float) origin.getX(), (float) origin.getY());
-                int atom2 = mol.addAtom((float) pt.getX(), (float) pt.getY());
-                onAddBond(atom1,atom2);
+                // This creates a new Fragment, so make sure scheme gets layouted (if in RXN mode)
+                model.needsLayout(true);
                 ok = true;
             }
         } else {
-//            mol = new StereoMolecule();
-//            model.addMolecule(mol, null);
-            mol = model.getMolecule();
-//            model.setSelectedMolecule(mol);
-//            mol.addAtom((float) origin.getX(), (float) origin.getY());
-//            mol.addAtom((float) pt.getX(), (float) pt.getY());
-//            onAddBond(0, 1);
-            int atom1 = mol.addAtom((float) origin.getX(), (float) origin.getY());
-            int atom2 = mol.addAtom((float) pt.getX(), (float) pt.getY());
-            onAddBond(atom1,atom2);
-            ok = true;
+            if (mol != null) {
+                if (sourceAtom != -1) {
+                    int t = selectedAtom;
+                    if (t == -1) {
+                        double dx = origin.getX() - pt.getX();
+                        double dy = origin.getY() - pt.getY();
+                        java.awt.geom.Point2D p = pt;
+                        if (dx * dx + dy * dy < Model.MIN_BOND_LENGTH_SQUARE) {
+                            p = suggestNewX2AndY2(sourceAtom);
+                        }
+                        t = mol.addAtom((float) p.getX(), (float) p.getY(), 0.0f);
+                    }
+                    StereoMolecule tm = model.getMoleculeAt(pt, true);
+                    if (mol == tm) {
+                        onAddBond(sourceAtom, t);
+                    } else if (tm != null) {
+                        mol.addMolecule(tm);
+                        t = mol.findAtom((float) pt.getX(), (float) pt.getY());
+                        model.deleteMolecule(tm);
+                        onAddBond(sourceAtom, t);
+                    }
+                    ok = true;
+                } else { // mol == null
+                    int atom1 = mol.addAtom((float) origin.getX(), (float) origin.getY());
+                    int atom2 = mol.addAtom((float) pt.getX(), (float) pt.getY());
+                    onAddBond(atom1, atom2);
+                    // This creates a new Fragment, so make sure scheme gets layouted (if in RXN mode)
+                    model.needsLayout(true);
+                    ok = true;
+                }
+            } else {
+                mol = model.getMolecule();
+                int atom1 = mol.addAtom((float) origin.getX(), (float) origin.getY());
+                int atom2 = mol.addAtom((float) pt.getX(), (float) pt.getY());
+                onAddBond(atom1, atom2);
+                ok = true;
+            }
         }
 //        theAtom = -1;
         dragging = false;
@@ -237,7 +235,7 @@ public abstract class BondBaseAction extends BondHighlightAction
                 p = new Point2D.Double(mol.getAtomX(atom), mol.getAtomY(atom));
             }
             ctx.save();
-            ctx.setStroke(IColor.BLACK);
+//            ctx.setStroke(IColor.BLACK);
             ctx.drawLine(p.getX(), p.getY(), last.getX(), last.getY());
             ctx.restore();
         }

@@ -42,7 +42,7 @@ import com.actelion.research.share.gui.editor.Model;
  * Date: 5/16/13
  * Time: 3:39 PM
  */
-public class PasteAction extends CommandAction
+public abstract class PasteAction extends CommandAction
 {
     java.awt.Dimension bounds;
 //    ClipboardHandler mClipboardHandler =new ClipboardHandler();
@@ -76,6 +76,11 @@ public class PasteAction extends CommandAction
         pasteMolecule();
     }
 
+    public abstract boolean pasteMolecule();
+    public abstract boolean pasteReaction();
+
+
+/*
     private boolean pasteReaction()
     {
         boolean ret = false;
@@ -92,7 +97,9 @@ public class PasteAction extends CommandAction
 //        }
         return ret;
     }
+*/
 
+/*
     private boolean pasteMolecule()
     {
         boolean ret = false;
@@ -128,6 +135,7 @@ public class PasteAction extends CommandAction
 //        }
         return ret;
     }
+*/
 
 }
 

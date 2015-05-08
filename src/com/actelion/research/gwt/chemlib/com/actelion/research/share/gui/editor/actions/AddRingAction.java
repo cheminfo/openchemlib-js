@@ -91,6 +91,7 @@ public class AddRingAction extends BondHighlightAction
 //                model.addMolecule(mol,null);
                 model.setSelectedMolecule(mol);
                 ok = mol.addRing((float) pt.getX(), (float) pt.getY(), ringSize, aromatic);
+                model.needsLayout(true);
             }
         } else {
             mol = new StereoMolecule();

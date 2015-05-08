@@ -194,7 +194,7 @@ public class GraphicsContext implements IDrawContext<Context2d>
     }
 
     @Override
-    public void setFont(String name, double size)
+    public void setFont(String name, double size,boolean bold)
     {
         textSize = (int)size;
         String fna = " " + (int)textSize + "px";

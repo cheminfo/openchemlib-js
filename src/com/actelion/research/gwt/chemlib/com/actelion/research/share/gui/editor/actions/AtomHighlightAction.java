@@ -136,9 +136,6 @@ public abstract class AtomHighlightAction extends DrawAction
     @Override
     public boolean onKeyPressed(IKeyEvent evt)
     {
-//        if (mol == null) {
-//            return false;
-//        }
         if (evt.getCode().equals(builder.getDeleteKey())) {
             int theAtom = model.getSelectedAtom();
             StereoMolecule mol = model.getSelectedMolecule();

@@ -31,18 +31,41 @@
 *
 */
 
-package com.actelion.research.share.gui.editor.io;
+package com.actelion.research.share.gui.editor;
 
+import javafx.scene.image.Image;
 
 /**
- * Project:
- * User: rufenec
- * Date: 11/24/2014
- * Time: 3:20 PM
+ * Created by rufenec on 20/04/15.
  */
-public interface IKeyEvent
+public class ImageProvider
 {
-    IKeyCode getCode();
+    protected static final Image BUTTON_UP = new Image(ImageProvider.class.getResourceAsStream("/images/drawButtonsUp.gif"));
+    protected static final Image BUTTON_DOWN = new Image(ImageProvider.class.getResourceAsStream("/images/drawButtonsDown.gif"));
+    protected static final Image ESR_BUTTON_UP = new Image(ImageProvider.class.getResourceAsStream("/images/ESRButtonsUp.gif"));
+    protected static final Image ESR_BUTTON_DOWN = new Image(ImageProvider.class.getResourceAsStream("/images/ESRButtonsDown.gif"));
 
-    String getText();
+    public static final double ESR_IMAGE_WIDTH = 28;
+    public static final double ESR_IMAGE_HEIGHT = 70;
+    public static final double ESR_IMAGE_ROWS = 3;
+
+    public Image getESRImage(boolean up)
+    {
+        if (up)
+            return ESR_BUTTON_UP;
+        else
+            return ESR_BUTTON_DOWN;
+    }
+
+    public Image getButtonImage(boolean up)
+    {
+        if (up)
+            return BUTTON_UP;
+        else
+            return BUTTON_DOWN;
+    }
+
+    public double getESRImageRows() {
+        return ESR_IMAGE_ROWS;
+    }
 }

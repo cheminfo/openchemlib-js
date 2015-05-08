@@ -384,7 +384,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         Action a = toolBar.getCurrentAction();
         if (a != null) {
             if (a.onKeyPressed(keyEvent)) {
-                model.notifyChange();
+                model.changed();
 //                drawPane.draw();
                 a.paint(drawPane.getDrawContext());
             } else {
@@ -469,7 +469,7 @@ public class StructureEditor implements IChangeListener//,Exportable
             if (a != null && !a.isCommand()) {
                 if (a.onMouseUp(new ACTMouseEvent(evt))) {
                     drawPane.draw();
-                    model.notifyChange();
+                    model.changed();
 //                    model.valueInvalidated();
                 }
             }
