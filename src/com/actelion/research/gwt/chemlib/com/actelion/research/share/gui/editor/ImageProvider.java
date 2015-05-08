@@ -33,39 +33,14 @@
 
 package com.actelion.research.share.gui.editor;
 
-import javafx.scene.image.Image;
-
 /**
- * Created by rufenec on 20/04/15.
+ * Created by rufenec on 08/05/15.
  */
-public class ImageProvider
+public abstract class ImageProvider<T>
 {
-    protected static final Image BUTTON_UP = new Image(ImageProvider.class.getResourceAsStream("/images/drawButtonsUp.gif"));
-    protected static final Image BUTTON_DOWN = new Image(ImageProvider.class.getResourceAsStream("/images/drawButtonsDown.gif"));
-    protected static final Image ESR_BUTTON_UP = new Image(ImageProvider.class.getResourceAsStream("/images/ESRButtonsUp.gif"));
-    protected static final Image ESR_BUTTON_DOWN = new Image(ImageProvider.class.getResourceAsStream("/images/ESRButtonsDown.gif"));
+    public abstract T getESRImage(boolean up);
+    public abstract T getButtonImage(boolean up);
+    public abstract int getESRImageRows();
 
-    public static final double ESR_IMAGE_WIDTH = 28;
-    public static final double ESR_IMAGE_HEIGHT = 70;
-    public static final double ESR_IMAGE_ROWS = 3;
-
-    public Image getESRImage(boolean up)
-    {
-        if (up)
-            return ESR_BUTTON_UP;
-        else
-            return ESR_BUTTON_DOWN;
-    }
-
-    public Image getButtonImage(boolean up)
-    {
-        if (up)
-            return BUTTON_UP;
-        else
-            return BUTTON_DOWN;
-    }
-
-    public double getESRImageRows() {
-        return ESR_IMAGE_ROWS;
-    }
 }
+

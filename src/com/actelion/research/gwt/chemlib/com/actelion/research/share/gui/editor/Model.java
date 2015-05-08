@@ -141,7 +141,6 @@ public abstract class Model
 
         }
         mDrawingObjectList = new ArrayList<IDrawingObject>();
-        imageProvider = new ImageProvider();
 
     }
 
@@ -1397,13 +1396,12 @@ public abstract class Model
 
     public abstract Reaction pasteReaction();
 
-    public ImageProvider getImageProvider()
-    {
+    public ImageProvider getImageProvider() {
         return imageProvider;
-    }
-    public void setImagProvider(ImageProvider imagProvider)
+    };
+    public void setImageProvider(ImageProvider p)
     {
-        this.imageProvider = imagProvider;
+        imageProvider = p;
     }
 
 
