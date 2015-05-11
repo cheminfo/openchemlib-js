@@ -3,7 +3,7 @@
     "name": "full",
     "war": "actelionFull",
     "entrypoint": "com.actelion.research.gwt.Full",
-    "fake": false
+    "fake": true
   },
   {
     "name": "core",

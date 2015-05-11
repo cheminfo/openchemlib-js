@@ -1,6 +1,6 @@
 {
   "name": "openchemlib",
-  "version": "3.0.0-alpha10",
+  "version": "3.0.0-beta1",
   "description": "Manipulate molecules",
   "keywords": [
     "chemistry",
@@ -10,6 +10,7 @@
   ],
   "main": [
     "dist/openchemlib-core.js",
+    "dist/openchemlib-full.js",
     "dist/openchemlib-viewer.js"
   ],
   "license": "BSD",
