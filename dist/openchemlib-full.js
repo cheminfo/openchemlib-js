@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v3.0.0-beta1
- * @date 2015-05-11T12:36:30.415Z
+ * @version v3.0.0-beta2
+ * @date 2015-05-11T13:30:21.082Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD
 */
@@ -2122,7 +2122,7 @@ NT(67,33,{4:1,15:1,67:1,17:1,21:1},z5);var lS=k4(67);NT(75,1,{4:1,75:1},A5);_.eQ
 
         var toReturn = $wnd["actchem"];
 
-        toReturn.version = '3.0.0-beta1';
+        toReturn.version = '3.0.0-beta2';
 
         return toReturn;
     }
@@ -2138,7 +2138,7 @@ NT(67,33,{4:1,15:1,67:1,17:1,21:1},z5);var lS=k4(67);NT(75,1,{4:1,75:1},A5);_.eQ
         fakeWindow.document = {};
         module.exports = getExports(fakeWindow);
     } else { // Browser
-        if (true) {
+        if (false) {
             // Timer proxies
             fakeWindow.setTimeout = window.setTimeout.bind(window);
             fakeWindow.clearTimeout = window.clearTimeout.bind(window);
