@@ -84,7 +84,6 @@ public class GraphicsContext implements IDrawContext<Context2d>
             (int) ((color & 0x00FF0000l) >> 16) + "," +
             (int) ((color & 0x0000FF00l) >> 8) + "," +
             (double) ((color & 0x000000FFl) / 255.0) + ")";
-//        Log.println("makeRGBA " + s);
         return s;
     }
 

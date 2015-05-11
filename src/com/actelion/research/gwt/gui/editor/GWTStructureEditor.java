@@ -58,20 +58,16 @@ import com.google.gwt.core.client.EntryPoint;
 public class GWTStructureEditor implements EntryPoint
 {
 
-
     /**
      * This is the entry point method.
      */
     public void onModuleLoad()
     {
-//        GWT.create(StructureView.class);
-//        GWT.create(StructureEditor.class);
         onLoadImpl();
     }
 
     private native void onLoadImpl() /*-{
-        console.log("Calling Actelion Editor Global init functions");
-       if ($wnd.editorLoaded && typeof $wnd.editorLoaded == 'function') $wnd.editorLoaded();
+        if (typeof $wnd.editorLoaded === 'function') $wnd.editorLoaded();
      }-*/;
 
 }

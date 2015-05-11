@@ -142,14 +142,11 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
   private boolean loaded = false;
     public Element create(Element parent, int width, int height)
     {
-
-        Log.console("BASE URL => '" + GWT.getModuleBaseURL());
         BUTTON_UP.addLoadHandler(new LoadHandler()
         {
             @Override
             public void onLoad(LoadEvent event)
             {
-                Log.console("Loaded UP");
                 if (loaded)
                     requestLayout();
                 loaded = true;
@@ -161,7 +158,6 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
             @Override
             public void onLoad(LoadEvent event)
             {
-                Log.console("Loaded down");
                 if (loaded)
                     requestLayout();
                 loaded = true;
@@ -262,7 +258,6 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
 
     private void drawESRButtons(GraphicsContext ctx)
     {
-//        Log.println("drawESRButtons " + ESR_BUTTON_UP);
 
         double ESRdx = ESR_IMAGE_WIDTH - 2 * ESR_BORDER;
         double ESRdy = (ESR_IMAGE_HEIGHT - 2 * ESR_BORDER) / ESR_IMAGE_ROWS;
@@ -271,10 +266,8 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         int ESRx = ESR_BORDER;
 
         if (currentAction instanceof ESRTypeAction) {
-//            Log.println("currentAction is ESType Action");
             ctx.drawImage(ESR_BUTTON_DOWN, ESRx, ESRy, ESRdx, ESRdy, ESRdx, ESRdy * ESR_BUTTON_ROW, ESRdx, ESRdy);
         } else {
-//            Log.println("currentAction is NOT ESType Action");
             ctx.drawImage(ESR_BUTTON_UP, ESRx, ESRy, ESRdx, ESRdy, ESRdx, ESRdy * ESR_BUTTON_ROW, ESRdx, ESRdy);
         }
     }

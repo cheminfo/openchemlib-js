@@ -172,11 +172,9 @@ class DrawArea implements IChangeListener
             long start = new Date().getTime();
             depictor.paint(context2d);
             long end = new Date().getTime();
-//            Log.println("MD used " + (end - start) + " msec");
 
             // This is needed due
             if (action != null) {
-                //   Log.println("Drawing action " + action);
                 action.paint(new GraphicsContext(context2d));
             }
         }
@@ -240,7 +238,6 @@ class DrawArea implements IChangeListener
             {
                 down = true;
                 code = event.getNativeKeyCode();
-                Log.console("Key Down " + code);
             }
         });
 
@@ -251,7 +248,6 @@ class DrawArea implements IChangeListener
             {
 //                System.out.println("Key UP " + code);
                 code = event.getNativeKeyCode();
-                Log.console("Key Up " + code);
                 if ((code >= KeyCodes.KEY_A && code <= KeyCodes.KEY_Z)
                     || (code >= KeyCodes.KEY_ZERO && code <= KeyCodes.KEY_NINE)
                     || (code == KeyCodes.KEY_DELETE)
@@ -272,7 +268,6 @@ class DrawArea implements IChangeListener
             {
                 pressed = true;
                 code = event.getCharCode();
-                Log.console("Key Press " + code);
             }
         });
     }
@@ -373,7 +368,6 @@ class ContextHandler implements ContextMenuHandler
                     copy("test copy");
                 }
                 // changed the context menu selection
-                Log.println("Selected item is" + selectionModel.getSelectedObject());
                 contextMenu.hide();
 
             }

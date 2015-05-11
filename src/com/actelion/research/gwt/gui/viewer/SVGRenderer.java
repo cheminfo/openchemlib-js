@@ -55,21 +55,15 @@ public class SVGRenderer
         try {
             StereoMolecule mol = new StereoMolecule();
             IDCodeParser p = new IDCodeParser(true);
-            Log.console("parsing idcode");
             if (idCode != null) {
                 String[] parts = idCode.split(" ");
                 if (parts.length > 1) {
                     p.parse(mol, parts[0], parts[1]);
                 } else
                     p.parse(mol, idCode);
-
-                Log.console("renderMolecule");
-                Log.console(idCode);
                 Canonizer can = new Canonizer(mol);
                 String n = can.getIDCode();
                 String c = can.getEncodedCoordinates();
-                Log.console("afterrender");
-                Log.console(n + " " + c);
 
                 p.parse(mol, n,c);
 

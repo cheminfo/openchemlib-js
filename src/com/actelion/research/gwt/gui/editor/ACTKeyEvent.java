@@ -78,7 +78,6 @@ public class ACTKeyEvent<T extends KeyEvent> implements IKeyEvent
     public ACTKeyEvent(int code,boolean shift,int mask)
     {
         //this.evt = evt;
-        Log.console("Code = " + code + " " + shift);
         this.code = (code >= 'A' && code <='Z' && !shift) ? code + 32 : code;
         this.shift = shift;
         this.mask = mask;

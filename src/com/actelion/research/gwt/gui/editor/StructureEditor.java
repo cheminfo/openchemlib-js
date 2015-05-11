@@ -62,8 +62,6 @@ import java.awt.geom.Point2D;
  * Date: 7/1/2014
  * Time: 10:05 AM
  */
-//@Export
-//@ExportPackage("actchem")
 @JsType
 @JsNamespace("$wnd.actchem")
 @JsExport
@@ -89,7 +87,6 @@ public class StructureEditor implements IChangeListener//,Exportable
     @JsExport
     public StructureEditor(String id)
     {
-//        Log.println("StructureEditor ctor(): " + id);
         Element parent = Document.get().getElementById(id);
         if (parent != null) {
             model = new GWTEditorModel(0);
@@ -121,7 +118,6 @@ public class StructureEditor implements IChangeListener//,Exportable
     @JsExport
     public static StructureEditor createEditor(String id)
     {
-        Log.println("StructureEditor::createEdior() " + id);
         return new StructureEditor(id);
     }
 
