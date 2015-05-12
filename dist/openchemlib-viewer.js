@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
  * @version v3.0.0-beta2
- * @date 2015-05-11T13:30:21.094Z
+ * @date 2015-05-12T12:12:56.519Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD
 */

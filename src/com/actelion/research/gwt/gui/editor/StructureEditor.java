@@ -50,6 +50,8 @@ import com.google.gwt.core.client.js.JsProperty;
 import com.google.gwt.core.client.js.JsType;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.*;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 
 import java.awt.geom.Point2D;
 
@@ -87,11 +89,11 @@ public class StructureEditor implements IChangeListener//,Exportable
     @JsExport
     public StructureEditor(String id)
     {
-        Element parent = Document.get().getElementById(id);
+        final Element parent = Document.get().getElementById(id);
         if (parent != null) {
             model = new GWTEditorModel(0);
-            int width = parent.getClientWidth();
-            int height = parent.getClientHeight();
+            final int width = parent.getClientWidth();
+            final int height = parent.getClientHeight();
             String idcode = parent.getAttribute("data-idcode");
 
             toolBar = new ToolBarImpl(model);
@@ -102,17 +104,37 @@ public class StructureEditor implements IChangeListener//,Exportable
             parent.appendChild(drawAreaElement);
             idcodeTextElement = Document.get().createTextInputElement();
             idcodeTextElement.setId(id + "-idcode-element");
-            idcodeTextElement.setAttribute("style", "position:relative;float:left;width:" + (width - 5) + "px;height:" + TEXTHEIGHT + "px;");
+//            idcodeTextElement.setAttribute("style", "position:relative;float:left;width:" + (width - 5) + "px;height:" + TEXTHEIGHT + "px;");
+            setIDCodeTextPanelSize(width);
+
             parent.appendChild(idcodeTextElement);
 
             model.addChangeListener(this);
-            System.out.println("Idcode is : " + idcode);
+
             StereoMolecule mol = createMolecule(idcode, (width - TOOLBARWIDTH), height - TEXTHEIGHT - 5);
-            //mol.setFragment(false);
             model.setValue(mol, true);
+
             setUpHandlers();
             setupMouseHandlers();
+
+            com.google.gwt.user.client.Window.addResizeHandler(new ResizeHandler()
+            {
+                public void onResize(ResizeEvent ev)
+                {
+                    int w = parent.getClientWidth();
+                    int h = parent.getClientHeight();
+                    if (width != w || height !=h) {
+                        drawPane.setSize(w - TOOLBARWIDTH, h- TEXTHEIGHT - 5);
+                        setIDCodeTextPanelSize(w);
+                    }
+                }
+            });
         }
+    }
+
+    private void setIDCodeTextPanelSize(int w)
+    {
+        idcodeTextElement.setAttribute("style", "position:relative;float:left;width:" + (w - 5) + "px;height:" + TEXTHEIGHT + "px;");
     }
 
     @JsExport
@@ -326,14 +348,6 @@ public class StructureEditor implements IChangeListener//,Exportable
                 mousePoint = null;
             }
         });
-//        drawPane.setOnMouseDragReleased(new EventHandler<MouseEvent>()
-//        {
-//            @Override
-//            public void handle(MouseEvent mouseEvent)
-//            {
-//                onMouseDragRelease(mouseEvent);
-//            }
-//        });
         drawPane.setOnMousePressed(new MouseDownHandler()
         {
             @Override
@@ -479,7 +493,7 @@ public class StructureEditor implements IChangeListener//,Exportable
     {
 
         if (evt.getNativeButton() == NativeEvent.BUTTON_RIGHT) {
-            System.err.println("Thow right clicks!!!");
+            Log.console("Thow right clicks!!!");
             rightClick = true;
 //            contextMenu.show(this, evt.getScreenX(), evt.getScreenY());
         }

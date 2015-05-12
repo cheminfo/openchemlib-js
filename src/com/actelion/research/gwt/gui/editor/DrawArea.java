@@ -32,22 +32,6 @@
 */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.AbstractDepictor;
@@ -83,22 +67,26 @@ import java.util.Date;
 class DrawArea implements IChangeListener
 {
     public static final CssColor WHITE = CssColor.make("WHITE");
-    static String DRAWAREAID = "drawarea";
+    //static String DRAWAREAID = "drawarea";
+    private static int instanceCount = 0;
 
     private com.actelion.research.share.gui.editor.actions.Action action;
     private Model model;
     //    CanvasElement canvasElement = null;
     Canvas canvas;
-    FocusPanel panel;
+    private FocusPanel panel;
+    private RootPanel container ;
 
     DrawArea(Model m)
     {
         model = m;
         model.addChangeListener(this);
+        instanceCount++;
     }
 
     public Element create(Element parent, int width, int height)
     {
+        String  DRAWAREAID = "drawarea" + instanceCount;
         DivElement toolbarHolder = Document.get().createDivElement();
         toolbarHolder.setId(DRAWAREAID);
         toolbarHolder.setAttribute("style",
@@ -110,16 +98,11 @@ class DrawArea implements IChangeListener
 //            "position:relative;float:right;width:" + width + "px;height:" + height + "px;");
         parent.appendChild(toolbarHolder);
         canvas = Canvas.createIfSupported();
-        canvas.setCoordinateSpaceWidth(width);
-        canvas.setCoordinateSpaceHeight(height);
-        canvas.setWidth(width + "px");
-        canvas.setHeight(height + "px");
-        model.setDisplaySize(new Dimension(width, height));
-
-        System.out.println("Added focus panel");
+        setDrawSize(width, height);
         panel = new FocusPanel();
         panel.add(canvas);
-        RootPanel.get(DRAWAREAID).add(panel);
+        container = RootPanel.get(DRAWAREAID);
+        container.add(panel);
 //        setupHandlers();
 //        setupMouseHandlers();
 //        draw(canvas);
@@ -197,7 +180,8 @@ class DrawArea implements IChangeListener
     {
         canvas.addClickHandler(handler);
         canvas.addDoubleClickHandler(dbl);
-        canvas.addDomHandler(new ContextHandler(), ContextMenuEvent.getType());
+//        Removed for LPatiny
+//        canvas.addDomHandler(new ContextHandler(), ContextMenuEvent.getType());
     }
 
     public void setOnMouseDragged(MouseMoveHandler handler)
@@ -286,6 +270,28 @@ class DrawArea implements IChangeListener
     public void setCursor(Style.Cursor c)
     {
         canvas.getCanvasElement().getStyle().setCursor(c);
+    }
+
+    public void setSize(int width, int height)
+    {
+//        Log.console("Setting panel size to " + width);
+        container.setWidth(width + "px");
+        container.setHeight(height + "px");
+        panel.setWidth(width + "px");
+        panel.setHeight(height + "px");
+        setDrawSize(width, height);
+        model.needsLayout(true);
+        draw();
+    }
+
+    private void setDrawSize(int width, int height)
+    {
+//        Log.console("Setting canvas size to " + width);
+        canvas.setCoordinateSpaceWidth(width);
+        canvas.setCoordinateSpaceHeight(height);
+        canvas.setWidth(width + "px");
+        canvas.setHeight(height + "px");
+        model.setDisplaySize(new Dimension(width, height));
     }
 }
 

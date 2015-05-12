@@ -110,7 +110,8 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
             PREFIX +
                     "R0lGODlhHABGANUAAISChH59fnt6e3h3eHRzdMTDxLi3uJiXmAAAw3d3eLe3uKamp5eXmI+PkIaGh4ODhH1+fsPExLe4uJGSkgDDAM/Qz8DBwHh4d76+vZ6enZiYl4qKidbTzsMAANDPz8fGxqSjo5KRkYqJiYSDg////9LS0svLy76+vru7u7i4uLW1tbKysq+vr6ysrKmpqaOjo6GhoZubm5iYmJWVlZKSko+Pj4yMjImJiYSEhIODg4CAgHh4eG9vb19fXyEhIQAAACwAAAAAHABGAAAG/0CScEgsGo0AEmfJbDqfziQHQK1ar1iqUgrweb/gsPi33YrPaF956qXx3vC4PL7u+t4EQkIQ0AEcNzY1NB0HMRkwPXVePHk7fDojgIKEHR2IL4pTZncEAwIQOjkOIpSWpyALmlyMF5A4k4Mzp6cuq5w8kA+xNLO0p7dsd6GjgbK/pyzBdjyRvL7ILCvLjLvGEzMayC3SKtR3DhuCITMy290p3zzGvQznKyoKKOqU2ZY/Px0u3PAGKCfqGvSSEePej33d/J2woK4XPnwdHv6AJ7GAunIF8S3Ax0IiBgsFPqjTEEOiC3wr8KF4+MGEupI/XuBrgU8FvoUR8LlcdCeDxP8fHR9ikGjCgzoYLxYghCcBxceQJkxUKKGuh9WrWLNi5Zmmq5pNwtzMGSuHJx49kP6wQ2AIkTpHkCStRYAA09tHxEhRoss3lTpXfWCxm8GXry2zup4VLqwu7+DFfJWZdfYYMgJp6qwJwqYBMj9vZsONK+cZnbrBDErDk0dPVufCS1UoDDgwBuzPChmarQ37oYoUDy2axchXKUqV+EKOPERXKc0fNn+cwNfyJSbnQQ3gs6BzJ1hmiFLFfghSp1GzSLEzdQqypVSqZrXK18rVKxqeYsnqN9sIbR+1lFDQViJmwdWHXAFSQIFdBX6SVymDKCihX2YBpoNg9Ugo4WHfMZKO2GAaatiYKM+EKKFkHd5BWYYmUoCZWZrVwJmJn6kjWg3kyECjaWahtuNq85hVjwYhnvTQbGYJhJGGRqb0wz+6pchDbUxy8xB7wkm5pILYXfmUSGaRlAGXCOEDHFHWpbeUStN1p0546v32Ez7nSanmZ019GdVUy/xwx3yAWrXGEYQWChYUiCa6SRaMNlpFEAA7";
 
-    static String TOOLBARID = "toolbar";
+    static int instanceCount = 0;
+//    static String TOOLBARID = "toolbar";
 //    static final Image BUTTON_UP = new Image("images/drawButtonsUp.gif");
 //    static final Image BUTTON_DOWN = new Image("images/drawButtonsDown.gif");
 //    static final Image ESR_BUTTON_UP = new Image("images/ESRButtonsUp.gif");
@@ -132,16 +133,20 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
     private int selectetCol;
     private Action currentAction = null;
     private Action lastAction = null;
+    private boolean loaded = false;
 
 
 
     ToolBarImpl(Model model)
     {
         this.model = model;
+        instanceCount++;
     }
-  private boolean loaded = false;
+
     public Element create(Element parent, int width, int height)
     {
+        String toolBarId = "toolbar" + instanceCount;
+
         BUTTON_UP.addLoadHandler(new LoadHandler()
         {
             @Override
@@ -165,7 +170,7 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         });
 
         DivElement toolbarHolder = Document.get().createDivElement();
-        toolbarHolder.setId(TOOLBARID);
+        toolbarHolder.setId(toolBarId);
         toolbarHolder.setAttribute(
             "style", "position:relative;float:left;width:" + width + "px;height:" + height + "px;");
 //        img.setUrl(GWT.getModuleBaseURL() + "/images/drawButtonsUp.gif");
@@ -175,13 +180,13 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         canvas.setCoordinateSpaceHeight(height);
         canvas.setWidth(width + "px");
         canvas.setHeight(height + "px");
-        RootPanel.get(TOOLBARID).add(canvas);
+        RootPanel.get(toolBarId).add(canvas);
 
         //  This is to force addLoadHandler
         BUTTON_UP.setVisible(false);
-        RootPanel.get(TOOLBARID).add(BUTTON_UP);
+        RootPanel.get(toolBarId).add(BUTTON_UP);
         BUTTON_DOWN.setVisible(false);
-        RootPanel.get(TOOLBARID).add(BUTTON_DOWN);
+        RootPanel.get(toolBarId).add(BUTTON_DOWN);
 
         setupHandlers();
         setupMouseHandlers();
@@ -195,25 +200,7 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         draw(canvas);
     }
 
-//    public Element create(Element parent, int width, int height)
-//    {
-//        DivElement toolbarHolder = Document.get().createDivElement();
-//        toolbarHolder.setId(TOOLBARID);
-//        toolbarHolder.setAttribute(
-//            "style", "position:relative;float:left;width:" + width + "px;height:" + height + "px;");
-////        img.setUrl(GWT.getModuleBaseURL() + "/images/drawButtonsUp.gif");
-//        parent.appendChild(toolbarHolder);
-//        canvas = Canvas.createIfSupported();
-//        canvas.setCoordinateSpaceWidth(width);
-//        canvas.setCoordinateSpaceHeight(height);
-//        canvas.setWidth(width + "px");
-//        canvas.setHeight(height + "px");
-//        RootPanel.get(TOOLBARID).add(canvas);
-//        setupHandlers();
-//        setupMouseHandlers();
-//        draw(canvas);
-//        return toolbarHolder;
-//    }
+
 
     private void draw(Canvas toolBar)
     {
