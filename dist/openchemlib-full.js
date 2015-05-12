@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v3.0.0-beta2
- * @date 2015-05-12T12:12:56.531Z
+ * @version v3.0.0-beta3
+ * @date 2015-05-12T14:43:18.110Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD
 */
@@ -1936,7 +1936,7 @@ MR(56,227,I9,x4);var bR=t$(56);MR(143,447,{4:1,72:1},B4);_.Hd=function C4(a){ret
 
         var toReturn = $wnd["actchem"];
 
-        toReturn.version = '3.0.0-beta2';
+        toReturn.version = '3.0.0-beta3';
 
         return toReturn;
     }
