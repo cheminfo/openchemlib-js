@@ -1,3 +1,10 @@
+3.0.0-beta3 / 2015-05-12
+========================
+
+* fix resizing
+* fix toolbar in case of multiple instances
+* fix right click issues
+
 3.0.0-beta2 / 2015-05-11
 ========================
 
