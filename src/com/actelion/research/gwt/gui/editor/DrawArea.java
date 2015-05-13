@@ -67,12 +67,10 @@ import java.util.Date;
 class DrawArea implements IChangeListener
 {
     public static final CssColor WHITE = CssColor.make("WHITE");
-    //static String DRAWAREAID = "drawarea";
     private static int instanceCount = 0;
 
     private com.actelion.research.share.gui.editor.actions.Action action;
     private Model model;
-    //    CanvasElement canvasElement = null;
     Canvas canvas;
     private FocusPanel panel;
     private RootPanel container ;
@@ -84,30 +82,23 @@ class DrawArea implements IChangeListener
         instanceCount++;
     }
 
-    public Element create(Element parent, int width, int height)
+    public Element createElement(Element parent, int left, int top, int width, int height)
     {
         String  DRAWAREAID = "drawarea" + instanceCount;
-        DivElement toolbarHolder = Document.get().createDivElement();
-        toolbarHolder.setId(DRAWAREAID);
-        toolbarHolder.setAttribute("style",
-            "position:relative;float:right;width:" + width + "px;height:" + height + "px;");
+        DivElement drawAreaContainer = Document.get().createDivElement();
+        drawAreaContainer.setId(DRAWAREAID);
+        drawAreaContainer.setAttribute("style",
+                "position:absolute;left:" + left + "px; width:" + width + "px;height:" + height + "px;");
+//        "position:relative;float:right;width:" + width + "px;height:" + height + "px;");
 
-
-//        canvasElement = Document.get().createCanvasElement();
-//        canvasElement.setAttribute("style",
-//            "position:relative;float:right;width:" + width + "px;height:" + height + "px;");
-        parent.appendChild(toolbarHolder);
+        parent.appendChild(drawAreaContainer);
         canvas = Canvas.createIfSupported();
         setDrawSize(width, height);
         panel = new FocusPanel();
         panel.add(canvas);
         container = RootPanel.get(DRAWAREAID);
         container.add(panel);
-//        setupHandlers();
-//        setupMouseHandlers();
-//        draw(canvas);
-
-        return toolbarHolder;
+        return drawAreaContainer;
     }
 
     public void draw(com.actelion.research.share.gui.editor.actions.Action a)

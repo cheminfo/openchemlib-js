@@ -70,7 +70,7 @@ public interface ToolBar<T>
     double ESR_IMAGE_HEIGHT = 70;
     double ESR_IMAGE_ROWS = 3;
 
-    public T create(T parent, int width, int height);
+    public T createElement(T parent, int width, int height);
     public void doAction(Action a);
     public Action getCurrentAction();
 }

@@ -53,6 +53,7 @@ package com.actelion.research.gwt.gui.editor.actions;
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gwt.gui.editor.ButtonPressListener;
+import com.actelion.research.gwt.gui.editor.ImageHolder;
 import com.actelion.research.gwt.gui.editor.ToolBar;
 import com.actelion.research.gwt.gui.viewer.GraphicsContext;
 import com.actelion.research.gwt.gui.editor.Window;
@@ -61,7 +62,6 @@ import com.actelion.research.share.gui.editor.actions.BondHighlightAction;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -77,19 +77,20 @@ import java.awt.geom.Point2D;
 
 class ESRPane extends PopupPanel
 {
-    static final Image BUTTON_UP = new Image("images/ESRButtonsUp.gif");
-    static final Image BUTTON_DOWN = new Image("images/ESRButtonsDown.gif");
 
     private boolean loaded = false;
     private Canvas canvas;
     private Model model;
+
+    private final Image ESR_BUTTON_UP = new Image(ImageHolder.ESRBUTTONUP64);
+    private final Image ESR_BUTTON_DOWN = new Image(ImageHolder.ESRBUTTONDOWN64);
 
     public ESRPane(Model m)
     {
         super(true);
         this.model = m;
 
-        BUTTON_UP.addLoadHandler(new LoadHandler()
+        ESR_BUTTON_UP.addLoadHandler(new LoadHandler()
         {
             @Override
             public void onLoad(LoadEvent event)
@@ -100,7 +101,7 @@ class ESRPane extends PopupPanel
             }
         });
 
-        BUTTON_DOWN.addLoadHandler(new LoadHandler()
+        ESR_BUTTON_DOWN.addLoadHandler(new LoadHandler()
         {
             @Override
             public void onLoad(LoadEvent event)
@@ -111,8 +112,8 @@ class ESRPane extends PopupPanel
             }
         });
 
-        int width = BUTTON_UP.getWidth();
-        int height = BUTTON_UP.getHeight();
+        int width = ESR_BUTTON_UP.getWidth();
+        int height = ESR_BUTTON_UP.getHeight();
         canvas = Canvas.createIfSupported();
         canvas.setCoordinateSpaceWidth(width);
         canvas.setCoordinateSpaceHeight(height);
@@ -161,19 +162,19 @@ class ESRPane extends PopupPanel
     private void draw(Canvas toolBar)
     {
         Context2d context2d = toolBar.getContext2d();
-//        context2d.drawImage(ImageElement.as(BUTTON_UP.getElement()), 0, 0);
+//        context2d.drawImage(ImageElement.as(ESR_BUTTON_UP.getElement()), 0, 0);
         drawButtons(new GraphicsContext(context2d));
     }
 
     private void drawButtons(GraphicsContext ctx)
     {
-        ctx.drawImage(BUTTON_UP, 0, 0);
+        ctx.drawImage(ESR_BUTTON_UP, 0, 0);
         int selectedRow = model.rowFromESRType(model.getESRType());
         double dx = ToolBar.ESR_IMAGE_WIDTH;
         double dy = ToolBar.ESR_IMAGE_HEIGHT / ToolBar.ESR_IMAGE_ROWS;
         int y = (int) (ToolBar.ESR_IMAGE_HEIGHT / ToolBar.ESR_IMAGE_ROWS * selectedRow);
         int x = 0;
-        ctx.drawImage(BUTTON_DOWN, x, y, dx, dy, x, y, dx, dy);
+        ctx.drawImage(ESR_BUTTON_DOWN, x, y, dx, dy, x, y, dx, dy);
     }
 
 }

@@ -52,8 +52,12 @@ import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 //import org.timepedia.exporter.client.Export;
 //import org.timepedia.exporter.client.Exportable;
@@ -79,7 +83,12 @@ public class StructureEditor implements IChangeListener//,Exportable
     private ToolBar<Element> toolBar;
     private DrawArea drawPane;
     private InputElement idcodeTextElement;
+    private Element container = null;
+    private static List<StructureEditor> map = new ArrayList<StructureEditor>();
 
+    static {
+        initObserver();
+    }
 
     public StructureEditor()
     {
@@ -89,47 +98,100 @@ public class StructureEditor implements IChangeListener//,Exportable
     @JsExport
     public StructureEditor(String id)
     {
-        final Element parent = Document.get().getElementById(id);
-        if (parent != null) {
+        container = Document.get().getElementById(id);
+        if (container != null) {
             model = new GWTEditorModel(0);
-            final int width = parent.getClientWidth();
-            final int height = parent.getClientHeight();
-            String idcode = parent.getAttribute("data-idcode");
+            String style = container.getAttribute("style");
+            style += ";overflow:hidden;position:relative;";
+            container.setAttribute("style",style);
+            final int width = container.getClientWidth();
+            final int height = container.getClientHeight();
+            String idcode = container.getAttribute("data-idcode");
 
             toolBar = new ToolBarImpl(model);
-            Element toolBarElement = toolBar.create(parent, TOOLBARWIDTH, height - TEXTHEIGHT - 5);
-            parent.appendChild(toolBarElement);
+            Element toolBarElement = toolBar.createElement(container, TOOLBARWIDTH, height - TEXTHEIGHT - 5);
+            container.appendChild(toolBarElement);
+
             drawPane = new DrawArea(model);
-            Element drawAreaElement = drawPane.create(parent, (width - TOOLBARWIDTH), height - TEXTHEIGHT - 5);
-            parent.appendChild(drawAreaElement);
+            Element drawAreaElement = drawPane.createElement(container, TOOLBARWIDTH,0,(width - TOOLBARWIDTH), height - TEXTHEIGHT - 5);
+            container.appendChild(drawAreaElement);
+
             idcodeTextElement = Document.get().createTextInputElement();
             idcodeTextElement.setId(id + "-idcode-element");
 //            idcodeTextElement.setAttribute("style", "position:relative;float:left;width:" + (width - 5) + "px;height:" + TEXTHEIGHT + "px;");
             setIDCodeTextPanelSize(width);
-
-            parent.appendChild(idcodeTextElement);
+            container.appendChild(idcodeTextElement);
 
             model.addChangeListener(this);
-
             StereoMolecule mol = createMolecule(idcode, (width - TOOLBARWIDTH), height - TEXTHEIGHT - 5);
             model.setValue(mol, true);
 
             setUpHandlers();
             setupMouseHandlers();
 
+/*
+            Element p = Document.get().getElementById("svg");
+            map.add(this);
+            observeDataChange(p);
+            Log.console("Setting up event listener " + p);
+
+
+*/
+/*
+            Event.setEventListener(Document.get().getBody(), new EventListener()
+            {
+
+                @Override
+                public void onBrowserEvent(Event event)
+                {
+                    Log.console("Event: " + event);
+                }
+            });
+*/
+
+
             com.google.gwt.user.client.Window.addResizeHandler(new ResizeHandler()
             {
                 public void onResize(ResizeEvent ev)
                 {
-                    int w = parent.getClientWidth();
-                    int h = parent.getClientHeight();
-                    if (width != w || height !=h) {
-                        drawPane.setSize(w - TOOLBARWIDTH, h- TEXTHEIGHT - 5);
+                    int w = container.getClientWidth();
+                    int h = container.getClientHeight();
+                    if (width != w || height != h) {
+                        drawPane.setSize(w - TOOLBARWIDTH, h - TEXTHEIGHT - 5);
                         setIDCodeTextPanelSize(w);
                     }
                 }
             });
         }
+    }
+
+
+    private native void observeDataChange(Element el) /*-{
+        var config = {childList: true}
+        $wnd.edit$observer.observe(el, config);
+    }-*/;
+
+
+    private native static void initObserver() /*-{
+        $wnd.edit$observer = new MutationObserver(function (mutations) {
+            console.log("Mutation");
+            mutations.forEach(function (mutation) {
+                @com.actelion.research.gwt.gui.editor.StructureEditor::notify(Ljava/lang/Object;)(mutation.target);
+            });
+        });
+    }-*/;
+
+
+    public static void notify(Object o)
+    {
+        Log.console("Notify from mutation");
+        for (StructureEditor e : map) {
+            e.drawPane.draw();
+            int w = e.container.getClientWidth();
+            int h = e.container.getClientHeight();
+            e.drawPane.setSize(w - TOOLBARWIDTH, h - TEXTHEIGHT - 5);
+        }
+
     }
 
     private void setIDCodeTextPanelSize(int w)
@@ -255,7 +317,7 @@ public class StructureEditor implements IChangeListener//,Exportable
                 public void onChange()
                 {
                     String idcode = model.getIDCode();
-                    callFuncS(cb,idcode);
+                    callFuncS(cb, idcode);
 
                 }
             });
@@ -480,10 +542,8 @@ public class StructureEditor implements IChangeListener//,Exportable
                 if (a.onMouseUp(new ACTMouseEvent(evt))) {
                     drawPane.draw();
                     model.changed();
-//                    model.valueInvalidated();
                 }
             }
-//            drawPane.requestFocus();
         }
         setCursor(ICursor.DEFAULT);
         rightClick = false;
@@ -538,9 +598,7 @@ public class StructureEditor implements IChangeListener//,Exportable
     public void onChange()
     {
         if (idcodeTextElement != null) {
-//            System.out.println("Structure Editor onChange");
             String idcode = model.getIDCode();
-//            System.out.println("Setting idcode to " + idcode);
             idcodeTextElement.setValue(idcode);
         }
     }

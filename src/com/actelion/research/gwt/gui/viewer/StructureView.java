@@ -69,6 +69,8 @@ import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
@@ -127,15 +129,22 @@ public class StructureView
     @JsExport
     public static void drawStructure(String id, String idcode, String coordinates, JavaScriptObject options)
     {
-    	drawStructure(id, idcode, coordinates, getDisplayMode(options));
+    	drawStructure(id, idcode, coordinates, getDisplayMode(options),null);
     }
     
     @JsExport
     public static void drawMolecule(CanvasElement el, Molecule mol, JavaScriptObject options)
     {
-    	drawMolecule(el, mol, getDisplayMode(options));
+    	drawMolecule(el, mol, getDisplayMode(options), null);
     }
-    
+
+    @JsExport
+    public static void drawStructureWithText(String id, String idcode, String coordinates, JavaScriptObject options,String []atomText)
+    {
+        drawStructure(id, idcode, coordinates, getDisplayMode(options),atomText);
+    }
+
+
     private static native int getDisplayMode(JavaScriptObject options)/*-{
     	options = options || {};
     	var displayMode = 0;
@@ -153,23 +162,25 @@ public class StructureView
     	return displayMode;
     }-*/;
 
-    private static void drawStructure(String id, String idcode, String coordinates, int displayMode)
+    private static void drawStructure(String id, String idcode, String coordinates, int displayMode,String[] atomText)
     {
         Element el = Document.get().getElementById(id);
         if (el instanceof CanvasElement) {
             CanvasElement ce = (CanvasElement) el;
-            StructureElement.drawIDCode(ce,idcode,coordinates, displayMode);
+            StructureElement.drawIDCode(ce,idcode,coordinates, displayMode,atomText);
         }
     }
-    
+
+/*
     private static void drawStructure(CanvasElement el, String idcode, String coordinates, int displayMode)
     {
     	StructureElement.drawIDCode(el,idcode,coordinates, displayMode);
     }
-    
-    private static void drawMolecule(CanvasElement el, Molecule mol, int displayMode)
+*/
+
+    private static void drawMolecule(CanvasElement el, Molecule mol, int displayMode,String[] atomText)
     {
-    	StructureElement.drawMolecule(el, mol, displayMode);
+    	StructureElement.drawMolecule(el, mol, displayMode,atomText);
     }
 
 }
@@ -188,6 +199,33 @@ class StructureElement
         canvas = Canvas.wrap(el);
         map.put(el, this);
         observeDataChange(el);
+
+        final Element parent = el.getParentElement();
+        if (parent != null) {
+            final int width = parent.getClientWidth();
+            final int height = parent.getClientHeight();
+            com.google.gwt.user.client.Window.addResizeHandler(new ResizeHandler()
+            {
+                public void onResize(ResizeEvent ev)
+                {
+                    int w = parent.getClientWidth();
+                    int h = parent.getClientHeight();
+                    if (width != w || height != h) {
+                        setCanvasSize(w,h);
+                        draw();
+                    }
+                }
+            });
+        }
+
+    }
+
+    private void setCanvasSize(int width,int height)
+    {
+        canvas.setCoordinateSpaceWidth(width);
+        canvas.setCoordinateSpaceHeight(height);
+        canvas.setWidth(width + "px");
+        canvas.setHeight(height + "px");
     }
 
     private native static void initObserver() /*-{
@@ -207,6 +245,7 @@ class StructureElement
 
     public static void notify(Object o)
     {
+        Log.console("Notify view mutation");
         Object p = map.get(o);
         if (p instanceof StructureElement) {
             StructureElement se = (StructureElement) p;
@@ -227,10 +266,10 @@ class StructureElement
     
     private static void drawMolecule(Context2d ctx, String idcode, int width, int height)
     {
-    	drawMolecule(ctx, idcode, width, height, 0);
+    	drawMolecule(ctx, idcode, width, height, 0,null);
     }
 
-    private static void drawMolecule(Context2d ctx, String idcode, int width, int height, int displayMode)
+    private static void drawMolecule(Context2d ctx, String idcode, int width, int height, int displayMode,String[] atomText)
     {
         if (idcode != null && idcode.trim().length() > 0) {
             StereoMolecule mol = new StereoMolecule();
@@ -240,20 +279,24 @@ class StructureElement
                 parser.parse(mol, idcode);
             else
                 parser.parse(mol, elements[0], elements[1]);
-
+            drawMolecule(ctx,mol,width,height,displayMode,atomText);
+/*
             AbstractDepictor depictor = new GWTDepictor(ctx, mol, displayMode);
             depictor.validateView(null,
             new Rectangle2D.Float(0, 0, (float) width, (float) height), AbstractDepictor.cModeInflateToMaxAVBL);
             ctx.clearRect(0, 0, width, height);
             depictor.paint(ctx);
+*/
         } else {
             ctx.clearRect(0, 0, width, height);
         }
     }
     
-    private static void drawMolecule(Context2d ctx, StereoMolecule mol, int width, int height, int displayMode)
+    private static void drawMolecule(Context2d ctx, StereoMolecule mol, int width, int height, int displayMode,String[] atomText)
     {
     	AbstractDepictor depictor = new GWTDepictor(ctx, mol, displayMode);
+        if (atomText != null)
+            depictor.setAtomText(atomText);
     	depictor.validateView(null, new Rectangle2D.Float(0, 0, (float) width, (float) height), AbstractDepictor.cModeInflateToMaxAVBL);
     	ctx.clearRect(0, 0, width, height);
     	depictor.paint(ctx);
@@ -264,34 +307,38 @@ class StructureElement
     {
         Element el = canvas.getCanvasElement();
         String idcode = el.getAttribute("data-idcode");
+        String text = el.getAttribute("data-text");
+        String[] at = text != null ? text.split(",") : null;
         Context2d ctx = canvas.getContext2d();
         drawMolecule(ctx, idcode,
             canvas.getCoordinateSpaceWidth(),
-            canvas.getCoordinateSpaceHeight());
+            canvas.getCoordinateSpaceHeight(),0,at);
     }
     
-    public static void drawIDCode(CanvasElement el, String idcode, String coordinates)
+    public static void drawIDCode(CanvasElement el, String idcode, String coordinates,String[] atomText)
     {
-    	drawIDCode(el, idcode, coordinates, 0);
+    	drawIDCode(el, idcode, coordinates, 0,atomText);
     }
 
-    public static void drawIDCode(CanvasElement el, String idcode, String coordinates, int displayMode)
+    public static void drawIDCode(CanvasElement el, String idcode, String coordinates, int displayMode,String[] atomText)
     {
         Canvas canvas = Canvas.wrap(el);
         if (idcode != null && idcode.length() > 0) {
             String combined = idcode + (coordinates != null ? " " + coordinates : "");
             Context2d ctx = canvas.getContext2d();
             drawMolecule(ctx, combined,
-                canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight(), displayMode);
+                    canvas.getCoordinateSpaceWidth(),
+                    canvas.getCoordinateSpaceHeight(),
+                    displayMode,atomText);
         }
     }
     
-    public static void drawMolecule(CanvasElement el, Molecule mol, int displayMode)
+    public static void drawMolecule(CanvasElement el, Molecule mol, int displayMode,String[] atomText)
     {
     	Canvas canvas = Canvas.wrap(el);
     	Context2d ctx = canvas.getContext2d();
     	drawMolecule(ctx, mol.getStereoMolecule(),
-                canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight(), displayMode);
+                canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight(), displayMode,atomText);
     }
 
 }
