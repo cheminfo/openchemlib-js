@@ -38,15 +38,7 @@
 <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
-    <link type="text/css" rel="stylesheet" href="StructureEditor.css">
     <script src="openchemlib-full.js"></script>
-
-    <!-- Hide the idcode textfield -->
-    <style>
-        #editor-idcode-element {
-            visibility: hidden;
-        }
-    </style>
 </head>
 
 <!--                                           -->
@@ -57,7 +49,10 @@
 <body>
 <div id="editor"
      style="width:500px;height:400px;border:solid;border-width:2px;"
-     data-idcode="dknD@MADfVU}eVhHB`@` !BjDJhO_z`jDJWPjaBjCw~hOz`jDIGE^}">
+     view-only="false"
+     show-idcode="false"
+     is-fragment="true"
+        >
 </div>
 <button id="b" onclick="clicked()">Click Me...</button>
 
@@ -108,9 +103,6 @@
     }
     function clicked()
     {
-//        var test = "fhvacFGXhDFICDPx@fCHW@@UDhdmdCVZ``J@@@ !BLsicOgDjrHKHwW{@rHJW`lbBrMu~pG{@rHI[E\\}bup}";
-//        console.log("Button Clicked");
-//        editorCtrl.setIDCode(test);
         console.log("Molecule is fragment: " + editorCtrl.isFragment())
         editorCtrl.setFragment(!editorCtrl.isFragment());
         console.log("IDCODE is " + editorCtrl.getIDCode());

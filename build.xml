@@ -25,4 +25,7 @@
             </classpath>
         </javac>
     </target>
+    <target name="dist-test">
+        <copy file="war/Editor.html" todir="dist"/>
+    </target>
 </project>
