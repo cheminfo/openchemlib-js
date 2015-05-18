@@ -44,10 +44,7 @@ import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.cell.client.AbstractCell;
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -88,11 +85,15 @@ class DrawArea implements IChangeListener
         DivElement drawAreaContainer = Document.get().createDivElement();
         drawAreaContainer.setId(DRAWAREAID);
         drawAreaContainer.setAttribute("style",
-                "position:absolute;left:" + left + "px; width:" + width + "px;height:" + height + "px;");
+                "position:absolute;" +
+                        "left:" + left + "px; " +
+                        "width:" + width + "px;" +
+                        "height:" + height + "px;");
 //        "position:relative;float:right;width:" + width + "px;height:" + height + "px;");
 
         parent.appendChild(drawAreaContainer);
         canvas = Canvas.createIfSupported();
+        canvas.getCanvasElement().setAttribute("style","outline: none;");
         setDrawSize(width, height);
         panel = new FocusPanel();
         panel.add(canvas);

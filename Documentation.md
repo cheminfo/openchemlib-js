@@ -5,6 +5,9 @@
 [Substructure search](#sssearch)  
 [Substructure search with index](#sssearchwithindex)
 
+[StructureEditor](#structureeditor)
+
+
 ---------------------------------------
 
 ## Molecule
@@ -279,6 +282,38 @@ Sets a callback function which is called whenever an bond is selected/unselected
 
 Sets a callback function which is called whenever the structure in the editor has been changed. The callback signature is: callback(newIdCode)
 
+
+### Usage in your page
+
+load this script:
+
+     src="openchemlib-full.js"
+
+
+create a div with the following attributes:
+
+     id="editor"
+     style="width:100%;height:400px;border:solid;border-width:2px"
+     view-only="false"
+     show-idcode="true"
+     data-idcode="fhvacFGXhDFICDPx@fCHW@@UDhdmdCVZ``J@@@ !BLsicOgDjrHKHwW{@rHJW`lbBrMu~pG{@rHI[E\}bup}"
+
+
+execute the following JS:
+
+        editorCtrl = window.actchem.StructureEditor.createEditor("editor");
+
+
+### Attributes (defaults are in UPPERCASE):
+
+     view-only="FALSE | true"       = Shows the toolbar
+
+     show-idcode="FALSE | true"     = Shows the input control containing the current IDCode
+
+     data-idcode=""                 = This allows you to specify the molecule IDCode in the editor
+
+     is-fragment="FALSE | true"     = Sets the editor mode into fragment mode.
+                                      Please note that the data-icode attribute overrules this behavior: If specified, the mode depends on the passed molecule
 
 
 
