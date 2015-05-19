@@ -29,7 +29,7 @@ __Options__
 
 #### compile:min / compile:pretty
 
-Execute the GWT compilator
+Execute the GWT compiler
 
 #### export
 
