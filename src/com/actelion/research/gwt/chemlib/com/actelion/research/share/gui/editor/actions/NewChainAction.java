@@ -155,7 +155,9 @@ public class NewChainAction extends BondHighlightAction
             }
             highlightAtom(mol, -1);
             ok = true;
+
         }
+        dragging = false;
         return ok;
 
     }
@@ -183,6 +185,8 @@ public class NewChainAction extends BondHighlightAction
             double dy = pt.getY() - origin.getY();
             double a = 1.0;// sqrt(avbl/2*avbl/2);
             double b = 1.0;//sqrt(avbl/2*avbl/2);
+
+
             if (Math.abs(dy) > Math.abs(dx)) {
                 numChainAtoms = (int) (2 * Math.abs(dy) / (s0 + s2));
                 if ((int) Math.abs(dy) % (int) (s0 + s2) > s0) {
@@ -279,7 +283,6 @@ public class NewChainAction extends BondHighlightAction
 
     void drawLine(IDrawContext _ctx, double x1, double y1, double x2, double y2)
     {
-//        _ctx.setStroke(IColor.BLACK);
         _ctx.drawLine(x1, y1, x2, y2);
     }
 }

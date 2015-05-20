@@ -44,6 +44,7 @@ import com.actelion.research.gwt.gui.editor.ACTKeyCode;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.AtomPropertiesDialog;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.AtomQueryFeaturesDialog;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.BondQueryFeaturesDialog;
+import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.Polygon;
 import com.actelion.research.share.gui.editor.chem.IArrow;
 import com.actelion.research.share.gui.editor.dialogs.IAtomPropertiesDialog;

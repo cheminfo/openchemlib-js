@@ -70,7 +70,7 @@ class DrawArea implements IChangeListener
     private Model model;
     Canvas canvas;
     private FocusPanel panel;
-    private RootPanel container ;
+    private RootPanel container;
 
     DrawArea(Model m)
     {
@@ -81,7 +81,7 @@ class DrawArea implements IChangeListener
 
     public Element createElement(Element parent, int left, int top, int width, int height)
     {
-        String  DRAWAREAID = "drawarea" + instanceCount;
+        String DRAWAREAID = "drawarea" + instanceCount;
         DivElement drawAreaContainer = Document.get().createDivElement();
         drawAreaContainer.setId(DRAWAREAID);
         drawAreaContainer.setAttribute("style",
@@ -93,7 +93,7 @@ class DrawArea implements IChangeListener
 
         parent.appendChild(drawAreaContainer);
         canvas = Canvas.createIfSupported();
-        canvas.getCanvasElement().setAttribute("style","outline: none;");
+        canvas.getCanvasElement().setAttribute("style", "outline: none;");
         setDrawSize(width, height);
         panel = new FocusPanel();
         panel.add(canvas);
@@ -116,48 +116,33 @@ class DrawArea implements IChangeListener
 
     private void draw(Canvas canvas)
     {
-//        System.out.println("Drawing canvas");
         Context2d context2d = canvas.getContext2d();
         AbstractDepictor depictor;
         int w = (int) model.getDisplaySize().getWidth();
         int h = (int) model.getDisplaySize().getHeight();
-        //if (w > 0 && h > 0)
-        {
-            //System.out.printf("Drawing MolArea %f %f\n", w, h);
-            int displayMode = 0;
-//            if (isReaction()) {
-//                depictor = new JFXExtendedDepictor(model.getReaction(), model.getDrawinObjects(), displayMode);
-//                depictor.setDisplayMode(model.getDisplayMode());
-//            } else
-            {
-                depictor = new GWTDepictor(context2d, model.getMolecule());
-                depictor.setDisplayMode(model.getDisplayMode());
-            }
-            //depictor.setFragmentNoColor(isMultiFragment() ? Color.RED : null);
-
-            if (model.needsLayout()) {
-                System.out.println("Need layout " + w + " " + h);
-                depictor.updateCoords(null,
+        depictor = new GWTDepictor(context2d, model.getMolecule());
+        depictor.setDisplayMode(model.getDisplayMode());
+        if (model.needsLayout()) {
+//            Log.console("Need layout " + w + " " + h);
+            depictor.updateCoords(null,
                     new java.awt.geom.Rectangle2D.Float(0, 0, (float) w, (float) h), AbstractDepictor.cModeInflateToMaxAVBL);
-            }
-            model.needsLayout(false);
-            context2d.clearRect(0, 0, w, h);
-            context2d.setFillStyle(WHITE);
-            context2d.fillRect(0, 0, w, h);
-            long start = new Date().getTime();
-            depictor.paint(context2d);
-            long end = new Date().getTime();
+        }
+        model.needsLayout(false);
+        context2d.clearRect(0, 0, w, h);
+        context2d.setFillStyle(WHITE);
+        context2d.fillRect(0, 0, w, h);
+        depictor.paint(context2d);
 
-            // This is needed due
-            if (action != null) {
-                action.paint(new GraphicsContext(context2d));
-            }
+        // Let the actions draw if needed e.g. NewChainAction
+        if (action != null) {
+            action.paint(new GraphicsContext(context2d));
         }
     }
 
     @Override
     public void onChange()
     {
+        Log.console("onChange");
 //        System.out.println("DrawArea on change...");
         draw(canvas);
     }
@@ -205,8 +190,20 @@ class DrawArea implements IChangeListener
     private boolean pressed = false;
     private int code = 0;
 
+    private boolean isValidKey(int kc)
+    {
+        return  (  (kc >= KeyCodes.KEY_A && kc <= KeyCodes.KEY_Z)
+                || (kc >= KeyCodes.KEY_ZERO && kc <= KeyCodes.KEY_NINE)
+                || (kc == KeyCodes.KEY_DELETE)
+                || (kc == KeyCodes.KEY_ENTER)
+                || (kc == KeyCodes.KEY_BACKSPACE)
+                ) ;
+
+    }
+
     public void setOnKeyPressed(final ACTKeyEventHandler handler)
     {
+
         canvas.addKeyDownHandler(new KeyDownHandler()
         {
             @Override
@@ -214,6 +211,9 @@ class DrawArea implements IChangeListener
             {
                 down = true;
                 code = event.getNativeKeyCode();
+                if (isValidKey(code)) {
+                    event.preventDefault();
+                }
             }
         });
 
@@ -222,16 +222,13 @@ class DrawArea implements IChangeListener
             @Override
             public void onKeyUp(KeyUpEvent event)
             {
-//                System.out.println("Key UP " + code);
                 code = event.getNativeKeyCode();
-                if ((code >= KeyCodes.KEY_A && code <= KeyCodes.KEY_Z)
-                    || (code >= KeyCodes.KEY_ZERO && code <= KeyCodes.KEY_NINE)
-                    || (code == KeyCodes.KEY_DELETE)
-                    ) {
+                if (isValidKey(code)){
+                    event.preventDefault();
                     handler.onKey(new ACTKeyEvent(
-                        code,
-                        event.isShiftKeyDown(),
-                        pressed ? (ACTKeyEvent.LETTER | ACTKeyEvent.DIGIT) : 0));
+                            code,
+                            event.isShiftKeyDown(),
+                            pressed ? (ACTKeyEvent.LETTER | ACTKeyEvent.DIGIT) : 0));
                 }
                 down = pressed = false;
             }
@@ -244,6 +241,9 @@ class DrawArea implements IChangeListener
             {
                 pressed = true;
                 code = event.getCharCode();
+                if (isValidKey(code)) {
+                    event.preventDefault();
+                }
             }
         });
     }
@@ -314,8 +314,8 @@ class ContextHandler implements ContextMenuHandler
                            MenuItem value, SafeHtmlBuilder sb)
         {
             SafeHtml html = SafeHtmlUtils
-                .fromSafeConstant("<div class='cell'> " + value
-                    + "</div>");
+                    .fromSafeConstant("<div class='cell'> " + value
+                            + "</div>");
             sb.append(html);
         }
 

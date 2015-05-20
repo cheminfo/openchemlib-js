@@ -439,24 +439,23 @@ public class StructureEditor implements IChangeListener//,Exportable
         });
         drawPane.setOnKeyPressed(new ACTKeyEventHandler()
         {
-
-
-//            @Override
-//            public void onKeyUp(KeyUpEvent event)
-//            {
-//                System.out.println("Key Up Handler " + event.getNativeKeyCode());
-//                onKeyPressed(event);
-//            }
-
             @Override
             public void onKey(IKeyEvent event)
             {
-//                System.out.println("ACTEvent " + event);
                 onKeyPressed(event);
             }
         });
+/*
+        drawPane.setOnKeyReleased(new ACTKeyEventHandler()
+        {
+            @Override
+            public void onKey(IKeyEvent event)
+            {
+                onKeyPressed(event);
+            }
+        });
+*/
 
-        //drawPane.requestFocus();
     }
 
     private void onKeyPressed(IKeyEvent keyEvent)
@@ -465,8 +464,6 @@ public class StructureEditor implements IChangeListener//,Exportable
         if (a != null) {
             if (a.onKeyPressed(keyEvent)) {
                 model.changed();
-//                drawPane.draw();
-                a.paint(drawPane.getDrawContext());
             } else {
                 handleKeyEvent(keyEvent);
             }
@@ -475,15 +472,6 @@ public class StructureEditor implements IChangeListener//,Exportable
 
     private void handleKeyEvent(IKeyEvent keyEvent)
     {
-//        System.out.println("Handle KeyEvent ion SE " + keyEvent);
-//        StereoMolecule mol = model.getSelectedMolecule();
-//        if (keyEvent.getCode().equals(KeyCode.DELETE)) {
-//            model.pushUndo();
-//            if (mol.deleteSelectedAtoms()) {
-//                drawPane.draw();
-//                model.notifyChange();
-//            }
-//        }
     }
 
     private void onMouseMoved(MouseEvent evt)

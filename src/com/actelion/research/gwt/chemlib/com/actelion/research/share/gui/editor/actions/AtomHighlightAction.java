@@ -37,6 +37,7 @@ import com.actelion.research.chem.CoordinateInventor;
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.NamedSubstituents;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.DialogResult;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.dialogs.IAtomQueryFeaturesDialog;

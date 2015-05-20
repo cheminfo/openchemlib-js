@@ -84,35 +84,4 @@ public interface IDrawContext<T>
     void setLineWidth(double i);
 
 
-//    void save();
-//
-//    void setStroke(Color highlightStyle);
-//
-//    void setLineWidth(int i);
-//
-//    void setLineCap(StrokeLineCap defaultStrokeLineCap);
-//
-//    void setLineJoin(StrokeLineJoin defaultStrokeLineJoin);
-//
-//    void beginPath();
-//
-//    void moveTo(double x1, double y1);
-//
-//    void lineTo(double x2, double y2);
-//
-//    void stroke();
-//
-//    void closePath();
-//
-//    void restore();
-//
-//    void setFill(Color highlightStyle);
-//
-//    void setTextSize(int i);
-//
-//    void fillText(String s, double x, double y);
-//
-//    void fillArc(double x, double y, double dx, double dy, int startAngle, int endAngle, ArcType defaultArcType);
-//
-//    void strokeLine(double x, double y, double x1, double y1);
 }
