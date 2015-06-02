@@ -31,15 +31,6 @@
 *
 */
 
-
-
-
-
-
-
-
-
-
 package com.actelion.research.chem.reaction;
 
 import java.util.ArrayList;

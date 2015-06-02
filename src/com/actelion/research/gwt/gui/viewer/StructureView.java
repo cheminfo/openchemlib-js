@@ -202,22 +202,24 @@ class StructureElement
 
         final Element parent = el.getParentElement();
         if (parent != null) {
-            final int width = parent.getClientWidth();
-            final int height = parent.getClientHeight();
             com.google.gwt.user.client.Window.addResizeHandler(new ResizeHandler()
             {
                 public void onResize(ResizeEvent ev)
                 {
-                    int w = parent.getClientWidth();
-                    int h = parent.getClientHeight();
+                    final int width = parent.getOffsetWidth();
+                    final int height = parent.getOffsetHeight();
+                    int w = canvas.getOffsetWidth();
+                    int h = canvas.getOffsetHeight();
                     if (width != w || height != h) {
-                        setCanvasSize(w,h);
+                        setCanvasSize(width,height);
                         draw();
                     }
                 }
             });
+            int width = parent.getOffsetWidth();
+            int height = parent.getOffsetHeight();
+            setCanvasSize(width,height);
         }
-
     }
 
     private void setCanvasSize(int width,int height)
