@@ -32,28 +32,7 @@
 */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.actelion.research.gwt.gui.viewer;
-
 
 import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.IDCodeParser;
@@ -61,6 +40,7 @@ import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gwt.core.Molecule;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.JsExport;
 import com.google.gwt.core.client.js.JsNamespace;
@@ -69,8 +49,11 @@ import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.event.dom.client.DragStartEvent;
+import com.google.gwt.event.dom.client.DragStartHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.user.client.ui.Image;
 
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
@@ -197,6 +180,18 @@ class StructureElement
     public StructureElement(CanvasElement el)
     {
         canvas = Canvas.wrap(el);
+        canvas.addDragStartHandler(new DragStartHandler()
+        {
+            @Override
+            public void onDragStart(DragStartEvent event)
+            {
+                Log.console("OnDragStart");
+                Element el = canvas.getCanvasElement();
+                String idcode = el.getAttribute("data-idcode");
+                event.getDataTransfer().setData("text",idcode);
+            }
+        });
+
         map.put(el, this);
         observeDataChange(el);
 
