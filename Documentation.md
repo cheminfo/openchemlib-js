@@ -301,7 +301,7 @@ create a div with the following attributes:
 
 execute the following JS:
 
-        editorCtrl = window.actchem.StructureEditor.createEditor("editor");
+        editorCtrl = window.OCL.StructureEditor.createEditor("editor");
 
 
 ### Attributes (defaults are in UPPERCASE):

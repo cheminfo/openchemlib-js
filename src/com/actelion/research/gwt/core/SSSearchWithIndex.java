@@ -6,7 +6,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.*;
 
 @JsType
-@JsNamespace("$wnd.actchem")
+@JsNamespace("$wnd.OCL")
 @JsExport
 public class SSSearchWithIndex {
 	

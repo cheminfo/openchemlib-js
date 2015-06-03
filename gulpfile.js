@@ -75,7 +75,7 @@ function build(done) {
         prom.push(exporter({
             input: file,
             output: 'dist/openchemlib-' + mod.name + '.js',
-            exports: 'actchem',
+            exports: 'OCL',
             fake: mod.fake,
             'package': pack
         }));

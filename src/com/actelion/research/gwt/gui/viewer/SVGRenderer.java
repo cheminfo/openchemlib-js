@@ -44,7 +44,7 @@ import java.awt.geom.Rectangle2D;
  * Created by rufenec on 20/03/15.
  */
 @JsType
-@JsNamespace("$wnd.actchem")
+@JsNamespace("$wnd.OCL")
 @JsExport
 public class SVGRenderer
 {

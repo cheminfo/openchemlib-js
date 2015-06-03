@@ -60,7 +60,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsType
-@JsNamespace("$wnd.actchem")
+@JsNamespace("$wnd.OCL")
 @JsExport
 public class StructureView
 {

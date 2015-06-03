@@ -4,7 +4,7 @@ import com.actelion.research.chem.SSSearcher;
 import com.google.gwt.core.client.js.*;
 
 @JsType
-@JsNamespace("$wnd.actchem")
+@JsNamespace("$wnd.OCL")
 @JsExport
 public class SSSearch {
 	

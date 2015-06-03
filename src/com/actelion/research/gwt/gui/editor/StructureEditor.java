@@ -67,7 +67,7 @@ import java.util.List;
  * Time: 10:05 AM
  */
 @JsType
-@JsNamespace("$wnd.actchem")
+@JsNamespace("$wnd.OCL")
 @JsExport
 public class StructureEditor implements IChangeListener//,Exportable
 {

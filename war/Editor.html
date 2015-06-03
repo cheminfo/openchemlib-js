@@ -74,7 +74,7 @@
     function changeMolecule(idc)
     {
         if(idc != idcode) {
-            var svg = window.actchem.SVGRenderer.renderMolecule(idc,400,400);
+            var svg = window.OCL.SVGRenderer.renderMolecule(idc,400,400);
             var div = document.getElementById("svg");
             div.innerHTML = svg;
             idcode = idc;
@@ -96,7 +96,7 @@
     //function editorLoaded()
     {
         /* Find the DIV element by name and place the editor into it */
-        editorCtrl = window.actchem.StructureEditor.createEditor("editor");
+        editorCtrl = window.OCL.StructureEditor.createEditor("editor");
         editorCtrl.setAtomHightlightCallback(onAtomHighlight);
         editorCtrl.setBondHightlightCallback(onBondHighlight);
         editorCtrl.setChangeListenerCallback(changeMolecule);
