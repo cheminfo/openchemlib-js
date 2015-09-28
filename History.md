@@ -1,4 +1,10 @@
-3.0.0-beta6 / 2015-xx-xx
+3.0.0 / 2015-09-28
+==================
+
+* Make JS API in line with Java API
+* Remove cheminfo-specific methods
+
+3.0.0-beta6 / 2015-06-03
 ========================
 
 * Changed prefix from actchem to OCL

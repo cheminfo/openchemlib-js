@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git://github.com/cheminfo/openchemlib-js.git"
   },
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "author": "Michaël Zasso",
   "contributors": [
     "Christian Rufener"

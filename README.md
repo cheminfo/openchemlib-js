@@ -45,5 +45,4 @@ Copy the required java files from the openchemlib project
 
 ## License
 
-BSD
-
+[BSD-3-Clause](./LICENSE)
