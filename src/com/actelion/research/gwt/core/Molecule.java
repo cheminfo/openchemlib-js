@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
 
-import org.cheminfo.chem.DiastereotopicAtomID;
-import org.cheminfo.chem.HydrogenHandler;
-
 import com.actelion.research.chem.*;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.*;
@@ -146,15 +143,6 @@ public class Molecule {
 		act_mol.ensureHelperArrays(required);
 	}
 	
-	public void expandHydrogens() {
-		HydrogenHandler.expandAllHydrogens(act_mol);
-	}
-	
-	public native JavaScriptObject[] getDiastereotopicAtomIDs(JavaScriptObject element) /*-{
-		element = element || '';
-		return this.@com.actelion.research.gwt.core.Molecule::getDiastereotopicAtomIDs(Ljava/lang/String;)(element);
-	}-*/;
-	
 	/* public methods after this line will not be accessible from javascript */
 	
 	@JsNoExport
@@ -178,51 +166,7 @@ public class Molecule {
 	}
 	
 	@JsNoExport
-	public JavaScriptObject[] getDiastereotopicAtomIDs(String element) {
-		String[] diaIDs = getDiastereotopicAtomIDsArray();
-		HashMap<String, Vector<Integer>> result=new HashMap<String, Vector<Integer>>();
-		for (int i=0; i<diaIDs.length; i++) {
-			if (element == null || element.equals("") || act_mol.getAtomLabel(i).equals(element)) {
-				String diaID=diaIDs[i];
-				if (result.containsKey(diaID)) {
-					result.get(diaID).add(i);
-				} else {
-					Vector<Integer> atomIDs=new Vector<Integer>();
-					atomIDs.add(i);
-					result.put(diaID, atomIDs);
-				}
-			}
-		}
-		Set<String> keySet = result.keySet();
-		JavaScriptObject[] toReturn = new JavaScriptObject[keySet.size()];
-		int i = 0;
-		for(String diaID : keySet) {
-			Vector<Integer> linked=result.get(diaID);
-			int jj = linked.size();
-			int[] linkedAtoms = new int[jj];
-			for(int j = 0; j < jj; j++) {
-				linkedAtoms[j] = linked.get(j);
-			}
-			toReturn[i++] = getDiastereotopicAtomID(diaID, linkedAtoms, act_mol.getAtomLabel(linked.get(0)));
-		}
-		return toReturn;
-	}
-	
-	@JsNoExport
 	public StereoMolecule getStereoMolecule() {
 		return act_mol;
 	}
-	
-	public String[] getDiastereotopicAtomIDsArray() {
-		return DiastereotopicAtomID.getAtomIds(act_mol);
-	}
-	
-	@JsNoExport
-	public native JavaScriptObject getDiastereotopicAtomID(String diaID, int[] linkedAtoms, String element) /*-{
-		return {
-			id: diaID,
-			atoms: linkedAtoms,
-			element: element
-		};
-	}-*/;
 }
