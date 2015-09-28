@@ -25,11 +25,23 @@ public class SDFileParser {
 		return new Molecule(parser.getMolecule());
 	}
 	
-	public String getMolfile() {
+	public String getNextMolFile() {
 		return parser.getNextMolFile();
 	}
+
+	public String getNextFieldData() {
+		return parser.getNextFieldData();
+	}
+
+	public String[] getFieldNames(int recordsToInspect) {
+		return parser.getFieldNames(recordsToInspect);
+	}
 	
-	public String getField(String name) {
+	public String getFieldData(int idx) {
+		return parser.getFieldData(idx);
+	}
+
+   	public String getField(String name) {
 		String[] names = parser.getFieldNames();
 		for(int i = 0; i < names.length; i++) {
 			if(names[i].equals(name)) {
@@ -38,13 +50,4 @@ public class SDFileParser {
 		}
 		return null;
 	}
-	
-	public String[] getFieldNames() {
-		return parser.getFieldNames();
-	}
-	
-	public String getFieldData(int idx) {
-		return parser.getFieldData(idx);
-	}
-
 }

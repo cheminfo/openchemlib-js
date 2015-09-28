@@ -2,8 +2,8 @@
 
 [Molecule](#molecule)  
 [SDF parser](#sdfileparser)  
-[Substructure search](#sssearch)  
-[Substructure search with index](#sssearchwithindex)
+[Substructure searcher](#sssearcher)  
+[Substructure searcher with index](#sssearcherwithindex)
 
 [StructureEditor](#structureeditor)
 
@@ -144,9 +144,11 @@ while(parser.next()) {
 
 Returns the current [`Molecule`](#molecule)
 
-### parser.getMolfile()
+### parser.getNextMolFile()
 
 Returns the current molfile string
+
+### parser.getNextFieldData()
 
 ### parser.getField(name)
 
@@ -158,15 +160,15 @@ Returns the list of field names for the entire sdf
 
 ---------------------------------------
 
-## SSSearch
+## SSSearcher
 
-Basic substructure search
+Basic substructure searcher
 
-### new SSSearch()
+### new SSSearcher()
 
 Create a new substructure searcher
 
-### search.setFragment(fragment)
+### searcher.setFragment(fragment)
 
 Set the `fragment` to search
 
@@ -174,7 +176,7 @@ __Arguments__
 
 * `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
 
-### search.setMolecule(molecule)
+### searcher.setMolecule(molecule)
 
 Set the target `molecule` in which the search will be done
 
@@ -182,29 +184,39 @@ __Arguments__
 
 * `molecule` - [Molecule](#molecule) instance to set as target molecule
 
-### search.isFragmentInMolecule()
+### searcher.setMol(fragment, molecule)
+
+### searcher.isFragmentInMolecule()
 
 Returns true if the set fragment is in the target molecule, false otherwise
 
 ---------------------------------------
 
-## SSSearchWithIndex
+## SSSearcherWithIndex
 
 Fast substructure search with index filtering
 
-### SSSearchWithIndex.getKeyIDCode()
+### SSSearcherWithIndex.getKeyIDCode()
 
 Returns an array of the 512 idcodes that are used for the index
 
-### SSSearchWithIndex.getTanimotoSimilarity(index1, index2)
+### SSSearcherWithIndex.getSimilarityTanimoto(index1, index2)
 
 Returns the Tanimoto similarity between the two indexes
 
-### new SSSearchWithIndex()
+### SSSearcherWithIndex.getSimilarityAngleCosine(index1, index2)
+
+### SSSearcherWithIndex.getIndexFromHexString(string)
+
+### SSSearcherWithIndex.getHexStringFromIndex(index)
+
+### SSSearcherWithIndex.bitCount(int)
+
+### new SSSearcherWithIndex()
 
 Create a new substructure searcher
 
-### search.setFragment(fragment, [index])
+### searcher.setFragment(fragment, [index])
 
 Set the `fragment` to search
 
@@ -213,7 +225,7 @@ __Arguments__
 * `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
 * `index` - If the index for this fragment was computed previously, it can be provided here to save time
 
-### search.setMolecule(molecule, [index])
+### searcher.setMolecule(molecule, [index])
 
 Set the target `molecule` in which the search will be done
 
@@ -222,10 +234,13 @@ __Arguments__
 * `molecule` - [Molecule](#molecule) instance to set as target molecule
 * `index` - If the index for this fragment was computed previously, it can be provided here to save time
 
-### search.isFragmentInMolecule()
+### searcher.isFragmentInMolecule()
 
 Returns true if the set fragment is in the target molecule, false otherwise
 
+### searcher.createIndex()
+
+---------------------------------------
 
 ## StructureEditor
 
