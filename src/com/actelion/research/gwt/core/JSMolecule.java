@@ -16,18 +16,18 @@ public class JSMolecule {
 	
 	private static Services services = Services.getInstance();
 	
-	private StereoMolecule act_mol;
+	private StereoMolecule oclMolecule;
 	private MoleculeProperties properties = null;
 	private MolecularFormula formula = null;
 
 	@JsNoExport
 	public JSMolecule(int atoms, int bonds) {
-		act_mol = new StereoMolecule(atoms, bonds);
+		oclMolecule = new StereoMolecule(atoms, bonds);
 	}
 
 	@JsNoExport
 	public JSMolecule(StereoMolecule mol) {
-		act_mol = mol;
+		oclMolecule = mol;
 	}
 
 	@JsNoExport
@@ -44,7 +44,7 @@ public class JSMolecule {
 	
 	public static JSMolecule fromMolfile(String molfile) throws Exception {
 		JSMolecule mol = new JSMolecule();
-		services.getMolfileParser().parse(mol.act_mol, molfile);
+		services.getMolfileParser().parse(mol.oclMolecule, molfile);
 		return mol;
 	}
 	
@@ -65,27 +65,27 @@ public class JSMolecule {
 	}-*/;
 	
 	public String toSmiles() {
-		return services.getSmilesCreator().generateSmiles(act_mol);
+		return services.getSmilesCreator().generateSmiles(oclMolecule);
 	}
 	
 	public String toMolfile() {
-		MolfileCreator creator = new MolfileCreator(act_mol);
+		MolfileCreator creator = new MolfileCreator(oclMolecule);
 		return creator.getMolfile();
 	}
 	
 	public String toSVG(int width, int height, String id) {
-		SVGDepictor d = new SVGDepictor(act_mol, id);
+		SVGDepictor d = new SVGDepictor(oclMolecule, id);
 		d.validateView(null, new Rectangle2D.Float(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
 		d.paint(null);
 		return d.toString();
 	}
 	
 	public String getIDCode() {
-		return act_mol.getIDCode();
+		return oclMolecule.getIDCode();
 	}
 	
 	public String getIDCoordinates() {
-		return act_mol.getIDCoordinates();
+		return oclMolecule.getIDCoordinates();
 	}
 	
 	public native JavaScriptObject getIDCodeAndCoordinates() /*-{
@@ -97,43 +97,43 @@ public class JSMolecule {
 	
 	public MolecularFormula getMolecularFormula() {
 		if(formula == null) {
-			formula = new MolecularFormula(act_mol);
+			formula = new MolecularFormula(oclMolecule);
 		}
 		return formula;
 	}
 	
 	public MoleculeProperties getProperties() {
 		if(properties == null) {
-			properties = new MoleculeProperties(act_mol);
+			properties = new MoleculeProperties(oclMolecule);
 		}
 		return properties;
 	}
 	
 	public int[] getIndex() {
-		return services.getSSSearcherWithIndex().createIndex(act_mol);
+		return services.getSSSearcherWithIndex().createIndex(oclMolecule);
 	}
 	
 	public void inventCoordinates() {
 		CoordinateInventor inventor = services.getCoordinateInventor();
 		inventor.setRandomSeed(0);
-		inventor.invent(act_mol);
-		act_mol.setStereoBondsFromParity();
+		inventor.invent(oclMolecule);
+		oclMolecule.setStereoBondsFromParity();
 	}
 	
 	public boolean isFragment() {
-		return act_mol.isFragment();
+		return oclMolecule.isFragment();
 	}
 	
 	public void setFragment(boolean isFragment) {
-		act_mol.setFragment(isFragment);
+		oclMolecule.setFragment(isFragment);
 	}
 	
 	public int getFragmentNumbers() {
-		return act_mol.getFragmentNumbers(new int[act_mol.getAllAtoms()], false);
+		return oclMolecule.getFragmentNumbers(new int[oclMolecule.getAllAtoms()], false);
 	}
 	
 	public JSMolecule[] getFragments() {
-		StereoMolecule[] fragments = act_mol.getFragments();
+		StereoMolecule[] fragments = oclMolecule.getFragments();
 		JSMolecule[] newFragments = new JSMolecule[fragments.length];
 		for(int i = 0; i < fragments.length; i++) {
 			newFragments[i] = new JSMolecule(fragments[i]);
@@ -142,7 +142,7 @@ public class JSMolecule {
 	}
 	
 	public void ensureHelperArrays(int required) {
-		act_mol.ensureHelperArrays(required);
+		oclMolecule.ensureHelperArrays(required);
 	}
 	
 	/* public methods after this line will not be accessible from javascript */
@@ -150,7 +150,7 @@ public class JSMolecule {
 	@JsNoExport
 	public static JSMolecule fromSmiles(String smiles, boolean ensure2DCoordinates, boolean readStereoFeatures) throws Exception {
 		JSMolecule mol = new JSMolecule();
-		services.getSmilesParser().parse(mol.act_mol, smiles.getBytes(), false, readStereoFeatures);
+		services.getSmilesParser().parse(mol.oclMolecule, smiles.getBytes(), false, readStereoFeatures);
 		if (ensure2DCoordinates) {
 			mol.inventCoordinates();
 		}
@@ -169,6 +169,6 @@ public class JSMolecule {
 	
 	@JsNoExport
 	public StereoMolecule getStereoMolecule() {
-		return act_mol;
+		return oclMolecule;
 	}
 }
