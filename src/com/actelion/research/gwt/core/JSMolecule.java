@@ -10,9 +10,9 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.*;
 
 @JsType
-@JsNamespace("$wnd.OCL")
-@JsExport
-public class Molecule {
+@JsNamespace("OCL")
+@JsExport("Molecule")
+public class JSMolecule {
 	
 	private static Services services = Services.getInstance();
 	
@@ -20,39 +20,39 @@ public class Molecule {
 	private MoleculeProperties properties = null;
 	private MolecularFormula formula = null;
 	
-	public Molecule() {
+	public JSMolecule() {
 		this(new StereoMolecule(32, 32));
 	}
 	
-	public Molecule(StereoMolecule mol) {
+	public JSMolecule(StereoMolecule mol) {
 		act_mol = mol;
 	}
 	
-	public static native Molecule fromSmiles(String smiles, JavaScriptObject options) throws Exception /*-{
+	public static native JSMolecule fromSmiles(String smiles, JavaScriptObject options) throws Exception /*-{
 		options = options || {};
 		var coordinates = !options.noCoordinates;
 		var stereo = !options.noStereo;
-		return @com.actelion.research.gwt.core.Molecule::fromSmiles(Ljava/lang/String;ZZ)(smiles, coordinates, stereo);
+		return @com.actelion.research.gwt.core.JSMolecule::fromSmiles(Ljava/lang/String;ZZ)(smiles, coordinates, stereo);
 	}-*/;
 	
-	public static Molecule fromMolfile(String molfile) throws Exception {
-		Molecule mol = new Molecule();
+	public static JSMolecule fromMolfile(String molfile) throws Exception {
+		JSMolecule mol = new JSMolecule();
 		services.getMolfileParser().parse(mol.act_mol, molfile);
 		return mol;
 	}
 	
-	public static native Molecule fromIDCode(String idcode, JavaScriptObject coordinates) /*-{
+	public static native JSMolecule fromIDCode(String idcode, JavaScriptObject coordinates) /*-{
 		var mol;
 		if (typeof coordinates === 'undefined') {
 			coordinates = true;
 		}
 		if (typeof coordinates === 'boolean') {
-			mol = @com.actelion.research.gwt.core.Molecule::fromIDCode(Ljava/lang/String;Z)(idcode, false);
+			mol = @com.actelion.research.gwt.core.JSMolecule::fromIDCode(Ljava/lang/String;Z)(idcode, false);
 			if (coordinates === true) {
-				mol.@com.actelion.research.gwt.core.Molecule::inventCoordinates()();
+				mol.@com.actelion.research.gwt.core.JSMolecule::inventCoordinates()();
 			}
 		} else if(typeof coordinates === 'string') {
-			mol = @com.actelion.research.gwt.core.Molecule::fromIDCode(Ljava/lang/String;Ljava/lang/String;)(idcode, coordinates);
+			mol = @com.actelion.research.gwt.core.JSMolecule::fromIDCode(Ljava/lang/String;Ljava/lang/String;)(idcode, coordinates);
 		}
 		return mol;
 	}-*/;
@@ -85,8 +85,8 @@ public class Molecule {
 	
 	public native JavaScriptObject getIDCodeAndCoordinates() /*-{
 		return {
-			idCode: this.@com.actelion.research.gwt.core.Molecule::getIDCode()(),
-			coordinates: this.@com.actelion.research.gwt.core.Molecule::getIDCoordinates()()
+			idCode: this.@com.actelion.research.gwt.core.JSMolecule::getIDCode()(),
+			coordinates: this.@com.actelion.research.gwt.core.JSMolecule::getIDCoordinates()()
 		};
 	}-*/;
 	
@@ -130,11 +130,11 @@ public class Molecule {
 		return act_mol.getFragmentNumbers(new int[act_mol.getAllAtoms()], false);
 	}
 	
-	public Molecule[] getFragments() {
+	public JSMolecule[] getFragments() {
 		StereoMolecule[] fragments = act_mol.getFragments();
-		Molecule[] newFragments = new Molecule[fragments.length];
+		JSMolecule[] newFragments = new JSMolecule[fragments.length];
 		for(int i = 0; i < fragments.length; i++) {
-			newFragments[i] = new Molecule(fragments[i]);
+			newFragments[i] = new JSMolecule(fragments[i]);
 		}
 		return newFragments;
 	}
@@ -146,8 +146,8 @@ public class Molecule {
 	/* public methods after this line will not be accessible from javascript */
 	
 	@JsNoExport
-	public static Molecule fromSmiles(String smiles, boolean ensure2DCoordinates, boolean readStereoFeatures) throws Exception {
-		Molecule mol = new Molecule();
+	public static JSMolecule fromSmiles(String smiles, boolean ensure2DCoordinates, boolean readStereoFeatures) throws Exception {
+		JSMolecule mol = new JSMolecule();
 		services.getSmilesParser().parse(mol.act_mol, smiles.getBytes(), false, readStereoFeatures);
 		if (ensure2DCoordinates) {
 			mol.inventCoordinates();
@@ -156,13 +156,13 @@ public class Molecule {
 	}
 	
 	@JsNoExport
-	public static Molecule fromIDCode(String idcode, boolean ensure2DCoordinates) {
-		return new Molecule(services.getIDCodeParser(ensure2DCoordinates).getCompactMolecule(idcode));
+	public static JSMolecule fromIDCode(String idcode, boolean ensure2DCoordinates) {
+		return new JSMolecule(services.getIDCodeParser(ensure2DCoordinates).getCompactMolecule(idcode));
 	}
 	
 	@JsNoExport
-	public static Molecule fromIDCode(String idcode, String coordinates) {
-		return new Molecule(services.getIDCodeParser(false).getCompactMolecule(idcode, coordinates));
+	public static JSMolecule fromIDCode(String idcode, String coordinates) {
+		return new JSMolecule(services.getIDCodeParser(false).getCompactMolecule(idcode, coordinates));
 	}
 	
 	@JsNoExport
