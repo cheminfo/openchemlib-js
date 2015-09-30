@@ -19,13 +19,20 @@ public class JSMolecule {
 	private StereoMolecule act_mol;
 	private MoleculeProperties properties = null;
 	private MolecularFormula formula = null;
-	
-	public JSMolecule() {
-		this(new StereoMolecule(32, 32));
+
+	@JsNoExport
+	public JSMolecule(int atoms, int bonds) {
+		act_mol = new StereoMolecule(atoms, bonds);
 	}
-	
+
+	@JsNoExport
 	public JSMolecule(StereoMolecule mol) {
 		act_mol = mol;
+	}
+
+	@JsNoExport
+	public JSMolecule() {
+		this(32, 32);
 	}
 	
 	public static native JSMolecule fromSmiles(String smiles, JavaScriptObject options) throws Exception /*-{
@@ -73,12 +80,10 @@ public class JSMolecule {
 		return d.toString();
 	}
 	
-	@JsProperty
 	public String getIDCode() {
 		return act_mol.getIDCode();
 	}
 	
-	@JsProperty
 	public String getIDCoordinates() {
 		return act_mol.getIDCoordinates();
 	}
@@ -90,7 +95,6 @@ public class JSMolecule {
 		};
 	}-*/;
 	
-	@JsProperty
 	public MolecularFormula getMolecularFormula() {
 		if(formula == null) {
 			formula = new MolecularFormula(act_mol);
@@ -98,7 +102,6 @@ public class JSMolecule {
 		return formula;
 	}
 	
-	@JsProperty
 	public MoleculeProperties getProperties() {
 		if(properties == null) {
 			properties = new MoleculeProperties(act_mol);
@@ -106,7 +109,6 @@ public class JSMolecule {
 		return properties;
 	}
 	
-	@JsProperty
 	public int[] getIndex() {
 		return services.getSSSearcherWithIndex().createIndex(act_mol);
 	}

@@ -46,7 +46,6 @@ import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.JsExport;
 import com.google.gwt.core.client.js.JsNamespace;
-import com.google.gwt.core.client.js.JsProperty;
 import com.google.gwt.core.client.js.JsType;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.*;
@@ -89,6 +88,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         initObserver();
     }
 
+    @JsNoExport
     public StructureEditor()
     {
         this("editor");
@@ -214,13 +214,11 @@ public class StructureEditor implements IChangeListener//,Exportable
         return new StructureEditor(id);
     }
 
-    @JsProperty
     public String getIDCode()
     {
         return model.getIDCode();
     }
 
-    @JsProperty
     public void setIDCode(String idCode)
     {
         try {
@@ -240,50 +238,42 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
-    @JsProperty
     public void setFragment(boolean set)
     {
         model.setFragment(set);
     }
 
-    @JsProperty
     public boolean isFragment()
     {
         return model.isFragment();
     }
 
-    @JsProperty
     public String getMolFile()
     {
         return model.getMolFile(false);
     }
 
-    @JsProperty
     public void setMolFile(String molFile)
     {
         model.setMolFile(molFile);
     }
 
-    @JsProperty
     public String getMolFileV3()
     {
         return model.getMolFile(true);
     }
 
-    @JsProperty
     public String getSmiles()
     {
         return model.getSmiles();
     }
 
-    @JsProperty
     public void setSmiles(String smiles)
     {
         model.setSmiles(smiles);
     }
 
 
-    @JsProperty
     public void setAtomHightlightCallback(final JavaScriptObject atomHightlightCallback)
     {
         if (atomHightlightCallback != null) {
@@ -299,7 +289,6 @@ public class StructureEditor implements IChangeListener//,Exportable
             model.registerAtomHighlightCallback(null);
     }
 
-    @JsProperty
     public void setBondHightlightCallback(final JavaScriptObject bondHightlightCallback)
     {
         if (bondHightlightCallback != null) {
@@ -316,7 +305,6 @@ public class StructureEditor implements IChangeListener//,Exportable
     }
 
 
-    @JsProperty
     public void setChangeListenerCallback(final JavaScriptObject cb)
     {
         if (cb != null) {

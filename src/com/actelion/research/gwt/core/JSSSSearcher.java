@@ -8,7 +8,7 @@ import com.google.gwt.core.client.js.*;
 @JsExport("SSSearcher")
 public class JSSSSearcher {
 	
-	private SSSearcher searcher = SSSearcher();
+	private SSSearcher searcher = new SSSearcher();
 	
 	public JSSSSearcher() {}
 

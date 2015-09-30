@@ -11,19 +11,16 @@ public class MolecularFormula extends com.actelion.research.chem.MolecularFormul
 	}
 	
 	@Override
-	@JsProperty
 	public double getAbsoluteWeight() {
 		return super.getAbsoluteWeight();
 	}
 	
 	@Override
-	@JsProperty
 	public double getRelativeWeight() {
 		return super.getRelativeWeight();
 	}
 	
 	@Override
-	@JsProperty
 	public String getFormula() {
 		return super.getFormula();
 	}
