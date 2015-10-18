@@ -29,6 +29,6 @@
     "fs-extra": "^0.24.0",
     "gulp": "^3.8.10",
     "gwt-api-exporter": "^1.1.5",
-    "minimist": "^1.1.1"
+    "minimist": "^1.2.0"
   }
 }
