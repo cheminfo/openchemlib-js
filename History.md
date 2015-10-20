@@ -1,3 +1,9 @@
+3.0.1 / 2015-10-20
+==================
+
+* update openchemlib
+* use GWT 2.8 to fix bug in SSSearcher
+
 3.0.0 / 2015-09-28
 ==================
 
