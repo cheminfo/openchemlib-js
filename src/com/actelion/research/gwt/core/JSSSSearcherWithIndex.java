@@ -1,27 +1,28 @@
 package com.actelion.research.gwt.core;
 
+import com.actelion.research.chem.SSSearcherWithIndex;
 import com.actelion.research.chem.StereoMolecule;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.*;
 
 @JsType
-@JsNamespace("$wnd.OCL")
-@JsExport
-public class SSSearcherWithIndex {
+@JsNamespace("OCL")
+@JsExport("SSSearcherWithIndex")
+public class JSSSSearcherWithIndex {
 	
-	private com.actelion.research.chem.SSSearcherWithIndex searcher = new com.actelion.research.chem.SSSearcherWithIndex();
+	private SSSearcherWithIndex searcher = new SSSearcherWithIndex();
 	
-	public SSSearcherWithIndex() {}
+	public JSSSSearcherWithIndex() {}
 	
 	public static String[] getKeyIDCode() {
 		return com.actelion.research.chem.SSSearcherWithIndex.cKeyIDCode;
 	}
 
-	public void setFragment(Molecule fragment, int[] index) {
+	public void setFragment(JSMolecule fragment, int[] index) {
 		this.searcher.setFragment(fragment.getStereoMolecule(), index);
 	}
 
-	public void setMolecule(Molecule molecule, int[] index) {
+	public void setMolecule(JSMolecule molecule, int[] index) {
 		this.searcher.setMolecule(molecule.getStereoMolecule(), index);
 	}
 	
@@ -29,28 +30,28 @@ public class SSSearcherWithIndex {
 		return this.searcher.isFragmentInMolecule();
 	}
 	
-	public int[] createIndex(Molecule molecule) {
+	public int[] createIndex(JSMolecule molecule) {
 		return searcher.createIndex(molecule.getStereoMolecule());
 	}
 	
 	public static float getSimilarityTanimoto(int[] index1, int[] index2) {
-		return com.actelion.research.chem.SSSearcherWithIndex.getSimilarityTanimoto(index1, index2);
+		return SSSearcherWithIndex.getSimilarityTanimoto(index1, index2);
 	}
 
 	public static float getSimilarityAngleCosine(int[] index1, int[] index2) {
-		return com.actelion.research.chem.SSSearcherWithIndex.getSimilarityAngleCosine(index1, index2);
+		return SSSearcherWithIndex.getSimilarityAngleCosine(index1, index2);
 	}
 
 	public static int[] getIndexFromHexString(String hex) {
-		return com.actelion.research.chem.SSSearcherWithIndex.getIndexFromHexString(hex);
+		return SSSearcherWithIndex.getIndexFromHexString(hex);
 	}
 
 	public static String getHexStringFromIndex(int[] index) {
-		return com.actelion.research.chem.SSSearcherWithIndex.getHexStringFromIndex(index);
+		return SSSearcherWithIndex.getHexStringFromIndex(index);
 	}
 
 	public static int bitCount(int x) {
-	    return com.actelion.research.chem.SSSearcherWithIndex.bitCount(x);
+	    return SSSearcherWithIndex.bitCount(x);
 	}
 
 }

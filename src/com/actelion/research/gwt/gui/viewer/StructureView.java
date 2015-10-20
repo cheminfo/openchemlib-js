@@ -37,7 +37,7 @@ package com.actelion.research.gwt.gui.viewer;
 import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.IDCodeParser;
 import com.actelion.research.chem.StereoMolecule;
-import com.actelion.research.gwt.core.Molecule;
+import com.actelion.research.gwt.core.JSMolecule;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.GWT;
@@ -60,7 +60,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsType
-@JsNamespace("$wnd.OCL")
+@JsNamespace("OCL")
 @JsExport
 public class StructureView
 {
@@ -116,7 +116,7 @@ public class StructureView
     }
     
     @JsExport
-    public static void drawMolecule(CanvasElement el, Molecule mol, JavaScriptObject options)
+    public static void drawMolecule(CanvasElement el, JSMolecule mol, JavaScriptObject options)
     {
     	drawMolecule(el, mol, getDisplayMode(options), null);
     }
@@ -161,7 +161,7 @@ public class StructureView
     }
 */
 
-    private static void drawMolecule(CanvasElement el, Molecule mol, int displayMode,String[] atomText)
+    private static void drawMolecule(CanvasElement el, JSMolecule mol, int displayMode,String[] atomText)
     {
     	StructureElement.drawMolecule(el, mol, displayMode,atomText);
     }
@@ -330,7 +330,7 @@ class StructureElement
         }
     }
     
-    public static void drawMolecule(CanvasElement el, Molecule mol, int displayMode,String[] atomText)
+    public static void drawMolecule(CanvasElement el, JSMolecule mol, int displayMode,String[] atomText)
     {
     	Canvas canvas = Canvas.wrap(el);
     	Context2d ctx = canvas.getContext2d();

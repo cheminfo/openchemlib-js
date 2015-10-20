@@ -1,26 +1,27 @@
 package com.actelion.research.gwt.core;
 
+import com.actelion.research.chem.SSSearcher;
 import com.google.gwt.core.client.js.*;
 
 @JsType
-@JsNamespace("$wnd.OCL")
-@JsExport
-public class SSSearcher {
+@JsNamespace("OCL")
+@JsExport("SSSearcher")
+public class JSSSSearcher {
 	
-	private com.actelion.research.chem.SSSearcher searcher = new com.actelion.research.chem.SSSearcher();
+	private SSSearcher searcher = new SSSearcher();
 	
-	public SSSearcher() {}
+	public JSSSSearcher() {}
 
-	public void setMol(Molecule fragment, Molecule molecule) {
+	public void setMol(JSMolecule fragment, JSMolecule molecule) {
 	    setMolecule(molecule);
 	    setFragment(fragment);
 	}
 	
-	public void setFragment(Molecule fragment) {
+	public void setFragment(JSMolecule fragment) {
 		this.searcher.setFragment(fragment.getStereoMolecule());
 	}
 	
-	public void setMolecule(Molecule molecule) {
+	public void setMolecule(JSMolecule molecule) {
 		this.searcher.setMolecule(molecule.getStereoMolecule());
 	}
 	
