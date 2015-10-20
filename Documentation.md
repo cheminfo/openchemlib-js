@@ -89,14 +89,6 @@ Returns the number of fragments in the molecule
 
 Returns an array of fragments from the molecule
 
-### molecule.expandHydrogens()
-
-Add all implicit hydrogens to the molecule
-
-### molecule.getDiastereotopicAtomIDs([element])
-
-### molecule.getDiastereotopicAtomIDsArray()
-
 ## MolecularFormula
 
 ### mf.getAbsoluteWeight()
