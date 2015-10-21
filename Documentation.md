@@ -257,6 +257,18 @@ Returns the calculated risk as an integer.
 
 ---------------------------------------
 
+## DruglikenessPredictor
+
+### Constants
+
+* DruglikenessPredictor.DRUGLIKENESS_UNKNOWN
+
+### DruglikenessPredictor.assessDruglikeness(molecule)
+
+Returns the calculated drug likeness as a double.
+
+---------------------------------------
+
 ## StructureEditor
 
 ### StructureEditor.createEditor(id)
