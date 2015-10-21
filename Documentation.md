@@ -4,6 +4,7 @@
 [SDF parser](#sdfileparser)  
 [Substructure searcher](#sssearcher)  
 [Substructure searcher with index](#sssearcherwithindex)
+[Toxicity predictor](#toxicitypredictor)
 
 [StructureEditor](#structureeditor)
 
@@ -231,6 +232,28 @@ __Arguments__
 Returns true if the set fragment is in the target molecule, false otherwise
 
 ### searcher.createIndex()
+
+---------------------------------------
+
+## ToxicityPredictor
+
+### Risk constants
+
+* ToxicityPredictor.RISK_UNKNOWN
+* ToxicityPredictor.RISK_NO
+* ToxicityPredictor.RISK_LOW
+* ToxicityPredictor.RISK_HIGH
+
+### Toxicity type constants
+
+* ToxicityPredictor.TYPE_MUTAGENIC
+* ToxicityPredictor.TYPE_TUMORIGENIC
+* ToxicityPredictor.TYPE_IRRITANT
+* ToxicityPredictor.TYPE_REPRODUCTIVE_EFFECTIVE
+
+### ToxicityPredictor.assessRisk(molecule, type)
+
+Returns the calculated risk as an integer.
 
 ---------------------------------------
 
