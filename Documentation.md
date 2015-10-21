@@ -3,8 +3,9 @@
 [Molecule](#molecule)  
 [SDF parser](#sdfileparser)  
 [Substructure searcher](#sssearcher)  
-[Substructure searcher with index](#sssearcherwithindex)
-[Toxicity predictor](#toxicitypredictor)
+[Substructure searcher with index](#sssearcherwithindex)  
+[Toxicity predictor](#toxicitypredictor)  
+[Drug likeness predictor](#druglikenesspredictor)
 
 [StructureEditor](#structureeditor)
 
