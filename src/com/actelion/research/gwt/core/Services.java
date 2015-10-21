@@ -7,6 +7,7 @@ import com.actelion.research.chem.SSSearcherWithIndex;
 import com.actelion.research.chem.SmilesCreator;
 import com.actelion.research.chem.SmilesParser;
 import com.actelion.research.chem.prediction.ToxicityPredictor;
+import com.actelion.research.chem.prediction.DruglikenessPredictor;
 import com.actelion.research.calc.ThreadMaster;
 
 public class Services {
@@ -20,6 +21,7 @@ public class Services {
 	private IDCodeParser idcodeParserWithCoordinates = null;
 	private CoordinateInventor coordinateInventor = null;
 	private SSSearcherWithIndex sSSearcherWithIndex = null;
+	private DruglikenessPredictor druglikenessPredictor = null;
 	private ToxicityPredictor toxicityPredictor = null;
 	private ThreadMaster threadMaster = null;
 	
@@ -86,6 +88,13 @@ public class Services {
 			toxicityPredictor = new ToxicityPredictor();
 		}
 		return toxicityPredictor;
+	}
+
+	public DruglikenessPredictor getDruglikenessPredictor() {
+		if(druglikenessPredictor == null) {
+			druglikenessPredictor = new DruglikenessPredictor();
+		}
+		return druglikenessPredictor;
 	}
 
 	public ThreadMaster getThreadMaster() {

@@ -59,6 +59,8 @@ var modified = [
     'chem/AbstractDrawingObject',
     'chem/DepictorTransformation',
 
+    'chem/prediction/DruglikenessPredictor',
+    'chem/prediction/IncrementTable',
     'chem/prediction/ToxicityPredictor',
 ];
 
