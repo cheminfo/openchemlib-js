@@ -1,6 +1,7 @@
 package com.actelion.research.gwt.core;
 
 import com.actelion.research.chem.prediction.ToxicityPredictor;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.*;
 
 @JsType
@@ -8,6 +9,7 @@ import com.google.gwt.core.client.js.*;
 @JsExport("ToxicityPredictor")
 public class JSToxicityPredictor {
 	private static Services services = Services.getInstance();
+	private ToxicityPredictor predictor;
 
 	public static int RISK_UNKNOWN = ToxicityPredictor.cUnknownRisk;
 	public static int RISK_NO = ToxicityPredictor.cNoRisk;
@@ -19,7 +21,15 @@ public class JSToxicityPredictor {
 	public static int TYPE_IRRITANT = ToxicityPredictor.cRiskTypeIrritant;
 	public static int TYPE_REPRODUCTIVE_EFFECTIVE = ToxicityPredictor.cRiskTypeReproductiveEffective;
 
-	public static int assessRisk(JSMolecule molecule, int riskType) {
-		return services.getToxicityPredictor().assessRisk(molecule.getStereoMolecule(), riskType, services.getThreadMaster());
+	public JSToxicityPredictor() {
+		predictor = new ToxicityPredictor();
+	}
+
+	public int assessRisk(JSMolecule molecule, int riskType) {
+		return predictor.assessRisk(molecule.getStereoMolecule(), riskType, services.getThreadMaster());
+	}
+
+	public JavaScriptObject getDetail(JSMolecule molecule, int riskType) {
+		return Util.convertParameterizedStringList(predictor.getDetail(molecule.getStereoMolecule(), riskType));
 	}
 }

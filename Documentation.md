@@ -251,9 +251,14 @@ Returns true if the set fragment is in the target molecule, false otherwise
 * ToxicityPredictor.TYPE_IRRITANT
 * ToxicityPredictor.TYPE_REPRODUCTIVE_EFFECTIVE
 
-### ToxicityPredictor.assessRisk(molecule, type)
+### predictor.assessRisk(molecule, type)
 
 Returns the calculated risk as an integer.
+
+### predictor.getDetail(molecule, type)
+
+Returns detailed information about the risk and the substructures
+that are responsible for it.
 
 ---------------------------------------
 
@@ -263,9 +268,15 @@ Returns the calculated risk as an integer.
 
 * DruglikenessPredictor.DRUGLIKENESS_UNKNOWN
 
-### DruglikenessPredictor.assessDruglikeness(molecule)
+### predictor.assessDruglikeness(molecule)
 
 Returns the calculated drug likeness as a double.
+
+### predictor.getDruglikenessString(molecule)
+
+### predictor.getDetail()
+
+Returns detailed information about the previous drug likeness assessment.
 
 ---------------------------------------
 
