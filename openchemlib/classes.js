@@ -1,5 +1,7 @@
 var classes = [
     // Requirements for Core
+    'calc/ThreadMaster',
+
     'chem/AbstractDepictor',
     'chem/AromaticityResolver',
     'chem/AtomFunctionAnalyzer',
@@ -55,7 +57,9 @@ exports.copy = classes.map(getFilename);
 var modified = [
     // Requirements for Core
     'chem/AbstractDrawingObject',
-    'chem/DepictorTransformation'
+    'chem/DepictorTransformation',
+
+    'chem/prediction/ToxicityPredictor',
 ];
 
 exports.modified = modified.map(getFilename);
