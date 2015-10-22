@@ -37,7 +37,6 @@ import com.actelion.research.chem.CoordinateInventor;
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.NamedSubstituents;
 import com.actelion.research.chem.StereoMolecule;
-import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.DialogResult;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.dialogs.IAtomQueryFeaturesDialog;
@@ -67,13 +66,13 @@ public abstract class AtomHighlightAction extends DrawAction
 
         StereoMolecule mol = model.getSelectedMolecule();// .getFragment(pt, false);
         int currentAtom = model.getSelectedAtom();
-        int atom = getAtomAt(pt);
+        int atom = findAtom(mol,pt) ;//getAtomAt(pt);
         // Update at least when current selected atom and new selected atom differ
-        boolean ok = atom != currentAtom;
+        boolean ok = atom != -1;//currentAtom;
 
         setHighlightAtom(mol, -1);
         String keyStrokes = model.getKeyStrokeBuffer().toString();
-        if (currentAtom != -1 && ok) {
+        if (currentAtom != -1 && atom != currentAtom) {
             if (keyStrokes.length() > 0) {
                 StereoMolecule currentMol = model.getSelectedMolecule();
                 expandAtomKeyStrokes(currentMol, currentAtom, keyStrokes);
@@ -306,5 +305,27 @@ public abstract class AtomHighlightAction extends DrawAction
         }
         return false;
     }
+
+    public int findAtom(StereoMolecule mol,Point2D pt) {
+        int foundAtom = -1;
+        float pickx = (float)pt.getX();
+        float picky = (float)pt.getY();
+        float avbl = mol.getAverageBondLength();
+        float foundDistanceSquare = Float.MAX_VALUE;
+        float maxDistanceSquare = avbl * avbl / (avbl/3) ;
+        int mAllAtoms = mol.getAllAtoms();
+        for (int atom=0; atom<mAllAtoms; atom++) {
+            float x = mol.getAtomX(atom);
+            float y = mol.getAtomY(atom);
+            float distanceSquare = (pickx-x) * (pickx-x) + (picky-y) * (picky-y);
+            if (distanceSquare < maxDistanceSquare && distanceSquare < foundDistanceSquare) {
+                foundDistanceSquare = distanceSquare;
+                foundAtom = atom;
+            }
+        }
+//        System.out.printf("Atom %d\n",foundAtom);
+        return foundAtom;
+    }
+
 
 }
