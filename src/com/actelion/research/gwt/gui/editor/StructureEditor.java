@@ -46,6 +46,7 @@ import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.JsExport;
 import com.google.gwt.core.client.js.JsNamespace;
+import com.google.gwt.core.client.js.JsNoExport;
 import com.google.gwt.core.client.js.JsType;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.*;
