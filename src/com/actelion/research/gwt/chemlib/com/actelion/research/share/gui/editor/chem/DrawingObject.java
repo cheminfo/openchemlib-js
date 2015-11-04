@@ -44,7 +44,7 @@ import com.actelion.research.share.gui.editor.geom.IDrawContext;
  */
 
 public abstract class DrawingObject
-        implements Cloneable,IDrawingObject
+        implements IDrawingObject
 {
 
 //    Object o;
@@ -76,6 +76,7 @@ public abstract class DrawingObject
     public abstract void move(float dx, float dy);
    	public abstract void scale(float f);
 
+/*
     public Object clone()
     {
         try {
@@ -85,6 +86,7 @@ public abstract class DrawingObject
         }
         return null;
     }
+*/
 
 
 ////	protected static final String DESCRIPTOR_START = "<DrawingObject";

@@ -3,8 +3,6 @@
 	<inherits name='com.google.gwt.user.User'/>
 	
 	<!-- Dependencies -->
-	<inherits name="com.actelion.research.gwt.jre.Jre" />
-    <inherits name="com.actelion.research.gwt.chemlib.ChemLib" />
     <inherits name="com.actelion.research.gwt.StructureViewer" />
 
     <source path="gui/editor"/>
