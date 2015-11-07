@@ -38,6 +38,7 @@ var classes = [
     'chem/io/CompoundFileParser',
 
     'chem/prediction/CLogPPredictor',
+    'chem/prediction/DrugScoreCalculator', // TODO not in OCL
     'chem/prediction/PolarSurfaceAreaPredictor',
     'chem/prediction/ParameterizedStringList',
     'chem/prediction/SolubilityPredictor',
