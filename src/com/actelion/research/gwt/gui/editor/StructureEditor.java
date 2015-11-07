@@ -538,7 +538,7 @@ public class StructureEditor implements IChangeListener//,Exportable
     {
 
         if (evt.getNativeButton() == NativeEvent.BUTTON_RIGHT) {
-            Log.console("Thow right clicks!!!");
+//            Log.console("Thow right clicks!!!");
             rightClick = true;
 //            contextMenu.show(this, evt.getScreenX(), evt.getScreenY());
         }

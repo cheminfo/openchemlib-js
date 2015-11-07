@@ -142,7 +142,7 @@ class DrawArea implements IChangeListener
     @Override
     public void onChange()
     {
-        Log.console("onChange");
+//        Log.console("onChange");
 //        System.out.println("DrawArea on change...");
         draw(canvas);
     }
