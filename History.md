@@ -1,3 +1,9 @@
+3.1.1 / 2015-11-07
+==================
+
+* Editor: fixed AtomHightlight
+* Editor: working query feature dialogs
+
 3.1.0 / 2015-10-21
 ==================
 
