@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v3.1.0
- * @date 2015-10-21T13:25:13.818Z
+ * @version v3.1.1
+ * @date 2015-11-07T11:23:01.669Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -1229,7 +1229,7 @@ var f;typeof d==xK?(f=e(new Error(d.replace(IL,' ')))):d&&typeof d==vK&&'stack' 
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '3.1.0';
+        toReturn.version = '3.1.1';
 
         return toReturn;
     }
