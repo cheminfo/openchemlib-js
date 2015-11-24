@@ -12,6 +12,7 @@
     "build": "gulp build:min"
   },
   "main": "dist/openchemlib-core.js",
+  "files": ["dist/openchemlib-core.js"],
   "repository": {
     "type": "git",
     "url": "git://github.com/cheminfo/openchemlib-js.git"
