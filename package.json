@@ -1,6 +1,6 @@
 {
   "name": "openchemlib",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "description": "Manipulate molecules",
   "keywords": [
     "chemistry",
@@ -12,7 +12,9 @@
     "build": "gulp build:min"
   },
   "main": "dist/openchemlib-core.js",
-  "files": ["dist/openchemlib-core.js"],
+  "files": [
+    "dist/openchemlib-core.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/cheminfo/openchemlib-js.git"
