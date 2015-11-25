@@ -84,7 +84,7 @@ public class GWTDepictor extends AbstractDepictor
     }
 
     static ColorMap MOLECULECOLORS[] = {
-        new ColorMap(Molecule.cAtomColorBlack, CssColor.make("BLACK")),
+        new ColorMap(Molecule.cAtomColorNone, CssColor.make("BLACK")),
         new ColorMap(Molecule.cAtomColorBlue, CssColor.make("BLUE")),
         new ColorMap(Molecule.cAtomColorRed, CssColor.make("RED")),
         new ColorMap(Molecule.cAtomColorGreen, CssColor.make("GREEN")),
@@ -230,7 +230,7 @@ public class GWTDepictor extends AbstractDepictor
                 return cm.molcol;
             }
         }
-        return Molecule.cAtomColorBlack;
+        return Molecule.cAtomColorNone;
     }
 
 

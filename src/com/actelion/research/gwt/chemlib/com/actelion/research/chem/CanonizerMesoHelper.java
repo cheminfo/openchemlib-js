@@ -133,38 +133,40 @@ public class CanonizerMesoHelper {
 				return false;
 			}
 
+			// if we have a direct BINAP bond or Z-double bond we refuse
+		int bond = mMol.getBond(atom1, atom2);
+		if (bond != -1) {
+			if (mMol.getBondOrder(bond) == 1
+			 && mEZParity[bond] != Molecule.cBondParityNone)
+				return false;
+			if (mMol.getBondOrder(bond) == 2
+			 && mEZParity[bond] == Molecule.cBondParityZor2)
+				return false;
+			}
+
 			// if our atoms are part of a non-aromatic double bond ...
 		if (mMol.getAtomPi(atom1) == 1 && !mMol.isAromaticAtom(atom1)) {
 			int bond1 = -1;
 			for (int i=0; i<mMol.getConnAtoms(atom1); i++) {
-				if (mMol.getConnBondOrder(atom1, i) == 1) {
+				if (mMol.getConnAtom(atom1, i) != atom2
+				 && mMol.getConnBondOrder(atom1, i) == 2) {
 					bond1 = mMol.getConnBond(atom1, i);
-					if (mMol.getConnAtom(atom1, i) == atom2
-					 && mEZParity[bond1] != Molecule.cBondParityNone)
-						return false;
-					break;
-					}
-				else if (mMol.getConnBondOrder(atom1, i) == 2) {
-					bond1 = mMol.getConnBond(atom1, i);
-					if (mMol.getConnAtom(atom1, i) == atom2
-					 && mEZParity[bond1] == Molecule.cBondParityEor1)
-						return false;
 					break;
 					}
 				}
 			int bond2 = -1;
 			for (int i=0; i<mMol.getConnAtoms(atom2); i++) {
-				if (mMol.getConnBondOrder(atom2, i) == 2) {
+				if (mMol.getConnAtom(atom2, i) != atom1
+				 && mMol.getConnBondOrder(atom2, i) == 2) {
 					bond2 = mMol.getConnBond(atom2, i);
 					break;
 					}
 				}
 
-			if (mEZParity[bond1] != Molecule.cBondParityNone) {
-				if (mEZParityRoundIsOdd[bond1]
-				   ^ (mEZParity[bond1] == mEZParity[bond2]))
-					return false;
-				}
+			if (bond1 != -1 // for symmetry reasons bond2 must not be -1 then
+			 && mEZParity[bond1] != Molecule.cBondParityNone
+			 && (mEZParityRoundIsOdd[bond1] ^ (mEZParity[bond1] == mEZParity[bond2])))
+				return false;
 			}
 
 		return true;

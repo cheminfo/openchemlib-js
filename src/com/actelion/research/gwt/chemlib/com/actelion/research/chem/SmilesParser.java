@@ -68,6 +68,7 @@ public class SmilesParser {
 
 		int[] ringClosureAtom = new int[MAX_RE_CONNECTIONS];
 		int[] ringClosurePosition = new int[MAX_RE_CONNECTIONS];
+		boolean[] ringClosureInUse = new boolean[MAX_RE_CONNECTIONS];
 		for (int i=0; i<MAX_RE_CONNECTIONS; i++)
 			ringClosureAtom[i] = -1;
 
@@ -254,6 +255,9 @@ public class SmilesParser {
 						ringClosurePosition[number] = position-1;
 						}
 					else {
+						if (ringClosureAtom[number] == baseAtom[bracketLevel])
+							throw new Exception("SmilesParser: ring closure to same atom");
+
 						if (readStereoFeatures && parityMap != null) {
 							THParity parity = parityMap.get(ringClosureAtom[number]);
 							if (parity != null)
@@ -373,6 +377,13 @@ public class SmilesParser {
 
 			throw new Exception("SmilesParser: unexpected character found: '"+theChar+"'");
 			}
+
+		// Check for unsatisfied open bonds
+		if (bondType != Molecule.cBondTypeSingle)
+			throw new Exception("SmilesParser: dangling open bond");
+		for (int i=0; i<MAX_RE_CONNECTIONS; i++)
+			if (ringClosureAtom[i] != -1)
+				throw new Exception("SmilesParser: dangling ring closure");
 
 		int[] handleHydrogenAtomMap = mMol.getHandleHydrogenMap();
 

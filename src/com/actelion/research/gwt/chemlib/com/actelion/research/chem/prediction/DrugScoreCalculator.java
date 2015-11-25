@@ -36,8 +36,15 @@ package com.actelion.research.chem.prediction;
  */
 public class DrugScoreCalculator
 {
-    public static double calculate(double cLogPScore,double solubilityScore,double molweightScore,double drugLikenessScore,int[] toxRisks)
+    public static double calculate(double mCLogP,double mSolubility,double mMolweight,double mDruglikeness,int[] toxRisks)
     {
+
+        double cLogPScore = 1/(1+Math.exp(mCLogP-5));
+        double solubilityScore = 1-1/(1+Math.exp(mSolubility+5));
+        double molweightScore = 1/(1+Math.exp(0.012*mMolweight-6));
+//        mTPSAScore = 1/(1+Math.exp(0.05*mTPSA-5));
+        double drugLikenessScore = 1-1/(1+Math.exp(mDruglikeness));
+
         double drugScore = (0.5+cLogPScore/2)
                 * (0.5+solubilityScore/2)
                 * (0.5+molweightScore/2)
@@ -50,5 +57,7 @@ public class DrugScoreCalculator
                 drugScore *= 0.60;
         }
         return drugScore;
+
+
     }
 }

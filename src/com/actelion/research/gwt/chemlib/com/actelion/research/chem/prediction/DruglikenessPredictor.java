@@ -37,6 +37,9 @@ import com.actelion.research.chem.SSSearcher;
 import com.actelion.research.chem.StereoMolecule;
 
 public class DruglikenessPredictor {
+
+	private static String druglikenessNoIndex = "sNy@LDeVjj@XTKU|TH\t5.89\nKA|P@QvRRJjjj@LFaLJnyC@\t5.86\nHiFH@H{IIEUJjj@FGPfES]rA@\t5.82\nJoB@@BUJssoPvxPTA@@@FFpaUpriv\u007FDsP\t5.61\nHeTH@@RV[TYZ`@@AaUMpssHP`\t5.19\nHmtH@@RVYWeVhH@@FCESCJ|rDx\t5.18\nj`qA@@IIULsj\u007FiuoUP@`@@@CAUF\\DkQkN}qFB@\t5.1\nsOx@@eJymUT@pLVOLJp\t4.95\nj`a`@@@YIEEDthdg^jjj`@@@XV`cAJLxKQkN}rD`\t4.89\nHk]@@@yJeWmZ{Sjj`@`@XSBEPrngqLx\t4.83\nHkmL`LfDD@cIIBhhd]MZ`X@@FEXwKoDdp\t4.7\nHefD@Hz\\ddUTuUUP@pFDpj[ayD`\t4.57\nHiD@XHdDdJdFdNdAdLddLTjjh@^Ia@\t-9.59\nHct@DDdLdJdFdAdIdEdMdLddTaaeUUU@CqBx\t-10.1\nsNpOAxRPTai@rEdGHCh\u007Fjj@P\t-10.77";
+
 	public static final double cDruglikenessUnknown = -999;
 
     private static boolean			sInitialized = false;
@@ -48,7 +51,7 @@ public class DruglikenessPredictor {
 		synchronized(DruglikenessPredictor.class) {
 			if (!sInitialized) {
 		        try {
-					sIncrementTable = new IncrementTable("/resources/druglikenessNoIndex.txt");
+					sIncrementTable = new IncrementTable(druglikenessNoIndex);
 					sInitialized = true;
 					}
 				catch (Exception e) {

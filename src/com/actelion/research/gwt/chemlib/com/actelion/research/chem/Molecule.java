@@ -68,7 +68,7 @@ public class Molecule implements Serializable {
 	public static final int cAtomRadicalStateT		= 0x000030;
 
 	private static final int cAtomFlagsColor		= 0x0001C0;
-	public static final int cAtomColorBlack			= 0x000000;
+	public static final int cAtomColorNone = 0x000000;
 	public static final int cAtomColorBlue			= 0x000040;
 	public static final int cAtomColorRed			= 0x000080;
 	public static final int cAtomColorGreen			= 0x0000C0;
@@ -1484,7 +1484,7 @@ public class Molecule implements Serializable {
 
 	/**
 	 * Marks this bond to be deleted in a later call to deleteMarkedAtomsAndBonds().
-	 * @param atom
+	 * @param bond
 	 */
 	public void markBondForDeletion(int bond) {
 		mBondType[bond] = cBondTypeDeleted;		// mark for delete
@@ -1503,7 +1503,7 @@ public class Molecule implements Serializable {
 
 	/**
 	 * Checks whether this bond was marked to be deleted and not deleted yet.
-	 * @param atom
+	 * @param bond
 	 * @return
 	 */
 	public boolean isBondMarkedForDeletion(int bond) {
@@ -1800,7 +1800,7 @@ public class Molecule implements Serializable {
 	 * The list of atoms that are allowed at this position during sub-structure search.
 	 * (or refused atoms, if atom query feature cAtomQFAny is set).
 	 * @param atom
-	 * @return null or atom list, if defined
+	 * @return null or sorted list of unique atomic numbers, if defined
 	 */
 	public int[] getAtomList(int atom) {
 		return (mAtomList == null) ? null : mAtomList[atom];
@@ -1849,7 +1849,7 @@ public class Molecule implements Serializable {
 	 * The atom parity is a calculated property available above/equal helper level cHelperParities.
 	 * It describes the stereo configuration of a chiral atom and is calculated either from
 	 * 2D-atom-coordinates and up/down-bonds or from 3D-atom-coordinates, whatever is available.
-	 * It depends on the atom indices of the neighbor atoms and their orientation is space.<br>
+	 * It depends on the atom indexes of the neighbor atoms and their orientation in space.<br>
 	 * The parity is defined as follows: Look at the chiral atom such that its neighbor atom with the
 	 * highest atom index (or the hydrogen atom if it is implicit) is oriented to the back.
 	 * If the remaining three neighbors are in clockwise order (considering ascending atom indexes)
@@ -2469,13 +2469,9 @@ public class Molecule implements Serializable {
 	 * If this atom's query feature cAtomQFAny (any atom) is set, then the list is considered to be a NOT-list.
 	 * Depending on cAtomQFAny the list must contain at least 1 or 2 members.
 	 * @param atom
-	 * @param list null or int[] of valid atomic numbers
+	 * @param list null or int[] of valid unique, but not sorted, atomic numbers
 	 */
 	public void setAtomList(int atom, int[] list) {
-		/*
-		 * 'list' is null or an int[] of valid atomic numbers.
-		 * Depending on cAtomQFAny the list must contain at least 1 or 2 members
-		 */
 		if (mAtomList == null)
 			mAtomList = new int[mMaxAtoms][];
 

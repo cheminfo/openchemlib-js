@@ -58,7 +58,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsType
-@JsNamespace("$wnd.OCL")
+@JsNamespace("OCL")
 @JsExport
 public class StructureView
 {

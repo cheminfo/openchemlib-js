@@ -1538,7 +1538,7 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 	private int[] calculateAtomSymmetries() {
 		CanonizerBaseValue[] baseValue = new CanonizerBaseValue[mAtoms];
 		for (int atom=0; atom<mAtoms; atom++) {
-			baseValue[atom] = new CanonizerBaseValue();
+			baseValue[atom] = new CanonizerBaseValue(2);
 			baseValue[atom].init(atom);
 			}
 
