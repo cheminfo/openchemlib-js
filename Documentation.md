@@ -353,6 +353,7 @@ create a div with the following attributes:
      data-idcode="fhvacFGXhDFICDPx@fCHW@@UDhdmdCVZ``J@@@ !BLsicOgDjrHKHwW{@rHJW`lbBrMu~pG{@rHI[E\}bup}"
 
 
+
 execute the following JS:
 
         editorCtrl = window.OCL.StructureEditor.createEditor("editor");
@@ -360,14 +361,24 @@ execute the following JS:
 
 ### Attributes (defaults are in UPPERCASE):
 
-     view-only="FALSE | true"       = Shows the toolbar
+     view-only="FALSE" | "true"     = Shows the toolbar
 
-     show-idcode="FALSE | true"     = Shows the input control containing the current IDCode
+     show-idcode="FALSE" | "true"   = Shows the input control containing the current IDCode
 
      data-idcode=""                 = This allows you to specify the molecule IDCode in the editor
 
-     is-fragment="FALSE | true"     = Sets the editor mode into fragment mode.
-                                      Please note that the data-icode attribute overrules this behavior: If specified, the mode depends on the passed molecule
+     is-fragment="FALSE" | "true"   = Sets the editor into fragment (query) mode.
+                                      Please note that the data-icode attribute overrules this behavior: 
+                                      If specified, the mode depends on the passed molecule
 
+     show-fragment-indicator= "FALSE" | "true"
+                                    = Shows a "Q" on the right lower if the Molecule is in fragment (query) mode
+     
+     ignore-stereo-errors= "FALSE" | "true"
+                                    = If true, then shows no magenta-colored atom/bonds on stereo errors
+     
+     no-stereo-text= "FALSE" | "true"
+                                    = If true, does not show stereo information text
+                                     
 
 

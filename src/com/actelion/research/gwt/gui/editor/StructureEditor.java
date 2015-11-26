@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.*;
+import com.actelion.research.gwt.gui.viewer.Console;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
@@ -76,6 +77,7 @@ public class StructureEditor implements IChangeListener//,Exportable
     private ToolBar<Element> toolBar;
     private DrawArea drawPane;
     private InputElement idcodeTextElement;
+    private LabelElement fragmentStatus;
     private Element container = null;
     private Boolean viewOnly = false;
     private static List<StructureEditor> map = new ArrayList<StructureEditor>();
@@ -103,6 +105,19 @@ public class StructureEditor implements IChangeListener//,Exportable
             String vo = container.getAttribute("view-only");
             viewOnly = Boolean.parseBoolean(vo);
 
+            // Todo: Implement the following options:
+
+            String se = container.getAttribute("ignore-stereo-errors");
+            boolean ignoreStereoErrors = Boolean.parseBoolean(se);
+
+            String st = container.getAttribute("no-stereo-text");
+            boolean noStereoText = Boolean.parseBoolean(st);
+
+            String sf = container.getAttribute("show-fragment-indicator");
+            final boolean showFragmentIndicator = Boolean.parseBoolean(sf);
+
+            // End Todo
+
             String si = container.getAttribute("show-idcode");
             boolean showIDCode = Boolean.parseBoolean(si);
 
@@ -128,12 +143,32 @@ public class StructureEditor implements IChangeListener//,Exportable
             Element drawAreaElement = drawPane.createElement(container, toolBarWidth,0,(width - toolBarWidth), height - TEXTHEIGHT - 5);
             container.appendChild(drawAreaElement);
 
+            int idcodewidth = showFragmentIndicator ? width - 30 : width;
+            if (showFragmentIndicator) {
+                fragmentStatus = Document.get().createLabelElement();
+                fragmentStatus.setId(id + "-fragment-element");
+                setElementSizePos(fragmentStatus, width - 30, height - TEXTHEIGHT - 5, TEXTHEIGHT, 30);
+                String t = fragmentStatus.getAttribute("style");
+                fragmentStatus.setAttribute("style", t + "text-align:center;");
+                fragmentStatus.setInnerText(model.isFragment() ? "Q" : "");
+                container.appendChild(fragmentStatus);
+            }
             if (showIDCode) {
                 idcodeTextElement = Document.get().createTextInputElement();
                 idcodeTextElement.setId(id + "-idcode-element");
-                setIDCodeTextPanelSizeAndPosition(0,height - TEXTHEIGHT - 5, TEXTHEIGHT,width);
+                setElementSizePos(idcodeTextElement, 0, height - TEXTHEIGHT - 5, TEXTHEIGHT, idcodewidth);
                 container.appendChild(idcodeTextElement);
             }
+
+            int displayMode = model.getDisplayMode();
+            if (ignoreStereoErrors)
+                displayMode |= AbstractDepictor.cDModeNoStereoProblem;
+
+            if (noStereoText)
+                displayMode |= AbstractDepictor.cDModeSuppressChiralText;
+
+            model.setDisplayMode(displayMode);
+
             model.addChangeListener(this);
             StereoMolecule mol = createMolecule(idcode, isFragment, (width - toolBarWidth), height - TEXTHEIGHT - 5);
             model.setValue(mol, true);
@@ -148,9 +183,13 @@ public class StructureEditor implements IChangeListener//,Exportable
                 {
                     int w = container.getClientWidth();
                     int h = container.getClientHeight();
+                    int idcodewidth = showFragmentIndicator ? w - 30 : h;
                     if (width != w || height != h) {
                         drawPane.setSize(w - toolBarWidth, h - TEXTHEIGHT - 5);
-                        setIDCodeTextPanelSizeAndPosition(0,h - TEXTHEIGHT - 5, TEXTHEIGHT,width);
+                        if (idcodeTextElement != null)
+                            setElementSizePos(idcodeTextElement, 0, h - TEXTHEIGHT - 5, TEXTHEIGHT, idcodewidth);
+                        if (fragmentStatus != null)
+                            setElementSizePos(fragmentStatus, w-30, h - TEXTHEIGHT - 5, TEXTHEIGHT, 30);
                     }
                 }
             });
@@ -192,9 +231,9 @@ public class StructureEditor implements IChangeListener//,Exportable
         return viewOnly ? 0 : TOOLBARWIDTH;
     }
 
-    private void setIDCodeTextPanelSizeAndPosition(int x, int y, int h, int w)
+    private void setElementSizePos(Element el, int x, int y, int h, int w)
     {
-        idcodeTextElement.setAttribute("style",
+        el.setAttribute("style",
                 "position:absolute;" +
                         "left:" + x + "px; " +
                         "top:" + y + "px;" +
@@ -209,6 +248,7 @@ public class StructureEditor implements IChangeListener//,Exportable
     {
         return new StructureEditor(id);
     }
+
 
     public String getIDCode()
     {
@@ -577,9 +617,13 @@ public class StructureEditor implements IChangeListener//,Exportable
     @Override
     public void onChange()
     {
+        Console.log("OnChange");
         if (idcodeTextElement != null) {
             String idcode = model.getIDCode();
             idcodeTextElement.setValue(idcode);
+        }
+        if (fragmentStatus != null) {
+            fragmentStatus.setInnerText(model.isFragment() ? "Q" : "");
         }
     }
 

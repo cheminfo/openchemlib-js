@@ -146,8 +146,6 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         toolbarHolder.setId(toolBarId);
         toolbarHolder.setAttribute(
             "style", "position:absolute;width:" + width + "px;height:" + height + "px;");
-//        "style", "position:relative;float:left;width:" + width + "px;height:" + height + "px;");
-//        img.setUrl(GWT.getModuleBaseURL() + "/images/drawButtonsUp.gif");
         parent.appendChild(toolbarHolder);
         canvas = Canvas.createIfSupported();
         canvas.setCoordinateSpaceWidth(width);

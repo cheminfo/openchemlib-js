@@ -1065,6 +1065,7 @@ public abstract class Model
     public void setFragment(boolean fragment)
     {
         mMol.setFragment(fragment);
+        notifyChange();
     }
 
     public void setNewMolecule()
