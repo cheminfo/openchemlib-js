@@ -1769,8 +1769,7 @@ public int getAtomPi(int atom) {
 /**
  * @param atom
  * @return Hendrickson sigma-value, which is the number attached carbon atoms
- *
-public int getAtomSigma(int atom) {
+ */
 public int getAtomSigma(int atom) {
 	return oclMolecule.getAtomSigma(atom);
 }
@@ -1778,8 +1777,7 @@ public int getAtomSigma(int atom) {
 /**
  * @param atom
  * @return Hendrickson Z-value, which is the sum of all bond orders to any attached hetero atoms
- *
-public int getAtomZValue(int atom) {
+ */
 public int getAtomZValue(int atom) {
 	return oclMolecule.getAtomZValue(atom);
 }
