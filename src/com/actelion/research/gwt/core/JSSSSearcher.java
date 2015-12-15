@@ -1,11 +1,9 @@
 package com.actelion.research.gwt.core;
 
 import com.actelion.research.chem.SSSearcher;
-import com.google.gwt.core.client.js.*;
+import jsinterop.annotations.*;
 
-@JsType
-@JsNamespace("OCL")
-@JsExport("SSSearcher")
+@JsType(name = "SSSearcher")
 public class JSSSSearcher {
 	
 	private SSSearcher searcher = new SSSearcher();

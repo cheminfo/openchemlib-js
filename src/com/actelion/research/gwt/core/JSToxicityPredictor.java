@@ -2,11 +2,9 @@ package com.actelion.research.gwt.core;
 
 import com.actelion.research.chem.prediction.ToxicityPredictor;
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.js.*;
+import jsinterop.annotations.*;
 
-@JsType
-@JsNamespace("OCL")
-@JsExport("ToxicityPredictor")
+@JsType(name = "ToxicityPredictor")
 public class JSToxicityPredictor {
 	private static Services services = Services.getInstance();
 	private ToxicityPredictor predictor;

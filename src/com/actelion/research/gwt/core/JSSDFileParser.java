@@ -4,16 +4,13 @@ import java.io.StringReader;
 
 import com.actelion.research.chem.io.SDFileParser;
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.js.*;
+import jsinterop.annotations.*;
 
-@JsType
-@JsNamespace("OCL")
-@JsExport("SDFileParser")
+@JsType("SDFileParser")
 public class JSSDFileParser {
 
 	private SDFileParser parser;
 	
-	@JsExport
 	public JSSDFileParser(String sdf, String[] fields) {
 		parser = new SDFileParser(new StringReader(sdf), fields);
 	}

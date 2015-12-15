@@ -32,21 +32,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.viewer;
 
 import com.actelion.research.chem.*;
-import com.google.gwt.core.client.js.JsExport;
-import com.google.gwt.core.client.js.JsNamespace;
-import com.google.gwt.core.client.js.JsType;
+import jsinterop.annotations.*;
 
 import java.awt.geom.Rectangle2D;
 
 /**
  * Created by rufenec on 20/03/15.
  */
+@JsPackage(namespace = "OCL")
 @JsType
-@JsNamespace("OCL")
-@JsExport
 public class SVGRenderer
 {
-    @JsExport
     public static String renderMolecule(String idCode,int width,int height)
     {
         try {

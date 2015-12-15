@@ -1,7 +1,7 @@
 package com.actelion.research.gwt.core;
 
 import com.actelion.research.chem.ExtendedMolecule;
-import com.google.gwt.core.client.js.*;
+import jsinterop.annotations.*;
 
 @JsType
 public class MolecularFormula extends com.actelion.research.chem.MolecularFormula {

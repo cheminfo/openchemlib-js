@@ -3,11 +3,9 @@ package com.actelion.research.gwt.core;
 import com.actelion.research.chem.SSSearcherWithIndex;
 import com.actelion.research.chem.StereoMolecule;
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.js.*;
+import jsinterop.annotations.*;
 
-@JsType
-@JsNamespace("OCL")
-@JsExport("SSSearcherWithIndex")
+@JsType(name = "SSSearcherWithIndex")
 public class JSSSSearcherWithIndex {
 	
 	private SSSearcherWithIndex searcher = new SSSearcherWithIndex();

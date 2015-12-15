@@ -43,14 +43,11 @@ import com.actelion.research.share.gui.editor.io.IKeyEvent;
 import com.actelion.research.share.gui.editor.listeners.IChangeListener;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.js.JsExport;
-import com.google.gwt.core.client.js.JsNamespace;
-import com.google.gwt.core.client.js.JsNoExport;
-import com.google.gwt.core.client.js.JsType;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
+import jsinterop.annotations.*;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -62,9 +59,8 @@ import java.util.List;
  * Date: 7/1/2014
  * Time: 10:05 AM
  */
+@JsPackage(namespace = "OCL")
 @JsType
-@JsNamespace("OCL")
-@JsExport
 public class StructureEditor implements IChangeListener//,Exportable
 {
     static int TEXTHEIGHT = 20;
@@ -86,7 +82,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         initObserver();
     }
 
-    @JsNoExport
+    @JsIgnore
     public StructureEditor()
     {
         this("editor");
@@ -96,7 +92,6 @@ public class StructureEditor implements IChangeListener//,Exportable
 //        return $doc.querySelectorAll(selectors);
 //    }-*/;
 
-    @JsExport
     public StructureEditor(String id)
     {
         container = Document.get().getElementById(id);
@@ -243,7 +238,6 @@ public class StructureEditor implements IChangeListener//,Exportable
 //        idcodeTextElement.setAttribute("style", "position:relative;float:left;width:" + (w - 5) + "px;height:" + TEXTHEIGHT + "px;");
     }
 
-    @JsExport
     public static StructureEditor createEditor(String id)
     {
         return new StructureEditor(id);

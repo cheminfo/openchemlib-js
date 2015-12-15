@@ -7,11 +7,9 @@ import java.util.Vector;
 
 import com.actelion.research.chem.*;
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.js.*;
+import jsinterop.annotations.*;
 
-@JsType
-@JsNamespace("OCL")
-@JsExport("Molecule")
+@JsType(name = "Molecule")
 public class JSMolecule {
 	
 	private static Services services = Services.getInstance();
@@ -20,17 +18,17 @@ public class JSMolecule {
 	private MoleculeProperties properties = null;
 	private MolecularFormula formula = null;
 
-	@JsNoExport
+	@JsIgnore
 	public JSMolecule(int atoms, int bonds) {
 		oclMolecule = new StereoMolecule(atoms, bonds);
 	}
 
-	@JsNoExport
+	@JsIgnore
 	public JSMolecule(StereoMolecule mol) {
 		oclMolecule = mol;
 	}
 
-	@JsNoExport
+	@JsIgnore
 	public JSMolecule() {
 		this(32, 32);
 	}
@@ -114,7 +112,7 @@ public class JSMolecule {
 	
 	/* public methods after this line will not be accessible from javascript */
 	
-	@JsNoExport
+	@JsIgnore
 	public static JSMolecule fromSmiles(String smiles, boolean ensure2DCoordinates, boolean readStereoFeatures) throws Exception {
 		JSMolecule mol = new JSMolecule();
 		services.getSmilesParser().parse(mol.oclMolecule, smiles.getBytes(), false, readStereoFeatures);
@@ -124,17 +122,17 @@ public class JSMolecule {
 		return mol;
 	}
 	
-	@JsNoExport
+	@JsIgnore
 	public static JSMolecule fromIDCode(String idcode, boolean ensure2DCoordinates) {
 		return new JSMolecule(services.getIDCodeParser(ensure2DCoordinates).getCompactMolecule(idcode));
 	}
 	
-	@JsNoExport
+	@JsIgnore
 	public static JSMolecule fromIDCode(String idcode, String coordinates) {
 		return new JSMolecule(services.getIDCodeParser(false).getCompactMolecule(idcode, coordinates));
 	}
 	
-	@JsNoExport
+	@JsIgnore
 	public StereoMolecule getStereoMolecule() {
 		return oclMolecule;
 	}
@@ -1764,22 +1762,6 @@ public int getAtoms() {
  */
 public int getAtomPi(int atom) {
 	return oclMolecule.getAtomPi(atom);
-}
-
-/**
- * @param atom
- * @return Hendrickson sigma-value, which is the number attached carbon atoms
- */
-public int getAtomSigma(int atom) {
-	return oclMolecule.getAtomSigma(atom);
-}
-
-/**
- * @param atom
- * @return Hendrickson Z-value, which is the sum of all bond orders to any attached hetero atoms
- */
-public int getAtomZValue(int atom) {
-	return oclMolecule.getAtomZValue(atom);
 }
 
 /**

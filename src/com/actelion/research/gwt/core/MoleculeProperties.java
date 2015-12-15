@@ -2,7 +2,7 @@ package com.actelion.research.gwt.core;
 
 import com.actelion.research.chem.PropertyCalculator;
 import com.actelion.research.chem.StereoMolecule;
-import com.google.gwt.core.client.js.*;
+import jsinterop.annotations.*;
 
 @JsType
 public class MoleculeProperties extends PropertyCalculator {

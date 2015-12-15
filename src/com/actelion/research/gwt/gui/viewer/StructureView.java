@@ -40,9 +40,6 @@ import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.js.JsExport;
-import com.google.gwt.core.client.js.JsNamespace;
-import com.google.gwt.core.client.js.JsType;
 import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -52,17 +49,16 @@ import com.google.gwt.event.dom.client.DragStartHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.ui.Image;
+import jsinterop.annotations.*;
 
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
+@JsPackage(namespace = "OCL")
 @JsType
-@JsNamespace("OCL")
-@JsExport
 public class StructureView
 {
-    @JsExport
     public static void showStructures(String cssClass)
     {
         NodeList<Element> list = Document.get().getElementsByTagName("canvas");
@@ -85,7 +81,6 @@ public class StructureView
         }
     }
 
-    @JsExport
     public static void renderStructure(String id)
     {
         CanvasElement ce = null;
@@ -97,7 +92,6 @@ public class StructureView
         }
     }
 
-    @JsExport
     public static String getIDCode(String id)
     {
         Element el = Document.get().getElementById(id);
@@ -107,19 +101,16 @@ public class StructureView
         return null;
     }
     
-    @JsExport
     public static void drawStructure(String id, String idcode, String coordinates, JavaScriptObject options)
     {
     	drawStructure(id, idcode, coordinates, getDisplayMode(options),null);
     }
     
-    @JsExport
     public static void drawMolecule(CanvasElement el, JSMolecule mol, JavaScriptObject options)
     {
     	drawMolecule(el, mol, getDisplayMode(options), null);
     }
 
-    @JsExport
     public static void drawStructureWithText(String id, String idcode, String coordinates, JavaScriptObject options,String []atomText)
     {
         drawStructure(id, idcode, coordinates, getDisplayMode(options),atomText);

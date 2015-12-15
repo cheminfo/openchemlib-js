@@ -101,7 +101,7 @@ function compile(mode) {
                 '-XnocheckCasts',
                 '-XnoclassMetadata',
                 '-nocheckAssertions',
-                '-XjsInteropMode', 'JS',
+                '-generateJsInteropExports',
                 '-style'
             ];
             if (mode === 'min') {
