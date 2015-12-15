@@ -59,8 +59,7 @@ import java.util.List;
  * Date: 7/1/2014
  * Time: 10:05 AM
  */
-@JsPackage(namespace = "OCL")
-@JsType
+@JsType(namespace = "OCL")
 public class StructureEditor implements IChangeListener//,Exportable
 {
     static int TEXTHEIGHT = 20;

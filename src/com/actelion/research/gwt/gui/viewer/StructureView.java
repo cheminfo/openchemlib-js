@@ -55,8 +55,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
-@JsPackage(namespace = "OCL")
-@JsType
+@JsType(namespace = "OCL")
 public class StructureView
 {
     public static void showStructures(String cssClass)

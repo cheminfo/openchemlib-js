@@ -1,3 +1,8 @@
+3.2.2 / 2015-12-15
+==================
+
+* fix namespace for editor and structure viewer
+
 3.2.1 / 2015-12-15
 ==================
 

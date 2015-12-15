@@ -39,8 +39,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * Created by rufenec on 20/03/15.
  */
-@JsPackage(namespace = "OCL")
-@JsType
+@JsType(namespace = "OCL")
 public class SVGRenderer
 {
     public static String renderMolecule(String idCode,int width,int height)
