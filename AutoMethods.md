@@ -44,3 +44,8 @@ Script: http://visualizer.epfl.ch/tiny/X0dNMRc1NiGIUASYEAlk
 - public void setAtomZ(int atom, float z)
 - public int getPathLength(int atom1, int atom2, int maxLength, boolean[] neglectAtom)
 - public int getFragmentNumbers(int[] fragmentNo, boolean[] neglectBond)
+
+## Unknown issue
+
+- public int getAtomZValue(int atom)
+- public int getAtomSigma(int atom)
