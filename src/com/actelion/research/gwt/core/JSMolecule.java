@@ -15,8 +15,6 @@ public class JSMolecule {
 	private static Services services = Services.getInstance();
 	
 	private StereoMolecule oclMolecule;
-	private MoleculeProperties properties = null;
-	private MolecularFormula formula = null;
 
 	public JSMolecule(StereoMolecule mol) {
 	    if (mol == null) {
@@ -81,19 +79,13 @@ public class JSMolecule {
 			coordinates: this.@com.actelion.research.gwt.core.JSMolecule::getIDCoordinates()()
 		};
 	}-*/;
-	
+
 	public MolecularFormula getMolecularFormula() {
-		if(formula == null) {
-			formula = new MolecularFormula(oclMolecule);
-		}
-		return formula;
+		return new MolecularFormula(oclMolecule);
 	}
-	
+
 	public MoleculeProperties getProperties() {
-		if(properties == null) {
-			properties = new MoleculeProperties(oclMolecule);
-		}
-		return properties;
+		return new MoleculeProperties(oclMolecule);
 	}
 	
 	public int[] getIndex() {
