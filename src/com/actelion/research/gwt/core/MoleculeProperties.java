@@ -7,6 +7,7 @@ import jsinterop.annotations.*;
 @JsType
 public class MoleculeProperties extends PropertyCalculator {
 
+	@JsIgnore
 	public MoleculeProperties(StereoMolecule mol) {
 		super(mol);
 	}

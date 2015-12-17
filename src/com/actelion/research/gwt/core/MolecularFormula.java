@@ -6,6 +6,7 @@ import jsinterop.annotations.*;
 @JsType
 public class MolecularFormula extends com.actelion.research.chem.MolecularFormula {
 
+	@JsIgnore
 	public MolecularFormula(ExtendedMolecule mol) {
 		super(mol);
 	}

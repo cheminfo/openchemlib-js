@@ -18,19 +18,16 @@ public class JSMolecule {
 	private MoleculeProperties properties = null;
 	private MolecularFormula formula = null;
 
-	@JsIgnore
-	public JSMolecule(int atoms, int bonds) {
-		oclMolecule = new StereoMolecule(atoms, bonds);
-	}
-
-	@JsIgnore
 	public JSMolecule(StereoMolecule mol) {
+	    if (mol == null) {
+	    	mol = new StereoMolecule(32, 32);
+	    }
 		oclMolecule = mol;
 	}
 
 	@JsIgnore
 	public JSMolecule() {
-		this(32, 32);
+	    this(null);
 	}
 	
 	public static native JSMolecule fromSmiles(String smiles, JavaScriptObject options) throws Exception /*-{
@@ -131,7 +128,7 @@ public class JSMolecule {
 	public static JSMolecule fromIDCode(String idcode, String coordinates) {
 		return new JSMolecule(services.getIDCodeParser(false).getCompactMolecule(idcode, coordinates));
 	}
-	
+
 	@JsIgnore
 	public StereoMolecule getStereoMolecule() {
 		return oclMolecule;
