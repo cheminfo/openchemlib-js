@@ -13,36 +13,43 @@ public class MoleculeProperties extends PropertyCalculator {
 	}
 	
 	@Override
+	@JsProperty
 	public int getAcceptorCount() {
 		return super.getAcceptorCount();
 	}
 	
 	@Override
+	@JsProperty
 	public int getDonorCount() {
 		return super.getDonorCount();
 	}
 	
 	@Override
+	@JsProperty
 	public double getLogP() {
 		return super.getLogP();
 	}
 	
 	@Override
+	@JsProperty
 	public double getLogS() {
 		return super.getLogS();
 	}
 	
 	@Override
+	@JsProperty
 	public double getPolarSurfaceArea() {
 		return super.getPolarSurfaceArea();
 	}
 	
 	@Override
+	@JsProperty
 	public int getRotatableBondCount() {
 		return super.getRotatableBondCount();
 	}
 	
 	@Override
+	@JsProperty
 	public int getStereoCenterCount() {
 		return super.getStereoCenterCount();
 	}
