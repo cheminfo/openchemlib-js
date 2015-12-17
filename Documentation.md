@@ -93,19 +93,19 @@ Returns an array of fragments from the molecule
 
 ## MolecularFormula
 
-### mf.getAbsoluteWeight()
-### mf.getRelativeWeight()
-### mf.getFormula()
+### mf.absoluteWeight
+### mf.relativeWeight
+### mf.formula
 
 ## MoleculeProperties
 
-### p.getAcceptorCount()
-### p.getDonorCount()
-### p.getLogP()
-### p.getLogS()
-### p.getPolarSurfaceArea()
-### p.getRotatableBondCount()
-### p.getStereoCenterCount()
+### p.acceptorCount
+### p.donorCount
+### p.logP
+### p.logS
+### p.polarSurfaceArea
+### p.rotatableBondCount
+### p.stereoCenterCount
 
 ---------------------------------------
 
