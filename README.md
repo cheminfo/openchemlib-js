@@ -9,11 +9,11 @@ JavaScript interface with the [openchemlib](https://github.com/actelion/openchem
 To build this project, you need :
 * java >= 1.7
 * GWT 2.8 ([Download build here](http://goo.gl/62SeR5))
-* Node.js 0.12 or io.js ([link](https://iojs.org/dist/latest/))
+* Node.js ([link](https://nodejs.org/en/download/stable/))
 
 ### Install dependencies
 
-`npm install`
+`npm install`  
 `[sudo] npm install -g gulp`
 
 ### Configure directories
