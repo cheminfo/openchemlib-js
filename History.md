@@ -1,3 +1,9 @@
+4.0.0 / 2016-02-16
+==================
+
+* Major: use property getters for MolecularFormula and MoleculeProperties
+* update openchemlib
+
 3.2.2 / 2015-12-15
 ==================
 
