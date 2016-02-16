@@ -1,42 +1,44 @@
 /*
-
-Copyright (c) 2015, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* Copyright (c) 1997 - 2015
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
+
+import com.actelion.research.util.Angle;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import com.actelion.research.util.Angle;
 
 /**
  * While the Molecule class covers all primary molecule information as atom and bond properties,
@@ -860,7 +862,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			return null;
 
 		int[] fragmentSize = new int[fragmentCount];
-		for (int atom=0; atom<mAllAtoms; atom++)
+		for (int atom=0; atom<mAtoms; atom++)
 			fragmentSize[fragmentNo[atom]]++;
 
 		int largestFragment = 0;
@@ -1126,48 +1128,82 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int rCount = 0;
 		ensureHelperArrays(Molecule.cHelperRings);
 		for (int bond=0; bond<mBonds; bond++) {
-			if (getBondOrder(bond) == 3
-			 && mConnAtoms[mBondAtom[0][bond]] > 1
-			 && mConnAtoms[mBondAtom[1][bond]] > 1) {
-				rCount++;   // count x-x#x-x as one rotatable bond
-				continue;
-				}
+			if (getBondOrder(bond) == 1 && !isRingBond(bond)) {
+				boolean isRotatable = true;
+				for (int i = 0; i < 2; i++) {
+					int atom1 = mBondAtom[i][bond];
+					if (mConnAtoms[atom1] == 1) {
+						isRotatable = false;
+						break;  // terminal bond
+						}
 
-			if (getBondOrder(bond) != 1 || isRingBond(bond))
-				continue;
-
-			boolean isRotatable = true;
-			for (int i=0; i<2; i++) {
-				int atom1 = mBondAtom[i][bond];
-				if (mConnAtoms[atom1] == 1) {
-					isRotatable = false;
-					break;  // terminal bond
-					}
-				if (mPi[atom1] == 2
-				 && mConnAtoms[atom1] == 2) {
-					isRotatable = false;
-					break;  // vicinal to triple bond (count triple bond instead)
-					}
-				if (mAtomicNo[atom1] == 7 && !isAromaticAtom(atom1)) {
-					int atom2 = mBondAtom[1-i][bond];
-					for (int j=0; j<mConnAtoms[atom2]; j++) {
-						int connAtom = mConnAtom[atom2][j];
-						int connBond = mConnBond[atom2][j];
-						if (connBond != bond
-						 && getBondOrder(connBond) > 1
-						 && !isAromaticAtom(connAtom)
-						 && isElectronegative(connAtom)) {
-							isRotatable = false;
-							break;  // amid bond
+					if (mAtomicNo[atom1] == 7 && !isAromaticAtom(atom1)) {
+						int atom2 = mBondAtom[1 - i][bond];
+						for (int j = 0; j < mConnAtoms[atom2]; j++) {
+							int connAtom = mConnAtom[atom2][j];
+							int connBond = mConnBond[atom2][j];
+							if (connBond != bond
+									&& getBondOrder(connBond) > 1
+									&& !isAromaticAtom(connAtom)
+									&& isElectronegative(connAtom)) {
+								isRotatable = false;
+								break;  // amid bond
+								}
 							}
+						}
+					}
+
+				if (isRotatable && !isPseudoRotatableBond(bond))
+					rCount++;
+				}
+			}
+		return rCount;
+		}
+
+	/**
+	 * In a consecutive sequence of sp-hybridized atoms multiple single bonds
+	 * cause redundant torsions. Only that single bond with the smallest bond index
+	 * is considered really rotatable; all other single bonds are pseudo rotatable.
+	 * If one/both end(s) of the sp-atom sequence doesn't carry atoms
+	 * outside of the straight line then no bond is considered rotatable.
+	 * A simple terminal single bond
+	 * @param bond
+	 * @return true, if this bond is not considered rotatable because of a redundancy
+	 */
+	public boolean isPseudoRotatableBond(int bond) {
+		if (getBondOrder(bond) != 1)
+			return false;
+
+		for (int i=0; i<2; i++) {
+			int atom = mBondAtom[i][bond];
+			int rearAtom = mBondAtom[1-i][bond];
+
+			while (mPi[atom] == 2
+				&& mConnAtoms[atom] == 2
+				&& mAtomicNo[atom] < 10) {
+				for (int j=0; j<2; j++) {
+					int connAtom = mConnAtom[atom][j];
+					if (connAtom != rearAtom) {
+						if (mConnAtoms[connAtom] == 1)
+							return true;
+
+						int connBond = mConnBond[atom][j];
+						if (getBondOrder(connBond) == 1
+						 && connBond < bond)
+							return true;
+
+						rearAtom = atom;
+						atom = connAtom;
+						break;
 						}
 					}
 				}
 
-			if (isRotatable)
-				rCount++;
+			if (mConnAtoms[atom] == 1)
+				return true;
 			}
-		return rCount;
+
+		return false;
 		}
 
 	public int getAromaticRingCount() {
@@ -1601,7 +1637,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * tetrahedral parity is returned. If the horizontal bonds are plain
 	 * single bonds, then they are interpreted as up-bonds.
 	 * @param atom the stereo center
-	 * @param index map of neighbours sorted by atom index
+	 * @param sortedConnMap map of neighbours sorted by atom index
 	 * @param angle bond angles sorted by neighbour atom index
 	 * @param direction null or int[] large enough to receive bond directions
 	 * @return cAtomParity1,cAtomParity2 or cAtomParityUnknown
@@ -1639,7 +1675,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * are met, then an int array is returned defining the directions of all
 	 * connected bonds (0:south; 1:west; 2:north; 3:east).
 	 * @param atom
-	 * @param index map of neighbours sorted by atom index
+	 * @param sortedConnMap map of neighbours sorted by atom index
 	 * @param angle bond angles sorted by neighbour atom index
 	 * @param direction array large enough to receive bond directions
 	 * @return false if fisher projection conditions are not met
@@ -2407,7 +2443,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * from the stereo configurations.<br>
 	 * <i>cHelperCIP</i>: Cahn-Ingold-Prelog stereo information for atoms and bonds.<br>
 	 * <br>cHelperParities and cHelperCIP require a StereoMolecule!!!<br>
-	 * @param one of cHelperNeighbours,cHelperRings,cHelperParities,cHelperCIP
+	 * @param required one of cHelperNeighbours,cHelperRings,cHelperParities,cHelperCIP
 	 * @return true if the molecule was changed
 	 */
 	public void ensureHelperArrays(int required) {

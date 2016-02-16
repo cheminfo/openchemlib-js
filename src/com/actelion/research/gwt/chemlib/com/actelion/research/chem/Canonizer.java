@@ -1,32 +1,34 @@
 /*
-
-Copyright (c) 2015, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* Copyright (c) 1997 - 2015
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 // Restriction: - Although bond query features are encoded into the idcode, idcodes of
@@ -137,7 +139,7 @@ public class Canonizer {
 
 	private String		  mIDCode,mCoordinates,mMapping;
 	private StringBuilder	mEncodingBuffer;
-	private	int				mEncodingBitsAvail,mEncodingTempData;
+	private	int				mEncodingBitsAvail,mEncodingTempData,mMaxConnAtoms;
 
 	/**
 	 * Runs a canonicalization process molecule creating a unique atom ranking
@@ -522,7 +524,7 @@ System.out.println();
 		if ((mMode & CONSIDER_STEREOHETEROTOPICITY) != 0) {
 			for (int atom=0; atom<mMol.getAtoms(); atom++) {
 				mCanBase[atom].init(atom);
-				mCanBase[atom].add(ATOM_BITS+4, mCanRank[atom] << 12);
+				mCanBase[atom].add(ATOM_BITS+12, mCanRank[atom] << 12);
 				}
 			}
 		if (mNoOfRanks < mMol.getAtoms()) {
@@ -629,10 +631,17 @@ System.out.println("mEZParity["+bond+"] = "+mEZParity[bond]);
 				}
 			}
 
+		mMaxConnAtoms = 2;
+		for (int atom=0; atom<mMol.getAtoms(); atom++)
+			mMaxConnAtoms = Math.max(mMaxConnAtoms, mMol.getConnAtoms(atom));
+		int baseValueSize = Math.max(2, bondQueryFeaturesPresent ?
+				(62 + ATOM_BITS + mMaxConnAtoms * (ATOM_BITS+Molecule.cBondQFNoOfBits)) / 63
+			  : (62 + ATOM_BITS + mMaxConnAtoms * (ATOM_BITS+5)) / 63);
+
 		mCanRank = new int[mMol.getAllAtoms()];
 		mCanBase = new CanonizerBaseValue[mMol.getAtoms()];
 		for (int atom=0; atom<mMol.getAtoms(); atom++)
-			mCanBase[atom] = new CanonizerBaseValue(bondQueryFeaturesPresent ? 4 : 3);
+			mCanBase[atom] = new CanonizerBaseValue(baseValueSize);
 
 		boolean atomListFound = false;
 
@@ -674,7 +683,7 @@ System.out.println("mEZParity["+bond+"] = "+mEZParity[bond]);
 					bondRingSize[i] |= Math.min(31, mMol.getBondRingSize(mMol.getConnBond(atom, i)));
 					}
 				Arrays.sort(bondRingSize);
-				for (int i=6; i>bondRingSize.length; i--)
+				for (int i=mMaxConnAtoms; i>bondRingSize.length; i--)
 					mCanBase[atom].add(ATOM_BITS+5, 0);
 				for (int i=bondRingSize.length-1; i>=0; i--)
 					mCanBase[atom].add(ATOM_BITS+5, bondRingSize[i]);
@@ -708,7 +717,7 @@ System.out.println("mEZParity["+bond+"] = "+mEZParity[bond]);
 					bondQFList[i] |= mMol.getBondQueryFeatures(mMol.getConnBond(atom, i));
 					}
 				Arrays.sort(bondQFList);
-				for (int i=6; i>bondQFList.length; i--)
+				for (int i=mMaxConnAtoms; i>bondQFList.length; i--)
 					mCanBase[atom].add(ATOM_BITS+Molecule.cBondQFNoOfBits, 0);
 				for (int i=bondQFList.length-1; i>=0; i--)
 					mCanBase[atom].add(ATOM_BITS+Molecule.cBondQFNoOfBits, bondQFList[i]);
@@ -1470,10 +1479,11 @@ System.out.println("mCanBaseValue["+atom+"] = "+Long.toHexString(mCanBase[atom].
 				connRank[j] = rank;
 				}
 
-			int neighbours = Math.min(6, mMol.getConnAtoms(atom));
+			int neighbours = mMol.getConnAtoms(atom);
 			mCanBase[atom].init(atom);
 			mCanBase[atom].add(ATOM_BITS, mCanRank[atom]);
-			mCanBase[atom].add((6 - neighbours)*(ATOM_BITS + 1), 0);
+			for (int i=neighbours; i<mMaxConnAtoms; i++)
+				mCanBase[atom].add(ATOM_BITS + 1, 0);
 			for (int i=0; i<neighbours; i++)
 				mCanBase[atom].add(ATOM_BITS + 1, connRank[i]);
 			}
