@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v4.0.0
- * @date 2016-02-16T09:14:07.183Z
+ * @version v4.0.1
+ * @date 2016-03-08T15:07:42.405Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -1353,7 +1353,7 @@ _.cAtomCIPParitySorP=Yp;_.cAtomColorBlack=Zp;_.cAtomColorBlue=$p;_.cAtomColorDar
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '4.0.0';
+        toReturn.version = '4.0.1';
 
         return toReturn;
     }

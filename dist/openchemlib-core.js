@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v4.0.0
- * @date 2016-02-16T09:14:07.172Z
+ * @version v4.0.1
+ * @date 2016-03-08T15:07:42.465Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -1155,7 +1155,7 @@ var IB=TF(127);cE(149,1,{},Cp);_.assessDruglikeness=function Dp(a){var b;return 
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '4.0.0';
+        toReturn.version = '4.0.1';
 
         return toReturn;
     }
