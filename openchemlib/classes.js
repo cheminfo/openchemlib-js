@@ -27,6 +27,10 @@ var classes = [
     'chem/StereoMolecule',
     'chem/SVGDepictor',
 
+    'chem/contrib/DiastereotopicAtomID',
+    'chem/contrib/HoseCodeCreator',
+    'chem/contrib/HydrogenHandler',
+
     'chem/descriptor/DescriptorHandler',
     'chem/descriptor/DescriptorHandlerFactory',
     'chem/descriptor/DescriptorInfo',

@@ -9,6 +9,7 @@
     "SMILES"
   ],
   "scripts": {
+    "copy:openchemlib": "gulp copy:openchemlib",
     "build": "gulp build:min"
   },
   "main": "dist/openchemlib-core.js",
