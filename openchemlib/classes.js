@@ -26,6 +26,7 @@ var classes = [
     'chem/SSSearcherWithIndex',
     'chem/StereoMolecule',
     'chem/SVGDepictor',
+    'chem/UniqueStringList',
 
     'chem/contrib/DiastereotopicAtomID',
     'chem/contrib/HoseCodeCreator',
