@@ -6,7 +6,7 @@ import com.actelion.research.chem.io.SDFileParser;
 import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
-@JsType("SDFileParser")
+@JsType(name = "SDFileParser")
 public class JSSDFileParser {
 
 	private SDFileParser parser;
