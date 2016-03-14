@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import com.actelion.research.chem.*;
+import com.actelion.research.chem.contrib.*;
 import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
@@ -98,8 +99,43 @@ public class JSMolecule {
 		inventor.invent(oclMolecule);
 		oclMolecule.setStereoBondsFromParity();
 	}
+
+	public native void addImplicitHydrogens(JavaScriptObject atomNumber) /*-{
+		if (atomNumber === undefined) {
+			this.@com.actelion.research.gwt.core.JSMolecule::addImplicitHydrogens()();
+		} else {
+			this.@com.actelion.research.gwt.core.JSMolecule::addImplicitHydrogens(I)(atomNumber);
+		}
+	}-*/;
+
+	public int getNumberOfHydrogens() {
+		return HydrogenHandler.getNumberOfHydrogens(oclMolecule);
+	}
+
+	public String[] getDiastereotopicAtomIDs() {
+		return DiastereotopicAtomID.getAtomIds(oclMolecule);
+	}
+
+	public void addMissingChirality() {
+		DiastereotopicAtomID.addMissingChirality(oclMolecule);
+	}
+
+	public native String[][] getHoseCodes(JavaScriptObject options) /*-{
+		options = options || {};
+		var maxSphereSize = (typeof options.maxSphereSize === 'undefined' ? 5 : options.maxSphereSize) | 0;
+		var type = (typeof options.type === 'undefined' ? 0 : options.type) | 0;
+		return @com.actelion.research.chem.contrib.HoseCodeCreator::getHoseCodes(Lcom/actelion/research/chem/StereoMolecule;II)(this.@com.actelion.research.gwt.core.JSMolecule::oclMolecule, maxSphereSize, type);
+	}-*/;
 	
 	/* public methods after this line will not be accessible from javascript */
+
+	private void addImplicitHydrogens() {
+		HydrogenHandler.addImplicitHydrogens(oclMolecule);
+	}
+
+	private void addImplicitHydrogens(int atomNumber) {
+		HydrogenHandler.addImplicitHydrogens(oclMolecule, atomNumber);
+	}
 	
 	@JsIgnore
 	public static JSMolecule fromSmiles(String smiles, boolean ensure2DCoordinates, boolean readStereoFeatures) throws Exception {
