@@ -6,6 +6,7 @@
 [Substructure searcher with index](#sssearcherwithindex)  
 [Toxicity predictor](#toxicitypredictor)  
 [Drug likeness predictor](#druglikenesspredictor)
+[Util](#util)
 
 [StructureEditor](#structureeditor)
 
@@ -78,6 +79,21 @@ Returns the int[] index array used for substructure search
 ### molecule.inventCoordinates()
 
 Compute and set atom coordinates for this molecule
+
+### molecule.addImplicitHydrogens([atomNumber])
+
+### molecule.getNumberOfHydrogens()
+
+### molecule.getDiastereotopicAtomIDs()
+
+### molecule.addMissingChirality()
+
+### molecule.getHoseCodes(options)
+
+__Options__
+
+* `maxSphereSize` - (default: 5).
+* `type` - (default: 0).
 
 ### molecule.setFragment(isFragment)
 
@@ -281,6 +297,17 @@ Returns detailed information about the previous drug likeness assessment.
 
 ---------------------------------------
 
+## Util
+
+### Util.getHoseCodesFromDiastereotopicID(id, options)
+
+__Options__
+
+* `maxSphereSize` - (default: 5).
+* `type` - (default: 0).
+
+---------------------------------------
+
 ## StructureEditor
 
 ### StructureEditor.createEditor(id)
@@ -380,5 +407,3 @@ execute the following JS:
      no-stereo-text= "FALSE" | "true"
                                     = If true, does not show stereo information text
                                      
-
-
