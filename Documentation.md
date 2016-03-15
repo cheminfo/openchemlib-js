@@ -5,7 +5,7 @@
 [Substructure searcher](#sssearcher)  
 [Substructure searcher with index](#sssearcherwithindex)  
 [Toxicity predictor](#toxicitypredictor)  
-[Drug likeness predictor](#druglikenesspredictor)
+[Drug likeness predictor](#druglikenesspredictor)  
 [Util](#util)
 
 [StructureEditor](#structureeditor)
