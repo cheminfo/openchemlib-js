@@ -84,16 +84,22 @@ Compute and set atom coordinates for this molecule
 
 ### molecule.getNumberOfHydrogens()
 
-### molecule.getDiastereotopicAtomIDs()
+### molecule.getDiastereotopicAtomIDs([elementLabel])
+Returns the diastereotopic IDs of the molecule for the specified element (optional)
+
+__Options__
+
+* `elementLabel`-  (default: all the atoms)
 
 ### molecule.addMissingChirality()
 
 ### molecule.getHoseCodes(options)
+This function returns an array of HOSE(Hierarchical Organisation of Spherical Environments) codes represented as diastereotopic actelion IDs. 
 
 __Options__
 
-* `maxSphereSize` - (default: 5).
-* `type` - (default: 0).
+* `maxSphereSize` - Maximum number of atoms from the center (default: 5).
+* `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
 
 ### molecule.setFragment(isFragment)
 
@@ -300,11 +306,12 @@ Returns detailed information about the previous drug likeness assessment.
 ## Util
 
 ### Util.getHoseCodesFromDiastereotopicID(id, options)
+Returns the HOSE(Hierarchical Organisation of Spherical Environments) code for the given diasterotopic ID. 
 
 __Options__
 
-* `maxSphereSize` - (default: 5).
-* `type` - (default: 0).
+* `maxSphereSize` - Maximum number of atoms from the center (default: 5).
+* `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
 
 ---------------------------------------
 
