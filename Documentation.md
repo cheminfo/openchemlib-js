@@ -81,8 +81,16 @@ Returns the int[] index array used for substructure search
 Compute and set atom coordinates for this molecule
 
 ### molecule.addImplicitHydrogens([atomNumber])
+Expand and find a position for all the hydrogens of the 2D molecule. If `atomNumber` is specified, the function only applies for the hydrogens of the given atom.
+
+__Options__
+
+* `atomNumber`- The atom number according to the molfile (default: all the atoms)
+
 
 ### molecule.getNumberOfHydrogens()
+
+Returns the count of hydrogens in the molecule. 
 
 ### molecule.getDiastereotopicAtomIDs([elementLabel])
 Returns the diastereotopic IDs of the molecule for the specified element (optional)
