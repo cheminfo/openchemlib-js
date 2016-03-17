@@ -9,7 +9,7 @@
     "name": "core",
     "war": "actelionCore",
     "entrypoint": "com.actelion.research.gwt.Core",
-    "fake": false
+    "fake": true
   },
   {
     "name": "viewer",
