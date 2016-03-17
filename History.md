@@ -1,3 +1,11 @@
+4.1.0 / 2016-03-17
+==================
+
+* add new contrib methods to generate HOSE codes and diastereotopic atom IDs
+* do not use global window for `core` library (still needed for the other builds)
+ * this allows to load any number of independant versions of `core` along with one version of `full` or `viewer`
+ * `viewer` will probably be removed in the future, leaving only `core` and `full`
+
 4.0.0 / 2016-02-16
 ==================
 
