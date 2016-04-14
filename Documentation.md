@@ -311,6 +311,12 @@ Returns detailed information about the previous drug likeness assessment.
 
 ---------------------------------------
 
+## DrugScoreCalculator
+
+### DrugScoreCalculator.calculate(cLogP, solubility, molWeight, drugLikeness, toxicityRisks)
+
+---------------------------------------
+
 ## Util
 
 ### Util.getHoseCodesFromDiastereotopicID(id, options)
