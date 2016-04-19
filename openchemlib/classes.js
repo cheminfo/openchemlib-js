@@ -51,6 +51,7 @@ var classes = [
     'util/Angle',
     'util/ColorHelper',
     'util/SortedList',
+    'util/IntArrayComparator',
 
     // Requirements for Viewer
     'share/gui/editor/geom/IDrawContext', // TODO not in OCL

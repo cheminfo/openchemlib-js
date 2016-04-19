@@ -1,34 +1,33 @@
 /*
-* Copyright (c) 1997 - 2015
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
+
+Copyright (c) 2015-2016, cheminfo
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+    * Neither the name of {{ project }} nor the names of its contributors
+      may be used to endorse or promote products derived from this software
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 */
 
 package com.actelion.research.chem;
@@ -122,7 +121,7 @@ public class Molecule implements Serializable {
 	protected static final int cAtomFlagsValence	= 0xF0000000;
 	private static final int cAtomFlagsValenceShift = 28;
 
-	public static final int cAtomQFNoOfBits			= 29;
+	public static final int cAtomQFNoOfBits			= 30;
 	public static final int cAtomQFAromStateBits	= 2;
 	public static final int cAtomQFAromStateShift	= 1;
 	public static final int cAtomQFRingStateBits	= 4;
@@ -152,26 +151,27 @@ public class Molecule implements Serializable {
 	public static final int cAtomQFNot0Hydrogen		= 0x00000080;
 	public static final int cAtomQFNot1Hydrogen		= 0x00000100;
 	public static final int cAtomQFNot2Hydrogen		= 0x00000200;
-	public static final int cAtomQFNot3Hydrogen	 = 0x00000400;
+	public static final int cAtomQFNot3Hydrogen		= 0x00000400;
 	public static final int cAtomQFNoMoreNeighbours	= 0x00000800;
 	public static final int cAtomQFMoreNeighbours	= 0x00001000;
 	public static final int cAtomQFMatchStereo		= 0x00002000;
-	public static final int cAtomQFPiElectrons	  = 0x0001C000;
+	public static final int cAtomQFPiElectrons		= 0x0001C000;
 	public static final int cAtomQFNot0PiElectrons  = 0x00004000;
 	public static final int cAtomQFNot1PiElectron   = 0x00008000;
 	public static final int cAtomQFNot2PiElectrons  = 0x00010000;
-	public static final int cAtomQFNeighbours	   = 0x003E0000;  // these QF refer to non-H neighbours
+	public static final int cAtomQFNeighbours		= 0x003E0000;  // these QF refer to non-H neighbours
 	public static final int cAtomQFNot0Neighbours   = 0x00020000;
 	public static final int cAtomQFNot1Neighbour	= 0x00040000;
 	public static final int cAtomQFNot2Neighbours   = 0x00080000;
 	public static final int cAtomQFNot3Neighbours   = 0x00100000;
 	public static final int cAtomQFNot4Neighbours   = 0x00200000;  // this is not 4 or more neighbours
-	public static final int cAtomQFRingSize		 = 0x01C00000;
+	public static final int cAtomQFRingSize			= 0x01C00000;
 	public static final int cAtomQFCharge			= 0x0E000000;
 	public static final int cAtomQFNotChargeNeg		= 0x02000000;
 	public static final int cAtomQFNotCharge0		= 0x04000000;
 	public static final int cAtomQFNotChargePos		= 0x08000000;
 	public static final int cAtomQFFlatNitrogen		= 0x10000000;  // currently only used in TorsionDetail
+	public static final int cAtomQFExcludeGroup		= 0x20000000;  // these atoms must not exist in SS-matches
 
 	public static final int cBondTypeSingle			= 0x00000001;
 	public static final int cBondTypeDouble			= 0x00000002;
