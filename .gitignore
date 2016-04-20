@@ -7,3 +7,5 @@ config.json
 war/**
 !war/images
 *.log
+/gwt/
+gwt.zip
