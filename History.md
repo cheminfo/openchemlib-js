@@ -1,3 +1,9 @@
+4.2.1 / 2016-04-20
+==================
+
+* toSVG now works correctly in core build
+* warn that toSVG only works in a browser's window
+
 4.2.0 / 2016-04-14
 ==================
 
