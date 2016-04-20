@@ -10,7 +10,10 @@
   ],
   "scripts": {
     "copy:openchemlib": "gulp copy:openchemlib",
-    "build": "gulp build:min"
+    "build": "gulp build:min",
+    "build-core": "gulp build:min -m core",
+    "test": "mocha --require should --reporter mocha-better-spec-reporter",
+    "test-travis": "npm run build-core && npm run test"
   },
   "main": "dist/openchemlib-core.js",
   "files": [
@@ -33,6 +36,9 @@
     "fs-extra": "^0.28.0",
     "gulp": "^3.9.1",
     "gwt-api-exporter": "^1.1.6",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "mocha": "^2.4.5",
+    "mocha-better-spec-reporter": "^3.0.2",
+    "should": "^8.3.1"
   }
 }
