@@ -123,7 +123,7 @@ function compile(mode) {
 }
 
 function copyOpenchemlib() {
-    var chemlibDir = config.openchemlib;
+    var chemlibDir = path.join(config.openchemlib, 'main/java');
     var outDir = './src/com/actelion/research/gwt/chemlib/';
     var modifiedDir = './openchemlib/modified/';
 
