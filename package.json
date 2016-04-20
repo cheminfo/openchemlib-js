@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
-    "fs-extra": "^0.26.5",
+    "fs-extra": "^0.26.6",
     "gulp": "^3.9.1",
     "gwt-api-exporter": "^1.1.6",
     "minimist": "^1.2.0"
