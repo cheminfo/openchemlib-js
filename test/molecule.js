@@ -17,5 +17,18 @@ describe('Molecule', function () {
             mol.toSmiles().should.equal(smiles);
         }
     });
+
+    it('medley', function () {
+        var idcode = 'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
+        var mol = Molecule.fromIDCode(idcode);
+        
+        var molfile = mol.toMolfile();
+        mol = Molecule.fromMolfile(molfile);
+        mol.getIDCode().should.equal(idcode);
+        
+        var smiles = mol.toSmiles();
+        mol = Molecule.fromSmiles(smiles);
+        mol.getIDCode().should.equal(idcode);
+    });
     
 });
