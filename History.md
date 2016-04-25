@@ -1,3 +1,9 @@
+4.2.2 / 2016-04-25
+==================
+
+* update openchemlib
+* remove sourceURL from dist files
+
 4.2.1 / 2016-04-20
 ==================
 
