@@ -235,7 +235,7 @@ public class ESRTypeAction extends BondHighlightAction implements ButtonPressLis
 
     private int getESRAtom(int stereoBond)
     {
-        StereoMolecule mMol = model.getSelectedMolecule();
+        StereoMolecule mMol = model.getMolecule();
         if (mMol != null) {
             int atom = mMol.getBondAtom(0, stereoBond);
             if (mMol.getAtomParity(atom) != Molecule.cAtomParityNone) {
@@ -261,7 +261,7 @@ public class ESRTypeAction extends BondHighlightAction implements ButtonPressLis
     private int getESRBond(int stereoBond)
     {
         int bond = -1;
-        StereoMolecule mMol = model.getSelectedMolecule();
+        StereoMolecule mMol = model.getMolecule();
         if (mMol != null) {
             bond = mMol.findBINAPChiralityBond(mMol.getBondAtom(0, stereoBond));
             if (bond != -1
@@ -276,7 +276,7 @@ public class ESRTypeAction extends BondHighlightAction implements ButtonPressLis
     private void setESRInfo(int stereoBond, int type)
     {
         int group = -1;
-        StereoMolecule mMol = model.getSelectedMolecule();
+        StereoMolecule mMol = model.getMolecule();
         if (mMol != null) {
             int atom = getESRAtom(stereoBond);
             int bond = (atom == -1) ? getESRBond(stereoBond) : -1;

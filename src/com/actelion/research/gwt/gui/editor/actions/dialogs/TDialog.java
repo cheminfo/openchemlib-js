@@ -126,7 +126,7 @@ public abstract class TDialog extends DialogBox
                 public void setPosition(int offsetWidth, int offsetHeight)
                 {
                     setPopupPosition(left + (element.getOffsetWidth() - offsetWidth) /2 ,
-                            top + (element.getOffsetHeight()- offsetHeight)/2);
+                            Math.max(top,top + (element.getOffsetHeight()- offsetHeight)/2));
 
                 }
             });

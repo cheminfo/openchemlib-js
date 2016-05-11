@@ -30,27 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.actelion.research.gwt.gui.viewer;
 
 
@@ -100,17 +79,26 @@ public class GWTDepictor extends AbstractDepictor
 
     private int textSize = 8;
     private String currentFont = textSize + "px Helvetica";
-    private float lineWidth;
+    private double lineWidth;
 
-    public GWTDepictor(Context2d ctx, StereoMolecule mol)
+    public GWTDepictor(StereoMolecule mol)
     {
-        this(ctx, mol, 0);
+        this(mol, 0);
     }
     
-    public GWTDepictor(Context2d ctx, StereoMolecule mol, int displayMode)
+    public GWTDepictor(StereoMolecule mol, int displayMode)
     {
     	super(mol, displayMode);
-    	this.ctx = ctx;
+    	//this.ctx = ctx;
+    }
+
+    @Override
+    public void paint(Object g)
+    {
+        if (g instanceof Context2d) {
+            ctx = (Context2d) g;
+        }
+        super.paint(g);
     }
 
 
@@ -136,7 +124,7 @@ public class GWTDepictor extends AbstractDepictor
     }
 
     @Override
-    protected void drawPolygon(float[] px, float[] py, int count)
+    protected void drawPolygon(double[] px, double[] py, int count)
     {
         ctx.setStrokeStyle(currentColor);
         ctx.setFillStyle(currentColor);
@@ -150,7 +138,7 @@ public class GWTDepictor extends AbstractDepictor
     }
 
     @Override
-    protected void drawString(String theString, float x, float y)
+    protected void drawString(String theString, double x, double y)
     {
         ctx.setFont(currentFont);
         ctx.setTextAlign(Context2d.TextAlign.CENTER);
@@ -160,7 +148,7 @@ public class GWTDepictor extends AbstractDepictor
     }
 
     @Override
-    protected void fillCircle(float x, float y, float r)
+    protected void fillCircle(double x, double y, double r)
     {
         ctx.setFillStyle(currentColor);
         ctx.beginPath();
@@ -172,11 +160,11 @@ public class GWTDepictor extends AbstractDepictor
     }
 
     @Override
-    protected float getStringWidth(String theString)
+    protected double getStringWidth(String theString)
     {
         if (ctx != null) {
             TextMetrics tm = ctx.measureText(theString);
-            return (float) tm.getWidth();
+            return (double) tm.getWidth();
         }
         return 8;
     }
@@ -196,17 +184,19 @@ public class GWTDepictor extends AbstractDepictor
     }
 
     @Override
-    protected void setLineWidth(float lineWidth)
+    protected void setLineWidth(double lineWidth)
     {
         this.lineWidth = lineWidth;
-        ctx.setLineWidth(lineWidth);
-        ctx.setLineCap(Context2d.LineCap.ROUND);
-        ctx.setLineJoin(Context2d.LineJoin.MITER);
+//        if (ctx != null) {
+//            ctx.setLineWidth(lineWidth);
+//            ctx.setLineCap(Context2d.LineCap.ROUND);
+//            ctx.setLineJoin(Context2d.LineJoin.MITER);
+//        }
     }
 
 
     @Override
-    protected float getLineWidth()
+    protected double getLineWidth()
     {
         return lineWidth;
     }

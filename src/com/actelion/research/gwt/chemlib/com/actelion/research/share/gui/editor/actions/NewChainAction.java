@@ -1,34 +1,19 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-*/
+ * Project: DD_jfx
+ * @(#)NewChainAction.java
+ *
+ * Copyright (c) 1997- 2015
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All Rights Reserved.
+ *
+ * This software is the proprietary information of Actelion Pharmaceuticals, Ltd.
+ * Use is subject to license terms.
+ *
+ * Author: Christian Rufener
+ */
 
 package com.actelion.research.share.gui.editor.actions;
 
@@ -36,6 +21,7 @@ import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.geom.IColor;
+import com.actelion.research.share.gui.editor.geom.ICursor;
 import com.actelion.research.share.gui.editor.geom.IDrawContext;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
 
@@ -87,7 +73,7 @@ public class NewChainAction extends BondHighlightAction
             }
         } else {
             StereoMolecule mol = model.getMolecule();
-            model.setSelectedMolecule(mol);
+//            model.setSelectedMolecule(mol);
             origin = new Point2D.Double(evt.getX(), evt.getY());
             update = true;
             numChainAtoms = 0;
@@ -105,7 +91,7 @@ public class NewChainAction extends BondHighlightAction
         boolean ok = false;
         model.pushUndo();
         java.awt.geom.Point2D pt = new Point2D.Double(evt.getX(), evt.getY());
-        StereoMolecule mol = model.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
         //if (mol != null)
         {
             if (numChainAtoms == 0) {
@@ -165,7 +151,7 @@ public class NewChainAction extends BondHighlightAction
     @Override
     protected boolean onDrag(java.awt.geom.Point2D pt)
     {
-        StereoMolecule mol = model.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
         boolean repaintNeeded = false;
         if (mol != null) {
             double lastX, lastY;
@@ -254,7 +240,7 @@ public class NewChainAction extends BondHighlightAction
     @Override
     public boolean paint(IDrawContext ctx)
     {
-        StereoMolecule mol = model.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
         if (mol != null) {
             if (!dragging) {
                 super.paint(ctx);
@@ -284,4 +270,11 @@ public class NewChainAction extends BondHighlightAction
     {
         _ctx.drawLine(x1, y1, x2, y2);
     }
+
+    @Override
+    public int getCursor()
+    {
+        return ICursor.TOOL_CHAINCURSOR;
+    }
+
 }

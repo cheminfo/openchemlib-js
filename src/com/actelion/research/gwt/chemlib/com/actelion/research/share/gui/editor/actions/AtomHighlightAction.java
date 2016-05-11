@@ -1,34 +1,19 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-*/
+ * Project: DD_jfx
+ * @(#)AtomHighlightAction.java
+ *
+ * Copyright (c) 1997- 2015
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All Rights Reserved.
+ *
+ * This software is the proprietary information of Actelion Pharmaceuticals, Ltd.
+ * Use is subject to license terms.
+ *
+ * Author: Christian Rufener
+ */
 
 package com.actelion.research.share.gui.editor.actions;
 
@@ -64,18 +49,17 @@ public abstract class AtomHighlightAction extends DrawAction
 
     boolean trackHighLight(java.awt.geom.Point2D pt)
     {
-
-        StereoMolecule mol = model.getSelectedMolecule();// .getFragment(pt, false);
+        StereoMolecule mol = model.getMolecule();// .getSelectedMolecule();// .getFragment(pt, false);
         int currentAtom = model.getSelectedAtom();
         int atom = findAtom(mol,pt) ;//getAtomAt(pt);
         // Update at least when current selected atom and new selected atom differ
-        boolean ok = atom != -1;//currentAtom;
+        boolean ok = atom != -1;
         lastHightlightPoint = pt;
-        setHighlightAtom(mol, -1);
+//        setHighlightAtom(mol, -1);
         String keyStrokes = model.getKeyStrokeBuffer().toString();
         if (currentAtom != -1 && atom != currentAtom) {
             if (keyStrokes.length() > 0) {
-                StereoMolecule currentMol = model.getSelectedMolecule();
+                StereoMolecule currentMol = model.getMolecule();//getSelectedMolecule();
                 expandAtomKeyStrokes(currentMol, currentAtom, keyStrokes);
                 model.getKeyStrokeBuffer().setLength(0);
             }
@@ -88,14 +72,16 @@ public abstract class AtomHighlightAction extends DrawAction
                 ok = true;
             }
         }
+        atom = model.getSelectedAtom();
+        ok = ok | currentAtom != atom;
         return ok;
     }
 
     void setHighlightAtom(StereoMolecule mol, int atom)
     {
-        if (mol != null) {
-            model.setSelectedMolecule(mol);
-        }
+//        if (mol != null) {
+//            model.setSelectedMolecule(mol);
+//        }
         model.setSelectedAtom(atom);
     }
 
@@ -112,7 +98,8 @@ public abstract class AtomHighlightAction extends DrawAction
     {
         if (!drag) {
             java.awt.geom.Point2D pt = new Point2D.Double(evt.getX(), evt.getY());
-            return trackHighLight(pt);
+            boolean ok = trackHighLight(pt);
+            return ok;
         } else {
             return false;
         }
@@ -124,7 +111,7 @@ public abstract class AtomHighlightAction extends DrawAction
     {
         boolean ok = false;
         int theAtom = model.getSelectedAtom();
-        StereoMolecule mol = model.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();// .getSelectedMolecule();
         if (mol != null) {
             if (theAtom != -1) {
                 drawAtomHighlight(_ctx, mol, theAtom);
@@ -139,7 +126,7 @@ public abstract class AtomHighlightAction extends DrawAction
     {
         if (evt.getCode().equals(builder.getDeleteKey())) {
             int theAtom = model.getSelectedAtom();
-            StereoMolecule mol = model.getSelectedMolecule();
+            StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
 //            System.out.println("Delete Atom " + theAtom);
             if (theAtom != -1) {
                 mol.deleteAtom(theAtom);
@@ -165,7 +152,7 @@ public abstract class AtomHighlightAction extends DrawAction
     private boolean handleCharacter(IKeyEvent evt)
     {
         int theAtom = model.getSelectedAtom();
-        StereoMolecule mol = model.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
         StringBuilder keyStrokeBuffer = model.getKeyStrokeBuffer();
         if (mol == null) {
             return false;
@@ -237,7 +224,7 @@ public abstract class AtomHighlightAction extends DrawAction
             // while retaining coordinates of the fragment.
             StereoMolecule fragment = new StereoMolecule();
             fragment.addFragment(mol, highliteAtom, null);
-            float sourceAVBL = fragment.getAverageBondLength();
+            double sourceAVBL = fragment.getAverageBondLength();
             int firstAtomInFragment = fragment.getAllAtoms();
             for (int atom = 0; atom < fragment.getAllAtoms(); atom++) {
                 fragment.setAtomMarker(atom, true);
@@ -245,8 +232,8 @@ public abstract class AtomHighlightAction extends DrawAction
             fragment.addSubstituent(substituent, 0);
             new CoordinateInventor(CoordinateInventor.MODE_KEEP_MARKED_ATOM_COORDS).invent(fragment);
 
-            float dx = mol.getAtomX(highliteAtom) - sourceAVBL * fragment.getAtomX(0);
-            float dy = mol.getAtomY(highliteAtom) - sourceAVBL * fragment.getAtomY(0);
+            double dx = mol.getAtomX(highliteAtom) - sourceAVBL * fragment.getAtomX(0);
+            double dy = mol.getAtomY(highliteAtom) - sourceAVBL * fragment.getAtomY(0);
 
             // Attach the substituent to the complete molecule and take coodinates from the
             // previously created fragment-substituent species.
@@ -299,7 +286,7 @@ public abstract class AtomHighlightAction extends DrawAction
 
     private boolean showAtomQFDialog(int atom)
     {
-        StereoMolecule mol = model.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
         if (mol != null) {
             IAtomQueryFeaturesDialog dlg = builder.createAtomQueryFeatureDialog(/*new AtomQueryFeaturesDialog*/mol, atom);
             return dlg.doModalAt(lastHightlightPoint.getX(),lastHightlightPoint.getY()) == DialogResult.IDOK;
@@ -309,16 +296,16 @@ public abstract class AtomHighlightAction extends DrawAction
 
     public int findAtom(StereoMolecule mol,Point2D pt) {
         int foundAtom = -1;
-        float pickx = (float)pt.getX();
-        float picky = (float)pt.getY();
-        float avbl = mol.getAverageBondLength();
-        float foundDistanceSquare = Float.MAX_VALUE;
-        float maxDistanceSquare = avbl * avbl / (avbl/3) ;
+        double pickx = pt.getX();
+        double picky = pt.getY();
+        double avbl = mol.getAverageBondLength();
+        double foundDistanceSquare = Float.MAX_VALUE;
+        double maxDistanceSquare = avbl * avbl / (avbl/3) ;
         int mAllAtoms = mol.getAllAtoms();
         for (int atom=0; atom<mAllAtoms; atom++) {
-            float x = mol.getAtomX(atom);
-            float y = mol.getAtomY(atom);
-            float distanceSquare = (pickx-x) * (pickx-x) + (picky-y) * (picky-y);
+            double x = mol.getAtomX(atom);
+            double y = mol.getAtomY(atom);
+            double distanceSquare = (pickx-x) * (pickx-x) + (picky-y) * (picky-y);
             if (distanceSquare < maxDistanceSquare && distanceSquare < foundDistanceSquare) {
                 foundDistanceSquare = distanceSquare;
                 foundAtom = atom;

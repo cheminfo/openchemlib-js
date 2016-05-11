@@ -43,6 +43,7 @@ public class GraphicsContext implements IDrawContext<Context2d>
 {
     Context2d ctx;
     private int textSize = 10;
+    private String fontName = "Helvetica";
 
     public GraphicsContext(Context2d ctx)
     {
@@ -133,10 +134,16 @@ public class GraphicsContext implements IDrawContext<Context2d>
     public void setFont(String name, double size,boolean bold)
     {
 
-//        CSS Font format: "font-style font-variant font-weight font-size/line-height font-family"
         textSize = (int)size;
         String fna = (bold ? "bold " : "") + textSize + "px " + name;
+        fontName = name;
         ctx.setFont(fna);
+    }
+
+    @Override
+    public String getFont()
+    {
+        return fontName;
     }
 
     @Override

@@ -231,7 +231,6 @@ class StructureElement
 
     public static void notify(Object o)
     {
-        Log.console("Notify view mutation");
         Object p = map.get(o);
         if (p instanceof StructureElement) {
             StructureElement se = (StructureElement) p;
@@ -280,10 +279,10 @@ class StructureElement
     
     private static void drawMolecule(Context2d ctx, StereoMolecule mol, int width, int height, int displayMode,String[] atomText)
     {
-    	AbstractDepictor depictor = new GWTDepictor(ctx, mol, displayMode);
+    	AbstractDepictor depictor = new GWTDepictor( mol, displayMode);
         if (atomText != null)
             depictor.setAtomText(atomText);
-    	depictor.validateView(null, new Rectangle2D.Float(0, 0, (float) width, (float) height), AbstractDepictor.cModeInflateToMaxAVBL);
+    	depictor.validateView(null, new Rectangle2D.Double(0, 0, (float) width, (float) height), AbstractDepictor.cModeInflateToMaxAVBL);
     	ctx.clearRect(0, 0, width, height);
     	depictor.paint(ctx);
     }

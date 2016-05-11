@@ -50,6 +50,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 
+import com.actelion.research.gwt.gui.viewer.Console;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.io.IKeyCode;
 import com.actelion.research.share.gui.editor.io.IKeyEvent;
@@ -69,16 +70,16 @@ public class ACTKeyEvent<T extends KeyEvent> implements IKeyEvent
     public static final int WHITESPACE = 1 << 7;
     public static final int MEDIA = 1 << 8;
 
-//    T evt;
+    T evt;
     int code;
     boolean shift;
     int mask = 0;
 
-    public ACTKeyEvent(int code,boolean shift,int mask)
+    public ACTKeyEvent(int code,T evt,int mask)
     {
-        //this.evt = evt;
+        this.evt = evt;
         this.code = (code >= 'A' && code <='Z' && !shift) ? code + 32 : code;
-        this.shift = shift;
+        this.shift = evt.isShiftKeyDown();// shift;
         this.mask = mask;
     }
 
@@ -96,6 +97,23 @@ public class ACTKeyEvent<T extends KeyEvent> implements IKeyEvent
 //        System.out.println("getText " + s);
         return s;
     }
+
+    @Override
+    public boolean isControlDown() {
+        return evt.isControlKeyDown();// .isControlDown();
+    }
+
+    @Override
+    public boolean isShiftDown() {
+        return evt.isShiftKeyDown();
+    }
+
+
+    @Override
+    public boolean isAltDown() {
+        return evt.isAltKeyDown();
+    }
+
 
     public String toString()
     {

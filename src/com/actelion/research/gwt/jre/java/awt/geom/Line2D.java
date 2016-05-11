@@ -51,6 +51,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package java.awt.geom;
 
 
+import java.io.Serializable;
+
 public abstract class Line2D
 {
     public static class Float extends Line2D
@@ -212,6 +214,155 @@ public abstract class Line2D
         }
 
     }
+
+    /**
+     * A line segment specified with double coordinates.
+     * @since 1.2
+     */
+    public static class Double extends Line2D implements Serializable {
+        /**
+         * The X coordinate of the start point of the line segment.
+         * @since 1.2
+         * @serial
+         */
+        public double x1;
+
+        /**
+         * The Y coordinate of the start point of the line segment.
+         * @since 1.2
+         * @serial
+         */
+        public double y1;
+
+        /**
+         * The X coordinate of the end point of the line segment.
+         * @since 1.2
+         * @serial
+         */
+        public double x2;
+
+        /**
+         * The Y coordinate of the end point of the line segment.
+         * @since 1.2
+         * @serial
+         */
+        public double y2;
+
+        /**
+         * Constructs and initializes a Line with coordinates (0, 0) &rarr; (0, 0).
+         * @since 1.2
+         */
+        public Double() {
+        }
+
+        /**
+         * Constructs and initializes a <code>Line2D</code> from the
+         * specified coordinates.
+         * @param x1 the X coordinate of the start point
+         * @param y1 the Y coordinate of the start point
+         * @param x2 the X coordinate of the end point
+         * @param y2 the Y coordinate of the end point
+         * @since 1.2
+         */
+        public Double(double x1, double y1, double x2, double y2) {
+            setLine(x1, y1, x2, y2);
+        }
+
+        /**
+         * Constructs and initializes a <code>Line2D</code> from the
+         * specified <code>Point2D</code> objects.
+         * @param p1 the start <code>Point2D</code> of this line segment
+         * @param p2 the end <code>Point2D</code> of this line segment
+         * @since 1.2
+         */
+        public Double(Point2D p1, Point2D p2) {
+            setLine(p1.getX(),p1.getY(), p2.getX(),p2.getY());
+        }
+
+        /**
+         * {@inheritDoc}
+         * @since 1.2
+         */
+        public double getX1() {
+            return x1;
+        }
+
+        /**
+         * {@inheritDoc}
+         * @since 1.2
+         */
+        public double getY1() {
+            return y1;
+        }
+
+        /**
+         * {@inheritDoc}
+         * @since 1.2
+         */
+        public Point2D getP1() {
+            return new Point2D.Double(x1, y1);
+        }
+
+        /**
+         * {@inheritDoc}
+         * @since 1.2
+         */
+        public double getX2() {
+            return x2;
+        }
+
+        /**
+         * {@inheritDoc}
+         * @since 1.2
+         */
+        public double getY2() {
+            return y2;
+        }
+
+        /**
+         * {@inheritDoc}
+         * @since 1.2
+         */
+        public Point2D getP2() {
+            return new Point2D.Double(x2, y2);
+        }
+
+        /**
+         * {@inheritDoc}
+         * @since 1.2
+         */
+        public void setLine(double x1, double y1, double x2, double y2) {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        }
+
+        /**
+         * {@inheritDoc}
+         * @since 1.2
+         */
+        public Rectangle2D getBounds2D() {
+            double x, y, w, h;
+            if (x1 < x2) {
+                x = x1;
+                w = x2 - x1;
+            } else {
+                x = x2;
+                w = x1 - x2;
+            }
+            if (y1 < y2) {
+                y = y1;
+                h = y2 - y1;
+            } else {
+                y = y2;
+                h = y1 - y2;
+            }
+            return new Rectangle2D.Double(x, y, w, h);
+        }
+
+    }
+
 
     public abstract double getX1();
 

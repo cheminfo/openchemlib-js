@@ -1,39 +1,25 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-*/
+ * Project: DD_jfx
+ * @(#)SelectionAction.java
+ *
+ * Copyright (c) 1997- 2015
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All Rights Reserved.
+ *
+ * This software is the proprietary information of Actelion Pharmaceuticals, Ltd.
+ * Use is subject to license terms.
+ *
+ * Author: Christian Rufener
+ */
 
 package com.actelion.research.share.gui.editor.actions;
 
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.gwt.gui.viewer.Console;
 import com.actelion.research.share.gui.DialogResult;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.chem.IDrawingObject;
@@ -42,9 +28,12 @@ import com.actelion.research.share.gui.editor.dialogs.IBondQueryFeaturesDialog;
 import com.actelion.research.share.gui.editor.geom.ICursor;
 import com.actelion.research.share.gui.editor.geom.IDrawContext;
 import com.actelion.research.share.gui.editor.geom.IPolygon;
+import com.actelion.research.share.gui.editor.io.IKeyEvent;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 
 /**
@@ -56,31 +45,42 @@ import java.awt.geom.Point2D;
 public class SelectionAction extends BondHighlightAction//DrawAction
 {
     private volatile IPolygon polygon = builder.createPolygon();
-    boolean rectangular = false;
+
+
     int atom = -1;
     int bond = -1;
-//    private float[] mX, mY;
-    IDrawingObject selectedOne;
-    boolean shift = false,duplicate = false,layout = false;
-    public SelectionAction(Model model)
-    {
+    boolean shift = false, duplicate = false,/* layout = false,*/
+            rectangular = false;
+
+    public SelectionAction(Model model) {
         super(model);
     }
 
     @Override
-    public boolean onMouseDown(IMouseEvent evt)
-    {
+    public boolean onKeyPressed(IKeyEvent evt) {
+        shift = evt.isShiftDown();
+        rectangular = evt.isAltDown();
+        return super.onKeyPressed(evt);
+    }
+
+    @Override
+    public boolean onKeyReleased(IKeyEvent evt) {
+        shift = false;
+        rectangular = false;
+        duplicate = false;
+        return super.onKeyReleased(evt);
+    }
+
+    @Override
+    public boolean onMouseDown(IMouseEvent evt) {
         java.awt.geom.Point2D pt = new Point2D.Double(evt.getX(), evt.getY());
         StereoMolecule mol = model.getMoleculeAt(pt, true);
 
-        shift = evt.isShiftDown();
-        rectangular = evt.isControlDown();
         polygon = builder.createPolygon();
         polygon.add(pt);
-
+        rectangular = evt.isAltDown();
         duplicate = false;
-        layout = false;
-        selectedOne = null;
+//        layout = false;
 
         last = origin = new Point2D.Double(pt.getX(), pt.getY());
         atom = getAtomAt(mol, origin);
@@ -96,21 +96,20 @@ public class SelectionAction extends BondHighlightAction//DrawAction
     }
 
     @Override
-    public boolean onMouseUp(IMouseEvent ev)
-    {
+    public boolean onMouseUp(IMouseEvent ev) {
         polygon = builder.createPolygon();
         atom = bond = -1;
         origin = last = null;
         duplicate = false;
-        if (layout)
-            model.needsLayout(true);
-        layout = false;
+        rectangular = false;
+//        if (layout)
+//            model.needsLayout(true);
+//        layout = false;
         return true;
     }
 
     @Override
-    public boolean onMouseMove(IMouseEvent evt, boolean drag)
-    {
+    public boolean onMouseMove(IMouseEvent evt, boolean drag) {
 //        System.out.println("Atoms and Bonds moving " + atom + " " + bond);
         boolean ok = false;
         java.awt.geom.Point2D pt = new Point2D.Double(evt.getX(), evt.getY());
@@ -118,230 +117,52 @@ public class SelectionAction extends BondHighlightAction//DrawAction
             double dx = last.getX() - pt.getX();
             double dy = last.getY() - pt.getY();
             if (!shift || duplicate) {
-                ok = moveAtomsAndBonds(dx, dy);
-                if (!ok) {
-                    ok = moveSelected(dx, dy);
+                ok = moveAtomsAndBonds(dx, dy, model.getSelectedDrawingObject() != null);
+                if (ok) {
+                    moveSelectedDrawItems(dx, dy);
+                } else if (model.getSelectedDrawingObject() != null) {
+                    model.getSelectedDrawingObject().move((float) -dx, (float) -dy);
+                    ok = true;
                 }
                 if (!ok) {
                     ok = selectItems(pt);
                 }
-            } else {
+            } else if (shift) {
                 duplicate = true;
                 duplicateSelected();
             }
-            layout = true;
+////            layout = true;
         } else {
             ok = trackHighLight(pt);
         }
+
         last = pt;
         return ok;
     }
 
-    private boolean moveAtomsAndBonds(double dx, double dy)
-    {
-        boolean ok = false;
-//        for (StereoMolecule mol : model.getMols()) {
-        StereoMolecule mol = model.getMolecule();
-      {
-            if (mol != null) {
-                if (mol != null && atom != -1) {
-                    translateAtoms(mol, dx, dy, true);
-                    ok = true;
-                } else if (mol != null && bond != -1) {
-                    translateBond(mol, dx, dy, true);
-                    ok = true;
-                }
-            }
-        }
-        return ok;
-    }
-
-    private boolean selectItems(java.awt.geom.Point2D pt)
-    {
-        boolean ok = false;
-        if (rectangular) {
-            selectRectanglarRegion(null);
-            ok = true;
-        } else {
-            if (selectPolygonRegion(null, pt)) {
-                ok = true;
-            }
-        }
-        return ok;
-    }
-
-    private boolean moveSelected(double dx, double dy)
-    {
-        boolean ok = false;
-        if (selectedOne != null) {
-            selectedOne.move((float) -dx, (float) -dy);
-            ok = true;
-        }
-        return ok;
-    }
-
-    private void duplicateSelected()
-    {
-        StereoMolecule mol = model.getSelectedMolecule();
-
-        int originalAtoms = mol.getAllAtoms();
-        int originalBonds = mol.getAllBonds();
-        int[] atomMap = new int[mol.getAllAtoms()];
-        int esrGroupCountAND = mol.renumberESRGroups(Molecule.cESRTypeAnd);
-        int esrGroupCountOR = mol.renumberESRGroups(Molecule.cESRTypeOr);
-        for (int atom = 0; atom < originalAtoms; atom++) {
-            if (mol.isSelectedAtom(atom)) {
-                int newAtom = mol.getAllAtoms();
-                atomMap[atom] = newAtom;
-                mol.copyAtom(mol, atom, esrGroupCountAND, esrGroupCountOR);
-            }
-        }
-        for (int bond = 0; bond < originalBonds; bond++) {
-            if (mol.isSelectedBond(bond)) {
-                mol.copyBond(mol, bond, esrGroupCountAND, esrGroupCountOR, atomMap, false);
-            }
-        }
-        for (int atom = 0; atom < originalAtoms; atom++) {
-            mol.setAtomSelection(atom, false);
-        }
-        for (int atom = originalAtoms; atom < mol.getAllAtoms(); atom++) {
-            mol.setAtomMapNo(atom, 0, false);
-        }
-    }
-
-
-    private boolean selectPolygonRegion(StereoMolecule m, java.awt.geom.Point2D pt)
-    {
-        if (polygon.size() > 1 && Math.abs(pt.getX() - polygon.get(polygon.size() - 1).getX()) < 10
-            && Math.abs(pt.getY() - polygon.get(polygon.size() - 1).getY()) < 10) {
-            return false;
-        }
-        if (origin == null) {
-            throw new RuntimeException("NUll DOWN Point!");
-        }
-        polygon.remove(origin);
-        polygon.add(pt);
-        polygon.add(origin);
-
-        deselectAllAtoms();
-        selectFromPolygonRegion();
-        return true;
-    }
-
-    private void selectFromPolygonRegion()
-    {
-//        StereoMolecule[] mols = model.getMols();
-//        for (StereoMolecule mol : mols) {
-          StereoMolecule mol = model.getMolecule();
-        {
-            for (int i = 0; i < mol.getAllAtoms(); i++) {
-                boolean isSelected = polygon.contains(mol.getAtomX(i), mol.getAtomY(i));
-                mol.setAtomSelection(i, isSelected);
-                model.setSelectedMolecule(mol);
-            }
-        }
-    }
-
-    private void deselectAllAtoms()
-    {
-//        StereoMolecule[] mols = model.getMols();
-//        for (StereoMolecule mol : mols) {
-        StereoMolecule mol = model.getMolecule();
-      {
-
-            deselectAtoms(mol);
-        }
-    }
-
-    private void selectRectanglarRegion(StereoMolecule mol)
-    {
-        java.awt.geom.Rectangle2D rc = makeRect(origin, last);
+    @Override
+    boolean trackHighLight(java.awt.geom.Point2D pt) {
         boolean selected = false;
-        if (mol != null) {
-//            deselectAllAtoms();
-            selectAtomsInRectangle(mol, rc);
-            selected = true;
-        } else {
-//            StereoMolecule[] mols = model.getMols();
-//            for (StereoMolecule m : mols) {
-            StereoMolecule m = model.getMolecule();
-          {
-                deselectAtoms(m);
-                java.awt.geom.Rectangle2D bounds = builder.getBoundingRect(m);
-                if (bounds != null && bounds.intersects(rc.getX(),rc.getY(),rc.getWidth(),rc.getHeight())) {
-                    selectRectanglarRegion(m);
-                    //break;
-                }
+        IDrawingObject lastSelected = model.getSelectedDrawingObject();
+        java.util.List<IDrawingObject> drawables = model.getDrawingObjects();
+        model.setSelectedDrawingObject(null);
+        for (IDrawingObject d : drawables) {
+            if (d.getBoundingRect().contains(pt.getX(), pt.getY())) {
+                model.setSelectedDrawingObject(d);
+                selected = true;
+                break;
             }
         }
-        if (!selected) {
-            selectDrawingObjectsInRectangle(rc);
-        }
+        boolean ok = selected || lastSelected != null || super.trackHighLight(pt);
+//        System.out.printf("Tracking highlight selection %s\n",ok);
+        return ok;
+
     }
 
-    private void deselectAtoms(StereoMolecule mol)
-    {
-        for (int i = 0; i < mol.getAllAtoms(); i++) {
-            mol.setAtomSelection(i, false);
-        }
-    }
 
-    private void selectDrawingObjectsInRectangle(java.awt.geom.Rectangle2D rc)
-    {
-//        for (IDrawingObject dw : model.getDrawingObjectList()) {
-//            dw.setSelected(false);
-//            java.awt.geom.Rectangle2D r = dw.getBoundingRect();
-//            java.awt.geom.Rectangle2D bounds = new java.awt.geom.Rectangle2D.Double(r.getMinX(), r.getMinY(), r.getWidth(), r.getHeight());
-////            IRectangle2D bounds = builder.createRectangle(r.getMinX(), r.getMinY(), r.getWidth(), r.getHeight());
-//            if (bounds.intersects(rc)) {
-//                dw.setSelected(true);
-//            }
-//        }
-    }
-
-    private void selectAtomsInRectangle(StereoMolecule mol, java.awt.geom.Rectangle2D rc)
-    {
-        for (int i = 0; i < mol.getAllAtoms(); i++) {
-            boolean isSelected = rc.contains(mol.getAtomX(i), mol.getAtomY(i));
-            mol.setAtomSelection(i, isSelected);
-        }
-        model.setSelectedMolecule(mol);
-    }
-
-    private void translateBond(StereoMolecule mol, double dx, double dy, boolean selected)
-    {
-        int a1 = mol.getBondAtom(0, bond);
-        int a2 = mol.getBondAtom(1, bond);
-        if (selected) {
-            translateAtoms(mol, dx, dy, true);
-        } else {
-            translateAtom(mol, a1, dx, dy);
-            translateAtom(mol, a2, dx, dy);
-        }
-    }
-
-    private void translateAtom(StereoMolecule mol, int a, double dx, double dy)
-    {
-        mol.setAtomX(a, mol.getAtomX(a) - dx);
-        mol.setAtomY(a, mol.getAtomY(a) - dy);
-    }
-
-    private void translateAtoms(StereoMolecule mol, double dx, double dy, boolean allSelected)
-    {
-        if (allSelected) {
-            for (int i = 0; i < mol.getAllAtoms(); i++) {
-                if (mol.isSelectedAtom(i)) {
-                    translateAtom(mol, i, dx, dy);
-                }
-            }
-        } else {
-            translateAtom(mol, atom, dx, dy);
-        }
-    }
 
     @Override
-    public boolean onDoubleClick(IMouseEvent evt)
-    {
+    public boolean onDoubleClick(IMouseEvent evt) {
 //        StereoMolecule mol = model.getSelectedMolecule();
         java.awt.geom.Point2D pt = new Point2D.Double(evt.getX(), evt.getY());
         StereoMolecule mol = model.getMoleculeAt(pt, true);
@@ -395,48 +216,56 @@ public class SelectionAction extends BondHighlightAction//DrawAction
                     return true;
                 }
             }
+        } else {
+            IDrawingObject drawingObject = model.getSelectedDrawingObject();
+            if (drawingObject != null) {
+                //System.out.printf("Doubleclick on seleted object\n");
+                if (evt.isShiftDown()) {
+                    deselectAllAtoms();
+                    deselectAllDrawingObjects();
+//                    model.setSelectedDrawingObject(null);
+                }
+                drawingObject.setSelected(true);
+                model.setSelectedDrawingObject(drawingObject);
+            }
+
         }
         return false;
     }
 
-
-    private boolean showAtomQFDialog(int atom)
-    {
-        StereoMolecule mol = model.getSelectedMolecule();
-        if (mol != null) {
-            IAtomQueryFeaturesDialog dlg = builder.createAtomQueryFeatureDialog(/* new AtomQueryFeaturesDialog*/mol, atom);
-            return dlg.doModalAt(lastHightlightPoint.getX(), lastHightlightPoint.getY()) == DialogResult.IDOK;
-        }
-        return false;
-    }
-
-    private boolean showBondQFDialog(int bond)
-    {
-        StereoMolecule mol = model.getSelectedMolecule();
-        if (mol != null) {
-            IBondQueryFeaturesDialog dlg = builder.createBondFeaturesDialog( /*new BondQueryFeaturesDialog(*/mol, bond);
-            return dlg.doModalAt(lastHightlightPoint.getX(),lastHightlightPoint.getY()) == DialogResult.IDOK;
-        }
-        return false;
-    }
-
-
-    java.awt.geom.Rectangle2D makeRect(java.awt.geom.Point2D origin, java.awt.geom.Point2D pt)
-    {
-//        return Geom.makeRect(origin, pt);
-        double x = Math.min(origin.getX(), pt.getX());
-        double y = Math.min(origin.getY(), pt.getY());
-        double w = Math.abs(origin.getX() - pt.getX());
-        double h = Math.abs(origin.getY() - pt.getY());
-        return new java.awt.geom.Rectangle2D.Double(x,y,w,h);
-//        return builder.createRectangle(x, y, w, h);
-//        return new Geom.Rectangle2D(x, y, w, h);
-    }
 
     @Override
-    public boolean paint(IDrawContext ctx)
-    {
+    public int getCursor() {
+        int ha = model.getSelectedAtom();
+        int hb = model.getSelectedBond();
+        StereoMolecule mol = model.getMolecule();
+
+        if (shift && rectangular)
+            return ICursor.TOOL_SELECTRECTPLUSCURSOR;
+
+        if (shift)
+            return ICursor.TOOL_LASSOPLUSCURSOR;
+
+        if (rectangular)
+            return ICursor.TOOL_SELECTRECTCURSOR;
+
+        if (ha != -1 && mol.isSelectedAtom(ha))
+            return shift ? ICursor.TOOL_HANDPLUSCURSOR : ICursor.TOOL_HANDCURSOR;
+
+        if (hb != -1 && mol.isSelectedBond(hb))
+            return shift ? ICursor.TOOL_HANDPLUSCURSOR : ICursor.TOOL_HANDCURSOR;
+
+        if (ha != -1 || hb != -1)
+            return ICursor.TOOL_POINTERCURSOR;
+        return ICursor.TOOL_LASSOCURSOR;
+    }
+
+
+    @Override
+    public boolean paint(IDrawContext ctx) {
+        ctx.save();
         super.paint(ctx);
+        ctx.setStroke(builder.getSelectionColor());
         if (rectangular && origin != null && last != null) {
             drawDashedRect(ctx);
             return true;
@@ -444,11 +273,11 @@ public class SelectionAction extends BondHighlightAction//DrawAction
             drawPolygon(ctx);
             return true;
         }
+        ctx.restore();
         return false;
     }
 
-    private void drawDashedRect(IDrawContext ctx)
-    {
+    private void drawDashedRect(IDrawContext ctx) {
         java.awt.geom.Rectangle2D rc = makeRect(origin, last);
         if (rc.getWidth() > 5 && rc.getHeight() > 5) {
             drawDashedRect(ctx, rc.getMinX(), rc.getMinY(), rc.getWidth(), rc.getHeight(), new int[]{
@@ -458,33 +287,233 @@ public class SelectionAction extends BondHighlightAction//DrawAction
         }
     }
 
-    private void drawPolygon(IDrawContext ctx)
-    {
+    private void drawPolygon(IDrawContext ctx) {
         ctx.drawPolygon(polygon);
     }
 
-    @Override
-    public int getCursor()
-    {
-        if (rectangular) {
-            return ICursor.SE_RESIZE;
-        }
-        return ICursor.CROSSHAIR;
+    private void drawDashedLine(IDrawContext context, double srcx, double srcy, double targetx, double targety, int[] dashPattern) {
+        context.drawDashedLine(srcx, srcy, targetx, targety, dashPattern);
     }
 
-    private void drawDashedLine(IDrawContext context, double srcx, double srcy, double targetx, double targety, int[] dashPattern)
-      {
-          context.drawDashedLine(srcx,srcy,targetx,targety,dashPattern);
-      }
+    private void drawDashedRect(IDrawContext ctx, double x, double y, double w, double h, int[] pattern) {
+        drawDashedLine(ctx, x, y, x + w, y, pattern);
+        drawDashedLine(ctx, x, y, x, y + h, pattern);
+        drawDashedLine(ctx, x, y + h, x + w, y + h, pattern);
+        drawDashedLine(ctx, x + w, y + h, x + w, y, pattern);
+    }
 
-      private void drawDashedRect(IDrawContext ctx, double x, double y, double w, double h,int[] pattern)
-      {
-          drawDashedLine(ctx,x,y,x+w,y,pattern);
-          drawDashedLine(ctx,x,y,x,y+h,pattern);
-          drawDashedLine(ctx,x,y+h,x+w,y+h,pattern);
-          drawDashedLine(ctx,x+w,y+h,x+w,y,pattern);
-      }
+    private boolean moveAtomsAndBonds(double dx, double dy, boolean force) {
+        boolean ok = false;
+//        for (StereoMolecule mol : model.getMols()) {
+        StereoMolecule mol = model.getMolecule();
+        if (mol != null) {
+            if (mol != null && atom != -1 || force) {
+                translateAtoms(mol, dx, dy, true);
+                ok = true;
+            } else if (mol != null && bond != -1 || force) {
+                translateBond(mol, dx, dy, true);
+                ok = true;
+            }
+        }
+        return ok;
+    }
 
+    private boolean selectItems(java.awt.geom.Point2D pt) {
+        boolean ok = false;
+        if (rectangular) {
+            selectRectanglarRegion(null);
+            ok = true;
+        } else {
+            if (selectPolygonRegion(null, pt)) {
+                ok = true;
+            }
+        }
+        return ok;
+    }
+
+    private boolean moveSelectedDrawItems(double dx, double dy) {
+        boolean ok = false;
+        for (IDrawingObject selectedOne : model.getDrawingObjects()) {
+            if (selectedOne.isSelected()) {
+                selectedOne.move((float) -dx, (float) -dy);
+                ok = true;
+            }
+        }
+        return ok;
+    }
+
+    private void duplicateSelected() {
+        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
+
+        int originalAtoms = mol.getAllAtoms();
+        int originalBonds = mol.getAllBonds();
+        int[] atomMap = new int[mol.getAllAtoms()];
+        int esrGroupCountAND = mol.renumberESRGroups(Molecule.cESRTypeAnd);
+        int esrGroupCountOR = mol.renumberESRGroups(Molecule.cESRTypeOr);
+        for (int atom = 0; atom < originalAtoms; atom++) {
+            if (mol.isSelectedAtom(atom)) {
+                int newAtom = mol.getAllAtoms();
+                atomMap[atom] = newAtom;
+                mol.copyAtom(mol, atom, esrGroupCountAND, esrGroupCountOR);
+            }
+        }
+        for (int bond = 0; bond < originalBonds; bond++) {
+            if (mol.isSelectedBond(bond)) {
+                mol.copyBond(mol, bond, esrGroupCountAND, esrGroupCountOR, atomMap, false);
+            }
+        }
+        for (int atom = 0; atom < originalAtoms; atom++) {
+            mol.setAtomSelection(atom, false);
+        }
+        for (int atom = originalAtoms; atom < mol.getAllAtoms(); atom++) {
+            mol.setAtomMapNo(atom, 0, false);
+        }
+    }
+
+
+    private boolean selectPolygonRegion(StereoMolecule m, java.awt.geom.Point2D pt) {
+        if (polygon.size() > 1 && Math.abs(pt.getX() - polygon.get(polygon.size() - 1).getX()) < 10
+                && Math.abs(pt.getY() - polygon.get(polygon.size() - 1).getY()) < 10) {
+            return false;
+        }
+        if (origin == null) {
+            throw new RuntimeException("NUll DOWN Point!");
+        }
+        polygon.remove(origin);
+        polygon.add(pt);
+        polygon.add(origin);
+
+        deselectAllAtoms();
+        deselectAllDrawingObjects();
+        selectFromPolygonRegion();
+        return true;
+    }
+
+    private void selectFromPolygonRegion() {
+        StereoMolecule mol = model.getMolecule();
+        for (int i = 0; i < mol.getAllAtoms(); i++) {
+            boolean isSelected = polygon.contains(mol.getAtomX(i), mol.getAtomY(i));
+            mol.setAtomSelection(i, isSelected);
+//            model.setSelectedMolecule(mol);
+        }
+
+        List<IDrawingObject> drawables = model.getDrawingObjects();
+        for (IDrawingObject d : drawables) {
+            Rectangle2D r = d.getBoundingRect();
+            if (polygon.contains(r.getCenterX(), r.getCenterY()))
+                d.setSelected(true);
+        }
+    }
+
+    private void deselectAllAtoms() {
+        StereoMolecule mol = model.getMolecule();
+        deselectAtoms(mol);
+    }
+
+    private void selectRectanglarRegion(StereoMolecule mol) {
+        java.awt.geom.Rectangle2D rc = makeRect(origin, last);
+        boolean selected = false;
+        if (mol != null) {
+            selectAtomsInRectangle(mol, rc);
+            selected = true;
+        } else {
+            StereoMolecule m = model.getMolecule();
+            deselectAtoms(m);
+            java.awt.geom.Rectangle2D bounds = builder.getBoundingRect(m);
+            if (bounds != null && bounds.intersects(rc.getX(), rc.getY(), rc.getWidth(), rc.getHeight())) {
+                selectRectanglarRegion(m);
+                //break;
+            }
+        }
+        if (!selected) {
+            selectDrawingObjectsInRectangle(rc);
+        }
+    }
+
+    private void deselectAtoms(StereoMolecule mol) {
+        for (int i = 0; i < mol.getAllAtoms(); i++) {
+            mol.setAtomSelection(i, false);
+        }
+    }
+
+    private void selectDrawingObjectsInRectangle(java.awt.geom.Rectangle2D rc) {
+        for (IDrawingObject dw : model.getDrawingObjects()) {
+            dw.setSelected(false);
+            java.awt.geom.Rectangle2D r = dw.getBoundingRect();
+            if (rc.contains(r.getCenterX(), r.getCenterY()))
+                dw.setSelected(true);
+        }
+    }
+
+    private void selectAtomsInRectangle(StereoMolecule mol, java.awt.geom.Rectangle2D rc) {
+        for (int i = 0; i < mol.getAllAtoms(); i++) {
+            boolean isSelected = rc.contains(mol.getAtomX(i), mol.getAtomY(i));
+            mol.setAtomSelection(i, isSelected);
+        }
+//        model.setSelectedMolecule(mol);
+    }
+
+    private void translateBond(StereoMolecule mol, double dx, double dy, boolean selected) {
+        int a1 = mol.getBondAtom(0, bond);
+        int a2 = mol.getBondAtom(1, bond);
+        if (selected) {
+            translateAtoms(mol, dx, dy, true);
+        } else {
+            translateAtom(mol, a1, dx, dy);
+            translateAtom(mol, a2, dx, dy);
+        }
+    }
+
+    private void translateAtom(StereoMolecule mol, int a, double dx, double dy) {
+        mol.setAtomX(a, mol.getAtomX(a) - dx);
+        mol.setAtomY(a, mol.getAtomY(a) - dy);
+    }
+
+    private void translateAtoms(StereoMolecule mol, double dx, double dy, boolean allSelected) {
+        if (allSelected) {
+            for (int i = 0; i < mol.getAllAtoms(); i++) {
+                if (mol.isSelectedAtom(i)) {
+                    translateAtom(mol, i, dx, dy);
+                }
+            }
+        } else {
+            translateAtom(mol, atom, dx, dy);
+        }
+    }
+
+    private java.awt.geom.Rectangle2D makeRect(java.awt.geom.Point2D origin, java.awt.geom.Point2D pt) {
+        double x = Math.min(origin.getX(), pt.getX());
+        double y = Math.min(origin.getY(), pt.getY());
+        double w = Math.abs(origin.getX() - pt.getX());
+        double h = Math.abs(origin.getY() - pt.getY());
+        return new java.awt.geom.Rectangle2D.Double(x, y, w, h);
+    }
+
+
+    private void deselectAllDrawingObjects() {
+        for (IDrawingObject d : model.getDrawingObjects()) {
+            d.setSelected(false);
+        }
+    }
+
+
+    private boolean showAtomQFDialog(int atom) {
+        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
+        if (mol != null) {
+            IAtomQueryFeaturesDialog dlg = builder.createAtomQueryFeatureDialog(/* new AtomQueryFeaturesDialog*/mol, atom);
+            return dlg.doModalAt(lastHightlightPoint.getX(), lastHightlightPoint.getY()) == DialogResult.IDOK;
+        }
+        return false;
+    }
+
+    private boolean showBondQFDialog(int bond) {
+        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
+        if (mol != null) {
+            IBondQueryFeaturesDialog dlg = builder.createBondFeaturesDialog( /*new BondQueryFeaturesDialog(*/mol, bond);
+            return dlg.doModalAt(lastHightlightPoint.getX(), lastHightlightPoint.getY()) == DialogResult.IDOK;
+        }
+        return false;
+    }
 
 }
 

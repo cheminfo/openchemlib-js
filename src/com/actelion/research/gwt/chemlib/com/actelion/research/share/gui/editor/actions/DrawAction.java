@@ -1,34 +1,19 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-*/
+ * Project: DD_jfx
+ * @(#)DrawAction.java
+ *
+ * Copyright (c) 1997- 2015
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All Rights Reserved.
+ *
+ * This software is the proprietary information of Actelion Pharmaceuticals, Ltd.
+ * Use is subject to license terms.
+ *
+ * Author: Christian Rufener
+ */
 
 package com.actelion.research.share.gui.editor.actions;
 
@@ -50,11 +35,11 @@ import java.awt.geom.Point2D;
 public abstract class DrawAction implements Action
 {
     protected static final GeomFactory builder = GeomFactory.getGeomFactory();
-    public static final double HIGHLIGHT_ATOM_DIAMETER = 20;
-    public static final long HIGHLIGHT_STYLE = builder.createColor(.7, .8, 1, 0.8);// new Color(.7, .8, 1, 0.8);
+    public static final double HIGHLIGHT_ATOM_RADIUS = 5;
+//    public static final long HIGHLIGHT_STYLE = builder.createColor(.7, .8, 1, 0.8);// new Color(.7, .8, 1, 0.8);
     public static final int MAX_CONNATOMS = 8;
     public static final String UNKNOWN = "<unknown>";
-    public static final String KEYSTROKEFONT = "Helvetica";
+//    public static final String KEYSTROKEFONT = "Helvetica";
     public static final int KEYSTROKEFONTSIZE = 24;
     protected Model model;
 
@@ -78,6 +63,12 @@ public abstract class DrawAction implements Action
 
     @Override
     public boolean onKeyPressed(IKeyEvent evt)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean onKeyReleased(IKeyEvent evt)
     {
         return false;
     }
@@ -146,6 +137,10 @@ public abstract class DrawAction implements Action
 
     protected void drawBondHighlight(IDrawContext ctx, StereoMolecule mol, int theBond)
     {
+        int width = (int) (0.32f * mol.getAverageBondLength());
+        if (width < 5)
+            width = (int)HIGHLIGHT_ATOM_RADIUS;
+
         double x1 = mol.getAtomX(mol.getBondAtom(0, theBond));
         double y1 = mol.getAtomY(mol.getBondAtom(0, theBond));
         double x2 = mol.getAtomX(mol.getBondAtom(1, theBond));
@@ -153,8 +148,8 @@ public abstract class DrawAction implements Action
 
 
         ctx.save();
-        ctx.setLineWidth(8);
-        ctx.setStroke(HIGHLIGHT_STYLE);
+        ctx.setLineWidth(width);
+        ctx.setStroke(builder.getHighLightColor());
 //        ctx.setStroke(IColor.BLUE);
         ctx.drawLine(x1, y1, x2, y2);
         ctx.restore();
@@ -163,7 +158,7 @@ public abstract class DrawAction implements Action
 
     protected void highlightAtom(StereoMolecule mol, int atom)
     {
-        model.setSelectedMolecule(mol);
+//        model.setSelectedMolecule(mol);
         model.setSelectedAtom(atom);
     }
 
@@ -178,12 +173,16 @@ public abstract class DrawAction implements Action
 
     private void drawAtomHighlightElement(IDrawContext ctx, StereoMolecule mol, int theAtom)
     {
+        int radius = (int) (0.32f * mol.getAverageBondLength());
+        if (radius < 5)
+            radius = (int)HIGHLIGHT_ATOM_RADIUS;
+
         java.awt.geom.Point2D highlightPoint = new Point2D.Double(mol.getAtomX(theAtom), mol.getAtomY(theAtom));
         ctx.save();
-        ctx.setFill(HIGHLIGHT_STYLE);
+        ctx.setFill(builder.getHighLightColor());
         ctx.fillElipse(
-                highlightPoint.getX() - HIGHLIGHT_ATOM_DIAMETER / 2, highlightPoint.getY() - HIGHLIGHT_ATOM_DIAMETER / 2,
-                HIGHLIGHT_ATOM_DIAMETER, HIGHLIGHT_ATOM_DIAMETER
+                highlightPoint.getX() - radius, highlightPoint.getY() - radius ,
+                2 * radius, 2 * radius
         );
         ctx.restore();
     }
@@ -198,21 +197,21 @@ public abstract class DrawAction implements Action
 
         ctx.save();
         ctx.setFill((
-                validity == Model.KEY_IS_ATOM_LABEL) ? IColor.BLACK
+                validity == Model.KEY_IS_ATOM_LABEL) ? builder.getForegroundColor()
                 : (validity == Model.KEY_IS_SUBSTITUENT) ? IColor.BLUE
                 : (validity == Model.KEY_IS_VALID_START) ? IColor.GRAY : IColor.RED);
 
         if (validity == Model.KEY_IS_INVALID) {
             s = s + UNKNOWN;
         }
-        ctx.setFont(KEYSTROKEFONT, KEYSTROKEFONTSIZE, false);
+        ctx.setFont(ctx.getFont(), KEYSTROKEFONTSIZE, false);
         ctx.fillText(s, highlightPoint.getX(), highlightPoint.getY());
         ctx.restore();
     }
 
     protected java.awt.geom.Point2D suggestNewX2AndY2(int atom)
     {
-        StereoMolecule mol = model.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();// .getSelectedMolecule();
         mol.ensureHelperArrays(Molecule.cHelperNeighbours);
 
         double newAngle = Math.PI * 2 / 3;

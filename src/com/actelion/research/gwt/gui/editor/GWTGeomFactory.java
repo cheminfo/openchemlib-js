@@ -1,5 +1,6 @@
 package com.actelion.research.gwt.gui.editor;
 
+import com.actelion.research.chem.ChemistryHelper;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.AtomPropertiesDialog;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.AtomQueryFeaturesDialog;
@@ -37,6 +38,8 @@ public class GWTGeomFactory extends GeomFactory
     @Override
     public Rectangle2D getBoundingRect(StereoMolecule m)
     {
+        return ChemistryHelper.getBoundingRect(m);
+/*
         double xmax = Double.MIN_VALUE;
         double ymax = Double.MIN_VALUE;
         double xmin = Double.MAX_VALUE;
@@ -55,6 +58,7 @@ public class GWTGeomFactory extends GeomFactory
         }
 
         return (na > 0) ? new Rectangle2D.Double(xmin, ymin, Math.max(xmax - xmin, bl), Math.max(ymax - ymin, bl)) : null;
+*/
     }
     public IKeyCode getDeleteKey()
     {
@@ -69,9 +73,26 @@ public class GWTGeomFactory extends GeomFactory
     {
         return ACTKeyCode.BACK_SPACE;
     }
-
     public IKeyCode getEnterKey()
     {
         return ACTKeyCode.ENTER;
     }
+
+
+    public long getHighLightColor(){
+        return createColor(.3,0.4,1,.4);
+    }
+    public long getMapToolColor(){
+        return createColor(1,0,0,1);
+    }
+    public long getSelectionColor(){
+        return createColor(1,0,0,1);
+    }
+    public long getForegroundColor(){
+        return createColor(0,0,0,1);
+    }
+    public long getBackgroundColor(){
+        return createColor(1,1,1,1);
+    }
+
 }

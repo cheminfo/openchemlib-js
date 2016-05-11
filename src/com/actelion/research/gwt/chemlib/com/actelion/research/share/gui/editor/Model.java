@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2015-2016, cheminfo
+Copyright (c) 2015, cheminfo
 
 All rights reserved.
 
@@ -27,7 +27,6 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 */
 
 package com.actelion.research.share.gui.editor;
@@ -36,6 +35,7 @@ import com.actelion.research.chem.*;
 import com.actelion.research.chem.reaction.IReactionMapper;
 import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.chem.reaction.ReactionEncoder;
+import com.actelion.research.share.gui.Arrow;
 import com.actelion.research.share.gui.editor.chem.IDepictor;
 import com.actelion.research.share.gui.editor.chem.IDrawingObject;
 import com.actelion.research.share.gui.editor.listeners.IChangeListener;
@@ -84,7 +84,7 @@ public abstract class Model
     // redraw molecules and drawing objects with their current coordinates
     protected static final int UPDATE_CHECK_VIEW = 2;
     // redraw with on-the-fly coordinate transformation only if current coords do not fit within view area
-    // (new coords are generated for one paint() only; the original coords are not changed)
+    // (new coords are generated for one draw() only; the original coords are not changed)
     protected static final int UPDATE_CHECK_COORDS = 3;
     // redraw with in-place coordinate transformation only if current coords do not fit within view area
     // (the original atom and object coords are replaced by the new ones)
@@ -123,25 +123,31 @@ public abstract class Model
     private Dimension displaySize = new Dimension(0, 0);
     private StereoMolecule mMol = new StereoMolecule();        // molecule being modified directly by the drawing editor
     private StringBuilder mAtomKeyStrokeBuffer = new StringBuilder();
-    private List<IDrawingObject> mDrawingObjectList, mUndoDrawingObjectList;
+    private List<IDrawingObject> mDrawingObjectList;//, mUndoDrawingObjectList;
 
     private StereoMolecule[] mFragment;    // in case of MODE_MULTIPLE_FRAGMENTS contains valid stereo fragments
-    IReactionMapper mapper;
-    ImageProvider imageProvider ;
+    private IDrawingObject selectedDrawingObject;
+
+    private IReactionMapper mapper;
+    private ImageProvider imageProvider ;
 
 
     public Model(int mode)
     {
+        mDrawingObjectList = new ArrayList<IDrawingObject>();
         mMode = mode;
         if ((mMode & (MODE_REACTION | MODE_MARKUSH_STRUCTURE)) != 0) {
             mMode |= (MODE_MULTIPLE_FRAGMENTS);
         }
 
         if ((mMode & (MODE_DRAWING_OBJECTS | MODE_REACTION)) != 0) {
-            //            mDrawingObjectList = new ArrayList<>();
 
         }
-        mDrawingObjectList = new ArrayList<IDrawingObject>();
+        if ((mMode & (MODE_REACTION)) != 0) {
+            Arrow arrow = new Arrow(0,0,0,0);
+//            arrow.setDeletable(false);
+            mDrawingObjectList.add(arrow);
+        }
 
     }
 
@@ -173,19 +179,16 @@ public abstract class Model
 
         double w = dim.getWidth();
         double h = dim.getHeight();
-        double y = h / 2;
-        double x = w / 5 * 2;
         double width = w / 5;
-        double height = 50;
 
         if (w > 0 && h > 0) {
-            System.out.println("Clean into: " + sort );
             ChemistryHelper.scaleInto(reaction, 0, 0, dim.getWidth(), dim.getHeight(), width);
             setValue(reaction);
         }
     }
 
 
+/*
     public void setSelectedMolecule(StereoMolecule selectedMolecule)
     {
 
@@ -196,13 +199,14 @@ public abstract class Model
         }
 //        this.selectedMolecule = selectedMolecule;
     }
+*/
 
-    public StereoMolecule getSelectedMolecule()
-    {
-
-        //return selectedMolecule;
-        return mMol;
-    }
+//    public StereoMolecule getSelectedMolecule()
+//    {
+//
+//        //return selectedMolecule;
+//        return mMol;
+//    }
 
     public StereoMolecule getSelectedCopy(StereoMolecule sourceMol)
     {
@@ -261,11 +265,11 @@ public abstract class Model
     private int findFragment(float x, float y)
     {
         int fragment = -1;
-        float minDistance = Float.MAX_VALUE;
+        double minDistance = Float.MAX_VALUE;
         for (int atom = 0; atom < mMol.getAllAtoms(); atom++) {
-            float dx = x - mMol.getAtomX(atom);
-            float dy = y - mMol.getAtomY(atom);
-            float distance = (float) Math.sqrt(dx * dx + dy * dy);
+            double dx = x - mMol.getAtomX(atom);
+            double dy = y - mMol.getAtomY(atom);
+            double distance = Math.sqrt(dx * dx + dy * dy);
             if (distance < FRAGMENT_MAX_CLICK_DISTANCE
                     && minDistance > distance) {
                 minDistance = distance;
@@ -442,7 +446,7 @@ public abstract class Model
         if ((mMode & MODE_MULTIPLE_FRAGMENTS) == 0) {
             cleanupMoleculeCoordinates(depictor, selectedOnly);
         } else {
-            cleanupMultiFragmentCoordinates(depictor, selectedOnly);
+            cleanupMultiFragmentCoordinates(depictor, selectedOnly,true);
         }
 
         if (selectedOnly)
@@ -463,14 +467,12 @@ public abstract class Model
             mMol.setStereoBondsFromParity();
         }
 
-        depictor.updateCoords(null, new java.awt.geom.Rectangle2D.Float(0, 0, getWidth(), getHeight()),
-                AbstractDepictor.cModeInflateToMaxAVBL);
-
-        DepictorTransformation dt = depictor.simpleValidateView(new Rectangle2D.Float(0, 0, this.getWidth(), this.getHeight()),AbstractDepictor.cModeInflateToMaxAVBL );
+        DepictorTransformation dt = depictor.simpleValidateView(new Rectangle2D.Double(0, 0, this.getWidth(), this.getHeight()),AbstractDepictor.cModeInflateToMaxAVBL );
         if (dt != null)
             dt.applyTo(mMol);
 
     }
+
 
     private float getHeight()
     {
@@ -482,10 +484,10 @@ public abstract class Model
         return (float) displaySize.getWidth();
     }
 
-    private void cleanupMultiFragmentCoordinates(IDepictor depictor, boolean selectedOnly)
+    private void cleanupMultiFragmentCoordinates(IDepictor depictor, boolean selectedOnly,boolean invent)
     {
         //if (selectedOnly && mUpdateMode == UPDATE_INVENT_COORDS)
-        if (false) {
+        if (invent) {
             int[] fragmentAtom = new int[mFragment.length];
             for (int atom = 0; atom < mMol.getAllAtoms(); atom++) {
                 int fragment = mFragmentNo[atom];
@@ -494,11 +496,11 @@ public abstract class Model
             }
         }
 
-        java.awt.geom.Rectangle2D.Float[] boundingRect = new java.awt.geom.Rectangle2D.Float[mFragment.length];
+        java.awt.geom.Rectangle2D.Double[] boundingRect = new java.awt.geom.Rectangle2D.Double[mFragment.length];
 //		float fragmentWidth = 0.0f;
         for (int fragment = 0; fragment < mFragment.length; fragment++) {
             //if (mUpdateMode == UPDATE_INVENT_COORDS)
-            if (false) {
+            if (invent) {
                 new CoordinateInventor(selectedOnly ? CoordinateInventor.MODE_KEEP_MARKED_ATOM_COORDS : 0).invent(mFragment[fragment]);
                 mFragment[fragment].setStereoBondsFromParity();
             }
@@ -508,15 +510,15 @@ public abstract class Model
 //			fragmentWidth += boundingRect[fragment].width;
         }
 
-        float spacing = FRAGMENT_CLEANUP_DISTANCE * AbstractDepictor.cOptAvBondLen;
-        float avbl = mMol.getAverageBondLength();
+        double spacing = FRAGMENT_CLEANUP_DISTANCE * AbstractDepictor.cOptAvBondLen;
+        double avbl = mMol.getAverageBondLength();
 //        float arrowWidth = ((mMode & MODE_REACTION) == 0) ?
 //            0f
 //            : (mUpdateMode == UPDATE_SCALE_COORDS_USE_FRAGMENTS) ?
 //            DEFAULT_ARROW_LENGTH * getWidth()
 //            : ((IArrow) mDrawingObjectList.get(0)).getLength() * AbstractDepictor.cOptAvBondLen / avbl;
 
-        float rawX = 0.5f * spacing;
+        double rawX = 0.5 * spacing;
 //        for (int fragment = 0; fragment <= mFragment.length; fragment++) {
 //            if ((mMode & MODE_REACTION) != 0 && fragment == mReactantCount) {
 //                ((IArrow) mDrawingObjectList.get(0)).setCoordinates(
@@ -536,7 +538,7 @@ public abstract class Model
 //            rawX += spacing + boundingRect[fragment].width;
 //        }
 
-        depictor.updateCoords(null, new java.awt.geom.Rectangle2D.Float(0, 0, getWidth(), getHeight()),
+        depictor.updateCoords(null, new java.awt.geom.Rectangle2D.Double(0, 0, getWidth(), getHeight()),
                 AbstractDepictor.cModeInflateToMaxAVBL);
 
         int[] fragmentAtom = new int[mFragment.length];
@@ -595,12 +597,12 @@ public abstract class Model
             mergeFragments[i] = new boolean[i];
         }
 
-        float avbl = mMol.getAverageBondLength();
+        double avbl = mMol.getAverageBondLength();
         for (int atom1 = 1; atom1 < mMol.getAllAtoms(); atom1++) {
             for (int atom2 = 0; atom2 < atom1; atom2++) {
-                float dx = mMol.getAtomX(atom2) - mMol.getAtomX(atom1);
-                float dy = mMol.getAtomY(atom2) - mMol.getAtomY(atom1);
-                float distance = (float) Math.sqrt(dx * dx + dy * dy);
+                double dx = mMol.getAtomX(atom2) - mMol.getAtomX(atom1);
+                double dy = mMol.getAtomY(atom2) - mMol.getAtomY(atom1);
+                double distance = Math.sqrt(dx * dx + dy * dy);
                 if (distance < FRAGMENT_GROUPING_DISTANCE * avbl) {
                     int fragment1 = fragmentNo[atom1];
                     int fragment2 = fragmentNo[atom2];
@@ -660,13 +662,10 @@ public abstract class Model
 
         if ((mMode & MODE_REACTION) != 0) {
             mReactantCount = 0;
-//            IArrow arrow = ((mMode & MODE_REACTION) != 0) ? (IArrow) mDrawingObjectList.get(0) : null;
+            Arrow arrow = ((mMode & MODE_REACTION) != 0) ? (Arrow)mDrawingObjectList.get(0) : null;
             for (int fragment = 0; fragment < fragments; fragment++) {
-                fragmentDescriptor[fragment][1] = (isOnProductSide(fragmentCOG[fragment].x,
+                fragmentDescriptor[fragment][1] = (arrow.isOnProductSide(fragmentCOG[fragment].x,
                         fragmentCOG[fragment].y)) ? 1 : 0;
-
-//                fragmentDescriptor[fragment][1] = reactantIndex < fragment ? 1 : 0;
-
                 if (fragmentDescriptor[fragment][1] == 0) {
                     mReactantCount++;
                 }
@@ -744,7 +743,7 @@ public abstract class Model
 
     public void mapReaction(int atom, Point2D left, Point2D right)
     {
-        StereoMolecule mol = getSelectedMolecule();
+        StereoMolecule mol = getMolecule();// getSelectedMolecule();
         if (mol != null && left != null && right != null) {
             int freeMapNo = getNextMapNo();
             StereoMolecule source = getFragmentAt(left, false);
@@ -860,7 +859,7 @@ public abstract class Model
 
     public final void setValue(StereoMolecule value, boolean b)
     {
-        needslayout = b;
+        needsLayout(b);
         mMol = value;
         notifyChange();
     }
@@ -907,7 +906,7 @@ public abstract class Model
                     int source = mol.getBondAtom(0, i);
                     int target = mol.getBondAtom(1, i);
                     java.awt.geom.Line2D line =
-                            new java.awt.geom.Line2D.Float(mol.getAtomX(source), mol.getAtomY(source), mol.getAtomX(target), mol.getAtomY(target));
+                            new java.awt.geom.Line2D.Double(mol.getAtomX(source), mol.getAtomY(source), mol.getAtomX(target), mol.getAtomY(target));
                     double dist = line.ptSegDist(pt.getX(), pt.getY());
                     if (dist < 5) {
 /*
@@ -937,7 +936,7 @@ public abstract class Model
                 int source = mol.getBondAtom(0, i);
                 int target = mol.getBondAtom(1, i);
                 java.awt.geom.Line2D line =
-                        new java.awt.geom.Line2D.Float(
+                        new java.awt.geom.Line2D.Double(
                                 mol.getAtomX(source), mol.getAtomY(source),
                                 mol.getAtomX(target), mol.getAtomY(target));
                 double dist = line.ptSegDist(pt.getX(), pt.getY());
@@ -1037,7 +1036,7 @@ public abstract class Model
     }
 
 
-    public List<IDrawingObject> getDrawinObjects()
+    public List<IDrawingObject> getDrawingObjects()
     {
         return mDrawingObjectList;
     }
@@ -1080,6 +1079,8 @@ public abstract class Model
     public void needsLayout(boolean set)
     {
         needslayout = set;
+//        if (set)
+//            System.out.printf("NeedsLayout %s\n",set);
     }
 
     public boolean needsLayout()
@@ -1108,7 +1109,7 @@ public abstract class Model
     public String getIDCode()
     {
         if (!isReaction()) {
-            StereoMolecule mol = getSelectedMolecule();
+            StereoMolecule mol = getMolecule();//getSelectedMolecule();
             if (mol != null && mMol.getAllAtoms() > 0) {
                 Canonizer can = new Canonizer(mol);
                 return (can.getIDCode() + " " + can.getEncodedCoordinates());
@@ -1308,6 +1309,14 @@ public abstract class Model
                 scaleCoords(1, -1);
             }
             moveCoords((float) pt.getX(), (float) pt.getY());
+
+            // invert stereo bonds
+            for (int bond=0; bond<mMol.getAllBonds(); bond++) {
+                if (mMol.getBondType(bond) == Molecule.cBondTypeUp)
+                    mMol.setBondType(bond, Molecule.cBondTypeDown);
+                else if (mMol.getBondType(bond) == Molecule.cBondTypeDown)
+                    mMol.setBondType(bond, Molecule.cBondTypeUp);
+            }
         }
     }
 
@@ -1365,7 +1374,7 @@ public abstract class Model
             } else {
                 int avbl = (int) mMol.getAverageBondLength();
                 AbstractDepictor d = createDepictor(mol);
-                DepictorTransformation dt = d.simpleValidateView(new Rectangle2D.Float(0, 0, this.getWidth(), this.getHeight()),
+                DepictorTransformation dt = d.simpleValidateView(new Rectangle2D.Double(0, 0, this.getWidth(), this.getHeight()),
                         AbstractDepictor.cModeInflateToMaxAVBL + avbl);
                 if (dt != null)
                     dt.applyTo(mol);
@@ -1383,6 +1392,21 @@ public abstract class Model
 
     }
 
+    public IDrawingObject getSelectedDrawingObject() {
+        return selectedDrawingObject;
+    }
+
+    public void setSelectedDrawingObject(IDrawingObject sel) {
+        if (selectedDrawingObject != sel) {
+            setSelectedAtom(-1);
+            setSelectedBond(-1);
+        }
+        this.selectedDrawingObject = sel;
+//        for (IDrawingObject d : getDrawingObjects())
+//            d.setSelected(false);
+        if (sel != null)
+            this.selectedDrawingObject.setSelected(true);
+    }
 
     public abstract void cleanMolecule(boolean selectedOnly);
 

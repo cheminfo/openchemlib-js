@@ -80,7 +80,7 @@ public class GWTEditorModel extends Model
     @Override
     protected AbstractDepictor createDepictor(StereoMolecule mol)
     {
-        return new GWTDepictor(null, mol);
+        return new GWTDepictor( mol);
     }
 
 
@@ -130,9 +130,9 @@ public class GWTEditorModel extends Model
             }
         }
         Dimension dim = getDisplaySize();
-        GWTDepictor depictor = new GWTDepictor(null, mol);
+        GWTDepictor depictor = new GWTDepictor(mol);
         depictor.updateCoords((Graphics)null,
-                new java.awt.geom.Rectangle2D.Float(0, 0,
+                new java.awt.geom.Rectangle2D.Double(0, 0,
                         (float) dim.getWidth(), (float) dim.getHeight()), GWTDepictor.cModeInflateToMaxAVBL
         );
         setValue(mol,true);

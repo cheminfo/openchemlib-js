@@ -32,21 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.actelion.research.gwt.gui.editor;
 
 
@@ -73,16 +58,6 @@ public class ACTMouseEvent<T extends MouseEvent> implements IMouseEvent
         return _evt.getY();
     }
 
-    public boolean isShiftKeyDown()
-    {
-        return _evt.isShiftKeyDown();
-    }
-
-    public boolean isControlKeyDown()
-    {
-        return _evt.isControlKeyDown();
-    }
-
     public boolean isShiftDown()
     {
         return _evt.isShiftKeyDown();
@@ -92,5 +67,10 @@ public class ACTMouseEvent<T extends MouseEvent> implements IMouseEvent
     public boolean isControlDown()
     {
         return _evt.isControlKeyDown();
+    }
+
+    @Override
+    public boolean isAltDown() {
+        return _evt.isAltKeyDown();
     }
 }

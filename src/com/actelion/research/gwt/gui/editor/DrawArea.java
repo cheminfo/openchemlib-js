@@ -34,10 +34,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.AbstractDepictor;
+import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.gwt.gui.viewer.GraphicsContext;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
+import com.actelion.research.share.gui.editor.chem.AbstractExtendedDepictor;
+import com.actelion.research.share.gui.editor.geom.GeomFactory;
 import com.actelion.research.share.gui.editor.listeners.IChangeListener;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -53,15 +56,18 @@ import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Date;
 
 class DrawArea implements IChangeListener
 {
+    private boolean down = false;
+    private boolean pressed = false;
+    private int code = 0;
+    protected static final GeomFactory builder = GeomFactory.getGeomFactory();
+
     public static final CssColor WHITE = CssColor.make("WHITE");
     private static int instanceCount = 0;
 
@@ -115,27 +121,50 @@ class DrawArea implements IChangeListener
 
     private void draw(Canvas canvas)
     {
+        long fg = builder.getForegroundColor();
         Context2d context2d = canvas.getContext2d();
-        AbstractDepictor depictor;
         int w = (int) model.getDisplaySize().getWidth();
         int h = (int) model.getDisplaySize().getHeight();
-        depictor = new GWTDepictor(context2d, model.getMolecule());
-        depictor.setDisplayMode(model.getDisplayMode());
+
+        int displayMode = model.getDisplayMode();
+
+        drawBackground(context2d, w, h);
+
+        if (isReaction()) {
+            model.analyzeFragmentMembership();
+            if (model.needsLayout())
+                model.cleanReaction(true);
+        }
+
+//        AbstractDepictor depictor;
+//        depictor = new GWTDepictor(context2d, model.getMolecule());
+        AbstractExtendedDepictor depictor = createDepictor();
+        depictor.setDisplayMode(displayMode);
+
         if (model.needsLayout()) {
-//            Log.console("Need layout " + w + " " + h);
             depictor.updateCoords(null,
-                    new java.awt.geom.Rectangle2D.Float(0, 0, (float) w, (float) h), AbstractDepictor.cModeInflateToMaxAVBL);
+                    new java.awt.geom.Rectangle2D.Double(0, 0, (float) w, (float) h), AbstractDepictor.cModeInflateToMaxAVBL);
         }
         model.needsLayout(false);
+
+
+
+        depictor.paint(context2d);
+        // Let the actions draw if needed e.g. NewChainAction
+        if (action != null) {
+            GraphicsContext ctx = new GraphicsContext(context2d);
+            ctx.save();
+            ctx.setStroke(fg);
+            ctx.setFill(fg);
+            action.paint(ctx);
+            ctx.restore();
+        }
+    }
+
+    private void drawBackground(Context2d context2d, int w, int h) {
         context2d.clearRect(0, 0, w, h);
         context2d.setFillStyle(WHITE);
         context2d.fillRect(0, 0, w, h);
-        depictor.paint(context2d);
-
-        // Let the actions draw if needed e.g. NewChainAction
-        if (action != null) {
-            action.paint(new GraphicsContext(context2d));
-        }
     }
 
     @Override
@@ -185,9 +214,30 @@ class DrawArea implements IChangeListener
         canvas.addMouseUpHandler(handler);
     }
 
-    private boolean down = false;
-    private boolean pressed = false;
-    private int code = 0;
+    protected boolean isMarkush()
+    {
+        int mode = model.getMode();
+        return (mode & Model.MODE_MARKUSH_STRUCTURE) != 0;
+
+    }
+
+    private boolean isReaction() {
+        int mode = model.getMode();
+        return (mode & Model.MODE_REACTION) != 0;
+    }
+
+    private AbstractExtendedDepictor createDepictor() {
+        AbstractExtendedDepictor mDepictor;
+        Context2d ctx = canvas.getContext2d();
+        if (isReaction())
+            mDepictor = new MoleculeDrawDepictor(ctx,new Reaction(model.getFragments(), model.getReactantCount()), model.getDrawingObjects(), false);
+        else if (isMarkush()) {
+            mDepictor = new MoleculeDrawDepictor(ctx,model.getFragments(), model.getMarkushCount(), null);
+        } else {
+            mDepictor = new MoleculeDrawDepictor(ctx,model.getMolecule(), model.getDrawingObjects());
+        }
+        return mDepictor;
+    }
 
     private boolean isValidKey(int kc)
     {
@@ -226,7 +276,7 @@ class DrawArea implements IChangeListener
                     event.preventDefault();
                     handler.onKey(new ACTKeyEvent(
                             code,
-                            event.isShiftKeyDown(),
+                            event,//.isShiftKeyDown(),
                             pressed ? (ACTKeyEvent.LETTER | ACTKeyEvent.DIGIT) : 0));
                 }
                 down = pressed = false;

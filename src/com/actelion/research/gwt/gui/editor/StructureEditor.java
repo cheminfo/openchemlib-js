@@ -138,11 +138,11 @@ public class StructureEditor implements IChangeListener//,Exportable
             Element drawAreaElement = drawPane.createElement(container, toolBarWidth,0,(width - toolBarWidth), height - TEXTHEIGHT - 5);
             container.appendChild(drawAreaElement);
 
-            int idcodewidth = showFragmentIndicator ? width - 30 : width;
+            int idcodewidth = showFragmentIndicator ? width - 50 : width;
             if (showFragmentIndicator) {
                 fragmentStatus = Document.get().createLabelElement();
                 fragmentStatus.setId(id + "-fragment-element");
-                setElementSizePos(fragmentStatus, width - 30, height - TEXTHEIGHT - 5, TEXTHEIGHT, 30);
+                setElementSizePos(fragmentStatus, width - 50, height - TEXTHEIGHT - 5, TEXTHEIGHT, 50);
                 String t = fragmentStatus.getAttribute("style");
                 fragmentStatus.setAttribute("style", t + "text-align:center;");
                 fragmentStatus.setInnerText(model.isFragment() ? "Q" : "");
@@ -364,9 +364,9 @@ public class StructureEditor implements IChangeListener//,Exportable
                 p.parse(mol, elements[0], elements[1]);
 
             mol.setStereoBondsFromParity();
-            GWTDepictor depictor = new GWTDepictor(getContext2d(), mol);
+            GWTDepictor depictor = new GWTDepictor(mol);
             depictor.updateCoords(null,
-                    new java.awt.geom.Rectangle2D.Float(0, 0, (float) width, (float) height),
+                    new java.awt.geom.Rectangle2D.Double(0, 0, (float) width, (float) height),
                     GWTDepictor.cModeInflateToMaxAVBL
             );
 
@@ -611,7 +611,6 @@ public class StructureEditor implements IChangeListener//,Exportable
     @Override
     public void onChange()
     {
-        Console.log("OnChange");
         if (idcodeTextElement != null) {
             String idcode = model.getIDCode();
             idcodeTextElement.setValue(idcode);

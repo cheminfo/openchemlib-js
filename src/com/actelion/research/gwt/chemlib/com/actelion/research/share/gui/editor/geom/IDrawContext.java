@@ -57,6 +57,8 @@ public interface IDrawContext<T>
 
     void setFont(String helvetica, double size,boolean bold);
 
+    String getFont();
+
     void setFill(long color);
 
     void fillText(String str, double x, double y);

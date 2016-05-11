@@ -27,6 +27,9 @@ var classes = [
     'chem/StereoMolecule',
     'chem/SVGDepictor',
     'chem/UniqueStringList',
+    'chem/Coordinates',
+
+    'chem/conf/Coordinate',
 
     'chem/contrib/DiastereotopicAtomID',
     'chem/contrib/HoseCodeCreator',

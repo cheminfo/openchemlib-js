@@ -73,7 +73,7 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
     private ExtendedMolecule mMol;
     private int mAtom;
 
-    private CheckBox mCBAny, mCBBlocked, mCBSubstituted, mCBMatchStereo;
+    private CheckBox mCBAny, mCBBlocked, mCBSubstituted, mCBMatchStereo,mCBExcludeGroup;
     private ComboBox mChoiceArom, mChoiceRingState, mChoiceRingSize, mChoiceCharge,
             mChoiceNeighbours, mChoiceHydrogen, mChoicePi;
     private TextBox mTFAtomList;
@@ -90,7 +90,7 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
     protected void buildGUI(RootPanel root)
     {
 
-        Grid grid = new Grid(14, 2);
+        Grid grid = new Grid(15, 2);
         grid.setCellPadding(0);
 
         HorizontalPanel panel = new HorizontalPanel();
@@ -192,6 +192,8 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
         mCBMatchStereo = new CheckBox("match stereo center");
         grid.setWidget(12, 0, mCBMatchStereo);
 
+        mCBExcludeGroup = new CheckBox("is part of exclude group");
+        grid.setWidget(13, 0, mCBExcludeGroup);
 
         HorizontalPanel buttonPanel = new HorizontalPanel();
         buttonPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
@@ -200,7 +202,7 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
         ok = new Button("OK");
         buttonPanel.add(cancel);
         buttonPanel.add(ok);
-        grid.setWidget(13, 1, buttonPanel);
+        grid.setWidget(14, 1, buttonPanel);
 //        grid.setWidget(13,2,cancel);
 //        grid.setWidget(13,3,ok);
 
@@ -405,6 +407,10 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
         if ((queryFeatures & Molecule.cAtomQFMatchStereo) != 0)
             mCBMatchStereo.setValue(true);
+
+        if ((queryFeatures & Molecule.cAtomQFExcludeGroup) != 0)
+            mCBExcludeGroup.setValue(true);
+
     }
 
     private void setQueryFeatures()
@@ -594,6 +600,10 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
         if (mCBMatchStereo.getValue())
             queryFeatures |= Molecule.cAtomQFMatchStereo;
+
+        if (mCBExcludeGroup.getValue())
+            queryFeatures |= Molecule.cAtomQFExcludeGroup;
+
 
         mMol.setAtomQueryFeature(atom, 0xFFFFFFFF, false);
         mMol.setAtomQueryFeature(atom, queryFeatures, true);

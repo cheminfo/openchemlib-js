@@ -29,44 +29,48 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-
 package com.actelion.research.gwt.gui.viewer;
 
-import com.actelion.research.chem.*;
-import jsinterop.annotations.*;
-
-import java.awt.geom.Rectangle2D;
+import com.actelion.research.chem.Canonizer;
+import com.actelion.research.chem.IDCodeParser;
+import com.actelion.research.chem.StereoMolecule;
 
 /**
  * Created by rufenec on 20/03/15.
  */
-@JsType(namespace = "OCL")
-public class SVGRenderer
+public class TestIDC
 {
-    public static String renderMolecule(String idCode,int width,int height)
+    public static void main(String[] args)
     {
+        String idCode = "gFp@DiTvjh@ !Bg~w@k_}mvw@`";
+
+//        Log.java:70 gFp@DiTvjh@ !B_g~w_K_}mvw_@
+
         try {
             StereoMolecule mol = new StereoMolecule();
-            IDCodeParser p = new IDCodeParser(true);
+            IDCodeParser p = new IDCodeParser(false);
+            System.out.println("parsing idcode");
             if (idCode != null) {
                 String[] parts = idCode.split(" ");
                 if (parts.length > 1) {
                     p.parse(mol, parts[0], parts[1]);
                 } else
                     p.parse(mol, idCode);
+
+
+                System.out.println("renderMolecule: " + mol.isFragment());
+                System.out.println(idCode);
                 Canonizer can = new Canonizer(mol);
                 String n = can.getIDCode();
                 String c = can.getEncodedCoordinates();
-                p.parse(mol, n,c);
-                SVGDepictor depictor =new SVGDepictor(mol,null);
-                depictor.validateView(null, new Rectangle2D.Double(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
-                depictor.paint(null);
-                return depictor.toString();
+                System.out.println("afterrender " + mol.isFragment());
+                System.out.println(n + " " + c);
+
+                p.parse(mol, n, c);
+
             }
-        } catch (Exception e) {
-            Log.println("error setting idcode data " + e);
-        } finally {
+        } catch (Exception a) {
+
         }
-        return null;
     }
 }

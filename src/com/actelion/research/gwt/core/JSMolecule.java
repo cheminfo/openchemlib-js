@@ -76,7 +76,7 @@ public class JSMolecule {
 	
 	private String getSVG(int width, int height, String id) {
 		SVGDepictor d = new SVGDepictor(oclMolecule, id);
-		d.validateView(null, new Rectangle2D.Float(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
+		d.validateView(null, new Rectangle2D.Double(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
 		d.paint(null);
 		return d.toString();
 	}
@@ -403,12 +403,12 @@ public static int getAtomicNoFromLabel(String atomLabel) {
 }
 
 
-public static float getAngle(float x1, float y1, float x2, float y2) {
+public static double getAngle(float x1, float y1, float x2, float y2) {
 	return StereoMolecule.getAngle(x1, y1, x2, y2);
 }
 
 
-public static float getAngleDif(float angle1, float angle2) {
+public static double getAngleDif(float angle1, float angle2) {
 	return StereoMolecule.getAngleDif(angle1, angle2);
 }
 
@@ -667,7 +667,7 @@ public void markAtomForDeletion(int atom) {
 
 /**
  * Marks this bond to be deleted in a later call to deleteMarkedAtomsAndBonds().
- * @param atom
+ * @param bond
  */
 public void markBondForDeletion(int bond) {
 	oclMolecule.markBondForDeletion(bond);
@@ -684,7 +684,7 @@ public boolean isAtomMarkedForDeletion(int atom) {
 
 /**
  * Checks whether this bond was marked to be deleted and not deleted yet.
- * @param atom
+ * @param bond
  * @return
  */
 public boolean isBondMarkedForDeletion(int bond) {
@@ -935,22 +935,22 @@ public int getAtomRadical(int atom) {
 }
 
 
-public float getAtomX(int atom) {
+public double getAtomX(int atom) {
 	return oclMolecule.getAtomX(atom);
 }
 
 
-public float getAtomY(int atom) {
+public double getAtomY(int atom) {
 	return oclMolecule.getAtomY(atom);
 }
 
 
-public float getAtomZ(int atom) {
+public double getAtomZ(int atom) {
 	return oclMolecule.getAtomZ(atom);
 }
 
 
-public float getBondAngle(int atom1, int atom2) {
+public double getBondAngle(int atom1, int atom2) {
 	return oclMolecule.getBondAngle(atom1, atom2);
 }
 
@@ -1002,7 +1002,7 @@ public int getBondESRType(int bond) {
  * @param bond
  * @return bond length calculated from atom 2D-coordinates.
  */
-public float getBondLength(int bond) {
+public double getBondLength(int bond) {
 	return oclMolecule.getBondLength(bond);
 }
 
@@ -1869,7 +1869,7 @@ public int getConnBondOrder(int atom, int i) {
 }
 
 
-public float getAverageBondLength(boolean nonHydrogenBondsOnly) {
+public double getAverageBondLength(boolean nonHydrogenBondsOnly) {
 	return oclMolecule.getAverageBondLength(nonHydrogenBondsOnly);
 }
 
@@ -2278,12 +2278,12 @@ public void setStereoBondFromAtomParity(int atom) {
  * tetrahedral parity is returned. If the horizontal bonds are plain
  * single bonds, then they are interpreted as up-bonds.
  * @param atom the stereo center
- * @param index map of neighbours sorted by atom index
+ * @param sortedConnMap map of neighbours sorted by atom index
  * @param angle bond angles sorted by neighbour atom index
  * @param direction null or int[] large enough to receive bond directions
  * @return cAtomParity1,cAtomParity2 or cAtomParityUnknown
  */
-public int getFisherProjectionParity(int atom, int[] sortedConnMap, float[] angle, int[] direction) {
+public int getFisherProjectionParity(int atom, int[] sortedConnMap, double[] angle, int[] direction) {
 	return oclMolecule.getFisherProjectionParity(atom, sortedConnMap, angle, direction);
 }
 
@@ -2393,7 +2393,7 @@ public int canonizeCharge(boolean allowUnbalancedCharge) throws Exception {
  * from the stereo configurations.<br>
  * <i>cHelperCIP</i>: Cahn-Ingold-Prelog stereo information for atoms and bonds.<br>
  * <br>cHelperParities and cHelperCIP require a StereoMolecule!!!<br>
- * @param one of cHelperNeighbours,cHelperRings,cHelperParities,cHelperCIP
+ * @param required of cHelperNeighbours,cHelperRings,cHelperParities,cHelperCIP
  * @return true if the molecule was changed
  */
 public void ensureHelperArrays(int required) {
