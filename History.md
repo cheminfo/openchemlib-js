@@ -1,3 +1,9 @@
+4.3.0 / 2016-05-24
+==================
+
+* update openchemlib
+* add support for exclude group
+
 4.2.2 / 2016-04-25
 ==================
 
