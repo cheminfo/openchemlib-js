@@ -30,7 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.*;

@@ -171,10 +171,7 @@ public class CoordinateInventor {
 
 		for (int atom=0; atom<mAtoms; atom++) {
 			if (mMol.isMarkedAtom(atom)) {
-				if (mConnAtoms[atom] == 0)
-					mMol.setAtomMarker(atom, false);
-				else
-					mAtomHandled[atom] = true;
+				mAtomHandled[atom] = true;
 				}
 			}
 
@@ -1886,6 +1883,7 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 				}
 			else {
 				f.translate((mMaxX + mMinX - f.mMaxX - f.mMinX) / 2, mMaxY - f.mMinY + 1.0);
+				return;
 				}
 			}
 
@@ -1919,16 +1917,16 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 				double surplus = getAtomSurplus(atom);
 				double d = 0.0;
 				switch (corner) {
-				case 0:	// top right
+				case 0:	// top left
 					d = mMaxX - 0.5 * (mMaxX + mMinY + mAtomX[atom] - mAtomY[atom]);
 					break;
-				case 1:	// bottom right
+				case 1:	// bottom left
 					d = mMaxX - 0.5 * (mMaxX - mMaxY + mAtomX[atom] + mAtomY[atom]);
 					break;
-				case 2:	// bottom left
+				case 2:	// bottom right
 					d = 0.5 * (mMinX + mMaxY + mAtomX[atom] - mAtomY[atom]) - mMinX;
 					break;
-				case 3:	// top left
+				case 3:	// top right
 					d = 0.5 * (mMinX - mMinY + mAtomX[atom] + mAtomY[atom]) - mMinX;
 					break;
 					}

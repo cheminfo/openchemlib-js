@@ -30,27 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.actelion.research.gwt.gui.viewer;
 
 import com.google.gwt.core.client.EntryPoint;

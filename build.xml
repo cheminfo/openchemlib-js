@@ -25,6 +25,16 @@
             </classpath>
         </javac>
     </target>
+
+    <target name="build" depends="">
+        <ant antfile="actelion.xml" target="copy"/>
+        <exec command="gulp">
+            <arg line="copy:openchemlib"/>
+        </exec>
+        <ant antfile="actelion.xml" target="copyright"/>
+        <exec command="gulp"/>
+    </target>
+
     <target name="dist-test">
         <copy file="war/Editor.html" todir="dist"/>
     </target>
