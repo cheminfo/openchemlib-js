@@ -136,6 +136,7 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         canvas.setCoordinateSpaceHeight(height);
         canvas.setWidth(width + "px");
         canvas.setHeight(height + "px");
+
         RootPanel.get(toolBarId).add(canvas);
 
         //  This is to force addLoadHandler
