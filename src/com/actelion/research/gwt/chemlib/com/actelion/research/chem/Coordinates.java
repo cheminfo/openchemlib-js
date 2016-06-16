@@ -1,35 +1,35 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
+
+Copyright (c) 2015-2016, cheminfo
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+    * Neither the name of {{ project }} nor the names of its contributors
+      may be used to endorse or promote products derived from this software
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 */
+
 package com.actelion.research.chem;
 
 import com.actelion.research.chem.conf.Coordinate;
@@ -60,9 +60,11 @@ public final class Coordinates implements Serializable, Comparable<Coordinates> 
 	/**
 	 * Copies x,y,z from c to this
 	 * @param c
+	 * @return this after copying c
 	 */
-	public void set(Coordinates c) {
+	public Coordinates set(Coordinates c) {
 		set(c.x, c.y, c.z);
+		return this;
 	}
 
 	public void set(double x, double y, double z) {
@@ -153,20 +155,43 @@ public final class Coordinates implements Serializable, Comparable<Coordinates> 
 		return new Coordinates(x*scale, y*scale, z*scale);
 	}
 
-	public final void sub(Coordinates c) {
+	/**
+	 * @param c
+	 * @return this after subtracting c
+	 */
+	public final Coordinates sub(Coordinates c) {
 		x-=c.x;
 		y-=c.y;
 		z-=c.z;
+		return this;
 	}
-	public final void add(Coordinates c) {
+
+	/**
+	 * @param c
+	 * @return this after subtracting c
+	 */
+	public final Coordinates add(Coordinates c) {
 		x+=c.x;
 		y+=c.y;
 		z+=c.z;
+		return this;
 	}
-	public final void scale(double scale) {
+
+	public void add(double dx, double dy, double dz) {
+		x += dx;
+		y += dy;
+		z += dz;
+	}
+
+	/**
+	 * @param scale
+	 * @return this after scaling this
+	 */
+	public final Coordinates scale(double scale) {
 		x*=scale;
 		y*=scale;
 		z*=scale;
+		return this;
 	}
 	public final void negate() {
 		x=-x;
@@ -191,6 +216,9 @@ public final class Coordinates implements Serializable, Comparable<Coordinates> 
 	}
 
 
+	/**
+	 * @return new Coordinates with a copy of this scaled to length=1.0
+	 */
 	public final Coordinates unitC() {
 		double d = dist();
 		if(d==0) {
@@ -202,7 +230,10 @@ public final class Coordinates implements Serializable, Comparable<Coordinates> 
 		return new Coordinates(x/d, y/d, z/d);
 	}
 
-	public final void unit() {
+	/**
+	 * @return this after scaling it to length=1.0
+	 */
+	public final Coordinates unit() {
 		double d = dist();
 		if(d==0) {
 			System.err.println("Cannot call unit() on a null vector. Returned (1,0,0)");
@@ -211,11 +242,49 @@ public final class Coordinates implements Serializable, Comparable<Coordinates> 
 			y = 0;
 			z = 0;
 //			throw new IllegalArgumentException("Cannot call unit() on a null vector.");
-			return;
+			return this;
 		}
 		x/=d;
 		y/=d;
 		z/=d;
+		return this;
+	}
+
+	/**
+	 * Calculates the center point between this and c and sets this to the center point.
+	 * @param c
+	 * @return this after updating it to the center position
+	 */
+	public Coordinates center(Coordinates c) {
+		x = (x + c.x) / 2.0;
+		y = (y + c.y) / 2.0;
+		z = (z + c.z) / 2.0;
+		return this;
+	}
+
+	/**
+	 * Updates this to contains the center between c1 and c2.
+	 * @param c1
+	 * @param c2
+	 */
+	public void center(Coordinates c1, Coordinates c2) {
+		x = (c1.x + c2.x) / 2.0;
+		y = (c1.y + c2.y) / 2.0;
+		z = (c1.z + c2.z) / 2.0;
+	}
+
+	/**
+	 * Updates this to contain a point on the straight line through c1 and c2.
+	 * @param c1
+	 * @param c2
+	 * @param f location on line 0.0 -> c1, 1.0 -> c2
+	 * @return this after updating to be a point on the line
+	 */
+	public Coordinates between(Coordinates c1, Coordinates c2, double f) {
+		x = c1.x + f * (c2.x - c1.x);
+		y = c1.y + f * (c2.y - c1.y);
+		z = c1.z + f * (c2.z - c1.z);
+		return this;
 	}
 
 	public final boolean insideBounds(Coordinates[] bounds) {

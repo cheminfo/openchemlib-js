@@ -39,6 +39,7 @@ import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
+import com.actelion.research.share.gui.editor.chem.AbstractExtendedDepictor;
 import com.actelion.research.share.gui.editor.geom.GeomFactory;
 
 import java.awt.*;
@@ -58,6 +59,11 @@ public class GWTEditorModel extends Model
     public void cleanMolecule(boolean selectedOnly)
     {
         cleanupMultiFragmentCoordinates(selectedOnly);
+    }
+
+    @Override
+    protected AbstractExtendedDepictor createExtendedDepictor() {
+        return null;
     }
 
     @Override

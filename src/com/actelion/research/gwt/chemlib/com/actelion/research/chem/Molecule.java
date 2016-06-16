@@ -1,34 +1,33 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
+
+Copyright (c) 2015-2016, cheminfo
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+    * Neither the name of {{ project }} nor the names of its contributors
+      may be used to endorse or promote products derived from this software
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 */
 
 package com.actelion.research.chem;
@@ -291,7 +290,8 @@ public class Molecule implements Serializable {
 	public static final int cChiralityEpimers		   = 0x060000;
 	public static final int cChiralityDiastereomers	 = 0x070000; // this has added the number of diastereomers
 
-	public static final double cDefaultAverageBondLength = 24.0;
+	private static final double cDefaultAVBL = 24.0;
+	private static double sDefaultAVBL = cDefaultAVBL;
 
 	public static final String cAtomLabel[] = { "?",
 		"H"  ,"He" ,"Li" ,"Be" ,"B"  ,"C"  ,"N"  ,"O"  ,
@@ -1895,6 +1895,21 @@ public class Molecule implements Serializable {
 		return mCoordinates[atom].z;
 		}
 
+	public static double getDefaultAverageBondLength() {
+		return sDefaultAVBL;
+		}
+
+	/**
+	 * When the molecule adds a new bond to a new atom or a new ring,
+	 * then atoms are positioned such that the lengths of the new bonds
+	 * are equal to the average length of existing bonds. If there are no
+	 * existing bonds, then this default is used.
+	 * If the default is not set by this function, then it is 24.
+	 * @param defaultAVBL
+	 */
+	public static void setDefaultAverageBondLength(double defaultAVBL) {
+		sDefaultAVBL = defaultAVBL;
+		}
 
 	/**
 	 * Calculates and returns the mean bond length. If the molecule has
@@ -1903,7 +1918,7 @@ public class Molecule implements Serializable {
 	 * @return
 	 */
 	public double getAverageBondLength() {
-		return getAverageBondLength(mAllAtoms, mAllBonds, cDefaultAverageBondLength);
+		return getAverageBondLength(mAllAtoms, mAllBonds, sDefaultAVBL);
 		}
 
 
@@ -1916,7 +1931,7 @@ public class Molecule implements Serializable {
 	 * @return
 	 */
 	public double getAverageBondLength(int atoms, int bonds) {
-		return getAverageBondLength(atoms, bonds, cDefaultAverageBondLength);
+		return getAverageBondLength(atoms, bonds, sDefaultAVBL);
 		}
 
 
@@ -3411,7 +3426,7 @@ public class Molecule implements Serializable {
 				mAtomFlags[atomDest] = mAtomFlags[atom];
 				mAtomQueryFeatures[atomDest] = mAtomQueryFeatures[atom];
 				mAtomMapNo[atomDest] = mAtomMapNo[atom];
-				mCoordinates[atomDest] = mCoordinates[atom];
+				mCoordinates[atomDest].set(mCoordinates[atom]);
 				if (mAtomList != null)
 					mAtomList[atomDest] = mAtomList[atom];
 				if (mAtomCustomLabel != null)
