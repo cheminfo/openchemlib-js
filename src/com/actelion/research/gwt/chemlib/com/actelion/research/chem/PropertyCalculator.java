@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.chem;
 
 import com.actelion.research.chem.prediction.CLogPPredictor;
+import com.actelion.research.chem.prediction.ParameterizedStringList;
 import com.actelion.research.chem.prediction.PolarSurfaceAreaPredictor;
 import com.actelion.research.chem.prediction.SolubilityPredictor;
 
@@ -70,14 +71,24 @@ public class PropertyCalculator {
 			return CLogPPredictor.cCLogPUnknown;
 			}
 		}
+	public ParameterizedStringList getLogPDetail() {
+		return new CLogPPredictor().getDetail(mMolecule);
+	}
 
 	public double getLogS() {
 		return new SolubilityPredictor().assessSolubility(mMolecule);
 		}
+	public ParameterizedStringList getLogSDetail() {
+		return new SolubilityPredictor().getDetail(mMolecule);
+	}
+
 
 	public double getPolarSurfaceArea() {
 		return new PolarSurfaceAreaPredictor().assessPSA(mMolecule);
 		}
+	public ParameterizedStringList getPolarSurfaceAreaDetail() {
+		return new PolarSurfaceAreaPredictor().getDetail(mMolecule);
+	}
 
 	public int getRotatableBondCount() {
 		return mMolecule.getRotatableBondCount();

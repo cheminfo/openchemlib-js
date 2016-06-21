@@ -2,6 +2,7 @@ package com.actelion.research.gwt.core;
 
 import com.actelion.research.chem.PropertyCalculator;
 import com.actelion.research.chem.StereoMolecule;
+import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
 @JsType
@@ -29,19 +30,34 @@ public class MoleculeProperties extends PropertyCalculator {
 	public double getLogP() {
 		return super.getLogP();
 	}
-	
+
+	@JsProperty
+	public JavaScriptObject getLogPString() {
+		return Util.convertParameterizedStringList(super.getLogPDetail());
+	}
+
 	@Override
 	@JsProperty
 	public double getLogS() {
 		return super.getLogS();
 	}
-	
+
+	@JsProperty
+	public JavaScriptObject getLogSString() {
+		return Util.convertParameterizedStringList(super.getLogSDetail());
+	}
+
 	@Override
 	@JsProperty
 	public double getPolarSurfaceArea() {
 		return super.getPolarSurfaceArea();
 	}
-	
+
+	@JsProperty
+	public JavaScriptObject getPolarSurfaceAreaString() {
+		return Util.convertParameterizedStringList(super.getPolarSurfaceAreaDetail());
+	}
+
 	@Override
 	@JsProperty
 	public int getRotatableBondCount() {
