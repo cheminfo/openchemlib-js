@@ -224,7 +224,7 @@ class StructureElement
 
 
     private native void observeDataChange(Element el) /*-{
-        var config = {attributes: true, attributeOldValue: true, attributeFilter: ['data-idcode']}
+        var config = {attributes: true, attributeOldValue: true, attributeFilter: ['data-idcode','data-text']}
         $wnd.struct$observer.observe(el, config);
     }-*/;
 
