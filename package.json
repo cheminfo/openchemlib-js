@@ -39,6 +39,6 @@
     "minimist": "^1.2.0",
     "mocha": "^2.4.5",
     "mocha-better-spec-reporter": "^3.0.2",
-    "should": "^8.3.1"
+    "should": "^9.0.1"
   }
 }
