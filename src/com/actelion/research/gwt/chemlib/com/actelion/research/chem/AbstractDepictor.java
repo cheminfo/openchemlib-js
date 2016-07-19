@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
@@ -772,9 +773,11 @@ public abstract class AbstractDepictor {
 			for (int i=0; i<mMol.getAllBonds(); i++) {
 				int atom1 = mMol.getBondAtom(0,i);
 				int atom2 = mMol.getBondAtom(1,i);
+				String type = mMol.isDelocalizedBond(i) ? "d"
+							: mMol.isAromaticBond(i) ? "a" : "";
 				double x = (getAtomX(atom1) + getAtomX(atom2)) / 2;
 				double y = (getAtomY(atom1) + getAtomY(atom2)) / 2;
-				mpDrawString(x,y,String.valueOf(i),true,true);
+				mpDrawString(x,y,type+String.valueOf(i),true,true);
 				}
 			setColor(mStandardForegroundColor);
 			setTextSize(mpLabelSize);
@@ -871,7 +874,7 @@ public abstract class AbstractDepictor {
 					}
 				break;
             case Molecule.cBondTypeMetalLigand:
-                mpHandleDashedLine(theLine, atom1, atom2);
+                mpHandleShortDashedLine(theLine, atom1, atom2);
                 break;
 			}
 			break;
@@ -1339,10 +1342,16 @@ public abstract class AbstractDepictor {
 		}
 
 
-    private void mpHandleDottedLine(DepictorLine theLine,int atm1,int atm2) {
+    private void mpHandleShortDashedLine(DepictorLine theLine,int atm1,int atm2) {
         if (mpProperLine(theLine))
-            drawDottedLine(theLine);
+            drawShortDashedLine(theLine, atm1, atm2);
         }
+
+
+	private void mpHandleDottedLine(DepictorLine theLine,int atm1,int atm2) {
+		if (mpProperLine(theLine))
+			drawDottedLine(theLine);
+		}
 
 
 	private void mpHandleWedge(DepictorLine origWedge,int atm1,int atm2) {
@@ -2209,6 +2218,46 @@ public abstract class AbstractDepictor {
 		aLine.x2 = theLine.x2;
 		aLine.y2 = theLine.y2;
 		drawBlackLine(aLine);
+
+		setColor(mStandardForegroundColor);
+		}
+
+
+	private void drawShortDashedLine(DepictorLine theLine, int atom1, int atom2) {
+		double xdif = theLine.x2 - theLine.x1;
+		double ydif = theLine.y2 - theLine.y1;
+		double length = Math.sqrt(xdif * xdif + ydif * ydif);
+		int points = 2 * (int)Math.round(length / (4 * mpLineWidth));
+
+		double xinc = xdif / (points-1);
+		double yinc = ydif / (points-1);
+
+		int color1,color2;
+		if (mMol.isBondForegroundHilited(mMol.getBond(atom1, atom2))) {
+			color1 = COLOR_HILITE_BOND_FG;
+			color2 = COLOR_HILITE_BOND_FG;
+			}
+		else {
+			color1 = mAtomColor[atom1];
+			color2 = mAtomColor[atom2];
+			}
+
+		double x = theLine.x1 - mpLineWidth/2;
+		double y = theLine.y1 - mpLineWidth/2;
+
+		setColor(color1);
+		for (int i=0; i<points/2; i++) {
+			fillCircle(x, y, mpLineWidth);
+			x += xinc;
+			y += yinc;
+			}
+
+		setColor(color2);
+		for (int i=0; i<points/2; i++) {
+			fillCircle(x, y, mpLineWidth);
+			x += xinc;
+			y += yinc;
+			}
 
 		setColor(mStandardForegroundColor);
 		}

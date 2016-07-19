@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 // Restriction: - Although bond query features are encoded into the idcode, idcodes of
@@ -190,11 +191,13 @@ public class Canonizer {
 		canInitializeRanking();
 		canRankStereo();
 		canRankFinal();
-
-		if (mCIPParityNoDistinctionProblem)
-			System.out.println("No distinction applying CIP rules: "+getIDCode()+" "+getEncodedCoordinates());
+//		if (mCIPParityNoDistinctionProblem)
+//			System.out.println("No distinction applying CIP rules: "+getIDCode()+" "+getEncodedCoordinates());
 		}
 
+	public boolean hasCIPParityDistinctionProblem() {
+		return mCIPParityNoDistinctionProblem;
+		}
 
 	/**
 	 * Locate those tetrahedral nitrogen atoms with at least 3 neighbors that
@@ -387,7 +390,7 @@ public class Canonizer {
 				valence = (byte)explicitAbnormalValence;
 			}
 		else if (!mMol.supportsImplicitHydrogen(atom)
-			  && mMol.getAllConnAtoms(atom) != mMol.getConnAtoms(atom)) {
+			  && mMol.getImplicitHydrogens(atom) != 0) {
 			valence = mMol.getOccupiedValence(atom) - mMol.getElectronValenceCorrection(atom);
 			}
 
@@ -618,6 +621,18 @@ System.out.println("mEZParity["+bond+"] = "+mEZParity[bond]);
 			}
 		}
 
+	/**
+	 * This method returns all normal connected atoms plus(!) order-0 connected metal atoms.
+	 * @param atom
+	 * @return
+	 */
+	private int canGetConnAtoms(int atom) {
+		int connAtoms = mMol.getConnAtoms(atom);
+		while(connAtoms < mMol.getAllConnAtoms(atom)
+		   && mMol.getConnBondOrder(atom, connAtoms) == 0)
+			connAtoms++;
+		return connAtoms;
+		}
 
 	private void canInitializeRanking() {
 		boolean bondQueryFeaturesPresent = false;
@@ -632,7 +647,7 @@ System.out.println("mEZParity["+bond+"] = "+mEZParity[bond]);
 
 		mMaxConnAtoms = 2;
 		for (int atom=0; atom<mMol.getAtoms(); atom++)
-			mMaxConnAtoms = Math.max(mMaxConnAtoms, mMol.getConnAtoms(atom));
+			mMaxConnAtoms = Math.max(mMaxConnAtoms, canGetConnAtoms(atom));
 		int baseValueSize = Math.max(2, bondQueryFeaturesPresent ?
 				(62 + ATOM_BITS + mMaxConnAtoms * (ATOM_BITS+Molecule.cBondQFNoOfBits)) / 63
 			  : (62 + ATOM_BITS + mMaxConnAtoms * (ATOM_BITS+5)) / 63);
@@ -653,7 +668,7 @@ System.out.println("mEZParity["+bond+"] = "+mEZParity[bond]);
 				mCanBase[atom].add(8, mMol.getAtomicNo(atom));
 			mCanBase[atom].add(8, mMol.getAtomMass(atom));
 			mCanBase[atom].add(2, mMol.getAtomPi(atom));
-			mCanBase[atom].add(3, mMol.getConnAtoms(atom));
+			mCanBase[atom].add(3, canGetConnAtoms(atom));
 			if ((mMol.getAtomQueryFeatures(atom) & Molecule.cAtomQFAny) != 0)
 				mCanBase[atom].add(4, 8);
 			else
@@ -709,8 +724,8 @@ System.out.println("mEZParity["+bond+"] = "+mEZParity[bond]);
 			for (int atom=0; atom<mMol.getAtoms(); atom++) {
 				mCanBase[atom].init(atom);
 				mCanBase[atom].add(ATOM_BITS, mCanRank[atom]);
-				long[] bondQFList = new long[mMol.getConnAtoms(atom)];
-				for (int i=0; i<mMol.getConnAtoms(atom); i++) {
+				long[] bondQFList = new long[canGetConnAtoms(atom)];
+				for (int i=0; i<canGetConnAtoms(atom); i++) {
 					bondQFList[i] = mCanRank[mMol.getConnAtom(atom, i)];
 					bondQFList[i] <<= Molecule.cBondQFNoOfBits;
 					bondQFList[i] |= mMol.getBondQueryFeatures(mMol.getConnBond(atom, i));
@@ -1417,7 +1432,7 @@ System.out.println("mCanBaseValue["+atom+"] = "+Long.toHexString(mCanBase[atom].
 				fragmentNo[atom] = ++fragmentCount;
 				boolean bondHandled[] = new boolean[mMol.getBonds()];
 				for (int current=0; current<fragmentAtoms; current++) {
-					for (int i=0; i<mMol.getConnAtoms(fragmentAtom[current]); i++) {
+					for (int i=0; i<canGetConnAtoms(fragmentAtom[current]); i++) {
 						int connBond = mMol.getConnBond(fragmentAtom[current],i);
 						if (mMol.isRingBond(connBond) || mMol.getBondOrder(connBond) == 2 || mMol.isBINAPChiralityBond(connBond)) {
 							int connAtom = mMol.getConnAtom(fragmentAtom[current],i);
@@ -1463,7 +1478,8 @@ System.out.println("mCanBaseValue["+atom+"] = "+Long.toHexString(mCanBase[atom].
 		int	connRank[] = new int[ExtendedMolecule.cMaxConnAtoms];
 		for (int atom=0; atom<mMol.getAtoms(); atom++) {
 								// generate sorted list of ranks of neighbours
-			for (int i=0; i<mMol.getConnAtoms(atom); i++) {
+			int neighbours = canGetConnAtoms(atom);
+			for (int i=0; i<neighbours; i++) {
 				int rank = 2 * mCanRank[mMol.getConnAtom(atom,i)];
 				int connBond = mMol.getConnBond(atom,i);
 				if (mMol.getBondOrder(connBond) == 2)
@@ -1478,7 +1494,6 @@ System.out.println("mCanBaseValue["+atom+"] = "+Long.toHexString(mCanBase[atom].
 				connRank[j] = rank;
 				}
 
-			int neighbours = mMol.getConnAtoms(atom);
 			mCanBase[atom].init(atom);
 			mCanBase[atom].add(ATOM_BITS, mCanRank[atom]);
 			for (int i=neighbours; i<mMaxConnAtoms; i++)
@@ -2183,7 +2198,7 @@ System.out.println("noOfRanks:"+canRank);
 					int highestRankingConnAtom = 0;
 					int highestRankingConnBond = 0;
 					int highestRank = -1;
-					for (int i=0; i<mMol.getConnAtoms(mGraphAtom[firstUnhandled]); i++) {
+					for (int i=0; i<canGetConnAtoms(mGraphAtom[firstUnhandled]); i++) {
 						int connAtom = mMol.getConnAtom(mGraphAtom[firstUnhandled],i);
 						if (!atomHandled[connAtom] && mCanRank[connAtom] > highestRank) {
 							highestRankingConnAtom = connAtom;
@@ -3057,16 +3072,41 @@ System.out.println();
 		return (index < limit) ? index : index - limit;
 		}
 
-
+	/**
+	 * Encodes the molecule's atom coordinates into a compact String. Together with the
+	 * idcode the coordinate string can be passed to the IDCodeParser to recreate the
+	 * original molecule including coordinates.<br>
+	 * If the molecule's coordinates are 2D, then coordinate encoding will be relative,
+	 * i.e. scale and absolute positions get lost during the encoding.
+	 * 3D-coordinates, however, are encoded retaining scale and absolute positions.<br>
+	 * If the molecule has 3D-coordinates and if there are no implicit hydrogen atoms,
+	 * i.e. all hydrogen atoms are explicitly available with their coordinates, then
+	 * hydrogen 3D-coordinates are also encoded despite the fact that the idcode itself does
+	 * not contain hydrogen atoms, because it must be canonical.
+	 * @return
+	 */
 	public String getEncodedCoordinates() {
 		return getEncodedCoordinates(mZCoordinatesAvailable);
 		}
 
-
-	public String getEncodedCoordinates(boolean keepAbsoluteValues) {
+	/**
+	 * Encodes the molecule's atom coordinates into a compact String. Together with the
+	 * idcode the coordinate string can be passed to the IDCodeParser to recreate the
+	 * original molecule including coordinates.<br>
+	 * If keepPositionAndScale==false, then coordinate encoding will be relative,
+	 * i.e. scale and absolute positions get lost during the encoding.
+	 * Otherwise the encoding retains scale and absolute positions.<br>
+	 * If the molecule has 3D-coordinates and if there are no implicit hydrogen atoms,
+	 * i.e. all hydrogen atoms are explicitly available with their coordinates, then
+	 * hydrogen 3D-coordinates are also encoded despite the fact that the idcode itself does
+	 * not contain hydrogen atoms, because it must be canonical.
+	 * @param keepPositionAndScale if false, then coordinates are scaled to an average bond length of 1.5 units
+	 * @return
+	 */
+	public String getEncodedCoordinates(boolean keepPositionAndScale) {
 		if (mCoordinates == null) {
 			generateGraph();
-			encodeCoordinates(keepAbsoluteValues);
+			encodeCoordinates(keepPositionAndScale);
 			}
 
 		return mCoordinates;
@@ -3168,7 +3208,7 @@ System.out.println();
 		mCoordinates = coordinateBuffer.toString();
 		}	*/
 
-	private void encodeCoordinates(boolean keepAbsoluteValues) {
+	private void encodeCoordinates(boolean keepPositionAndScale) {
 		if (mMol.getAtoms() == 0) {
 			mCoordinates = "";
 			return;
@@ -3192,7 +3232,7 @@ System.out.println();
 		encodeBitsStart();
 		mEncodingBuffer.append(includeHydrogenCoordinates ? '#' : '!');
 		encodeBits(mZCoordinatesAvailable ? 1 : 0, 1);
-		encodeBits(keepAbsoluteValues ? 1 : 0, 1);
+		encodeBits(keepPositionAndScale ? 1 : 0, 1);
 		encodeBits(resolutionBits/2, 4);	// resolution bits devided by 2
 
 		double maxDelta = 0.0;
@@ -3201,7 +3241,7 @@ System.out.println();
 		if (includeHydrogenCoordinates) {
 			for (int i=0; i<mMol.getAtoms(); i++) {
 				int atom = mGraphAtom[i];
-				for (int j=mMol.getConnAtoms(atom); j<mMol.getAllConnAtoms(atom); j++)
+				for (int j=canGetConnAtoms(atom); j<mMol.getAllConnAtoms(atom); j++)
 					maxDelta = getMaxDelta(mMol.getConnAtom(atom, j), atom, maxDelta);
 				}
 			}
@@ -3220,12 +3260,12 @@ System.out.println();
 		if (includeHydrogenCoordinates) {
 			for (int i=0; i<mMol.getAtoms(); i++) {
 				int atom = mGraphAtom[i];
-				for (int j=mMol.getConnAtoms(atom); j<mMol.getAllConnAtoms(atom); j++)
+				for (int j=canGetConnAtoms(atom); j<mMol.getAllConnAtoms(atom); j++)
 					encodeAtomCoords(mMol.getConnAtom(atom, j), atom, maxDeltaPlusHalfIncrement, increment, resolutionBits);
 				}
 			}
 
-		if (keepAbsoluteValues) {
+		if (keepPositionAndScale) {
 			double avblDefault = mZCoordinatesAvailable ? 1.5 : Molecule.getDefaultAverageBondLength();
 			double avbl = mMol.getAverageBondLength(mMol.getAtoms(), mMol.getBonds(), avblDefault);
 			encodeBits(encodeABVL(avbl, binCount), resolutionBits);

@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
@@ -529,19 +530,44 @@ public class Molecule implements Serializable {
 
 
 	/**
-	 * High level function for constructing a molecule.
-	 * @param atm1
-	 * @param atm2
-	 * @param type
-	 * @return
+	 * Suggests either cBondTypeSingle or cBondTypeMetalLigand
+	 * whatever seems more appropriate for a new bond between the two atoms.
+	 * @param atom1
+	 * @param atom2
+	 * @return preferred bond type
 	 */
-	public int addBond(int atm1,int atm2,int type) {
-		if (atm1 == atm2)
+	public int suggestBondType(int atom1, int atom2) {
+		return isMetalAtom(atom1) || isMetalAtom(atom2) ?
+				cBondTypeMetalLigand : cBondTypeSingle;
+	}
+
+	/**
+	 * High level function for constructing a molecule.
+	 * Adds a single or metal bond between the two atoms
+	 * depending on whether one of them is a metal atom.
+	 * @param atom1
+	 * @param atom2
+	 * @return new bond index
+	 */
+	public int addBond(int atom1, int atom2) {
+		return addBond(atom1, atom2, suggestBondType(atom1, atom2));
+		}
+
+
+	/**
+	 * High level function for constructing a molecule.
+	 * @param atom1
+	 * @param atom2
+	 * @param type
+	 * @return new bond index
+	 */
+	public int addBond(int atom1, int atom2, int type) {
+		if (atom1 == atom2)
 			return -1;
 
 		for (int bnd=0; bnd<mAllBonds; bnd++) {
-			if (mBondAtom[0][bnd] == atm1 && mBondAtom[1][bnd] == atm2
-			 || mBondAtom[0][bnd] == atm2 && mBondAtom[1][bnd] == atm1) {
+			if (mBondAtom[0][bnd] == atom1 && mBondAtom[1][bnd] == atom2
+			 || mBondAtom[0][bnd] == atom2 && mBondAtom[1][bnd] == atom1) {
 				if (mBondType[bnd] < type)
 					mBondType[bnd] = type;
 				return bnd;
@@ -551,8 +577,8 @@ public class Molecule implements Serializable {
 		if (mAllBonds >= mMaxBonds)
 			setMaxBonds(mMaxBonds*2);
 
-		mBondAtom[0][mAllBonds] = atm1;
-		mBondAtom[1][mAllBonds] = atm2;
+		mBondAtom[0][mAllBonds] = atom1;
+		mBondAtom[1][mAllBonds] = atom2;
 		mBondType[mAllBonds] = type;
 		mBondFlags[mAllBonds] = 0;
 		mBondQueryFeatures[mAllBonds] = 0;
@@ -3133,9 +3159,11 @@ public class Molecule implements Serializable {
 
 	private boolean incrementBondOrder(int bond) {
 		int maxBondOrder = getMaximumBondOrder(bond);
+		boolean hasMetal = isMetalAtom(mBondAtom[0][bond]) || isMetalAtom(mBondAtom[1][bond]);
+		int startBond = hasMetal ? cBondTypeMetalLigand : cBondTypeSingle;
 
 		if (mBondType[bond] == cBondTypeTriple) {
-			mBondType[bond] = cBondTypeSingle;
+			mBondType[bond] = startBond;
 			mValidHelperArrays = cHelperNone;
 			return true;
 			}
@@ -3151,7 +3179,7 @@ public class Molecule implements Serializable {
 			if (maxBondOrder == 3)
 				mBondType[bond] = cBondTypeTriple;
 			else
-				mBondType[bond] = cBondTypeSingle;
+				mBondType[bond] = startBond;
 			mValidHelperArrays = cHelperNone;
 			return true;
 			}
@@ -3162,11 +3190,20 @@ public class Molecule implements Serializable {
 			return true;
 			}
 
-		if (maxBondOrder < 2)
+		if (!hasMetal && maxBondOrder < 2)
 			return false;
 
 		if (mBondType[bond] == cBondTypeSingle) {
 			mBondType[bond] = cBondTypeDouble;
+			mValidHelperArrays = cHelperNone;
+			return true;
+			}
+
+		if (maxBondOrder < 1)
+			return false;
+
+		if (mBondType[bond] == cBondTypeMetalLigand) {
+			mBondType[bond] = cBondTypeSingle;
 			mValidHelperArrays = cHelperNone;
 			return true;
 			}
@@ -3490,7 +3527,7 @@ public class Molecule implements Serializable {
 				}
 			bnd = getBondNo(actlAtm,remoteAtm);
 			if (bnd == -1) {
-				bnd = addBond(actlAtm,remoteAtm,1);
+				bnd = addBond(actlAtm, remoteAtm, suggestBondType(actlAtm, remoteAtm));
 				if (aromatic) {
 					if (dblBnd) {
 						if ((simpleGetValence(mBondAtom[0][bnd]) < 4)
@@ -3505,7 +3542,7 @@ public class Molecule implements Serializable {
 			}
 		bnd = getBondNo(actlAtm,endAtm);
 		if (bnd == -1)
-			bnd = addBond(actlAtm,endAtm,1);
+			bnd = addBond(actlAtm, endAtm, suggestBondType(actlAtm, endAtm));
 
 		if (aromatic)
 			if (dblBnd)

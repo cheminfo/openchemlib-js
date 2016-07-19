@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
@@ -346,7 +347,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * @param atom
-	 * @return the number of direct neighbor atoms excluding hydrogen atoms
+	 * @return the number of direct neighbor atoms excluding plain hydrogen atoms and 0-order bonded metals
 	 */
 	public int getConnAtoms(int atom) {
 		return mConnAtoms[atom];
@@ -370,6 +371,24 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 */
 	public int getConnBondOrder(int atom, int i) {
 		return mConnBondOrder[atom][i];
+		}
+
+
+	/**
+	 * This method returns the non-hydrogen neighbour count of atom.
+	 * It excludes any hydrogen atoms in contrast to getConnAtoms(), which only
+	 * excludes plain hydrogen (not deuterium, tritium, custom labelled hydrogen, etc.).
+	 * Don't use this method's return value for loops with getConnAtom(),
+	 * getConnBond(), or getConnBondOrder().
+	 * @param atom
+	 * @return the number of non-hydrogen neighbor atoms
+	 */
+	public int getNonHydrogenNeighbourCount(int atom) {
+		int count = mConnAtoms[atom];
+		for (int i=0; i<mConnAtoms[atom]; i++)
+			if (mAtomicNo[mConnAtom[atom][i]] == 1)
+				count--;
+		return count;
 		}
 
 
@@ -1125,6 +1144,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			}
 
 		return Math.max(0, maxValence - occupiedValence);
+		}
+
+	public int getExplicitHydrogens(int atom) {
+		int count = 0;
+		for (int i=mConnAtoms[atom]; i<mAllConnAtoms[atom]; i++)
+			if (mConnBondOrder[atom][i] != 0)
+				count++;
+		return count;
 		}
 
 	/**
@@ -2282,32 +2309,23 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		// split covalent bonds between hetero atoms and one of (Li,Na,K,Mg,Ca,...)
 		boolean bondDeleted = false;
 		for (int bond=0; bond<mBonds; bond++) {
-			if (getBondOrder(bond) == 1) {
-				for (int i=0; i<2; i++) {
-					if (isElectronegative(mBondAtom[i][bond])) {
-						int atom = mBondAtom[1-i][bond];
-						int atomicNo = mAtomicNo[atom];
-						if (atomicNo == 3	 // Li
-						 || atomicNo == 11	// Na
-						 || atomicNo == 12	// Mg
-						 || atomicNo == 19	// K
-						 || atomicNo == 20	// Ca
-						 || atomicNo == 37	// Rb
-						 || atomicNo == 38	// Sr
-						 || atomicNo == 55	// Cs
-						 || atomicNo == 56) { // Ba
+			for (int i=0; i<2; i++) {
+				if (isElectronegative(mBondAtom[i][bond])) {
+					int atom = mBondAtom[1-i][bond];
+					if (isGroupAlkaliOrEarthAlkaliMetal(atom)) {
+						if (getBondOrder(bond) == 1) {
 							mAtomCharge[atom]++;
 							mAtomCharge[mBondAtom[i][bond]]--;
 							mBondType[bond] = cBondTypeDeleted;
 							bondDeleted = true;
 							}
-						break;
+						else if (mBondType[bond] == cBondTypeMetalLigand) {
+							mBondType[bond] = cBondTypeDeleted;
+							bondDeleted = true;
+							}
 						}
+					break;
 					}
-				}
-			else if (mBondType[bond] == cBondTypeMetalLigand) {
-				mBondType[bond] = cBondTypeDeleted;
-				bondDeleted = true;
 				}
 			}
 		if (bondDeleted) {
@@ -2321,6 +2339,18 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		return found;
 		}
 
+	private boolean isGroupAlkaliOrEarthAlkaliMetal(int atom) {
+		int atomicNo = mAtomicNo[atom];
+		return atomicNo == 3	 // Li
+			|| atomicNo == 11	// Na
+			|| atomicNo == 12	// Mg
+			|| atomicNo == 19	// K
+			|| atomicNo == 20	// Ca
+			|| atomicNo == 37	// Rb
+			|| atomicNo == 38	// Sr
+			|| atomicNo == 55	// Cs
+			|| atomicNo == 56;	// Ba
+		}
 
 	/**
 	 * Canonizes charge distribution in single- and multifragment molecules.
@@ -2446,6 +2476,69 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		return false;
 		}
 
+
+	/**
+	 * Provided that the bond parity of a double bond is available,
+	 * this method determines, whether connAtom has a counterpart with
+	 * Z- (cis) configuration at the other end of the double bond.
+	 * If there is no Z-counterpart, then -1 is returned.
+	 * Requires cHelperParities.
+	 * @param connAtom directly connected to one of the double bond atoms
+	 * @param bond double bond with available bond parity
+	 * @return -1 or counterpart to connAtom in Z-configuration
+	 */
+	public int getZNeighbour(int connAtom, int bond) {
+		if (getBondOrder(bond) != 2 && !isAromaticBond(bond))
+			return -1;
+		int parity = getBondParity(bond);
+		if (parity != cBondParityEor1 && parity != cBondCIPParityZorM)
+			return -1;
+
+		for (int i=0; i<2; i++) {
+			int atom1 = mBondAtom[i][bond];
+			int atom2 = mBondAtom[1-i][bond];
+			int other1 = -1;
+			boolean found = false;
+			for (int j=0; j<mConnAtoms[atom1]; j++) {
+				int conn = mConnAtom[atom1][j];
+				if (conn != atom2) {
+					if (conn == connAtom)
+						found = true;
+					else
+						other1 = conn;
+					}
+				}
+			if (found) {
+				int lowConn = -1;
+				int highConn = -1;
+				for (int j=0; j<mConnAtoms[atom2]; j++) {
+					int conn = mConnAtom[atom2][j];
+					if (conn != atom1) {
+						if (lowConn == -1)
+							lowConn = conn;
+						else if (conn > lowConn)
+							highConn = conn;
+						else {
+							highConn = lowConn;
+							lowConn = conn;
+							}
+						}
+					}
+
+				if (mConnAtoms[atom1] == 2) {
+					if (mConnAtoms[atom2] == 2)
+						return parity == cBondCIPParityZorM ? lowConn : -1;
+					return (parity == cBondCIPParityZorM) ? lowConn : highConn;
+					}
+				else {
+					if (mConnAtoms[atom2] == 2)
+						return (parity == cBondCIPParityZorM) ^ (connAtom < other1) ? -1 : lowConn;
+					return (parity == cBondCIPParityZorM) ^ (connAtom < other1) ? highConn : lowConn;
+					}
+				}
+			}
+		return -1;
+		}
 
 	/**
 	 * While the Molecule class covers all primary molecule information, its derived class
@@ -2752,22 +2845,52 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			mConnBondOrder[atom] = new int[connCount[atom]];
 			}
 
-		for(int bnd=0; bnd<mAllBonds; bnd++) {
+		boolean metalBondFound = false;
+		for(int bnd=0; bnd<mBonds; bnd++) {
 			int order = getBondOrder(bnd);
-			for(int i=0; i<2; i++) {
+			if (order == 0) {
+				metalBondFound = true;
+				continue;
+				}
+
+			for (int i = 0; i < 2; i++) {
 				int atom = mBondAtom[i][bnd];
 				mConnBondOrder[atom][mAllConnAtoms[atom]] = order;
-				mConnAtom[atom][mAllConnAtoms[atom]] = mBondAtom[1-i][bnd];
+				mConnAtom[atom][mAllConnAtoms[atom]] = mBondAtom[1 - i][bnd];
 				mConnBond[atom][mAllConnAtoms[atom]] = bnd;
 				mAllConnAtoms[atom]++;
-				if (bnd < mBonds)
-					mConnAtoms[atom]++;
+				mConnAtoms[atom]++;
 				if (atom < mAtoms) {
 					if (order > 1)
 						mPi[atom] += order + order - 2;
 					else if (mBondType[bnd] == cBondTypeDelocalized)
 						mPi[atom] = 2;
 					}
+				}
+			}
+
+		if (metalBondFound) {
+			for(int bnd=0; bnd<mBonds; bnd++) {
+				int order = getBondOrder(bnd);
+				if (order == 0) {
+					for (int i = 0; i < 2; i++) {
+						int atom = mBondAtom[i][bnd];
+						mConnBondOrder[atom][mAllConnAtoms[atom]] = order;
+						mConnAtom[atom][mAllConnAtoms[atom]] = mBondAtom[1 - i][bnd];
+						mConnBond[atom][mAllConnAtoms[atom]] = bnd;
+						mAllConnAtoms[atom]++;
+						}
+					}
+				}
+			}
+
+		for(int bnd=mBonds; bnd<mAllBonds; bnd++) {
+			for (int i = 0; i < 2; i++) {
+				int atom = mBondAtom[i][bnd];
+				mConnBondOrder[atom][mAllConnAtoms[atom]] = 1;
+				mConnAtom[atom][mAllConnAtoms[atom]] = mBondAtom[1 - i][bnd];
+				mConnBond[atom][mAllConnAtoms[atom]] = bnd;
+				mAllConnAtoms[atom]++;
 				}
 			}
 
@@ -2834,7 +2957,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			// and remove explicit hydrogens except those with stereo bonds
 		boolean deleteHydrogens = false;
 		for (int atom=0; atom<mAtoms; atom++) {
-			int explicitHydrogens = mAllConnAtoms[atom] - mConnAtoms[atom];
+			int explicitHydrogens = getExplicitHydrogens(atom);
 			if (!mProtectHydrogen && explicitHydrogens > 0) {
 				if ((mAtomQueryFeatures[atom] & cAtomQFNoMoreNeighbours) == 0) {
 					if (getFreeValence(atom) == 0)
