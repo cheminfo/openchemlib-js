@@ -13,7 +13,7 @@ JavaScript interface with the [openchemlib](https://github.com/actelion/openchem
 To build this project, you need :
 * java >= 1.7
 * GWT 2.8 ([Download build here](http://goo.gl/62SeR5))
-* Node.js ([link](https://nodejs.org/en/download/stable/))
+* Node.js ([link](https://nodejs.org/en/download/))
 
 ### Install dependencies
 
