@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "4"
-  - "5"
+  - "6"
   - "stable"
 sudo: false
 before_script: "sh install-travis.sh"
