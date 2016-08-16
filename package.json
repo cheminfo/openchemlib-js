@@ -35,7 +35,7 @@
   "devDependencies": {
     "fs-extra": "^0.30.0",
     "gulp": "^3.9.1",
-    "gwt-api-exporter": "^1.1.8",
+    "gwt-api-exporter": "^1.1.10",
     "minimist": "^1.2.0",
     "mocha": "^3.0.2",
     "mocha-better-spec-reporter": "^3.0.2",
