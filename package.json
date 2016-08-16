@@ -37,8 +37,8 @@
     "gulp": "^3.9.1",
     "gwt-api-exporter": "^1.1.8",
     "minimist": "^1.2.0",
-    "mocha": "^2.4.5",
+    "mocha": "^3.0.2",
     "mocha-better-spec-reporter": "^3.0.2",
-    "should": "^10.0.0"
+    "should": "^11.1.0"
   }
 }
