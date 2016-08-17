@@ -34,7 +34,6 @@ package com.actelion.research.share.gui.editor.actions;
 
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
-import com.actelion.research.gwt.gui.viewer.Console;
 import com.actelion.research.share.gui.DialogResult;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.chem.IDrawingObject;
@@ -83,6 +82,7 @@ public class SelectionAction extends BondHighlightAction//DrawAction
         shift = false;
         rectangular = false;
         duplicate = false;
+
         return super.onKeyReleased(evt);
     }
 
@@ -93,9 +93,8 @@ public class SelectionAction extends BondHighlightAction//DrawAction
 
         polygon = builder.createPolygon();
         polygon.add(pt);
-        rectangular = evt.isAltDown();
+
         duplicate = false;
-//        layout = false;
 
         last = origin = new Point2D.Double(pt.getX(), pt.getY());
         atom = getAtomAt(mol, origin);
@@ -105,6 +104,15 @@ public class SelectionAction extends BondHighlightAction//DrawAction
                 if (!shift)
                     deselectAllAtoms();
                 mol.setAtomSelection(atom, true);
+            }
+        } else if (bond != -1) {
+            if (!mol.isSelectedBond(bond)) {
+                if (!shift)
+                    deselectAllAtoms();
+                int a1 = mol.getBondAtom(0, bond);
+                int a2 = mol.getBondAtom(1, bond);
+                mol.setAtomSelection(a1, true);
+                mol.setAtomSelection(a2, true);
             }
         }
         return false;
@@ -116,7 +124,6 @@ public class SelectionAction extends BondHighlightAction//DrawAction
         atom = bond = -1;
         origin = last = null;
         duplicate = false;
-        rectangular = false;
 //        if (layout)
 //            model.needsLayout(true);
 //        layout = false;
@@ -161,6 +168,7 @@ public class SelectionAction extends BondHighlightAction//DrawAction
         IDrawingObject lastSelected = model.getSelectedDrawingObject();
         java.util.List<IDrawingObject> drawables = model.getDrawingObjects();
         model.setSelectedDrawingObject(null);
+
         for (IDrawingObject d : drawables) {
             if (d.getBoundingRect().contains(pt.getX(), pt.getY())) {
                 model.setSelectedDrawingObject(d);
@@ -287,6 +295,13 @@ public class SelectionAction extends BondHighlightAction//DrawAction
         } else if (polygon != null && polygon.size() > 1) {
             drawPolygon(ctx);
             return true;
+        } else {
+            ctx.setStroke(builder.getHighLightColor());
+            ctx.setFill(builder.getHighLightColor());
+            IDrawingObject obj =  model.getSelectedDrawingObject();
+            if(obj != null) {
+                obj.draw(ctx,null);
+            }
         }
         ctx.restore();
         return false;
@@ -306,7 +321,10 @@ public class SelectionAction extends BondHighlightAction//DrawAction
         ctx.drawPolygon(polygon);
     }
 
-    private void drawDashedLine(IDrawContext context, double srcx, double srcy, double targetx, double targety, int[] dashPattern) {
+    private void drawDashedLine(IDrawContext context,
+                                double srcx, double srcy,
+                                double targetx, double targety,
+                                int[] dashPattern) {
         context.drawDashedLine(srcx, srcy, targetx, targety, dashPattern);
     }
 
@@ -319,14 +337,13 @@ public class SelectionAction extends BondHighlightAction//DrawAction
 
     private boolean moveAtomsAndBonds(double dx, double dy, boolean force) {
         boolean ok = false;
-//        for (StereoMolecule mol : model.getMols()) {
         StereoMolecule mol = model.getMolecule();
         if (mol != null) {
             if (mol != null && atom != -1 || force) {
                 translateAtoms(mol, dx, dy, true);
                 ok = true;
             } else if (mol != null && bond != -1 || force) {
-                translateBond(mol, dx, dy, true);
+                translateBonds(mol, dx, dy, true);
                 ok = true;
             }
         }
@@ -468,7 +485,7 @@ public class SelectionAction extends BondHighlightAction//DrawAction
 //        model.setSelectedMolecule(mol);
     }
 
-    private void translateBond(StereoMolecule mol, double dx, double dy, boolean selected) {
+    private void translateBonds(StereoMolecule mol, double dx, double dy, boolean selected) {
         int a1 = mol.getBondAtom(0, bond);
         int a2 = mol.getBondAtom(1, bond);
         if (selected) {

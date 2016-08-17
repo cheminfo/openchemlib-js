@@ -1,34 +1,33 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
+
+Copyright (c) 2015-2016, cheminfo
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+    * Neither the name of {{ project }} nor the names of its contributors
+      may be used to endorse or promote products derived from this software
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 */
 
 package com.actelion.research.chem;
@@ -148,7 +147,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			destMol.setFragment(true);
 
 		if (recognizeDelocalizedBonds)
-			new AromaticityResolver(destMol).locateDelocalizedDoubleBonds(null);
+			new AromaticityResolver(destMol).locateDelocalizedDoubleBonds();
 		}
 
 
@@ -218,7 +217,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			destMol.setFragment(true);
 
 		if (recognizeDelocalizedBonds)
-			new AromaticityResolver(destMol).locateDelocalizedDoubleBonds(null);
+			new AromaticityResolver(destMol).locateDelocalizedDoubleBonds();
  
 		return atomMap;
 		}
@@ -2100,34 +2099,6 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * Evaluates, whether bond is an amide bond, thio-amide, or amidine bond.
-	 * @param bond
-	 * @return
-	 */
-	public boolean isAmideTypeBond(int bond) {
-		ensureHelperArrays(cHelperNeighbours);
-
-		for (int i=0; i<2; i++) {
-			int atom1 = mBondAtom[i][bond];
-			if (mAtomicNo[atom1] == 7) {
-				int atom2 = mBondAtom[1-i][bond];
-				for (int j=0; j<mConnAtoms[atom2]; j++) {
-					int connAtom = mConnAtom[atom2][j];
-					int connBond = mConnBond[atom2][j];
-					if ((mAtomicNo[connAtom] == 7
-					  || mAtomicNo[connAtom] == 8
-					  || mAtomicNo[connAtom] == 16)
-					 && getBondOrder(connBond) >= 2)
-						return true;
-					}
-				}
-			}
-
-		return false;
-		}
-
-
-	/**
 	 * Checks whether this nitrogen atom is flat, because it has a double bond,
 	 * is member of an aromatic ring or is part of amide, an enamine or
 	 * in resonance with an aromatic ring. It is also checked that ortho
@@ -2405,10 +2376,6 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 					atom2 = mBondAtom[0][bond];
 					}
 				else
-					continue;
-
-				if (isMetalAtom(atom1)
-				 || isMetalAtom(atom2))
 					continue;
 
 				if (mAtomicNo[atom1] < 9)

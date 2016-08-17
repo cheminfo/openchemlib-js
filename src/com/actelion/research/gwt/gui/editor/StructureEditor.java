@@ -417,10 +417,8 @@ public class StructureEditor implements IChangeListener//,Exportable
             @Override
             public void onMouseMove(MouseMoveEvent event)
             {
-                boolean moved = mousePoint == null ? false :
-                        mousePoint.distance(event.getX(), event.getY()) > 1;
-//                if (mousePoint != null)
-//                System.out.println("DrawPane on MouseMove: " + mousePoint.distance(event.getX(),event.getY()));
+                boolean moved = mousePoint == null ? false : true;
+//                        mousePoint.distance(event.getX(), event.getY()) > 1;
                 if (!drag && moved) {
                     onMouseMoved(event);
                 }

@@ -35,7 +35,6 @@ package com.actelion.research.share.gui.editor.actions;
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.share.gui.editor.Model;
-import com.actelion.research.share.gui.editor.geom.IColor;
 import com.actelion.research.share.gui.editor.geom.IDrawContext;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
 
@@ -70,7 +69,10 @@ public abstract class BondBaseAction extends BondHighlightAction
     {
         StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
         if (mol != null) {
-            mol.addBond(srcAtom, targetAtom, getBondType());
+            int bondType = getBondType();
+            if (bondType == Molecule.cBondTypeSingle)
+                bondType = mol.suggestBondType(srcAtom, targetAtom);
+            mol.addBond(srcAtom, targetAtom, bondType);
             mol.ensureHelperArrays(Molecule.cHelperNeighbours);
         } else {
 //            mol = new StereoMolecule();
@@ -109,7 +111,10 @@ public abstract class BondBaseAction extends BondHighlightAction
                     java.awt.geom.Point2D p = suggestNewX2AndY2(sourceAtom);
                     int stopAtom = mol.findAtom((float) p.getX(), (float) p.getY());
                     if (stopAtom != -1) {
-                        mol.addOrChangeBond(sourceAtom, stopAtom, getBondType());
+                        int bondType = getBondType();
+                        if (bondType == Molecule.cBondTypeSingle)
+                            bondType = mol.suggestBondType(sourceAtom, stopAtom);
+                        mol.addOrChangeBond(sourceAtom, stopAtom, bondType);
                     } else {
                         int t = mol.addAtom((float) p.getX(), (float) p.getY(), 0.0f);
                         onAddBond(sourceAtom, t);
@@ -179,34 +184,10 @@ public abstract class BondBaseAction extends BondHighlightAction
                 ok = true;
             }
         }
-//        theAtom = -1;
         dragging = false;
         return ok;
 
     }
-
-
-//    public boolean onMouseMove(Point2D pt, boolean drag)
-//    {
-//        dragging = drag;
-//        if (!drag) {
-//            return trackHighLight(pt, true);
-//        } else {
-//            return onDrag(pt);
-//        }
-//    }
-//
-//    boolean onDrag(Point2D pt)
-//    {
-//        double dx = Math.abs(pt.getX()-origin.getX());
-//        double dy = Math.abs(pt.getY()-origin.getY());
-//        if(dx > 5 || dy > 5) {
-//            trackHighLight(pt, false);
-//            last = pt;
-//        } else
-//            last = null;
-//        return true;
-//    }
 
 
     public boolean paint(IDrawContext _ctx)
@@ -224,7 +205,6 @@ public abstract class BondBaseAction extends BondHighlightAction
     private void drawBondLine(IDrawContext ctx)
     {
         java.awt.geom.Point2D p = origin;
-        System.out.println("Origin " + origin + " last " + last);
         if (p != null && last != null) {
             int atom = getAtomAt(p);
             StereoMolecule mol = model.getMoleculeAt(p, true);

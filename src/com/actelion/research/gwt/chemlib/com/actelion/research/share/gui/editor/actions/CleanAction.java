@@ -52,7 +52,7 @@ public class CleanAction extends CommandAction
     @Override
     public void onCommand()
     {
-//        model.pushUndo();
+        model.pushUndo();
         if (model.isReaction()) {
             model.cleanReaction(true);
         } else {
