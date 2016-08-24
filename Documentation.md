@@ -83,14 +83,12 @@ Compute and set atom coordinates for this molecule
 ### molecule.addImplicitHydrogens([atomNumber])
 Expand and find a position for all the hydrogens of the 2D molecule. If `atomNumber` is specified, the function only applies for the hydrogens of the given atom.
 
-### molecule.removeExplicitHydrogens()
-Remove the explicit hydrogens in the molecule.
-
-
 __Options__
 
 * `atomNumber`- The atom number according to the molfile (default: all the atoms)
 
+### molecule.removeExplicitHydrogens()
+Remove the explicit hydrogens in the molecule.
 
 ### molecule.getNumberOfHydrogens()
 
