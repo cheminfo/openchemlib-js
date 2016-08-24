@@ -92,12 +92,8 @@ __Options__
 
 Returns the count of hydrogens in the molecule. 
 
-### molecule.getDiastereotopicAtomIDs([elementLabel])
-Returns the diastereotopic IDs of the molecule for the specified element (optional)
-
-__Options__
-
-* `elementLabel`-  (default: all the atoms)
+### molecule.getDiastereotopicAtomIDs()
+Returns the diastereotopic IDs of all the atoms in the molecule
 
 ### molecule.addMissingChirality()
 
