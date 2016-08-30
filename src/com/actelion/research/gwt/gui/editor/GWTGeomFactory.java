@@ -5,6 +5,7 @@ import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.AtomPropertiesDialog;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.AtomQueryFeaturesDialog;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.BondQueryFeaturesDialog;
+import com.actelion.research.share.gui.DrawConfig;
 import com.actelion.research.share.gui.editor.chem.IArrow;
 import com.actelion.research.share.gui.editor.dialogs.IAtomPropertiesDialog;
 import com.actelion.research.share.gui.editor.dialogs.IAtomQueryFeaturesDialog;
@@ -19,6 +20,10 @@ import java.awt.geom.Rectangle2D;
  */
 public class GWTGeomFactory extends GeomFactory
 {
+    public GWTGeomFactory(DrawConfig cfg) {
+        super(cfg);
+    }
+
     public IArrow createArrow(Rectangle2D r)
     {
         return null;
@@ -79,6 +84,7 @@ public class GWTGeomFactory extends GeomFactory
     }
 
 
+/*
     public long getHighLightColor(){
         return createColor(.3,0.4,1,.4);
     }
@@ -94,5 +100,6 @@ public class GWTGeomFactory extends GeomFactory
     public long getBackgroundColor(){
         return createColor(1,1,1,1);
     }
+*/
 
 }

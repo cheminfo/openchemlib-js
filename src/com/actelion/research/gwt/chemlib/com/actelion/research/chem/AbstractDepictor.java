@@ -1360,7 +1360,7 @@ public abstract class AbstractDepictor {
 		 && origWedge.y1 == origWedge.y2)
 			return;
 
-		theWedge.x1 = origWedge.x1;	// use copy of data for recursive processing
+		theWedge.x1 = origWedge.x1;	// use addPasteHandler of data for recursive processing
 		theWedge.y1 = origWedge.y1;
 		theWedge.x2 = origWedge.x2;
 		theWedge.y2 = origWedge.y2;

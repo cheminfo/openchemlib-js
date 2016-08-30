@@ -572,7 +572,7 @@ public int copyBond(JSMolecule destMol, int sourceBond, int esrGroupOffsetAND, i
 
 /**
  * Copies name,isFragment,chirality and validity of parity & CIP flags.
- * When copying molecules parts only or when changing the atom order during copy,
+ * When copying molecules parts only or when changing the atom order during addPasteHandler,
  * then atom parities or CIP parities may not be valid anymore and
  * invalidateHelperArrays([affected bits]) should be called in these cases.
  * @param destMol
@@ -1827,7 +1827,7 @@ public int getBond(int atom1, int atom2) {
 }
 
 /**
- * @return a copy of this with all arrays sized to just cover all existing atoms and bonds
+ * @return a addPasteHandler of this with all arrays sized to just cover all existing atoms and bonds
  */
 public JSMolecule getCompactCopy() {
 	return new JSMolecule(oclMolecule.getCompactCopy());

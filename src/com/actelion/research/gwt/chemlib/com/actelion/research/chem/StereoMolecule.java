@@ -77,7 +77,7 @@ public class StereoMolecule extends ExtendedMolecule {
 	/**
 	 * Copies name, isFragment, chirality. If this molecule has valid parities, but no
 	 * atom coordinates, then the validity of parity & CIP flags is copied as well.
-	 * When copying molecules parts only or when changing the atom order during copy,
+	 * When copying molecules parts only or when changing the atom order during addPasteHandler,
 	 * then atom parities or CIP parities may not be valid anymore and
 	 * invalidateHelperArrays([affected bits]) should be called in these cases.
 	 * @param destMol

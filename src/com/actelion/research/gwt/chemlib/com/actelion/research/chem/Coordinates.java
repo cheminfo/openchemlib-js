@@ -241,7 +241,7 @@ public final class Coordinates implements Serializable, Comparable<Coordinates> 
 
 
 	/**
-	 * @return new Coordinates with a copy of this scaled to length=1.0
+	 * @return new Coordinates with a addPasteHandler of this scaled to length=1.0
 	 */
 	public final Coordinates unitC() {
 		double d = dist();

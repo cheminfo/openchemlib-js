@@ -34,6 +34,7 @@ package com.actelion.research.share.gui.editor.geom;
 
 
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.share.gui.DrawConfig;
 import com.actelion.research.share.gui.Polygon;
 import com.actelion.research.share.gui.editor.chem.IArrow;
 import com.actelion.research.share.gui.editor.dialogs.IAtomPropertiesDialog;
@@ -57,43 +58,31 @@ public abstract class GeomFactory
     {
         factory = f;
     }
+    private DrawConfig drawConfig;
+    public GeomFactory(DrawConfig cfg)
+    {
+        drawConfig = cfg;
+    }
+
+/*
     public static synchronized GeomFactory getGeomFactory()
     {
         if (factory == null) {
             throw new RuntimeException("No Factory regstered!");
-/*
-            String nm = System.getProperty("com.actelion.research.geomfactory");
-            try {
-                Class cls = null;
-                try {
-                    cls = Class.forName(nm);
-                } catch (ClassNotFoundException e) {
-                    ClassLoader cl = ClassLoader.getSystemClassLoader();
-                    if (cl != null) {
-                        try {
-                            cls = cl.loadClass(nm);
-                        } catch (ClassNotFoundException ee) {
-                            throw new Error("GeomFactory not found: " + nm);
-                        }
-                    }
-                }
-                factory = (GeomFactory) cls.newInstance();
-            } catch (InstantiationException e) {
-                throw new Error("GeomFactory not found: " + e);
-            } catch (IllegalAccessException e) {
-                throw new Error("GeomFactory not found: " + e);
-            }
-*/
+
         }
         return factory;
     }
+*/
 
+/*
     public final long createColor(double r, double g, double b, double alpha)
     {
         long col = (long)(r * 255) << 24 | (long)(g * 255) << 16 | (long)(b * 255) << 8 | (long)(alpha*255);
         return col;
     }
 
+*/
 
     public final IPolygon createPolygon()
     {
@@ -109,10 +98,15 @@ public abstract class GeomFactory
     public abstract IKeyCode getBackSpaceKey();
     public abstract IKeyCode getEnterKey();
 
-    public abstract long getHighLightColor();
-    public abstract long getMapToolColor();
-    public abstract long getSelectionColor();
-    public abstract long getForegroundColor();
-    public abstract long getBackgroundColor();
+    public DrawConfig getDrawConfig()
+    {
+        return drawConfig;
+    }
+
+    public final long getHighLightColor() { return drawConfig.getHighLightColor();}
+    public final long getMapToolColor() { return drawConfig.getMapToolColor();}
+    public final long getSelectionColor() { return drawConfig.getSelectionColor();}
+    public final long getForegroundColor() { return drawConfig.getForegroundColor();}
+    public final long getBackgroundColor() { return drawConfig.getBackgroundColor();}
 
 }

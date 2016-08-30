@@ -33,7 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.share.gui.editor.actions;
 
 import com.actelion.research.share.gui.editor.Model;
-import com.actelion.research.share.gui.editor.geom.GeomFactory;
 import com.actelion.research.share.gui.editor.geom.ICursor;
 import com.actelion.research.share.gui.editor.geom.IDrawContext;
 import com.actelion.research.share.gui.editor.io.IKeyEvent;
@@ -47,7 +46,7 @@ import com.actelion.research.share.gui.editor.io.IMouseEvent;
 public abstract class CommandAction implements Action
 {
     protected Model model;
-    protected static GeomFactory builder = GeomFactory.getGeomFactory() ;
+//    protected static GeomFactory builder = GeomFactory.getGeomFactory() ;
 
     public CommandAction(Model m)
     {

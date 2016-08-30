@@ -113,7 +113,7 @@ public class Point extends Point2D  {
      * Returns the location of this point.
      * This method is included for completeness, to parallel the
      * <code>getLocation</code> method of <code>Component</code>.
-     * @return      a copy of this point, at the same location
+     * @return      a addPasteHandler of this point, at the same location
      * @see         java.awt.Component#getLocation
      * @see         java.awt.Point#setLocation(java.awt.Point)
      * @see         java.awt.Point#setLocation(int, int)

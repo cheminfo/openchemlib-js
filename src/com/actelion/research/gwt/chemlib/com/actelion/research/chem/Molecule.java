@@ -1166,7 +1166,7 @@ public class Molecule implements Serializable {
 
 	/**
 	 * Copies name,isFragment,chirality and validity of parity & CIP flags.
-	 * When copying molecules parts only or when changing the atom order during copy,
+	 * When copying molecules parts only or when changing the atom order during addPasteHandler,
 	 * then atom parities or CIP parities may not be valid anymore and
 	 * invalidateHelperArrays([affected bits]) should be called in these cases.
 	 * @param destMol

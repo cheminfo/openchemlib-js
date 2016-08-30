@@ -38,6 +38,7 @@ import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.gwt.gui.viewer.Log;
+import com.actelion.research.share.gui.DrawConfig;
 import com.actelion.research.share.gui.editor.chem.AbstractExtendedDepictor;
 import com.actelion.research.share.gui.editor.chem.IDepictor;
 import com.actelion.research.share.gui.editor.chem.IDrawingObject;
@@ -52,13 +53,13 @@ public class MoleculeDrawDepictor extends AbstractExtendedDepictor<Context2d, Cs
 
 
     Context2d ctx;
-    public MoleculeDrawDepictor(Context2d ctx,StereoMolecule mol, java.util.List<IDrawingObject> drawingObjectList) {
-        super(mol, drawingObjectList, true);
+    public MoleculeDrawDepictor(Context2d ctx,StereoMolecule mol, java.util.List<IDrawingObject> drawingObjectList,DrawConfig cfg) {
+        super(mol, drawingObjectList, true,cfg);
         this.ctx = ctx;
     }
 
-    public MoleculeDrawDepictor(Context2d ctx,StereoMolecule[] mol, java.util.List<IDrawingObject> drawingObjectList) {
-        super(mol, drawingObjectList, true);
+    public MoleculeDrawDepictor(Context2d ctx,StereoMolecule[] mol, java.util.List<IDrawingObject> drawingObjectList,DrawConfig cfg) {
+        super(mol, drawingObjectList, true,cfg);
         this.ctx = ctx;
     }
 
@@ -73,18 +74,18 @@ public class MoleculeDrawDepictor extends AbstractExtendedDepictor<Context2d, Cs
      * @param markushCoreCount
      * @param drawingObjectList
      */
-    public MoleculeDrawDepictor(Context2d ctx,StereoMolecule[] mol, int markushCoreCount, java.util.List<IDrawingObject> drawingObjectList) {
-        super(mol, markushCoreCount, drawingObjectList, true);
+    public MoleculeDrawDepictor(Context2d ctx,StereoMolecule[] mol, int markushCoreCount, java.util.List<IDrawingObject> drawingObjectList,DrawConfig cfg) {
+        super(mol, markushCoreCount, drawingObjectList, true,cfg);
         this.ctx = ctx;
     }
 
-    public MoleculeDrawDepictor(Context2d ctx,Reaction reaction, java.util.List<IDrawingObject> drawingObjectList, boolean layoutReaction) {
-        super(reaction, drawingObjectList, layoutReaction, true);
+    public MoleculeDrawDepictor(Context2d ctx,Reaction reaction, java.util.List<IDrawingObject> drawingObjectList, boolean layoutReaction,DrawConfig cfg) {
+        super(reaction, drawingObjectList, layoutReaction, true,cfg);
         this.ctx = ctx;
     }
 
     @Override
-    public AbstractDepictor createDepictor(StereoMolecule stereoMolecule, boolean mUseGraphics2D) {
+    public AbstractDepictor createDepictor(StereoMolecule stereoMolecule, boolean mUseGraphics2D,DrawConfig cfg) {
         if (mUseGraphics2D)
             return new GWTDepictor(stereoMolecule);
         else

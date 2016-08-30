@@ -68,7 +68,7 @@ public class Rectangle extends Rectangle2D
     /**
      * Constructs a new <code>Rectangle</code>, initialized to match
      * the values of the specified <code>Rectangle</code>.
-     * @param r  the <code>Rectangle</code> from which to copy initial values
+     * @param r  the <code>Rectangle</code> from which to addPasteHandler initial values
      *           to a newly constructed <code>Rectangle</code>
      * @since 1.1
      */
@@ -730,7 +730,7 @@ public class Rectangle extends Rectangle2D
 //     * the rules for <a href=#NonExistant>non-existant</a> rectangles
 //     * apply.
 //     * If only one has a dimension less than zero, then the result
-//     * will be a copy of the other {@code Rectangle}.
+//     * will be a addPasteHandler of the other {@code Rectangle}.
 //     * If both have dimension less than zero, then the result will
 //     * have at least one dimension less than zero.
 //     * <p>

@@ -42,14 +42,20 @@ import com.google.gwt.core.shared.GWT;
  */
 public class Log
 {
-    public static native void console(String text)
+
+    private static final boolean DEBUG = true;
+    public static void console(String s)
+    {
+        if (DEBUG)
+            _console(s);
+    }
+    private static native void _console(String text)
     /*-{
-        console.log(text);
+            console.log(text);
     }-*/;
 
     public static void println(String s)
     {
-        System.out.println(s);
         GWT.log(s);
         console(s);
     }
