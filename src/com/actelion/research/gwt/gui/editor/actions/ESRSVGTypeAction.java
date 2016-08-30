@@ -30,48 +30,35 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-package com.actelion.research.share.gui.editor.actions;
+package com.actelion.research.gwt.gui.editor.actions;
 
+import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.gwt.gui.editor.ButtonPressListener;
+import com.actelion.research.gwt.gui.editor.ToolBar;
+import com.actelion.research.gwt.gui.editor.Window;
 import com.actelion.research.share.gui.editor.Model;
-import com.actelion.research.share.gui.DialogResult;
-import com.actelion.research.share.gui.editor.dialogs.IAtomPropertiesDialog;
-import com.actelion.research.share.gui.editor.geom.GeomFactory;
+import com.actelion.research.share.gui.editor.actions.BondHighlightAction;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
+import com.google.gwt.user.client.ui.PopupPanel;
 
-/**
- * Project:
- * User: rufenec
- * Date: 2/1/13
- * Time: 4:13 PM
- */
-public class ChangeAtomPropertiesAction extends AtomHighlightAction
+import java.awt.geom.Point2D;
+
+public class ESRSVGTypeAction extends AbstractTypeAction
+        //BondHighlightAction implements ButtonPressListener
 {
 
-    public ChangeAtomPropertiesAction(Model model)
+    private int scale = 1;
+    public ESRSVGTypeAction(Model model, int scale)
     {
-        super(model);
+        super(model,scale);
+        this.scale = scale;
     }
 
     @Override
-    public boolean onMouseUp(IMouseEvent evt)
+    public ESRSVGPane createPane()
     {
-        model.pushUndo();
-        int theAtom = model.getSelectedAtom();
-        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
-        if (mol != null && theAtom != -1) {
-            GeomFactory builder = model.getGeomFactory();
-            IAtomPropertiesDialog dlg = builder.createAtomPropertiesDialog(mol,theAtom);
-            if (dlg.doModalAt(evt.getX(),evt.getY()) == DialogResult.IDOK) {
-                return true;
-            }
-        }
-        return false;
+        return new ESRSVGPane(model,scale);
     }
 
-
-    public static boolean isEmptyString(String s)
-    {
-        return s == null || s.trim().length()==0;
-    }
 }

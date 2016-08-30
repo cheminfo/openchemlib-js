@@ -46,13 +46,15 @@ import java.awt.*;
 
 public class GWTEditorModel extends Model
 {
+/*
     static {
         GeomFactory.registerFactory(new GWTGeomFactory());
     }
+*/
 
-    public GWTEditorModel(int mode)
+    public GWTEditorModel(GeomFactory factory, int mode)
     {
-        super(mode);
+        super(factory,mode);
     }
 
     @Override

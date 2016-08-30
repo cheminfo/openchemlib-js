@@ -33,7 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.*;
-import com.actelion.research.gwt.gui.viewer.Console;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
@@ -64,7 +63,6 @@ public class StructureEditor implements IChangeListener//,Exportable
 {
     static int TEXTHEIGHT = 20;
     static int TOOLBARWIDTH = 45;
-    static int TOOLBARHEIGHT = 360;
 
     private boolean drag = false;
     private Point2D mousePoint = null;
@@ -77,6 +75,7 @@ public class StructureEditor implements IChangeListener//,Exportable
     private Boolean viewOnly = false;
     private static List<StructureEditor> map = new ArrayList<StructureEditor>();
 
+    private int scale = 2;
     static {
         initObserver();
     }
@@ -95,7 +94,7 @@ public class StructureEditor implements IChangeListener//,Exportable
     {
         container = Document.get().getElementById(id);
         if (container != null) {
-            model = new GWTEditorModel(0);
+            model = new GWTEditorModel(new GWTGeomFactory(new GWTDrawConfig()),0);
             String vo = container.getAttribute("view-only");
             viewOnly = Boolean.parseBoolean(vo);
 
@@ -128,7 +127,8 @@ public class StructureEditor implements IChangeListener//,Exportable
             String idcode = container.getAttribute("data-idcode");
 
             final int toolBarWidth = getToolbarWidth();
-            toolBar = new ToolBarImpl(model);
+//            toolBar = new ToolBarImpl(model);
+            toolBar = new SVGToolBarImpl(model,scale);
             Element toolBarElement = toolBar.createElement(container, toolBarWidth, height - TEXTHEIGHT - 5);
             if (!viewOnly)
                 container.appendChild(toolBarElement);
@@ -190,14 +190,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
-
-//    private native void observeDataChange(Element el) /*-{
-//        var config = {childList: true}
-//        $wnd.edit$observer.observe(el, config);
-//    }-*/;
-
-
-    private native static void initObserver() /*-{
+   private native static void initObserver() /*-{
         $wnd.edit$observer = new MutationObserver(function (mutations) {
             console.log("Mutation");
             mutations.forEach(function (mutation) {
@@ -222,7 +215,7 @@ public class StructureEditor implements IChangeListener//,Exportable
 
     private int getToolbarWidth()
     {
-        return viewOnly ? 0 : TOOLBARWIDTH;
+        return viewOnly ? 0 : TOOLBARWIDTH *scale;
     }
 
     private void setElementSizePos(Element el, int x, int y, int h, int w)

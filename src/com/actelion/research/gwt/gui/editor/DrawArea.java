@@ -65,7 +65,8 @@ class DrawArea implements IChangeListener
     private boolean down = false;
     private boolean pressed = false;
     private int code = 0;
-    protected static final GeomFactory builder = GeomFactory.getGeomFactory();
+//    protected static final GeomFactory builder = GeomFactory.getGeomFactory();
+    protected final GeomFactory builder;
 
     public static final CssColor WHITE = CssColor.make("WHITE");
     private static int instanceCount = 0;
@@ -79,6 +80,7 @@ class DrawArea implements IChangeListener
     DrawArea(Model m)
     {
         model = m;
+        builder = model.getGeomFactory();
         model.addChangeListener(this);
         instanceCount++;
     }
@@ -229,11 +231,11 @@ class DrawArea implements IChangeListener
         AbstractExtendedDepictor mDepictor;
         Context2d ctx = canvas.getContext2d();
         if (isReaction())
-            mDepictor = new MoleculeDrawDepictor(ctx,new Reaction(model.getFragments(), model.getReactantCount()), model.getDrawingObjects(), false);
+            mDepictor = new MoleculeDrawDepictor(ctx,new Reaction(model.getFragments(), model.getReactantCount()), model.getDrawingObjects(), false,builder.getDrawConfig());
         else if (isMarkush()) {
-            mDepictor = new MoleculeDrawDepictor(ctx,model.getFragments(), model.getMarkushCount(), null);
+            mDepictor = new MoleculeDrawDepictor(ctx,model.getFragments(), model.getMarkushCount(), null,builder.getDrawConfig());
         } else {
-            mDepictor = new MoleculeDrawDepictor(ctx,model.getMolecule(), model.getDrawingObjects());
+            mDepictor = new MoleculeDrawDepictor(ctx,model.getMolecule(), model.getDrawingObjects(),builder.getDrawConfig());
         }
         return mDepictor;
     }
