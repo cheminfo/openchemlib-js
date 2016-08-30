@@ -325,7 +325,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * @return a copy of this with all arrays sized to just cover all existing atoms and bonds
+	 * @return a addPasteHandler of this with all arrays sized to just cover all existing atoms and bonds
 	 */
 	public ExtendedMolecule getCompactCopy() {
 		ExtendedMolecule theCopy = new ExtendedMolecule(mAllAtoms, mAllBonds);

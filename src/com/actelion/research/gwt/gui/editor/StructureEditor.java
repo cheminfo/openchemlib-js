@@ -40,6 +40,7 @@ import com.actelion.research.share.gui.editor.actions.Action;
 import com.actelion.research.share.gui.editor.geom.ICursor;
 import com.actelion.research.share.gui.editor.io.IKeyEvent;
 import com.actelion.research.share.gui.editor.listeners.IChangeListener;
+import com.gargoylesoftware.htmlunit.javascript.host.html.HTMLImageElement;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.*;
@@ -75,7 +76,7 @@ public class StructureEditor implements IChangeListener//,Exportable
     private Boolean viewOnly = false;
     private static List<StructureEditor> map = new ArrayList<StructureEditor>();
 
-    private int scale = 2;
+    private int scale = 1;
     static {
         initObserver();
     }
@@ -90,9 +91,17 @@ public class StructureEditor implements IChangeListener//,Exportable
 //        return $doc.querySelectorAll(selectors);
 //    }-*/;
 
+    @JsIgnore
     public StructureEditor(String id)
     {
+        this(id,false,1);
+    }
+
+    public StructureEditor(String id, boolean useSVG, int scale)
+    {
+        this.scale = scale;
         container = Document.get().getElementById(id);
+
         if (container != null) {
             model = new GWTEditorModel(new GWTGeomFactory(new GWTDrawConfig()),0);
             String vo = container.getAttribute("view-only");
@@ -127,8 +136,10 @@ public class StructureEditor implements IChangeListener//,Exportable
             String idcode = container.getAttribute("data-idcode");
 
             final int toolBarWidth = getToolbarWidth();
-//            toolBar = new ToolBarImpl(model);
-            toolBar = new SVGToolBarImpl(model,scale);
+            if (useSVG)
+                toolBar = new SVGToolBarImpl(model,scale);
+            else
+                toolBar = new ToolBarImpl(model);
             Element toolBarElement = toolBar.createElement(container, toolBarWidth, height - TEXTHEIGHT - 5);
             if (!viewOnly)
                 container.appendChild(toolBarElement);
@@ -162,9 +173,8 @@ public class StructureEditor implements IChangeListener//,Exportable
                 displayMode |= AbstractDepictor.cDModeSuppressChiralText;
 
             model.setDisplayMode(displayMode);
-
             model.addChangeListener(this);
-            StereoMolecule mol = createMolecule(idcode, isFragment, (width - toolBarWidth), height - TEXTHEIGHT - 5);
+            StereoMolecule mol = createMolecule(idcode, isFragment/*, (width - toolBarWidth), height - TEXTHEIGHT - 5*/);
             model.setValue(mol, true);
 
             setUpHandlers();
@@ -188,9 +198,20 @@ public class StructureEditor implements IChangeListener//,Exportable
                 }
             });
         }
+        addPasteHandler(this,"onMouseClicked ");
     }
 
-   private native static void initObserver() /*-{
+    public static StructureEditor createEditor(String id)
+    {
+        return new StructureEditor(id);
+    }
+
+    public static StructureEditor createSVGEditor(String id, int scale)
+    {
+        return new StructureEditor(id,true,scale);
+    }
+
+    private native static void initObserver() /*-{
         $wnd.edit$observer = new MutationObserver(function (mutations) {
             console.log("Mutation");
             mutations.forEach(function (mutation) {
@@ -230,10 +251,6 @@ public class StructureEditor implements IChangeListener//,Exportable
 //        idcodeTextElement.setAttribute("style", "position:relative;float:left;width:" + (w - 5) + "px;height:" + TEXTHEIGHT + "px;");
     }
 
-    public static StructureEditor createEditor(String id)
-    {
-        return new StructureEditor(id);
-    }
 
 
     public String getIDCode()
@@ -343,7 +360,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
-    private StereoMolecule createMolecule(String idcode, boolean fragment, int width, int height)
+    private StereoMolecule createMolecule(String idcode, boolean fragment/*, int width, int height*/)
     {
         StereoMolecule mol = new StereoMolecule();
         mol.setFragment(fragment);
@@ -356,11 +373,13 @@ public class StructureEditor implements IChangeListener//,Exportable
                 p.parse(mol, elements[0], elements[1]);
 
             mol.setStereoBondsFromParity();
+/*
             GWTDepictor depictor = new GWTDepictor(mol);
             depictor.updateCoords(null,
                     new java.awt.geom.Rectangle2D.Double(0, 0, (float) width, (float) height),
                     GWTDepictor.cModeInflateToMaxAVBL
             );
+*/
 
         }
         return mol;
@@ -431,6 +450,7 @@ public class StructureEditor implements IChangeListener//,Exportable
             @Override
             public void onMouseDown(MouseDownEvent event)
             {
+
                 drag = true;
                 onMousePressed(event);
             }
@@ -453,6 +473,8 @@ public class StructureEditor implements IChangeListener//,Exportable
                 onKeyPressed(event);
             }
         });
+
+
 /*
         drawPane.setOnKeyReleased(new ACTKeyEventHandler()
         {
@@ -523,9 +545,84 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
+    public boolean onPasteString(String s)
+    {
+        Log.console("Pasted String: " + s);
+        IDCodeParser p  = new IDCodeParser(true);
+        try {
+            StereoMolecule mol = new StereoMolecule();
+            p.parse(mol,s);
+            Log.console("Molecule has " + mol.getAllAtoms() + " atoms");
+            model.addMolecule(mol);
+            return true;
+        } catch (Exception e) {
+            Log.console("Parse exception " + e);
+        }
+        return false;
+    }
+
+    public boolean onPasteImage(Object s)
+    {
+        Log.console("Pasted Image: " + s);
+        return false;
+    }
+
+    public void onPaste(DataTransfer s)
+    {
+        Log.console("Pasted Data: " + s);
+        Log.console("Image: " + s.getData("image/png"));
+        Log.console("Text: " + s.getData("text/plain"));
+    }
+
+        public static native void addPasteHandler(StructureEditor self, String text)
+    /*-{
+        console.log(text + " " + $wnd.Clipboard);
+        $doc.addEventListener('paste', function (e) {
+            if (e.clipboardData) {
+//                self.@com.actelion.research.gwt.gui.editor.StructureEditor::onPaste(Lcom/google/gwt/dom/client/DataTransfer;)(e.clipboardData);
+                var items = e.clipboardData.items;
+                var done = false;
+                if (items) {
+                    //access data directly
+                    for (var i = 0; !done && i < items.length; i++) {
+                        console.log("Item is " + items[i].type);
+                        if (items[i].type.indexOf("image") !== -1) {
+                            //image
+                            var blob = items[i].getAsFile();
+                            var URLObj = window.URL || window.webkitURL;
+                            var source = URLObj.createObjectURL(blob);
+
+                            var pastedImage = new Image();
+                            pastedImage.onload = function () {
+                                if(self.@com.actelion.research.gwt.gui.editor.StructureEditor::onPasteImage(Ljava/lang/Object;)(pastedImage)) {
+                                    done = true;
+                                }
+                            };
+                            pastedImage.src = source;
+                        } else if (items[i].type.indexOf("text/plain") !== -1) {
+                            items[i].getAsString(function (s){
+                               if (self.@com.actelion.research.gwt.gui.editor.StructureEditor::onPasteString(Ljava/lang/String;)(s)) {
+                                   done = true;
+                               }
+                            });
+
+                        }
+                    }
+                    e.preventDefault();
+                }
+            }
+
+        }, false); //official paste handler
+
+
+
+
+//        vaddPasteHandlerconsole.log("Copy Event " + copyEvent);
+//        $doc.dispatchEvent(copyEvent);
+    }-*/;
+
     private void onMouseClicked(MouseEvent evt, boolean dbl)
     {
-        System.out.println("onMouseClicked " + evt);
         if (!rightClick) {
             Action a = toolBar.getCurrentAction();
             if (a != null && !a.isCommand()) {
@@ -618,6 +715,131 @@ public class StructureEditor implements IChangeListener//,Exportable
     private native void callFuncS(JavaScriptObject func, String f) /*-{
         func(f);
     }-*/;
+
+
+    /*
+function CLIPBOARD_CLASS(canvas_id, autoresize) {
+    var _self = this;
+    var canvas = document.getElementById(canvas_id);
+    var ctx = document.getElementById(canvas_id).getContext("2d");
+    var ctrl_pressed = false;
+    var reading_dom = false;
+    var text_top = 15;
+    var pasteCatcher;
+    var paste_mode;
+
+    //handlers
+    document.addEventListener('keydown', function (e) {
+        _self.on_keyboard_action(e);
+    }, false); //firefox fix
+    document.addEventListener('keyup', function (e) {
+        _self.on_keyboardup_action(e);
+    }, false); //firefox fix
+    document.addEventListener('paste', function (e) {
+        _self.paste_auto(e);
+    }, false); //official paste handler
+
+    //constructor - prepare
+    this.init = function () {
+        //if using auto
+        if (window.Clipboard)
+            return true;
+
+        pasteCatcher = document.createElement("div");
+        pasteCatcher.setAttribute("id", "paste_ff");
+        pasteCatcher.setAttribute("contenteditable", "");
+        pasteCatcher.style.cssText = 'opacity:0;position:fixed;top:0px;left:0px;';
+        pasteCatcher.style.marginLeft = "-20px";
+        pasteCatcher.style.width = "10px";
+        document.body.appendChild(pasteCatcher);
+        document.getElementById('paste_ff').addEventListener('DOMSubtreeModified', function () {
+            if (paste_mode == 'auto' || ctrl_pressed == false)
+                return true;
+            //if paste handle failed - capture pasted object manually
+            if (pasteCatcher.children.length == 1) {
+                if (pasteCatcher.firstElementChild.src != undefined) {
+                    //image
+                    _self.paste_createImage(pasteCatcher.firstElementChild.src);
+                }
+            }
+            //register cleanup after some time.
+            setTimeout(function () {
+                pasteCatcher.innerHTML = '';
+            }, 20);
+        }, false);
+    }();
+    //default paste action
+    this.paste_auto = function (e) {
+        paste_mode = '';
+        pasteCatcher.innerHTML = '';
+        var plain_text_used = false;
+        if (e.clipboardData) {
+            var items = e.clipboardData.items;
+            if (items) {
+                paste_mode = 'auto';
+                //access data directly
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf("image") !== -1) {
+                        //image
+                        var blob = items[i].getAsFile();
+                        var URLObj = window.URL || window.webkitURL;
+                        var source = URLObj.createObjectURL(blob);
+                        this.paste_createImage(source);
+                    }
+                }
+                e.preventDefault();
+            }
+            else {
+                //wait for DOMSubtreeModified event
+                //https://bugzilla.mozilla.org/show_bug.cgi?id=891247
+            }
+        }
+    };
+    //on keyboard press -
+    this.on_keyboard_action = function (event) {
+        k = event.keyCode;
+        //ctrl
+        if (k == 17 || event.metaKey || event.ctrlKey) {
+            if (ctrl_pressed == false)
+                ctrl_pressed = true;
+        }
+        //c
+        if (k == 86) {
+            if (document.activeElement != undefined && document.activeElement.type == 'text') {
+                //let user paste into some input
+                return false;
+            }
+
+            if (ctrl_pressed == true && !window.Clipboard)
+                pasteCatcher.focus();
+        }
+    };
+    //on kaybord release
+    this.on_keyboardup_action = function (event) {
+        k = event.keyCode;
+        //ctrl
+        if (k == 17 || event.metaKey || event.ctrlKey || event.key == 'Meta')
+            ctrl_pressed = false;
+    };
+    //draw image
+    this.paste_createImage = function (source) {
+        var pastedImage = new Image();
+        pastedImage.onload = function () {
+            if(autoresize == true){
+                //resize canvas
+                canvas.width = pastedImage.width;
+                canvas.height = pastedImage.height;
+            }
+            else{
+                //clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            ctx.drawImage(pastedImage, 0, 0);
+        };
+        pastedImage.src = source;
+    };
+}
+ */
 
 }
 

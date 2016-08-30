@@ -352,7 +352,20 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener
                 onMouseMoved(event);
             }
         });
+        canvas.addMouseOutHandler(new MouseOutHandler() {
+            @Override
+            public void onMouseOut(MouseOutEvent event) {
+                onMouseLeft(event);
+            }
+        });
 
+    }
+
+    private void onMouseLeft(MouseOutEvent event) {
+        if (hoverAction != null) {
+            hoverAction = null;
+            repaint();
+        }
     }
 
     private void onMouseMoved(MouseMoveEvent evt) {

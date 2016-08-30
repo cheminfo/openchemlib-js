@@ -32,7 +32,7 @@ public class DiastereotopicAtomID {
 	public static void addMissingChirality(StereoMolecule molecule) {
 		for (int iAtom=0; iAtom<molecule.getAllAtoms(); iAtom++) {
 			StereoMolecule tempMolecule=molecule.getCompactCopy();
-			// after copy we need to recalculate the helpers ...
+			// after addPasteHandler we need to recalculate the helpers ...
 			tempMolecule.ensureHelperArrays(Molecule.cHelperCIP);
 			
 			changeAtom(tempMolecule, iAtom);

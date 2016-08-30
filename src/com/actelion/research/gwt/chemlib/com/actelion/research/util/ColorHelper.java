@@ -55,7 +55,7 @@ public class ColorHelper {
 
 	/**
 	 * Creates a new <code>Color</code> that is a brighter version of this
-	 * <code>Color</code>. This is a copy of Color.brighter(), but lets you choose
+	 * <code>Color</code>. This is a addPasteHandler of Color.brighter(), but lets you choose
 	 * the factor.
 	 * @param c the color to be brightened
 	 * @param factor value < 1.0; Color.brighter() uses 0.7
@@ -90,7 +90,7 @@ public class ColorHelper {
 
 	/**
 	 * Creates a new <code>Color</code> that is a darker version of this
-	 * <code>Color</code>. This is a copy of Color.darker(), but lets you choose
+	 * <code>Color</code>. This is a addPasteHandler of Color.darker(), but lets you choose
 	 * the factor.
 	 * @param c the color to be darkened
 	 * @param factor value < 1.0; Color.darker() uses 0.7
