@@ -1,3 +1,10 @@
+4.4.0 / 2016-09-01
+==================
+
+* fix highlighting issues
+* add SVG editor version
+* add compatibility with CouchDB views
+
 4.3.2 / 2016-08-16
 ==================
 
