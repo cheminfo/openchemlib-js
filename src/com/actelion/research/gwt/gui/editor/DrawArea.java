@@ -33,8 +33,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.AbstractDepictor;
+import com.actelion.research.chem.IDCodeParser;
+import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
-import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.gwt.gui.viewer.GraphicsContext;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
@@ -82,13 +83,56 @@ class DrawArea implements IChangeListener
         model = m;
         builder = model.getGeomFactory();
         model.addChangeListener(this);
+
         instanceCount++;
 
 
 
     }
 
-     public static native void copy(String text)
+    private void setupDropHandler() {
+        Log.console("Init d&d");
+        canvas.addDomHandler(new DragOverHandler()
+        {
+            @Override
+            public void onDragOver(DragOverEvent event)
+            {
+                canvas.addStyleName("dropping");
+            }
+        }, DragOverEvent.getType());
+
+        canvas.addDomHandler(new DragLeaveHandler()
+        {
+            @Override
+            public void onDragLeave(DragLeaveEvent event)
+            {
+                canvas.removeStyleName("dropping");
+            }
+        }, DragLeaveEvent.getType());
+
+        canvas.addDomHandler(new DropHandler()
+        {
+            @Override
+            public void onDrop(DropEvent event)
+            {
+                try {
+                    String idcode = event.getData("text");
+                    Log.console("onDrop " + idcode);
+                    StereoMolecule mol = new StereoMolecule();
+                    IDCodeParser parser = new IDCodeParser();
+                    parser.parse(mol,idcode);
+                    model.setNewMolecule();
+                    model.addMolecule(mol);
+                    event.preventDefault();
+                } catch (Exception e) {
+                    Log.console("Cannot drop molecule: " + e);
+                }
+                // Do something with dropLabel and dragging
+            }
+        }, DropEvent.getType());
+    }
+
+    public static native void copy(String text)
     /*-{
         console.log(addPasteHandler + text);
         var copyEvent = new ClipboardEvent('copy', { dataType: 'text/plain', data: 'Data to be copied' } );
@@ -98,9 +142,9 @@ class DrawArea implements IChangeListener
 
     public Element createElement(Element parent, int left, int top, int width, int height)
     {
-        String DRAWAREAID = "drawarea" + instanceCount;
+        String drawAreaID = "drawarea" + instanceCount;
         DivElement drawAreaContainer = Document.get().createDivElement();
-        drawAreaContainer.setId(DRAWAREAID);
+        drawAreaContainer.setId(drawAreaID);
         drawAreaContainer.setAttribute("style",
                 "position:absolute;" +
                         "left:" + left + "px; " +
@@ -115,8 +159,11 @@ class DrawArea implements IChangeListener
         setDrawSize(width, height);
         panel = new FocusPanel();
         panel.add(canvas);
-        container = RootPanel.get(DRAWAREAID);
+        container = RootPanel.get(drawAreaID);
         container.add(panel);
+
+        setupDropHandler();
+
         return drawAreaContainer;
     }
 

@@ -12,7 +12,6 @@ public abstract class DrawConfig
         return col;
     }
 
-
     public abstract long getHighLightColor();
     public abstract long getMapToolColor();
     public abstract long getSelectionColor();

@@ -89,7 +89,6 @@ public abstract class AtomHighlightAction extends DrawAction
             }
         }
         atom = model.getSelectedAtom();
-//        System.out.printf("Atom track %s %d %d\n",ok,currentAtom,atom);
         ok = ok | atom != -1;
         return ok;
     }
@@ -145,7 +144,6 @@ public abstract class AtomHighlightAction extends DrawAction
         if (evt.getCode().equals(factory.getDeleteKey())) {
             int theAtom = model.getSelectedAtom();
             StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
-//            System.out.println("Delete Atom " + theAtom);
             if (theAtom != -1) {
                 mol.deleteAtom(theAtom);
                 setHighlightAtom(mol, -1);
@@ -180,7 +178,6 @@ public abstract class AtomHighlightAction extends DrawAction
         if (theAtom != -1 /*&& !evt.isShiftDown()*/) {
             char c = code != null && code.length() > 0 ? code.charAt(0) : 0;
             boolean isFirst = (keyStrokeBuffer.length() == 0);
-//                System.out.printf("KeyStroke is first: %s\n", isFirst);
             if (isFirst) {
                 switch (c) {
                     case '+':
@@ -214,6 +211,7 @@ public abstract class AtomHighlightAction extends DrawAction
 
     private boolean handleCharsNonSelected(String code)
     {
+
         if ("h".equals(code)) {
             model.flip(true);
             return true;
@@ -230,6 +228,7 @@ public abstract class AtomHighlightAction extends DrawAction
         int atomicNo = Molecule.getAtomicNoFromLabel(keyStrokes);
         if (atomicNo != 0) {
             if (mol.changeAtom(highliteAtom, atomicNo, 0, -1, 0)) {
+                model.changed();
                 return;
             }
         }
@@ -263,6 +262,7 @@ public abstract class AtomHighlightAction extends DrawAction
                 mol.setAtomY(firstAtomInMol + i, sourceAVBL * fragment.getAtomY(firstAtomInFragment + i) + dy);
             }
             mol.setStereoBondsFromParity();
+            model.changed();
         }
     }
 
@@ -287,7 +287,6 @@ public abstract class AtomHighlightAction extends DrawAction
             keyStrokeBuffer.setLength(0);
             return true;
         } else if (!isFirst && evt.getCode().equals(factory.getBackSpaceKey())) {
-//            System.out.println("BackSpace!");
             keyStrokeBuffer.setLength(keyStrokeBuffer.length() - 1);
             return true;
         } else if (evt.getCode().equals(factory.getEnterKey())) {
@@ -296,7 +295,6 @@ public abstract class AtomHighlightAction extends DrawAction
             return true;
         } else if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122) || (c >= 48 && c <= 57) || (c == '-')) {
             keyStrokeBuffer.append(c);
-//            System.out.printf("KeyStroke buffer is first: %s\n", keyStrokeBuffer);
             return true;
         }
         return false;
@@ -331,7 +329,6 @@ public abstract class AtomHighlightAction extends DrawAction
                 foundAtom = atom;
             }
         }
-//        System.out.printf("Atom %d\n",foundAtom);
         return foundAtom;
     }
 

@@ -33,14 +33,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.*;
-import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.actions.Action;
 import com.actelion.research.share.gui.editor.geom.ICursor;
 import com.actelion.research.share.gui.editor.io.IKeyEvent;
 import com.actelion.research.share.gui.editor.listeners.IChangeListener;
-import com.gargoylesoftware.htmlunit.javascript.host.html.HTMLImageElement;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.*;

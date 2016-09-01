@@ -52,37 +52,13 @@ import java.awt.geom.Rectangle2D;
  */
 public abstract class GeomFactory
 {
-    static GeomFactory factory = null;
 
-    public static synchronized void registerFactory(GeomFactory f)
-    {
-        factory = f;
-    }
     private DrawConfig drawConfig;
     public GeomFactory(DrawConfig cfg)
     {
         drawConfig = cfg;
     }
 
-/*
-    public static synchronized GeomFactory getGeomFactory()
-    {
-        if (factory == null) {
-            throw new RuntimeException("No Factory regstered!");
-
-        }
-        return factory;
-    }
-*/
-
-/*
-    public final long createColor(double r, double g, double b, double alpha)
-    {
-        long col = (long)(r * 255) << 24 | (long)(g * 255) << 16 | (long)(b * 255) << 8 | (long)(alpha*255);
-        return col;
-    }
-
-*/
 
     public final IPolygon createPolygon()
     {
