@@ -1,11 +1,11 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v4.3.2
- * @date 2016-08-29T16:03:55.383Z
+ * @version v4.4.0
+ * @date 2016-09-01T11:25:09.515Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
-(function () {
+(function (root) {
     'use strict';
 
     function getExports($wnd) {
@@ -1188,12 +1188,12 @@ function $A(a){a=a||{};var b=0;a.suppressChiralText&&(b|=32);a.suppressESR&&(b|=
 function an(a){var b,c;if(a.indexOf('[')>=0){b=a.indexOf(' NOT[');c=a.indexOf(']',b);if(b>=0&&c>0){return -(c+1)}else{b=a.indexOf(' [');c=a.indexOf(']',b);if(b>=0&&c>0){return c+1}}b=a.indexOf(" 'NOT[");c=a.indexOf("]'",b);if(b>=0&&c>0){return -(c+2)}else{b=a.indexOf(" '[");c=a.indexOf("]'",b);if(b>=0&&c>0){return c+2}}aP()}return 0}
 function cf(a,b,c,d){var e,f,g;e=c==-1?$wnd.Math.abs(Bi(a.L,b)-Bi(a.L,a.t[0]))/8:$wnd.Math.abs(Bi(a.L,b)-Bi(a.L,c));d<e&&(d=e);f=c==-1?$wnd.Math.abs(Ci(a.L,b)-Ci(a.L,a.t[0]))/8:$wnd.Math.abs(Ci(a.L,b)-Ci(a.L,c));d<f&&(d=f);if(a._){g=c==-1?$wnd.Math.abs(Di(a.L,b)-Di(a.L,a.t[0]))/8:$wnd.Math.abs(Di(a.L,b)-Di(a.L,c));d<g&&(d=g)}return d}
 function Sn(a,b){var c,d,e,f,g,h,i,j;g=false;if(Xk(a.d,b)==0){for(f=1;f<fl(a.d,b);f++){for(h=0;h<f;h++){d=el(a.d,b,f);e=el(a.d,b,h);a.w[d]>a.w[e]^d>e&&(g=!g)}}}else{for(f=0;f<fl(a.d,b);f++){c=el(a.d,b,f);j=0;i=bF(dG,vX,6,3,15,1);for(h=0;h<fl(a.d,c);h++){i[j]=el(a.d,c,h);i[j]!=b&&++j}j==2&&a.w[i[0]]>a.w[i[1]]^i[0]>i[1]&&(g=!g)}}return g}
+function GA(b,c,d){var e,f,g,h,i,j,k,l;try{i=new tp;k=new um(true);if(b!=null){l=HO(b,' ');l.length>1?rm(k,i,l[0],l[1]):qm(k,i,b);f=new uf(i);j=bf(f);e=af(f,f._);rm(k,i,j,e);g=new vo(i,null);Cd(g,new yM(0,0,c,d));xd(g);return to(g)}}catch(a){a=iK(a);if(TF(a,12)){h=a;console.log('error setting idcode data '+h)}else throw jK(a)}return null}
 function Nf(a,b,c){var d,e,f,g,h,i,j,k,l;if(b==null)return;h=0;for(e=0;e<a.i.d;e++)b[e]&&++h;l=bF(dG,vX,6,h,15,1);h=0;for(d=0;d<a.i.d;d++)b[d]&&(l[h++]=d);j=false;for(g=new LS(c);g.a<g.c.a.length;){f=KS(g);if(f.length==l.length){i=false;for(k=0;k<f.length;k++){if(f[k]!==l[k]){i=true;break}}if(!i){j=true;break}}}j||(c.a[c.a.length]=l,true)}
 function sE(b,c){var d,e,f,g,h,i;if(!c){throw jK(new oO('Cannot fire null event'))}try{++b.b;h=(e=uE(b,c.Ib()),e);d=null;i=b.c?h.Xb(h.size()):h.Wb();while(b.c?i.Zb():i.Tb()){g=b.c?i.$b():i.Ub();try{c.Hb(g)}catch(a){a=iK(a);if(TF(a,14)){f=a;!d&&(d=new JT);_P(d.a,f,d)}else throw jK(a)}}if(d){throw jK(new yE(d))}}finally{--b.b;b.b==0&&vE(b)}}
 function Vh(a,b,c,d,e,f){if((c==1||c==151||c==152)&&sl(a,b)>1)return false;a.w[b]&=-2;a.t!=null&&(a.t[b]=null);a.r!=null&&(a.r[b]=null);if(c==a.A[b]&&d==a.v[b]&&e==((a.s[b]&oY)>>>28)-1&&f==(a.s[b]&48))return false;if(c==151||c==152){d=c-149;c=1}a.s[b]&=960;a.A[b]=c;a.v[b]=d;a.q[b]=0;a.w[b]=0;Lj(a,b,e);$j(a,b,f);Gj(a,a.u[b]);a.Q=0;return true}
 function FL(){var d=$wnd.onbeforeunload;var e=$wnd.onunload;$wnd.onbeforeunload=function(a){var b,c;try{b=VW(eL)()}finally{c=d&&d(a)}if(b!=null){return b}if(c!=null){return c}};$wnd.onunload=VW(function(a){try{XK&&(!YK&&(YK=new lL),undefined)}finally{e&&e(a);$wnd.onresize=null;$wnd.onscroll=null;$wnd.onbeforeunload=null;$wnd.onunload=null}})}
 function yl(a){var b,c,d,e,f,g,h,i,j;j=0;ep(a,3);for(d=0;d<a.e;d++){if(Qi(a,d)==1&&(a.C[d]&64)==0){h=true;for(g=0;g<2;g++){b=a.B[g][d];if(a.g[b]==1){h=false;break}if(a.A[b]==7&&(a.s[b]&oX)==0){c=a.B[1-g][d];for(i=0;i<a.g[c];i++){e=a.f[c][i];f=a.i[c][i];if(f!=d&&Qi(a,f)>1&&(a.s[e]&oX)==0&&Hk(a.A[e])){h=false;break}}}}h&&!Nl(a,d)&&++j}}return j}
-function GA(b,c,d){var e,f,g,h,i,j,k,l;try{i=new tp;k=new um(true);if(b!=null){l=HO(b,' ');l.length>1?rm(k,i,l[0],l[1]):qm(k,i,b);f=new uf(i);j=bf(f);e=af(f,f._);rm(k,i,j,e);g=new vo(i,null);Cd(g,new yM(0,0,c,d));xd(g);return to(g)}}catch(a){a=iK(a);if(TF(a,12)){h=a;aP();console.log('error setting idcode data '+h)}else throw jK(a)}return null}
 function Yc(a){var b,c,d,e,f,g;if(a.H.I){g=a.Q;a.nb(-7);for(b=0;b<a.H.d;b++)(zi(a.H,b)&AX)!=0&&a.ib(yh(a.L,Bi(a.H,b))-g,zh(a.L,Ci(a.H,b))-g,2*g);a.pb(2*a.Q);f=new Jd;for(e=0;e<a.H.p;e++){c=Ii(a.H,0,e);d=Ii(a.H,1,e);if((zi(a.H,c)&zi(a.H,d)&AX)!=0){f.a=yh(a.L,Bi(a.H,c));f.c=zh(a.L,Ci(a.H,c));f.b=yh(a.L,Bi(a.H,d));f.d=zh(a.L,Ci(a.H,d));a.eb(f)}}}}
 function le(a){var b,c,d,e,f,g,h,i,j,k;d=bF(dG,vX,6,16,15,1);for(b=0;b<a.L.d;b++){j=ue(a,b);for(f=0;f<j;f++){k=2*a.c[el(a.L,b,f)];c=gl(a.L,b,f);Qi(a.L,c)==2&&(Jl(a.L,c)||++k);for(h=0;h<f;h++)if(k<d[h])break;for(i=f;i>h;i--)d[i]=d[i-1];d[h]=k}Jf(a.b[b],b);Gf(a.b[b],16,a.c[b]);for(g=j;g<a.I;g++)Gf(a.b[b],17,0);for(e=0;e<j;e++)Gf(a.b[b],17,d[e])}}
 function LA(a){var e,f;IA();var b,c,d;this.a=KB(a);wB(this.a,new SA(this),(bE(),bE(),aE));_P(HA,a,this);e={attributes:true,attributeOldValue:true,attributeFilter:[R$,'data-text']};$wnd.struct$observer.observe(a,e);c=(f=a.parentNode,(!f||f.nodeType!=1)&&(f=null),f);if(c){bL(new UA(this,c));d=(c.offsetWidth||0)|0;b=(c.offsetHeight||0)|0;KA(this,d,b)}}
@@ -1403,7 +1403,7 @@ _.Tb=function lR(){return this.a.Tb()};_.Ub=function mR(){var a;a=this.a.Ub();re
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '4.3.2';
+        toReturn.version = '4.4.0';
 
         return toReturn;
     }
@@ -1418,9 +1418,13 @@ _.Tb=function lR(){return this.a.Tb()};_.Ub=function mR(){var a;a=this.a.Ub();re
         isBrowser = true;
         globalEnv = self;
         document = {};
-    } else { // Node.js
+    } else if (typeof global !== 'undefined') { // Node.js
         isBrowser = false;
         globalEnv = global;
+        document = {};
+    } else { // Other environment (example: CouchDB)
+        isBrowser = false;
+        globalEnv = root;
         document = {};
     }
 
@@ -1429,21 +1433,30 @@ _.Tb=function lR(){return this.a.Tb()};_.Ub=function mR(){var a;a=this.a.Ub();re
         fakeWindow = globalEnv;
     } else {
         fakeWindow = {};
-        fakeWindow.setTimeout = globalEnv.setTimeout.bind(globalEnv);
-        fakeWindow.clearTimeout = globalEnv.clearTimeout.bind(globalEnv);
-        fakeWindow.setInterval = globalEnv.setInterval.bind(globalEnv);
-        fakeWindow.clearInterval = globalEnv.clearInterval.bind(globalEnv);
+        fakeWindow.setTimeout = globalEnv.setTimeout ? globalEnv.setTimeout.bind(globalEnv) : noop;
+        fakeWindow.clearTimeout = globalEnv.clearTimeout ? globalEnv.clearTimeout.bind(globalEnv) : noop;
+        fakeWindow.setInterval = globalEnv.setInterval ? globalEnv.setInterval.bind(globalEnv) : noop;
+        fakeWindow.clearInterval = globalEnv.clearInterval ? globalEnv.clearInterval.bind(globalEnv) : noop;
+        // required since GWT 2.8.0
+        fakeWindow.Error = globalEnv.Error;
+        fakeWindow.Math = globalEnv.Math;
+        fakeWindow.RegExp = globalEnv.RegExp;
+        fakeWindow.TypeError = globalEnv.TypeError;
     }
 
     if (!fakeWindow.document) {
         fakeWindow.document = document;
     }
 
-    if (typeof module !== 'undefined' && module.exports) { // NodeJS
-        module.exports = getExports(fakeWindow);
+    var exportedApi = getExports(fakeWindow);
+
+    if (typeof exports !== 'undefined') { // NodeJS
+        fillExports(exportedApi, exports);
     } else if (typeof define === 'function' && define.amd) { // AMD
         define(function () {
-            return getExports(fakeWindow);
+            var exportsObj = {};
+            fillExports(exportedApi, exportsObj);
+            return exportsObj;
         });
     } else { // Global
         var path = ["OCL"];
@@ -1452,7 +1465,17 @@ _.Tb=function lR(){return this.a.Tb()};_.Ub=function mR(){var a;a=this.a.Ub();re
         for (var i = 0; i < l; i++) {
             obj = obj[path[i]] || (obj[path[i]] = {});
         }
-        obj[path[l]] = getExports(fakeWindow);
+        obj[path[l]] = {};
+        fillExports(exportedApi, obj[path[l]]);
     }
 
-})();
+    function fillExports(obj, exports) {
+        var keys = Object.keys(obj);
+        for (var i = 0; i < keys.length; i++) {
+            exports[keys[i]] = obj[keys[i]];
+        }
+    }
+
+    function noop() {}
+
+})(this);
