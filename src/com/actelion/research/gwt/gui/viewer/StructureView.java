@@ -173,7 +173,6 @@ class StructureElement
             @Override
             public void onDragStart(DragStartEvent event)
             {
-                Log.console("OnDragStart");
                 Element el = canvas.getCanvasElement();
                 String idcode = el.getAttribute("data-idcode");
                 event.getDataTransfer().setData("text",idcode);

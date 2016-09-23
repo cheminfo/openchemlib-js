@@ -92,7 +92,6 @@ class DrawArea implements IChangeListener
     }
 
     private void setupDropHandler() {
-        Log.console("Init d&d");
         canvas.addDomHandler(new DragOverHandler()
         {
             @Override
@@ -118,7 +117,6 @@ class DrawArea implements IChangeListener
             {
                 try {
                     String idcode = event.getData("text");
-                    Log.console("onDrop " + idcode);
                     StereoMolecule mol = new StereoMolecule();
                     IDCodeParser parser = new IDCodeParser();
                     parser.parse(mol,idcode);

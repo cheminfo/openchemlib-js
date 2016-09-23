@@ -221,7 +221,6 @@ public class StructureEditor implements IChangeListener//,Exportable
 
     public static void notify(Object o)
     {
-        Log.console("Notify from mutation");
         for (StructureEditor e : map) {
             e.drawPane.draw();
             int w = e.container.getClientWidth();
@@ -545,12 +544,10 @@ public class StructureEditor implements IChangeListener//,Exportable
 
     public boolean onPasteString(String s)
     {
-        Log.console("Pasted String: " + s);
         IDCodeParser p  = new IDCodeParser(true);
         try {
             StereoMolecule mol = new StereoMolecule();
             p.parse(mol,s);
-            Log.console("Molecule has " + mol.getAllAtoms() + " atoms");
             model.addMolecule(mol);
             return true;
         } catch (Exception e) {
@@ -561,15 +558,15 @@ public class StructureEditor implements IChangeListener//,Exportable
 
     public boolean onPasteImage(Object s)
     {
-        Log.console("Pasted Image: " + s);
+        //Log.console("Pasted Image: " + s);
         return false;
     }
 
     public void onPaste(DataTransfer s)
     {
-        Log.console("Pasted Data: " + s);
-        Log.console("Image: " + s.getData("image/png"));
-        Log.console("Text: " + s.getData("text/plain"));
+        //Log.console("Pasted Data: " + s);
+        //Log.console("Image: " + s.getData("image/png"));
+        //Log.console("Text: " + s.getData("text/plain"));
     }
 
     public boolean hasFocus()
