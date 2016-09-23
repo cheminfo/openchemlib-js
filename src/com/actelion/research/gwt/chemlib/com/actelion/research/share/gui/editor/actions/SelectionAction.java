@@ -59,14 +59,12 @@ import java.util.List;
  */
 public class SelectionAction extends BondHighlightAction//DrawAction
 {
-//    private volatile IPolygon polygon = builder.createPolygon();
 
     private volatile IPolygon polygon ;
     private GeomFactory factory ;
     int atom = -1;
     int bond = -1;
-    boolean shift = false, duplicate = false,/* layout = false,*/
-            rectangular = false;
+    boolean shift = false, duplicate = false,rectangular = false;
 
     public SelectionAction(Model model) {
         super(model);
@@ -129,15 +127,11 @@ public class SelectionAction extends BondHighlightAction//DrawAction
         atom = bond = -1;
         origin = last = null;
         duplicate = false;
-//        if (layout)
-//            model.needsLayout(true);
-//        layout = false;
         return true;
     }
 
     @Override
     public boolean onMouseMove(IMouseEvent evt, boolean drag) {
-//        System.out.println("Atoms and Bonds moving " + atom + " " + bond);
         boolean ok = false;
         java.awt.geom.Point2D pt = new Point2D.Double(evt.getX(), evt.getY());
         if (drag) {
@@ -158,7 +152,6 @@ public class SelectionAction extends BondHighlightAction//DrawAction
                 duplicate = true;
                 duplicateSelected();
             }
-////            layout = true;
         } else {
             ok = trackHighLight(pt);
         }
@@ -182,7 +175,6 @@ public class SelectionAction extends BondHighlightAction//DrawAction
             }
         }
         boolean ok = selected || lastSelected != null || super.trackHighLight(pt);
-//        System.out.printf("Tracking highlight selection %s\n",ok);
         return ok;
 
     }
@@ -380,7 +372,7 @@ public class SelectionAction extends BondHighlightAction//DrawAction
     }
 
     private void duplicateSelected() {
-        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();
 
         int originalAtoms = mol.getAllAtoms();
         int originalBonds = mol.getAllBonds();
@@ -535,7 +527,7 @@ public class SelectionAction extends BondHighlightAction//DrawAction
 
 
     private boolean showAtomQFDialog(int atom) {
-        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();
         if (mol != null) {
             IAtomQueryFeaturesDialog dlg = factory.createAtomQueryFeatureDialog(/* new AtomQueryFeaturesDialog*/mol, atom);
             return dlg.doModalAt(lastHightlightPoint.getX(), lastHightlightPoint.getY()) == DialogResult.IDOK;
@@ -544,7 +536,7 @@ public class SelectionAction extends BondHighlightAction//DrawAction
     }
 
     private boolean showBondQFDialog(int bond) {
-        StereoMolecule mol = model.getMolecule();//.getSelectedMolecule();
+        StereoMolecule mol = model.getMolecule();
         if (mol != null) {
             IBondQueryFeaturesDialog dlg = factory.createBondFeaturesDialog( /*new BondQueryFeaturesDialog(*/mol, bond);
             return dlg.doModalAt(lastHightlightPoint.getX(), lastHightlightPoint.getY()) == DialogResult.IDOK;
