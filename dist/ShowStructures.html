@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head><title>Static Structure Rendering</title>
+    <script src="openchemlib-full.js"></script>
+
+</head>
+<body>
+<h1 style="text-align:center;color:darkblue">
+    Display of Static Structures
+</h1>
+
+<h2 style="text-align:center;">
+    Structure Rendering Example
+</h2>
+
+<div class="input-group" style="position: relative;">
+    <table border="1" width="100%">
+        <tbody>
+        <tr>
+            <th>ID</th>
+            <th>Formula</th>
+            <th>MW</th>
+            <th>Structure</th>
+        </tr>
+
+        <tr>
+            <td>42</td>
+            <td>C6H7N</td>
+            <td>93.1286</td>
+            <td style="text-align:center;">
+                <div style="width:100px;margin:auto">
+                    <canvas id="idcode42" class="actstruct foo"
+                            draggable="true"
+                            data-idcode="gOx@@drm\@@@@"
+                            ondblclick="onCanvasClick(this);">
+                    </canvas>
+                </div>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>43</td>
+            <td>C8H9NO</td>
+            <td>135.1655</td>
+            <td style="text-align:center;">
+                <div style="width:100px;margin:auto">
+                    <canvas id="idcode43" height="200" width="200" class="actstruct"
+                            draggable="true"
+                            data-idcode="deVH@AAIfuneh@`@@"
+                            ondblclick="onCanvasClick(this);">
+                    </canvas>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>43</td>
+            <td>C8H9NO</td>
+            <td>135.1655</td>
+            <td style="text-align:center;">
+                <div style="width:100px;margin:auto">
+                    <canvas id="idcode43" height="200" width="200" class="actstruct"
+                            draggable="true"
+                            data-idcode="go]^@`@@@`A@drrkMjnkJjmkJl{Njjjzjjjj{zjitjjjjjjjjrCGaIl~DaTjuf{GoqGbuA@AAQTEAPTAPEPUATEAPTEEUUUUUUUUUUUU@@@@@@ !BhmcEQpUhl\ZozKXqT\EQpUhmcZozKGFicEVLUGAT\EVMjhl\ZfLUGAUcEQpUXvk~bzKGFicEQpUXqT\EVMjhl\ZozKGFicEQpUXqT\EQpUXqUcZaqjGFh\ZozKXqT\EQpUGAVKEVMjGFh\ZozKXqT\EQpUbqUcZaqjGFk~bvLUGAT\EXlUXvh\ZozKXqVKE_zKbqW~bxlUhnKE_zKmWlE^Mj{Fk~R~LU{ATtE^Mj{Fk~R~LU{ATtE^Mj{Fk~R~LU{ATtE^Mj{Fk~R~LU{ATtE^Mj{Fk~Rp"
+                            ondblclick="onCanvasClick(this);">
+                    </canvas>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div id="editor"
+         style="visibility:hidden;width:500px;height:400px;border:solid;border-width:2;float:right;position: absolute;top: 100%;"
+         data-idcode="dknD@MADfVU}eVhHB`@` !BjDJhO_z`jDJWPjaBjCw~hOz`jDIGE^}">
+    </div>
+
+    <button id="ok">Click</button>
+    <button id="cancel">Cancel</button>
+
+    <script>
+        var init = false;
+        var el = document.getElementById("idcode42");
+        var btn = document.getElementById("ok");
+        var c = document.getElementById("cancel");
+        btn.onclick = function () {
+            console.log("Changing attributes");
+            el.setAttribute("data-idcode", "deVH@AAIfuneh@`@@");
+            console.log("Click");
+        }
+
+
+        /* This is called by onLoad method of StructureViewer Module*/
+        function structureViewLoaded() {
+            console.log("init structureview");
+            window.OCL.StructureView.showStructures("actstruct");
+        }
+
+        var theEditor = null;
+
+        /* This is called by the onModuleLoad of GWT */
+        function editorLoaded() {
+//            log.log("JS: editorLoaded()");
+        }
+
+        function onCanvasClick(el) {
+            var editor = document.getElementById("editor");
+            if (editor.style.visibility != "visible") {
+                editor.style.visibility = "visible";
+                editor.style.float = "right";
+                editor.style.position = "absolute";
+                editor.style.to = "100%";
+                /* Find the DIV element by name and place the editor into it */
+                theEditor = window.OCL.StructureEditor.createEditor("editor");
+            }
+            var idc = window.OCL.StructureView.getIDCode(el.id);
+            console.log("IDCOde is " + idc);
+            theEditor.setIDCode(idc);
+
+        }
+
+        structureViewLoaded();
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+/*
+* Copyright (c) 1997 - 2015
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*/
+-->
+
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <script src="openchemlib-full.js"></script>
+</head>
+
+<!--                                           -->
+<!-- The body can have arbitrary html, or      -->
+<!-- you can leave the body empty if you want  -->
+<!-- to create a completely dynamic ui         -->
+<!--                                           -->
+<body>
+<div id="editor"
+     style="width:500px;height:400px;border:solid;border-width:2px;"
+     view-only="false"
+     show-idcode="false"
+     is-fragment="true"
+        >
+</div>
+<div id="editor2"
+     style="width:500px;height:400px;border:solid;border-width:2px;"
+     view-only="false"
+     show-idcode="false"
+     is-fragment="true"
+>
+</div>
+
+<button id="b" onclick="clicked()">Click Me...</button>
+
+<button onclick="onClick();">Show SVG</button>
+<div id="svg">
+
+</div>
+<script>
+    var idcode = "" ;
+    function onClick()
+    {
+        console.log("Show SVG");
+        var code = editorCtrl.getIDCode();
+        console.log("Show SVG " + code);
+        changeMolecule(code);
+        editorCtrl.setIDCode(code);
+    }
+
+    function changeMolecule(idc)
+    {
+        if(idc != idcode) {
+            var svg = window.OCL.SVGRenderer.renderMolecule(idc,400,400);
+            var div = document.getElementById("svg");
+            div.innerHTML = svg;
+            idcode = idc;
+        }
+    }
+
+
+    var editorCtrl = null;
+    function onAtomHighlight(atom, sel)
+    {
+        console.log("Atom selected " + atom  + " " + sel);
+    }
+
+    function onBondHighlight(bond, sel)
+    {
+        console.log("Bond selected " + bond  + " " + sel);
+    }
+    /* This is called by the onModuleLoad of GWT */
+    //function editorLoaded()
+    {
+        /* Find the DIV element by name and place the editor into it */
+        editorCtrl = window.OCL.StructureEditor.createEditor("editor");
+        editorCtrl.setAtomHightlightCallback(onAtomHighlight);
+        editorCtrl.setBondHightlightCallback(onBondHighlight);
+        editorCtrl.setChangeListenerCallback(changeMolecule);
+
+
+        window.OCL.StructureEditor.createEditor("editor2");
+
+    }
+    function clicked()
+    {
+        console.log("Molecule is fragment: " + editorCtrl.isFragment())
+        editorCtrl.setFragment(!editorCtrl.isFragment());
+        console.log("IDCODE is " + editorCtrl.getIDCode());
+        console.log("MOLFILE is");
+        console.log(editorCtrl.getMolFile());
+        console.log("MOLFILE v3 is");
+        console.log(editorCtrl.getMolFileV3());
+        console.log("SMILES is " + editorCtrl.getSmiles());
+    }
+</script>
+</body>
+</html>
