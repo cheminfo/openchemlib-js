@@ -106,12 +106,13 @@ public abstract class TDialog extends DialogBox
 
 
     public native Element getElementFromPoint(int x, int y) /*-{
-        var theTarget = $doc.elementFromPoint(x, y);
-        return theTarget
+        var curElement = $doc.activeElement;
+        return curElement
     }-*/;
 
     public DialogResult doModalAt(final double x, final double y)
     {
+        Log.console("DoModal at " + x + " " + y);
         final Element element = getElementFromPoint((int)x,(int)y);
         if(element != null) {
             final int left = element.getAbsoluteLeft();
