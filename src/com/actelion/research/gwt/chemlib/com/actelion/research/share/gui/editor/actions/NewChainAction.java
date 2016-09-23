@@ -117,7 +117,8 @@ public class NewChainAction extends BondHighlightAction {
             if (mChainAtom[0] != -1) {
                 mol.addBond(sourceAtom, mChainAtom[0]);
             }
-            model.needsLayout(true);
+            if(model.isReaction())
+                model.needsLayout(true);
         }
 
         if (numChainAtoms > 1) {
@@ -129,7 +130,8 @@ public class NewChainAction extends BondHighlightAction {
                     mol.addBond(mChainAtom[i - 1], mChainAtom[i]);
                 }
             }
-            model.needsLayout(true);
+            if(model.isReaction())
+                model.needsLayout(true);
         }
         highlightAtom(mol, -1);
         ok = true;
