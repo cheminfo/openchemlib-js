@@ -74,6 +74,7 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener
     private boolean loaded = false;
 
     private int scale = 1;
+    private boolean focus;
 
     SVGToolBarImpl(Model model,int scale)
     {
@@ -114,7 +115,19 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener
         canvas.setCoordinateSpaceHeight(height*scale);
         canvas.setWidth(width*scale + "px");
         canvas.setHeight(height*scale + "px");
+        canvas.addFocusHandler(new FocusHandler() {
+            @Override
+            public void onFocus(FocusEvent event) {
+                focus = true;
+            }
+        });
 
+        canvas.addBlurHandler(new BlurHandler() {
+            @Override
+            public void onBlur(BlurEvent event) {
+                focus = false;
+            }
+        });
         // Add the canvas to the toolbar container
         RootPanel.get(toolBarId).add(canvas);
 
@@ -487,6 +500,11 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener
     public Action getCurrentAction()
     {
         return currentAction;
+    }
+
+    @Override
+    public boolean hasFocus() {
+        return focus;
     }
 
     @Override

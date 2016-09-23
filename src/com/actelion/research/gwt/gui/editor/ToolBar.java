@@ -55,4 +55,5 @@ public interface ToolBar<T>
     public T createElement(T parent, int width, int height);
     public void doAction(Action a);
     public Action getCurrentAction();
+    public boolean hasFocus();
 }

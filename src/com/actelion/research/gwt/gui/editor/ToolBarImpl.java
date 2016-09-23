@@ -91,7 +91,7 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
     private Action currentAction = null;
     private Action lastAction = null;
     private boolean loaded = false;
-
+    private boolean focus;
 
 
     ToolBarImpl(Model model)
@@ -137,6 +137,19 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         canvas.setWidth(width + "px");
         canvas.setHeight(height + "px");
 
+        canvas.addFocusHandler(new FocusHandler() {
+            @Override
+            public void onFocus(FocusEvent event) {
+                focus = true;
+            }
+        });
+
+        canvas.addBlurHandler(new BlurHandler() {
+            @Override
+            public void onBlur(BlurEvent event) {
+                focus = false;
+            }
+        });
         RootPanel.get(toolBarId).add(canvas);
 
         //  This is to force addLoadHandler
@@ -408,6 +421,11 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
     public Action getCurrentAction()
     {
         return currentAction;
+    }
+
+    @Override
+    public boolean hasFocus() {
+        return focus;
     }
 
     @Override
