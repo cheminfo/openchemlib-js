@@ -1,3 +1,10 @@
+4.4.1 / 2016-09-23
+==================
+
+* editor: fix structure change notification with keyboard
+* editor: add drag and drop support
+* editor: fix invasive paste issue
+
 4.4.0 / 2016-09-01
 ==================
 
