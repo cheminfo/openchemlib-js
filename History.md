@@ -1,4 +1,5 @@
 4.4.2 / 2016-09-23
+==================
 
 * editor: fix initial placement of new bond/chain/ring
 * editor: fix dialog positions
