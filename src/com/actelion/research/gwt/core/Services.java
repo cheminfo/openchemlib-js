@@ -1,11 +1,11 @@
 package com.actelion.research.gwt.core;
 
-import com.actelion.research.chem.CoordinateInventor;
 import com.actelion.research.chem.IDCodeParser;
 import com.actelion.research.chem.MolfileParser;
 import com.actelion.research.chem.SSSearcherWithIndex;
 import com.actelion.research.chem.SmilesCreator;
 import com.actelion.research.chem.SmilesParser;
+import com.actelion.research.chem.coords.CoordinateInventor;
 import com.actelion.research.chem.prediction.ToxicityPredictor;
 import com.actelion.research.chem.prediction.DruglikenessPredictor;
 import com.actelion.research.calc.ThreadMaster;

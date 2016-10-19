@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var path = require('path');
 var fs = require('fs-extra');
 var exporter = require('gwt-api-exporter');
+var rimraf = require('rimraf');
 var pack = require('./package.json');
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -128,6 +129,8 @@ function copyOpenchemlib() {
     var modifiedDir = './openchemlib/modified/';
 
     var chemlibClasses = require('./openchemlib/classes');
+
+    rimraf.sync(outDir + 'com/');
 
     var toCopy = chemlibClasses.copy;
     log('Copying ' + toCopy.length + ' classes from openchemlib');

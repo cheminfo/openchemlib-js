@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
@@ -154,7 +155,7 @@ public class RingCollection {
 		// which is not a member of a small ring
 		if ((mode & MODE_LARGE_RINGS) != 0) {
 			for (int bond=0; bond<mMol.getBonds(); bond++) {
-				if (!isConfirmedChainBond[bond]) {
+				if (!isConfirmedChainBond[bond] && mMol.getBondOrder(bond) != 0) {
 					int ringAtom[] = findSmallestRing(bond, isConfirmedChainAtom);
 					if (ringAtom != null)
 						updateRingSizes(ringAtom, getRingBonds(ringAtom));
@@ -433,6 +434,19 @@ public class RingCollection {
 		}
 
 
+	/**
+	 * brute force method to check, whether and which ring is shared by two bonds
+	 * @param bond1
+	 * @param bond2
+	 * @return -1 if bond1 and bond2 don't share a common ring
+	 */
+	public int getSharedRing(int bond1, int bond2) {
+		for (int i=0; i<mRingBondSet.size(); i++)
+			if (isBondMember(i, bond1) && isBondMember(i, bond2))
+				return i;
+		return -1;
+		}
+
 	private void updateRingSizes(int[] ringAtom, int[] ringBond) {
 		int ringSize = ringAtom.length;
 		for (int i=0; i<ringSize; i++)
@@ -482,7 +496,7 @@ public class RingCollection {
 		int[] ringMembership = new int[mMol.getBonds()];
 		for (int ring=0; ring<mRingBondSet.size(); ring++) {
 			int[] ringBond = mRingBondSet.get(ring);
-			if (ringBond.length >= 5 && ringBond.length <= 7) {
+			if (ringBond.length == 3 || (ringBond.length >= 5 && ringBond.length <= 7)) {
 				for (int i=0; i<ringBond.length; i++) {
 					int bond = ringBond[i];
 					if (mMol.getConnAtoms(mMol.getBondAtom(0, bond)) == 3
@@ -556,13 +570,33 @@ public class RingCollection {
 
 		boolean hasDelocalizationLeak = false;
 		switch (ringBonds) {
+		case 3:
+			final int[] cSequence3Ring = {
+				2,	 // 010
+				1,	 // 001
+				4 }; // 100
+			hasDelocalizationLeak = true;
+			for (int carbeniumPosition=0; carbeniumPosition<3; carbeniumPosition++) {
+				if ((bondSequence & cSequence3Ring[carbeniumPosition]) == cSequence3Ring[carbeniumPosition]) {
+					if ((mMol.getAtomicNo(ringAtom[carbeniumPosition]) == 6
+							&& mMol.getAtomCharge(ringAtom[carbeniumPosition]) == 1)
+							|| (mMol.getAtomicNo(ringAtom[carbeniumPosition]) == 5
+							&& mMol.getAtomCharge(ringAtom[carbeniumPosition]) == 0)) {
+						isAromatic[ringNo] = true;
+						heteroPosition[ringNo] = carbeniumPosition;
+						if ((aromaticButNotDelocalizedSequence & cSequence3Ring[carbeniumPosition]) == 0)
+							hasDelocalizationLeak = false;
+						}
+					}
+				}
+			break;
 		case 5:
 			final int[] cSequence5Ring = {
 			   10,	// 01010
 				5,	// 00101
 			   18,	// 10010
 				9,	// 01001
-			   20 };  // 01010
+			   20 };// 01010
 			hasDelocalizationLeak = true;
 			for (int position=0; position<5; position++) {
 				if ((bondSequence & cSequence5Ring[position]) == cSequence5Ring[position]) {

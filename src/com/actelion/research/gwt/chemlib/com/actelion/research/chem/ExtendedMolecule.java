@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
@@ -70,8 +71,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	transient private RingCollection mRingSet;
 
 	transient private int mPi[];
-	transient private int mConnAtoms[];
-	transient private int mAllConnAtoms[];
+	transient private int mConnAtoms[];	// non-H neighbour counts
+	transient private int mAllConnAtoms[];	// neighbour counts including explicit hydrogen
 	transient private int mConnAtom[][];
 	transient private int mConnBond[][];
 	transient private int mConnBondOrder[][];
@@ -147,7 +148,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			destMol.setFragment(true);
 
 		if (recognizeDelocalizedBonds)
-			new AromaticityResolver(destMol).locateDelocalizedDoubleBonds();
+			new AromaticityResolver(destMol).locateDelocalizedDoubleBonds(null);
 		}
 
 
@@ -176,7 +177,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		destMol.mAllAtoms = 0;
 		for (int atom=0; atom<mAllAtoms;atom++) {
 			atomMap[atom] = -1;
-			for (int i=0; i<mConnAtoms[atom]; i++) {
+			for (int i = 0; i< mConnAtoms[atom]; i++) {
 				if (includeBond[mConnBond[atom][i]]) {
 					atomMap[atom] = copyAtom(destMol, atom, 0, 0);
 					break;
@@ -217,15 +218,20 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			destMol.setFragment(true);
 
 		if (recognizeDelocalizedBonds)
-			new AromaticityResolver(destMol).locateDelocalizedDoubleBonds();
+			new AromaticityResolver(destMol).locateDelocalizedDoubleBonds(null);
  
 		return atomMap;
 		}
 
 
 	/**
+	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+	 * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+	 * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
 	 * @param atom
-	 * @return the number of direct neighbor atoms including explicit hydrogen atoms
+	 * @return count of category 1 & 2 neighbour atoms (excludes neighbours connected with zero bond order)
 	 */
 	public int getAllConnAtoms(int atom) {
 		return mAllConnAtoms[atom];
@@ -234,18 +240,30 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * @param atom
-	 * @return the number of connected explicit and implicit hydrogen atoms
+	 * @return the number of connected plain explicit and implicit hydrogen atoms
 	 */
 	public int getAllHydrogens(int atom) {
-		return mAllConnAtoms[atom] - mConnAtoms[atom] + getImplicitHydrogens(atom);
+		return getExplicitHydrogens(atom) + getImplicitHydrogens(atom);
 		}
 
 
 	/**
-	 * @return the number of non-hydrogen atoms in the molecule
+	 * The atom list is preprocessed such that all plain hydrogen atoms
+	 * (natural abundance, no custom labels) are at the end of the list.
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+	 * @return count of atoms not including plain-H atoms
 	 */
 	public int getAtoms() {
 		return mAtoms;
+		}
+
+
+	/**
+	 * @param atom
+	 * @return count of neighbour atoms connected by a 0-order metal ligand bond
+	 */
+	public int getMetalBondedConnAtoms(int atom) {
+		return mConnAtom[atom].length - mAllConnAtoms[atom];
 		}
 
 
@@ -256,7 +274,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 */
 	public int getAtomPi(int atom) {
 		return mPi[atom];
-		}
+	}
 
 
 	/**
@@ -306,7 +324,10 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * @return the number of bonds in the molecule not counting those that connect natural-abundance hydrogen atoms
+	 * The bond list is preprocessed such that all bonds leading to a plain hydrogen atom
+	 * (natural abundance, no custom labels) are at the end of the list.
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+	 * @return count of bonds not including those connecting plain-H atoms
 	 */
 	public int getBonds() {
 		return mBonds;
@@ -317,7 +338,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return -1 or the bond that connects atom1 with atom2
 	 */
 	public int getBond(int atom1, int atom2) {
-		for (int i=0; i<mAllConnAtoms[atom1]; i++)
+		for (int i=0; i<getAllConnAtomsPlusMetalBonds(atom1); i++)
 			if (mConnAtom[atom1][i] == atom2)
 				return mConnBond[atom1][i];
 		return -1;
@@ -325,7 +346,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * @return a addPasteHandler of this with all arrays sized to just cover all existing atoms and bonds
+	 * @return a copy of this with all arrays sized to just cover all existing atoms and bonds
 	 */
 	public ExtendedMolecule getCompactCopy() {
 		ExtendedMolecule theCopy = new ExtendedMolecule(mAllAtoms, mAllBonds);
@@ -335,8 +356,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
+	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+	 * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+	 * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
 	 * @param atom
-	 * @param i
+	 * @param i index into sorted neighbour list
 	 * @return the i-th neighbor atom of atom
 	 */
 	public int getConnAtom(int atom, int i) {
@@ -345,8 +371,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
+	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+	 * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+	 * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
 	 * @param atom
-	 * @return the number of direct neighbor atoms excluding plain hydrogen atoms and 0-order bonded metals
+	 * @return count of category 1 neighbour atoms (excludes plain H and bond zero orders)
 	 */
 	public int getConnAtoms(int atom) {
 		return mConnAtoms[atom];
@@ -354,9 +385,28 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
+	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+	 * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+	 * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
 	 * @param atom
-	 * @param i
-	 * @return the bond connecting atom and its i-th neighbor atom
+	 * @return count of category 1 & 2 & 3 neighbour atoms (excludes neighbours connected with zero bond order)
+	 */
+	public int getAllConnAtomsPlusMetalBonds(int atom) {
+		return mConnAtom[atom].length;
+		}
+
+
+	/**
+	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+	 * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+	 * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+	 * @param atom
+	 * @param i index into sorted neighbour list
+	 * @return index of bond connecting atom with its i-th neighbor
 	 */
 	public int getConnBond(int atom, int i) {
 		return mConnBond[atom][i];
@@ -364,9 +414,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
+	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+	 * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+	 * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
 	 * @param atom
-	 * @param i
-	 * @return the order of the bond connecting atom and its i-th neighbor atom
+	 * @param i index into sorted neighbour list
+	 * @return order of bond connecting atom with its i-th neighbor
 	 */
 	public int getConnBondOrder(int atom, int i) {
 		return mConnBondOrder[atom][i];
@@ -384,7 +439,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 */
 	public int getNonHydrogenNeighbourCount(int atom) {
 		int count = mConnAtoms[atom];
-		for (int i=0; i<mConnAtoms[atom]; i++)
+		for (int i = 0; i< mConnAtoms[atom]; i++)
 			if (mAtomicNo[mConnAtom[atom][i]] == 1)
 				count--;
 		return count;
@@ -416,12 +471,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * of atom with the lowest atom index, i.e. that is the first in the atom table.
 	 * @return neighbour index map
 	 */
-	public int[] getSortedConnMap(int atom) {
-		int[] indexMap = new int[mAllConnAtoms[atom]];
-		for (int i=0; i<mAllConnAtoms[atom]; i++)
+	private int[] getSortedConnMap(int atom) {
+		int connAtoms = mAllConnAtoms[atom];
+		int[] indexMap = new int[connAtoms];
+		for (int i=0; i<connAtoms; i++)
 			indexMap[i] = (mConnAtom[atom][i] << 16) + i;
 		java.util.Arrays.sort(indexMap);
-		for (int i=0; i<mAllConnAtoms[atom]; i++)
+		for (int i=0; i<connAtoms; i++)
 			indexMap[i] &= 0x0000FFFF;
 		return indexMap;
 		}
@@ -463,15 +519,51 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The free valence is the number of potential additional single bonded
-	 * neighbours to reach the atom's maximum valence. Atom charges are considered.
-	 * Implicit hydrogens are not considered.
+	 * neighbours to reach the atom's maximum valence. Atomic numbers that have
+	 * multiple possible valences, the highest value is taken.
+	 * Atom charges are considered. Implicit hydrogens are not considered.
 	 * Thus, the oxygen in a R-O(-) has a free valence of 0, the nitrogen in R3N(+)
-	 * has a free valence of 1.
+	 * has a free valence of 1. Chlorine in Cl(-) has a free valence of 6. If you need
+	 * the free valence taking the lowest possible valence into account, use
+	 * getLowestFreeValence(), which would return 0 for Cl(-).
 	 * @param atom
 	 * @return
 	 */
 	public int getFreeValence(int atom) {
 		return getMaxValence(atom) - getOccupiedValence(atom);
+		}
+
+
+	/**
+	 * The free valence is the number of potential additional single bonded
+	 * neighbours to reach the atom's lowest valence above or equal its current
+	 * occupied valence. Atom charges are considered. Implicit hydrogens are not considered.
+	 * Thus, the phosphor atoms in PF2 and PF4 both have a lowest free valence of 1.
+	 * The oxygen in R-O(-) has a lowest free valence of 0, the nitrogen in R3N(+)
+	 * has a free valence of 1. If you need the maximum possible free valence,
+	 * use getFreeValence(), which would give 6 for Cl(-) and HCl.
+	 * @param atom
+	 * @return
+	 */
+	public int getLowestFreeValence(int atom) {
+		int occupiedValence = getOccupiedValence(atom);
+		occupiedValence += getElectronValenceCorrection(atom, occupiedValence);
+
+		int valence = getAtomAbnormalValence(atom);
+		if (valence == -1) {
+			byte[] valenceList = (mAtomicNo[atom] < cAtomValence.length) ? cAtomValence[mAtomicNo[atom]] : null;
+			if (valenceList == null) {
+				valence = cDefaultAtomValence;
+			}
+			else {
+				int i= 0;
+				while (occupiedValence > valenceList[i] && i<valenceList.length-1)
+					i++;
+				valence = valenceList[i];
+				}
+			}
+
+		return valence - occupiedValence;
 		}
 
 
@@ -486,7 +578,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return abnormal valence or -1 if valence doesn't exceed standard valence
 	 */
 	public int getImplicitHigherValence(int atom, boolean neglectExplicitHydrogen) {
-		int occupiedValence = getOccupiedValence(atom) - getElectronValenceCorrection(atom);
+		int occupiedValence = getOccupiedValence(atom);
+		occupiedValence -= getElectronValenceCorrection(atom, occupiedValence);
 		if (neglectExplicitHydrogen)
 			occupiedValence -= mAllConnAtoms[atom] - mConnAtoms[atom];
 
@@ -536,7 +629,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * Calculates for every atom the mean value of all shortest routes (bonds in between)
+	 * Calculates for every non-H atom the mean value of all shortest routes (bonds in between)
 	 * to any other atom of the same fragment.
 	 * @return 
 	 */
@@ -553,7 +646,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			int current = 0;
 			int highest = 0;
 			while (current <= highest) {
-				for (int i=0; i<mConnAtoms[graphAtom[current]]; i++) {
+				for (int i = 0; i< mConnAtoms[graphAtom[current]]; i++) {
 					int candidate = mConnAtom[graphAtom[current]][i];
 					if (graphLevel[candidate] == 0) {
 						graphLevel[candidate] = graphLevel[graphAtom[current]] + 1;
@@ -581,15 +674,15 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		ensureHelperArrays(cHelperNeighbours);
 
-		int[] graphLevel = new int[mAtoms];
-		int graphAtom[] = new int[mAtoms];
+		int[] graphLevel = new int[mAllAtoms];
+		int graphAtom[] = new int[mAllAtoms];
 
 		graphAtom[0] = atom1;
 		graphLevel[atom1] = 1;
 		int current = 0;
 		int highest = 0;
 		while (current <= highest) {
-			for (int i=0; i<mConnAtoms[graphAtom[current]]; i++) {
+			for (int i=0; i<mAllConnAtoms[graphAtom[current]]; i++) {
 				int candidate = mConnAtom[graphAtom[current]][i];
 				if (candidate == atom2)
 					return graphLevel[graphAtom[current]];
@@ -619,20 +712,21 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		ensureHelperArrays(cHelperNeighbours);
 
-		int[] graphLevel = new int[mAtoms];
-		int graphAtom[] = new int[mAtoms];
+		int[] graphLevel = new int[mAllAtoms];
+		int graphAtom[] = new int[mAllAtoms];
 
 		graphAtom[0] = atom1;
 		graphLevel[atom1] = 1;
 		int current = 0;
 		int highest = 0;
 		while (current <= highest && graphLevel[graphAtom[current]] <= maxLength) {
-			for (int i=0; i<mConnAtoms[graphAtom[current]]; i++) {
+			for (int i=0; i<mAllConnAtoms[graphAtom[current]]; i++) {
 				int candidate = mConnAtom[graphAtom[current]][i];
 				if (candidate == atom2)
 					return graphLevel[graphAtom[current]];
 
-				if (graphLevel[candidate] == 0 && (neglectAtom == null || !neglectAtom[candidate])) {
+				if (graphLevel[candidate] == 0
+						&& (neglectAtom == null || neglectAtom.length <= candidate || !neglectAtom[candidate])) {
 					graphAtom[++highest] = candidate;
 					graphLevel[candidate] = graphLevel[graphAtom[current]]+1;
 					}
@@ -660,9 +754,9 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		ensureHelperArrays(cHelperNeighbours);
 
-		int[] graphLevel = new int[mAtoms];
-		int graphAtom[] = new int[mAtoms];
-		int parentAtom[] = new int[mAtoms];
+		int[] graphLevel = new int[mAllAtoms];
+		int graphAtom[] = new int[mAllAtoms];
+		int parentAtom[] = new int[mAllAtoms];
 
 		graphAtom[0] = atom1;
 		graphLevel[atom1] = 1;
@@ -671,8 +765,10 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int highest = 0;
 		while (current <= highest && graphLevel[graphAtom[current]] <= maxLength) {
 			int parent = graphAtom[current];
-			for (int i=0; i<mConnAtoms[parent]; i++) {
-				if (neglectBond == null || !neglectBond[mConnBond[parent][i]]) {
+			for (int i=0; i<mAllConnAtoms[parent]; i++) {
+				if (neglectBond == null
+				 || neglectBond.length <= mConnBond[parent][i]
+				 || !neglectBond[mConnBond[parent][i]]) {
 					int candidate = mConnAtom[parent][i];
 					if (candidate == atom2) {
 						int index = graphLevel[parent];
@@ -707,7 +803,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	public void getPathBonds(int[] pathAtom, int[] pathBond, int pathLength) {
 		ensureHelperArrays(cHelperNeighbours);
 		for (int i=0; i<pathLength; i++) {
-			for (int j=0; j<mConnAtoms[pathAtom[i]]; j++) {
+			for (int j=0; j<mAllConnAtoms[pathAtom[i]]; j++) {
 				if (mConnAtom[pathAtom[i]][j] == pathAtom[i+1]) {
 					pathBond[i] = mConnBond[pathAtom[i]][j];
 					break;
@@ -753,7 +849,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int current = 0;
 		int highest = 0;
 	 	while (current <= highest) {
-			for (int i=0; i<sourceMol.mAllConnAtoms[graphAtom[current]]; i++) {
+			for (int i=0; i<sourceMol.getAllConnAtoms(graphAtom[current]); i++) {
 				int candidate = sourceMol.mConnAtom[graphAtom[current]][i];
 				if (!isFragmentMember[candidate]) {
 					graphAtom[++highest] = candidate;
@@ -776,10 +872,24 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
+	 * Returns an array of all atoms for which a path of bonds leads to rootAtom
+	 * not considering metal ligand bonds.
 	 * @param rootAtom
-	 * @return array of all atoms that for which a path of bonds leads to rootAtom
+	 * @return atoms being in the same fragment as rootAtom
 	 */
 	public int[] getFragmentAtoms(int rootAtom) {
+		return getFragmentAtoms(rootAtom, false);
+		}
+
+
+	/**
+	 * Returns an array of all atoms for which a path of bonds leads to rootAtom.
+	 * Metal ligand bonds may or may not be considered a connection.
+	 * @param rootAtom
+	 * @param considerMetalBonds
+	 * @return atoms being in the same fragment as rootAtom
+	 */
+	public int[] getFragmentAtoms(int rootAtom, boolean considerMetalBonds) {
 		ensureHelperArrays(cHelperNeighbours);
 
 		boolean[] isFragmentMember = new boolean[mAllAtoms];
@@ -791,7 +901,9 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int highest = 0;
 		int fragmentMembers = 1;
 	 	while (current <= highest) {
-			for (int i=0; i<mAllConnAtoms[graphAtom[current]]; i++) {
+			int connAtoms = considerMetalBonds ? getAllConnAtomsPlusMetalBonds(graphAtom[current])
+											   : mAllConnAtoms[graphAtom[current]];
+			for (int i=0; i<connAtoms; i++) {
 				int candidate = mConnAtom[graphAtom[current]][i];
 				if (!isFragmentMember[candidate]) {
 					graphAtom[++highest] = candidate;
@@ -816,11 +928,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * Locates all disconnected fragments in the molecule and assigns
 	 * fragment numbers (starting from 0) to all atoms. Individual bonds can be marked to
 	 * be skipped, i.e. to be treated as non-existing.
+	 * Metal ligand bonds may or may not be considered a connection.
 	 * @param fragmentNo array not smaller than getAllAtoms()
 	 * @param neglectBond array not smaller than getAllBonds()
+	 * @param considerMetalBonds
 	 * @return array of atom's fragments indexes
 	 */
-	public int getFragmentNumbers(int[] fragmentNo, boolean[] neglectBond) {
+	public int getFragmentNumbers(int[] fragmentNo, boolean[] neglectBond, boolean considerMetalBonds) {
 		ensureHelperArrays(cHelperNeighbours);
 
 		for (int atom=0; atom<mAllAtoms; atom++)
@@ -835,7 +949,9 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				int current = 0;
 				int highest = 0;
 				while (current <= highest) {
-					for (int i=0; i<mAllConnAtoms[graphAtom[current]]; i++) {
+					int connAtoms = considerMetalBonds ? getAllConnAtomsPlusMetalBonds(graphAtom[current])
+													   : mAllConnAtoms[graphAtom[current]];
+					for (int i=0; i<connAtoms; i++) {
 						int candidate = mConnAtom[graphAtom[current]][i];
 						if (fragmentNo[candidate] == -1
 						 && !neglectBond[mConnBond[graphAtom[current]][i]]) {
@@ -859,11 +975,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * non-marked atoms receive the fragment number -1 and are not considered a connection between
 	 * marked atoms potentially causing two marked atoms to end up in different fragments, despite
 	 * sharing the same fragment.
+	 * Metal ligand bonds may or may not be considered a connection.
 	 * @param fragmentNo array at least mAllAtoms big to receive atom fragment indexes
 	 * @param markedAtomsOnly if true, then only atoms marked with setAtomMarker() are considered
+	 * @param considerMetalBonds
 	 * @return number of disconnected fragments
 	 */
-	public int getFragmentNumbers(int[] fragmentNo, boolean markedAtomsOnly) {
+	public int getFragmentNumbers(int[] fragmentNo, boolean markedAtomsOnly, boolean considerMetalBonds) {
 		ensureHelperArrays(cHelperNeighbours);
 
 		for (int atom=0; atom<mAllAtoms; atom++)
@@ -879,7 +997,9 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				int current = 0;
 				int highest = 0;
 				while (current <= highest) {
-					for (int i=0; i<mAllConnAtoms[graphAtom[current]]; i++) {
+					int connAtoms = considerMetalBonds ? getAllConnAtomsPlusMetalBonds(graphAtom[current])
+													   : mAllConnAtoms[graphAtom[current]];
+					for (int i=0; i<connAtoms; i++) {
 						int candidate = mConnAtom[graphAtom[current]][i];
 						if (fragmentNo[candidate] == -1
 						 && (!markedAtomsOnly || isMarkedAtom(candidate))) {
@@ -900,11 +1020,25 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * Removes all unconnected fragments except for the largest one.
 	 * If small fragments were removed, then canonizeCharge() is called to
 	 * neutralize charges after potential removal of counter ions.
-	 * @return atom mapping from old to new indexnull if no fragments were removed
+	 * Metal ligand bonds are not considered a connection.
+	 * @return atom mapping from old to new index; null if no fragments were removed
 	 */
 	public int[] stripSmallFragments() {
+		return stripSmallFragments(false);
+		}
+
+
+	/**
+	 * Removes all unconnected fragments except for the largest one.
+	 * If small fragments were removed, then canonizeCharge() is called to
+	 * neutralize charges after potential removal of counter ions.
+	 * Metal ligand bonds may or may not be considered a connection.
+	 * @param considerMetalBonds
+	 * @return atom mapping from old to new index; null if no fragments were removed
+	 */
+	public int[] stripSmallFragments(boolean considerMetalBonds) {
 		int[] fragmentNo = new int[mAllAtoms];
-		int fragmentCount = getFragmentNumbers(fragmentNo, false);
+		int fragmentCount = getFragmentNumbers(fragmentNo, false, considerMetalBonds);
 
 		if (fragmentCount <= 1)
 			return null;
@@ -927,7 +1061,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				mAtomicNo[atom] = -1;				// mark for delete
 
 		for (int bond=0; bond<mAllBonds; bond++)
-			if (fragmentNo[mBondAtom[0][bond]] != largestFragment)
+			if ((!considerMetalBonds && mBondType[bond] == cBondTypeMetalLigand)
+			 || fragmentNo[mBondAtom[0][bond]] != largestFragment)
 				mBondType[bond] = cBondTypeDeleted;	// mark for delete
 
 		int[] atomMap = compressMolTable();
@@ -962,7 +1097,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int current = 0;
 		int highest = 0;
 	 	while (current <= highest) {
-			for (int i=0; i<mConnAtoms[graphAtom[current]]; i++) {
+			for (int i = 0; i< mConnAtoms[graphAtom[current]]; i++) {
 				int candidateBond = mConnBond[graphAtom[current]][i];
 				if (!isMemberBond[candidateBond]
 				 && isRingBond(candidateBond)
@@ -1017,7 +1152,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int current = 1;
 		int highest = 1;
 	 	while (current <= highest) {
-			for (int i=0; i<mAllConnAtoms[graphAtom[current]]; i++) {
+			int connAtoms = getAllConnAtomsPlusMetalBonds(graphAtom[current]);
+			for (int i=0; i<connAtoms; i++) {
 				int candidate = mConnAtom[graphAtom[current]][i];
 				if (candidate == coreAtom) {
 					if (current != 1)
@@ -1061,7 +1197,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int current = 1;
 		int highest = 1;
 		while (current <= highest) {
-			for (int i=0; i<mConnAtoms[graphAtom[current]]; i++) {
+			for (int i = 0; i< mConnAtoms[graphAtom[current]]; i++) {
 				int candidate = mConnAtom[graphAtom[current]][i];
 				if (candidate == coreAtom) {
 					if (current != 1)
@@ -1091,11 +1227,18 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			return true;
 		if (mAtomicNo[atom] == 1)
 			return false;
-		return isOrganicAtom(atom) || mAtomicNo[atom] == 13;	// Al
+		return isOrganicAtom(atom)
+				|| mAtomicNo[atom] == 13	// Al
+				|| mAtomicNo[atom] >= 171;	// amino acids
 		}
 
 	/**
-	 * 
+	 * Calculates and return the number of implicit hydrogens at atom.
+	 * If atom is itself a hydrogen atom, a metal except Al, or a noble gase,
+	 * then 0 is returned. For all other atom kinds the number of
+	 * implicit hydrogens is basically the lowest typical valence that is compatible
+	 * with the occupied valence, minus the occupied valence corrected by atom charge
+	 * and radical state.
 	 * @param atom
 	 * @return
 	 */
@@ -1116,13 +1259,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		if (mIsFragment) {
 			int delocalizedBonds = 1;
-			for (int i=0; i<mConnAtoms[atom]; i++)
+			for (int i = 0; i< mConnAtoms[atom]; i++)
 				if (mBondType[mConnBond[atom][i]] == cBondTypeDelocalized)
 					delocalizedBonds++;
 			occupiedValence += delocalizedBonds >> 1;
 			}
 
-		occupiedValence -= getElectronValenceCorrection(atom);
+		occupiedValence -= getElectronValenceCorrection(atom, occupiedValence);
 		int maxValence = getAtomAbnormalValence(atom);
 		if (maxValence == -1) {
 			if (mAtomicNo[atom] >= 171 && mAtomicNo[atom] <= 190) {
@@ -1145,12 +1288,12 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		return Math.max(0, maxValence - occupiedValence);
 		}
 
+	/**
+	 * @param atom
+	 * @return number of explicit plain hydrogen atoms (does not include D,T,cutom labelled H, etc)
+	 */
 	public int getExplicitHydrogens(int atom) {
-		int count = 0;
-		for (int i=mConnAtoms[atom]; i<mAllConnAtoms[atom]; i++)
-			if (mConnBondOrder[atom][i] != 0)
-				count++;
-		return count;
+		return mAllConnAtoms[atom] - mConnAtoms[atom];
 		}
 
 	/**
@@ -1163,9 +1306,11 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		for (int atom=0; atom<mAllAtoms; atom++) {
 			int mass = mAtomMass[atom] != 0 ? mAtomMass[atom] : cRoundedMass[mAtomicNo[atom]];
 			molweight += mass + getImplicitHydrogens(atom) * cRoundedMass[1];
-			if (mAtomicNo[atom] >= 171 && mAtomicNo[atom] <= 190
-			 && mAllConnAtoms[atom] > 2)	// to accomodate for bisulfide bridges
-				molweight -= (mAllConnAtoms[atom] - 2) * cRoundedMass[1];
+			if (mAtomicNo[atom] >= 171 && mAtomicNo[atom] <= 190) {
+				int connAtoms = mAllConnAtoms[atom];
+				if (connAtoms > 2)
+					molweight -= (connAtoms - 2) * cRoundedMass[1];
+				}
 			}
 
 		return molweight;
@@ -1287,7 +1432,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		boolean[] neglectBond = new boolean[mBonds];
 		int[] ringAtom = new int[mAtoms];
 		int count = 0;
-		for (int i=1; i<mConnAtoms[atom]; i++) {
+		for (int i = 1; i< mConnAtoms[atom]; i++) {
 			int bond1 = mConnBond[atom][i];
 			if (isRingBond(bond1)) {
 				for (int j=0; j<i; j++) {
@@ -1547,11 +1692,12 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		int[] sortedConnMap = getSortedConnMap(atom);
 
-		double angle[] = new double[mAllConnAtoms[atom]];
-		for (int i=0; i<mAllConnAtoms[atom]; i++)
+		int allConnAtoms = mAllConnAtoms[atom];
+		double angle[] = new double[allConnAtoms];
+		for (int i=0; i<allConnAtoms; i++)
 			angle[i] = getBondAngle(mConnAtom[atom][sortedConnMap[i]], atom);
 
-		for (int i=0; i<mAllConnAtoms[atom]; i++)
+		for (int i=0; i<allConnAtoms; i++)
 			if (mBondAtom[0][mConnBond[atom][i]] == atom
 			 && getBondOrder(mConnBond[atom][i]) == 1)
 				mBondType[mConnBond[atom][i]] = cBondTypeSingle;
@@ -1562,7 +1708,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		// If there is exactly one stereo bond at the atom then take this
 		// as the new stereo bond. Otherwise find a preferred stereo bond.
 		int preferredBond = -1;
-		for (int i=0; i<mAllConnAtoms[atom]; i++) {
+		for (int i=0; i<allConnAtoms; i++) {
 			int connBond = mConnBond[atom][i];
 			if (isStereoBond(connBond, atom)) {
 				mBondType[mConnBond[atom][i]] = cBondTypeSingle;
@@ -1581,7 +1727,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			}
 
 		int preferredBondIndex = -1;
-		for (int i=0; i<mAllConnAtoms[atom]; i++) {
+		for (int i=0; i<allConnAtoms; i++) {
 			if (preferredBond == mConnBond[atom][sortedConnMap[i]]) {
 				preferredBondIndex = i;
 				break;
@@ -1612,12 +1758,12 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				preferredBondIndex = i;
 			}	*/
 
-		for (int i=1; i<mAllConnAtoms[atom]; i++)
+		for (int i=1; i<allConnAtoms; i++)
 			if (angle[i] < angle[0])
 				angle[i] += Math.PI*2;
 
 		int bondType;
-		if (mAllConnAtoms[atom] == 3) {
+		if (allConnAtoms == 3) {
 				// new handling!!! TLS 17.Oct.2005
 				// Originally the parity depended solely on clockwise/anti-clockwise orientation
 				// of three (priority sorted) angles, which included the angle of the stereo bond.
@@ -1667,13 +1813,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	private boolean setFisherProjectionStereoBondsFromParity(int atom, int[] sortedConnMap, double[] angle) {
-		int[] direction = new int[mAllConnAtoms[atom]];
+		int allConnAtoms = mAllConnAtoms[atom];
+		int[] direction = new int[allConnAtoms];
 		int parity = getFisherProjectionParity(atom, sortedConnMap, angle, direction);
 		if (parity == cAtomParityUnknown)
 			return false;
 
 		int bondType = (getAtomParity(atom) == parity) ? cBondTypeUp : cBondTypeDown;
-		for (int i=0; i<mAllConnAtoms[atom]; i++) {
+		for (int i=0; i<allConnAtoms; i++) {
 			if ((direction[i] & 1) == 1) {
 				int bond = mConnBond[atom][sortedConnMap[i]];
 				mBondType[bond] = bondType;
@@ -1699,13 +1846,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return cAtomParity1,cAtomParity2 or cAtomParityUnknown
 	 */
 	public int getFisherProjectionParity(int atom, int[] sortedConnMap, double[] angle, int[] direction) {
+		int allConnAtoms = mAllConnAtoms[atom];
 		if (direction == null)
-			direction = new int[mAllConnAtoms[atom]];
+			direction = new int[allConnAtoms];
 		if (!getFisherProjectionBondDirections(atom, sortedConnMap, angle, direction))
 			return cAtomParityUnknown;
 
 		int horizontalBondType = -1;
-		for (int i=0; i<mAllConnAtoms[atom]; i++) {
+		for (int i=0; i<allConnAtoms; i++) {
 			if ((direction[i] & 1) == 1) { // horizontal bond
 				int bondType = mBondType[mConnBond[atom][sortedConnMap[i]]];
 				if (horizontalBondType != -1
@@ -1719,7 +1867,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int index = (Math.abs(direction[0] - direction[1]) == 2) ? 1 : 0;
 		int dif = direction[index] - direction[index+1];
 		boolean isClockwise = (Math.abs(dif) == 3) ^ (direction[index] < direction[index+1]);
-		boolean is4thConnHorizontal = (mAllConnAtoms[atom] == 3 || ((direction[3] & 1) == 1));
+		boolean is4thConnHorizontal = (allConnAtoms == 3 || ((direction[3] & 1) == 1));
 		return (isClockwise ^ is4thConnHorizontal) ^ (horizontalBondType == cBondTypeDown) ?
 				cAtomParity1 : cAtomParity2;
 		}
@@ -1737,14 +1885,15 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return false if fisher projection conditions are not met
 	 */
 	private boolean getFisherProjectionBondDirections(int atom, int[] sortedConnMap, double[] angle, int[] direction) {
+		int allConnAtoms = mAllConnAtoms[atom];
 		if (mPi[atom] != 0
 		 || isAromaticAtom(atom)
 		 || mConnAtoms[atom] < 3
-		 || mAllConnAtoms[atom] > 4)
+		 || allConnAtoms > 4)
 			return false;
 
 		boolean[] isUsed = new boolean[4];
-		for (int i=0; i<mAllConnAtoms[atom]; i++) {
+		for (int i=0; i<allConnAtoms; i++) {
 			double a = Math.PI*5/4 - angle[i];
 			if (Math.abs(Math.PI/4 - (a % (Math.PI/2))) > FISCHER_PROJECTION_LIMIT)
 				return false;
@@ -1817,7 +1966,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			}
 
 		int highPriorityAtom = Integer.MAX_VALUE;
-		for (int i=0; i<mConnAtoms[preferredAlleneAtom]; i++) {
+		for (int i = 0; i< mConnAtoms[preferredAlleneAtom]; i++) {
 			int connAtom = mConnAtom[preferredAlleneAtom][i];
 			if ((connAtom != atom) && (highPriorityAtom > connAtom))
 				highPriorityAtom = connAtom;
@@ -1825,7 +1974,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		int[] oppositeAtom = new int[2];
 		int oppositeAtoms = 0;
-		for (int i=0; i<mConnAtoms[oppositeAlleneAtom]; i++) {
+		for (int i = 0; i< mConnAtoms[oppositeAlleneAtom]; i++) {
 			int connAtom = mConnAtom[oppositeAlleneAtom][i];
 			if (connAtom != atom)
 				oppositeAtom[oppositeAtoms++] = connAtom;
@@ -1911,7 +2060,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			}
 
 		int highPriorityAtom = Integer.MAX_VALUE;
-		for (int i=0; i<mConnAtoms[preferredBINAPAtom]; i++) {
+		for (int i = 0; i< mConnAtoms[preferredBINAPAtom]; i++) {
 			int connAtom = mConnAtom[preferredBINAPAtom][i];
 			if ((mConnBond[preferredBINAPAtom][i] != bond) && (highPriorityAtom > connAtom))
 				highPriorityAtom = connAtom;
@@ -1919,7 +2068,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		int[] oppositeAtom = new int[2];
 		int oppositeAtoms = 0;
-		for (int i=0; i<mConnAtoms[oppositeBINAPAtom]; i++)
+		for (int i = 0; i< mConnAtoms[oppositeBINAPAtom]; i++)
 			if (mConnBond[oppositeBINAPAtom][i] != bond)
 				oppositeAtom[oppositeAtoms++] = mConnAtom[oppositeBINAPAtom][i];
 
@@ -1959,15 +2108,16 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	private int preferredTHStereoBond(int atom) {
 		// If we have two (anti-)parallel bonds, the we need to select
 		// that one of those that is closest to the other bonds.
-		double[] angle = new double[mAllConnAtoms[atom]];
-		for (int i=0; i<mAllConnAtoms[atom]; i++)
+		int allConnAtoms = mAllConnAtoms[atom];
+		double[] angle = new double[allConnAtoms];
+		for (int i=0; i<allConnAtoms; i++)
 			angle[i] = getBondAngle(atom, mConnAtom[atom][i]);
-		for (int i=1; i<mAllConnAtoms[atom]; i++) {
+		for (int i=1; i<allConnAtoms; i++) {
 			for (int j=0; j<i; j++) {
 				if (bondsAreParallel(angle[i], angle[j])) {
 					float angleDistanceSum1 = 0;
 					float angleDistanceSum2 = 0;
-					for (int k=0; k<mAllConnAtoms[atom]; k++) {
+					for (int k=0; k<allConnAtoms; k++) {
 						if (k != i && k != j) {
 							angleDistanceSum1 += Math.abs(Angle.difference(angle[i], angle[k]));
 							angleDistanceSum2 += Math.abs(Angle.difference(angle[j], angle[k]));
@@ -1982,7 +2132,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		int preferredBond = -1;
 		int bestScore = 0;
-		for (int i=0; i<mAllConnAtoms[atom]; i++) {
+		for (int i=0; i<allConnAtoms; i++) {
 			int connAtom = mConnAtom[atom][i];
 			int connBond = mConnBond[atom][i];
 			int score = getStereoBondScore(connBond, connAtom);
@@ -2045,7 +2195,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	public int findAlleneCenterAtom(int atom) {
 		int center = -1;
 		if (mPi[atom] == 1) {
-			for (int i=0; i<mConnAtoms[atom]; i++) {
+			for (int i = 0; i< mConnAtoms[atom]; i++) {
 				if (mConnBondOrder[atom][i] == 2) {
 					int connAtom = mConnAtom[atom][i];
 					if (mConnAtoms[connAtom] == 2 && mPi[connAtom] == 2) {
@@ -2074,7 +2224,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 */
 	private int findBINAPOppositeAtom(int atom) {
 		if (mConnAtoms[atom] == 3 && isAromaticAtom(atom) && getAtomRingSize(atom) >= 6)
-			for (int i=0; i<mConnAtoms[atom]; i++)
+			for (int i = 0; i< mConnAtoms[atom]; i++)
 				if (isBINAPChiralityBond(mConnBond[atom][i]))
 					return mConnAtom[atom][i];
 		return -1;
@@ -2091,10 +2241,38 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 */
 	public int findBINAPChiralityBond(int atom) {
 		if (mConnAtoms[atom] == 3 && isAromaticAtom(atom) && getAtomRingSize(atom) >= 6)
-			for (int i=0; i<mConnAtoms[atom]; i++)
+			for (int i = 0; i< mConnAtoms[atom]; i++)
 				if (isBINAPChiralityBond(mConnBond[atom][i]))
 					return mConnBond[atom][i];
 		return -1;
+		}
+
+
+	/**
+	 * Evaluates, whether bond is an amide bond, thio-amide, or amidine bond.
+	 * @param bond
+	 * @return
+	 */
+	public boolean isAmideTypeBond(int bond) {
+		ensureHelperArrays(cHelperNeighbours);
+
+		for (int i=0; i<2; i++) {
+			int atom1 = mBondAtom[i][bond];
+			if (mAtomicNo[atom1] == 7) {
+				int atom2 = mBondAtom[1-i][bond];
+				for (int j = 0; j< mConnAtoms[atom2]; j++) {
+					int connAtom = mConnAtom[atom2][j];
+					int connBond = mConnBond[atom2][j];
+					if ((mAtomicNo[connAtom] == 7
+					  || mAtomicNo[connAtom] == 8
+					  || mAtomicNo[connAtom] == 16)
+					 && getBondOrder(connBond) >= 2)
+						return true;
+					}
+				}
+			}
+
+		return false;
 		}
 
 
@@ -2115,7 +2293,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		if (mAtomCharge[atom] == 1)
 			return false;
 		int heteroCount = 0;
-		for (int i=0; i<mConnAtoms[atom]; i++) {
+		for (int i = 0; i< mConnAtoms[atom]; i++) {
 			if (mConnBondOrder[atom][i] == 1) {
 				int atomicNo = mAtomicNo[mConnAtom[atom][i]];
 				if (atomicNo == 8 || atomicNo == 9 || atomicNo == 17)
@@ -2123,13 +2301,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				}
 			}
 		if (heteroCount == 0) {
-			for (int i=0; i<mConnAtoms[atom]; i++) {
+			for (int i = 0; i< mConnAtoms[atom]; i++) {
 				int connAtom = mConnAtom[atom][i];
 				if (mPi[connAtom] != 0) {
 					if (isAromaticAtom(connAtom)) {
 						if (getAtomRingSize(connAtom) >= 5) {
 							int orthoSubstituentCount = 0;
-							for (int j=0; j<mConnAtoms[connAtom]; j++) {
+							for (int j = 0; j< mConnAtoms[connAtom]; j++) {
 								int ortho = mConnAtom[connAtom][j];
 								if (ortho != atom && mConnAtoms[ortho] >= 3)
 									orthoSubstituentCount++;
@@ -2142,7 +2320,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 						}
 
 					// vinyloge amides, etc.
-					for (int j=0; j<mConnAtoms[connAtom]; j++) {
+					for (int j = 0; j< mConnAtoms[connAtom]; j++) {
 						if ((mConnBondOrder[connAtom][j] == 2 || isAromaticBond(mConnBond[connAtom][j]))
 						 && isStabilizedAtom(mConnAtom[connAtom][j]))
 							return true;
@@ -2151,11 +2329,11 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				}
 			}
 		if (heteroCount < 2) {
-			for (int i=0; i<mConnAtoms[atom]; i++) {
+			for (int i = 0; i< mConnAtoms[atom]; i++) {
 				int connAtom = mConnAtom[atom][i];
 				boolean isStabilized = false;
 				boolean hasCompetitor = false;
-				for (int j=0; j<mConnAtoms[connAtom]; j++) {
+				for (int j = 0; j< mConnAtoms[connAtom]; j++) {
 					if (mConnAtom[connAtom][j] != atom) {
 						if (mConnBondOrder[connAtom][j] != 1
 						 && (mAtomicNo[mConnAtom[connAtom][j]] == 7
@@ -2202,12 +2380,12 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			return false;
 
 		int orthoSubstituentCount = 0;
-		for (int j=0; j<mConnAtoms[atom1]; j++) {
+		for (int j = 0; j< mConnAtoms[atom1]; j++) {
 			int connAtom = mConnAtom[atom1][j];
 			if (connAtom != atom2 && mConnAtoms[connAtom] > 2)
 				orthoSubstituentCount++;
 			}
-		for (int j=0; j<mConnAtoms[atom2]; j++) {
+		for (int j = 0; j< mConnAtoms[atom2]; j++) {
 			int connAtom = mConnAtom[atom2][j];
 			if (connAtom != atom1 && mConnAtoms[connAtom] > 2)
 				orthoSubstituentCount++;
@@ -2266,7 +2444,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				int valence = getOccupiedValence(atom);
 				if (valence == 4) {
 					// normalize -N(=O)-OH to -N(+)(=O)-O(-)
-					for (int i=0; i<mConnAtoms[atom]; i++) {
+					for (int i = 0; i< mConnAtoms[atom]; i++) {
 						int connAtom = mConnAtom[atom][i];
 						if (mConnBondOrder[atom][i] == 1
 						 && mAtomicNo[connAtom] == 8
@@ -2281,7 +2459,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 					}
 				else if (valence == 5) {
 					// normalize -N(=O)2 to -N(+)(=O)-O(-), -N#N to -N(+)=N(-),
-					for (int i=0; i<mConnAtoms[atom]; i++) {
+					for (int i = 0; i< mConnAtoms[atom]; i++) {
 						int connAtom = mConnAtom[atom][i];
 						int connBond = mConnBond[atom][i];
 						if (mConnBondOrder[atom][i] == 2
@@ -2378,6 +2556,10 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				else
 					continue;
 
+				if (isMetalAtom(atom1)
+				 || isMetalAtom(atom2))
+					continue;
+
 				if (mAtomicNo[atom1] < 9)
 					if (getOccupiedValence(atom1) > 3)
 						continue;
@@ -2457,7 +2639,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return true if atom has a neighbour with a negative charge
 	 */
 	private boolean hasNegativeNeighbour(int atom) {
-		for (int i=0; i<mConnAtoms[atom]; i++)
+		for (int i = 0; i< mConnAtoms[atom]; i++)
 			if (mAtomCharge[mConnAtom[atom][i]] < 0)
 				return true;
 		return false;
@@ -2469,7 +2651,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return true if atom has a neighbour with a positive charge
 	 */
 	private boolean hasPositiveNeighbour(int atom) {
-		for (int i=0; i<mConnAtoms[atom]; i++)
+		for (int i = 0; i< mConnAtoms[atom]; i++)
 			if (mAtomCharge[mConnAtom[atom][i]] > 0)
 				return true;
 		return false;
@@ -2498,7 +2680,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			int atom2 = mBondAtom[1-i][bond];
 			int other1 = -1;
 			boolean found = false;
-			for (int j=0; j<mConnAtoms[atom1]; j++) {
+			for (int j = 0; j< mConnAtoms[atom1]; j++) {
 				int conn = mConnAtom[atom1][j];
 				if (conn != atom2) {
 					if (conn == connAtom)
@@ -2510,7 +2692,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			if (found) {
 				int lowConn = -1;
 				int highConn = -1;
-				for (int j=0; j<mConnAtoms[atom2]; j++) {
+				for (int j = 0; j< mConnAtoms[atom2]; j++) {
 					int conn = mConnAtom[atom2][j];
 					if (conn != atom1) {
 						if (lowConn == -1)
@@ -2608,13 +2790,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				}
 
 			for (int atom=0; atom<mAtoms; atom++) {	// allylic & stabilized flags
-				for (int i=0; i<mConnAtoms[atom]; i++) {
+				for (int i = 0; i< mConnAtoms[atom]; i++) {
 					int connBond = mConnBond[atom][i];
 					if (isAromaticBond(connBond))
 						continue;
 
 					int connAtom = mConnAtom[atom][i];
-					for (int j=0; j<mConnAtoms[connAtom]; j++) {
+					for (int j = 0; j< mConnAtoms[connAtom]; j++) {
 						if (mConnBond[connAtom][j] == connBond)
 							continue;
 
@@ -2639,11 +2821,11 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 					if (mPi[atom] > 0
 					 && ((cAtomFlagStabilized | cAtomFlagAromatic)
 					 		& mAtomFlags[atom]) == cAtomFlagStabilized) {
-						for (int i=0; i<mConnAtoms[atom]; i++) {
+						for (int i = 0; i< mConnAtoms[atom]; i++) {
 							if (mConnBondOrder[atom][i] > 1) {
 								int connAtom = mConnAtom[atom][i];
 								int connBond = mConnBond[atom][i];
-								for (int j=0; j<mConnAtoms[connAtom]; j++) {
+								for (int j = 0; j< mConnAtoms[connAtom]; j++) {
 									if (mConnBond[connAtom][j] != connBond) {
 										int candidate = mConnAtom[connAtom][j];
 										if ((mAtomFlags[candidate] & cAtomFlagStabilized) == 0) {
@@ -2667,7 +2849,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * Usually explicit hydrogen atoms can be removed without changing a molecule,
-	 * because the removal just convert explicit into implicit hydrogen atoms.
+	 * because the removal just converts explicit into implicit hydrogen atoms.
 	 * Exceptions are hydrogen with isotop information, hydrogens not connected to a non-H atom,
 	 * hydrogens carrying a custom label and hydrogens whose existence implicitly defines a neighbour
 	 * atom to have an abnormal valence.<br>
@@ -2820,7 +3002,10 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 					}
 				}
 			}
+
 		setStereoBondsFromParity();
+
+		mValidHelperArrays = cHelperNone;
 		}
 
 
@@ -2854,11 +3039,12 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 			for (int i = 0; i < 2; i++) {
 				int atom = mBondAtom[i][bnd];
-				mConnBondOrder[atom][mAllConnAtoms[atom]] = order;
-				mConnAtom[atom][mAllConnAtoms[atom]] = mBondAtom[1 - i][bnd];
-				mConnBond[atom][mAllConnAtoms[atom]] = bnd;
-				mAllConnAtoms[atom]++;
-				mConnAtoms[atom]++;
+				int allConnAtoms = mAllConnAtoms[atom];
+				mConnBondOrder[atom][allConnAtoms] = order;
+				mConnAtom[atom][allConnAtoms] = mBondAtom[1 - i][bnd];
+				mConnBond[atom][allConnAtoms] = bnd;
+				mAllConnAtoms[atom]++;	// all non metal-bonded neighbours (non-H, H)
+				mConnAtoms[atom]++;	// non-H and non-metal-bonded neighbours
 				if (atom < mAtoms) {
 					if (order > 1)
 						mPi[atom] += order + order - 2;
@@ -2868,28 +3054,41 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				}
 			}
 
+		for(int bnd=mBonds; bnd<mAllBonds; bnd++) {
+			int order = getBondOrder(bnd);
+			if (order == 0) {
+				metalBondFound = true;
+				continue;
+				}
+
+			for (int i = 0; i < 2; i++) {
+				int atom = mBondAtom[i][bnd];
+				int allConnAtoms = mAllConnAtoms[atom];
+				mConnBondOrder[atom][allConnAtoms] = order;
+				mConnAtom[atom][allConnAtoms] = mBondAtom[1 - i][bnd];
+				mConnBond[atom][allConnAtoms] = bnd;
+				mAllConnAtoms[atom]++;	// all non metal-bonded neighbours (non-H, H)
+				if (mBondAtom[1-i][bnd] < mAtoms)
+					mConnAtoms[atom]++;
+				}
+			}
+
 		if (metalBondFound) {
-			for(int bnd=0; bnd<mBonds; bnd++) {
+			int[] allConnAtoms = new int[mAllAtoms];
+			for(int atom=0; atom<mAllAtoms; atom++)
+				allConnAtoms[atom] = mAllConnAtoms[atom];
+
+			for(int bnd=0; bnd<mAllBonds; bnd++) {
 				int order = getBondOrder(bnd);
 				if (order == 0) {
 					for (int i = 0; i < 2; i++) {
 						int atom = mBondAtom[i][bnd];
-						mConnBondOrder[atom][mAllConnAtoms[atom]] = order;
-						mConnAtom[atom][mAllConnAtoms[atom]] = mBondAtom[1 - i][bnd];
-						mConnBond[atom][mAllConnAtoms[atom]] = bnd;
-						mAllConnAtoms[atom]++;
+						mConnBondOrder[atom][allConnAtoms[atom]] = order;
+						mConnAtom[atom][allConnAtoms[atom]] = mBondAtom[1 - i][bnd];
+						mConnBond[atom][allConnAtoms[atom]] = bnd;
+						allConnAtoms[atom]++;		// all neighbours (non-H, H, metal-bonded)
 						}
 					}
-				}
-			}
-
-		for(int bnd=mBonds; bnd<mAllBonds; bnd++) {
-			for (int i = 0; i < 2; i++) {
-				int atom = mBondAtom[i][bnd];
-				mConnBondOrder[atom][mAllConnAtoms[atom]] = 1;
-				mConnAtom[atom][mAllConnAtoms[atom]] = mBondAtom[1 - i][bnd];
-				mConnBond[atom][mAllConnAtoms[atom]] = bnd;
-				mAllConnAtoms[atom]++;
 				}
 			}
 
@@ -2979,7 +3178,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 						}
 					}
 
-				for (int i=mConnAtoms[atom]; i<mAllConnAtoms[atom]; i++) {
+				for (int i = mConnAtoms[atom]; i<mAllConnAtoms[atom]; i++) {
 					int connBond = mConnBond[atom][i];
 					if (mBondType[connBond] == cBondTypeSingle) {	// no stereo bond
 						mAtomicNo[mConnAtom[atom][i]] = -1;

@@ -9,7 +9,6 @@ var classes = [
     'chem/Canonizer',
     'chem/CanonizerBaseValue',
     'chem/CanonizerMesoHelper',
-    'chem/CoordinateInventor',
     'chem/ExtendedMolecule',
     'chem/IDCodeParser',
     'chem/IsotopeHelper',
@@ -30,6 +29,13 @@ var classes = [
     'chem/Coordinates',
 
     'chem/conf/Coordinate',
+
+    'chem/coords/CoordinateInventor',
+    'chem/coords/FragmentAssociation',
+    'chem/coords/InventorAngle',
+    'chem/coords/InventorChain',
+    'chem/coords/InventorCharge',
+    'chem/coords/InventorFragment',
 
     'chem/contrib/DiastereotopicAtomID',
     'chem/contrib/HoseCodeCreator',
@@ -53,6 +59,7 @@ var classes = [
 
     'util/Angle',
     'util/ColorHelper',
+    'util/DoubleFormat',
     'util/SortedList',
     'util/IntArrayComparator',
 

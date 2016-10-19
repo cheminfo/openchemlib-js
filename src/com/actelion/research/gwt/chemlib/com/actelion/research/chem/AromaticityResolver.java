@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
@@ -35,94 +36,84 @@ package com.actelion.research.chem;
 public class AromaticityResolver {
 	ExtendedMolecule	mMol;
 	private boolean		mAllHydrogensAreExplicit;
-	private boolean[]	mIsAromaticBond;
+	private boolean[] mIsDelocalizedBond;
     private int         mAromaticAtoms,mAromaticBonds,mPiElectronsAdded;
 
     /**
-     * Creates a new AromaticityResolver for molecule mol that assumes that
-     * all delocalized bonds of mol have bondType Molecule.cBondTypeDelocalized.
-     * Internally this constructor creates a bond masks encoding the
-     * delocalization from the bond type, then changes these bond type to
-     * Molecule.cBondTypeSingle and calls the other constructor.
+     * Creates a new AromaticityResolver for molecule mol.
      * @param mol
      */
     public AromaticityResolver(ExtendedMolecule mol) {
         mMol = mol;
-
-        mol.ensureHelperArrays(Molecule.cHelperNeighbours);
-
-        mIsAromaticBond = new boolean[mol.getBonds()];
-        for (int bond=0; bond<mol.getBonds(); bond++) {
-            if (mol.getBondType(bond) == Molecule.cBondTypeDelocalized) {
-                mIsAromaticBond[bond] = true;
-                mol.setBondType(bond, Molecule.cBondTypeSingle);
-                }
-            }
-
-        initialize();
-    	}
-
-    /**
-     * Creates a new AromaticityResolver for molecule mol that assumes that
-     * all delocalized bonds are flagged properly in isAromaticBond.
-     * BondTypes of these bonds are assumed to be Molecule.cBondTypeSingle.
-     * @param mol
-     * @param isAromaticBond
-     */
-    public AromaticityResolver(ExtendedMolecule mol, boolean[] isAromaticBond) {
-        mMol = mol;
-		mIsAromaticBond = isAromaticBond;
-
-        mMol.ensureHelperArrays(Molecule.cHelperNeighbours);
-
-        initialize();
         }
-
-    private void initialize() {
-    	mPiElectronsAdded = 0;
-
-    	boolean[] isAromaticAtom = new boolean[mMol.getAtoms()];
-        for (int bond=0; bond<mMol.getBonds(); bond++) {
-            if (mIsAromaticBond[bond]) {
-            	mAromaticBonds++;
-            	for (int i=0; i<2; i++) {
-            		if (!isAromaticAtom[mMol.getBondAtom(i, bond)]) {
-            			isAromaticAtom[mMol.getBondAtom(i, bond)] = true;
-        				mAromaticAtoms++;
-            			}
-            		}
-            	}
-            }
-    	}
 
     /**
      * This method promotes all necessary bonds of the defined delocalized part of the molecule
      * from single to double bonds in order to create a valid delocalized system
      * of conjugated single and double bonds.
+	 * The delocalized part of the molecule may be defined by passing an array
+	 * to isAromaticBond that has all bonds flagged, which are part of a delocalized area.
+	 * In this case these bonds are assumed to have bond type cBondTypeSingle.
+	 * Alternatively, one may pass null and indicate affected bonds with bond type cBondTypeDelocalized.
      * Non-cyclic atom chains defined to be delocalized are treated depending
      * on whether we have a molecule or a query fragment. For fragments the respective bond
      * types will be set to cBondTypeDelocalized; for molecules the chain will
      * have alternating single and double bonds starting with double at a non-ring end.
      * @return true if all bonds of the delocalized area could be consistently converted. 
      */
-	public boolean locateDelocalizedDoubleBonds() {
-		return locateDelocalizedDoubleBonds(false, false);
+	public boolean locateDelocalizedDoubleBonds(boolean[] isAromaticBond) {
+		return locateDelocalizedDoubleBonds(isAromaticBond, false, false);
 		}
 
 	/**
 	 * This method promotes all necessary bonds of the defined delocalized part of the molecule
 	 * from single to double bonds in order to create a valid delocalized system
 	 * of conjugated single and double bonds.
+	 * The delocalized part of the molecule may be defined by passing an array
+	 * to isAromaticBond that has all bonds flagged, which are part of a delocalized area.
+	 * In this case these bonds are assumed to have bond type cBondTypeSingle.
+	 * Alternatively, one may pass null and indicate affected bonds with bond type cBondTypeDelocalized.
 	 * Non-cyclic atom chains defined to be delocalized are treated depending
 	 * on whether we have a molecule or a query fragment. For fragments the respective bond
 	 * types will be set to cBondTypeDelocalized; for molecules the chain will
 	 * have alternating single and double bonds starting with double at a non-ring end.
+	 * @param isAromaticBond if null, then bond type cBondTypeDelocalized is used to indicate delocalized bonds
 	 * @param mayChangeAtomCharges true if input molecule doesn't carry atom charges and these may be added to achieve aromaticity
 	 * @param allHydrogensAreExplicit true this method can rely on all hydrogens being explicitly present
 	 * @return true if all bonds of the delocalized area could be consistently converted.
 	 */
-	public boolean locateDelocalizedDoubleBonds(boolean mayChangeAtomCharges, boolean allHydrogensAreExplicit) {
-        if (mAromaticBonds == 0)
+	public boolean locateDelocalizedDoubleBonds(boolean[] isAromaticBond, boolean mayChangeAtomCharges, boolean allHydrogensAreExplicit) {
+		mMol.ensureHelperArrays(Molecule.cHelperNeighbours);
+
+		if (isAromaticBond != null) {
+			mIsDelocalizedBond = isAromaticBond;
+			}
+		else {
+			mIsDelocalizedBond = new boolean[mMol.getBonds()];
+			for (int bond=0; bond<mMol.getBonds(); bond++) {
+				if (mMol.getBondType(bond) == Molecule.cBondTypeDelocalized) {
+					mIsDelocalizedBond[bond] = true;
+					mMol.setBondType(bond, Molecule.cBondTypeSingle);
+					}
+				}
+			}
+
+		mPiElectronsAdded = 0;
+
+		boolean[] isAromaticAtom = new boolean[mMol.getAtoms()];
+		for (int bond=0; bond<mMol.getBonds(); bond++) {
+			if (mIsDelocalizedBond[bond]) {
+				mAromaticBonds++;
+				for (int i=0; i<2; i++) {
+					if (!isAromaticAtom[mMol.getBondAtom(i, bond)]) {
+						isAromaticAtom[mMol.getBondAtom(i, bond)] = true;
+						mAromaticAtoms++;
+						}
+					}
+				}
+			}
+
+		if (mAromaticBonds == 0)
             return true;
 
 		mAllHydrogensAreExplicit = allHydrogensAreExplicit;
@@ -155,20 +146,23 @@ public class AromaticityResolver {
 				}
 			}
 
-		protectAmideBonds(ringSet);
+		protectAmideBonds(ringSet);	// using rules for detecting aromatic (thio-)amide bonds
 		protectDoubleBondAtoms();
 
 		promoteObviousBonds();
 
         while (mAromaticBonds != 0) {
             boolean bondsPromoted = false;
+
+			// promote all delocalized bonds, which are part of two delocalized rings
+			// and therefore have 4 attached delocalized neighbor bonds.
             for (int bond=0; bond<mMol.getBonds(); bond++) {
-                if (mIsAromaticBond[bond]) {
+                if (mIsDelocalizedBond[bond]) {
                     int aromaticConnBonds = 0;
                     for (int j=0; j<2; j++) {
                         int bondAtom = mMol.getBondAtom(j, bond);
                         for (int k=0; k<mMol.getConnAtoms(bondAtom); k++)
-                            if (mIsAromaticBond[mMol.getConnBond(bondAtom, k)])
+                            if (mIsDelocalizedBond[mMol.getConnBond(bondAtom, k)])
                                 aromaticConnBonds++;
                         }
     
@@ -188,7 +182,7 @@ public class AromaticityResolver {
                         boolean isAromaticRing = true;
                         int[] ringBond = ringSet.getRingBonds(ring);
                         for (int i=0; i<6; i++) {
-                            if (!mIsAromaticBond[ringBond[i]]) {
+                            if (!mIsDelocalizedBond[ringBond[i]]) {
                                 isAromaticRing = false;
                                 break;
                                 }
@@ -208,7 +202,7 @@ public class AromaticityResolver {
                 // find and promote one aromatic bond
                 // (should never happen, but to prevent an endless loop nonetheless)
                 for (int bond=0; bond<mMol.getBonds(); bond++) {
-                    if (mIsAromaticBond[bond]) {
+                    if (mIsDelocalizedBond[bond]) {
                         promoteBond(bond);
                         promoteObviousBonds();
                         bondsPromoted = true;
@@ -224,7 +218,7 @@ public class AromaticityResolver {
 
 	private boolean isAromaticAtom(int atom) {
 		for (int i=0; i<mMol.getConnAtoms(atom); i++)
-			if (mIsAromaticBond[mMol.getConnBond(atom, i)])
+			if (mIsDelocalizedBond[mMol.getConnBond(atom, i)])
 				return true;
 		return false;
 		}
@@ -234,8 +228,8 @@ public class AromaticityResolver {
         mAromaticAtoms--;
 		for (int i=0; i<mMol.getConnAtoms(atom); i++) {
 			int connBond = mMol.getConnBond(atom, i);
-            if (mIsAromaticBond[connBond]) {
-                mIsAromaticBond[connBond] = false;
+            if (mIsDelocalizedBond[connBond]) {
+                mIsDelocalizedBond[connBond] = false;
                 mAromaticBonds--;
                 }
             }
@@ -252,8 +246,8 @@ public class AromaticityResolver {
 			int bondAtom = mMol.getBondAtom(i, bond);
 			for (int j=0; j<mMol.getConnAtoms(bondAtom); j++) {
 				int connBond = mMol.getConnBond(bondAtom, j);
-                if (mIsAromaticBond[connBond]) {
-                    mIsAromaticBond[connBond] = false;
+                if (mIsDelocalizedBond[connBond]) {
+                    mIsDelocalizedBond[connBond] = false;
                     mAromaticBonds--;
                     }
                 }
@@ -267,14 +261,14 @@ public class AromaticityResolver {
 		do {
 			terminalAromaticBondFound = false;
 			for (int bond=0; bond<mMol.getBonds(); bond++) {
-				if (mIsAromaticBond[bond]) {
+				if (mIsDelocalizedBond[bond]) {
 					boolean isTerminalAromaticBond = false;
 					for (int i=0; i<2; i++) {
                         int bondAtom = mMol.getBondAtom(i, bond);
 					    boolean aromaticNeighbourFound = false;
 						for (int j=0; j<mMol.getConnAtoms(bondAtom); j++) {
 							if (bond != mMol.getConnBond(bondAtom, j)
-							 && mIsAromaticBond[mMol.getConnBond(bondAtom, j)]) {
+							 && mIsDelocalizedBond[mMol.getConnBond(bondAtom, j)]) {
 								aromaticNeighbourFound = true;
 								break;
 								}
@@ -299,13 +293,13 @@ public class AromaticityResolver {
         // protect query features cBondQFDelocalized in open aromatic chains of fragments
 	    // with incomplete aromatic rings
         for (int bond=0; bond<mMol.getBonds(); bond++) {
-            if (mIsAromaticBond[bond]) {
+            if (mIsDelocalizedBond[bond]) {
                 for (int i=0; i<2; i++) {
                     int terminalAtom = mMol.getBondAtom(i, bond);
                     boolean aromaticNeighbourFound = false;
                     for (int j=0; j<mMol.getConnAtoms(terminalAtom); j++) {
                         if (bond != mMol.getConnBond(terminalAtom, j)
-                         && mIsAromaticBond[mMol.getConnBond(terminalAtom, j)]) {
+                         && mIsDelocalizedBond[mMol.getConnBond(terminalAtom, j)]) {
                             aromaticNeighbourFound = true;
                             break;
                             }
@@ -314,13 +308,13 @@ public class AromaticityResolver {
                         int terminalBond = bond;
                         int bridgeAtom = mMol.getBondAtom(1-i, bond);
                         while (terminalBond != -1) {
-                            mIsAromaticBond[terminalBond] = false;
+                            mIsDelocalizedBond[terminalBond] = false;
                             mAromaticBonds--;
                             mMol.setBondType(terminalBond, Molecule.cBondTypeDelocalized);
                             terminalBond = -1;
                             terminalAtom = bridgeAtom;
                             for (int j=0; j<mMol.getConnAtoms(terminalAtom); j++) {
-                                if (mIsAromaticBond[mMol.getConnBond(terminalAtom, j)]) {
+                                if (mIsDelocalizedBond[mMol.getConnBond(terminalAtom, j)]) {
                                     if (terminalBond == -1) {
                                         terminalBond = mMol.getConnBond(terminalAtom, j);
                                         bridgeAtom = mMol.getConnAtom(terminalAtom, j);
@@ -342,7 +336,7 @@ public class AromaticityResolver {
 
 	private void protectAmideBonds(RingCollection ringSet) {
 		for (int bond=0; bond<mMol.getBonds(); bond++) {
-			if (mIsAromaticBond[bond] && ringSet.qualifiesAsAmideTypeBond(bond)) {
+			if (mIsDelocalizedBond[bond] && ringSet.qualifiesAsAmideTypeBond(bond)) {
 				protectAtom(mMol.getBondAtom(0, bond));
 				protectAtom(mMol.getBondAtom(1, bond));
 				}
@@ -356,7 +350,7 @@ public class AromaticityResolver {
 					int atom = mMol.getBondAtom(i, bond);
 					for (int j=0; j<mMol.getConnAtoms(atom); j++) {
 						int connBond = mMol.getConnBond(atom, j);
-						if (mIsAromaticBond[connBond]) {
+						if (mIsDelocalizedBond[connBond]) {
 							protectAtom(atom);
 							break;
 							}
@@ -377,10 +371,10 @@ public class AromaticityResolver {
 		boolean[] isAromaticRingAtom = new boolean[mMol.getAtoms()];
 		for (int ring=0; ring<ringSet.getSize(); ring++) {
 			int ringSize = ringSet.getRingSize(ring);
-			if (ringSize >= 5 && ringSize <= 7) {
+			if (ringSize == 3 || ringSize == 5 || ringSize == 6 || ringSize == 7) {
 				boolean isDelocalized = true;
 				for (int bond:ringSet.getRingBonds(ring)) {
-					if (!mIsAromaticBond[bond]) {
+					if (!mIsDelocalizedBond[bond]) {
 						isDelocalized = false;
 						break;
 						}
@@ -423,9 +417,9 @@ public class AromaticityResolver {
 						for (int atom : ringSet.getRingAtoms(ring)) {
 							if (atom == leakAtom) {
 								if (ringSize == 5)
-									checkAtomTypeLeak5(atom, true);
+									checkAtomTypeLeak5(atom, true);	// 5-membered
 								else
-									checkAtomTypeLeak7(atom, true);
+									checkAtomTypeLeak7(atom, true);	// 3- or 7-membered
 
 								protectAtom(atom);
 								}
@@ -448,7 +442,7 @@ public class AromaticityResolver {
 			int atom1 = mMol.getBondAtom(0, bond);
 			int atom2 = mMol.getBondAtom(1, bond);
 			if (!isAromaticRingAtom[atom1] && !isAromaticRingAtom[atom2]) {
-				if (mIsAromaticBond[bond]) {
+				if (mIsDelocalizedBond[bond]) {
 					delocalizedNeighbourCount[atom1]++;
 					delocalizedNeighbourCount[atom2]++;
 					}
@@ -472,7 +466,7 @@ public class AromaticityResolver {
 				int highest = 0;
 				while (current <= highest) {
 					for (int i=0; i<mMol.getConnAtoms(graphAtom[current]); i++) {
-						if (mIsAromaticBond[mMol.getConnBond(graphAtom[current], i)]) {
+						if (mIsDelocalizedBond[mMol.getConnBond(graphAtom[current], i)]) {
 							int candidate = mMol.getConnAtom(graphAtom[current], i);
 							if ((current == 0 || candidate != graphAtom[current-1])
 							 && delocalizedNeighbourCount[candidate] != 0) {
@@ -503,7 +497,7 @@ public class AromaticityResolver {
 				int highest = 0;
 				while (current <= highest) {
 					for (int i = 0; i < mMol.getConnAtoms(graphAtom[current]); i++) {
-						if (mIsAromaticBond[mMol.getConnBond(graphAtom[current], i)]) {
+						if (mIsDelocalizedBond[mMol.getConnBond(graphAtom[current], i)]) {
 							int candidate = mMol.getConnAtom(graphAtom[current], i);
 							if (!atomHandled[candidate]) {
 								graphAtom[++highest] = candidate;
@@ -563,20 +557,33 @@ public class AromaticityResolver {
 	 */
 	private boolean checkAtomTypePi1(int atom, boolean correctCharge) {
 		int atomicNo = mMol.getAtomicNo(atom);
-		if (atomicNo <5 || atomicNo > 8)
-			return false;
-
-		int freeValence = mMol.getFreeValence(atom);
-		if (mAllHydrogensAreExplicit && freeValence == 1)
-			return true;
-		if (!mAllHydrogensAreExplicit && freeValence >= 1)
-			return true;
-
-		if (atomicNo != 6) {
-			if (freeValence == 0 && mMol.getAtomCharge(atom) == 0) {
-				if (correctCharge)
-					mMol.setAtomCharge(atom, atomicNo < 6 ? -1 : 1);
+		if ((atomicNo >=5 && atomicNo <= 8)
+				|| atomicNo == 15 || atomicNo == 16 || atomicNo == 33 || atomicNo == 34) {	// P,S,As,Se
+			int freeValence = mMol.getFreeValence(atom);
+			if (freeValence == 1 || freeValence == 2)	// we allow one more free valence, because the atom may have a missing charge
 				return true;
+
+			if (mMol.getAtomCharge(atom) == 0) {
+				if ((atomicNo == 15 || atomicNo == 33) && freeValence == 3) {
+					if (correctCharge)
+						mMol.setAtomCharge(atom, 1);
+					return true;
+					}
+				if ((atomicNo == 16 || atomicNo == 34) && freeValence == 4) {
+					if (correctCharge)
+						mMol.setAtomCharge(atom, 1);
+					return true;
+					}
+				if (atomicNo == 5 && freeValence == 0) {
+					if (correctCharge)
+						mMol.setAtomCharge(atom, -1);
+					return true;
+					}
+				if ((atomicNo == 7 || atomicNo == 8) && freeValence == 0) {
+					if (correctCharge)
+						mMol.setAtomCharge(atom, 1);
+					return true;
+					}
 				}
 			}
 
@@ -592,7 +599,7 @@ public class AromaticityResolver {
 	 */
 	private int checkAtomTypeLeak5(int atom, boolean correctCharge) {
 		if (mMol.getAtomicNo(atom) == 7) {
-			if (mMol.getAllConnAtoms(atom) > 2)
+			if (mMol.getAllConnAtoms(atom) == 3)
 				return 3;
 			if (mMol.getConnAtoms(atom) == 2)
 				return 2;
@@ -615,7 +622,7 @@ public class AromaticityResolver {
 
 	/**
 	 * Checks, whether the atom is compatible with that aromatic atom of
-	 * a 7-membered ring that supplies the empty orbital.
+	 * a 3- or 7-membered ring that supplies the empty orbital.
 	 * @param atom
 	 * @param correctCharge if true then may add a charge to make the atom compatible
 	 * @return 0 (not compatible) or priority to be used (higher numbers have higher priority)

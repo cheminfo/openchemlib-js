@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import com.actelion.research.chem.*;
 import com.actelion.research.chem.contrib.*;
+import com.actelion.research.chem.coords.CoordinateInventor;
 import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
@@ -1686,12 +1687,19 @@ public int getMaxValence(int atom) {
 
 /**
  * This is the maximum valence correction caused by atom charge
- * or radical status, e.g. N+ -> 1; N- -> -1; Al+ -> -1; C+,C- -> -1
+ * or radical status, e.g. N+ -> 1; N- -> -1; Al+ -> -1; C+,C- -> -1.
+ * In some cases, where the atomicNo can have multiple valences,
+ * the influence of a charge depends on the atom's actual valence, e.g.
+ * valence corrections for R3P(+) and R5p(+) are 1 and -1, respectively.
+ * Criteria are:<br>
+ * -in the given valence state is there a lone pair that can be protonated<br>
+ * -can we introduce a negative substituent as in BH3 or PF5 vs. SF6<br>
  * @param atom
+ * @param occupiedValence
  * @return
  */
-public int getElectronValenceCorrection(int atom) {
-	return oclMolecule.getElectronValenceCorrection(atom);
+public int getElectronValenceCorrection(int atom, int occupiedValence) {
+	return oclMolecule.getElectronValenceCorrection(atom, occupiedValence);
 }
 
 
@@ -1874,16 +1882,6 @@ public double getAverageBondLength(boolean nonHydrogenBondsOnly) {
 }
 
 /**
- * Creates an array that maps connAtoms/connBonds sorted by atom indices.
- * getConnAtom(atom, getSortedConnMap(atom, 0)) retrieves that neighbour
- * of atom with the lowest atom index, i.e. that is the first in the atom table.
- * @return neighbour index map
- */
-public int[] getSortedConnMap(int atom) {
-	return oclMolecule.getSortedConnMap(atom);
-}
-
-/**
  * The sum of bond orders of explicitly connected neighbour atoms including explicit hydrogen.
  * @param atom
  * @return explicitly used valence
@@ -1997,12 +1995,14 @@ public int[] getFragmentAtoms(int rootAtom) {
  * non-marked atoms receive the fragment number -1 and are not considered a connection between
  * marked atoms potentially causing two marked atoms to end up in different fragments, despite
  * sharing the same fragment.
+ * Metal ligand bonds may or may not be considered a connection.
  * @param fragmentNo array at least mAllAtoms big to receive atom fragment indexes
  * @param markedAtomsOnly if true, then only atoms marked with setAtomMarker() are considered
+ * @param considerMetalBonds
  * @return number of disconnected fragments
  */
-public int getFragmentNumbers(int[] fragmentNo, boolean markedAtomsOnly) {
-	return oclMolecule.getFragmentNumbers(fragmentNo, markedAtomsOnly);
+public int getFragmentNumbers(int[] fragmentNo, boolean markedAtomsOnly, boolean considerMetalBonds) {
+	return oclMolecule.getFragmentNumbers(fragmentNo, markedAtomsOnly, considerMetalBonds);
 }
 
 /**

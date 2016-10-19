@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
@@ -354,14 +355,51 @@ public class Molecule implements Serializable {
 	 101,	186,	163,	 99 };					//  Thr,Trp,Tyr,Val,
 
 	public static final int cDefaultAtomValence = 6;
-	public static final byte cAtomValence[][] = { null,
-		{ 1 }, { 0 }, { 1 }, { 2 }, { 3 }, { 4 }, { 3 }, { 2 }, { 1 }, { 0 },   // H to Ne
-		{ 1 }, { 2 }, { 3 }, { 4 }, { 3,5 }, { 2,4,6 }, { 1,3,5,7 }, { 0 },	 // Na to Ar
-		{ 1 }, { 2 }, null, null, null, null, null, null, null, null,		   // K to Ni
-		null, null, { 2,3 }, { 2,4 }, { 3,5 }, { 2,4,6 }, { 1,3,5,7 }, { 0,2 }, // Cu to Kr
-		{ 1,2,3,4 }, { 2 }, null, null, null, null, null, null, null, null,	 // Rb to Pd
-		null, null, { 1,2,3 }, { 2,4 }, { 3,5 }, { 2,4,6 }, { 1,3,5,7 },		// Ag to I
-		{ 0,2,4,6 }, { 1 }, { 2 } };														 // Xe to Ba
+	public static final byte cAtomValence[][] = {null,
+			{1}, {0}, {1}, {2}, {3}, {4}, {3}, {2}, {1}, {0},			// H to Ne
+			{1}, {2}, {3}, {4}, {3, 5}, {2, 4, 6}, {1, 3, 5, 7}, {0},	// Na to Ar
+			{1}, {2}, null, null, null, null, null, null, null, null,	// K to Ni
+			null, null, {2, 3}, {2, 4}, {3, 5}, {2, 4, 6}, {1, 3, 5, 7}, {0, 2}, // Cu to Kr
+			{1, 2, 3, 4}, {2}, null, null, null, null, null, null, null, null, // Rb to Pd
+			null, null, {1, 2, 3}, {2, 4}, {3, 5}, {2, 4, 6}, {1, 3, 5, 7}, // Ag to I
+			{0, 2, 4, 6}, {1}, {2},										// Xe to Ba
+			null, null, null, null, null, null, null, null, null, null, // La to Dy
+			null, null, null, null, null, null, null, null, null, null, // Ho to Os
+			null, null, null, null, null, null, null, null, null, null, // Ir to Rn
+			null, null, null, null, null, null, null, null, null, null, // Fr to Cm
+			null, null, null, null, null, null, null, null, null, null, // Bk to Sg
+			null, null, null, null, null, null, null, null, null, null, // Bh to Lv
+			null, null, null, null, null, null, null, null, null, null, // Uus to 126
+			null, null, null, null, null, null, null, null, null, null,	// 127 to R5
+			null, null, null, null, null, null, null, null, null, null, // R6 to R15
+			null, null, null, null, null, null, null, null, null, null,	// R16 to 156
+			null, null, null, null, null, null, null, null, null, null, // D to 166
+			null, null, null, null,										// 167 to 170
+			{2}, {2}, {2}, {2}, {3}, {2}, {2}, {2}, {2}, {2},			// Ala to Ile
+			{2}, {2}, {2}, {2}, {2}, {2}, {2}, {2}, {2}, {2},			// Leu to Val
+	};
+
+	// Taken from http://www.cabrillo.edu/~aromero/Common%20Files/Periodic%20Table%20(Common%20Ionic%20Charges).pdf
+	public static final byte cCommonOxidationState[][] = { null,
+			{1}, null, {1}, {2}, null, null,					//  H,  He, Li, Be, B,  C,
+			{-3}, {-2}, {-1}, null, {1}, {2},					//  N,  O,  F,  Ne, Na, Mg,
+			{3}, null, {-3}, {-2}, {-1}, null,					//  Al, Si, P,  S,  Cl, Ar,
+			{1}, {2}, {3}, {2,3,4}, {2,3,4,5}, {2,3,6},			//  K,  Ca, Sc, Ti, V,  Cr,
+			{2,3,4,7}, {2,3}, {2,3}, {2,3}, {1, 2}, {2},		//  Mn, Fe, Co, Ni, Cu, Zn,
+			{3}, {2, 4}, {-3,3,5}, {-2}, {-1}, null,			//  Ga, Ge, As, Se, Br, Kr,
+			{1}, {2}, {3}, {4}, {3,5}, {6},						//  Rb, Sr, Y,  Zr, Nb, Mo,
+			{4,6,7}, {3}, {3}, {2,4}, {1}, {2},					//  Tc, Ru, Rh, Pd, Ag, Cd,
+			{3}, {2,4}, {-3,3,5}, {-2,4,6}, {-1}, null,			//  In, Sn, Sb, Te, I,  Xe,
+			{1}, {2}, {3}, {3,4}, {3}, {3},						//  Cs, Ba, La ,Ce, Pr, Nd,
+			{3}, {2,3}, {2,3}, {3}, {3}, {3},					//  Pm, Sm, Eu, Gd, Tb, Dy,
+			{3}, {3}, {3}, {2,3}, {3}, {4},						//  Ho, Er, Tm, Yb, Lu, Hf,
+			{5}, {6}, {4,6,7}, {3, 4}, {3,4}, {2,4},			//  Ta, W,  Re, Os, Ir, Pt,
+			{1,3}, {1,2}, {1,3}, {2,4}, {3,5}, {-2,2,4},		//  Au, Hg, Tl, Pb, Bi, Po,
+			{-1,1}, null, {1}, {2}, {3}, {4},					//  At, Rn, Fr, Ra, Ac, Th,
+			{4,5}, {3,4,5,6}, {3,4,5,6}, {3,4,5,6}, {3,4,5,6},	//  Pa, U,  Np, Pu, Am,
+			{3}, {3,4}, {3}, {3}, {3}, {2,3},					//  Cm, Bk, Cf, Es, Fm, Md,
+			{2,3}, {3}											//  No, Lr
+		};
 
 	transient protected int mMaxAtoms;
 	transient protected int mMaxBonds;
@@ -1166,7 +1204,7 @@ public class Molecule implements Serializable {
 
 	/**
 	 * Copies name,isFragment,chirality and validity of parity & CIP flags.
-	 * When copying molecules parts only or when changing the atom order during addPasteHandler,
+	 * When copying molecules parts only or when changing the atom order during copy,
 	 * then atom parities or CIP parities may not be valid anymore and
 	 * invalidateHelperArrays([affected bits]) should be called in these cases.
 	 * @param destMol
@@ -1938,7 +1976,7 @@ public class Molecule implements Serializable {
 
 	/**
 	 * Calculates and returns the mean bond length. If the molecule has
-	 * no bonds, then the average distance between unconnected atoms is
+	 * no bonds, then the smallest distance between unconnected atoms is
 	 * returned. If is has less than 2 atoms, cDefaultAverageBondLength is returned.
 	 * @return
 	 */
@@ -1949,7 +1987,7 @@ public class Molecule implements Serializable {
 
 	/**
 	 * Calculates and returns the mean bond length of all bonds 0...bonds.
-	 * If there are no bonds, then the average distance between unconnected atoms is
+	 * If there are no bonds, then the smallest distance between unconnected atoms is
 	 * returned. If we have less than 2 atoms, cDefaultAverageBondLength is returned.
 	 * @param atoms atom indexes >= this are not considered
 	 * @param bonds bond indexes >= this are not considered
@@ -1962,40 +2000,51 @@ public class Molecule implements Serializable {
 
 	/**
 	 * Calculates and returns the mean bond length of all bonds 0...bonds.
-	 * If there are no bonds, then the average distance between unconnected atoms is
-	 * returned. If we have less than 2 atoms, defaultBondLength is returned.
+	 * If there are no bonds, then the smallest distance between unconnected atoms is
+	 * determined and a reasonable potential bond length derived from that is returned.
+	 * If we have less than 2 atoms, defaultBondLength is returned.
 	 * @param atoms atom indexes >= this are not considered
 	 * @param bonds bond indexes >= this are not considered
 	 * @return
 	 */
 	public double getAverageBondLength(int atoms, int bonds, double defaultBondLength) {
-		for (int bond=0; bond<bonds; bond++)
-			if ((mBondQueryFeatures[bond] & cBondQFBridge) != 0)
-				bonds--;
+		boolean considerMetalBonds = false;
 
-		if (bonds == 0) {
+		int consideredBonds = 0;
+		while (consideredBonds == 0 && !considerMetalBonds) {
+			for (int bond=0; bond<bonds; bond++)
+				if ((considerMetalBonds || mBondType[bond] != cBondTypeMetalLigand)
+				 && (mBondQueryFeatures[bond] & cBondQFBridge) == 0)
+					consideredBonds++;
+
+			if (consideredBonds == 0)
+				considerMetalBonds = true;
+			}
+
+		if (consideredBonds == 0) {
 				// since this function is used to get an idea about the scale
-				// of the molecule return as approximation a mean atom distance
+				// of the molecule return as approximation the smallest atom distance
 			if (atoms < 2)
 				return defaultBondLength;
 
-			double sum = 0.0;
-			int count = 0;
+			double lowDistance = Double.MAX_VALUE;
 			for (int atom1=1; atom1<atoms; atom1++) {
 				for (int atom2=0; atom2<atom1; atom2++) {
-					sum += mCoordinates[atom1].distance(mCoordinates[atom2]);
-					count++;
+					double distance = mCoordinates[atom1].distance(mCoordinates[atom2]);
+					if (distance > 0 && distance < lowDistance)
+						lowDistance = distance;
 					}
 				}
-			return Math.min(defaultBondLength, Math.sqrt(atoms) * sum / (2f * count));
+			return (lowDistance != Double.MAX_VALUE) ? 0.6 * lowDistance : defaultBondLength;
 			}
 
 		double avblSum = 0.0;
 		for (int bond=0; bond<bonds; bond++) {
-			if ((mBondQueryFeatures[bond] & cBondQFBridge) == 0)
+			if ((considerMetalBonds || mBondType[bond] != cBondTypeMetalLigand)
+			 && (mBondQueryFeatures[bond] & cBondQFBridge) == 0)
 				avblSum += mCoordinates[mBondAtom[1][bond]].distance(mCoordinates[mBondAtom[0][bond]]);
 			}
-		return avblSum / bonds;
+		return avblSum / consideredBonds;
 		}
 
 
@@ -3289,17 +3338,25 @@ public class Molecule implements Serializable {
 	 * @return
 	 */
 	public int getMaxValence(int atom) {
-		return getMaxValenceUncharged(atom) + getElectronValenceCorrection(atom);
+		int valence = getMaxValenceUncharged(atom);
+		return valence + getElectronValenceCorrection(atom, valence);
 		}
 
 
 	/**
 	 * This is the maximum valence correction caused by atom charge
-	 * or radical status, e.g. N+ -> 1; N- -> -1; Al+ -> -1; C+,C- -> -1
+	 * or radical status, e.g. N+ -> 1; N- -> -1; Al+ -> -1; C+,C- -> -1.
+	 * In some cases, where the atomicNo can have multiple valences,
+	 * the influence of a charge depends on the atom's actual valence, e.g.
+	 * valence corrections for R3P(+) and R5p(+) are 1 and -1, respectively.
+	 * Criteria are:<br>
+	 * -in the given valence state is there a lone pair that can be protonated<br>
+	 * -can we introduce a negative substituent as in BH3 or PF5 vs. SF6<br>
 	 * @param atom
+	 * @param occupiedValence
 	 * @return
 	 */
-	public int getElectronValenceCorrection(int atom) {
+	public int getElectronValenceCorrection(int atom, int occupiedValence) {
 		if (mAtomicNo[atom] >= 171 && mAtomicNo[atom] <= 190)
 			return 0;
 
@@ -3318,12 +3375,40 @@ public class Molecule implements Serializable {
 			if ((mAtomQueryFeatures[atom] & cAtomQFCharge) == cAtomQFNotCharge0+cAtomQFNotChargeNeg)
 				charge = 1;
 			}
-		if (mAtomicNo[atom] == 6)
-			correction -= Math.abs(charge);
-		else if (isElectronegative(atom))
+		if (mAtomicNo[atom] == 7		// N
+		 || mAtomicNo[atom] == 8		// O
+		 || mAtomicNo[atom] == 9)		// F
 			correction += charge;
-		else
+		else if (mAtomicNo[atom] == 6	// C
+			  || mAtomicNo[atom] == 14	// Si
+			  || mAtomicNo[atom] == 32)	// Ge
+			correction -= Math.abs(charge);
+		else if (mAtomicNo[atom] == 15		// P
+			  || mAtomicNo[atom] == 33) {	// As
+			if (occupiedValence - correction - charge <= 3)
+				correction += charge;
+			else
+				correction -= charge;
+			}
+		else if (mAtomicNo[atom] == 16		// S
+			  || mAtomicNo[atom] == 34		// Se
+			  || mAtomicNo[atom] == 52) {	// Te
+			if (occupiedValence - correction - charge <= 4)
+				correction += charge;
+			else
+				correction -= Math.abs(charge);
+			}
+		else if (mAtomicNo[atom] == 17		// Cl
+			  || mAtomicNo[atom] == 35		// Br
+			  || mAtomicNo[atom] == 53) {   // I
+			if (occupiedValence - correction - charge <= 5)
+				correction += charge;
+			else
+				correction -= Math.abs(charge);
+			}
+		else {	// B, Al, other metals
 			correction -= charge;
+			}
 
 		return correction;
 		}
@@ -3410,7 +3495,7 @@ public class Molecule implements Serializable {
 		return atomicNo == 1
 			|| (atomicNo >=  5 && atomicNo <=  9)	// B,C,N,O,F
 			|| (atomicNo >= 14 && atomicNo <= 17)	// Si,P,S,Cl
-			|| (atomicNo >= 33 && atomicNo <= 35)	// As,Se,Br
+			|| (atomicNo >= 32 && atomicNo <= 35)	// Ge,As,Se,Br
 			|| (atomicNo >= 52 && atomicNo <= 53);	// Te,I
 		}
 

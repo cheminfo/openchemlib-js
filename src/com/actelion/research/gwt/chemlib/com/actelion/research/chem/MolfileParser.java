@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 /*
@@ -56,7 +57,9 @@ public class MolfileParser
 	public static boolean debug = false;
 	private StereoMolecule mMol;
 	private TreeMap<Integer,Integer> mAtomIndexMap,mBondIndexMap;
-	
+	private boolean mTreatAnyAsMetalBond,mDeduceMissingCharges;
+
+
 	/**
 	 * Constructor of a MolFileParser, which will mirror Y,Z coordinates
 	 */
@@ -91,6 +94,9 @@ public class MolfileParser
 				TRACE("Error [readMoleculeFromBuffer]: No Comment Line\n");
 				return false;
 			}
+
+			mTreatAnyAsMetalBond = line.contains("From CSD data. Using bond type 'Any'");
+			mDeduceMissingCharges = line.contains("From CSD data.");
 
 			/*** Counts line ***/
 			if(null == (line = reader.readLine())){
@@ -395,6 +401,11 @@ public class MolfileParser
 			e.printStackTrace();
 			System.err.println("error reading molfile " + e);
 			return false;
+		}
+
+		if (mDeduceMissingCharges) {
+			introduceObviousMetalBonds();
+			deduceMissingCharges();
 		}
 
 		// needs to be done for molfiles with chiral=0 that have stereo
@@ -919,6 +930,10 @@ public class MolfileParser
 					case 4:
 						realBondType = Molecule.cBondTypeDelocalized;
 						break;
+					case 8:
+						if (mTreatAnyAsMetalBond)
+							realBondType = Molecule.cBondTypeMetalLigand;
+						break;
 				}
 				break;
 		}
@@ -942,8 +957,9 @@ public class MolfileParser
 					queryFeatures |= Molecule.cBondQFDouble | Molecule.cBondQFDelocalized;
 					break;
 				case 8:
-					queryFeatures |= Molecule.cBondQFSingle | Molecule.cBondQFDouble
-						| Molecule.cBondQFTriple | Molecule.cBondQFDelocalized;
+					if (!mTreatAnyAsMetalBond)
+						queryFeatures |= Molecule.cBondQFSingle | Molecule.cBondQFDouble
+										| Molecule.cBondQFTriple | Molecule.cBondQFDelocalized;
 					break;
 			}
 		}
@@ -1025,5 +1041,93 @@ public class MolfileParser
 		if(debug){
 			System.out.println(s);
 		}
+	}
+
+	/**
+	 * If we have single atoms from a metal to an electronegative atom
+	 * that therefore exceeds its max valence, then reduce the bond to a
+	 * metal ligand bond.
+	 */
+	private void introduceObviousMetalBonds() {
+		int[] occupiedValence = new int[mMol.getAllAtoms()];
+
+		// initialize with 1 for all delocalized atoms
+		for (int bond=0; bond<mMol.getAllBonds(); bond++)
+			if (mMol.getBondType(bond) == Molecule.cBondTypeDelocalized)
+				for (int i=0; i<2; i++)
+					occupiedValence[mMol.getBondAtom(i, bond)] = 1;
+
+		// all bond orders
+		for (int bond=0; bond<mMol.getAllBonds(); bond++) {
+			int order = mMol.getBondOrder(bond);
+			for (int i=0; i<2; i++)
+				occupiedValence[mMol.getBondAtom(i, bond)] += order;
+		}
+
+		for (int bond=0; bond<mMol.getAllBonds(); bond++) {
+			if (mMol.getBondOrder(bond) == 1) {
+				for (int i=0; i<2; i++) {
+					int metalAtom = mMol.getBondAtom(1-i, bond);
+					if (mMol.isMetalAtom(metalAtom)) {
+						int atom = mMol.getBondAtom(i, bond);
+						if (mMol.isElectronegative(atom)
+						 && occupiedValence[atom] > mMol.getMaxValence(atom)) {
+							mMol.setBondType(bond, Molecule.cBondTypeMetalLigand);
+							continue;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * SD-Files exported from the CSD database contain aromatic bonds rather than single/double bonds.
+	 * Charges of aromatic systems are usually not given (e.g. in cyclopentadienyl(-) or pyridinium(+))
+	 * and counter ions carry reduced charges to compensate (e.g. Fe in ferrocene wrongly has no charge assigned).
+	 * To prevent valence problems and wrong idcode encoding we need to repair.
+	 */
+	private void deduceMissingCharges() {
+		int[] chargeChange = new int[mMol.getAllAtoms()];
+		for (int atom=0; atom<mMol.getAllAtoms(); atom++)
+			chargeChange[atom] = -mMol.getAtomCharge(atom);
+
+		new AromaticityResolver(mMol).locateDelocalizedDoubleBonds(null, true, false);
+
+		for (int atom=0; atom<mMol.getAllAtoms(); atom++)
+			chargeChange[atom] += mMol.getAtomCharge(atom);
+
+		for (int atom=0; atom<mMol.getAllAtoms(); atom++) {
+			if (chargeChange[atom] != 0) {
+				int chargeToDistribute = -chargeChange[atom];
+
+				for (int bond=0; bond<mMol.getAllBonds(); bond++) {
+					for (int i=0; i<2; i++) {
+						if (chargeToDistribute > 0
+						 && mMol.getBondType(bond) == Molecule.cBondTypeMetalLigand
+						 && mMol.getBondAtom(1-i, bond) == atom) {
+							int metal = mMol.getBondAtom(i, bond);
+							if (mMol.isMetalAtom(metal)) {
+								int maxCharge = getMaxOxidationState(metal);
+								int charge = mMol.getAtomCharge(metal);
+								if (charge < maxCharge) {
+									int dif = Math.min(chargeToDistribute, maxCharge - charge);
+									mMol.setAtomCharge(metal, charge + dif);
+									chargeToDistribute -= dif;
+								}
+							}
+						}
+					}
+				}
+
+			}
+		}
+	}
+
+	private int getMaxOxidationState(int metal) {
+		int atomicNo = mMol.getAtomicNo(metal);
+		byte[] os = (atomicNo < Molecule.cCommonOxidationState.length) ?
+				Molecule.cCommonOxidationState[atomicNo] : null;
+		return (os == null) ? 0 : os[os.length-1];
 	}
 }
