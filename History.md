@@ -1,3 +1,9 @@
+4.5.0 / 2016-10-19
+==================
+
+* editor: fixed regression in chain placement
+* update OCL to 2016_10_18-04_00_45
+
 4.4.2 / 2016-09-23
 ==================
 
