@@ -71,6 +71,9 @@ public class Canonizer {
 	// Assign parities to tetrahedral nitrogen (useful in crystals or at low temp, when N inversion is frozen out)
 	public static final int ASSIGN_PARITIES_TO_TETRAHEDRAL_N = 32;
 
+	// Enforces creation of 3D-coordinate encoding even if all z-coords are 0.0
+	public static final int COORDS_ARE_3D = 64;
+
 	protected static final int cIDCodeVersion2 = 8;
 		// productive version till May 2006 based on the molfile version 2
 
@@ -155,10 +158,12 @@ public class Canonizer {
 	 * Runs a canonicalization process molecule creating a unique atom ranking
 	 * taking stereo features, ESR settings and query features into account.
 	 * If mode includes ENCODE_ATOM_CUSTOM_LABELS, than custom atom labels are
-	 * used for atom ranking and are encoded into the idcode.
-	 * 
+	 * used for atom ranking and are encoded into the idcode.<br>
+	 * If mode includes COORDS_ARE_3D, then getEncodedCoordinates() always returns
+	 * a 3D-encoding even if all z-coordinates are 0.0. Otherwise coordinates are
+	 * encoded in 3 dimensions only, if at least one of the z-coords is not 0.0.
 	 * @param mol
-	 * @param mode 0 or one or more of CONSIDER...TOPICITY, CREATE_SYMMETRY_RANK, ENCODE_ATOM_CUSTOM_LABELS, ASSIGN_PARITIES_TO_TETRAHEDRAL_N
+	 * @param mode 0 or one or more of CONSIDER...TOPICITY, CREATE_SYMMETRY_RANK, ENCODE_ATOM_CUSTOM_LABELS, ASSIGN_PARITIES_TO_TETRAHEDRAL_N, COORDS_ARE_3D
 	 */
 	public Canonizer(ExtendedMolecule mol, int mode) {
 		if (mol.getAllAtoms()>MAX_ATOMS)
@@ -172,10 +177,14 @@ public class Canonizer {
 		mMol.ensureHelperArrays(Molecule.cHelperRings);
 		canFindNitrogenQualifyingForParity();
 
-		for (int atom=0; atom<mMol.getAtoms(); atom++) {
-			if (mMol.getAtomZ(atom) != 0.0) {
-				mZCoordinatesAvailable = true;
-				break;
+		mZCoordinatesAvailable = ((mode & COORDS_ARE_3D) != 0);
+
+		if (!mZCoordinatesAvailable) {
+			for (int atom=0; atom<mMol.getAtoms(); atom++) {
+				if (mMol.getAtomZ(atom) != 0.0) {
+					mZCoordinatesAvailable = true;
+					break;
+					}
 				}
 			}
 
@@ -2610,7 +2619,8 @@ System.out.println();
 System.out.print("BondOrders:");
 */
 		for (int bond=0; bond<mMol.getBonds(); bond++) {
-			int bondOrder = ((mMol.getBondQueryFeatures(bond) & Molecule.cBondQFBridge) != 0) ?
+			int bondOrder = ((mMol.getBondQueryFeatures(mGraphBond[bond]) & Molecule.cBondQFBridge) != 0
+						  || mMol.getBondType(mGraphBond[bond]) == Molecule.cBondTypeMetalLigand) ?
 							1 : (mMol.isDelocalizedBond(mGraphBond[bond])) ?
 							0 : mMol.getBondOrder(mGraphBond[bond]);
 			encodeBits(bondOrder, 2);
@@ -2924,6 +2934,20 @@ System.out.println();
 
 		if (mMol.isFragment())	// 27 = datatype 'part of an exclude-group'
 			isSecondFeatureBlock |= addAtomQueryFeatures(27, isSecondFeatureBlock, nbits, Molecule.cAtomQFExcludeGroup, 1, -1);
+
+		count = 0;
+		for (int bond=0; bond<mMol.getBonds(); bond++)
+			if (mMol.getBondType(mGraphBond[bond]) == Molecule.cBondTypeMetalLigand)
+				count++;
+		if (count != 0) {
+			isSecondFeatureBlock = ensureSecondFeatureBlock(isSecondFeatureBlock);
+			encodeBits(1, 1);   //  more data to come
+			encodeBits(12, 4);   //  (28-offset) 28 = datatype 'coordinate bond'
+			encodeBits(count, nbits);
+			for (int bond=0; bond<mMol.getBonds(); bond++)
+				if (mMol.getBondType(mGraphBond[bond]) == Molecule.cBondTypeMetalLigand)
+					encodeBits(bond, nbits);
+			}
 
 		encodeBits(0, 1);
 		mIDCode = encodeBitsEnd();

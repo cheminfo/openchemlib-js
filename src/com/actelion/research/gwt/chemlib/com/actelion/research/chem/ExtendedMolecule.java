@@ -248,10 +248,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * The atom list is preprocessed such that all plain hydrogen atoms
-	 * (natural abundance, no custom labels) are at the end of the list.
+	 * A validated molecule (after helper array creation) contains a sorted list of all atoms
+	 * with the plain (neglegible) hydrogen atoms at the end of the list. Neglegible hydrogen atoms
+	 * a those that can be considered implicit, because they have no attached relevant information.
+	 * Hydrogen atoms that cannot be neglected are special isotops (mass != 0), if they carry a
+	 * custom label, if they are connected to another atom with bond order different from 1, or
+	 * if they are connected to another neglegible hydrogen.<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
-	 * @return count of atoms not including plain-H atoms
+	 * @return the number relevant atoms not including neglegible hydrogen atoms
 	 */
 	public int getAtoms() {
 		return mAtoms;
@@ -2864,11 +2868,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 */
 	private void handleHydrogens() {
 		// find all hydrogens that are connected to a non-H atom and therefore can be implicit		
-		boolean[] isSimpleHydrogen = new boolean[mAllAtoms];
-		for (int bond=0; bond<mAllBonds; bond++)
-			for (int i=0; i<2; i++)
-				if (isSimpleHydrogen(mBondAtom[i][bond]) && !isSimpleHydrogen(mBondAtom[1-i][bond]))
-					isSimpleHydrogen[mBondAtom[i][bond]] = true;
+		boolean[] isSimpleHydrogen = findSimpleHydrogens();
 
 					// move all hydrogen atoms to end of atom table
 		int lastNonHAtom = mAllAtoms;
@@ -2937,12 +2937,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	public int[] getHandleHydrogenMap() {
 		int[] map = new int[mAllAtoms];
 
-		boolean[] isSimpleHydrogen = new boolean[mAllAtoms];
-		for (int bond=0; bond<mAllBonds; bond++)
-			for (int i=0; i<2; i++)
-				if (isSimpleHydrogen(mBondAtom[i][bond]) && !isSimpleHydrogen(mBondAtom[1-i][bond]))
-					isSimpleHydrogen[mBondAtom[i][bond]] = true;
-		
+		boolean[] isSimpleHydrogen = findSimpleHydrogens();
+
 		int lastNonHAtom = mAllAtoms-1;
 		while (lastNonHAtom >= 0 && isSimpleHydrogen[lastNonHAtom]) {
 			map[lastNonHAtom] = lastNonHAtom;
@@ -2968,8 +2964,62 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		return map;
 		}
 
+	private boolean[] findSimpleHydrogens() {
+		boolean[] isSimpleHydrogen = new boolean[mAllAtoms];
+		for (int atom=0; atom<mAllAtoms; atom++)
+			isSimpleHydrogen[atom] = isSimpleHydrogen(atom);
+
+		// unflag simple hydrogens that have a bond with order != 1 or that have more than one bond
+		boolean[] oneBondFound = new boolean[mAllAtoms];
+		for (int bond=0; bond<mAllBonds; bond++) {
+			int atom1 = mBondAtom[0][bond];
+			int atom2 = mBondAtom[1][bond];
+
+			if (getBondOrder(bond) != 1) {
+				isSimpleHydrogen[atom1] = false;
+				isSimpleHydrogen[atom2] = false;
+				continue;
+				}
+
+			if (oneBondFound[atom1])
+				isSimpleHydrogen[atom1] = false;
+			if (oneBondFound[atom2])
+				isSimpleHydrogen[atom2] = false;
+
+			oneBondFound[atom1] = true;
+			oneBondFound[atom2] = true;
+			}
+
+		// unflag simple hydrogens within an H2 molecule
+		for (int bond=0; bond<mAllBonds; bond++) {
+			if (isSimpleHydrogen[mBondAtom[0][bond]] && isSimpleHydrogen[mBondAtom[1][bond]]) {
+				isSimpleHydrogen[mBondAtom[0][bond]] = false;
+				isSimpleHydrogen[mBondAtom[1][bond]] = false;
+				}
+			}
+
+			// unflag simple hydrogens that have no connection to another atom
+		for (int atom=0; atom<mAllAtoms; atom++)
+			if (!oneBondFound[atom])
+				isSimpleHydrogen[atom] = false;
+
+		return isSimpleHydrogen;
+		}
+
+	/**
+	 * Uncharged hydrogen atoms with no isotop information nor with an attached custom label
+	 * are considered simple and can usually be suppressed, effectively converting them from an
+	 * explicit to an implicit hydrogen atom.<br>
+	 * <b>Note:</b> This method returns true for uncharged, natural abundance hydrogens without
+	 * custom labels even if they have a non-standard bonding situation (everything being different
+	 * from having one single bonded non-simple-hydrogen neighbour, e.g. unbonded hydrogen, H2,
+	 * a metal ligand bond to another atom, two single bonds, etc.)
+	 * If unusual bonding needs to be considered, check for that independently from this method.
+	 * @param atom
+	 * @return
+	 */
 	public boolean isSimpleHydrogen(int atom) {
-		return mAtomicNo[atom] == 1 && mAtomMass[atom] == 0
+		return mAtomicNo[atom] == 1 && mAtomMass[atom] == 0 && mAtomCharge[atom] == 0
 			&& (mAtomCustomLabel == null || mAtomCustomLabel[atom] == null);
 		}
 
