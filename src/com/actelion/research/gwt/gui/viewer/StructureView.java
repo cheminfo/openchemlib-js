@@ -36,6 +36,7 @@ import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.IDCodeParser;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gwt.core.JSMolecule;
+import com.actelion.research.gwt.core.Util;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.GWT;
@@ -102,36 +103,18 @@ public class StructureView
     
     public static void drawStructure(String id, String idcode, String coordinates, JavaScriptObject options)
     {
-    	drawStructure(id, idcode, coordinates, getDisplayMode(options),null);
+    	drawStructure(id, idcode, coordinates, 	Util.getDisplayMode(options),null);
     }
     
     public static void drawMolecule(CanvasElement el, JSMolecule mol, JavaScriptObject options)
     {
-    	drawMolecule(el, mol, getDisplayMode(options), null);
+    	drawMolecule(el, mol, 	Util.getDisplayMode(options), null);
     }
 
     public static void drawStructureWithText(String id, String idcode, String coordinates, JavaScriptObject options,String []atomText)
     {
-        drawStructure(id, idcode, coordinates, getDisplayMode(options),atomText);
+        drawStructure(id, idcode, coordinates, 	Util.getDisplayMode(options),atomText);
     }
-
-
-    private static native int getDisplayMode(JavaScriptObject options)/*-{
-    	options = options || {};
-    	var displayMode = 0;
-    	if (options.suppressChiralText) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeSuppressChiralText;
-    	if (options.suppressESR) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeSuppressESR;
-    	if (options.suppressCIPParity) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeSuppressCIPParity;
-    	if (options.showMapping) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeShowMapping;
-    	if (options.showAtomNumber) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeAtomNo;
-    	if (options.showBondNumber) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeBondNo;
-    	if (options.inflateToMaxAVBL) displayMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToMaxAVBL;
-    	if (options.inflateToHighResAVBL) displayMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToHighResAVBL;
-    	if (options.noTabus) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoTabus;
-    	if (options.highlightQueryFeatures) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeHiliteAllQueryFeatures;
-    	if (options.noStereoProblem) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoStereoProblem;
-    	return displayMode;
-    }-*/;
 
     private static void drawStructure(String id, String idcode, String coordinates, int displayMode,String[] atomText)
     {

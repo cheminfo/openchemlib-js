@@ -68,15 +68,16 @@ public class JSMolecule {
 		return creator.getMolfile();
 	}
 
-	public native String toSVG(int width, int height, String id) /*-{
+	public native String toSVG(int width, int height, String id, JavaScriptObject options) /*-{
 		if (!$doc.createElement) {
 			throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
 		}
-		return this.@com.actelion.research.gwt.core.JSMolecule::getSVG(IILjava/lang/String;)(width, height, id);
+		return this.@com.actelion.research.gwt.core.JSMolecule::getSVG(IILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, id, options);
 	}-*/;
 	
-	private String getSVG(int width, int height, String id) {
-		SVGDepictor d = new SVGDepictor(oclMolecule, id);
+	private String getSVG(int width, int height, String id, JavaScriptObject options) {
+		int mode = Util.getDisplayMode(options);
+		SVGDepictor d = new SVGDepictor(oclMolecule, mode, id);
 		d.validateView(null, new Rectangle2D.Double(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
 		d.paint(null);
 		return d.toString();

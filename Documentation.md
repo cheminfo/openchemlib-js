@@ -48,7 +48,7 @@ Returns a smiles string
 
 Returns a molfile (V2000) string
 
-### molecule.toSVG(width, height, id)
+### molecule.toSVG(width, height, id, options)
 
 Returns an SVG string
 
@@ -327,6 +327,12 @@ __Options__
 
 ---------------------------------------
 
+## StructureView
+
+### StructureView.drawStructure(id, idcode, coordinates, options)
+
+---------------------------------------
+
 ## StructureEditor
 
 ### StructureEditor.createEditor(id)
@@ -426,3 +432,30 @@ execute the following JS:
      no-stereo-text= "FALSE" | "true"
                                     = If true, does not show stereo information text
                                      
+---------------------------------------
+
+## Depictor options
+
+The options are all boolean and the all default to `false`.
+
+- inflateToMaxAVBL
+- inflateToHighResAVBL
+- chiralTextBelowMolecule
+- chiralTextAboveMolecule
+- chiralTextOnFrameTop
+- chiralTextOnFrameBottom
+
+- noTabus
+- showAtomNumber
+- showBondNumber
+- highlightQueryFeatures
+- showMapping
+- suppressChiralText
+- suppressCIPParity
+- suppressESR
+
+- showSymmetrySimple
+- showSymmetryDiastereotopic
+- showSymmetryEnantiotopic
+- noImplicitAtomLabelColors
+- noStereoProblem

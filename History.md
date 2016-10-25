@@ -1,3 +1,8 @@
+4.6.0 / 2016-10-25
+==================
+
+* add more depictor options and support options in SVG depictor
+
 4.5.1 / 2016-10-25
 ==================
 
