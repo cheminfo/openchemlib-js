@@ -8,6 +8,8 @@
 [Drug likeness predictor](#druglikenesspredictor)  
 [Util](#util)
 
+
+[StructureView](#structureview)  
 [StructureEditor](#structureeditor)
 
 
@@ -51,6 +53,10 @@ Returns a molfile (V2000) string
 ### molecule.toSVG(width, height, id, options)
 
 Returns an SVG string
+
+__Options__
+
+See [Depictor options](#depictor-options)
 
 ### molecule.getIDCode()
 
@@ -331,6 +337,10 @@ __Options__
 
 ### StructureView.drawStructure(id, idcode, coordinates, options)
 
+__Options__
+
+See [Depictor options](#depictor-options)
+
 ---------------------------------------
 
 ## StructureEditor
@@ -436,7 +446,7 @@ execute the following JS:
 
 ## Depictor options
 
-The options are all boolean and the all default to `false`.
+The options are all boolean and they default to `false`.
 
 - inflateToMaxAVBL
 - inflateToHighResAVBL
