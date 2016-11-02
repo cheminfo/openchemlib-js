@@ -31,90 +31,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 package java.awt;
+/**
+ *  * JDK Class Emulation for GWT
+ */
 
 public class Color {
 
-    /**
-     * The color white.  In the default sRGB space.
-     */
     public final static Color white = new Color(255, 255, 255);
-
-    /**
-     * The color white.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
     public final static Color WHITE = white;
-
-
-    /**
-     * The color gray.  In the default sRGB space.
-     */
     public final static Color gray = new Color(128, 128, 128);
-
-
-    /**
-     * The color black.  In the default sRGB space.
-     */
     public final static Color black = new Color(0, 0, 0);
 
-
-    /**
-     * The color rgbValue.
-     *
-     * @serial
-     * @see #getRGB
-     */
-    int rgbValue;
-    private float frgbvalue[] = null;
-    private float falpha = 0.0f;
+    private int rgbValue;
+    private float realRGBValues[] = null;
+    private float alphaValue = 0.0f;
 
 
-    /**
-     * Creates an opaque sRGB color with the specified red, green,
-     * and blue values in the range (0 - 255).
-     * The actual color used in rendering depends
-     * on finding the best match given the color space
-     * available for a given output device.
-     * Alpha is defaulted to 255.
-     *
-     * @param r the red component
-     * @param g the green component
-     * @param b the blue component
-     * @throws IllegalArgumentException if <code>r</code>, <code>g</code>
-     *                                  or <code>b</code> are outside of the range
-     *                                  0 to 255, inclusive
-     * @see #getRed
-     * @see #getGreen
-     * @see #getBlue
-     * @see #getRGB
-     */
-    public Color(int r, int g, int b) {
-        this(r, g, b, 255);
+    public Color(int red, int green, int blue) {
+        this(red, green, blue, 255);
     }
 
-    /**
-     * Creates an sRGB color with the specified red, green, blue, and alpha
-     * values in the range (0 - 255).
-     *
-     * @param r the red component
-     * @param g the green component
-     * @param b the blue component
-     * @param a the alpha component
-     * @throws IllegalArgumentException if <code>r</code>, <code>g</code>,
-     *                                  <code>b</code> or <code>a</code> are outside of the range
-     *                                  0 to 255, inclusive
-     * @see #getRed
-     * @see #getGreen
-     * @see #getBlue
-     * @see #getAlpha
-     * @see #getRGB
-     */
-    public Color(int r, int g, int b, int a) {
-        rgbValue = ((a & 0xFF) << 24) |
-                ((r & 0xFF) << 16) |
-                ((g & 0xFF) << 8) |
-                ((b & 0xFF) << 0);
+    public Color(int red, int green, int blue, int alpha) {
+        rgbValue = ((alpha & 0xFF) << 24) | ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | ((blue & 0xFF) << 0);
     }
 
 
@@ -123,62 +61,30 @@ public class Color {
     }
 
 
-    public Color(float r, float g, float b, float a) {
-        this((int) (r * 255 + 0.5), (int) (g * 255 + 0.5), (int) (b * 255 + 0.5), (int) (a * 255 + 0.5));
-        frgbvalue = new float[3];
-        frgbvalue[0] = r;
-        frgbvalue[1] = g;
-        frgbvalue[2] = b;
-        falpha = a;
+    public Color(float red, float green, float blue, float alpha) {
+        this((int) (red * 255 + 0.5), (int) (green * 255 + 0.5), (int) (blue * 255 + 0.5), (int) (alpha * 255 + 0.5));
+        realRGBValues = new float[3];
+        realRGBValues[0] = red;
+        realRGBValues[1] = green;
+        realRGBValues[2] = blue;
+        alphaValue = alpha;
     }
 
-    /**
-     * Returns the red component in the range 0-255 in the default sRGB
-     * space.
-     *
-     * @return the red component.
-     * @see #getRGB
-     */
     public int getRed() {
-        return (getRGB() >> 16) & 0xFF;
+        return (rgbValue >> 16) & 0xFF;
     }
 
-    /**
-     * Returns the green component in the range 0-255 in the default sRGB
-     * space.
-     *
-     * @return the green component.
-     * @see #getRGB
-     */
     public int getGreen() {
-        return (getRGB() >> 8) & 0xFF;
+        return (rgbValue >> 8) & 0xFF;
     }
 
-    /**
-     * Returns the blue component in the range 0-255 in the default sRGB
-     * space.
-     *
-     * @return the blue component.
-     * @see #getRGB
-     */
     public int getBlue() {
-        return (getRGB() >> 0) & 0xFF;
+        return (rgbValue >> 0) & 0xFF;
     }
 
-    /**
-     * Returns the alpha component in the range 0-255.
-     *
-     * @return the alpha component.
-     * @see #getRGB
-     */
     public int getAlpha() {
-        return (getRGB() >> 24) & 0xff;
+        return (rgbValue >> 24) & 0xff;
     }
-
-    public int getRGB() {
-        return rgbValue;
-    }
-
 
     private static float[] RGBtoHSV(float r, float g, float b, float[] hsbvals) {
         float hue = 0, saturation = 0, brightness = 0;
@@ -201,15 +107,12 @@ public class Color {
             return hsbvals;
         }
 
-//        if (max < 0.01f)
-//        System.out.printf("Max = %f\n",max);
         if (max != 0)
             saturation = delta / max;
         else {
-            // r = g = b = 0
             saturation = 0;
             hue = 0;
-            hsbvals[0] = hue ;/// 360.0f;
+            hsbvals[0] = hue ;
             hsbvals[1] = saturation;
             hsbvals[2] = brightness;
             return hsbvals;
@@ -241,16 +144,16 @@ public class Color {
         } else {
             f = compArray;
         }
-        if (frgbvalue == null) {
+        if (realRGBValues == null) {
             f[0] = ((float) getRed()) / 255f;
             f[1] = ((float) getGreen()) / 255f;
             f[2] = ((float) getBlue()) / 255f;
             f[3] = ((float) getAlpha()) / 255f;
         } else {
-            f[0] = frgbvalue[0];
-            f[1] = frgbvalue[1];
-            f[2] = frgbvalue[2];
-            f[3] = falpha;
+            f[0] = realRGBValues[0];
+            f[1] = realRGBValues[1];
+            f[2] = realRGBValues[2];
+            f[3] = alphaValue;
         }
         return f;
     }

@@ -1,7 +1,9 @@
 package java.awt.image;
 
 import java.awt.*;
-
+/**
+ *  * JDK Class Emulation for GWT
+ */
 /**
  * Created by rufenec on 20/03/15.
  */

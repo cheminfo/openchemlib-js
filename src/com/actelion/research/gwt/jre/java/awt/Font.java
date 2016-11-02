@@ -38,18 +38,14 @@ import java.awt.geom.Rectangle2D;
 
 public class Font
 {
-    public static final int BOLD        = 1;
     public static final int PLAIN       = 0;
-    public static final int ITALIC      = 2;
     private String name;
-    private int type ;
     private int size;
     static Object canvas =  null;
 
     public Font(String name, int type, int size)
     {
         this.name = name;
-        this.type = type;
         this.size = size;
     }
 
@@ -61,12 +57,6 @@ public class Font
     {
         return size;
     }
-
-//    public GlyphVector createGlyphVector(java.awt.font.FontRenderContext frc, String str)
-//    {
-//
-//        return new GlyphVector();
-//    }
 
     public Rectangle2D getStringBounds(String theString, FontRenderContext fontRenderContext)
     {

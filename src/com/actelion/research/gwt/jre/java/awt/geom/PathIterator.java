@@ -32,6 +32,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package java.awt.geom;
 
+/**
+ *  * JDK Class Emulation for GWT
+ */
+
 public interface PathIterator
 {
 }
