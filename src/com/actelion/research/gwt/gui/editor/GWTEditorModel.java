@@ -33,11 +33,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.AbstractDepictor;
-import com.actelion.research.chem.CoordinateInventor;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.chem.coords.CoordinateInventor;
 import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
-import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.chem.AbstractExtendedDepictor;
 import com.actelion.research.share.gui.editor.geom.GeomFactory;
