@@ -1,3 +1,9 @@
+4.6.1 / 2016-11-03
+==================
+
+* fix license issue
+* fix StructureEditor not present in last release
+
 4.6.0 / 2016-10-25
 ==================
 
