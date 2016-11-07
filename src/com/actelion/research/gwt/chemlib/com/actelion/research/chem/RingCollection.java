@@ -57,10 +57,11 @@ public class RingCollection {
 	private int[] mHeteroPosition;
 	private boolean[] mIsAromatic;
 	private boolean[] mIsDelocalized;
+	private int mMaxSmallRingSize;
 
 	/**
-	 * Generates the complete set of small rings, which contains all rings
-	 * up to 7 members.<br> If mode includes LARGE_RINGS, then it determines
+	 * Generates the complete set of small rings, which don't contain metal atoms
+	 * and have up to 7 members.<br> If mode includes LARGE_RINGS, then it determines
 	 * for every atom and bond the size of the smallest ring, which they are
 	 * a member of.<br>If mode includes AROMATICITY then every small ring
 	 * is checked, whether it is aromatic.
@@ -68,7 +69,22 @@ public class RingCollection {
 	 * @param mode one of the public MODE_ options
 	 */
 	public RingCollection(ExtendedMolecule mol, int mode) {
+		this(mol, mode, MAX_SMALL_RING_SIZE);
+		}
+
+	/**
+	 * Generates the complete set of small rings, which don't contain metal atoms
+	 * and have up to 7 members.<br> If mode includes LARGE_RINGS, then it determines
+	 * for every atom and bond the size of the smallest ring, which they are
+	 * a member of.<br>If mode includes AROMATICITY then every small ring
+	 * is checked, whether it is aromatic.
+	 * @param mol
+	 * @param mode one of the public MODE_ options
+	 * @param maxSmallRingSize largest ring size considered a small ring
+	 */
+	public RingCollection(ExtendedMolecule mol, int mode, int maxSmallRingSize) {
 		mMol = mol;
+		mMaxSmallRingSize = maxSmallRingSize;
 		mRingAtomSet = new ArrayList<int[]>();
 		mRingBondSet = new ArrayList<int[]>();
 
@@ -90,7 +106,7 @@ public class RingCollection {
 						if (!isConfirmedChainAtom[mMol.getConnAtom(atom, i)])
 							potentialRingNeighbours++;
 	
-					if (potentialRingNeighbours < 2) {
+					if (potentialRingNeighbours < 2 || mMol.isMetalAtom(atom)) {
 						isConfirmedChainAtom[atom] = true;
 						for (int i=0; i<mMol.getConnAtoms(atom); i++)
 							isConfirmedChainBond[mMol.getConnBond(atom, i)] = true;
@@ -111,6 +127,8 @@ public class RingCollection {
 				// find all rings with less than 8 members of all closure bonds
 		int graphAtom[] = new int[mMol.getAtoms()];
 		graphAtom[0] = startAtom;
+		int[] parent = new int[mMol.getAtoms()];
+		parent[0] = -1;
 		int fragmentNo[] = new int[mMol.getAtoms()];
 		fragmentNo[startAtom] = 1;
 		int current = 0;
@@ -119,6 +137,8 @@ public class RingCollection {
 		while (current <= highest) {
 			for (int i=0; i<mMol.getConnAtoms(graphAtom[current]); i++) {
 				int candidate = mMol.getConnAtom(graphAtom[current], i);
+				if (candidate == parent[graphAtom[current]])
+					continue;
 
 				if (fragmentNo[candidate] != 0) {   // closure bond
 					addSmallRingsToSet(mMol.getConnBond(graphAtom[current], i), isConfirmedChainAtom);
@@ -127,6 +147,7 @@ public class RingCollection {
 
 				if (!isConfirmedChainAtom[candidate]) {
 					fragmentNo[candidate] = noOfFragments;
+					parent[candidate] = graphAtom[current];
 					graphAtom[++highest] = candidate;
 					}
 				}
@@ -137,6 +158,7 @@ public class RingCollection {
 					if (fragmentNo[atom] == 0 && !isConfirmedChainAtom[atom]) {
 						fragmentNo[atom] = ++noOfFragments;
 						graphAtom[++highest] = atom;
+						parent[atom] = -1;
 						break;
 						}
 					}
@@ -230,78 +252,78 @@ public class RingCollection {
 
 
 	private void addSmallRingsToSet(int closureBond, boolean[] isConfirmedChainAtom) {
+		int[] graphAtom = new int[mMaxSmallRingSize];
+		int[] connIndex = new int[mMaxSmallRingSize];
+		boolean[] isUsed = new boolean[mMol.getAtoms()];
+
 		int atom1 = mMol.getBondAtom(0, closureBond);
 		int atom2 = mMol.getBondAtom(1, closureBond);
-		int graphAtom[] = new int[mMol.getAtoms()];
-		int graphLevel[] = new int[mMol.getAtoms()];
-		int graphParent[] = new int[mMol.getAtoms()];
+
 		graphAtom[0] = atom1;
 		graphAtom[1] = atom2;
-		graphLevel[atom1] = 1;
-		graphLevel[atom2] = 2;
-		graphParent[atom1] = -1;
-		graphParent[atom2] = atom1;
+		connIndex[1] = -1;
+		isUsed[atom2] = true;
 		int current = 1;
-		int highest = 1;
-		while (current <= highest) {
-			if (graphLevel[graphAtom[current]] > MAX_SMALL_RING_SIZE)
-				return;
-			for (int i=0; i<mMol.getConnAtoms(graphAtom[current]); i++) {
-				int candidate = mMol.getConnAtom(graphAtom[current], i);
-				if ((current > 1) && candidate == atom1) {
-					int ringAtom[] = new int[graphLevel[graphAtom[current]]];
-					int atom = graphAtom[current];
-					for (int j = 0; j < ringAtom.length; j++) {
-						ringAtom[j] = atom;
-						atom = graphParent[atom];
-						}
-					addRingIfNew(ringAtom);
-					continue;
-					}
-				if (graphLevel[candidate] == 0 && !isConfirmedChainAtom[candidate]) {
-					graphAtom[++highest] = candidate;
-					graphLevel[candidate] = graphLevel[graphAtom[current]] + 1;
-					graphParent[candidate] = graphAtom[current];
-					}
+
+		while(current >= 1) {
+			connIndex[current]++;
+			if (connIndex[current] == mMol.getConnAtoms(graphAtom[current])) {
+				isUsed[graphAtom[current]] = false;
+				current--;
+				continue;
 				}
-			current++;
+
+			int candidate = mMol.getConnAtom(graphAtom[current], connIndex[current]);
+			if (isUsed[candidate] || isConfirmedChainAtom[candidate])
+				continue;
+
+			if (candidate == atom1 && current > 1) {
+				addRingIfNew(graphAtom, current+1);
+				continue;
+				}
+
+			if (current+1 < mMaxSmallRingSize) {
+				current++;
+				graphAtom[current] = candidate;
+				isUsed[candidate] = true;
+				connIndex[current] = -1;
+				}
 			}
 		}
 
 
-	private void addRingIfNew(int ringAtom[]) {
-		int ringAtoms = ringAtom.length;
+	private void addRingIfNew(int ringAtom[], int ringSize) {
 		int lowAtom = mMol.getMaxAtoms();
 		int lowIndex = 0;
-		for (int i=0; i<ringAtoms; i++) {
+		for (int i=0; i<ringSize; i++) {
 			if (lowAtom > ringAtom[i]) {
 				lowAtom = ringAtom[i];
 				lowIndex = i;
 				}
 			}
 
-		int sortedRing[] = new int[ringAtoms];
-		int leftIndex = (lowIndex > 0) ? lowIndex - 1 : ringAtoms - 1;
-		int rightIndex = (lowIndex < ringAtoms - 1) ? lowIndex + 1 : 0;
+		int sortedRing[] = new int[ringSize];
+		int leftIndex = (lowIndex > 0) ? lowIndex - 1 : ringSize - 1;
+		int rightIndex = (lowIndex < ringSize - 1) ? lowIndex + 1 : 0;
 		boolean inverse = (ringAtom[leftIndex] < ringAtom[rightIndex]);
-		for (int i=0; i<ringAtoms; i++) {
+		for (int i=0; i<ringSize; i++) {
 			sortedRing[i] = ringAtom[lowIndex];
 			if (inverse) {
 				if (--lowIndex < 0)
-					lowIndex = ringAtoms - 1;
+					lowIndex = ringSize - 1;
 				}
 			else {
-				if (++lowIndex == ringAtoms)
+				if (++lowIndex == ringSize)
 					lowIndex = 0;
 				}
 			}
 
 		for (int i=0; i<mRingAtomSet.size(); i++) {
 			int ringOfSet[] = mRingAtomSet.get(i);
-			if (ringOfSet.length != ringAtoms)
+			if (ringOfSet.length != ringSize)
 				continue;
 			boolean equal = true;
-			for (int j=0; j<ringAtoms; j++) {
+			for (int j=0; j<ringSize; j++) {
 				if (ringOfSet[j] != sortedRing[j]) {
 					equal = false;
 					break;

@@ -153,6 +153,7 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
         mChoiceHydrogen.addItem("exactly 2 hydrogens");
         mChoiceHydrogen.addItem("at least 1 hydrogen");
         mChoiceHydrogen.addItem("at least 2 hydrogens");
+        mChoiceHydrogen.addItem("at least 3 hydrogens");
         mChoiceHydrogen.addItem("less than 2 hydrogens");
         mChoiceHydrogen.addItem("less than 3 hydrogens");
         grid.setWidget(8, 0, mChoiceHydrogen);
@@ -358,11 +359,14 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
             case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen:
                 mChoiceHydrogen.setSelectedIndex(5);
                 break;
-            case Molecule.cAtomQFNot2Hydrogen | Molecule.cAtomQFNot3Hydrogen:
+            case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen | Molecule.cAtomQFNot2Hydrogen:
                 mChoiceHydrogen.setSelectedIndex(6);
                 break;
-            case Molecule.cAtomQFNot3Hydrogen:
+            case Molecule.cAtomQFNot2Hydrogen | Molecule.cAtomQFNot3Hydrogen:
                 mChoiceHydrogen.setSelectedIndex(7);
+                break;
+            case Molecule.cAtomQFNot3Hydrogen:
+                mChoiceHydrogen.setSelectedIndex(8);
                 break;
         }
 
@@ -548,11 +552,16 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
                 queryFeatures |= (Molecule.cAtomQFNot0Hydrogen
                         | Molecule.cAtomQFNot1Hydrogen);
                 break;
-            case 6: // less than 2 hydrogens
+            case 6:	// at least 3 hydrogens
+                queryFeatures |= (Molecule.cAtomQFNot0Hydrogen
+                        | Molecule.cAtomQFNot1Hydrogen
+                        | Molecule.cAtomQFNot2Hydrogen);
+                break;
+            case 7: // less than 2 hydrogens
                 queryFeatures |= (Molecule.cAtomQFNot2Hydrogen
                         | Molecule.cAtomQFNot3Hydrogen);
                 break;
-            case 7: // less than 3 hydrogens
+            case 8: // less than 3 hydrogens
                 queryFeatures |= (Molecule.cAtomQFNot3Hydrogen);
                 break;
         }
