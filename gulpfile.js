@@ -8,6 +8,7 @@ var exporter = require('gwt-api-exporter');
 var rimraf = require('rimraf');
 var pack = require('./package.json');
 var argv = require('minimist')(process.argv.slice(2));
+var copyFile = require('./openchemlib/copyFile');
 
 var verbose = argv.v;
 
@@ -135,13 +136,13 @@ function copyOpenchemlib() {
     var toCopy = chemlibClasses.copy;
     log('Copying ' + toCopy.length + ' classes from openchemlib');
     for (var i = 0; i < toCopy.length; i++) {
-        fs.copySync(path.join(chemlibDir, toCopy[i]), outDir + toCopy[i]);
+        copyFile(path.join(chemlibDir, toCopy[i]), outDir + toCopy[i]);
     }
 
     var modified = chemlibClasses.modified;
     log('Copying ' + modified.length + ' modified classes');
     for (var i = 0; i < modified.length; i++) {
-        fs.copySync(modifiedDir + modified[i], outDir + modified[i]);
+        copyFile(modifiedDir + modified[i], outDir + modified[i]);
     }
 }
 

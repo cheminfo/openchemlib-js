@@ -1,4 +1,9 @@
-/*
+'use strict';
+
+const fs = require('fs-extra');
+
+const header =
+`/*
 
 Copyright (c) 2015-2016, cheminfo
 
@@ -28,30 +33,17 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-*/
+*/`;
 
-
-
-
-
-
-
-package com.actelion.research.chem;
-
-public class AbstractDrawingObject
-{
-    public static AbstractDrawingObject instantiate(String substring)
-    {
-        return null;
+module.exports = function copyFile(from, to) {
+    const content = fs.readFileSync(from, 'utf8');
+    const start = content.indexOf('/*');
+    var newContent;
+    if (start === 0) {
+        const end = content.indexOf('*/');
+        newContent = content.substring(0, start) + header + content.substring(end + 2);
+    } else {
+        newContent = content;
     }
-
-    public String getDescriptor()
-    {
-        return "";
-    }
-
-    public Object clone() throws CloneNotSupportedException
-    {
-        throw new CloneNotSupportedException();
-    }
-}
+    fs.outputFileSync(to, newContent)
+};
