@@ -8,7 +8,6 @@ var exporter = require('gwt-api-exporter');
 var rimraf = require('rimraf');
 var pack = require('./package.json');
 var argv = require('minimist')(process.argv.slice(2));
-var copyFile = require('./openchemlib/copyFile');
 
 var verbose = argv.v;
 
@@ -125,24 +124,28 @@ function compile(mode) {
 }
 
 function copyOpenchemlib() {
-    var chemlibDir = path.join(config.openchemlib, 'main/java');
-    var outDir = './src/com/actelion/research/gwt/chemlib/';
-    var modifiedDir = './openchemlib/modified/';
+    const chemlibDir = path.join(config.openchemlib, 'main/java/com');
+    const outDir = './src/com/actelion/research/gwt/chemlib/com';
+    const modifiedDir = './openchemlib/modified/com';
 
-    var chemlibClasses = require('./openchemlib/classes');
+    const chemlibClasses = require('./openchemlib/classes');
 
-    rimraf.sync(outDir + 'com/');
+    rimraf.sync(outDir);
 
-    var toCopy = chemlibClasses.copy;
-    log('Copying ' + toCopy.length + ' classes from openchemlib');
-    for (var i = 0; i < toCopy.length; i++) {
-        copyFile(path.join(chemlibDir, toCopy[i]), outDir + toCopy[i]);
+    fs.copySync(chemlibDir, outDir);
+
+    const modified = chemlibClasses.modified;
+    log('Copying ' + modified.length + ' modified classes');
+    for (let i = 0; i < modified.length; i++) {
+        fs.copySync(path.join(modifiedDir, modified[i]), path.join(outDir, modified[i]));
     }
 
-    var modified = chemlibClasses.modified;
-    log('Copying ' + modified.length + ' modified classes');
-    for (var i = 0; i < modified.length; i++) {
-        copyFile(modifiedDir + modified[i], outDir + modified[i]);
+    const changed = chemlibClasses.changed;
+    for (let i = 0; i < changed.length; i++) {
+        const [file, callback] = changed[i];
+        const data = fs.readFileSync(path.join(outDir, file), 'utf8');
+        const result = callback(data);
+        fs.writeFileSync(path.join(outDir, file), result);
     }
 }
 

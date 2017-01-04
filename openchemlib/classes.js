@@ -1,78 +1,6 @@
-var classes = [
-    // Requirements for Core
-    'calc/ThreadMaster',
+'use strict';
 
-    'chem/AbstractDepictor',
-    'chem/AromaticityResolver',
-    'chem/AtomFunctionAnalyzer',
-    'chem/AtomTypeCalculator',
-    'chem/Canonizer',
-    'chem/CanonizerBaseValue',
-    'chem/CanonizerMesoHelper',
-    'chem/ExtendedMolecule',
-    'chem/IDCodeParser',
-    'chem/IsotopeHelper',
-    'chem/MolecularFormula',
-    'chem/Molecule',
-    'chem/MolfileCreator',
-    'chem/MolfileParser',
-    'chem/PropertyCalculator',
-    'chem/RingCollection',
-    'chem/SmilesCreator',
-    'chem/SmilesParser',
-    'chem/SortedStringList',
-    'chem/SSSearcher',
-    'chem/SSSearcherWithIndex',
-    'chem/StereoMolecule',
-    'chem/SVGDepictor',
-    'chem/UniqueStringList',
-    'chem/Coordinates',
-
-    'chem/conf/Coordinate',
-
-    'chem/coords/CoordinateInventor',
-    'chem/coords/FragmentAssociation',
-    'chem/coords/InventorAngle',
-    'chem/coords/InventorChain',
-    'chem/coords/InventorCharge',
-    'chem/coords/InventorFragment',
-
-    'chem/contrib/DiastereotopicAtomID',
-    'chem/contrib/HoseCodeCreator',
-    'chem/contrib/HydrogenHandler',
-
-    'chem/descriptor/DescriptorHandler',
-    'chem/descriptor/DescriptorHandlerFactory',
-    'chem/descriptor/DescriptorInfo',
-    'chem/descriptor/ISimilarityCalculator',
-    'chem/descriptor/ISimilarityHandlerFactory',
-    'chem/descriptor/SimilarityCalculatorInfo',
-
-    'chem/io/SDFileParser',
-    'chem/io/CompoundFileParser',
-
-    'chem/prediction/CLogPPredictor',
-    'chem/prediction/DrugScoreCalculator', // TODO not in OCL
-    'chem/prediction/PolarSurfaceAreaPredictor',
-    'chem/prediction/ParameterizedStringList',
-    'chem/prediction/SolubilityPredictor',
-
-    'util/Angle',
-    'util/ColorHelper',
-    'util/DoubleFormat',
-    'util/SortedList',
-    'util/IntArrayComparator',
-
-    // Requirements for Viewer
-    'share/gui/editor/geom/IDrawContext', // TODO not in OCL
-    'share/gui/editor/geom/IPolygon', // TODO not in OCL
-
-];
-
-exports.copy = classes.map(getFilename);
-
-var modified = [
-    // Requirements for Core
+const modified = [
     'chem/AbstractDrawingObject',
     'chem/DepictorTransformation',
 
@@ -83,6 +11,28 @@ var modified = [
 
 exports.modified = modified.map(getFilename);
 
+const changed = [
+    ['chem/Molecule', changeMolecule]
+];
+
+exports.changed = changed.map((file) => {
+    return [
+        getFilename(file[0]),
+        file[1]
+    ];
+});
+
 function getFilename(file) {
-    return 'com/actelion/research/' + file + '.java';
+    return 'actelion/research/' + file + '.java';
+}
+
+function changeMolecule(molecule) {
+    molecule = molecule.replace('import java.lang.reflect.Array;\n', '');
+    const copyOf = 'private final static Object copyOf';
+    const copyOfIndex = molecule.indexOf(copyOf);
+    const closeIndex = molecule.indexOf('}', copyOfIndex);
+    molecule = molecule.substr(0, closeIndex + 1) + '*/' + molecule.substr(closeIndex + 1);
+    molecule = molecule.substr(0, copyOfIndex) + '/*' + molecule.substr(copyOfIndex);
+    molecule = molecule.replace(/\([^)]+\)copyOf/g, 'Arrays.copyOf');
+    return molecule;
 }
