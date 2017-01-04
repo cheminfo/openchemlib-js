@@ -145,7 +145,8 @@ function copyOpenchemlib() {
 
     const changed = chemlibClasses.changed;
     for (let i = 0; i < changed.length; i++) {
-        const [file, callback] = changed[i];
+        const file = changed[i][0];
+        const callback = changed[i][1];
         const data = fs.readFileSync(path.join(outDir, file), 'utf8');
         const result = callback(data);
         fs.writeFileSync(path.join(outDir, file), result);
