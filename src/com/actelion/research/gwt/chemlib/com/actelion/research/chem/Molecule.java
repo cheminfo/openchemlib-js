@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
@@ -52,13 +53,13 @@ public class Molecule implements Serializable {
 	public static final int cMaxAtomicNo = 190;
 
 		// parity based on atom positions in atom table (as MDL parity)
-	private static final int cAtomFlagsParity		= 0x000003;
+	protected static final int cAtomFlagsParity		= 0x000003;
 	public static final int cAtomParityNone			= 0x000000;
 	public static final int cAtomParity1			= 0x000001;
 	public static final int cAtomParity2			= 0x000002;
-	public static final int cAtomParityUnknown	  = 0x000003;
+	public static final int cAtomParityUnknown		= 0x000003;
 
-	public static final int cAtomParityIsPseudo	 = 0x000004;
+	public static final int cAtomParityIsPseudo		= 0x000004;
 	protected static final int cAtomFlagSmallRing	= 0x000008;
 
 	public static final int cAtomRadicalState		= 0x000030;
@@ -69,7 +70,7 @@ public class Molecule implements Serializable {
 	public static final int cAtomRadicalStateT		= 0x000030;
 
 	private static final int cAtomFlagsColor		= 0x0001C0;
-	public static final int cAtomColorNone = 0x000000;
+	public static final int cAtomColorNone			= 0x000000;
 	public static final int cAtomColorBlue			= 0x000040;
 	public static final int cAtomColorRed			= 0x000080;
 	public static final int cAtomColorGreen			= 0x0000C0;
@@ -93,10 +94,10 @@ public class Molecule implements Serializable {
 
 	private static final int cAtomFlagsCIPParity	= 0x018000;
 	private static final int cAtomFlagsCIPParityShift = 15;
-	public static final int cAtomCIPParityNone	  = 0x000000;
-	public static final int cAtomCIPParityRorM	  = 0x000001;
+	public static final int cAtomCIPParityNone		= 0x000000;
+	public static final int cAtomCIPParityRorM		= 0x000001;
 	public static final int cAtomCIPParitySorP		= 0x000002;
-	public static final int cAtomCIPParityProblem   = 0x000003;
+	public static final int cAtomCIPParityProblem	= 0x000003;
 
 	protected static final int cAtomFlagStereoProblem = 0x020000;
 	protected static final int cAtomFlagMarked		= 0x040000;
@@ -128,11 +129,11 @@ public class Molecule implements Serializable {
 	public static final int cAtomQFRingStateShift	= 3;
 	public static final int cAtomQFHydrogenBits		= 4;
 	public static final int cAtomQFHydrogenShift	= 7;
-	public static final int cAtomQFPiElectronBits   = 3;
-	public static final int cAtomQFPiElectronShift  = 14;
+	public static final int cAtomQFPiElectronBits	= 3;
+	public static final int cAtomQFPiElectronShift	= 14;
 	public static final int cAtomQFNeighbourBits	= 5;
-	public static final int cAtomQFNeighbourShift   = 17;
-	public static final int cAtomQFRingSizeBits	 = 3;
+	public static final int cAtomQFNeighbourShift	= 17;
+	public static final int cAtomQFRingSizeBits		= 3;
 	public static final int cAtomQFRingSizeShift	= 22;
 	public static final int cAtomQFChargeBits		= 3;
 	public static final int cAtomQFChargeShift		= 25;
@@ -191,7 +192,7 @@ public class Molecule implements Serializable {
 	protected static final int cBondFlagsHelper3	= 0x0000003F;
 
 		// double bond E/Z parities based on atom positions in atom table
-	private static final int cBondFlagsParity		= 0x00000003;
+	protected static final int cBondFlagsParity		= 0x00000003;
 	public static final int cBondParityNone			= 0x00000000;
 	public static final int cBondParityEor1			= 0x00000001;
 	public static final int cBondParityZor2			= 0x00000002;
@@ -202,7 +203,7 @@ public class Molecule implements Serializable {
 	protected static final int cBondFlagsCIPParityShift = 4;
 	public static final int cBondCIPParityNone		= 0x00000000;
 	public static final int cBondCIPParityEorP		= 0x00000001;
-	public static final int cBondCIPParityZorM	  = 0x00000002;
+	public static final int cBondCIPParityZorM		= 0x00000002;
 	public static final int cBondCIPParityProblem   = 0x00000003;
 
 	protected static final int cBondFlagRing		= 0x00000040;
@@ -210,14 +211,14 @@ public class Molecule implements Serializable {
 	protected static final int cBondFlagAromatic	= 0x00000100;
 	protected static final int cBondFlagDelocalized	= 0x00000200;
 	protected static final int cBondFlagsESR		= 0x0001FC00;
-	private static final int cBondFlagsESRType	  = 0x00000C00;
+	private static final int cBondFlagsESRType		= 0x00000C00;
 	private static final int cBondFlagsESRTypeShift = 10;
-	private static final int cBondFlagsESRGroup	 = 0x0001F000;
+	private static final int cBondFlagsESRGroup		= 0x0001F000;
 	private static final int cBondFlagsESRGroupShift = 12;
 	private static final int cBondFlagBGHilited		= 0x00020000;
 	private static final int cBondFlagFGHilited		= 0x00040000;
 
-	private static final int cBondParityUnknownOrNone	= 0x1000000;
+	private static final int cBondParityUnknownOrNone = 0x1000000;
 	// This hint/flag is set by CoordinateInventor for double bonds without
 	// given EZ-parity because coordinates may imply a not intended EZ-parity.
 	// The setBondParity() method clears this flag. The Canonizer considers
@@ -259,16 +260,16 @@ public class Molecule implements Serializable {
 	public static final int cBondQFAromatic			= 0x00080000;
 	public static final int cBondQFNotAromatic		= 0x00100000;
 
-	public static final int cHelperNone = 0x0000;
-	public static final int cHelperBitNeighbours = 0x0001;
-	public static final int cHelperBitRings = 0x0002;
-	public static final int cHelperBitParities = 0x0004;
-	public static final int cHelperBitCIP = 0x0008;
+	public static final int cHelperNone				= 0x0000;
+	public static final int cHelperBitNeighbours	= 0x0001;
+	public static final int cHelperBitRings			= 0x0002;
+	public static final int cHelperBitParities		= 0x0004;
+	public static final int cHelperBitCIP			= 0x0008;
 
-	public static final int cHelperBitSymmetrySimple = 0x0010;
-	public static final int cHelperBitSymmetryDiastereotopic = 0x0020;
-	public static final int cHelperBitSymmetryEnantiotopic = 0x0040;
-	public static final int cHelperBitIncludeNitrogenParities = 0x0080;
+	public static final int cHelperBitSymmetrySimple			= 0x0010;
+	public static final int cHelperBitSymmetryDiastereotopic	= 0x0020;
+	public static final int cHelperBitSymmetryEnantiotopic		= 0x0040;
+	public static final int cHelperBitIncludeNitrogenParities	= 0x0080;
 
 	public static final int cHelperBitsStereo = 0x00FC;
 
@@ -284,12 +285,12 @@ public class Molecule implements Serializable {
 	public static final int cChiralityIsomerCountMask   = 0x00FFFF;
 	public static final int cChiralityUnknown		  	= 0x000000;
 	public static final int cChiralityNotChiral			= 0x010000;
-	public static final int cChiralityMeso			  = 0x020000; // this has added the number of meso isomers
+	public static final int cChiralityMeso				= 0x020000; // this has added the number of meso isomers
 	public static final int cChiralityRacemic			= 0x030000;
 	public static final int cChiralityKnownEnantiomer   = 0x040000;
 	public static final int cChiralityUnknownEnantiomer = 0x050000;
-	public static final int cChiralityEpimers		   = 0x060000;
-	public static final int cChiralityDiastereomers	 = 0x070000; // this has added the number of diastereomers
+	public static final int cChiralityEpimers		 	= 0x060000;
+	public static final int cChiralityDiastereomers		= 0x070000; // this has added the number of diastereomers
 
 	private static final double cDefaultAVBL = 24.0;
 	private static double sDefaultAVBL = cDefaultAVBL;
@@ -2054,6 +2055,34 @@ public class Molecule implements Serializable {
 
 
 	/**
+	 * Calculates a signed torsion as an exterior spherical angle
+	 * from a valid 4-atom strand.
+	 * Looking along the central bond, the torsion angle is 0.0, if the
+	 * projection of front and rear bonds point in the same direction.
+	 * If the front bond is rotated in the clockwise direction, the angle
+	 * increases, i.e. has a positive value.
+	 * http://en.wikipedia.org/wiki/Dihedral_angle
+	 * @param atom 4 valid atom indices defining a connected atom sequence
+	 * @return torsion in the range: -pi <= torsion <= pi
+	 */
+	public double calculateTorsion(int[] atom) {
+		Coordinates c1 = mCoordinates[atom[0]];
+		Coordinates c2 = mCoordinates[atom[1]];
+		Coordinates c3 = mCoordinates[atom[2]];
+		Coordinates c4 = mCoordinates[atom[3]];
+
+		Coordinates v1 = c2.subC(c1);
+		Coordinates v2 = c3.subC(c2);
+		Coordinates v3 = c4.subC(c3);
+
+		Coordinates n1 = v1.cross(v2);
+		Coordinates n2 = v2.cross(v3);
+
+		return -Math.atan2(v2.getLength() * v1.dot(n2), n1.dot(n2));
+		}
+
+
+	/**
 	 * @param no 0 or 1
 	 * @param bond
 	 * @return atom index
@@ -2212,12 +2241,44 @@ public class Molecule implements Serializable {
 		}
 
 
+
+	/**
+	 * Used instead of the 1.6 Features. Cartridge needs 1.5
+	 * @param a
+	 * @param newSize
+     * @return
+     */
+/*
+	private static int[] copyOf(int[] original, int newLength) {
+     int[] copy = new int[newLength];
+     System.arraycopy(original, 0, copy, 0,
+                      Math.min(original.length, newLength));
+     return copy;
+ }
+*/
+
+	/**
+	 * Used instead of the 1.6 Features. Cartridge needs 1.5
+	 * @param a
+	 * @param newSize
+     * @return
+     */
+	/*private final static Object copyOf(Object a, int newSize) {
+		Class cl = a.getClass();
+		if (!cl.isArray()) return null;
+		int size = Array.getLength(a);
+		Class componentType = a.getClass().getComponentType();
+		Object newArray = Array.newInstance(componentType, newSize);
+		System.arraycopy(a, 0, newArray, 0, Math.min(size, newSize));
+		return newArray;
+	}*/
+
 	/**
 	 * Usually called automatically and hardly needed to be called.
 	 * @param v
 	 */
 	public void setMaxAtoms(int v) {
-		mAtomicNo = Arrays.copyOf(mAtomicNo, v);
+		mAtomicNo = Arrays.copyOf(mAtomicNo, v);		// CXR: Do not used Arrays.copyOf: It's a 1.6 Feature!!
 		mAtomCharge = Arrays.copyOf(mAtomCharge, v);
 		mAtomMapNo = Arrays.copyOf(mAtomMapNo, v);
 		int orig = mCoordinates.length;
@@ -2283,7 +2344,7 @@ public class Molecule implements Serializable {
 
 	/**
 	 * @param atom
-	 * @return whether the atom's stereo configuration was explicitly deplared unknown
+	 * @return whether the atom's stereo configuration was explicitly declared unknown
 	 */
 	public boolean isAtomConfigurationUnknown(int atom) {
 		return ((mAtomFlags[atom] & cAtomFlagConfigurationUnknown) != 0);
@@ -2484,8 +2545,7 @@ public class Molecule implements Serializable {
 	public void setAtomAbnormalValence(int atom, int valence) {
 		if (valence >= -1 && valence <= 14) {
 			mAtomFlags[atom] &= ~cAtomFlagsValence;
-			if (valence != getDefaultMaxValenceUncharged(atom))
-				mAtomFlags[atom] |= ((1+valence) << cAtomFlagsValenceShift);
+			mAtomFlags[atom] |= ((1+valence) << cAtomFlagsValenceShift);
 
 			if (mAtomicNo[atom] == 6) {
 				if (valence == -1 || valence == 0 || valence == 2 || valence == 4) {
@@ -2652,7 +2712,7 @@ public class Molecule implements Serializable {
 	 * The atom parity is a calculated property available above/equal helper level cHelperParities.
 	 * It describes the stereo configuration of a chiral atom and is calculated either from
 	 * 2D-atom-coordinates and up/down-bonds or from 3D-atom-coordinates, whatever is available.
-	 * It depends on the atom indices of the neighbor atoms and their orientation is space.<br>
+	 * It depends on the atom indices of the neighbor atoms and their orientation in space.<br>
 	 * The parity is defined as follows: Look at the chiral atom such that its neighbor atom with the
 	 * highest atom index (or the hydrogen atom if it is implicit) is oriented to the back.
 	 * If the remaining three neighbors are in clockwise order (considering ascending atom indexes)
@@ -3128,23 +3188,6 @@ public class Molecule implements Serializable {
 		}
 
 
-	/**
-	 * Removes all user supplied stereo information: up/down-bonds,
-	 * atom configuration unknown flags, atom and bond ESR assignments.
-	 * Removes parity and CIP flags from helper state, such that stereo calculation
-	 * is redone, if needed.
-	 */
-	public void stripStereoInformation() {
-		mIsRacemate = false;
-		for (int atom=0; atom<mAllAtoms; atom++)
-			mAtomFlags[atom] &= ~(cAtomFlagConfigurationUnknown | cAtomFlagsESR);
-		for (int bond=0; bond<mAllBonds; bond++)
-			mBondType[bond] &= ~cBondTypeMaskStereo;
-
-		mValidHelperArrays &= ~cHelperBitsStereo;
-		}
-
-
 	public void translateCoords(double dx, double dy) {
 		for (int i=0; i<mAllAtoms; i++) {
 			mCoordinates[i].x += dx;
@@ -3348,7 +3391,7 @@ public class Molecule implements Serializable {
 	 * or radical status, e.g. N+ -> 1; N- -> -1; Al+ -> -1; C+,C- -> -1.
 	 * In some cases, where the atomicNo can have multiple valences,
 	 * the influence of a charge depends on the atom's actual valence, e.g.
-	 * valence corrections for R3P(+) and R5p(+) are 1 and -1, respectively.
+	 * valence corrections for R3P(+) and R5P(+) are 1 and -1, respectively.
 	 * Criteria are:<br>
 	 * -in the given valence state is there a lone pair that can be protonated<br>
 	 * -can we introduce a negative substituent as in BH3 or PF5 vs. SF6<br>

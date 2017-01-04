@@ -1,35 +1,35 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
-
 package com.actelion.research.chem;
 
 import com.actelion.research.chem.conf.Coordinate;
@@ -412,7 +412,7 @@ public final class Coordinates implements Serializable, Comparable<Coordinates> 
 		return pp;
 	}
 
-	public static final double getDihedral(Coordinates c1, Coordinates c2, Coordinates c3, Coordinates c4) {
+/*	public static final double getDihedral(Coordinates c1, Coordinates c2, Coordinates c3, Coordinates c4) {
 		//Coordinates c1 = this;
 		// Calculate the vectors between atoms
 		Coordinates r12 = new Coordinates(c1);
@@ -440,6 +440,32 @@ public final class Coordinates implements Serializable, Comparable<Coordinates> 
 
 		//  Get phi, assign the sign based on the sine value
 		return -Math.atan2(sin_phi, cos_phi);
+	}*/
+
+	/**
+	 * Calculates a signed torsion as an exterior spherical angle
+	 * from a valid sequence of 4 points in space.
+	 * Looking along the line from c2 to c3, the torsion angle is 0.0, if the
+	 * projection of c2->c1 and c3->c4 point in the same direction.
+	 * If the projection of vector c2-c1 is rotated in clockwise direction,
+	 * the angle increases, i.e. has a positive value.
+	 * http://en.wikipedia.org/wiki/Dihedral_angle
+	 * @param c1
+	 * @param c2
+	 * @param c3
+	 * @param c4
+	 * @return torsion in the range: -pi <= torsion <= pi
+	 */
+	public static final double getDihedral(Coordinates c1, Coordinates c2, Coordinates c3, Coordinates c4) {
+		// changed from above, because it seems a little more efficient; TLS 2-Nov-2016
+		Coordinates v1 = c2.subC(c1);
+		Coordinates v2 = c3.subC(c2);
+		Coordinates v3 = c4.subC(c3);
+
+		Coordinates n1 = v1.cross(v2);
+		Coordinates n2 = v2.cross(v3);
+
+		return -Math.atan2(v2.getLength() * v1.dot(n2), n1.dot(n2));
 	}
 
 	@Override

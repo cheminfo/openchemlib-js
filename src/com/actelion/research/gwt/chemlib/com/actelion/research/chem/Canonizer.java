@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 // Restriction: - Although bond query features are encoded into the idcode, idcodes of
@@ -39,7 +40,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.actelion.research.chem;
 
-import java.util.*;
+import com.actelion.research.chem.conf.TorsionDB;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class Canonizer {
 	public static final int CREATE_SYMMETRY_RANK = 1;
@@ -97,7 +102,7 @@ public class Canonizer {
 	public static final int MAX_ATOMS = 0xFFFF;
 	public static final int MAX_BONDS = 0xFFFF;
 
-	private ExtendedMolecule mMol;
+	private StereoMolecule mMol;
 	private int[] mCanRank;
 	private int[] mCanRankBeforeTieBreaking;
 	private byte[] mTHParity;
@@ -148,7 +153,7 @@ public class Canonizer {
 	 * taking stereo features, ESR settings and query features into account.
 	 * @param mol
 	 */
-	public Canonizer(ExtendedMolecule mol) {
+	public Canonizer(StereoMolecule mol) {
 		this(mol, 0);
 		}
 
@@ -164,7 +169,7 @@ public class Canonizer {
 	 * @param mol
 	 * @param mode 0 or one or more of CONSIDER...TOPICITY, CREATE_SYMMETRY_RANK, ENCODE_ATOM_CUSTOM_LABELS, ASSIGN_PARITIES_TO_TETRAHEDRAL_N, COORDS_ARE_3D
 	 */
-	public Canonizer(ExtendedMolecule mol, int mode) {
+	public Canonizer(StereoMolecule mol, int mode) {
 		if (mol.getAllAtoms()>MAX_ATOMS)
 			throw new IllegalArgumentException("Cannot canonize a molecule having more than "+MAX_ATOMS+" atoms");
 		if (mol.getAllBonds()>MAX_BONDS)
@@ -1541,7 +1546,8 @@ System.out.println("noOfRanks:"+canRank);
 		if (mTHParity[atom] != 0)
 			return false;
 
-		if (mMol.getAtomicNo(atom) != 6
+		if (mMol.getAtomicNo(atom) != 5
+		 && mMol.getAtomicNo(atom) != 6
 		 && mMol.getAtomicNo(atom) != 7
 		 && mMol.getAtomicNo(atom) != 14
 		 && mMol.getAtomicNo(atom) != 15
@@ -1560,7 +1566,10 @@ System.out.println("noOfRanks:"+canRank);
 		if (mMol.getConnAtoms(atom) < 3 || mMol.getAllConnAtoms(atom) > 4)
 			return false;
 
-		// don't tetrahedral nitrogen, unless they were found to qualify for parity calculation
+		if (mMol.getAtomicNo(atom) == 5 && mMol.getAllConnAtoms(atom) != 4)
+			return false;
+
+		// don't consider tetrahedral nitrogen, unless found to qualify for parity calculation
 		if (mMol.getAtomicNo(atom) == 7
 		 && !mNitrogenQualifiesForParity[atom])
 			return false;
@@ -1863,25 +1872,8 @@ System.out.println("noOfRanks:"+canRank);
 				mProEZAtomsInSameFragment[bond] = hasSecondBINAPBond(atom1);
 			}
 
-		int hp1 = halfParity1.getValue();
-		int hp2 = halfParity2.getValue();
-		if (hp1 == -1 || hp2 == -1 || ((hp1 + hp2) & 1) == 0) {
-			if (!calcProParity) {
-				mEZParity[bond] = Molecule.cBondParityUnknown;
-				}
-			return true;
-			}
-
-		byte axialParity = 0;
-		switch (hp1 + hp2) {
-		case 3:
-		case 7:
-			axialParity = Molecule.cBondParityEor1;
-			break;
-		case 5:
-			axialParity = Molecule.cBondParityZor2;
-			break;
-			}
+		byte axialParity = mZCoordinatesAvailable ? canCalcBINAPParity3D(halfParity1, halfParity2)
+												  : canCalcBINAPParity2D(halfParity1, halfParity2);
 
 		if (!calcProParity) {	// increment mProParity[] for atoms that are Pro-E
 			mEZParity[bond] = axialParity;
@@ -1911,6 +1903,43 @@ System.out.println("noOfRanks:"+canRank);
 			}
 
 		return true;
+		}
+
+
+	private byte canCalcBINAPParity2D(EZHalfParity halfParity1, EZHalfParity halfParity2) {
+		int hp1 = halfParity1.getValue();
+		int hp2 = halfParity2.getValue();
+		if (hp1 == -1 || hp2 == -1 || ((hp1 + hp2) & 1) == 0)
+			return Molecule.cBondParityUnknown;
+
+		byte axialParity = 0;
+		switch (hp1 + hp2) {
+		case 3:
+		case 7:
+			axialParity = Molecule.cBondParityEor1;
+			break;
+		case 5:
+			axialParity = Molecule.cBondParityZor2;
+			break;
+			}
+		return axialParity;
+		}
+
+
+	private byte canCalcBINAPParity3D(EZHalfParity halfParity1, EZHalfParity halfParity2) {
+		int[] atom = new int[4];
+		atom[0] = halfParity1.mHighConn;
+		atom[1] = halfParity1.mCentralAxialAtom;
+		atom[2] = halfParity2.mCentralAxialAtom;
+		atom[3] = halfParity2.mHighConn;
+		double torsion = mMol.calculateTorsion(atom);
+		// if the torsion is not significant (less than ~10 degrees) then return cBondParityUnknown
+		if (Math.abs(torsion) < 0.3 || Math.abs(torsion) > Math.PI-0.3)
+			return Molecule.cBondParityUnknown;
+		if (torsion < 0)
+			return Molecule.cBondParityEor1;
+		else
+			return Molecule.cBondParityZor2;
 		}
 
 

@@ -30,6 +30,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
+
+
+
+
+
+
 package com.actelion.research.chem;
 
 public class AbstractDrawingObject

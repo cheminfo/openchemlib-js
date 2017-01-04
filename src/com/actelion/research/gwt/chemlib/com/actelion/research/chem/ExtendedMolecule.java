@@ -1,33 +1,34 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 package com.actelion.research.chem;
@@ -124,15 +125,15 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			if (atom1<atomCount && atom2<atomCount) {
 				if (includeAtom[atom1] && includeAtom[atom2])
 					copyBond(destMol, bnd, 0, 0, atomMap, recognizeDelocalizedBonds);
-				// if we keep only one atom and have a bi-polar bonds, then we need to neutralize
+				// if we keep only one atom and have a bi-polar bond, then we need to neutralize
 				else if (mAtomCharge[atom1] != 0
 					  && mAtomCharge[atom2] != 0
 					  && (mAtomCharge[atom1] < 0
 						^ mAtomCharge[atom2] < 0)) {
 					if (includeAtom[atom1])
-						mAtomCharge[atom1] += (mAtomCharge[atom1] < 0) ? 1 : -1;
+						destMol.mAtomCharge[atomMap[atom1]] += (mAtomCharge[atom1] < 0) ? 1 : -1;
 					if (includeAtom[atom2])
-						mAtomCharge[atom2] += (mAtomCharge[atom2] < 0) ? 1 : -1;
+						destMol.mAtomCharge[atomMap[atom2]] += (mAtomCharge[atom2] < 0) ? 1 : -1;
 					}
 				}
 			}
@@ -2544,7 +2545,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		ensureHelperArrays(cHelperNeighbours);
 
 		for (int bond=0; bond<mAllBonds; bond++) {
-			if (getBondOrder(bond) < 3) {
+			int bondOrder = getBondOrder(bond);
+			if (bondOrder == 1 || bondOrder == 2) {
 				int atom1,atom2;
 				if (mAtomCharge[mBondAtom[0][bond]] > 0
 				 && mAtomCharge[mBondAtom[1][bond]] < 0) {
@@ -2563,13 +2565,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				 || isMetalAtom(atom2))
 					continue;
 
-				if (mAtomicNo[atom1] < 9)
-					if (getOccupiedValence(atom1) > 3)
+				if ((mAtomicNo[atom1] < 9 && getOccupiedValence(atom1) > 3)
+				 || (mAtomicNo[atom2] < 9 && getOccupiedValence(atom2) > 3))
 						continue;
 
 				mAtomCharge[atom1] -= 1;
 				mAtomCharge[atom2] += 1;
-				if (getBondOrder(bond) == 1)
+				if (bondOrder == 1)
 					mBondType[bond] = cBondTypeDouble;
 				else
 					mBondType[bond] = cBondTypeTriple;
