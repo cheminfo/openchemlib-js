@@ -22,8 +22,28 @@ exports.changed = changed.map((file) => {
     ];
 });
 
+const removed = [
+    'chem/dnd', // ui
+    'chem/FingerPrintGenerator.java',
+    'chem/reaction/ClassificationData.java',
+    'gui/dnd', // ui
+    'gui/hidpi', // ui
+    'share/gui/editor/chem/DrawingObject.java',
+    'util/ArrayUtils.java', // uses reflection
+    'util/CursorHelper.java',
+    'util/datamodel/IntVec.java',
+    'util/IntQueue.java', // unused, depends on ArrayUtils
+    'util/Platform.java',
+];
+
+exports.removed = removed.map(getFolderName);
+
 function getFilename(file) {
     return 'actelion/research/' + file + '.java';
+}
+
+function getFolderName(file) {
+    return 'actelion/research/' + file;
 }
 
 function changeMolecule(molecule) {

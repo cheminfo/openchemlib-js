@@ -91,6 +91,7 @@ function build(done) {
 
 function compile(mode) {
     return function () {
+        var min = mode === 'min';
         for (var i = 0; i < modules.length; i++) {
             log('Compiling module ' + modules[i].name);
             var args = [
@@ -98,26 +99,28 @@ function compile(mode) {
                 '-cp', classpath,
                 'com.google.gwt.dev.Compiler',
                 modules[i].entrypoint,
-                '-optimize', '9',
-                '-XnocheckCasts',
+                '-logLevel', verbose ? 'DEBUG' : 'ERROR',
+                min ? '-XnocheckCasts' : '-XcheckCasts',
                 '-XnoclassMetadata',
+                verbose ? '-draftCompile' : '-nodraftCompile',
                 '-nocheckAssertions',
                 '-generateJsInteropExports',
-                '-style'
+                '-optimize', min ? '9' : '0',
+                '-style', min ? 'OBFUSCATED' : 'PRETTY',
+      //          verbose ? '-failOnError' : '-nofailOnError'
             ];
-            if (mode === 'min') {
-                args.push('OBF');
-            } else {
-                args.push('PRETTY');
-            }
-            if (verbose) {
-                args.push('-logLevel', 'DEBUG');
-            }
-            var result = child_process.execFileSync('java', args);
-            if (verbose) {
-                var name = 'compile-' + modules[i].name + '.log';
-                log('Compilation log written to ' + name);
-                fs.writeFileSync('./' + name, result);
+            var result;
+            try {
+                result = child_process.execFileSync('java', args);
+            } catch (e) {
+                result = e.stdout;
+                throw e;
+            } finally {
+                if (verbose) {
+                    var name = 'compile-' + modules[i].name + '.log';
+                    log('Compilation log written to ' + name);
+                    fs.writeFileSync('./' + name, result);
+                }
             }
         }
     }
@@ -146,6 +149,11 @@ function copyOpenchemlib() {
         const data = fs.readFileSync(path.join(outDir, file), 'utf8');
         const result = callback(data);
         fs.writeFileSync(path.join(outDir, file), result);
+    }
+
+    const removed = chemlibClasses.removed;
+    for (const removedFile of removed) {
+        fs.removeSync(path.join(outDir, removedFile));
     }
 }
 

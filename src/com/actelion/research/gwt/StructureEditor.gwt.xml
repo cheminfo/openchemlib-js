@@ -8,6 +8,7 @@
     <source path="gui/editor"/>
     <entry-point class='com.actelion.research.gwt.gui.editor.GWTStructureEditor'/>
     <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
+    <set-property name="user.agent" value="safari" />
 <!--
     <set-property name="user.agent" value="safari" />
     <set-property name="user.agent" value="gecko1_8" />
