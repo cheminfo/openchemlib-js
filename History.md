@@ -1,3 +1,14 @@
+4.6.3 / 2017-01-04
+==================
+
+* update OCL to 2017.1.0
+
+4.6.2 / 2016-11-08
+==================
+
+* AtomQueryFeaturesDialog: added more than 2 Hydrogens on query features
+* Fix SVGDepictor: minimal bond width is now 1
+
 4.6.1 / 2016-11-03
 ==================
 
