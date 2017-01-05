@@ -69,9 +69,10 @@ public class JSMolecule {
 	}
 
 	public native String toSVG(int width, int height, String id, JavaScriptObject options) /*-{
-		if (!$doc.createElement) {
-			throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
-		}
+		//todo: re-enable this check once it becomes possible to change the font
+		//if (!$doc.createElement) {
+		//	throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
+		//}
 		return this.@com.actelion.research.gwt.core.JSMolecule::getSVG(IILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, id, options);
 	}-*/;
 	
