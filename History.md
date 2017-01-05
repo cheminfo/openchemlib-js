@@ -1,3 +1,23 @@
+4.7.0 / 2017-01-05
+==================
+
+Update public methods of JSMolecule. This adds a few new methods:
+* static double getDefaultAverageBondLength()
+* static void setDefaultAverageBondLength(double defaultAVBL)
+* int suggestBondType(int atom1, int atom2)
+* double calculateTorsion(int[] atom)
+* void setBondOrder(int bond,int order)
+* int getMetalBondedConnAtoms(int atom)
+* int getAllConnAtomsPlusMetalBonds(int atom)
+* int getNonHydrogenNeighbourCount(int atom)
+* int getExcludeGroupValence(int atom)
+* int getLowestFreeValence(int atom)
+* int getExplicitHydrogens(int atom)
+* boolean isPseudoRotatableBond(int bond)
+* boolean isAmideTypeBond(int bond)
+* int getZNeighbour(int connAtom, int bond)
+* int getHelperArrayStatus()
+
 4.6.3 / 2017-01-04
 ==================
 

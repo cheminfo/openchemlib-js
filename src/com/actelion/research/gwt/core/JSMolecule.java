@@ -176,15 +176,15 @@ public static final int cMaxAtomicNo = 190;
 public static final int cAtomParityNone			= 0x000000;
 public static final int cAtomParity1			= 0x000001;
 public static final int cAtomParity2			= 0x000002;
-public static final int cAtomParityUnknown	  = 0x000003;
-public static final int cAtomParityIsPseudo	 = 0x000004;
+public static final int cAtomParityUnknown		= 0x000003;
+public static final int cAtomParityIsPseudo		= 0x000004;
 public static final int cAtomRadicalState		= 0x000030;
 public static final int cAtomRadicalStateShift	= 4;
 public static final int cAtomRadicalStateNone	= 0x000000;
 public static final int cAtomRadicalStateS		= 0x000010;
 public static final int cAtomRadicalStateD		= 0x000020;
 public static final int cAtomRadicalStateT		= 0x000030;
-public static final int cAtomColorBlack			= 0x000000;
+public static final int cAtomColorNone			= 0x000000;
 public static final int cAtomColorBlue			= 0x000040;
 public static final int cAtomColorRed			= 0x000080;
 public static final int cAtomColorGreen			= 0x0000C0;
@@ -192,27 +192,27 @@ public static final int cAtomColorMagenta		= 0x000100;
 public static final int cAtomColorOrange		= 0x000140;
 public static final int cAtomColorDarkGreen		= 0x000180;
 public static final int cAtomColorDarkRed		= 0x0001C0;
-public static final int cAtomCIPParityNone	  = 0x000000;
-public static final int cAtomCIPParityRorM	  = 0x000001;
+public static final int cAtomCIPParityNone		= 0x000000;
+public static final int cAtomCIPParityRorM		= 0x000001;
 public static final int cAtomCIPParitySorP		= 0x000002;
-public static final int cAtomCIPParityProblem   = 0x000003;
+public static final int cAtomCIPParityProblem	= 0x000003;
 public static final int cESRTypeAbs				= 0;
 public static final int cESRTypeAnd				= 1;
 public static final int cESRTypeOr				= 2;
 public static final int cESRMaxGroups			= 32;
 public static final int cESRGroupBits			= 5;
-public static final int cAtomQFNoOfBits			= 29;
+public static final int cAtomQFNoOfBits			= 30;
 public static final int cAtomQFAromStateBits	= 2;
 public static final int cAtomQFAromStateShift	= 1;
 public static final int cAtomQFRingStateBits	= 4;
 public static final int cAtomQFRingStateShift	= 3;
 public static final int cAtomQFHydrogenBits		= 4;
 public static final int cAtomQFHydrogenShift	= 7;
-public static final int cAtomQFPiElectronBits   = 3;
-public static final int cAtomQFPiElectronShift  = 14;
+public static final int cAtomQFPiElectronBits	= 3;
+public static final int cAtomQFPiElectronShift	= 14;
 public static final int cAtomQFNeighbourBits	= 5;
-public static final int cAtomQFNeighbourShift   = 17;
-public static final int cAtomQFRingSizeBits	 = 3;
+public static final int cAtomQFNeighbourShift	= 17;
+public static final int cAtomQFRingSizeBits		= 3;
 public static final int cAtomQFRingSizeShift	= 22;
 public static final int cAtomQFChargeBits		= 3;
 public static final int cAtomQFChargeShift		= 25;
@@ -231,26 +231,27 @@ public static final int cAtomQFHydrogen			= 0x00000780;
 public static final int cAtomQFNot0Hydrogen		= 0x00000080;
 public static final int cAtomQFNot1Hydrogen		= 0x00000100;
 public static final int cAtomQFNot2Hydrogen		= 0x00000200;
-public static final int cAtomQFNot3Hydrogen	 = 0x00000400;
+public static final int cAtomQFNot3Hydrogen		= 0x00000400;
 public static final int cAtomQFNoMoreNeighbours	= 0x00000800;
 public static final int cAtomQFMoreNeighbours	= 0x00001000;
 public static final int cAtomQFMatchStereo		= 0x00002000;
-public static final int cAtomQFPiElectrons	  = 0x0001C000;
+public static final int cAtomQFPiElectrons		= 0x0001C000;
 public static final int cAtomQFNot0PiElectrons  = 0x00004000;
 public static final int cAtomQFNot1PiElectron   = 0x00008000;
 public static final int cAtomQFNot2PiElectrons  = 0x00010000;
-public static final int cAtomQFNeighbours	   = 0x003E0000;  // these QF refer to non-H neighbours
+public static final int cAtomQFNeighbours		= 0x003E0000;  // these QF refer to non-H neighbours
 public static final int cAtomQFNot0Neighbours   = 0x00020000;
 public static final int cAtomQFNot1Neighbour	= 0x00040000;
 public static final int cAtomQFNot2Neighbours   = 0x00080000;
 public static final int cAtomQFNot3Neighbours   = 0x00100000;
 public static final int cAtomQFNot4Neighbours   = 0x00200000;  // this is not 4 or more neighbours
-public static final int cAtomQFRingSize		 = 0x01C00000;
+public static final int cAtomQFRingSize			= 0x01C00000;
 public static final int cAtomQFCharge			= 0x0E000000;
 public static final int cAtomQFNotChargeNeg		= 0x02000000;
 public static final int cAtomQFNotCharge0		= 0x04000000;
 public static final int cAtomQFNotChargePos		= 0x08000000;
 public static final int cAtomQFFlatNitrogen		= 0x10000000;  // currently only used in TorsionDetail
+public static final int cAtomQFExcludeGroup		= 0x20000000;  // these atoms must not exist in SS-matches
 public static final int cBondTypeSingle			= 0x00000001;
 public static final int cBondTypeDouble			= 0x00000002;
 public static final int cBondTypeTriple			= 0x00000004;
@@ -267,51 +268,52 @@ public static final int cBondParityZor2			= 0x00000002;
 public static final int cBondParityUnknown		= 0x00000003;
 public static final int cBondCIPParityNone		= 0x00000000;
 public static final int cBondCIPParityEorP		= 0x00000001;
-public static final int cBondCIPParityZorM	  = 0x00000002;
+public static final int cBondCIPParityZorM		= 0x00000002;
 public static final int cBondCIPParityProblem   = 0x00000003;
-public static final int cBondQFNoOfBits			= 20;
-public static final int cBondQFBondTypesBits	= 4;
+public static final int cBondQFNoOfBits			= 21;
+public static final int cBondQFBondTypesBits	= 5;
 public static final int cBondQFBondTypesShift	= 0;
 public static final int cBondQFRingStateBits	= 2;
-public static final int cBondQFRingStateShift	= 4;
-public static final int cBondQFBridgeBits	   = 8;
-public static final int cBondQFBridgeShift	  = 6;
+public static final int cBondQFRingStateShift	= 5;
+public static final int cBondQFBridgeBits		= 8;
+public static final int cBondQFBridgeShift		= 7;
 public static final int cBondQFBridgeMinBits	= 4;
-public static final int cBondQFBridgeMinShift   = 6;
+public static final int cBondQFBridgeMinShift   = 7;
 public static final int cBondQFBridgeSpanBits   = 4;
-public static final int cBondQFBridgeSpanShift  = 10;
-public static final int cBondQFRingSizeBits	 = 3;
-public static final int cBondQFRingSizeShift	= 14;
+public static final int cBondQFBridgeSpanShift  = 11;
+public static final int cBondQFRingSizeBits		= 3;
+public static final int cBondQFRingSizeShift	= 15;
 public static final int cBondQFAromStateBits	= 2;
-public static final int cBondQFAromStateShift	= 18;
-public static final int cBondQFAllFeatures		= 0x000FFFFF;
-public static final int cBondQFSimpleFeatures	= 0x000C003F;
-public static final int cBondQFNarrowing		= 0x000C0030;
-public static final int cBondQFBondTypes		= 0x0000000F;
+public static final int cBondQFAromStateShift	= 19;
+public static final int cBondQFAllFeatures		= 0x001FFFFF;
+public static final int cBondQFSimpleFeatures	= 0x0018007F;
+public static final int cBondQFNarrowing		= 0x00180060;
+public static final int cBondQFBondTypes		= 0x0000001F;
 public static final int cBondQFSingle			= 0x00000001;
 public static final int cBondQFDouble			= 0x00000002;
 public static final int cBondQFTriple			= 0x00000004;
 public static final int cBondQFDelocalized		= 0x00000008;
-public static final int cBondQFRingState		= 0x00000030;
-public static final int cBondQFNotRing			= 0x00000010;
-public static final int cBondQFRing				= 0x00000020;
-public static final int cBondQFBridge		   = 0x00003FC0;
-public static final int cBondQFBridgeMin		= 0x000003C0;
-public static final int cBondQFBridgeSpan	   = 0x00003C00;
-public static final int cBondQFRingSize			= 0x0001C000;
-public static final int cBondQFMatchStereo		= 0x00020000;
-public static final int cBondQFAromState		= 0x000C0000;
-public static final int cBondQFAromatic			= 0x00040000;
-public static final int cBondQFNotAromatic		= 0x00080000;
-public static final int cHelperNone = 0x0000;
-public static final int cHelperBitNeighbours = 0x0001;
-public static final int cHelperBitRings = 0x0002;
-public static final int cHelperBitParities = 0x0004;
-public static final int cHelperBitCIP = 0x0008;
-public static final int cHelperBitSymmetrySimple = 0x0010;
-public static final int cHelperBitSymmetryDiastereotopic = 0x0020;
-public static final int cHelperBitSymmetryEnantiotopic = 0x0040;
-public static final int cHelperBitIncludeNitrogenParities = 0x0080;
+public static final int cBondQFMetalLigand		= 0x00000010;
+public static final int cBondQFRingState		= 0x00000060;
+public static final int cBondQFNotRing			= 0x00000020;
+public static final int cBondQFRing				= 0x00000040;
+public static final int cBondQFBridge			= 0x00007F80;
+public static final int cBondQFBridgeMin		= 0x00000780;
+public static final int cBondQFBridgeSpan		= 0x00007800;
+public static final int cBondQFRingSize			= 0x00038000;
+public static final int cBondQFMatchStereo		= 0x00040000;
+public static final int cBondQFAromState		= 0x00180000;
+public static final int cBondQFAromatic			= 0x00080000;
+public static final int cBondQFNotAromatic		= 0x00100000;
+public static final int cHelperNone				= 0x0000;
+public static final int cHelperBitNeighbours	= 0x0001;
+public static final int cHelperBitRings			= 0x0002;
+public static final int cHelperBitParities		= 0x0004;
+public static final int cHelperBitCIP			= 0x0008;
+public static final int cHelperBitSymmetrySimple			= 0x0010;
+public static final int cHelperBitSymmetryDiastereotopic	= 0x0020;
+public static final int cHelperBitSymmetryEnantiotopic		= 0x0040;
+public static final int cHelperBitIncludeNitrogenParities	= 0x0080;
 public static final int cHelperBitsStereo = 0x00FC;
 public static final int cHelperNeighbours = cHelperBitNeighbours;
 public static final int cHelperRings = cHelperNeighbours | cHelperBitRings;
@@ -323,12 +325,12 @@ public static final int cHelperSymmetryEnantiotopic = cHelperCIP | cHelperBitSym
 public static final int cChiralityIsomerCountMask   = 0x00FFFF;
 public static final int cChiralityUnknown		  	= 0x000000;
 public static final int cChiralityNotChiral			= 0x010000;
-public static final int cChiralityMeso			  = 0x020000; // this has added the number of meso isomers
+public static final int cChiralityMeso				= 0x020000; // this has added the number of meso isomers
 public static final int cChiralityRacemic			= 0x030000;
 public static final int cChiralityKnownEnantiomer   = 0x040000;
 public static final int cChiralityUnknownEnantiomer = 0x050000;
-public static final int cChiralityEpimers		   = 0x060000;
-public static final int cChiralityDiastereomers	 = 0x070000; // this has added the number of diastereomers
+public static final int cChiralityEpimers		 	= 0x060000;
+public static final int cChiralityDiastereomers		= 0x070000; // this has added the number of diastereomers
 public static final String cAtomLabel[] = { "?",
 	"H"  ,"He" ,"Li" ,"Be" ,"B"  ,"C"  ,"N"  ,"O"  ,
 	"F"  ,"Ne" ,"Na" ,"Mg" ,"Al" ,"Si" ,"P"  ,"S"  ,
@@ -405,12 +407,12 @@ public static int getAtomicNoFromLabel(String atomLabel) {
 }
 
 
-public static double getAngle(float x1, float y1, float x2, float y2) {
+public static double getAngle(double x1, double y1, double x2, double y2) {
 	return StereoMolecule.getAngle(x1, y1, x2, y2);
 }
 
 
-public static double getAngleDif(float angle1, float angle2) {
+public static double getAngleDif(double angle1, double angle2) {
 	return StereoMolecule.getAngleDif(angle1, angle2);
 }
 
@@ -424,14 +426,26 @@ public int addAtom(int atomicNo) {
 }
 
 /**
- * High level function for constructing a molecule.
- * @param atm1
- * @param atm2
- * @param type
- * @return
+ * Suggests either cBondTypeSingle or cBondTypeMetalLigand
+ * whatever seems more appropriate for a new bond between the two atoms.
+ * @param atom1
+ * @param atom2
+ * @return preferred bond type
  */
-public int addBond(int atm1,int atm2,int type) {
-	return oclMolecule.addBond(atm1,atm2,type);
+public int suggestBondType(int atom1, int atom2) {
+	return oclMolecule.suggestBondType(atom1, atom2);
+}
+
+/**
+ * High level function for constructing a molecule.
+ * Adds a single or metal bond between the two atoms
+ * depending on whether one of them is a metal atom.
+ * @param atom1
+ * @param atom2
+ * @return new bond index
+ */
+public int addBond(int atom1, int atom2) {
+	return oclMolecule.addBond(atom1, atom2);
 }
 
 /**
@@ -444,7 +458,7 @@ public int addBond(int atm1,int atm2,int type) {
  * @param radical
  * @return
  */
-public boolean addOrChangeAtom(float x, float y, int atomicNo, int mass, int abnormalValence, int radical) {
+public boolean addOrChangeAtom(double x, double y, int atomicNo, int mass, int abnormalValence, int radical) {
 	return oclMolecule.addOrChangeAtom(x, y, atomicNo, mass, abnormalValence, radical);
 }
 
@@ -467,7 +481,7 @@ public int addOrChangeBond(int atm1,int atm2,int type) {
  * @param aromatic
  * @return
  */
-public boolean addRing(float x, float y, int ringSize, boolean aromatic) {
+public boolean addRing(double x, double y, int ringSize, boolean aromatic) {
 	return oclMolecule.addRing(x, y, ringSize, aromatic);
 }
 
@@ -527,6 +541,9 @@ public boolean changeBond(int bnd, int type) {
 }
 
 /**
+ * Copies all atoms and bonds of mol to the end of this Molecule's atom and bond
+ * tables. If mol is a fragment then this Molecule's fragment flag is set to true
+ * and all query features of mol are also copied.
  * High level function for constructing a molecule.
  * @param mol
  * @return atom mapping from original mol to this molecule after incorporation of mol
@@ -568,13 +585,22 @@ public int copyAtom(JSMolecule destMol, int sourceAtom, int esrGroupOffsetAND, i
 	return oclMolecule.copyAtom(destMol.getStereoMolecule(), sourceAtom, esrGroupOffsetAND, esrGroupOffsetOR);
 }
 
+/**
+ * @param destMol
+ * @param sourceBond
+ * @param esrGroupOffsetAND -1 to create new ESR group or destMol ESR group count from esrGroupCountAND()
+ * @param esrGroupOffsetOR -1 to create new ESR group or destMol ESR group count from esrGroupCountOR()
+ * @param atomMap
+ * @param useBondTypeDelocalized
+ * @return
+ */
 public int copyBond(JSMolecule destMol, int sourceBond, int esrGroupOffsetAND, int esrGroupOffsetOR, int[] atomMap, boolean useBondTypeDelocalized) {
 	return oclMolecule.copyBond(destMol.getStereoMolecule(), sourceBond, esrGroupOffsetAND, esrGroupOffsetOR, atomMap, useBondTypeDelocalized);
 }
 
 /**
  * Copies name,isFragment,chirality and validity of parity & CIP flags.
- * When copying molecules parts only or when changing the atom order during addPasteHandler,
+ * When copying molecules parts only or when changing the atom order during copy,
  * then atom parities or CIP parities may not be valid anymore and
  * invalidateHelperArrays([affected bits]) should be called in these cases.
  * @param destMol
@@ -617,7 +643,7 @@ public void deleteAtom(int atom) {
  * @param y
  * @return
  */
-public boolean deleteAtomOrBond(float x, float y) {
+public boolean deleteAtomOrBond(double x, double y) {
 	return oclMolecule.deleteAtomOrBond(x, y);
 }
 
@@ -751,7 +777,7 @@ public void removeBondHiliting() {
  * @param picky
  * @return index of closest of nearby atoms or -1, if no atom is close
  */
-public int findAtom(float pickx, float picky) {
+public int findAtom(double pickx, double picky) {
 	return oclMolecule.findAtom(pickx, picky);
 }
 
@@ -760,7 +786,7 @@ public int findAtom(float pickx, float picky) {
  * @param picky
  * @return index of closest of nearby bonds or -1, if no bond is close
  */
-public int findBond(float pickx, float picky) {
+public int findBond(double pickx, double picky) {
 	return oclMolecule.findBond(pickx, picky);
 }
 
@@ -868,7 +894,7 @@ public String getAtomLabel(int atom) {
  * The list of atoms that are allowed at this position during sub-structure search.
  * (or refused atoms, if atom query feature cAtomQFAny is set).
  * @param atom
- * @return null or atom list, if defined
+ * @return null or sorted list of unique atomic numbers, if defined
  */
 public int[] getAtomList(int atom) {
 	return oclMolecule.getAtomList(atom);
@@ -902,7 +928,7 @@ public int getAtomMass(int atom) {
  * The atom parity is a calculated property available above/equal helper level cHelperParities.
  * It describes the stereo configuration of a chiral atom and is calculated either from
  * 2D-atom-coordinates and up/down-bonds or from 3D-atom-coordinates, whatever is available.
- * It depends on the atom indices of the neighbor atoms and their orientation is space.<br>
+ * It depends on the atom indexes of the neighbor atoms and their orientation in space.<br>
  * The parity is defined as follows: Look at the chiral atom such that its neighbor atom with the
  * highest atom index (or the hydrogen atom if it is implicit) is oriented to the back.
  * If the remaining three neighbors are in clockwise order (considering ascending atom indexes)
@@ -952,8 +978,39 @@ public double getAtomZ(int atom) {
 }
 
 
+public static double getDefaultAverageBondLength() {
+	return StereoMolecule.getDefaultAverageBondLength();
+}
+
+/**
+ * When the molecule adds a new bond to a new atom or a new ring,
+ * then atoms are positioned such that the lengths of the new bonds
+ * are equal to the average length of existing bonds. If there are no
+ * existing bonds, then this default is used.
+ * If the default is not set by this function, then it is 24.
+ * @param defaultAVBL
+ */
+public static void setDefaultAverageBondLength(double defaultAVBL) {
+	StereoMolecule.setDefaultAverageBondLength(defaultAVBL);
+}
+
 public double getBondAngle(int atom1, int atom2) {
 	return oclMolecule.getBondAngle(atom1, atom2);
+}
+
+/**
+ * Calculates a signed torsion as an exterior spherical angle
+ * from a valid 4-atom strand.
+ * Looking along the central bond, the torsion angle is 0.0, if the
+ * projection of front and rear bonds point in the same direction.
+ * If the front bond is rotated in the clockwise direction, the angle
+ * increases, i.e. has a positive value.
+ * http://en.wikipedia.org/wiki/Dihedral_angle
+ * @param atom 4 valid atom indices defining a connected atom sequence
+ * @return torsion in the range: -pi <= torsion <= pi
+ */
+public double calculateTorsion(int[] atom) {
+	return oclMolecule.calculateTorsion(atom);
 }
 
 /**
@@ -1137,7 +1194,7 @@ public boolean getStereoProblem(int atom) {
 
 /**
  * @param atom
- * @return whether the atom's stereo configuration was explicitly deplared unknown
+ * @return whether the atom's stereo configuration was explicitly declared unknown
  */
 public boolean isAtomConfigurationUnknown(int atom) {
 	return oclMolecule.isAtomConfigurationUnknown(atom);
@@ -1367,7 +1424,7 @@ public void setAtomMass(int atom, int mass) {
  * The atom parity is a calculated property available above/equal helper level cHelperParities.
  * It describes the stereo configuration of a chiral atom and is calculated either from
  * 2D-atom-coordinates and up/down-bonds or from 3D-atom-coordinates, whatever is available.
- * It depends on the atom indices of the neighbor atoms and their orientation is space.<br>
+ * It depends on the atom indices of the neighbor atoms and their orientation in space.<br>
  * The parity is defined as follows: Look at the chiral atom such that its neighbor atom with the
  * highest atom index (or the hydrogen atom if it is implicit) is oriented to the back.
  * If the remaining three neighbors are in clockwise order (considering ascending atom indexes)
@@ -1514,6 +1571,15 @@ public void setBondQueryFeature(int bond, int feature, boolean value) {
 }
 
 /**
+ * Sets the bond type based on bond order without stereo orientation.
+ * @param bond
+ * @param order 1,2, or 3
+ */
+public void setBondOrder(int bond,int order) {
+	oclMolecule.setBondOrder(bond,order);
+}
+
+/**
  * Defines a bond type combining bod order and stereo orientation.
  * @param bond
  * @param type one of cBondTypeSingle,cBondTypeDouble,cBondTypeUp,cBondTypeCross,...
@@ -1605,7 +1671,8 @@ public void setBondESR(int bond, int type, int group) {
  * have much in common, but in certain aspects behave differently. Thus, complete molecules
  * are considered to carry implicit hydrogens to fill unoccupied atom valences.
  * Sub-structure fragments on the other hand may carry atom or bond query features.
- * Depiction, sub-structure search, and other algorithms treat fragments and complete molecules differerently.
+ * Depiction, sub-structure search, and other algorithms treat fragments and complete molecules
+ * differently.
  * @param isFragment if false, then all query features are removed
  */
 public void setFragment(boolean isFragment) {
@@ -1625,33 +1692,23 @@ public boolean stripIsotopInfo() {
 	return oclMolecule.stripIsotopInfo();
 }
 
-/**
- * Removes all user supplied stereo information: up/down-bonds,
- * atom configuration unknown flags, atom and bond ESR assignments.
- * Removes parity and CIP flags from helper state, such that stereo calculation
- * is redone, if needed.
- */
-public void stripStereoInformation() {
-	oclMolecule.stripStereoInformation();
-}
 
-
-public void translateCoords(float dx, float dy) {
+public void translateCoords(double dx, double dy) {
 	oclMolecule.translateCoords(dx, dy);
 }
 
 
-public void scaleCoords(float f) {
+public void scaleCoords(double f) {
 	oclMolecule.scaleCoords(f);
 }
 
 
-public void zoomAndRotateInit(float x, float y) {
+public void zoomAndRotateInit(double x, double y) {
 	oclMolecule.zoomAndRotateInit(x, y);
 }
 
 
-public void zoomAndRotate(float zoom, float angle, boolean selected) {
+public void zoomAndRotate(double zoom, double angle, boolean selected) {
 	oclMolecule.zoomAndRotate(zoom, angle, selected);
 }
 
@@ -1691,7 +1748,7 @@ public int getMaxValence(int atom) {
  * or radical status, e.g. N+ -> 1; N- -> -1; Al+ -> -1; C+,C- -> -1.
  * In some cases, where the atomicNo can have multiple valences,
  * the influence of a charge depends on the atom's actual valence, e.g.
- * valence corrections for R3P(+) and R5p(+) are 1 and -1, respectively.
+ * valence corrections for R3P(+) and R5P(+) are 1 and -1, respectively.
  * Criteria are:<br>
  * -in the given valence state is there a lone pair that can be protonated<br>
  * -can we introduce a negative substituent as in BH3 or PF5 vs. SF6<br>
@@ -1746,7 +1803,7 @@ public boolean isOrganicAtom(int atom) {
 }
 
 /**
- * Copies a part of this Molecule into destMol, being defined by a mask of atoms to be included.
+ * Clears destmol and then copies a part of this Molecule into destMol, being defined by a mask of atoms to be included.
  * If not all atoms are copied, then destMol is set to be a substructure fragment.
  * @param destMol receives the part of this Molecule
  * @param includeAtom defines atoms to be copied; its size may be this.getAtoms() or this.getAllAtoms()
@@ -1759,7 +1816,7 @@ public void copyMoleculeByAtoms(JSMolecule destMol, boolean[] includeAtom, boole
 }
 
 /**
- * Copies a part of this Molecule into destMol, being defined by a mask of bonds to be included.
+ * Clears destmol and then copies a part of this Molecule into destMol, being defined by a mask of bonds to be included.
  * Bonds, whose atoms carry opposite charges are treated in the following manner: If only one of
  * the two bond atoms is kept, then its absolute charge will be reduced by 1.
  * @param destMol receives the part of this Molecule
@@ -1774,8 +1831,13 @@ public int[] copyMoleculeByBonds(JSMolecule destMol, boolean[] includeBond, bool
 }
 
 /**
+ * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+ * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+ * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+ * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+ * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
  * @param atom
- * @return the number of direct neighbor atoms including explicit hydrogen atoms
+ * @return count of category 1 & 2 neighbour atoms (excludes neighbours connected with zero bond order)
  */
 public int getAllConnAtoms(int atom) {
 	return oclMolecule.getAllConnAtoms(atom);
@@ -1783,17 +1845,32 @@ public int getAllConnAtoms(int atom) {
 
 /**
  * @param atom
- * @return the number of connected explicit and implicit hydrogen atoms
+ * @return the number of connected plain explicit and implicit hydrogen atoms
  */
 public int getAllHydrogens(int atom) {
 	return oclMolecule.getAllHydrogens(atom);
 }
 
 /**
- * @return the number of non-hydrogen atoms in the molecule
+ * A validated molecule (after helper array creation) contains a sorted list of all atoms
+ * with the plain (neglegible) hydrogen atoms at the end of the list. Neglegible hydrogen atoms
+ * a those that can be considered implicit, because they have no attached relevant information.
+ * Hydrogen atoms that cannot be neglected are special isotops (mass != 0), if they carry a
+ * custom label, if they are connected to another atom with bond order different from 1, or
+ * if they are connected to another neglegible hydrogen.<br>
+ * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+ * @return the number relevant atoms not including neglegible hydrogen atoms
  */
 public int getAtoms() {
 	return oclMolecule.getAtoms();
+}
+
+/**
+ * @param atom
+ * @return count of neighbour atoms connected by a 0-order metal ligand bond
+ */
+public int getMetalBondedConnAtoms(int atom) {
+	return oclMolecule.getMetalBondedConnAtoms(atom);
 }
 
 /**
@@ -1803,6 +1880,24 @@ public int getAtoms() {
  */
 public int getAtomPi(int atom) {
 	return oclMolecule.getAtomPi(atom);
+}
+
+/**
+ * @param atom
+ * @return Hendrickson sigma-value, which is the number attached carbon atoms
+ *
+public int getAtomSigma(int atom) {
+public int getAtomSigma(int atom) {
+	return oclMolecule.getAtomSigma(atom);
+}
+
+/**
+ * @param atom
+ * @return Hendrickson Z-value, which is the sum of all bond orders to any attached hetero atoms
+ *
+public int getAtomZValue(int atom) {
+public int getAtomZValue(int atom) {
+	return oclMolecule.getAtomZValue(atom);
 }
 
 /**
@@ -1822,7 +1917,10 @@ public int getBondRingSize(int bond) {
 }
 
 /**
- * @return the number of bonds in the molecule not counting those that connect natural-abundance hydrogen atoms
+ * The bond list is preprocessed such that all bonds leading to a plain hydrogen atom
+ * (natural abundance, no custom labels) are at the end of the list.
+ * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+ * @return count of bonds not including those connecting plain-H atoms
  */
 public int getBonds() {
 	return oclMolecule.getBonds();
@@ -1836,15 +1934,20 @@ public int getBond(int atom1, int atom2) {
 }
 
 /**
- * @return a addPasteHandler of this with all arrays sized to just cover all existing atoms and bonds
+ * @return a copy of this with all arrays sized to just cover all existing atoms and bonds
  */
 public JSMolecule getCompactCopy() {
 	return new JSMolecule(oclMolecule.getCompactCopy());
 }
 
 /**
+ * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+ * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+ * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+ * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+ * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
  * @param atom
- * @param i
+ * @param i index into sorted neighbour list
  * @return the i-th neighbor atom of atom
  */
 public int getConnAtom(int atom, int i) {
@@ -1852,38 +1955,87 @@ public int getConnAtom(int atom, int i) {
 }
 
 /**
+ * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+ * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+ * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+ * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+ * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
  * @param atom
- * @return the number of direct neighbor atoms excluding hydrogen atoms
+ * @return count of category 1 neighbour atoms (excludes plain H and bond zero orders)
  */
 public int getConnAtoms(int atom) {
 	return oclMolecule.getConnAtoms(atom);
 }
 
 /**
+ * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+ * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+ * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+ * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+ * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
  * @param atom
- * @param i
- * @return the bond connecting atom and its i-th neighbor atom
+ * @return count of category 1 & 2 & 3 neighbour atoms (excludes neighbours connected with zero bond order)
+ */
+public int getAllConnAtomsPlusMetalBonds(int atom) {
+	return oclMolecule.getAllConnAtomsPlusMetalBonds(atom);
+}
+
+/**
+ * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+ * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+ * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+ * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+ * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+ * @param atom
+ * @param i index into sorted neighbour list
+ * @return index of bond connecting atom with its i-th neighbor
  */
 public int getConnBond(int atom, int i) {
 	return oclMolecule.getConnBond(atom, i);
 }
 
 /**
+ * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+ * 1. non-plain-hydrogen atoms (bond order 1 and above)<br>
+ * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+ * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
+ * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
  * @param atom
- * @param i
- * @return the order of the bond connecting atom and its i-th neighbor atom
+ * @param i index into sorted neighbour list
+ * @return order of bond connecting atom with its i-th neighbor
  */
 public int getConnBondOrder(int atom, int i) {
 	return oclMolecule.getConnBondOrder(atom, i);
 }
 
+/**
+ * This method returns the non-hydrogen neighbour count of atom.
+ * It excludes any hydrogen atoms in contrast to getConnAtoms(), which only
+ * excludes plain hydrogen (not deuterium, tritium, custom labelled hydrogen, etc.).
+ * Don't use this method's return value for loops with getConnAtom(),
+ * getConnBond(), or getConnBondOrder().
+ * @param atom
+ * @return the number of non-hydrogen neighbor atoms
+ */
+public int getNonHydrogenNeighbourCount(int atom) {
+	return oclMolecule.getNonHydrogenNeighbourCount(atom);
+}
 
+/**
+ * Calculates and returns the mean bond length of all bonds including or not
+ * including hydrogen bonds.
+ * If there are no bonds, then the average distance between unconnected atoms is
+ * returned. If we have less than 2 atoms, cDefaultAverageBondLength is returned.
+ * @param nonHydrogenBondsOnly
+ * @return
+ */
 public double getAverageBondLength(boolean nonHydrogenBondsOnly) {
 	return oclMolecule.getAverageBondLength(nonHydrogenBondsOnly);
 }
 
 /**
  * The sum of bond orders of explicitly connected neighbour atoms including explicit hydrogen.
+ * The occupied valence includes bonds to atoms with set cAtomQFExcludeGroup flags.
  * @param atom
  * @return explicitly used valence
  */
@@ -1892,16 +2044,43 @@ public int getOccupiedValence(int atom) {
 }
 
 /**
+ * The sum of bond orders of explicitly connected neighbour atoms with the cAtomQFExcludeGroup flag set to true.
+ * @param atom
+ * @return occupied valence caused by exclude group atoms
+ */
+public int getExcludeGroupValence(int atom) {
+	return oclMolecule.getExcludeGroupValence(atom);
+}
+
+/**
  * The free valence is the number of potential additional single bonded
- * neighbours to reach the atom's maximum valence. Atom charges are considered.
- * Implicit hydrogens are not considered.
+ * neighbours to reach the atom's maximum valence. Atomic numbers that have
+ * multiple possible valences, the highest value is taken.
+ * Atom charges are considered. Implicit hydrogens are not considered.
  * Thus, the oxygen in a R-O(-) has a free valence of 0, the nitrogen in R3N(+)
- * has a free valence of 1.
+ * has a free valence of 1. Chlorine in Cl(-) has a free valence of 6. If you need
+ * the free valence taking the lowest possible valence into account, use
+ * getLowestFreeValence(), which would return 0 for Cl(-).
  * @param atom
  * @return
  */
 public int getFreeValence(int atom) {
 	return oclMolecule.getFreeValence(atom);
+}
+
+/**
+ * The free valence is the number of potential additional single bonded
+ * neighbours to reach the atom's lowest valence above or equal its current
+ * occupied valence. Atom charges are considered. Implicit hydrogens are not considered.
+ * Thus, the phosphor atoms in PF2 and PF4 both have a lowest free valence of 1.
+ * The oxygen in R-O(-) has a lowest free valence of 0, the nitrogen in R3N(+)
+ * has a free valence of 1. If you need the maximum possible free valence,
+ * use getFreeValence(), which would give 6 for Cl(-) and HCl.
+ * @param atom
+ * @return
+ */
+public int getLowestFreeValence(int atom) {
+	return oclMolecule.getLowestFreeValence(atom);
 }
 
 /**
@@ -1919,7 +2098,7 @@ public int getImplicitHigherValence(int atom, boolean neglectExplicitHydrogen) {
 }
 
 /**
- * Calculates for every atom the mean value of all shortest routes (bonds in between)
+ * Calculates for every non-H atom the mean value of all shortest routes (bonds in between)
  * to any other atom of the same fragment.
  * @return
  */
@@ -1982,11 +2161,14 @@ public void addFragment(JSMolecule sourceMol, int rootAtom, int[] atomMap) {
 }
 
 /**
+ * Returns an array of all atoms for which a path of bonds leads to rootAtom.
+ * Metal ligand bonds may or may not be considered a connection.
  * @param rootAtom
- * @return array of all atoms that for which a path of bonds leads to rootAtom
+ * @param considerMetalBonds
+ * @return atoms being in the same fragment as rootAtom
  */
-public int[] getFragmentAtoms(int rootAtom) {
-	return oclMolecule.getFragmentAtoms(rootAtom);
+public int[] getFragmentAtoms(int rootAtom, boolean considerMetalBonds) {
+	return oclMolecule.getFragmentAtoms(rootAtom, considerMetalBonds);
 }
 
 /**
@@ -2010,10 +2192,12 @@ public int getFragmentNumbers(int[] fragmentNo, boolean markedAtomsOnly, boolean
  * Removes all unconnected fragments except for the largest one.
  * If small fragments were removed, then canonizeCharge() is called to
  * neutralize charges after potential removal of counter ions.
- * @return atom mapping from old to new indexnull if no fragments were removed
+ * Metal ligand bonds may or may not be considered a connection.
+ * @param considerMetalBonds
+ * @return atom mapping from old to new index; null if no fragments were removed
  */
-public int[] stripSmallFragments() {
-	return oclMolecule.stripSmallFragments();
+public int[] stripSmallFragments(boolean considerMetalBonds) {
+	return oclMolecule.stripSmallFragments(considerMetalBonds);
 }
 
 /**
@@ -2075,12 +2259,25 @@ public boolean supportsImplicitHydrogen(int atom) {
 }
 
 /**
- *
+ * Calculates and return the number of implicit hydrogens at atom.
+ * If atom is itself a hydrogen atom, a metal except Al, or a noble gase,
+ * then 0 is returned. For all other atom kinds the number of
+ * implicit hydrogens is basically the lowest typical valence that is compatible
+ * with the occupied valence, minus the occupied valence corrected by atom charge
+ * and radical state.
  * @param atom
  * @return
  */
 public int getImplicitHydrogens(int atom) {
 	return oclMolecule.getImplicitHydrogens(atom);
+}
+
+/**
+ * @param atom
+ * @return number of explicit plain hydrogen atoms (does not include D,T,cutom labelled H, etc)
+ */
+public int getExplicitHydrogens(int atom) {
+	return oclMolecule.getExplicitHydrogens(atom);
 }
 
 /**
@@ -2102,6 +2299,20 @@ public int getMolweight() {
  */
 public int getRotatableBondCount() {
 	return oclMolecule.getRotatableBondCount();
+}
+
+/**
+ * In a consecutive sequence of sp-hybridized atoms multiple single bonds
+ * cause redundant torsions. Only that single bond with the smallest bond index
+ * is considered really rotatable; all other single bonds are pseudo rotatable.
+ * If one/both end(s) of the sp-atom sequence doesn't carry atoms
+ * outside of the straight line then no bond is considered rotatable.
+ * A simple terminal single bond
+ * @param bond
+ * @return true, if this bond is not considered rotatable because of a redundancy
+ */
+public boolean isPseudoRotatableBond(int bond) {
+	return oclMolecule.isPseudoRotatableBond(bond);
 }
 
 
@@ -2320,6 +2531,15 @@ public int findBINAPChiralityBond(int atom) {
 }
 
 /**
+ * Evaluates, whether bond is an amide bond, thio-amide, or amidine bond.
+ * @param bond
+ * @return
+ */
+public boolean isAmideTypeBond(int bond) {
+	return oclMolecule.isAmideTypeBond(bond);
+}
+
+/**
  * Checks whether this nitrogen atom is flat, because it has a double bond,
  * is member of an aromatic ring or is part of amide, an enamine or
  * in resonance with an aromatic ring. It is also checked that ortho
@@ -2372,6 +2592,25 @@ public int canonizeCharge(boolean allowUnbalancedCharge) throws Exception {
 }
 
 /**
+ * Provided that the bond parity of a double bond is available,
+ * this method determines, whether connAtom has a counterpart with
+ * Z- (cis) configuration at the other end of the double bond.
+ * If there is no Z-counterpart, then -1 is returned.
+ * Requires cHelperParities.
+ * @param connAtom directly connected to one of the double bond atoms
+ * @param bond double bond with available bond parity
+ * @return -1 or counterpart to connAtom in Z-configuration
+ */
+public int getZNeighbour(int connAtom, int bond) {
+	return oclMolecule.getZNeighbour(connAtom, bond);
+}
+
+
+public int getHelperArrayStatus() {
+	return oclMolecule.getHelperArrayStatus();
+}
+
+/**
  * While the Molecule class covers all primary molecule information, its derived class
  * ExtendedMolecule handles secondary, i.e. calculated molecule information, which is cached
  * in helper arrays and stays valid as long as the molecule's primary information is not changed.
@@ -2394,7 +2633,7 @@ public int canonizeCharge(boolean allowUnbalancedCharge) throws Exception {
  * from the stereo configurations.<br>
  * <i>cHelperCIP</i>: Cahn-Ingold-Prelog stereo information for atoms and bonds.<br>
  * <br>cHelperParities and cHelperCIP require a StereoMolecule!!!<br>
- * @param required of cHelperNeighbours,cHelperRings,cHelperParities,cHelperCIP
+ * @param required one of cHelperNeighbours,cHelperRings,cHelperParities,cHelperCIP
  * @return true if the molecule was changed
  */
 public void ensureHelperArrays(int required) {
@@ -2412,7 +2651,18 @@ public int[] getHandleHydrogenMap() {
 	return oclMolecule.getHandleHydrogenMap();
 }
 
-
+/**
+ * Uncharged hydrogen atoms with no isotop information nor with an attached custom label
+ * are considered simple and can usually be suppressed, effectively converting them from an
+ * explicit to an implicit hydrogen atom.<br>
+ * <b>Note:</b> This method returns true for uncharged, natural abundance hydrogens without
+ * custom labels even if they have a non-standard bonding situation (everything being different
+ * from having one single bonded non-simple-hydrogen neighbour, e.g. unbonded hydrogen, H2,
+ * a metal ligand bond to another atom, two single bonds, etc.)
+ * If unusual bonding needs to be considered, check for that independently from this method.
+ * @param atom
+ * @return
+ */
 public boolean isSimpleHydrogen(int atom) {
 	return oclMolecule.isSimpleHydrogen(atom);
 }
@@ -2430,10 +2680,10 @@ public void removeExplicitHydrogens() {
 
 /**
  * Separates all disconnected fragments of this Molecule into individual Molecule objects.
- * If fragment separation is only needed, if there are multiple fragments, it may me more
+ * If fragment separation is only needed, if there are multiple fragments, it may be more
  * efficient to run this functionality in two steps, e.g.:<br>
  * int[] fragmentNo = new int[mol.getAllAtoms()];<br>
- * int fragmentCount = getFragmentNumbers(fragmentNo, boolean);<br>
+ * int fragmentCount = getFragmentNumbers(fragmentNo, boolean, boolean);<br>
  * if (fragmentCount > 1) {<br>
  *     StereoMolecule[] fragment = getFragments(int[] fragmentNo, fragmentCount);<br>
  *     ...<br>
@@ -2450,7 +2700,19 @@ public JSMolecule[] getFragments() {
 
 }
 
-   /**
+/**
+ * Removes defined and implicit stereo information from the molecule.<br>
+ * - up/down-bonds are converted to double bonds<br>
+ * - stereo centers are flagged to be unknown<br>
+ * - double bonds with implicit stereo configurations are converted into cross bonds<br>
+ * - all atom and bond ESR assignments are removed<br>
+ * - parity and CIP helper state is set to invalid, such that stereo calculation is redone, if needed.
+ */
+public void stripStereoInformation() {
+	oclMolecule.stripStereoInformation();
+}
+
+/**
     * This returns the absolute(!) atom parity from the canonization procedure.
     * While the molecule's (relative) atom parity returned by getAtomParity() is
     * based on atom indices and therefore depends on the order of atoms,
@@ -2502,6 +2764,8 @@ public int getSymmetryRank(int atom) {
     * without explicitly creating a Canonizer object for this purpose.
     * The idcode is a compact String that uniquely encodes the molecule
     * with all stereo and query features.
+    * <br>WARNING: If the molecule has no atom coordinates but valid parities,
+    * e.g. after new IDCodeParser(false).parse(idcode, null), this method returns null;
     * @return
     */
 public String getIDCode() {
@@ -2512,6 +2776,8 @@ public String getIDCode() {
     * This is a convenience method that creates the molecule's id-coordinates
     * matching the idcode available with getIDCode().
     * It does not explicitly create a Canonizer object for this purpose.
+    * <br>WARNING: If the molecule has no atom coordinates but valid parities,
+    * e.g. after new IDCodeParser(false).parse(idcode, null), this method returns null;
     * @return
     */
 public String getIDCoordinates() {
