@@ -40,9 +40,7 @@
     "minimist": "^1.2.0",
     "mocha": "^3.0.2",
     "mocha-better-spec-reporter": "^3.0.2",
+    "rimraf": "^2.5.4",
     "should": "^11.1.0"
-  },
-  "dependencies": {
-    "rimraf": "^2.5.4"
   }
 }
