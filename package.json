@@ -17,7 +17,9 @@
   },
   "main": "dist/openchemlib-core.js",
   "files": [
-    "dist/openchemlib-core.js"
+    "dist",
+    "core.js",
+    "full.js"
   ],
   "repository": {
     "type": "git",
