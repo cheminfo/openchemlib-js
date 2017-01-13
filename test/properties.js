@@ -1,6 +1,6 @@
 'use strict';
 
-const OCL = require('..');
+const OCL = require('../core');
 const Molecule = OCL.Molecule;
 const MoleculeProperties = OCL.MoleculeProperties;
 

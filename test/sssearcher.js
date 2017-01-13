@@ -1,6 +1,6 @@
 'use strict';
 
-const OCL = require('..');
+const OCL = require('../minimal');
 const Molecule = OCL.Molecule;
 const SSSearcher = OCL.SSSearcher;
 

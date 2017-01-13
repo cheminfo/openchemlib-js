@@ -1,6 +1,6 @@
 'use strict';
 
-const Molecule = require('..').Molecule;
+const Molecule = require('../minimal').Molecule;
 
 describe('Molecule', function () {
     
@@ -29,6 +29,14 @@ describe('Molecule', function () {
         var smiles = mol.toSmiles();
         mol = Molecule.fromSmiles(smiles);
         mol.getIDCode().should.equal(idcode);
+    });
+
+    it('toSVG', function () {
+        var mol = Molecule.fromSmiles('CCOCCO');
+        var svg = mol.toSVG(300, 150, 'myId');
+        svg.should.containEql('width="300px" height="150px"');
+        svg.should.containEql('myId:Bond:1-0');
+        svg.should.containEql('myId:Atom:0');
     });
     
 });
