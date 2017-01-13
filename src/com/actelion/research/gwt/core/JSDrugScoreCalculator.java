@@ -1,5 +1,6 @@
 package com.actelion.research.gwt.core;
 
+import com.actelion.research.gwt.minimal.JSMolecule;
 import com.actelion.research.chem.prediction.DrugScoreCalculator;
 import jsinterop.annotations.*;
 

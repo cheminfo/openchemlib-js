@@ -1,4 +1,4 @@
-package com.actelion.research.gwt.core;
+package com.actelion.research.gwt.minimal;
 
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class JSMolecule {
 		options = options || {};
 		var coordinates = !options.noCoordinates;
 		var stereo = !options.noStereo;
-		return @com.actelion.research.gwt.core.JSMolecule::fromSmiles(Ljava/lang/String;ZZ)(smiles, coordinates, stereo);
+		return @com.actelion.research.gwt.minimal.JSMolecule::fromSmiles(Ljava/lang/String;ZZ)(smiles, coordinates, stereo);
 	}-*/;
 	
 	public static JSMolecule fromMolfile(String molfile) throws Exception {
@@ -49,12 +49,12 @@ public class JSMolecule {
 			coordinates = true;
 		}
 		if (typeof coordinates === 'boolean') {
-			mol = @com.actelion.research.gwt.core.JSMolecule::fromIDCode(Ljava/lang/String;Z)(idcode, false);
+			mol = @com.actelion.research.gwt.minimal.JSMolecule::fromIDCode(Ljava/lang/String;Z)(idcode, false);
 			if (coordinates === true) {
-				mol.@com.actelion.research.gwt.core.JSMolecule::inventCoordinates()();
+				mol.@com.actelion.research.gwt.minimal.JSMolecule::inventCoordinates()();
 			}
 		} else if(typeof coordinates === 'string') {
-			mol = @com.actelion.research.gwt.core.JSMolecule::fromIDCode(Ljava/lang/String;Ljava/lang/String;)(idcode, coordinates);
+			mol = @com.actelion.research.gwt.minimal.JSMolecule::fromIDCode(Ljava/lang/String;Ljava/lang/String;)(idcode, coordinates);
 		}
 		return mol;
 	}-*/;
@@ -73,7 +73,7 @@ public class JSMolecule {
 		//if (!$doc.createElement) {
 		//	throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
 		//}
-		return this.@com.actelion.research.gwt.core.JSMolecule::getSVG(IILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, id, options);
+		return this.@com.actelion.research.gwt.minimal.JSMolecule::getSVG(IILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, id, options);
 	}-*/;
 	
 	private String getSVG(int width, int height, String id, JavaScriptObject options) {
@@ -86,8 +86,8 @@ public class JSMolecule {
 	
 	public native JavaScriptObject getIDCodeAndCoordinates() /*-{
 		return {
-			idCode: this.@com.actelion.research.gwt.core.JSMolecule::getIDCode()(),
-			coordinates: this.@com.actelion.research.gwt.core.JSMolecule::getIDCoordinates()()
+			idCode: this.@com.actelion.research.gwt.minimal.JSMolecule::getIDCode()(),
+			coordinates: this.@com.actelion.research.gwt.minimal.JSMolecule::getIDCoordinates()()
 		};
 	}-*/;
 
@@ -112,9 +112,9 @@ public class JSMolecule {
 
 	public native void addImplicitHydrogens(JavaScriptObject atomNumber) /*-{
 		if (atomNumber === undefined) {
-			this.@com.actelion.research.gwt.core.JSMolecule::addImplicitHydrogens()();
+			this.@com.actelion.research.gwt.minimal.JSMolecule::addImplicitHydrogens()();
 		} else {
-			this.@com.actelion.research.gwt.core.JSMolecule::addImplicitHydrogens(I)(atomNumber);
+			this.@com.actelion.research.gwt.minimal.JSMolecule::addImplicitHydrogens(I)(atomNumber);
 		}
 	}-*/;
 
@@ -134,7 +134,7 @@ public class JSMolecule {
 		options = options || {};
 		var maxSphereSize = (typeof options.maxSphereSize === 'undefined' ? 5 : options.maxSphereSize) | 0;
 		var type = (typeof options.type === 'undefined' ? 0 : options.type) | 0;
-		return @com.actelion.research.chem.contrib.HoseCodeCreator::getHoseCodes(Lcom/actelion/research/chem/StereoMolecule;II)(this.@com.actelion.research.gwt.core.JSMolecule::oclMolecule, maxSphereSize, type);
+		return @com.actelion.research.chem.contrib.HoseCodeCreator::getHoseCodes(Lcom/actelion/research/chem/StereoMolecule;II)(this.@com.actelion.research.gwt.minimal.JSMolecule::oclMolecule, maxSphereSize, type);
 	}-*/;
 	
 	/* public methods after this line will not be accessible from javascript */

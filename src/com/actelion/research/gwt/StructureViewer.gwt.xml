@@ -1,18 +1,12 @@
-<module rename-to="actelionStructureViewer">
-	<!-- Inherit the core Web Toolkit stuff. -->
+<module rename-to="oclStructureViewer">
+    <source path="gui/viewer"/>
+    <entry-point class="com.actelion.research.gwt.gui.viewer.StructureViewer" />
+
 	<inherits name='com.google.gwt.user.User'/>
-	
-	<!-- Dependencies -->
 	<inherits name="com.actelion.research.gwt.jre.Jre" />
     <inherits name="com.actelion.research.gwt.chemlib.ChemLib" />
     <inherits name="com.actelion.research.gwt.Core" />
 
-    <source path="gui/viewer"/>
-    <entry-point class="com.actelion.research.gwt.gui.viewer.StructureViewer" />
     <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
     <set-property name="user.agent" value="safari" />
-<!--
-    <set-property name="user.agent" value="safari" />
-    <set-property name="user.agent" value="gecko1_8" />
--->
 </module>

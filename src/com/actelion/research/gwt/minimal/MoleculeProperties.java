@@ -1,4 +1,4 @@
-package com.actelion.research.gwt.core;
+package com.actelion.research.gwt.minimal;
 
 import com.actelion.research.chem.PropertyCalculator;
 import com.actelion.research.chem.StereoMolecule;

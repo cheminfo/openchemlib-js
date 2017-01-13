@@ -1,3 +1,19 @@
+5.0.0 / HEAD
+==================
+
+* remove viewer build
+* introduce minimal build
+
+4.7.2 / 2017-01-10
+==================
+
+* include full dist directory in npm and add require aliases
+
+4.7.1 / 2017-01-10
+==================
+
+* SVG depictor: compute string width without canvas for Helvetica. This allows the SVG depictor to be used on Node.js
+
 4.7.0 / 2017-01-05
 ==================
 

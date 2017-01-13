@@ -35,8 +35,8 @@ package com.actelion.research.gwt.gui.viewer;
 import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.IDCodeParser;
 import com.actelion.research.chem.StereoMolecule;
-import com.actelion.research.gwt.core.JSMolecule;
-import com.actelion.research.gwt.core.Util;
+import com.actelion.research.gwt.minimal.JSMolecule;
+import com.actelion.research.gwt.minimal.Util;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.GWT;
@@ -196,14 +196,14 @@ class StructureElement
     }
 
     private native static void initObserver() /*-{
-        $wnd.struct$observer = new MutationObserver(function (mutations)
-        {
-            mutations.forEach(function (mutation) {
-                @com.actelion.research.gwt.gui.viewer.StructureElement::notify(Ljava/lang/Object;)(mutation.target);
+        if ('MutationObserver' in $wnd) {
+            $wnd.struct$observer = new $wnd.MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    @com.actelion.research.gwt.gui.viewer.StructureElement::notify(Ljava/lang/Object;)(mutation.target);
+                });
             });
-        });
+        }
     }-*/;
-
 
     private native void observeDataChange(Element el) /*-{
         var config = {attributes: true, attributeOldValue: true, attributeFilter: ['data-idcode','data-text']}

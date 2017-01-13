@@ -212,14 +212,14 @@ public class StructureEditor implements IChangeListener//,Exportable
     }
 
     private native static void initObserver() /*-{
-        $wnd.edit$observer = new MutationObserver(function (mutations) {
-            console.log("Mutation");
-            mutations.forEach(function (mutation) {
-                @com.actelion.research.gwt.gui.editor.StructureEditor::notify(Ljava/lang/Object;)(mutation.target);
+        if ('MutationObserver' in $wnd) {
+            $wnd.edit$observer = new $wnd.MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    @com.actelion.research.gwt.gui.editor.StructureEditor::notify(Ljava/lang/Object;)(mutation.target);
+                });
             });
-        });
+        }
     }-*/;
-
 
     public static void notify(Object o)
     {
