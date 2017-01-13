@@ -1,16 +1,15 @@
-package com.actelion.research.gwt.minimal;
+package com.actelion.research.gwt.core;
 
 import com.actelion.research.chem.PropertyCalculator;
-import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.gwt.minimal.JSMolecule;
 import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
-@JsType
-public class MoleculeProperties extends PropertyCalculator {
+@JsType(name = "MoleculeProperties")
+public class JSMoleculeProperties extends PropertyCalculator {
 
-	@JsIgnore
-	public MoleculeProperties(StereoMolecule mol) {
-		super(mol);
+	public JSMoleculeProperties(JSMolecule mol) {
+		super(mol.getStereoMolecule());
 	}
 	
 	@Override

@@ -16,6 +16,7 @@ describe('Checking for the presence of main APIs', function () {
     ];
 
     const coreAPI = [
+        'MoleculeProperties',
         'DruglikenessPredictor',
         'DrugScoreCalculator',
         'ToxicityPredictor'

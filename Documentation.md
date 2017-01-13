@@ -1,17 +1,24 @@
 # Documentation
 
+### Classes present in minimal, core and full builds 
+
 [Molecule](#molecule)  
 [SDF parser](#sdfileparser)  
 [Substructure searcher](#sssearcher)  
 [Substructure searcher with index](#sssearcherwithindex)  
-[Toxicity predictor](#toxicitypredictor)  
-[Drug likeness predictor](#druglikenesspredictor)  
 [Util](#util)
 
+### Classes present in core and full builds
 
-[StructureView](#structureview)  
-[StructureEditor](#structureeditor)
+[Molecule Properties](#moleculeproperties)  
+[Drug likeness predictor](#druglikenesspredictor)  
+[Drug Score Calculator](#drugscorecalculator)
+[Toxicity predictor](#toxicitypredictor)
 
+### Classes present in full build
+
+[Structure View](#structureview)  
+[Structure Editor](#structureeditor)
 
 ---------------------------------------
 
@@ -73,10 +80,6 @@ Returns an object with both the idcode and coordinates
 ### molecule.getMolecularFormula()
 
 Returns a [MolecularFormula](#molecularformula) object
-
-### molecule.getProperties()
-
-Returns a [MoleculeProperties](#moleculeproperties) object
 
 ### molecule.getIndex()
 

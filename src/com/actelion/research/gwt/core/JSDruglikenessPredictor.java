@@ -1,8 +1,7 @@
 package com.actelion.research.gwt.core;
 
-import com.actelion.research.gwt.minimal.JSMolecule;
-import com.actelion.research.gwt.minimal.Util;
 import com.actelion.research.chem.prediction.DruglikenessPredictor;
+import com.actelion.research.gwt.minimal.JSMolecule;
 import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 

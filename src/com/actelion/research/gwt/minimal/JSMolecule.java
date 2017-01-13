@@ -94,10 +94,6 @@ public class JSMolecule {
 	public MolecularFormula getMolecularFormula() {
 		return new MolecularFormula(oclMolecule);
 	}
-
-	public MoleculeProperties getProperties() {
-		return new MoleculeProperties(oclMolecule);
-	}
 	
 	public int[] getIndex() {
 		return services.getSSSearcherWithIndex().createIndex(oclMolecule);
