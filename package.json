@@ -18,6 +18,7 @@
   "main": "dist/openchemlib-core.js",
   "files": [
     "dist",
+    "minimal.js",
     "core.js",
     "full.js"
   ],
