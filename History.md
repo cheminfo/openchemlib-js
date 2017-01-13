@@ -1,8 +1,13 @@
-5.0.0 / HEAD
+5.0.0 / 2017-01-13
 ==================
 
 * remove viewer build
 * introduce minimal build
+* do not include MoleculeProperties in minimal build
+
+BREAKING CHANGE:
+
+`molecule.getProperties()` has been removed. `new MoleculeProperties(molecule)` must be used instead.
 
 4.7.2 / 2017-01-10
 ==================
