@@ -37,11 +37,11 @@ __Options__
 
 ### Molecule.fromMolfile(molfile)
 
-Parse the provided `molfile` and return a `Molecule`
+Parse the provided `molfile` and return a `Molecule`.
 
 ### Molecule.fromIDCode(idcode, [ensure2DCoordinates|coordinates])
 
-Parse the provided `idcode` and return a `Molecule`
+Parse the provided `idcode` and return a `Molecule`.
 
 __Arguments__
 
@@ -51,15 +51,19 @@ __Arguments__
 
 ### molecule.toSmiles()
 
-Returns a smiles string
+Returns a smiles string.
 
 ### molecule.toMolfile()
 
-Returns a molfile (V2000) string
+Returns a molfile (V2000) string.
+
+### molecule.toMolfileV3()
+
+Returns a molfile (V3000) string.
 
 ### molecule.toSVG(width, height, id, options)
 
-Returns an SVG string
+Returns an SVG string representing the structure in two dimensions.
 
 __Options__
 
@@ -67,11 +71,11 @@ See [Depictor options](#depictor-options)
 
 ### molecule.getIDCode()
 
-Returns the ID Code if the molecule
+Returns the ID Code if the molecule.
 
 ### molecule.getIDCoordinates()
 
-Returns a string representation of the coordinates of the atoms in the molecule
+Returns a string representation of the coordinates of the atoms in the molecule.
 
 ### molecule.getIDCodeAndCoordinates()
 

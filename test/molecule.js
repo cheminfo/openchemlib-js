@@ -13,30 +13,43 @@ describe('Molecule', function () {
         }).should.throw();
         
         function testFromSmiles(smiles) {
-            var mol = Molecule.fromSmiles(smiles);
+            const mol = Molecule.fromSmiles(smiles);
             mol.toSmiles().should.equal(smiles);
         }
     });
 
     it('medley', function () {
-        var idcode = 'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
-        var mol = Molecule.fromIDCode(idcode);
+        const idcode = 'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
+        let mol = Molecule.fromIDCode(idcode);
         
-        var molfile = mol.toMolfile();
+        const molfile = mol.toMolfile();
         mol = Molecule.fromMolfile(molfile);
         mol.getIDCode().should.equal(idcode);
         
-        var smiles = mol.toSmiles();
+        const smiles = mol.toSmiles();
         mol = Molecule.fromSmiles(smiles);
         mol.getIDCode().should.equal(idcode);
     });
 
     it('toSVG', function () {
-        var mol = Molecule.fromSmiles('CCOCCO');
-        var svg = mol.toSVG(300, 150, 'myId');
+        const mol = Molecule.fromSmiles('CCOCCO');
+        const svg = mol.toSVG(300, 150, 'myId');
         svg.should.containEql('width="300px" height="150px"');
         svg.should.containEql('myId:Bond:1-0');
         svg.should.containEql('myId:Atom:0');
+    });
+
+    it('molfile V3', function () {
+        const idcode = 'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
+        let mol = Molecule.fromIDCode(idcode);
+
+        let molfileV3 = mol.toMolfileV3();
+        mol = Molecule.fromMolfile(molfileV3);
+        mol.getIDCode().should.equal(idcode);
+
+        molfileV3 = mol.toMolfileV3();
+        mol = Molecule.fromMolfile(molfileV3);
+        mol.getIDCode().should.equal(idcode);
     });
     
 });

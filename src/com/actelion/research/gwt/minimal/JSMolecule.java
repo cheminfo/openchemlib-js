@@ -68,6 +68,11 @@ public class JSMolecule {
 		return creator.getMolfile();
 	}
 
+	public String toMolfileV3() {
+		MolfileV3Creator creator = new MolfileV3Creator(oclMolecule);
+		return creator.getMolfile();
+	}
+
 	public native String toSVG(int width, int height, String id, JavaScriptObject options) /*-{
 		//todo: re-enable this check once it becomes possible to change the font
 		//if (!$doc.createElement) {
