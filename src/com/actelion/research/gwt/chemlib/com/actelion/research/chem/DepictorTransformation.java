@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2015-2016, cheminfo
+Copyright (c) 2015-2017, cheminfo
 
 All rights reserved.
 
@@ -29,11 +29,6 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-
-
-
-
-
 
 /*
     This is a special version which excludes the refs to AbstractDrawingObject
