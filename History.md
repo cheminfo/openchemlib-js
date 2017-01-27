@@ -1,7 +1,8 @@
-5.1.0 / HEAD
-============
+5.1.0 / 2017-01-27
+==================
 
 * feat: add mol.toMolfileV3
+* fix: Fixed SVGDepictor setLineWidth() regression.
 
 5.0.0 / 2017-01-13
 ==================
