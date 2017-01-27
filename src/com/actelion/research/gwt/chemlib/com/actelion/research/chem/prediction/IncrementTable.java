@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2015-2017, cheminfo
+Copyright (c) 2015-2016, cheminfo
 
 All rights reserved.
 
