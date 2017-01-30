@@ -7,6 +7,7 @@ describe('Molecule', function () {
     it('fromSmiles', function () {
         testFromSmiles('C');
         testFromSmiles('COCOC');
+        testFromSmiles('c1cc2cccc3c4cccc5cccc(c(c1)c23)c54');
         
         (function () {
             Molecule.fromSmiles('ABC');
@@ -14,7 +15,7 @@ describe('Molecule', function () {
         
         function testFromSmiles(smiles) {
             const mol = Molecule.fromSmiles(smiles);
-            mol.toSmiles().should.equal(smiles);
+            Molecule.fromSmiles(mol.toSmiles()).getIDCode().should.equal(mol.getIDCode());
         }
     });
 

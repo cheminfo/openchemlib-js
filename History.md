@@ -1,3 +1,8 @@
+5.1.1 / 2017-01-30
+==================
+
+* fix: Update OCL to 2017_01_28-04_00_45 to fix https://github.com/Actelion/openchemlib/issues/15
+
 5.1.0 / 2017-01-27
 ==================
 
