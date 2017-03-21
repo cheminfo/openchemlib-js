@@ -78,7 +78,15 @@ public class JSMolecule {
 		//if (!$doc.createElement) {
 		//	throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
 		//}
-		return this.@com.actelion.research.gwt.minimal.JSMolecule::getSVG(IILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, id, options);
+		options = options || {};
+		var svg =  this.@com.actelion.research.gwt.minimal.JSMolecule::getSVG(IILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, id, options);
+		if (options.fontWeight) {
+            		svg = svg.replace(/font-family=" Helvetica" /g, 'font-family=" Helvetica" font-weight="' + options.fontWeight + '" ');
+        	}
+        	if (options.strokeWidth) {
+            		svg = svg.replace(/stroke-width:1/g, 'stroke-width:' + options.strokeWidth + ' ');
+        	}
+        	return svg;
 	}-*/;
 	
 	private String getSVG(int width, int height, String id, JavaScriptObject options) {

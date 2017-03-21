@@ -34,10 +34,17 @@ describe('Molecule', function () {
 
     it('toSVG', function () {
         const mol = Molecule.fromSmiles('CCOCCO');
-        const svg = mol.toSVG(300, 150, 'myId');
+        let svg = mol.toSVG(300, 150, 'myId');
         svg.should.containEql('width="300px" height="150px"');
         svg.should.containEql('myId:Bond:1-0');
         svg.should.containEql('myId:Atom:0');
+
+        svg = mol.toSVG(300, 300, 'myId', {
+            strokeWidth: 2,
+            fontWeight: 'bold'
+        });
+        svg.should.containEql('font-weight="bold"');
+        svg.should.containEql('stroke-width:2');
     });
 
     it('molfile V3', function () {

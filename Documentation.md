@@ -453,26 +453,31 @@ execute the following JS:
 
 ## Depictor options
 
-The options are all boolean and they default to `false`.
+The following options are all boolean and they default to `false`.
 
-- inflateToMaxAVBL
-- inflateToHighResAVBL
-- chiralTextBelowMolecule
-- chiralTextAboveMolecule
-- chiralTextOnFrameTop
-- chiralTextOnFrameBottom
+- `inflateToMaxAVBL`
+- `inflateToHighResAVBL`
+- `chiralTextBelowMolecule`
+- `chiralTextAboveMolecule`
+- `chiralTextOnFrameTop`
+- `chiralTextOnFrameBottom`
+``
+- `noTabus`
+- `showAtomNumber`
+- `showBondNumber`
+- `highlightQueryFeatures`
+- `showMapping`
+- `suppressChiralText`
+- `suppressCIPParity`
+- `suppressESR`
+``
+- `showSymmetrySimple`
+- `showSymmetryDiastereotopic`
+- `showSymmetryEnantiotopic`
+- `noImplicitAtomLabelColors`
+- `noStereoProblem`
 
-- noTabus
-- showAtomNumber
-- showBondNumber
-- highlightQueryFeatures
-- showMapping
-- suppressChiralText
-- suppressCIPParity
-- suppressESR
+Layout options
 
-- showSymmetrySimple
-- showSymmetryDiastereotopic
-- showSymmetryEnantiotopic
-- noImplicitAtomLabelColors
-- noStereoProblem
+- `fontWeight`: font-weight attribute of atom labels
+- `strokeWidth`: stroke-width styling property of bonds
