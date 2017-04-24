@@ -39,7 +39,7 @@ public class JSMolecule {
 	
 	public static JSMolecule fromMolfile(String molfile) throws Exception {
 		JSMolecule mol = new JSMolecule();
-		services.getMolfileParser().parse(mol.oclMolecule, molfile);
+		new MolfileParser().parse(mol.oclMolecule, molfile);
 		return mol;
 	}
 	
@@ -60,7 +60,7 @@ public class JSMolecule {
 	}-*/;
 	
 	public String toSmiles() {
-		return services.getSmilesCreator().generateSmiles(oclMolecule);
+		return new SmilesCreator().generateSmiles(oclMolecule);
 	}
 	
 	public String toMolfile() {
@@ -113,7 +113,7 @@ public class JSMolecule {
 	}
 	
 	public void inventCoordinates() {
-		CoordinateInventor inventor = services.getCoordinateInventor();
+		CoordinateInventor inventor = new CoordinateInventor();
 		inventor.setRandomSeed(0);
 		inventor.invent(oclMolecule);
 		oclMolecule.setStereoBondsFromParity();
@@ -159,7 +159,7 @@ public class JSMolecule {
 	@JsIgnore
 	public static JSMolecule fromSmiles(String smiles, boolean ensure2DCoordinates, boolean readStereoFeatures) throws Exception {
 		JSMolecule mol = new JSMolecule();
-		services.getSmilesParser().parse(mol.oclMolecule, smiles.getBytes(), false, readStereoFeatures);
+		new SmilesParser().parse(mol.oclMolecule, smiles.getBytes(), false, readStereoFeatures);
 		if (ensure2DCoordinates) {
 			mol.inventCoordinates();
 		}
@@ -168,12 +168,12 @@ public class JSMolecule {
 	
 	@JsIgnore
 	public static JSMolecule fromIDCode(String idcode, boolean ensure2DCoordinates) {
-		return new JSMolecule(services.getIDCodeParser(ensure2DCoordinates).getCompactMolecule(idcode));
+		return new JSMolecule(new IDCodeParser(ensure2DCoordinates).getCompactMolecule(idcode));
 	}
 	
 	@JsIgnore
 	public static JSMolecule fromIDCode(String idcode, String coordinates) {
-		return new JSMolecule(services.getIDCodeParser(false).getCompactMolecule(idcode, coordinates));
+		return new JSMolecule(new IDCodeParser(false).getCompactMolecule(idcode, coordinates));
 	}
 
 	@JsIgnore
