@@ -1,3 +1,14 @@
+5.2.1 / 2017-04-24
+==================
+
+* Update OCL to 2017_04_22-04_01_31
+* Fix a bug with the SMILES parser that could enter in a wrong state after parsing an invalid SMILES
+
+5.2.0 / 2017-03-21
+==================
+
+* feat: add fontWeight and strokeWidth options to toSVG 
+
 5.1.2 / 2017-03-08
 ==================
 
