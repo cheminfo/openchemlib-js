@@ -57,7 +57,7 @@ public class GWTEditorModel extends Model
     }
 
     @Override
-    public void cleanMolecule(boolean selectedOnly)
+    public void cleanMolecule(boolean invent, boolean selectedOnly)
     {
         cleanupMultiFragmentCoordinates(selectedOnly);
     }

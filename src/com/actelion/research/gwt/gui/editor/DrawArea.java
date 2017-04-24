@@ -204,7 +204,7 @@ class DrawArea implements IChangeListener
         if (isReaction()) {
             model.analyzeFragmentMembership();
             if (model.needsLayout())
-                model.cleanReaction(true);
+                model.cleanReaction(true, true);
         }
 
 //        AbstractDepictor depictor;

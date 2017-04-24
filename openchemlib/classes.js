@@ -12,7 +12,8 @@ const modified = [
 exports.modified = modified.map(getFilename);
 
 const changed = [
-    ['chem/Molecule', changeMolecule]
+    ['chem/Molecule', changeMolecule],
+    ['share/gui/editor/Model', removePrintf]
 ];
 
 exports.changed = changed.map((file) => {
@@ -55,4 +56,8 @@ function changeMolecule(molecule) {
     molecule = molecule.substr(0, copyOfIndex) + '/*' + molecule.substr(copyOfIndex);
     molecule = molecule.replace(/\([^)]+\)copyOf/g, 'Arrays.copyOf');
     return molecule;
+}
+
+function removePrintf(code) {
+    return code.replace('System.out.printf', 'System.out.print')
 }
