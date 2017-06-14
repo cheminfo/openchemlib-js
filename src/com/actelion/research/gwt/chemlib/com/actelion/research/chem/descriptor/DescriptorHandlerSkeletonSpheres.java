@@ -164,7 +164,7 @@ public class DescriptorHandlerSkeletonSpheres implements DescriptorHandler<byte[
         }
 
     public String getVersion() {
-        return "1.1";
+        return DescriptorConstants.DESCRIPTOR_SkeletonSpheres.version;
         }
 
     public float getSimilarity(final byte[] d1, final byte[] d2) {
@@ -203,7 +203,7 @@ if (((double)matching/(double)total) > 0.8) {
         return normalizeValue((double)matching/(double)total);
         }
 
-	private float normalizeValue(double value) {
+	public float normalizeValue(double value) {
 		return value <= 0.0f ? 0.0f
 			 : value >= 1.0f ? 1.0f
 			 : (float)(1.0-Math.pow(1-Math.pow(value, CORRECTION_FACTOR) ,1.0/CORRECTION_FACTOR));

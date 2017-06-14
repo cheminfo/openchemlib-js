@@ -49,8 +49,9 @@ function getFolderName(file) {
 
 function changeMolecule(molecule) {
     molecule = molecule.replace('import java.lang.reflect.Array;\n', '');
-    const copyOf = 'private final static Object copyOf';
+    const copyOf = 'protected final static Object copyOf';
     const copyOfIndex = molecule.indexOf(copyOf);
+    if (copyOfIndex === -1) throw new Error('did not find copyOf method');
     const closeIndex = molecule.indexOf('}', copyOfIndex);
     molecule = molecule.substr(0, closeIndex + 1) + '*/' + molecule.substr(closeIndex + 1);
     molecule = molecule.substr(0, copyOfIndex) + '/*' + molecule.substr(copyOfIndex);

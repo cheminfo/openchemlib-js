@@ -61,6 +61,7 @@ import java.util.List;
  */
 public abstract class Model
 {
+
     public interface AtomHighlightCallback
     {
         void onHighlight(int atom, boolean selected);
@@ -469,7 +470,7 @@ public abstract class Model
 
         if (!multifragment) {
             AbstractDepictor depictor = createDepictor(getMolecule());
-            cleanupMoleculeCoordinates(depictor,invent, selectedOnly);
+            cleanupMoleculeCoordinates(depictor, invent, selectedOnly);
         } else {
             AbstractExtendedDepictor depictor = createExtendedDepictor();
             cleanupMultiFragmentCoordinates(depictor, selectedOnly, invent);
@@ -511,6 +512,7 @@ public abstract class Model
         return (float) displaySize.getWidth();
     }
 
+/*
     private void cleanupMultiFragmentCoordinatesEx(AbstractExtendedDepictor depictor, boolean selectedOnly, boolean invent)
     {
         //if (selectedOnly && mUpdateMode == UPDATE_INVENT_COORDS)
@@ -583,6 +585,7 @@ public abstract class Model
         mMol.setStereoBondsFromParity();
     }
 
+*/
     private int maxUpdateMode()
     {
         return AbstractDepictor.cModeInflateToMaxAVBL /*+ HiDPIHelper.scale(AbstractDepictor.cOptAvBondLen)*/;
@@ -614,19 +617,19 @@ public abstract class Model
 
         double spacing = FRAGMENT_CLEANUP_DISTANCE * AbstractDepictor.cOptAvBondLen;
         double avbl = mMol.getAverageBondLength();
-        double arrowWidth = ((mMode & MODE_REACTION) == 0) ?
-            0f
-            : (mMode == UPDATE_SCALE_COORDS_USE_FRAGMENTS) ?
-            DEFAULT_ARROW_LENGTH * getWidth()
-            : ((Arrow) mDrawingObjectList.get(0)).getBoundingRect().getWidth() * AbstractDepictor.cOptAvBondLen / avbl;
+        double arrowWidth = isReaction() ? DEFAULT_ARROW_LENGTH * getWidth() : 0;
+//            0f : true ?
+//            : (mMode == UPDATE_SCALE_COORDS_USE_FRAGMENTS) ?
+//            DEFAULT_ARROW_LENGTH * getWidth()
+//            : mDrawingObjectList.get(0).getBoundingRect().getWidth() * AbstractDepictor.cOptAvBondLen / avbl;
 
         double rawX = 0.5 * spacing;
         for (int fragment = 0; fragment <= mFragment.length; fragment++) {
-            if ((mMode & MODE_REACTION) != 0 && fragment == mReactantCount) {
-                ((Arrow) mDrawingObjectList.get(0)).
-                    setRect(
+            if (isReaction() && fragment == mReactantCount) {
+                mDrawingObjectList.get(0).setRect(
                         (float) (rawX - spacing / 20),
-                        getHeight() / 2, (float) (rawX - spacing / 2 + arrowWidth),
+                        getHeight() / 2,
+                        (float) (/*rawX - spacing / 2 + */arrowWidth),
                         getHeight() / 2);
                 rawX += arrowWidth;
             }
@@ -676,10 +679,12 @@ public abstract class Model
 
         int[] fragmentNo = new int[mMol.getAllAtoms()];
         int fragments = mMol.getFragmentNumbers(fragmentNo, false, true);
+        fragments = joinCloseFragments(fragmentNo, fragments);
 
-//        fragments = joinCloseFragments(fragmentNo, fragments);
         if (layout)
             sortFragmentsByPosition(fragmentNo, fragments);
+//        else
+//            fragments = joinCloseFragments(fragmentNo, fragments);
         mFragmentNo = fragmentNo;
 
         mFragment = mMol.getFragments(fragmentNo, fragments);
@@ -1034,6 +1039,27 @@ public abstract class Model
         }
         return null;
     }
+
+    private int getFragmentByAtom(int atom)
+    {
+        if (atom >= 0 && atom < getMolecule().getAllAtoms()) {
+            int idx = mFragmentNo[atom];
+            if (idx >= 0 && idx < mFragmentNo.length)
+                return idx;
+        }
+        return -1;
+    }
+
+    public void selectFragmentByAtom(int rootAtom)
+    {
+        int fragment = getFragmentByAtom(rootAtom);
+        for (int i = 0; fragment != -1 && i < mMol.getAllAtoms(); i++) {
+            if (mFragmentNo[i] == fragment) {
+                mMol.setAtomSelection(i, true);
+            }
+        }
+    }
+
 
     private boolean isPointOnAtomOrBond(StereoMolecule mol, Point2D pt, boolean includeBond)
     {

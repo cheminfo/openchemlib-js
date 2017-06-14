@@ -817,12 +817,12 @@ public class Matrix {
 */
     /**
      * Householder reduction according num rec 11.2.
-     * Followed from an eigen value decomposition with the calculation of the
-     * eigen vectors according num rec 11.3.
-     * @param intercept input matrix
+     * Followed from an Eigen value decomposition with the calculation of the
+     * Eigen vectors according num rec 11.3.
+     * @param A input matrix
      * @param n number of considered eigen values
-     * @param d
-     * @param e
+     * @param D
+     * @param E
      */
 
     final public static void getEigenvector(Matrix A, int n, Matrix D, Matrix E) {
@@ -892,7 +892,7 @@ public class Matrix {
        d[0] = 0.0;
        e[0] = 0.0;
        
-       // Contents of this loop can be omitted if eigenvectors not
+       // Contents of this loop can be omitted if Eigen vectors not
        // wanted except for statement d[i]=a[i * cols + i]
        for (i = 0; i < n; i++) {
            l = i;
@@ -914,7 +914,7 @@ public class Matrix {
                a[j * cols + i] = a[i * cols + j] = 0.0;
        }
 
-       // Eigenvalues and Eigenvectors of a trigiagonal matrix
+       // Eigen values and Eigen vectors of a trigiagonal matrix
        // void tqli(float d[], float e[], int n, float **z)
 
         int m,iter;
@@ -1733,6 +1733,34 @@ public class Matrix {
                 maNorm.set(ii, jj, dVal);
             }
         return maNorm;
+    }
+
+    /**
+     * For a quadratic matrix only.
+     * @return
+     */
+    public double [] getUpperTriangle(){
+
+        int r = rows();
+        int c = cols();
+
+        if(r != c){
+            throw new RuntimeException("Not a quadratic matrix.");
+        }
+
+        int n = ((r * r) - r)/2;
+
+        double [] a = new double[n];
+
+        int cc = 0;
+        for (int i = 0; i < r; i++) {
+
+            for (int j = i+1; j < r; j++) {
+                a[cc++] = get(i,j);
+            }
+        }
+
+        return a;
     }
 
     /**

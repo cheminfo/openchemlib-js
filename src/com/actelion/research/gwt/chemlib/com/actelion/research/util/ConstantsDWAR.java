@@ -1,6 +1,9 @@
 package com.actelion.research.util;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /*
 * Copyright (c) 1997 - 2016
@@ -38,6 +41,18 @@ public class ConstantsDWAR {
 
 	// This date format is recognized by the DataWarrior
 	public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("MMM dd, yyyy");
+
+	// NumberFormat is not htread save.
+	public static final String PATTERN_NF_DWAR4 ="0.0000";
+
+	public static final String PATTERN_NF_DWAR = "0.000############";
+
+	//
+//	public static final DecimalFormat NF_DWAR4 = new DecimalFormat("0.0000", new DecimalFormatSymbols(Locale.US));
+//
+//	public static final DecimalFormat NF_DWAR = new DecimalFormat("0.0", new DecimalFormatSymbols(Locale.US));
+
+
 
 	// Separator for values in DataWarrior file.
 	public static final String SEP_VALUE = "; ";
@@ -120,7 +135,12 @@ public class ConstantsDWAR {
 	public static final String TAG_RECORD_NO = "Record No";
 	
 	public static final String TAG_ACTNO = "Actelion No";
-	
+
+	public static final String TAG_SOURCE = "Source";
+
+
+
+
 	public static final String [] TAG_NAMES = {TAG_NAME, TAG_ACTNO, TAG_RECORD_NO};
 
 	public static final String ODE_EXTENSION = ".ode";
