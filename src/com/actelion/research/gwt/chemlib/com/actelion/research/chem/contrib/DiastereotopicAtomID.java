@@ -83,7 +83,9 @@ public class DiastereotopicAtomID {
 
 	private static void changeAtom(StereoMolecule molecule, int iAtom) {
 		molecule.setAtomCustomLabel(iAtom, molecule.getAtomLabel(iAtom)+"*");
-		molecule.setAtomicNo(iAtom, Molecule.getAtomicNoFromLabel("X"));
+		if (molecule.getAtomicNo(iAtom)==1) {
+			molecule.setAtomicNo(iAtom, Molecule.getAtomicNoFromLabel("X"));
+		}
 	}
 	
 	private static void makeRacemic(StereoMolecule molecule) {
