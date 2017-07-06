@@ -12,6 +12,12 @@ var argv = require('minimist')(process.argv.slice(2));
 var verbose = argv.v;
 
 var modules = require('./modules.json');
+
+var suffix='';
+if (argv.suffix) {
+    suffix='.'+argv.suffix;
+}
+
 if(argv.m) {
     for (var i = 0; i < modules.length; i++) {
         if(modules[i].name === argv.m) {
@@ -75,7 +81,7 @@ function build(done) {
         }
         prom.push(exporter({
             input: file,
-            output: 'dist/openchemlib-' + mod.name + '.js',
+            output: 'dist/openchemlib-' + mod.name + suffix + '.js',
             exports: 'OCL',
             fake: mod.fake,
             'package': pack
