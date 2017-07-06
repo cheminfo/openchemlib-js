@@ -58,7 +58,7 @@ public class DiastereotopicAtomID {
 	
 	private static void makeRacemic(StereoMolecule molecule) {
 		// if we don't calculate this we have 2 epimers
-		molecule.ensureHelperArrays(Molecule.cHelperCIP);
+		molecule.ensureHelperArrays(Molecule.cHelperParities);
 		// we need to make one group "AND" for chiral (to force to racemic, this means diastereotopic and not enantiotopic)
 		for (int i=0; i<molecule.getAllAtoms(); i++) {
 			if (molecule.getAtomParity(i)!=Molecule.cAtomParityNone) {
