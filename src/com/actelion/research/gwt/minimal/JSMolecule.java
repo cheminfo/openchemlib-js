@@ -38,9 +38,7 @@ public class JSMolecule {
 	}-*/;
 	
 	public static JSMolecule fromMolfile(String molfile) throws Exception {
-		JSMolecule mol = new JSMolecule();
-		new MolfileParser().parse(mol.oclMolecule, molfile);
-		return mol;
+		return new JSMolecule(new MolfileParser().getCompactMolecule(molfile));
 	}
 	
 	public static native JSMolecule fromIDCode(String idcode, JavaScriptObject coordinates) /*-{

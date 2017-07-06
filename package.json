@@ -12,6 +12,7 @@
     "copy:openchemlib": "gulp copy:openchemlib",
     "build": "gulp build:min",
     "build-core": "gulp build:min -m core",
+    "build-pretty": "gulp build:pretty -m full --suffix pretty",
     "test": "mocha --require should --reporter mocha-better-spec-reporter --recursive",
     "test-travis": "npm run build && npm run test"
   },
