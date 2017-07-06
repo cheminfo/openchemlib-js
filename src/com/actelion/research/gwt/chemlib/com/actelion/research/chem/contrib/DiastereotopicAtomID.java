@@ -29,6 +29,7 @@ public class DiastereotopicAtomID {
 		for (int iAtom=0; iAtom<molecule.getAllAtoms(); iAtom++) {
 			StereoMolecule tempMolecule=molecule.getCompactCopy();
 			changeAtom(tempMolecule, iAtom);
+			tempMolecule.ensureHelperArrays(Molecule.cHelperParities);
 			// we need to have >0 and not >1 because there could be unspecified chirality in racemate
 			for (int i=0; i<tempMolecule.getAtoms(); i++) {
 				// changed from from handling below; TLS 9.Nov.2015
