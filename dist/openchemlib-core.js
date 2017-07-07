@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v5.2.6
- * @date 2017-07-07T14:44:37.681Z
+ * @version v5.2.7
+ * @date 2017-07-07T14:47:03.817Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -133,29 +133,28 @@ _V._S=function _S(a,b){var c;c=new _V.zT;c.c=true;c.d=b.Gb();return _V.aT(a,b.Fb
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '5.2.6';
+        toReturn.version = '5.2.7';
 
         return toReturn;
     }
 
-    var isBrowser, globalEnv, document;
+    var isBrowser, globalEnv;
 
-    if (typeof window !== 'undefined') { // usual browser window
-        isBrowser = true;
-        globalEnv = window;
-        document = window.document;
-    } else if (typeof self !== 'undefined') { // Web Worker
+    if (typeof self !== 'undefined') { // Usual Browser Window or Web Worker
         isBrowser = true;
         globalEnv = self;
-        document = {};
     } else if (typeof global !== 'undefined') { // Node.js
         isBrowser = false;
         globalEnv = global;
-        document = {};
     } else { // Other environment (example: CouchDB)
         isBrowser = false;
         globalEnv = root;
-        document = {};
+    }
+
+    var document = globalEnv.document || {};
+
+    if (!document.compatMode) {
+        document.compatMode = 'CSS1Compat';
     }
 
     var fakeWindow;
