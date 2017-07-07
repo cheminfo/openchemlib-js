@@ -106,4 +106,11 @@ describe('diastereotopicIDs', function () {
         let diaIDs = [... new Set(molecule.getDiastereotopicAtomIDs())];
         diaIDs.length.should.equal(11);
     });
+
+    it('ethylbenzene', function () {
+        let molecule = Molecule.fromSmiles('CC(O)C(C)C');
+        let diaIDs = [... new Set(molecule.getDiastereotopicAtomIDs())];
+        diaIDs.length.should.equal(6);
+    });
+
 });
