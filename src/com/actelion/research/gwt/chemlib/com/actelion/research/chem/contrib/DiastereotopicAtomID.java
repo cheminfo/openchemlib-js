@@ -4,7 +4,10 @@ package com.actelion.research.chem.contrib;
 import com.actelion.research.chem.*;
 
 public class DiastereotopicAtomID {
-	
+
+	private static int xAtomicNumber = Molecule.getAtomicNoFromLabel("X");
+
+
 	public static String[] getAtomIds(StereoMolecule molecule) {
 		addMissingChirality(molecule);
 		
@@ -28,8 +31,9 @@ public class DiastereotopicAtomID {
 	public static void addMissingChirality(StereoMolecule molecule) {
 		for (int iAtom=0; iAtom<molecule.getAllAtoms(); iAtom++) {
 			StereoMolecule tempMolecule=molecule.getCompactCopy();
-			changeAtom(tempMolecule, iAtom);
+			// after copy we need to recalculate the helpers ...
 			tempMolecule.ensureHelperArrays(Molecule.cHelperParities);
+			changeAtom(tempMolecule, iAtom);
 			// we need to have >0 and not >1 because there could be unspecified chirality in racemate
 			for (int i=0; i<tempMolecule.getAtoms(); i++) {
 				// changed from from handling below; TLS 9.Nov.2015
@@ -53,9 +57,10 @@ public class DiastereotopicAtomID {
 	private static void changeAtom(StereoMolecule molecule, int iAtom) {
 		molecule.setAtomCustomLabel(iAtom, molecule.getAtomLabel(iAtom)+"*");
 		if (molecule.getAtomicNo(iAtom)==1) {
-			molecule.setAtomicNo(iAtom, Molecule.getAtomicNoFromLabel("X"));
+			molecule.setAtomicNo(iAtom, xAtomicNumber);
 		}
 	}
+
 	
 	private static void makeRacemic(StereoMolecule molecule) {
 		// if we don't calculate this we have 2 epimers
