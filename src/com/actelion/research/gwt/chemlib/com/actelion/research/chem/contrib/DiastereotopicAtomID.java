@@ -4,7 +4,10 @@ package com.actelion.research.chem.contrib;
 import com.actelion.research.chem.*;
 
 public class DiastereotopicAtomID {
-	
+
+	private static int xAtomicNumber = Molecule.getAtomicNoFromLabel("X");
+
+
 	public static String[] getAtomIds(StereoMolecule molecule) {
 		addMissingChirality(molecule);
 		
@@ -54,17 +57,23 @@ public class DiastereotopicAtomID {
 	}
 
 	private static void changeAtomForStereo(StereoMolecule molecule, int iAtom) {
-		molecule.setAtomMass( iAtom,molecule.getAtomMass(iAtom)+5);
+		// need to force the change to an excotic atom to check if it is really chiral
+		molecule.setAtomicNo(iAtom, xAtomicNumber);
 	}
 
 	private static void changeAtom(StereoMolecule molecule, int iAtom) {
 		molecule.setAtomCustomLabel(iAtom, molecule.getAtomLabel(iAtom)+"*");
-		molecule.setAtomMass( iAtom,molecule.getAtomMass(iAtom)+5);
+		if (molecule.getAtomicNo(iAtom)==1) {
+			molecule.setAtomicNo(iAtom, xAtomicNumber);
+		} else {
+			// we can not use X because we would have problems with valencies if it is
+			// expanded hydrogens or not
+			// we can not only use a custom label because it does not cound for the canonisation
+			molecule.setAtomMass( iAtom,molecule.getAtomMass(iAtom)+5);
+		}
 	}
 
-	/*
-	Take care that custom LABELS are NOT used in canonisation !!!
-	 */
+
 	private static void makeRacemic(StereoMolecule molecule) {
 		// if we don't calculate this we have 2 epimers
 		molecule.ensureHelperArrays(Molecule.cHelperParities);

@@ -30,15 +30,15 @@ describe('diastereotopicIDs', function () {
             'gOp@DiWMjj`FHJC}H`\\Jh',
             'gOp@DjWkjj`FHJC}H`\\Jh',
             'gOp@DfUkjj`FHJC}H`\\Jh',
-            'daD@`J`DjYvzjjdBbB@XbjC}HRdRj@',
-            'daD@`J`DjYvzjjdBbJ@XbjC}HRdRj@',
-            'daD@`N`DjWjZjjdB`b@XcjC}HSdRj@',
-            'daD@`N`DjWjZjjdB`j@XcjC}HSdRj@',
-            'daD@`N`DjWzZjjdBL`XcjC}HSdRj@',
-            'daD@`N`DjWzZjjdBM@XcjC}HSdRj@',
-            'daD@`B`LddRK]UUP@qATGzPaHeT',
-            'daD@`F`DjUZzjj`AbFhOtaFQJh'
-        ]);
+            'daD@`@fTfYVzjjdbaB@_iB@bUP',
+            'daD@`@fTfYVzjjdbaJ@_iB@bUP',
+            'daD@`@fTfUjZjjdb`b@_iB@bUP',
+            'daD@`@fTfUjZjjdb`j@_iB@bUP',
+            'daD@`@fTfUzZjjdbL`_iB@bUP',
+            'daD@`@fTfUzZjjdbM@_iB@bUP',
+            'daD@`@fTfevzjj`A~dHBIU@',
+            'daD@`@fTeeVzjj`A~dHBIU@'
+        ] );
     });
 
     it('methane', function () {
