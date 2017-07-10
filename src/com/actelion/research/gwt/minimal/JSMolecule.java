@@ -40,6 +40,17 @@ public class JSMolecule {
 	public static JSMolecule fromMolfile(String molfile) throws Exception {
 		return new JSMolecule(new MolfileParser().getCompactMolecule(molfile));
 	}
+
+	public static JavaScriptObject fromMolfileWithAtomMap(String molfile) throws Exception {
+		MolfileParser parser = new MolfileParser(MolfileParser.MODE_KEEP_HYDROGEN_MAP);
+		StereoMolecule mol = parser.getCompactMolecule(molfile);
+		int[] map = parser.getHandleHydrogenMap();
+		return createMolfileWithAtomMap(new JSMolecule(mol), map);
+	}
+
+	private static native JavaScriptObject createMolfileWithAtomMap(JSMolecule mol, int[] map) /*-{
+		return {molecule: mol, map: map};
+	}-*/;
 	
 	public static native JSMolecule fromIDCode(String idcode, JavaScriptObject coordinates) /*-{
 		var mol;
