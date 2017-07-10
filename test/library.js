@@ -3,6 +3,7 @@
 const core = require('..');
 const minimal = require('../minimal');
 const full = require('../full');
+const pretty = require('../dist/openchemlib-full.pretty');
 
 describe('Checking for the presence of main APIs', function () {
 
@@ -41,9 +42,11 @@ describe('Checking for the presence of main APIs', function () {
     });
 
     it('full', function () {
-        full.should.have.properties(minimalAPI);
-        full.should.have.properties(coreAPI);
-        full.should.have.properties(fullAPI)
+        [full, pretty].forEach((lib) => {
+            lib.should.have.properties(minimalAPI);
+            lib.should.have.properties(coreAPI);
+            lib.should.have.properties(fullAPI)
+        });
     })
 
 });
