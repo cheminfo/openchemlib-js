@@ -20,8 +20,8 @@ describe('diastereotopicIDs', function () {
         molecule.addImplicitHydrogens();
         var diaIDsH = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
 
-        for (var diaID of diaIDsH) {
-            diaIDs.indexOf(diaID).should.be.greaterThan(-1);
+        for (var diaID of diaIDs) {
+            diaIDsH.indexOf(diaID).should.be.greaterThan(-1);
         }
 
         diaIDsH.should.eql([
