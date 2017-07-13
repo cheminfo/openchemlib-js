@@ -10,9 +10,9 @@
   ],
   "scripts": {
     "copy:openchemlib": "gulp copy:openchemlib",
-    "build": "npm run build-min && npm run build-pretty",
+    "build": "gulp build:min && npm run build-pretty",
     "build-core": "gulp build:min -m core",
-    "build-min": "gulp build:min",
+    "build-minimal": "gulp build:min -m minimal",
     "build-pretty": "gulp build:pretty -m full --suffix pretty",
     "test": "mocha --require should --reporter mocha-better-spec-reporter --recursive",
     "test-travis": "npm run build && npm run test"
