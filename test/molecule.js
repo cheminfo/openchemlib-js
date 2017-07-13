@@ -67,6 +67,12 @@ describe('Molecule', function () {
         const result = Molecule.fromMolfileWithAtomMap(molfile);
         result.molecule.should.be.instanceOf(Molecule);
         result.map.length.should.equal(result.molecule.getAllAtoms());
+        var mol=result.molecule;
         console.log(Array.from(result.map));
+
+        for (var i=0; i<mol.getAllAtoms(); i++) {
+            console.log(i, result.map[i],mol.getAtomX(i), mol.getAtomY(i));
+        }
+
     });
 });
