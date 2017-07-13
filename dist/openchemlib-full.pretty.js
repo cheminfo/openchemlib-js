@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v5.2.9
- * @date 2017-07-10T14:04:10.904Z
+ * @version v5.2.10
+ * @date 2017-07-13T09:16:40.055Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -16037,26 +16037,26 @@ _.getFreeValence_0 = function getFreeValence(atom){
 }
 ;
 _.getHandleHydrogenMap_0 = function getHandleHydrogenMap(){
-  var atom, isSimpleHydrogen, lastNonHAtom, map_0;
+  var atom, i, isSimpleHydrogen, lastNonHAtom, map_0, temp, tempIndex;
   map_0 = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAllAtoms, 15, 1);
+  for (i = 0; i < this.mAllAtoms; i++)
+    map_0[i] = i;
   isSimpleHydrogen = this.findSimpleHydrogens();
-  lastNonHAtom = this.mAllAtoms - 1;
-  while (lastNonHAtom >= 0 && isSimpleHydrogen[lastNonHAtom]) {
-    map_0[lastNonHAtom] = lastNonHAtom;
+  lastNonHAtom = this.mAllAtoms;
+  do 
     lastNonHAtom--;
-  }
-  for (atom = 0; atom <= lastNonHAtom; atom++) {
+  while (lastNonHAtom >= 0 && isSimpleHydrogen[lastNonHAtom]);
+  for (atom = 0; atom < lastNonHAtom; atom++) {
     if (isSimpleHydrogen[atom]) {
-      map_0[atom] = lastNonHAtom;
-      map_0[lastNonHAtom] = atom;
-      lastNonHAtom--;
-      while (lastNonHAtom >= 0 && isSimpleHydrogen[lastNonHAtom]) {
-        map_0[lastNonHAtom] = lastNonHAtom;
+      tempIndex = map_0[atom];
+      map_0[atom] = map_0[lastNonHAtom];
+      map_0[lastNonHAtom] = tempIndex;
+      temp = isSimpleHydrogen[atom];
+      isSimpleHydrogen[atom] = isSimpleHydrogen[lastNonHAtom];
+      isSimpleHydrogen[lastNonHAtom] = temp;
+      do 
         lastNonHAtom--;
-      }
-    }
-     else {
-      map_0[atom] = atom;
+      while (isSimpleHydrogen[lastNonHAtom]);
     }
   }
   return map_0;
@@ -66269,29 +66269,28 @@ $gwt && $gwt.permProps && __gwtModuleFunction.__moduleStartupDone($gwt.permProps
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '5.2.9';
+        toReturn.version = '5.2.10';
 
         return toReturn;
     }
 
-    var isBrowser, globalEnv, document;
+    var isBrowser, globalEnv;
 
-    if (typeof window !== 'undefined') { // usual browser window
-        isBrowser = true;
-        globalEnv = window;
-        document = window.document;
-    } else if (typeof self !== 'undefined') { // Web Worker
+    if (typeof self !== 'undefined') { // Usual Browser Window or Web Worker
         isBrowser = true;
         globalEnv = self;
-        document = {};
     } else if (typeof global !== 'undefined') { // Node.js
         isBrowser = false;
         globalEnv = global;
-        document = {};
     } else { // Other environment (example: CouchDB)
         isBrowser = false;
         globalEnv = root;
-        document = {};
+    }
+
+    var document = globalEnv.document || {};
+
+    if (!document.compatMode) {
+        document.compatMode = 'CSS1Compat';
     }
 
     var fakeWindow;
