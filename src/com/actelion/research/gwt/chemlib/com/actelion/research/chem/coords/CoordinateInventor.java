@@ -38,9 +38,10 @@ import com.actelion.research.chem.*;
 import java.util.*;
 
 public class CoordinateInventor {
-	public static final int MODE_REMOVE_HYDROGEN = 1;
-	public static final int MODE_KEEP_MARKED_ATOM_COORDS = 2;
-	public static final int MODE_PREFER_MARKED_ATOM_COORDS = 4;
+	public static final int MODE_SKIP_DEFAULT_TEMPLATES = 1;
+	public static final int MODE_REMOVE_HYDROGEN = 2;
+	public static final int MODE_KEEP_MARKED_ATOM_COORDS = 4;
+	public static final int MODE_PREFER_MARKED_ATOM_COORDS = 8;
 	protected static final int MODE_CONSIDER_MARKED_ATOMS = MODE_KEEP_MARKED_ATOM_COORDS | MODE_PREFER_MARKED_ATOM_COORDS;
 
 	private static final byte FLIP_AS_LAST_RESORT = 1;
@@ -51,21 +52,34 @@ public class CoordinateInventor {
 	private static final int  LAST_RESORT_FLIPS = 128;
 	private static final int  TOTAL_FLIPS = PREFERRED_FLIPS + POSSIBLE_FLIPS + LAST_RESORT_FLIPS;
 
+	private static volatile List<InventorTemplate> sDefaultTemplateList;
+
 	private StereoMolecule mMol;
-	private ArrayList<InventorFragment>   mFragmentList;
+	private int[]		mFFP;
 	private Random		mRandom;
 	private boolean[]	mAtomHandled;
 	private boolean[]	mBondHandled;
-	private boolean[]	mIsConsideredBond;
+	private boolean[]	mAtomIsPartOfCustomTemplate;
 	private int[]		mUnPairedCharge;
 	private int			mMode;
+	private List<InventorFragment> mFragmentList;
+	private List<InventorTemplate> mCustomTemplateList;
+
+	private static synchronized void buildDefaultTemplateList() {
+		if (sDefaultTemplateList == null)
+			sDefaultTemplateList = new InventorDefaultTemplateList();
+	}
+
 
 	/**
 	 * Creates an CoordinateInventor, which removes unneeded hydrogen atoms
 	 * and creates new atom coordinates for all(!) atoms.
+	 * If setDefaultTemplates(new InventorDefaultTemplateList()) was called,
+	 * then these templates are used to create 3D-projection kind of coordinates
+	 * for polycyclic structures from these templates (adamantanes, cubane, etc.).
 	 */
 	public CoordinateInventor () {
-		mMode = MODE_REMOVE_HYDROGEN;
+		this(MODE_REMOVE_HYDROGEN);
 		}
 
 
@@ -74,15 +88,53 @@ public class CoordinateInventor {
 	 * MODE_REMOVE_HYDROGEN. If mode includes MODE_KEEP_MARKED_ATOM_COORDS, then marked atoms
 	 * keep their coordinates. If mode includes MODE_PREFER_MARKED_ATOM_COORDS, then coordinates
 	 * of marked atoms are changed only, if perfect coordinates are not possible without.
+	 * If setDefaultTemplates(new InventorDefaultTemplateList()) was called and mode does not
+	 * include MODE_SKIP_DEFAULT_TEMPLATES, then these templates are used to create 3D-projection
+	 * kind of coordinates for polycyclic structures from these templates (adamantanes, cubane, etc.).
 	 * @param mode
 	 */
 	public CoordinateInventor (int mode) {
 		mMode = mode;
+		if ((mode & MODE_SKIP_DEFAULT_TEMPLATES) == 0 && sDefaultTemplateList == null)
+			buildDefaultTemplateList();
 		}
 
 
 	public void setRandomSeed(long seed) {
 		mRandom = new Random(seed);
+		}
+
+
+	/**
+	 * By providing a custom template list containing substructures with predefined atom
+	 * coordinates, any occurence of any of these substructures will receive the
+	 * relative atom coordinates of the provided template, unless the substructure
+	 * shares more than one atom with a previously found substructure or the substructure
+	 * shares more than one atom with the non marked atoms and mode is
+	 * MODE_????_MARKED_ATOM_COORDS.
+	 * @param templateList
+	 */
+	public void setCustomTemplateList(List<InventorTemplate> templateList) {
+		mCustomTemplateList = templateList;
+		for (InventorTemplate template:templateList)
+			template.normalizeCoordinates();
+		}
+
+	/**
+	 * Creates new atom 2D-coordinates for a molecule or a part of a molecule.
+	 * Coordinates will correctly reflect E/Z double bond parities, unless the double bond is in a ring.
+	 * If atom parities are available, this call is typically followed by calling mol.setStereoBondsFromParity();
+	 * Unneeded explicit hydrogens are removed, if mode includes MODE_REMOVE_HYDROGEN.
+	 * The relative orientation of all marked atoms is retained, if mode includes MODE_KEEP_MARKED_ATOM_COORDS.
+	 * The relative orientation of all marked atoms is changed as last resort only, if mode includes MODE_PREFER_MARKED_ATOM_COORDS.
+	 * If setTemplateList() was called, then any substructures matching any of the templates will be shown
+	 * with the relative atom orientation provided with the template. If many molecule's coordinates are invented
+	 * with templates, then you should also provide the molecules' fragment fingerprint to speed up template search
+	 * using invent(mol, ffp).
+	 * @param mol the molecule that gets new 2D coordinates in place
+	 */
+	public void invent(StereoMolecule mol) {
+		invent(mol, null);
 		}
 
 
@@ -93,9 +145,13 @@ public class CoordinateInventor {
 	 * Unneeded explicit hydrogens are removed, if mode includes MODE_REMOVE_HYDROGEN.
 	 * The relative orientation of all marked atoms is retained, if mode includes MODE_KEEP_MARKED_ATOM_COORDS.
 	 * The relative orientation of all marked atoms is changed as last resort only, if mode includes MODE_PREFER_MARKED_ATOM_COORDS.
+	 * If setTemplateList() was called, then any substructures matching any of the templates will be shown
+	 * with the relative atom orientation provided with the template. If many molecule's coordinates are invented
+	 * with templates, then you should also provide the molecules' fragment fingerprint to speed up template search.
 	 * @param mol the molecule that gets new 2D coordinates in place
+	 * @parem ffp null or fragment fingerprint of the molecule, which is used (if available) for faster template location
 	 */
-	public void invent(StereoMolecule mol) {
+	public void invent(StereoMolecule mol, int[] ffp) {
 		if (mRandom == null)
 			mRandom = new Random();
 
@@ -105,26 +161,24 @@ public class CoordinateInventor {
 		mMol = mol;
 		mMol.ensureHelperArrays(Molecule.cHelperRings);
 
+		mFFP = ffp;
+
 		mFragmentList = new ArrayList<InventorFragment>();
 		mAtomHandled = new boolean[mMol.getAllAtoms()];
 		mBondHandled = new boolean[mMol.getAllBonds()];
-
-		// we consider all bonds except metal bonds outside of the core fragment
-		mIsConsideredBond = new boolean[mMol.getAllBonds()];
-		for (int bond=0; bond<mMol.getAllBonds(); bond++)
-			mIsConsideredBond[bond] = mMol.getBondType(bond) != Molecule.cBondTypeMetalLigand;
 
 		mUnPairedCharge = new int[mMol.getAllAtoms()];
 		for (int atom=0; atom<mMol.getAllAtoms(); atom++)
 			mUnPairedCharge[atom] = mMol.getAtomCharge(atom);
 
-		if ((mMode & MODE_CONSIDER_MARKED_ATOMS) != 0) {
-			for (int bond=0; bond<mMol.getAllBonds(); bond++)
-				mIsConsideredBond[bond] = !mIsConsideredBond[bond]
-						&& mMol.isMarkedAtom(mMol.getBondAtom(0, bond))
-						&& mMol.isMarkedAtom(mMol.getBondAtom(1, bond));
-			locateCoreFragment();
-			}
+		if ((mMode & MODE_CONSIDER_MARKED_ATOMS) != 0)
+			locateMarkedFragments();
+
+		if (mCustomTemplateList != null)
+			mAtomIsPartOfCustomTemplate = locateTemplateFragments(mCustomTemplateList, 512);
+
+		if ((mMode & MODE_SKIP_DEFAULT_TEMPLATES) == 0 && sDefaultTemplateList != null)
+			locateTemplateFragments(sDefaultTemplateList, 256);
 
 		locateInitialFragments();
 		joinOverlappingFragments();
@@ -158,7 +212,69 @@ public class CoordinateInventor {
 		}
 
 
-	private void locateCoreFragment() {
+	public boolean[] getCustomTemplateAtomMask() {
+		return mAtomIsPartOfCustomTemplate;
+		}
+
+
+	private boolean[] locateTemplateFragments(List<InventorTemplate> templateList, int priority) {
+		boolean useFFP = (mFFP != null && templateList.size() != 0 && templateList.get(0).getFFP() != null);
+
+		SSSearcher searcher = null;
+		SSSearcherWithIndex searcherWithIndex = null;
+		if (useFFP) {
+			searcherWithIndex = new SSSearcherWithIndex();
+			searcherWithIndex.setMolecule(mMol, mFFP);
+			}
+		else {
+			searcher = new SSSearcher();
+			searcher.setMolecule(mMol);
+			}
+
+		boolean[] atomIsPartOfTemplate = new boolean[mMol.getAtoms()];
+
+		for (InventorTemplate template: templateList) {
+			ArrayList<int[]> matchList = null;
+			if (useFFP) {
+				searcherWithIndex.setFragment(template.getFragment(), template.getFFP());
+				if (searcherWithIndex.findFragmentInMolecule(SSSearcher.cCountModeOverlapping, SSSearcher.cDefaultMatchMode) != 0)
+					matchList = searcherWithIndex.getMatchList();
+				}
+			else {
+				searcher.setFragment(template.getFragment());
+				if (searcher.findFragmentInMolecule(SSSearcher.cCountModeOverlapping, SSSearcher.cDefaultMatchMode) != 0)
+					matchList = searcher.getMatchList();
+				}
+
+			if (matchList != null) {
+				for (int[] match:matchList) {
+					int templateAtomCount = 0;
+					for (int atom:match)
+						if (atomIsPartOfTemplate[atom])
+							templateAtomCount++;
+					if (templateAtomCount <= 1) {
+						InventorFragment fragment = new InventorFragment(mMol, match.length, mMode);
+
+						for (int i=0; i<match.length; i++) {
+							int atom = match[i];
+							fragment.mPriority[i] = priority;
+							fragment.mGlobalAtom[i] = atom;
+							fragment.mAtomX[i] = template.getNormalizedAtomX(i);
+							fragment.mAtomY[i] = template.getNormalizedAtomY(i);
+							atomIsPartOfTemplate[atom] = true;
+							mAtomHandled[atom] = true;
+							}
+
+						mFragmentList.add(fragment);
+						}
+					}
+				}
+			}
+		return atomIsPartOfTemplate;
+		}
+
+
+	private void locateMarkedFragments() {
 		// take every small ring whose atoms are not a superset of another small ring
 		int bondCount = 0;
 		double avbl = 0;
@@ -199,7 +315,7 @@ public class CoordinateInventor {
 		for (int atom=0; atom<mMol.getAllAtoms(); atom++) {
 			int f = fragmentNo[atom];
 			if (f != -1) {
-				fragment[f].mPriority[atomIndex[f]] = 256;
+				fragment[f].mPriority[atomIndex[f]] = 1024;
 				fragment[f].mGlobalAtom[atomIndex[f]] = atom;
 				fragment[f].mAtomX[atomIndex[f]] = mMol.getAtomX(atom) / avbl;
 				fragment[f].mAtomY[atomIndex[f]] = mMol.getAtomY(atom) / avbl;
