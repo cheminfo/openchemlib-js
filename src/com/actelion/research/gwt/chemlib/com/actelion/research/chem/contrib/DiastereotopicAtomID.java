@@ -29,7 +29,7 @@ public class DiastereotopicAtomID {
 	 * This is the case for example for the valine where the 2 C of the methyl groups are diastereotopic
 	 * @param molecule
 	 */
-	public static void addMissingChirality(StereoMolecule molecule) {
+	public static void addMissingChirality(StereoMolecule molecule, int esrType) {
 		for (int iAtom=0; iAtom<molecule.getAllAtoms(); iAtom++) {
 			StereoMolecule tempMolecule=molecule.getCompactCopy();
 			changeAtomForStereo(tempMolecule, iAtom);
@@ -49,11 +49,15 @@ public class DiastereotopicAtomID {
 							molecule.setBondAtom(1, stereoBond, connAtom);
 						}
 					// To me it seems that we have to add all stereo centers into AND group 0.	TLS 9.Nov.2015
-					molecule.setAtomESR(i, Molecule.cESRTypeAnd, 0);
+					molecule.setAtomESR(i, esrType, 0);
 					}
 				}
 			}
 		}
+	}
+
+	public static void addMissingChirality(StereoMolecule molecule) {
+		addMissingChirality(molecule, Molecule.cESRTypeAnd);
 	}
 
 	private static void changeAtomForStereo(StereoMolecule molecule, int iAtom) {
