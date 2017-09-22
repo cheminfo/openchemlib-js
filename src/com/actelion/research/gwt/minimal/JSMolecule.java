@@ -144,9 +144,23 @@ public class JSMolecule {
 		return DiastereotopicAtomID.getAtomIds(oclMolecule);
 	}
 
+    public native void addMissingChirality(JavaScriptObject esrType) /*-{
+        if (esrType === undefined) {
+            this.@com.actelion.research.gwt.minimal.JSMolecule::addMissingChirality()();
+        } else {
+            this.@com.actelion.research.gwt.minimal.JSMolecule::addMissingChirality(I)(esrType);
+        }
+    }-*/;
+
+    @JsIgnore
 	public void addMissingChirality() {
 		DiastereotopicAtomID.addMissingChirality(oclMolecule);
 	}
+
+    @JsIgnore
+    public void addMissingChirality(int esrType) {
+        DiastereotopicAtomID.addMissingChirality(oclMolecule, esrType);
+    }
 
 	public native String[][] getHoseCodes(JavaScriptObject options) /*-{
 		options = options || {};

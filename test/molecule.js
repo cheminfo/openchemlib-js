@@ -70,4 +70,19 @@ describe('Molecule', function () {
         new Set(result.map).size.should.equal(result.molecule.getAllAtoms());
 
     });
+
+    it('addMissingChirality', () => {
+        let mol = Molecule.fromSmiles('CC(Cl)CC');
+        mol.getChiralText().should.equal('unknown chirality');
+        mol.addMissingChirality();
+        mol.getChiralText().should.equal('racemate');
+
+        mol = Molecule.fromSmiles('CC(Cl)CC');
+        mol.addMissingChirality(Molecule.cESRTypeOr);
+        mol.getChiralText().should.equal('this or other enantiomer');
+
+        mol = Molecule.fromSmiles('CC(Cl)CC');
+        mol.addMissingChirality(Molecule.cESRTypeAbs);
+        mol.getChiralText().should.equal('this enantiomer');
+    });
 });
