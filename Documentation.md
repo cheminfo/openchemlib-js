@@ -39,6 +39,10 @@ __Options__
 
 Parse the provided `molfile` and return a `Molecule`.
 
+### Molecule.fromMolfileWithAtomMap(molfile)
+
+Parse the provided `molfile` and return an object with `Molecule` and map.
+
 ### Molecule.fromIDCode(idcode, [ensure2DCoordinates|coordinates])
 
 Parse the provided `idcode` and return a `Molecule`.
