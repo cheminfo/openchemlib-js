@@ -185,7 +185,7 @@ public class Molecule implements Serializable {
 	public static final int cBondTypeDeleted		= 0x00000080;
 	public static final int cBondTypeIncreaseOrder  = 0x0000007F;
 
-	private static final int cBondTypeMaskSimple	= 0x00000067;	// masks
+	protected static final int cBondTypeMaskSimple	= 0x00000067;	// masks
 	protected static final int cBondTypeMaskStereo	= 0x00000018;
 
 	protected static final int cBondFlagsHelper2	= 0x000003C0;
@@ -2474,7 +2474,7 @@ public class Molecule implements Serializable {
 
 
 	public boolean isSelectedAtom(int atom) {
-		return ((mAtomFlags[atom] & cAtomFlagSelected) != 0) ? true : false;
+		return (mAtomFlags[atom] & cAtomFlagSelected) != 0;
 		}
 
 
@@ -2482,7 +2482,7 @@ public class Molecule implements Serializable {
 	 * Atom marking may be used for any external purpose
 	 */
 	public boolean isMarkedAtom(int atom) {
-		return ((mAtomFlags[atom] & cAtomFlagMarked) != 0) ? true : false;
+		return (mAtomFlags[atom] & cAtomFlagMarked) != 0;
 		}
 
 
@@ -2491,7 +2491,7 @@ public class Molecule implements Serializable {
 	 * @param bond
 	 */
 	public boolean isBondBackgroundHilited(int bond) {
-		return ((mBondFlags[bond] & cBondFlagBGHilited) != 0) ? true : false;
+		return (mBondFlags[bond] & cBondFlagBGHilited) != 0;
 		}
 
 
@@ -2500,14 +2500,14 @@ public class Molecule implements Serializable {
 	 * @param bond
 	 */
 	public boolean isBondForegroundHilited(int bond) {
-		return ((mBondFlags[bond] & cBondFlagFGHilited) != 0) ? true : false;
+		return (mBondFlags[bond] & cBondFlagFGHilited) != 0;
 		}
 
 
 	public boolean isSelectedBond(int bond) {
-		return ((mAtomFlags[mBondAtom[0][bond]]
-			   & mAtomFlags[mBondAtom[1][bond]]
-			   & cAtomFlagSelected) != 0) ? true : false;
+		return (mAtomFlags[mBondAtom[0][bond]]
+			  & mAtomFlags[mBondAtom[1][bond]]
+			  & cAtomFlagSelected) != 0;
 		}
 
 

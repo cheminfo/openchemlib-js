@@ -78,6 +78,23 @@ public class Canonizer {
 	// Enforces creation of 3D-coordinate encoding even if all z-coords are 0.0
 	public static final int COORDS_ARE_3D = 64;
 
+	// The Canonizer normalizes pseudo stereo parities within any rigid fragments, where
+	// two representations of relative stereo features encode equal stereo configurations
+	// (e.g. cis-1,4-dimethyl-cyclohexane). If the CREATE_PSEUDO_STEREO_GROUPS bit is set,
+	// then one can use getPseudoTHGroups() and getPseudoEZGroups(), which return stereo
+	// feature group numbers that are shared among all related relative stereo features
+	// (tetrahedral and E/Z-bonds).
+	public static final int CREATE_PSEUDO_STEREO_GROUPS = 128;
+
+	// If two molecules are identical except for an inverted configuration of stereo centers
+	// within one OR group, then they receive the same idcode, because 'this or the other'
+	// and 'the other or this' are effectively the same. If we know, however, that we have
+	// both enantiomers, but cannot assign which is which, we may want to create different
+	// idcodes for either enantiomer. If the mode includes DISTINGUISH_RACEMIC_OR_GROUPS,
+	// then the normalization of tetrahedral stereo centers is skipped for OR groups retaining
+	// the given configuration within all OR groups.
+	public static final int DISTINGUISH_RACEMIC_OR_GROUPS = 256;
+
 	protected static final int cIDCodeVersion2 = 8;
 		// productive version till May 2006 based on the molfile version 2
 
@@ -105,6 +122,8 @@ public class Canonizer {
 	private StereoMolecule mMol;
 	private int[] mCanRank;
 	private int[] mCanRankBeforeTieBreaking;
+	private int[] mPseudoTHGroup;
+	private int[] mPseudoEZGroup;
 	private byte[] mTHParity;
 	private byte[] mEZParity;
 	private byte[] mTHConfiguration;	// is tetrahedral parity based on atom numbers in graph
@@ -131,7 +150,7 @@ public class Canonizer {
 	private boolean[] mNitrogenQualifiesForParity;
 	private ArrayList<CanonizerFragment> mFragmentList;
 	private ArrayList<int[]> mTHParityNormalizationGroupList;
-	private int mMode,mNoOfRanks;
+	private int mMode,mNoOfRanks,mNoOfPseudoGroups;
 	private boolean mIsOddParityRound;
 	private boolean mZCoordinatesAvailable;
 	private boolean mCIPParityNoDistinctionProblem;
@@ -167,7 +186,7 @@ public class Canonizer {
 	 * a 3D-encoding even if all z-coordinates are 0.0. Otherwise coordinates are
 	 * encoded in 3 dimensions only, if at least one of the z-coords is not 0.0.
 	 * @param mol
-	 * @param mode 0 or one or more of CONSIDER...TOPICITY, CREATE_SYMMETRY_RANK, ENCODE_ATOM_CUSTOM_LABELS, ASSIGN_PARITIES_TO_TETRAHEDRAL_N, COORDS_ARE_3D
+	 * @param mode 0 or one or more of CONSIDER...TOPICITY, CREATE..., ENCODE_ATOM_CUSTOM_LABELS, ASSIGN_PARITIES_TO_TETRAHEDRAL_N, COORDS_ARE_3D
 	 */
 	public Canonizer(StereoMolecule mol, int mode) {
 		if (mol.getAllAtoms()>MAX_ATOMS)
@@ -1033,7 +1052,8 @@ System.out.println("mCanBaseValue["+atom+"] = "+Long.toHexString(mCanBase[atom].
 	private void canMarkESRGroupsForParityNormalization() {
 		int count = 0;
 		for (int atom=0; atom<mMol.getAtoms(); atom++)
-			if (mTHESRType[atom] != Molecule.cESRTypeAbs)
+			if (mTHESRType[atom] != Molecule.cESRTypeAbs
+			 && (mTHESRType[atom] != Molecule.cESRTypeOr || (mMode & DISTINGUISH_RACEMIC_OR_GROUPS) == 0))
 				count++;
 
 		if (count == 0)
@@ -1042,7 +1062,8 @@ System.out.println("mCanBaseValue["+atom+"] = "+Long.toHexString(mCanBase[atom].
 		int[] parity = new int[count];
 		count = 0;
 		for (int atom=0; atom<mMol.getAtoms(); atom++) {
-			if (mTHESRType[atom] != Molecule.cESRTypeAbs) {
+			if (mTHESRType[atom] != Molecule.cESRTypeAbs
+			 && (mTHESRType[atom] != Molecule.cESRTypeOr || (mMode & DISTINGUISH_RACEMIC_OR_GROUPS) == 0)) {
 				parity[count] = (mTHESRType[atom] << 29)
 							  | (mTHESRGroup[atom] << 24)
 							  | (mCanRank[atom] << 12)
@@ -1268,6 +1289,11 @@ System.out.println("mCanBaseValue["+atom+"] = "+Long.toHexString(mCanBase[atom].
 		int anyPseudoParityCount = 0;
 		boolean pseudoParity1Or2Found = false;
 
+		if ((mMode & CREATE_PSEUDO_STEREO_GROUPS) != 0) {
+			mPseudoTHGroup = new int[mMol.getAtoms()];
+			mPseudoEZGroup = new int[mMol.getBonds()];
+			}
+
 		for (int atom=0; atom<mMol.getAtoms(); atom++) {
 			if (mProTHAtomsInSameFragment[atom]) {
 				if (!mTHParityIsPseudo[atom]) {
@@ -1307,6 +1333,7 @@ System.out.println("mCanBaseValue["+atom+"] = "+Long.toHexString(mCanBase[atom].
 			}
 		else if (anyPseudoParityCount > 1) {
 			canEnsureFragments();
+			mNoOfPseudoGroups = 0;
 			for (CanonizerFragment f:mFragmentList) {
 				int pseudoParitiesInGroup = 0;
 				int pseudoParity1Or2InGroup = 0;
@@ -1374,6 +1401,16 @@ System.out.println("mCanBaseValue["+atom+"] = "+Long.toHexString(mCanBase[atom].
 								mEZParity[f.bond[i]] = Molecule.cBondParityUnknown;
 						}
 					else {	// canonize relative stereo features of fragment
+						if ((mMode & CREATE_PSEUDO_STEREO_GROUPS) != 0) {
+							mNoOfPseudoGroups++;
+							for (int i=0; i<f.atom.length; i++)
+								if (isFreshPseudoParityAtom[f.atom[i]])
+									mPseudoTHGroup[f.atom[i]] = mNoOfPseudoGroups;
+							for (int i=0; i<f.bond.length; i++)
+								if (isFreshPseudoParityBond[f.bond[i]])
+									mPseudoEZGroup[f.bond[i]] = mNoOfPseudoGroups;
+							}
+
 						boolean invertFragmentsStereoFeatures = false;
 						if (highTHAtomRank != -1) {
 							if (mTHParity[highRankingTHAtom] == Molecule.cAtomParity2)
@@ -1566,6 +1603,11 @@ System.out.println("noOfRanks:"+canRank);
 		if (mMol.getConnAtoms(atom) < 3 || mMol.getAllConnAtoms(atom) > 4)
 			return false;
 
+		// no carbenium
+		if (mMol.getAtomCharge(atom) > 0 && mMol.getAtomicNo(atom) == 6)
+			return false;
+
+		// no trivalent boron
 		if (mMol.getAtomicNo(atom) == 5 && mMol.getAllConnAtoms(atom) != 4)
 			return false;
 
@@ -3732,6 +3774,45 @@ System.out.println();
 		}
 
 
+	/**
+	 * If mMode includes CREATE_PSEUDO_STEREO_GROUPS, then this method returns
+	 * the number of independent relative stereo feature groups. A relative stereo
+	 * feature group always contains more than one pseudo stereo features (TH or EZ),
+	 * which only in combination define a certain stereo configuration.
+	 * @return
+	 */
+	public int getPseudoStereoGroupCount() {
+		return mNoOfPseudoGroups;
+		}
+
+	/**
+	 * If mMode includes CREATE_PSEUDO_STEREO_GROUPS, then this method returns
+	 * this bond's relative stereo feature group number provided this bond is a
+	 * pseudo stereo bond, i.e. its stereo configuration only is relevant in
+	 * combination with other pseudo stereo features.
+	 * If this bond is not a pseudo stereo bond, then this method returns 0.
+	 * @param bond
+	 * @return
+	 */
+	public int getPseudoEZGroup(int bond) {
+		return mPseudoEZGroup[bond];
+		}
+
+
+	/**
+	 * If mMode includes CREATE_PSEUDO_STEREO_GROUPS, then this method returns
+	 * this atom's relative stereo feature group number provided this atom is a
+	 * pseudo stereo center, i.e. its stereo configuration only is relevant in
+	 * combination with other pseudo stereo features.
+	 * If this atom is not a pseudo stereo center, then this method returns 0.
+	 * @param atom
+	 * @return
+	 */
+	public int getPseudoTHGroup(int atom) {
+		return mPseudoTHGroup[atom];
+		}
+
+
 	protected void setParities() {
 		// Creates parities based on atom indices of original molecule and
 		// stores them in molecule. It also set the stereo center flag.
@@ -4359,6 +4440,14 @@ System.out.println("");
 			}
 		}
 	
+	/**
+	 * @return an int[] giving all atom indexes in the order as they appear in the graph
+	 */
+	public int[] getGraphAtoms() {
+		generateGraph();
+		return mGraphAtom;
+		}
+
 	/**
 	 * @return an int[] giving the relationship between new atom numbers and old atom numbers
 	 */
