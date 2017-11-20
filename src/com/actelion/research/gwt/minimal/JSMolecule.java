@@ -106,6 +106,11 @@ public class JSMolecule {
 		return d.toString();
 	}
 	
+	public String getCanonizedIDCode(int flag) {
+		Canonizer canonizer = new Canonizer(oclMolecule, flag);
+		return canonizer.getIDCode();
+	}
+
 	public native JavaScriptObject getIDCodeAndCoordinates() /*-{
 		return {
 			idCode: this.@com.actelion.research.gwt.minimal.JSMolecule::getIDCode()(),
@@ -203,6 +208,16 @@ public class JSMolecule {
 	public StereoMolecule getStereoMolecule() {
 		return oclMolecule;
 	}
+	public static final int CANONIZER_CREATE_SYMMETRY_RANK = 1;
+	public static final int CANONIZER_CONSIDER_DIASTEREOTOPICITY = 2;
+	public static final int CANONIZER_CONSIDER_ENANTIOTOPICITY = 4;
+	public static final int CANONIZER_CONSIDER_STEREOHETEROTOPICITY = CANONIZER_CONSIDER_DIASTEREOTOPICITY | CANONIZER_CONSIDER_ENANTIOTOPICITY;
+	public static final int CANONIZER_ENCODE_ATOM_CUSTOM_LABELS = 8;
+	public static final int CANONIZER_ENCODE_ATOM_SELECTION = 16;
+	public static final int CANONIZER_ASSIGN_PARITIES_TO_TETRAHEDRAL_N = 32;
+	public static final int CANONIZER_COORDS_ARE_3D = 64;
+	public static final int CANONIZER_CREATE_PSEUDO_STEREO_GROUPS = 128;
+	public static final int CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS = 256;
 
 	// GENERATED AUTOMATICALLY DO NOT EDIT AFTER THIS LINE
 public static final int cMaxAtomicNo = 190;

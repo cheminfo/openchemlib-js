@@ -48,10 +48,11 @@ import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import jsinterop.annotations.*;
-
+import com.actelion.research.gwt.minimal.JSMolecule;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Project:
@@ -251,6 +252,9 @@ public class StructureEditor implements IChangeListener//,Exportable
     }
 
 
+    public JSMolecule getMolecule() {
+        return new JSMolecule(model.getMolecule());
+    }
 
     public String getIDCode()
     {
@@ -352,7 +356,7 @@ public class StructureEditor implements IChangeListener//,Exportable
                 public void onChange()
                 {
                     String idcode = model.getIDCode();
-                    callFuncS(cb, idcode);
+                    callFuncS(cb, idcode, getMolecule());
 
                 }
             });
@@ -713,8 +717,8 @@ public class StructureEditor implements IChangeListener//,Exportable
         func(param, b);
     }-*/;
 
-    private native void callFuncS(JavaScriptObject func, String f) /*-{
-        func(f);
+    private native void callFuncS(JavaScriptObject func, String f, JSMolecule jsMolecule) /*-{
+        func(f, jsMolecule);
     }-*/;
 
 }
