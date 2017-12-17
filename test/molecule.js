@@ -85,4 +85,12 @@ describe('Molecule', function () {
         mol.addMissingChirality(Molecule.cESRTypeAbs);
         mol.getChiralText().should.equal('this enantiomer');
     });
+
+    it('getCanonizedIDCode', () => {
+        let idcode = 'didH@@RYm^Fh@BHX@';
+        let mol = Molecule.fromIDCode(idcode);
+        mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS).should.equal(idcode);
+        mol.inventCoordinates();
+        mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS).should.equal(idcode);
+    });
 });
