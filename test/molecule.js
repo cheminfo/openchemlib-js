@@ -92,8 +92,18 @@ describe('Molecule', function() {
   });
 
   it('getCanonizedIDCode', () => {
-    let idcode = 'didH@@RYm^Fh@BHX@';
+    let idcode = 'didH@@RYm^Fh@BHx@';
     let mol = Molecule.fromIDCode(idcode);
+    mol
+      .getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS)
+      .should.equal(idcode);
+    mol.inventCoordinates();
+    mol
+      .getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS)
+      .should.equal(idcode);
+
+    idcode = 'didH@@RYm^Fh@BHX@';
+    mol = Molecule.fromIDCode(idcode);
     mol
       .getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS)
       .should.equal(idcode);
