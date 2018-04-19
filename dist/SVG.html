@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<head>
+    <title>Static Structure Rendering</title>
+    <script src="openchemlib-full.js"></script>
+
+</head>
+
+<body>
+    <h1 style="text-align:center;color:darkblue">
+        Display of Static Structures
+    </h1>
+
+    <h2 style="text-align:center;">
+        Structure Rendering Example (SVG)
+    </h2>
+
+    <div class="input-group" style="position: relative;">
+        <table border="1" width="100%">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>Formula</th>
+                    <th>MW</th>
+                    <th>Structure</th>
+                </tr>
+
+                <tr>
+                    <td>42</td>
+                    <td>C6H7N</td>
+                    <td>93.1286</td>
+                    <td style="text-align:center;">
+                        <div id="idcode" style="width:100px;margin:auto" data-idcode="gOx@@drm\@@@@">
+
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <button id="ok">Click</button>
+    </div>
+    <script>
+        var init = false;
+        var el = document.getElementById("idcode");
+        var btn = document.getElementById("ok");
+
+        btn.onclick = function () {
+            const mol = OCL.Molecule.fromIDCode(el.getAttribute('data-idcode'));
+            el.innerHTML =
+                mol.toSVG(200, 100) +
+                mol.toSVG(200, 100, 'test', { factorTextSize: 2 });
+        }
+
+    </script>
+</body>
+
+</html>

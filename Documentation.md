@@ -1,6 +1,6 @@
 # Documentation
 
-### Classes present in minimal, core and full builds 
+### Classes present in minimal, core and full builds
 
 [Molecule](#molecule)  
 [SDF parser](#sdfileparser)  
@@ -20,7 +20,7 @@
 [Structure View](#structureview)  
 [Structure Editor](#structureeditor)
 
----------------------------------------
+---
 
 ## Molecule
 
@@ -30,7 +30,7 @@ Parse the provided `smiles` and return a `Molecule`.
 By default, stereo features are parsed, which triggers itself a coordinate computation and coordinates are computed again after parsing to guarantee that they are always the same.  
 If you do not need stereo features and want the fastest parsing, use this method with `{noCoordinates: true, noStereo: true}`.
 
-__Options__
+**Options**
 
 * `noCoordinates` - disable extra coordinate computation (default: false).
 * `noStereo` - disable stereo features parsing (default: false).
@@ -47,7 +47,7 @@ Parse the provided `molfile` and return an object with `Molecule` and map.
 
 Parse the provided `idcode` and return a `Molecule`.
 
-__Arguments__
+**Arguments**
 
 * `idcode` - string with the idcode
 * `ensure2DCoordinates` - boolean indicating if the 2D coordinates should be computed (default: true)
@@ -69,9 +69,13 @@ Returns a molfile (V3000) string.
 
 Returns an SVG string representing the structure in two dimensions.
 
-__Options__
+**Options**
 
-See [Depictor options](#depictor-options)
+* `factorTextSize` (default: 1)
+* `fontWeight`: font-weight attribute of atom labels
+* `strokeWidth`: stroke-width styling property of bonds
+
+See [Depictor options](#depictor-options) for other options
 
 ### molecule.getIDCode()
 
@@ -98,28 +102,32 @@ Returns the int[] index array used for substructure search
 Compute and set atom coordinates for this molecule
 
 ### molecule.addImplicitHydrogens([atomNumber])
+
 Expand and find a position for all the hydrogens of the 2D molecule. If `atomNumber` is specified, the function only applies for the hydrogens of the given atom.
 
-__Options__
+**Options**
 
 * `atomNumber`- The atom number according to the molfile (default: all the atoms)
 
 ### molecule.removeExplicitHydrogens()
+
 Remove the explicit hydrogens in the molecule.
 
 ### molecule.getNumberOfHydrogens()
 
-Returns the count of hydrogens in the molecule. 
+Returns the count of hydrogens in the molecule.
 
 ### molecule.getDiastereotopicAtomIDs()
+
 Returns the diastereotopic IDs of all the atoms in the molecule
 
 ### molecule.addMissingChirality()
 
 ### molecule.getHoseCodes(options)
-This function returns an array of HOSE(Hierarchical Organisation of Spherical Environments) codes represented as diastereotopic actelion IDs. 
 
-__Options__
+This function returns an array of HOSE(Hierarchical Organisation of Spherical Environments) codes represented as diastereotopic actelion IDs.
+
+**Options**
 
 * `maxSphereSize` - Maximum number of atoms from the center (default: 5).
 * `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
@@ -139,20 +147,28 @@ Returns an array of fragments from the molecule
 ## MolecularFormula
 
 ### mf.absoluteWeight
+
 ### mf.relativeWeight
+
 ### mf.formula
 
 ## MoleculeProperties
 
 ### p.acceptorCount
+
 ### p.donorCount
+
 ### p.logP
+
 ### p.logS
+
 ### p.polarSurfaceArea
+
 ### p.rotatableBondCount
+
 ### p.stereoCenterCount
 
----------------------------------------
+---
 
 ## SDFileParser
 
@@ -160,7 +176,7 @@ Returns an array of fragments from the molecule
 
 Create a new parser
 
-__Arguments__
+**Arguments**
 
 * `sdf` - string with the sdf
 * `fields` - array of field names to parse. If null, the sdf is scanned to find all possible names (not efficient)
@@ -169,13 +185,14 @@ __Arguments__
 
 Move to the next molfile. Returns true if there is one, false otherwise.
 
-__Example__
+**Example**
+
 ```js
 var sdf = fs.readFileSync('./mysdf.sdf');
 var parser = new actelion.SDFileParser(sdf);
-while(parser.next()) {
-    var molecule = parser.getMolecule();
-    // process molecule
+while (parser.next()) {
+  var molecule = parser.getMolecule();
+  // process molecule
 }
 ```
 
@@ -197,7 +214,7 @@ Returns the content of the field `name` from the current record or null
 
 Returns the list of field names for the entire sdf
 
----------------------------------------
+---
 
 ## SSSearcher
 
@@ -211,7 +228,7 @@ Create a new substructure searcher
 
 Set the `fragment` to search
 
-__Arguments__
+**Arguments**
 
 * `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
 
@@ -219,7 +236,7 @@ __Arguments__
 
 Set the target `molecule` in which the search will be done
 
-__Arguments__
+**Arguments**
 
 * `molecule` - [Molecule](#molecule) instance to set as target molecule
 
@@ -229,7 +246,7 @@ __Arguments__
 
 Returns true if the set fragment is in the target molecule, false otherwise
 
----------------------------------------
+---
 
 ## SSSearcherWithIndex
 
@@ -259,7 +276,7 @@ Create a new substructure searcher
 
 Set the `fragment` to search
 
-__Arguments__
+**Arguments**
 
 * `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
 * `index` - If the index for this fragment was computed previously, it can be provided here to save time
@@ -268,7 +285,7 @@ __Arguments__
 
 Set the target `molecule` in which the search will be done
 
-__Arguments__
+**Arguments**
 
 * `molecule` - [Molecule](#molecule) instance to set as target molecule
 * `index` - If the index for this fragment was computed previously, it can be provided here to save time
@@ -279,7 +296,7 @@ Returns true if the set fragment is in the target molecule, false otherwise
 
 ### searcher.createIndex()
 
----------------------------------------
+---
 
 ## ToxicityPredictor
 
@@ -306,7 +323,7 @@ Returns the calculated risk as an integer.
 Returns detailed information about the risk and the substructures
 that are responsible for it.
 
----------------------------------------
+---
 
 ## DruglikenessPredictor
 
@@ -324,35 +341,36 @@ Returns the calculated drug likeness as a double.
 
 Returns detailed information about the previous drug likeness assessment.
 
----------------------------------------
+---
 
 ## DrugScoreCalculator
 
 ### DrugScoreCalculator.calculate(cLogP, solubility, molWeight, drugLikeness, toxicityRisks)
 
----------------------------------------
+---
 
 ## Util
 
 ### Util.getHoseCodesFromDiastereotopicID(id, options)
-Returns the HOSE(Hierarchical Organisation of Spherical Environments) code for the given diasterotopic ID. 
 
-__Options__
+Returns the HOSE(Hierarchical Organisation of Spherical Environments) code for the given diasterotopic ID.
+
+**Options**
 
 * `maxSphereSize` - Maximum number of atoms from the center (default: 5).
 * `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
 
----------------------------------------
+---
 
 ## StructureView
 
 ### StructureView.drawStructure(id, idcode, coordinates, options)
 
-__Options__
+**Options**
 
 See [Depictor options](#depictor-options)
 
----------------------------------------
+---
 
 ## StructureEditor
 
@@ -409,13 +427,11 @@ Sets a callback function which is called whenever an bond is selected/unselected
 
 Sets a callback function which is called whenever the structure in the editor has been changed. The callback signature is: callback(newIdCode)
 
-
 ### Usage in your page
 
 load this script:
 
      src="openchemlib-full.js"
-
 
 create a div with the following attributes:
 
@@ -425,12 +441,9 @@ create a div with the following attributes:
      show-idcode="true"
      data-idcode="fhvacFGXhDFICDPx@fCHW@@UDhdmdCVZ``J@@@ !BLsicOgDjrHKHwW{@rHJW`lbBrMu~pG{@rHI[E\}bup}"
 
-
-
 execute the following JS:
 
         editorCtrl = window.OCL.StructureEditor.createEditor("editor");
-
 
 ### Attributes (defaults are in UPPERCASE):
 
@@ -441,47 +454,42 @@ execute the following JS:
      data-idcode=""                 = This allows you to specify the molecule IDCode in the editor
 
      is-fragment="FALSE" | "true"   = Sets the editor into fragment (query) mode.
-                                      Please note that the data-icode attribute overrules this behavior: 
+                                      Please note that the data-icode attribute overrules this behavior:
                                       If specified, the mode depends on the passed molecule
 
      show-fragment-indicator= "FALSE" | "true"
                                     = Shows a "Q" on the right lower if the Molecule is in fragment (query) mode
-     
+
      ignore-stereo-errors= "FALSE" | "true"
                                     = If true, then shows no magenta-colored atom/bonds on stereo errors
-     
+
      no-stereo-text= "FALSE" | "true"
                                     = If true, does not show stereo information text
-                                     
----------------------------------------
+
+---
 
 ## Depictor options
 
 The following options are all boolean and they default to `false`.
 
-- `inflateToMaxAVBL`
-- `inflateToHighResAVBL`
-- `chiralTextBelowMolecule`
-- `chiralTextAboveMolecule`
-- `chiralTextOnFrameTop`
-- `chiralTextOnFrameBottom`
-``
-- `noTabus`
-- `showAtomNumber`
-- `showBondNumber`
-- `highlightQueryFeatures`
-- `showMapping`
-- `suppressChiralText`
-- `suppressCIPParity`
-- `suppressESR`
-``
-- `showSymmetrySimple`
-- `showSymmetryDiastereotopic`
-- `showSymmetryEnantiotopic`
-- `noImplicitAtomLabelColors`
-- `noStereoProblem`
-
-Layout options
-
-- `fontWeight`: font-weight attribute of atom labels
-- `strokeWidth`: stroke-width styling property of bonds
+* `inflateToMaxAVBL`
+* `inflateToHighResAVBL`
+* `chiralTextBelowMolecule`
+* `chiralTextAboveMolecule`
+* `chiralTextOnFrameTop`
+* `chiralTextOnFrameBottom`
+  ``
+* `noTabus`
+* `showAtomNumber`
+* `showBondNumber`
+* `highlightQueryFeatures`
+* `showMapping`
+* `suppressChiralText`
+* `suppressCIPParity`
+* `suppressESR`
+  ``
+* `showSymmetrySimple`
+* `showSymmetryDiastereotopic`
+* `showSymmetryEnantiotopic`
+* `noImplicitAtomLabelColors`
+* `noStereoProblem`

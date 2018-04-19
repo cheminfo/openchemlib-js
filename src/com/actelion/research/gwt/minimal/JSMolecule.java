@@ -88,7 +88,8 @@ public class JSMolecule {
 		//	throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
 		//}
 		options = options || {};
-		var svg =  this.@com.actelion.research.gwt.minimal.JSMolecule::getSVG(IILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, id, options);
+		var factorTextSize = options.factorTextSize || 1;
+		var svg =  this.@com.actelion.research.gwt.minimal.JSMolecule::getSVG(IIFLjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, factorTextSize, id, options);
 		if (options.fontWeight) {
             		svg = svg.replace(/font-family=" Helvetica" /g, 'font-family=" Helvetica" font-weight="' + options.fontWeight + '" ');
         	}
@@ -98,9 +99,10 @@ public class JSMolecule {
         	return svg;
 	}-*/;
 	
-	private String getSVG(int width, int height, String id, JavaScriptObject options) {
+	private String getSVG(int width, int height, float factorTextSize, String id, JavaScriptObject options) {
 		int mode = Util.getDisplayMode(options);
 		SVGDepictor d = new SVGDepictor(oclMolecule, mode, id);
+		d.setFactorTextSize(factorTextSize);
 		d.validateView(null, new Rectangle2D.Double(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
 		d.paint(null);
 		return d.toString();

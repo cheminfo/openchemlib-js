@@ -1,8 +1,8 @@
 # openchemlib-js
 
-  [![NPM version][npm-image]][npm-url]
-  [![build status][travis-image]][travis-url]
-  [![npm download][download-image]][download-url]
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+[![npm download][download-image]][download-url]
 
 JavaScript interface with the [openchemlib](https://github.com/actelion/openchemlib) java library
 
@@ -11,14 +11,14 @@ JavaScript interface with the [openchemlib](https://github.com/actelion/openchem
 ## Development
 
 To build this project, you need :
+
 * java >= 1.7
-* GWT 2.8 ([Download build here](https://goo.gl/QZILZx))
+* GWT 2.8 ([Download build here](http://www.gwtproject.org/download.html))
 * Node.js ([link](https://nodejs.org/en/download/current/))
 
 ### Install dependencies
 
-`npm install`  
-`[sudo] npm install -g gulp`
+`npm install`
 
 ### Configure directories
 
@@ -27,7 +27,8 @@ If you want to update the java code from openchemlib, provide the path to the op
 
 ### Gulp tasks
 
-__Options__
+**Options**
+
 * -m [name]: only process module "name"
 * -v: verbose output
 
