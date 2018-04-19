@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v5.5.0
- * @date 2017-11-20T12:40:56.620Z
+ * @version v5.5.1
+ * @date 2018-04-19T12:15:04.652Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -6637,6 +6637,10 @@ _.setColor = function setColor(theColor){
 ;
 _.setDisplayMode = function setDisplayMode(displayMode){
   this.mDisplayMode = displayMode;
+}
+;
+_.setFactorTextSize = function setFactorTextSize(factor){
+  this.mFactorTextSize = factor;
 }
 ;
 _.setRGBColor = function setRGBColor(rgbColor){
@@ -37772,10 +37776,11 @@ _.getRotatableBondCount = function getRotatableBondCount_2(){
   return this.oclMolecule.getRotatableBondCount_0();
 }
 ;
-_.getSVG = function getSVG(width_0, height, id_0, options){
+_.getSVG = function getSVG(width_0, height, factorTextSize, id_0, options){
   var d, mode;
   mode = cargm.getDisplayMode_0(options);
   d = new carc2.SVGDepictor(this.oclMolecule, mode, id_0);
+  d.setFactorTextSize(factorTextSize);
   d.validateView(null, new jag.Rectangle2D$Double_0(0, 0, width_0, height), 65536);
   d.paint(null);
   return d.toString_0();
@@ -38227,7 +38232,8 @@ _.toMolfileV3 = function toMolfileV3(){
 ;
 _.toSVG = function toSVG(width_0, height, id_0, options){
   options = options || {};
-  var svg = this.getSVG(width_0, height, id_0, options);
+  var factorTextSize = options.factorTextSize || 1;
+  var svg = this.getSVG(width_0, height, factorTextSize, id_0, options);
   if (options.fontWeight) {
     svg = svg.replace(/font-family=" Helvetica" /g, 'font-family=" Helvetica" font-weight="' + options.fontWeight + '" ');
   }
@@ -67030,7 +67036,7 @@ $gwt && $gwt.permProps && __gwtModuleFunction.__moduleStartupDone($gwt.permProps
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '5.5.0';
+        toReturn.version = '5.5.1';
 
         return toReturn;
     }
