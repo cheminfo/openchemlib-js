@@ -38,6 +38,9 @@ import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.actions.Action;
+import com.actelion.research.share.gui.editor.actions.NewChainAction;
+import com.actelion.research.share.gui.editor.actions.SelectionAction;
+import com.actelion.research.share.gui.editor.actions.ZoomRotateAction;
 import com.actelion.research.share.gui.editor.geom.ICursor;
 import com.actelion.research.share.gui.editor.io.IKeyEvent;
 import com.actelion.research.share.gui.editor.listeners.IChangeListener;
@@ -76,6 +79,9 @@ public class StructureEditor implements IChangeListener//,Exportable
     private Element container = null;
     private Boolean viewOnly = false;
     private static List<StructureEditor> map = new ArrayList<StructureEditor>();
+
+    private boolean rightClick = false;
+    private FakeMouseEvent mousePressEvt = null;
 
     private int scale = 1;
     static {
@@ -512,12 +518,8 @@ public class StructureEditor implements IChangeListener//,Exportable
         if (!rightClick) {
             Action a = toolBar.getCurrentAction();
             if (a != null && !a.isCommand()) {
-                //System.out.println("Mouse move.."+evt);
                 if (a.onMouseMove(new ACTMouseEvent(evt), false)) {
-//                    drawPane.draw();
-//                    model.notifyChange();
                     drawPane.draw(a);
-//                    a.paint(drawPane.getDrawContext());
                     drawPane.requestFocus();
                 }
             }
@@ -529,21 +531,12 @@ public class StructureEditor implements IChangeListener//,Exportable
         if (!rightClick) {
             Action a = toolBar.getCurrentAction();
             if (a != null && !a.isCommand()) {
-                if (a.onMouseMove(new ACTMouseEvent(evt)
-                        , true)) {
-                    drawPane.draw(a);
-//                    a.paint(drawPane.getDrawContext());
+                FakeMouseEvent thisEvt = new FakeMouseEvent(evt);
+                if (mousePressEvt == null || !isSmallMovement(thisEvt, mousePressEvt)) {
+                    if (a.onMouseMove(new ACTMouseEvent(evt), true)) {
+                        drawPane.draw(a);
+                    }
                 }
-            }
-        }
-    }
-
-    private void onMouseDragRelease(MouseEvent evt)
-    {
-        if (!rightClick) {
-            Action a = toolBar.getCurrentAction();
-            if (a != null && !a.isCommand()) {
-                //            a.onMouseUp(new Point2D(evt.getX(),evt.getY()));
             }
         }
     }
@@ -564,15 +557,7 @@ public class StructureEditor implements IChangeListener//,Exportable
 
     public boolean onPasteImage(Object s)
     {
-        //Log.console("Pasted Image: " + s);
         return false;
-    }
-
-    public void onPaste(DataTransfer s)
-    {
-        //Log.console("Pasted Data: " + s);
-        //Log.console("Image: " + s.getData("image/png"));
-        //Log.console("Text: " + s.getData("text/plain"));
     }
 
     public boolean hasFocus()
@@ -645,7 +630,15 @@ public class StructureEditor implements IChangeListener//,Exportable
         if (!rightClick) {
             Action a = toolBar.getCurrentAction();
             if (a != null && !a.isCommand()) {
-                if (a.onMouseUp(new ACTMouseEvent(evt))) {
+                FakeMouseEvent thisEvt = new FakeMouseEvent(evt);
+                FakeMouseEvent syntheticEvt = null;
+                if (mousePressEvt != null &&
+                    isSmallMovement(thisEvt, mousePressEvt)) {
+                    syntheticEvt = mousePressEvt;
+                } else {
+                    syntheticEvt = thisEvt;
+                }
+                if (a.onMouseUp(syntheticEvt)) {
                     drawPane.draw();
                     model.changed();
                 }
@@ -653,15 +646,14 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
         setCursor(ICursor.DEFAULT);
         rightClick = false;
+        mousePressEvt = null;
     }
 
     private void onMousePressed(MouseEvent evt)
     {
-
+        mousePressEvt = new FakeMouseEvent(evt);
         if (evt.getNativeButton() == NativeEvent.BUTTON_RIGHT) {
-//            Log.console("Thow right clicks!!!");
             rightClick = true;
-//            contextMenu.show(this, evt.getScreenX(), evt.getScreenY());
         }
         if (!rightClick) {
             Action a = toolBar.getCurrentAction();
@@ -669,13 +661,13 @@ public class StructureEditor implements IChangeListener//,Exportable
                 a.onMouseDown(new ACTMouseEvent(evt));
                 setCursor(a.getCursor());
             }
-//            evt.consume();
         }
-
     }
 
-    private boolean rightClick = false;
-
+    private boolean isSmallMovement(FakeMouseEvent evt1, FakeMouseEvent evt2) {
+        double distance = Math.pow(evt1.getX() - evt2.getX(), 2) + Math.pow(evt1.getY() - evt2.getY(), 2);
+        return distance <= 36.0;
+    }
 
     private void setCursor(int c)
     {
