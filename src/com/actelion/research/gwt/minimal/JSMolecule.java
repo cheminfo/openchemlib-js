@@ -381,6 +381,8 @@ public static final int cChiralityKnownEnantiomer   = 0x040000;
 public static final int cChiralityUnknownEnantiomer = 0x050000;
 public static final int cChiralityEpimers		 	= 0x060000;
 public static final int cChiralityDiastereomers		= 0x070000; // this has added the number of diastereomers
+	public static final int cMoleculeColorDefault = 0;
+	public static final int cMoleculeColorNeutral = 1;
 public static final String cAtomLabel[] = { "?",
 	"H"  ,"He" ,"Li" ,"Be" ,"B"  ,"C"  ,"N"  ,"O"  ,
 	"F"  ,"Ne" ,"Na" ,"Mg" ,"Al" ,"Si" ,"P"  ,"S"  ,
@@ -656,7 +658,7 @@ public int copyBond(JSMolecule destMol, int sourceBond, int esrGroupOffsetAND, i
  * @param destMol
  */
 public void copyMoleculeProperties(JSMolecule destMol) {
-	oclMolecule.copyMoleculeProperties(destMol.getStereoMolecule());
+		oclMolecule.copyMoleculeProperties(destMol.getStereoMolecule());
 }
 
 /**
@@ -714,7 +716,7 @@ public void deleteBond(int bond) {
 public void deleteBondAndSurrounding(int bond) {
 	oclMolecule.deleteBondAndSurrounding(bond);
 }
-
+	
 /**
  * High level function for constructing a molecule.
  * After the deletion the original order of atom and bond indexes is retained.
@@ -792,7 +794,7 @@ public int[] deleteMarkedAtomsAndBonds() {
  * e.g. by multiply calling addAtom(...), addBond(...) and other high level methods.
  */
 public void deleteMolecule() {
-	oclMolecule.deleteMolecule();
+		oclMolecule.deleteMolecule();
 }
 
 
@@ -952,7 +954,7 @@ public int[] getAtomList(int atom) {
 
 
 public String getAtomListString(int atom) {
-	return oclMolecule.getAtomListString(atom);
+		return oclMolecule.getAtomListString(atom);
 }
 
 /**
@@ -1043,7 +1045,7 @@ public static double getDefaultAverageBondLength() {
 public static void setDefaultAverageBondLength(double defaultAVBL) {
 	StereoMolecule.setDefaultAverageBondLength(defaultAVBL);
 }
-
+	
 public double getBondAngle(int atom1, int atom2) {
 	return oclMolecule.getBondAngle(atom1, atom2);
 }
@@ -1221,6 +1223,24 @@ public void setMaxBonds(int v) {
 	oclMolecule.setMaxBonds(v);
 }
 
+	/**
+	 * cMoleculeColorDefault: atom coloring depends on atomic number. Carbon and hydrogen are drawn in neutral color<br>
+	 * cMoleculeColorNeutral: all atoms and bonds and CIP letters are drawn in neutral color<br>
+	 * @return cMoleculeColorNeutral or cMoleculeColorDefault. In future may also return ARGB values.
+	 */
+	public int getMoleculeColor() {
+		return oclMolecule.getMoleculeColor();
+	}
+	
+	/**
+	 * Currently, this method only allows to switch the default atomic number dependent atom coloring off
+	 * by passing cMoleculeColorNeutral. In future updates it may also accept ARGB values.
+	 * @param color currently supported values: cMoleculeColorDefault, cMoleculeColorNeutral
+	 */
+	public void setMoleculeColor(int color) {
+		oclMolecule.setMoleculeColor(color);
+	}
+	
 /**
  * Allows to set a molecule name or identifier, that is, for instance, written to or read from molfiles.
  * @return
@@ -1663,6 +1683,19 @@ public void setHydrogenProtection(boolean protectHydrogen) {
 	oclMolecule.setHydrogenProtection(protectHydrogen);
 }
 
+	/**
+	 * Use this method with extreme care. If you make a change to the molecule,
+	 * the validity of the helper arrays is typically set to cHelperNone.
+	 * If you make a small change to a molecule that doesn't change its topology,
+	 * you may override the automatic automatically cleared helper validity with
+	 * this method and avoid a new calculation of the neighbour arrays and ring
+	 * detection.
+	 * @param helperValidity cHelperNeighbours or cHelperRings
+	 */
+	public void setHelperValidity(int helperValidity) {
+		oclMolecule.setHelperValidity(helperValidity);
+	}
+	
 /**
  * This is for compatibility with old MDL stereo representation
  * that contained a 'chiral' flag to indicate that the molecule
@@ -1681,7 +1714,10 @@ public void setToRacemate() {
  * the custom label instead of the original one. Custom labels
  * are not interpreted otherwise. However, they may optionally
  * be encoded into idcodes; see Canonizer.encodeAtomCustomLabels().
- * This label equals the normal atom label, then the custom label
+	 * If a custom label start with ']' then the label without the ']'
+	 * symbol is shown at the top left of the original atom label rather than
+	 * replacing the original atom label.
+	 * If label is null or equals the normal atom label, then the custom label
  * is removed. This method is less efficient than the byte[] version:
  * setAtomCustomLabel(int, byte[])
  * @param atom
@@ -1697,7 +1733,7 @@ public void setAtomCustomLabel(int atom, String label) {
  * are in the same group, i.e. within this group they have the defined (relative) stereo configuration.
  * @param atom
  * @param type one of cESRTypeAbs,cESRTypeAnd,cESRTypeOr
- * @param group index starting with 0
+	 * @param group index starting with 0 (not considered if type is cESRTypeAbs)
  */
 public void setAtomESR(int atom, int type, int group) {
 	oclMolecule.setAtomESR(atom, type, group);
@@ -1734,6 +1770,14 @@ public void setName(String name) {
 	oclMolecule.setName(name);
 }
 
+	/**
+	 * Removes any query features from the molecule
+	 * @return whether any query features were removed
+	 */
+	public boolean removeQueryFeatures() {
+		return oclMolecule.removeQueryFeatures();
+	}
+	
 /**
  * Removes all isotop information, i.e. sets all atoms to the natural isotop abundance.
  * @return true if something was changed
@@ -1862,7 +1906,7 @@ public boolean isOrganicAtom(int atom) {
  * @param atomMap null or int[] not smaller than includeAtom.length; receives atom indices of dest molecule
  */
 public void copyMoleculeByAtoms(JSMolecule destMol, boolean[] includeAtom, boolean recognizeDelocalizedBonds, int[] atomMap) {
-	oclMolecule.copyMoleculeByAtoms(destMol.getStereoMolecule(), includeAtom, recognizeDelocalizedBonds, atomMap);
+		oclMolecule.copyMoleculeByAtoms(destMol.getStereoMolecule(), includeAtom, recognizeDelocalizedBonds, atomMap);
 }
 
 /**
@@ -1877,7 +1921,7 @@ public void copyMoleculeByAtoms(JSMolecule destMol, boolean[] includeAtom, boole
  * @return atom map from this to destMol with not copied atom's index being -1
  */
 public int[] copyMoleculeByBonds(JSMolecule destMol, boolean[] includeBond, boolean recognizeDelocalizedBonds, int[] atomMap) {
-	return oclMolecule.copyMoleculeByBonds(destMol.getStereoMolecule(), includeBond, recognizeDelocalizedBonds, atomMap);
+		return oclMolecule.copyMoleculeByBonds(destMol.getStereoMolecule(), includeBond, recognizeDelocalizedBonds, atomMap);
 }
 
 /**
@@ -2324,7 +2368,7 @@ public int getImplicitHydrogens(int atom) {
 
 /**
  * @param atom
- * @return number of explicit plain hydrogen atoms (does not include D,T,cutom labelled H, etc)
+	 * @return number of explicit plain hydrogen atoms (does not include D,T,custom labelled H, etc)
  */
 public int getExplicitHydrogens(int atom) {
 	return oclMolecule.getExplicitHydrogens(atom);
@@ -2494,10 +2538,10 @@ public int getStereoBond(int atom) {
  * from up/down-bonds and atom coordinates, respectively. This is done during the helper
  * array calculation triggered by ensureHelperArrays(cHelperParities).<br>
  * This method tells the molecule that current atom/bond parities are valid, even if the
- * stereo perception not has been performed. In addition to the stereo parities on may
+	 * stereo perception not has been performed. In addition to the stereo parities one may
  * declare CIP parities and/or symmetry ranks also to be valid (helperStereoBits != 0).
- * This method should be called if no coordinates are available but the parities are valid
- * nevertheless, e.g. when the IDCodeParser parses an idcode without coordinates.
+	 * setParitiesValid(0) should be called if no coordinates are available but the parities are valid
+	 * nevertheless, e.g. after the IDCodeParser has parsed an idcode without coordinates.
  * (Note: After idcode parsing unknown stereo centers have parities cAtomParityNone
  * instead of cAtomParityUnknown. Thus, calling isStereoCenter(atom) returns false!!!)
  * Declaring parities valid prevents the Canonizer to run the stereo recognition again when
@@ -2629,6 +2673,46 @@ public boolean normalizeAmbiguousBonds() {
 	return oclMolecule.normalizeAmbiguousBonds();
 }
 
+	/**
+	 * @param atom
+	 * @return whether atom is one of Li,Na,K,Rb,Cs
+	 */
+	public boolean isAlkaliMetal(int atom) {
+		return oclMolecule.isAlkaliMetal(atom);
+	}
+	
+	/**
+	 * @param atom
+	 * @return whether atom is one of Mg,Ca,Sr,Ba
+	 */
+	public boolean isEarthAlkaliMetal(int atom) {
+		return oclMolecule.isEarthAlkaliMetal(atom);
+	}
+	
+	/**
+	 * @param atom
+	 * @return whether atom is one of N,P,As
+	 */
+	public boolean isNitrogenFamily(int atom) {
+		return oclMolecule.isNitrogenFamily(atom);
+	}
+	
+	/**
+	 * @param atom
+	 * @return whether atom is one of O,S,Se,Te
+	 */
+	public boolean isChalcogene(int atom) {
+		return oclMolecule.isChalcogene(atom);
+	}
+	
+	/**
+	 * @param atom
+	 * @return whether atom is one of F,Cl,Br,I
+	 */
+	public boolean isHalogene(int atom) {
+		return oclMolecule.isHalogene(atom);
+	}
+	
 /**
  * Canonizes charge distribution in single- and multifragment molecules.
  * Neutralizes positive and an equal amount of negative charges on electronegative atoms,
@@ -2735,7 +2819,7 @@ public void removeExplicitHydrogens() {
  * int[] fragmentNo = new int[mol.getAllAtoms()];<br>
  * int fragmentCount = getFragmentNumbers(fragmentNo, boolean, boolean);<br>
  * if (fragmentCount > 1) {<br>
- *     StereoMolecule[] fragment = getFragments(int[] fragmentNo, fragmentCount);<br>
+	 *     StereoMolecule[] fragment = getUniqueFragmentsEstimated(int[] fragmentNo, fragmentCount);<br>
  *     ...<br>
  *     }<br>
  * @return
@@ -2749,7 +2833,7 @@ public JSMolecule[] getFragments() {
 		return newFragments;
 
 }
-
+	
 /**
  * Removes defined and implicit stereo information from the molecule.<br>
  * - up/down-bonds are converted to double bonds<br>

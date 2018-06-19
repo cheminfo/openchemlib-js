@@ -31,6 +31,8 @@ Must correct the name in oclMolecule.$name() call.
 - public void copyMoleculeProperties(JSMolecule destMol)
 - public String getAtomListString(int atom)
 - public JSMolecule createMolecule(int atoms, int bonds)
+- public int getMoleculeColor()
+- public void setMoleculeColor(int color)
 
 ## Multiline methods
 
