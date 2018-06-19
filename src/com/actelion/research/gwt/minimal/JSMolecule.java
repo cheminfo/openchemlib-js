@@ -181,6 +181,13 @@ public class JSMolecule {
 		var type = (typeof options.type === 'undefined' ? 0 : options.type) | 0;
 		return @com.actelion.research.chem.contrib.HoseCodeCreator::getHoseCodes(Lcom/actelion/research/chem/StereoMolecule;II)(this.@com.actelion.research.gwt.minimal.JSMolecule::oclMolecule, maxSphereSize, type);
 	}-*/;
+
+	/**
+	 * @return a RingCollection object, which contains a total set of small rings
+	 */
+	public JSRingCollection getRingSet() {
+		return new JSRingCollection(oclMolecule.getRingSet());
+	}
 	
 	/* public methods after this line will not be accessible from javascript */
 
