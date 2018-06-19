@@ -91,7 +91,7 @@ describe('Molecule', function() {
     mol.getChiralText().should.equal('this enantiomer');
   });
 
-  it('getCanonizedIDCode', () => {
+  it.skip('getCanonizedIDCode', () => {
     let idcode = 'didH@@RYm^Fh@BHx@';
     let mol = Molecule.fromIDCode(idcode);
     mol
