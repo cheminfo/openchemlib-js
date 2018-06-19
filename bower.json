@@ -8,11 +8,7 @@
     "molfile",
     "SMILES"
   ],
-  "main": [
-    "dist/openchemlib-core.js",
-    "dist/openchemlib-full.js",
-    "dist/openchemlib-viewer.js"
-  ],
+  "main": "dist/openchemlib-core.js",
   "license": "BSD",
   "authors": [
     "Michaël Zasso",
