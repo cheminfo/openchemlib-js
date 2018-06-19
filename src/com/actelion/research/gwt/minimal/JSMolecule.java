@@ -508,8 +508,8 @@ public int addBond(int atom1, int atom2) {
  * @param radical
  * @return
  */
-public boolean addOrChangeAtom(double x, double y, int atomicNo, int mass, int abnormalValence, int radical) {
-	return oclMolecule.addOrChangeAtom(x, y, atomicNo, mass, abnormalValence, radical);
+public boolean addOrChangeAtom(double x, double y, int atomicNo, int mass, int abnormalValence, int radical, String customLabel) {
+	return oclMolecule.addOrChangeAtom(x, y, atomicNo, mass, abnormalValence, radical, customLabel);
 }
 
 /**

@@ -295,6 +295,9 @@ public class Molecule implements Serializable {
 	private static final double cDefaultAVBL = 24.0;
 	private static double sDefaultAVBL = cDefaultAVBL;
 
+	public static final int cMoleculeColorDefault = 0;
+	public static final int cMoleculeColorNeutral = 1;
+
 	public static final String cAtomLabel[] = { "?",
 		"H"  ,"He" ,"Li" ,"Be" ,"B"  ,"C"  ,"N"  ,"O"  ,
 		"F"  ,"Ne" ,"Na" ,"Mg" ,"Al" ,"Si" ,"P"  ,"S"  ,
@@ -426,6 +429,7 @@ public class Molecule implements Serializable {
 	transient protected int[][] mAtomList;
 	transient protected byte[][] mAtomCustomLabel;
 
+	transient private int mMoleculeColor;
 	transient private double mZoomRotationX,mZoomRotationY;
 	transient private double mOriginalAngle[];
 	transient private double mOriginalDistance[];
@@ -637,7 +641,7 @@ public class Molecule implements Serializable {
 	 * @param radical
 	 * @return
 	 */
-	public boolean addOrChangeAtom(double x, double y, int atomicNo, int mass, int abnormalValence, int radical) {
+	public boolean addOrChangeAtom(double x, double y, int atomicNo, int mass, int abnormalValence, int radical, String customLabel) {
 		int atom = findAtom(x,y);
 		if (atom == -1) {
 			if (mAllAtoms >= mMaxAtoms)
@@ -648,10 +652,13 @@ public class Molecule implements Serializable {
 			mAtomMass[atom] = mass;
 			setAtomAbnormalValence(atom, abnormalValence);
 			setAtomRadical(atom, radical);
+			setAtomCustomLabel(atom, customLabel);
 			return true;
 			}
 
-		return changeAtom(atom, atomicNo, mass, abnormalValence, radical);
+		boolean changed = changeAtom(atom, atomicNo, mass, abnormalValence, radical);
+		setAtomCustomLabel(atom, customLabel);
+		return changed;
 		}
 
 
@@ -2343,6 +2350,26 @@ public class Molecule implements Serializable {
 
 
 	/**
+	 * cMoleculeColorDefault: atom coloring depends on atomic number. Carbon and hydrogen are drawn in neutral color<br>
+	 * cMoleculeColorNeutral: all atoms and bonds and CIP letters are drawn in neutral color<br>
+	 * @return cMoleculeColorNeutral or cMoleculeColorDefault. In future may also return ARGB values.
+	 */
+	public int getMoleculeColor() {
+		return  mMoleculeColor;
+		}
+
+
+	/**
+	 * Currently, this method only allows to switch the default atomic number dependent atom coloring off
+	 * by passing cMoleculeColorNeutral. In future updates it may also accept ARGB values.
+	 * @param color currently supported values: cMoleculeColorDefault, cMoleculeColorNeutral
+	 */
+	public void setMoleculeColor(int color) {
+		mMoleculeColor = color;
+		}
+
+
+	/**
 	 * Allows to set a molecule name or identifier, that is, for instance, written to or read from molfiles.
 	 * @return
 	 */
@@ -3019,6 +3046,10 @@ public class Molecule implements Serializable {
 	 * the custom label instead of the original one. Custom labels
 	 * are not interpreted otherwise. However, they may optionally
 	 * be encoded into idcodes; see Canonizer.encodeAtomCustomLabels().
+	 * If a custom label start with ']' then the label without the ']'
+	 * symbol is shown at the top left of the original atom label rather than
+	 * replacing the original atom label.
+	 * the
 	 * @param atom
 	 * @param label null to remove custom label
 	 */
@@ -3042,7 +3073,10 @@ public class Molecule implements Serializable {
 	 * the custom label instead of the original one. Custom labels
 	 * are not interpreted otherwise. However, they may optionally
 	 * be encoded into idcodes; see Canonizer.encodeAtomCustomLabels().
-	 * This label equals the normal atom label, then the custom label
+	 * If a custom label start with ']' then the label without the ']'
+	 * symbol is shown at the top left of the original atom label rather than
+	 * replacing the original atom label.
+	 * If label is null or equals the normal atom label, then the custom label
 	 * is removed. This method is less efficient than the byte[] version:
 	 * setAtomCustomLabel(int, byte[])
 	 * @param atom

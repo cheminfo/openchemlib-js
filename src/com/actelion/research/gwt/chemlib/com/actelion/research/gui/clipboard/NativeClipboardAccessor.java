@@ -33,6 +33,8 @@
 
 package com.actelion.research.gui.clipboard;
 
+import com.actelion.research.util.Platform;
+
 public class NativeClipboardAccessor
 {
 
@@ -49,10 +51,11 @@ public class NativeClipboardAccessor
 
     static {
         try {
-            System.loadLibrary("actelionclip");
+			System.loadLibrary("actelionclip");
             System.out.println("actelionclip loaded");
         } catch (UnsatisfiedLinkError e) {
-            e.printStackTrace();
+        	// added to retain compatibility with DataWarrior installations; TLS 11Jan2018
+			e.printStackTrace();
         } catch (SecurityException e) {
         	e.printStackTrace();
         }

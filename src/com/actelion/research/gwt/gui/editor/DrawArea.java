@@ -121,7 +121,9 @@ class DrawArea implements IChangeListener
                     IDCodeParser parser = new IDCodeParser();
                     parser.parse(mol,idcode);
                     model.setNewMolecule();
-                    model.addMolecule(mol);
+                    // todo maybe change to something like:
+                    // model.addMolecule(mol, event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                    model.addMolecule(mol, 0, 0);
                     event.preventDefault();
                 } catch (Exception e) {
                     Log.console("Cannot drop molecule: " + e);
@@ -204,7 +206,7 @@ class DrawArea implements IChangeListener
         if (isReaction()) {
             model.analyzeFragmentMembership();
             if (model.needsLayout())
-                model.cleanReaction(true, true);
+                model.cleanReaction(true);
         }
 
 //        AbstractDepictor depictor;

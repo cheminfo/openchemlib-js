@@ -40,6 +40,10 @@ package com.actelion.research.chem;
 
 public class AbstractDrawingObject
 {
+    protected static final String DESCRIPTOR_START = "<DrawingObject";
+	protected static final String DESCRIPTOR_END = "></DrawingObject>";
+    protected static final String DESCRIPTOR_TYPE = " type=\"";
+
     public static AbstractDrawingObject instantiate(String substring)
     {
         return null;

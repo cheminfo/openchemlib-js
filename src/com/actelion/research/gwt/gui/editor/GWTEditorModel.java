@@ -94,13 +94,13 @@ public class GWTEditorModel extends Model
     }
 
     @Override
-    public StereoMolecule pasteMolecule()
+    public StereoMolecule pasteMolecule(double cx, double cy)
     {
         return null;
     }
 
     @Override
-    public Reaction pasteReaction()
+    public Reaction pasteReaction(double cx, double cy)
     {
         return null;
     }

@@ -547,7 +547,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         try {
             StereoMolecule mol = new StereoMolecule();
             p.parse(mol,s);
-            model.addMolecule(mol);
+            model.addMolecule(mol, 0, 0);
             return true;
         } catch (Exception e) {
             Log.console("Parse exception " + e);
