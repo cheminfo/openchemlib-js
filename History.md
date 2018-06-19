@@ -1,3 +1,81 @@
+5.6.0 / 2018-06-19
+==================
+
+* Update OCL to 2018.6.0
+* feat: expose RingCollection to JS
+
+5.5.2 / 2018-04-27
+==================
+
+* fix(editor): do not consider a mouse move for small movements
+
+5.5.1 / 2018-04-19
+==================
+
+* feat: add factorTextSize option to toSVG
+
+5.5.0 / 2017-11-20
+==================
+
+* Allow to retrieve a JSMolecule from editor
+
+5.4.0 / 2017-11-16
+==================
+
+* Update OCL to 2017_11_14-04_01_01
+
+5.3.0 / 2017-09-22
+==================
+
+* Update OCL to 2017_08_29-04_01_13
+* Fix addMissingChirality
+
+5.2.10 / 2017-07-13
+===================
+
+* Fix H mapping issue
+
+5.2.9 / 2017-07-07
+==================
+
+* Use the X symbol for hydrogens in DiaID
+
+5.2.8 / 2017-07-07
+==================
+
+* Identical to 5.2.7
+
+5.2.7 / 2017-07-07
+==================
+
+* Use isotopes to mark atoms
+
+5.2.6 / 2017-07-07
+==================
+
+* Precalculate X atom number
+
+5.2.5 / 2017-07-06
+==================
+
+* Update to add missing stereochemistry based on parities helper
+
+5.2.4 / 2017-07-06
+==================
+
+* update diastereotopicAtomID not to rely on CIP
+
+5.2.3 / 2017-07-04
+==================
+
+* fix hoseCodeCreator
+
+5.2.2 / 2017-07-03
+==================
+
+* Update OCL to 2017_06_10-04_00_52
+* Update diaID
+
 5.2.1 / 2017-04-24
 ==================
 
