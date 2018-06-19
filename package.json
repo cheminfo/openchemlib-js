@@ -14,7 +14,7 @@
     "build-core": "gulp build:min -m core",
     "build-minimal": "gulp build:min -m minimal",
     "build-pretty": "gulp build:pretty -m full --suffix pretty",
-    "eslint": "eslint __tests__",
+    "eslint": "eslint __tests__ gulpfile.js openchemlib/classes.js",
     "eslint-fix": "npm run eslint -- --fix",
     "test": "npm run build && npm run test-only && npm run eslint",
     "test-only": "jest"
