@@ -3,6 +3,4 @@ node_js:
   - 6
   - 8
   - 10
-sudo: false
-before_script: "sh install-travis.sh"
-script: "npm run test-travis"
+install: "sh install-travis.sh"

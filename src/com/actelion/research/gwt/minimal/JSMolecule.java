@@ -18,16 +18,22 @@ public class JSMolecule {
 	
 	private StereoMolecule oclMolecule;
 
+	public JSMolecule(int maxAtoms, int maxBonds, StereoMolecule mol) {
+		if (mol != null) {
+			oclMolecule = mol;
+		} else {
+			oclMolecule = new StereoMolecule(maxAtoms, maxBonds);
+		}
+	}
+
+	@JsIgnore
 	public JSMolecule(StereoMolecule mol) {
-	    if (mol == null) {
-	    	mol = new StereoMolecule(32, 32);
-	    }
-		oclMolecule = mol;
+		this(0, 0, mol);
 	}
 
 	@JsIgnore
 	public JSMolecule() {
-	    this(null);
+	    this(32, 32, null);
 	}
 	
 	public static native JSMolecule fromSmiles(String smiles, JavaScriptObject options) throws Exception /*-{

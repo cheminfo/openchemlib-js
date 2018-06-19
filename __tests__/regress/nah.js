@@ -2,8 +2,7 @@
 
 const OCL = require('../..');
 
-const molfile =
-`
+const molfile = `
   -ISIS-  09030813062D
 
   2  1  0  0  0  0  0  0  0  0999 V2000
@@ -13,9 +12,7 @@ const molfile =
 M  END
 `;
 
-describe('parsing molfile for NaH', function () {
-    it('should keep the hydrogen', function () {
-        const mol = OCL.Molecule.fromMolfile(molfile);
-        mol.getIDCode().should.equal('eFACPhBL@');
-    });
+test('parsing molfile for NaH should keep the hydrogen', () => {
+  const mol = OCL.Molecule.fromMolfile(molfile);
+  expect(mol.getIDCode()).toBe('eFACPhBL@');
 });
