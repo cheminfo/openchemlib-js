@@ -66,6 +66,6 @@ abstract public class AbstractDescriptorHandlerFP<U> implements DescriptorHandle
             || o2 == null
             || o1.length == 0
             || o2.length == 0 ? 0.0f
-               : SSSearcherWithIndex.getSimilarityTanimoto((int[])o1, (int[])o2);
+               : SSSearcherWithIndex.getSimilarityTanimoto(o1, o2);
     	}
 	}

@@ -49,7 +49,7 @@ public class JSSSSearcherWithIndex {
 	}
 
 	public static int bitCount(int x) {
-	    return SSSearcherWithIndex.bitCount(x);
+	    return Integer.bitCount(x);
 	}
 
 }

@@ -41,6 +41,7 @@ public class IsomericSmilesCreator {
 	private StereoMolecule mMol;
 	private Canonizer mCanonizer;
 	private String mSmiles;
+	private boolean mIncludeMapping;
 	private int[] mAtomRank;
 	private int[] mClosureNumber;
 	private int[] mSmilesIndex;
@@ -52,8 +53,22 @@ public class IsomericSmilesCreator {
 	private boolean[] mPseudoStereoGroupInversion;
 	private boolean[] mPseudoStereoGroupInitialized;
 
+	/**
+	 * Creates an IsomericSmilesCreator, which doesn't include atom mapping into generated smiles.
+	 * @param mol
+	 */
 	public IsomericSmilesCreator(StereoMolecule mol) {
+		this(mol, false);
+	}
+
+	/**
+	 * Creates an IsomericSmilesCreator, which may include atom mapping numbers into generated smiles.
+	 * @param mol
+	 * @param includeAtomMapping
+	 */
+	public IsomericSmilesCreator(StereoMolecule mol, boolean includeAtomMapping) {
 		mMol = mol;
+		mIncludeMapping = includeAtomMapping;
 	}
 
 	public String getSmiles() {
@@ -182,7 +197,8 @@ public class IsomericSmilesCreator {
 								// "The 'visual interpretation' of the 'up-ness' or 'down-ness' of each single bond
 								//  is relative to the carbon atom, not the double bond" (opensmiles.org).
 								SmilesAtom branchSA = mGraphAtomList.get(mSmilesIndex[connAtom]);
-								branchSA.ezHalfParity = halfParity1;	// same half-parity
+								if (branchSA.parent == parentSA.atom)
+									branchSA.ezHalfParity = halfParity1;	// same half-parity
 
 								if (connAtom < parentSA.parent)
 									halfParity = 3 - halfParity;	// invert
@@ -333,11 +349,14 @@ public class IsomericSmilesCreator {
 
 		int charge = mMol.getAtomCharge(atom);
 		int isotop = mMol.getAtomMass(atom);
+		int mapNo = mIncludeMapping ? mMol.getAtomMapNo(atom) : 0;
 
 		boolean useBrackets = !isOrganic(mMol.getAtomicNo(atom))
 				|| qualifiesForAtomParity(atom)
 				|| charge != 0
 				|| isotop != 0
+				|| mapNo != 0
+				|| mMol.getAtomAbnormalValence(atom) != -1
 				|| (mMol.isAromaticAtom(atom) && mMol.getAtomPi(atom)==0 && mMol.getImplicitHydrogens(atom)!=0);
 
 		if (useBrackets)
@@ -366,6 +385,11 @@ public class IsomericSmilesCreator {
 				builder.append(Integer.toString(Math.abs(charge)));
 		}
 
+		if (mapNo != 0) {
+			builder.append(':');
+			builder.append(Integer.toString(mapNo));
+		}
+
 		if (useBrackets)
 			builder.append(']');
 
@@ -391,14 +415,17 @@ public class IsomericSmilesCreator {
 		int closureCount = 0;
 		for (int i=0; i<mMol.getConnAtoms(smilesAtom.atom); i++) {
 			int bond = mMol.getConnBond(smilesAtom.atom, i);
-			if (mClosureNumber[bond] != 0)
-				mClosureBuffer[closureCount++] = (mClosureNumber[bond] << 20) + bond;
+			if (mClosureNumber[bond] != 0) {
+				int isOpenFlag = mClosureOpened[bond] ? 0 : 0x40000000;
+				mClosureBuffer[closureCount++] = isOpenFlag | (mClosureNumber[bond] << 20) | bond;
+			}
 		}
 		if (closureCount != 0) {
+			// when sorting, then put and handle open closures first
 			Arrays.sort(mClosureBuffer, 0, closureCount); // we must sort to be canonical
 			for (int i=0; i<closureCount; i++) {
 				int bond = mClosureBuffer[i] & 0x0003FFFF;
-				int closureNumber = (mClosureBuffer[i] >> 20);
+				int closureNumber = ((mClosureBuffer[i] & 0x3FFC0000) >> 20);
 				if (!mClosureOpened[bond]) {
 					mClosureOpened[bond] = true;
 					appendBondOrderSymbol(bond, builder);

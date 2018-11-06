@@ -55,7 +55,7 @@ public class CoordinateInventor {
 	private static volatile List<InventorTemplate> sDefaultTemplateList;
 
 	private StereoMolecule mMol;
-	private int[]		mFFP;
+	private long[]		mFFP;
 	private Random		mRandom;
 	private boolean[]	mAtomHandled;
 	private boolean[]	mBondHandled;
@@ -140,7 +140,10 @@ public class CoordinateInventor {
 
 	/**
 	 * Creates new atom 2D-coordinates for a molecule or a part of a molecule.
-	 * Coordinates will correctly reflect E/Z double bond parities, unless the double bond is in a ring.
+	 * Typically, the molecule has defined TH- and EZ-parities (even if unknown or none), which were not
+	 * calculated, but taken from a SMILES or from an IDCode. In these cases setParitiesValid() should have
+	 * been called to indicate that a parity calculation is not needed and even would destroy given parities.
+	 * New coordinates will correctly reflect E/Z double bond parities, unless the double bond is in a ring.
 	 * If atom parities are available, this call is typically followed by calling mol.setStereoBondsFromParity();
 	 * Unneeded explicit hydrogens are removed, if mode includes MODE_REMOVE_HYDROGEN.
 	 * The relative orientation of all marked atoms is retained, if mode includes MODE_KEEP_MARKED_ATOM_COORDS.
@@ -151,7 +154,9 @@ public class CoordinateInventor {
 	 * @param mol the molecule that gets new 2D coordinates in place
 	 * @parem ffp null or fragment fingerprint of the molecule, which is used (if available) for faster template location
 	 */
-	public void invent(StereoMolecule mol, int[] ffp) {
+	public void invent(StereoMolecule mol, long[] ffp) {
+		boolean paritiesPresent = ((mol.getHelperArrayStatus() & Molecule.cHelperParities) != 0);
+
 		if (mRandom == null)
 			mRandom = new Random();
 
@@ -209,6 +214,9 @@ public class CoordinateInventor {
 				mMol.setAtomZ(f.mGlobalAtom[j], 0.0);
 				}
 			}
+
+		if (paritiesPresent)
+			mMol.setStereoBondsFromParity();
 		}
 
 
@@ -846,8 +854,8 @@ public class CoordinateInventor {
 	private void createLargeRingFragment(InventorFragment f, int[] ringAtom, int[] ringBond) {
 		final int FIRST_RING_SIZE = 9;
 		final int LAST_RING_SIZE = 25;
-		final double[][] cAngleCorrection = { {20}, null, null, null, null, null, {-4,12},
-				{0,0,7.5}, null, null, null, null, {60/7, -60/7}, null, null, null, {-2.4} };
+		final double[][] cAngleCorrection = { {20}, null, null, {0,10}, null, null, {-4,12},
+				{0,0,-7.5}, null, null, null, null, {60/7, -60/7}, null, null, null, {-2.4} };
 		final int[][] cBondZList = { // sequence of E/Z parities in rings (E=0, Z=1)
 				{   // 9-membered ring
 					0x00000092,  // 010010010 sym
@@ -857,7 +865,8 @@ public class CoordinateInventor {
 				},
 				null,
 				{   // 12-membered rings
-					0x00000999   // 100110011001 sym
+					0x00000999,  // 100110011001 sym
+					0x00000492   // 010010010010 sym
 				},
 				null,
 				{   // 14-membered rings
@@ -1623,7 +1632,8 @@ public class CoordinateInventor {
 
 				if (mMol.getBondOrder(bond) == 2) {
 					if (!mMol.isSmallRingBond(bond)
-					 && mMol.getBondParity(bond) == Molecule.cBondParityNone)
+					 &&	(mMol.getBondParity(bond) == Molecule.cBondParityUnknown
+					  || mMol.getBondParity(bond) == Molecule.cBondParityNone))
 						mMol.setBondParityUnknownOrNone(bond);
 	
 					if (!mMol.isRingBond(bond)

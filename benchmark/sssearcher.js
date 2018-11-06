@@ -1,6 +1,7 @@
 'use strict';
 
 const Benchmark = require('benchmark');
+
 const OCLNew = require('../dist/openchemlib-core');
 const OCLOld = require('../distold/openchemlib-core');
 
@@ -18,19 +19,19 @@ var searcherOld = new OCLOld.SSSearcher();
 searcherOld.setMolecule(ethylBenzeneOld);
 searcherOld.setFragment(benzeneFragmentOld);
 
-const suite = new Benchmark.Suite;
+const suite = new Benchmark.Suite();
 
 suite
-    .add('old', function () {
-        searcherOld.isFragmentInMolecule();
-    })
-    .add('new', function () {
-        searcherNew.isFragmentInMolecule();
-    })
-    .on('cycle', function (event) {
-        console.log(String(event.target));
-    })
-    .on('complete', function () {
-        console.log('Fastest is ' + this.filter('fastest').map('name'));
-    })
-    .run();
+  .add('old', function () {
+    searcherOld.isFragmentInMolecule();
+  })
+  .add('new', function () {
+    searcherNew.isFragmentInMolecule();
+  })
+  .on('cycle', function (event) {
+    console.log(String(event.target));
+  })
+  .on('complete', function () {
+    console.log(`Fastest is ${this.filter('fastest').map('name')}`);
+  })
+  .run();

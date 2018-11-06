@@ -99,7 +99,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @param includeAtom defines atoms to be copied; its size may be this.getAtoms() or this.getAllAtoms()
 	 * @param recognizeDelocalizedBonds defines whether disconnected delocalized bonds will keep their
 	 * single/double bond status or whether the query feature 'delocalized bond' will be set
-	 * @param atomMap null or int[] not smaller than includeAtom.length; receives atom indices of dest molecule
+	 * @param atomMap null or int[] not smaller than includeAtom.length; receives atom indices of dest molecule or -1 if not copied
 	 */
 	public void copyMoleculeByAtoms(ExtendedMolecule destMol, boolean[] includeAtom, boolean recognizeDelocalizedBonds, int[] atomMap) {
 		if (recognizeDelocalizedBonds)
@@ -630,7 +630,6 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		// if we have a compatible higher allowed valence, then use that, otherwise the occupied valence
 		return Math.max(valence, occupiedValence);
 		}
-
 
 	/**
 	 * Calculates for every non-H atom the mean value of all shortest routes (bonds in between)
@@ -1661,6 +1660,11 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		for (int bond=0; bond<mBonds; bond++)
 			setStereoBondFromBondParity(bond);
+
+		for (int bond=0; bond<mBonds; bond++)
+			if (mBondType[bond] == cBondTypeDouble
+			 && getBondParity(bond) == Molecule.cBondParityUnknown)
+				mBondType[bond] = cBondTypeCross;
 		}
 
 

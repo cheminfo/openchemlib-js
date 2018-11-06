@@ -34,7 +34,6 @@
 package com.actelion.research.chem.descriptor;
 
 import com.actelion.research.chem.SSSearcherWithIndex;
-import com.actelion.research.chem.reaction.ReactionSearcher;
 
 public interface DescriptorConstants {
     public static final int DESCRIPTOR_TYPE_UNKNOWN = -1;
@@ -113,10 +112,20 @@ public interface DescriptorConstants {
         									   false,
         									   false,
         									   false);
-    public static final DescriptorInfo DESCRIPTOR_ReactionIndex = 
-                            new DescriptorInfo("ReactionIndex",
-                                               "RxnIdx",
-											   ReactionSearcher.cIndexVersion,
+
+    public static final DescriptorInfo DESCRIPTOR_ShapeAlign =
+        					new DescriptorInfo("ShapeAlign",
+        									   "Shape",
+												"1.0",
+        									   DESCRIPTOR_TYPE_MOLECULE,
+        									   false,
+        									   false,
+        									   false);
+
+    public static final DescriptorInfo DESCRIPTOR_ReactionFP =
+                            new DescriptorInfo("ReactionFingerprint",
+                                               "RxnFP",
+												DescriptorHandlerReactionFP.cVersion,
                                                DESCRIPTOR_TYPE_REACTION,
                                                false,
                                                false,
@@ -181,7 +190,8 @@ public interface DescriptorConstants {
                                                 DESCRIPTOR_HashedCFp,
                                                 DESCRIPTOR_SkeletonSpheres,
                                                 DESCRIPTOR_OrganicFunctionalGroups,
-                                                DESCRIPTOR_Flexophore
+                                                DESCRIPTOR_Flexophore,
+												DESCRIPTOR_ReactionFP
                                                 };
 
     public static final DescriptorInfo[] DESCRIPTOR_EXTENDED_LIST = {
@@ -198,7 +208,7 @@ public interface DescriptorConstants {
                                                 DESCRIPTOR_OrganicFunctionalGroups,
                                                 DESCRIPTOR_Flexophore,
                                                 DESCRIPTOR_Flexophore_HighRes,
-                                                DESCRIPTOR_ReactionIndex,
+			DESCRIPTOR_ReactionFP,
                                                 DESCRIPTOR_IntegerVector,
                                                 DESCRIPTOR_FULL_FRAGMENT_SET,
                                                 DESCRIPTOR_PhysicoChemicalProperties,

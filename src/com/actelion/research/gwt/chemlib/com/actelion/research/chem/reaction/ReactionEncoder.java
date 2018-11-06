@@ -45,7 +45,7 @@ public class ReactionEncoder
 {
 	public static final char MOLECULE_DELIMITER = ' ';
 	public static final char PRODUCT_IDENTIFIER = '!';
-	public static final char CATALYST_DELIMITER = '!';
+	public static final char CATALYST_DELIMITER = '+';	// character must not collide with idcode or coordinate encodings
 	public static final char OBJECT_DELIMITER = '#';
 
 	public static final int INCLUDE_MAPPING = 1;
@@ -73,7 +73,7 @@ public class ReactionEncoder
 	 * If there are drawing objects assigned to this reaction
 	 * then these are encoded in a 4th string.
 	 *
-	 * @return String[4] with reaction code, coordinates, mapping, drawing objects
+	 * @return String[5] with reaction code, mapping, coordinates, drawing objects, catalysts
 	 */
 	public static String[] encode(Reaction reaction, boolean keepAbsoluteCoordinates) {
 		return encode(reaction, keepAbsoluteCoordinates, true);
@@ -93,7 +93,7 @@ public class ReactionEncoder
 	 * @param reaction
 	 * @param keepAbsoluteCoordinates
 	 * @param sortByIDCode
-	 * @return String[5] with reaction code, coordinates, mapping, drawing objects, catalysts
+	 * @return String[5] with reaction code, mapping, coordinates, drawing objects, catalysts
 	 */
 	private static String[] encode(Reaction reaction, boolean keepAbsoluteCoordinates, boolean sortByIDCode) {
 		if (reaction == null
@@ -377,6 +377,112 @@ public class ReactionEncoder
 	/**
 	 * Creates a Reaction object by interpreting a reaction code,
 	 * mapping, coordinates and drawing objects that were earlier created
+	 * by this class.
+	 * If rxnCoords are relative or null, and if ensureCoordinates==true
+	 * then all reactants and products are placed automatically along a
+	 * horizontal line.
+	 *
+	 * @return Reaction
+	 */
+	public static Reaction decode(byte[] rxnCode, byte[] rxnMapping, byte[] rxnCoords,
+								  String rxnObjects, byte[] rxnCatalysts, boolean ensureCoordinates) {
+		if (rxnCode == null || rxnCode.length == 0) {
+			return null;
+		}
+
+		boolean isProduct = false;
+		int idcodeIndex = 0;
+		int mappingIndex = 0;
+		int coordsIndex = 0;
+		boolean reactionLayoutRequired = false;
+
+		int productIndex = indexOf(rxnCode, PRODUCT_IDENTIFIER);
+		if (productIndex == -1)
+			return null;
+
+		Reaction rxn = new Reaction();
+		while (idcodeIndex != -1) {
+			if (idcodeIndex > productIndex)
+				isProduct = true;
+
+			int delimiterIndex = indexOf(rxnCode, MOLECULE_DELIMITER, idcodeIndex);
+			if (!isProduct && (delimiterIndex > productIndex || delimiterIndex == -1))
+				delimiterIndex = productIndex;
+
+			int idcodeStart = idcodeIndex;
+			idcodeIndex = (delimiterIndex == -1) ? -1 : delimiterIndex + 1;
+
+			int mappingStart = -1;
+			if (rxnMapping != null && mappingIndex < rxnMapping.length) {
+				mappingStart = (rxnMapping[mappingIndex] == MOLECULE_DELIMITER) ? -1 : mappingIndex;
+				delimiterIndex = indexOf(rxnMapping, MOLECULE_DELIMITER, mappingIndex);
+				if (delimiterIndex != -1)
+					mappingIndex = delimiterIndex + 1;
+			}
+
+			int coordsStart = -1;
+			if (rxnCoords != null && rxnCoords.length != 0) {
+				coordsStart = coordsIndex;
+				delimiterIndex = indexOf(rxnCoords, MOLECULE_DELIMITER, coordsIndex);
+				if (delimiterIndex != -1)
+					coordsIndex = delimiterIndex + 1;
+			}
+
+			IDCodeParser parser = new IDCodeParser(ensureCoordinates);
+			StereoMolecule mol = parser.getCompactMolecule(rxnCode, rxnCoords, idcodeStart, coordsStart);
+
+			if (!reactionLayoutRequired && (coordsStart == -1 || !parser.coordinatesAreAbsolute(rxnCoords, coordsStart)))
+				reactionLayoutRequired = true;
+
+			if (mappingStart != -1)
+				parser.parseMapping(rxnMapping, mappingStart);
+
+			if (isProduct)
+				rxn.addProduct(mol);
+			else
+				rxn.addReactant(mol);
+		}
+
+		if (rxnObjects != null && rxnObjects.length() != 0) {
+			rxn.setDrawingObjects(new DrawingObjectList(rxnObjects));
+		}
+
+		if (rxnCatalysts != null && rxnCatalysts.length != 0) {
+			IDCodeParser parser = new IDCodeParser(ensureCoordinates);
+			int index1 = 0;
+			int index2 = indexOf(rxnCatalysts, CATALYST_DELIMITER);
+			while (index2 != -1) {
+				rxn.addCatalyst(parser.getCompactMolecule(rxnCatalysts, index1));
+				index1 = index2+1;
+				index2 = indexOf(rxnCatalysts, CATALYST_DELIMITER, index1);
+			}
+			rxn.addCatalyst(parser.getCompactMolecule(rxnCatalysts, index1));
+		}
+
+		rxn.setReactionLayoutRequired(reactionLayoutRequired);
+
+		return rxn;
+	}
+
+	private static int indexOf(byte[] bytes, char ch) {
+		for (int i=0; i<bytes.length; i++)
+			if (bytes[i] == ch)
+				return i;
+
+		return -1;
+		}
+
+	private static int indexOf(byte[] bytes, char ch, int start) {
+		for (int i=start; i<bytes.length; i++)
+			if (bytes[i] == ch)
+				return i;
+
+		return -1;
+	}
+
+	/**
+	 * Creates a Reaction object by interpreting a reaction code,
+	 * mapping, coordinates and drawing objects that were earlier created
 	 * by this class and are passed OBJECT_DELIMITER-delimited within
 	 * one string.
 	 * If rxnCoords are relative or null, and if ensureCoordinates==true
@@ -476,19 +582,24 @@ public class ReactionEncoder
 	}
 
 	/**
-	 * Generates an array of all products of the encoded reaction string as bytes.
-	 * If the string includes atom coordinates, these are used.
-	 * @param rxnBytes
-	 * @return null or StereoMolecule array with at least one molecule
+	 * Generates an array of all reactants and/or products of the encoded reaction string as bytes.
+	 * If the string includes atom coordinates or if they are explicitly, these are used.
+	 * At least one of includeReactants and includeProducts must be true.
+	 * @param rxnBytes may contain atom coordinates
+	 * @param coords may be null
+	 * @param includeReactants
+	 * @param includeProducts
+	 * @return null (if reactants or products are missing) or StereoMolecule array with at least one molecule
 	 */
-	public static StereoMolecule[] decodeProducts(byte[] rxnBytes) {
+	public static StereoMolecule[] decodeMolecules(byte[] rxnBytes, byte[] coords, boolean includeReactants, boolean includeProducts) {
 		if (rxnBytes == null || rxnBytes.length == 0)
 			return null;
 
-		int productIndex = 1+ ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.PRODUCT_IDENTIFIER);
-		if (productIndex == 0)
+		int reactantEnd = ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.PRODUCT_IDENTIFIER);
+		if (reactantEnd <= 0)
 			return null;
 
+		int productIndex = reactantEnd + 1;
 		int productEnd = ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.OBJECT_DELIMITER, productIndex);
 		if (productEnd == -1)
 			productEnd = rxnBytes.length;
@@ -496,28 +607,89 @@ public class ReactionEncoder
 		if (productIndex == productEnd)
 			return null;
 
-		byte[] coords = null;
-		int coordsIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.OBJECT_DELIMITER, productEnd+1);
-		if (coordsIndex != 0) {
-			int reactantIndex = 0;
-			while (reactantIndex < productIndex) {	// advance coordinate index one step for every reactant
-				reactantIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.MOLECULE_DELIMITER, reactantIndex);
-				coordsIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.MOLECULE_DELIMITER, coordsIndex);
+		int coordsIndex = 0;
+		if (coords == null) {
+			coordsIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte) ReactionEncoder.OBJECT_DELIMITER, productEnd + 1);
+			if (coordsIndex != 0)
+				coords = rxnBytes;
+		}
+		if (coords != null) {
+			if (!includeReactants) {
+				int reactantCount = 1;
+				for (int i=0; i<reactantEnd; i++)
+					if (rxnBytes[i] == ReactionEncoder.MOLECULE_DELIMITER)
+						reactantCount++;
+				for (int i=0; reactantCount != 0 && i<coords.length; i++) {
+					if (coords[i] == ReactionEncoder.MOLECULE_DELIMITER) {
+						coordsIndex = i + 1;
+						reactantCount--;
+					}
+				}
 			}
-			coords = rxnBytes;
 		}
 
+		ArrayList<StereoMolecule> moleculeList = new ArrayList<StereoMolecule>();
+		if (includeReactants) {
+			int reactantIndex = 0;
+			do {
+				StereoMolecule reactant = new IDCodeParser().getCompactMolecule(rxnBytes, coords, reactantIndex, coordsIndex);
+				if (reactant.getAllAtoms() != 0)
+					moleculeList.add(reactant);
 
-		ArrayList<StereoMolecule> productList = new ArrayList<StereoMolecule>();
-		while (productIndex != -1 && productIndex < productEnd) {
-			StereoMolecule product = new IDCodeParser().getCompactMolecule(rxnBytes, coords, productIndex, coordsIndex);
-			if (product.getAllAtoms() != 0)
-				productList.add(product);
+				reactantIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.MOLECULE_DELIMITER, reactantIndex);
+				if (coords != null)
+					coordsIndex = 1+ArrayUtils.indexOf(coords, (byte)ReactionEncoder.MOLECULE_DELIMITER, coordsIndex);
+			} while (reactantIndex != 0 && reactantIndex < reactantEnd);
+		}
+		if (includeProducts) {
+			do {
+				StereoMolecule product = new IDCodeParser().getCompactMolecule(rxnBytes, coords, productIndex, coordsIndex);
+				if (product.getAllAtoms() != 0)
+					moleculeList.add(product);
 
-			productIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.MOLECULE_DELIMITER, productIndex);
-			coordsIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.MOLECULE_DELIMITER, coordsIndex);
+				productIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.MOLECULE_DELIMITER, productIndex);
+				if (coords != null)
+					coordsIndex = 1+ArrayUtils.indexOf(coords, (byte)ReactionEncoder.MOLECULE_DELIMITER, coordsIndex);
+			} while (productIndex != 0 && productIndex < productEnd);
 		}
 
-		return productList.size() == 0 ? null : productList.toArray(new StereoMolecule[0]);
+		return moleculeList.size() == 0 ? null : moleculeList.toArray(new StereoMolecule[0]);
+	}
+
+	/**
+	 * Generates an array of all catalysts of the encoded reaction string as bytes.
+	 * If the string includes atom coordinates, these are used.
+	 * @param rxnBytes
+	 * @return null or StereoMolecule array with at least one molecule
+	 */
+	public static StereoMolecule[] decodeCatalysts(byte[] rxnBytes) {
+		if (rxnBytes == null || rxnBytes.length == 0)
+			return null;
+
+		int index = 0;
+		for (int i=0; i<4; i++) {
+			index = 1 + ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.OBJECT_DELIMITER, index);
+			if (index == 0)
+				return null;
+		}
+
+		if (index == rxnBytes.length)
+			return null;
+
+		ArrayList<StereoMolecule> catalystList = new ArrayList<StereoMolecule>();
+		while (index != 0 && index < rxnBytes.length) {
+			int nextIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte)ReactionEncoder.CATALYST_DELIMITER, index);
+			int coordsIndex = 1+ArrayUtils.indexOf(rxnBytes, (byte)' ', index);
+
+			StereoMolecule catalyst = (coordsIndex != 0 && (nextIndex == 0 || nextIndex > coordsIndex)) ?
+					  new IDCodeParser().getCompactMolecule(rxnBytes, rxnBytes, index, coordsIndex)
+					: new IDCodeParser().getCompactMolecule(rxnBytes, null, index, -1);
+			if (catalyst.getAllAtoms() != 0)
+				catalystList.add(catalyst);
+
+			index = nextIndex;
+		}
+
+		return catalystList.size() == 0 ? null : catalystList.toArray(new StereoMolecule[0]);
 	}
 }

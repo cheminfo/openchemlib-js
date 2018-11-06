@@ -50,18 +50,18 @@ public class DescriptorHandlerStandard2DFactory implements DescriptorConstants,D
 	public DescriptorHandler getDefaultDescriptorHandler(String shortName) {
 
 		if (DESCRIPTOR_FFP512.shortName.equals(shortName))
-			return DescriptorHandlerFFP512.getDefaultInstance();
+			return DescriptorHandlerLongFFP512.getDefaultInstance();
 		if (DESCRIPTOR_PFP512.shortName.equals(shortName))
-			return DescriptorHandlerPFP512.getDefaultInstance();
+			return DescriptorHandlerLongPFP512.getDefaultInstance();
 		if (DESCRIPTOR_HashedCFp.shortName.equals(shortName))
-			return DescriptorHandlerHashedCFp.getDefaultInstance();
+			return DescriptorHandlerLongCFP.getDefaultInstance();
 		if (DESCRIPTOR_SkeletonSpheres.shortName.equals(shortName))
 			return DescriptorHandlerSkeletonSpheres.getDefaultInstance();
 		if (DESCRIPTOR_OrganicFunctionalGroups.shortName.equals(shortName))
 			return DescriptorHandlerFunctionalGroups.getDefaultInstance();
 
-        if (DESCRIPTOR_ReactionIndex.shortName.equals(shortName))
-            return DescriptorHandlerReactionIndex.getDefaultInstance();
+        if (DESCRIPTOR_ReactionFP.shortName.equals(shortName))
+            return DescriptorHandlerReactionFP.getDefaultInstance();
 
 		return null;
 		}
@@ -70,18 +70,18 @@ public class DescriptorHandlerStandard2DFactory implements DescriptorConstants,D
 	public DescriptorHandler create(String shortName) {
 
 		if (DESCRIPTOR_FFP512.shortName.equals(shortName))
-			return new DescriptorHandlerFFP512();
+			return new DescriptorHandlerLongFFP512();
 		if (DESCRIPTOR_PFP512.shortName.equals(shortName))
-			return new DescriptorHandlerPFP512();
+			return new DescriptorHandlerLongPFP512();
 		if (DESCRIPTOR_HashedCFp.shortName.equals(shortName))
-			return new DescriptorHandlerHashedCFp();
+			return new DescriptorHandlerLongCFP();
 		if (DESCRIPTOR_SkeletonSpheres.shortName.equals(shortName))
 			return new DescriptorHandlerSkeletonSpheres();
 		if (DESCRIPTOR_OrganicFunctionalGroups.shortName.equals(shortName))
 			return new DescriptorHandlerFunctionalGroups();
 
-        if (DESCRIPTOR_ReactionIndex.shortName.equals(shortName))
-            return new DescriptorHandlerReactionIndex();
+        if (DESCRIPTOR_ReactionFP.shortName.equals(shortName))
+            return new DescriptorHandlerReactionFP();
 
 		return null;
 		}

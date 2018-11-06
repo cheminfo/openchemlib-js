@@ -1958,7 +1958,7 @@ public class JDrawArea extends JPanel
 	static class MySSSearcher extends SSSearcher
 	{
 		@Override
-		protected boolean areAtomsSimilar(int moleculeAtom, int fragmentAtom)
+		public boolean areAtomsSimilar(int moleculeAtom, int fragmentAtom)
 		{
 			if (mMolecule.getAtomicNo(moleculeAtom) == mFragment.getAtomicNo(fragmentAtom))
 				if (mMolecule.isAromaticAtom(moleculeAtom) || mFragment.isAromaticAtom(fragmentAtom))
@@ -1967,7 +1967,7 @@ public class JDrawArea extends JPanel
 		}
 
 		@Override
-		protected boolean areBondsSimilar(int moleculeBond, int fragmentBond)
+		public boolean areBondsSimilar(int moleculeBond, int fragmentBond)
 		{
 			if (mMolecule.isAromaticBond(moleculeBond) || mMolecule.isDelocalizedBond(moleculeBond) ||
 				mFragment.isAromaticBond(fragmentBond) || mFragment.isDelocalizedBond(fragmentBond)
@@ -2979,7 +2979,7 @@ public class JDrawArea extends JPanel
 			}
 
 			new CoordinateInventor(selectedOnly ? CoordinateInventor.MODE_KEEP_MARKED_ATOM_COORDS : 0).invent(mMol);
-			mMol.setStereoBondsFromParity();
+//			mMol.setStereoBondsFromParity(); not needed anymore
 		}
 
 		depictor.updateCoords(g, new Rectangle2D.Double(0, 0, getWidth(), getHeight()), maxUpdateMode());

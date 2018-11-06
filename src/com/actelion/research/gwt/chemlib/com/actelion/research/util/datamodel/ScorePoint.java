@@ -1,12 +1,5 @@
 
 
-package com.actelion.research.util.datamodel;
-
-import java.awt.Point;
-
-
-import com.actelion.research.util.Formatter;
-
 /*
 * Copyright (c) 1997 - 2016
 * Actelion Pharmaceuticals Ltd.
@@ -39,6 +32,17 @@ import com.actelion.research.util.Formatter;
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
+
+package com.actelion.research.util.datamodel;
+
+import java.awt.Point;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import com.actelion.research.util.Formatter;
+
 public class ScorePoint extends Point {
 
 	private static final long serialVersionUID = 24052013;
@@ -58,6 +62,11 @@ public class ScorePoint extends Point {
 		score = value;
 	}
 	
+	public ScorePoint(int x, int y, double value) {
+		super(x,y);
+		score = value;
+	}
+
 	public ScorePoint(int x, int y) {
 		super(x,y);
 	}
@@ -79,6 +88,32 @@ public class ScorePoint extends Point {
 		sb.append(" " + Formatter.format3(score));
 		
 		return sb.toString();
+	}
+
+
+	public static List<ScorePoint> read(File fiTxt) throws IOException {
+
+		List<ScorePoint> li = new ArrayList<ScorePoint>();
+
+		BufferedReader br = new BufferedReader(new FileReader(fiTxt));
+
+		String line = null;
+
+		while((line = br.readLine())!= null) {
+
+			String [] arr = line.split("\\t");
+
+			int x = Integer.parseInt(arr[0].trim());
+			int y = Integer.parseInt(arr[1].trim());
+			double v = java.lang.Double.parseDouble(arr[2].trim());
+
+			li.add(new ScorePoint(x,y,v));
+
+		}
+
+		br.close();
+
+		return li;
 	}
 	
 }

@@ -31,41 +31,32 @@
 *
 */
 
-package com.actelion.research.chem.descriptor;
+package com.actelion.research.chem.properties.fractaldimension;
 
-import com.actelion.research.chem.reaction.Reaction;
-import com.actelion.research.chem.reaction.ReactionSearcher;
+import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.util.datamodel.IdentifiedObject;
 
-public class DescriptorHandlerReactionIndex extends AbstractDescriptorHandlerFP<Reaction> {
-    private static DescriptorHandlerReactionIndex sDefaultInstance;
+/**
+ * InputObjectFracDimCalc
+ * <p>Modest v. Korff</p>
+ * <p>
+ * Created by korffmo1 on 28.08.18.
+ */
+class InputObjectFracDimCalc extends IdentifiedObject<StereoMolecule> {
 
-    public static DescriptorHandlerReactionIndex getDefaultInstance() {
-        if (sDefaultInstance == null) {
-        	synchronized(DescriptorHandlerReactionIndex.class) {
-        		sDefaultInstance = new DescriptorHandlerReactionIndex();
-        	}
-        }
-        return sDefaultInstance;
+    private String smiles;
+
+    public InputObjectFracDimCalc(StereoMolecule data, long id, String smiles) {
+        super(data, id);
+        this.smiles = smiles;
     }
 
-    public DescriptorInfo getInfo() {
-        return DescriptorConstants.DESCRIPTOR_ReactionIndex;
+    public InputObjectFracDimCalc(InputObjectFracDimCalc inputObjectFracDimCalc) {
+        super(inputObjectFracDimCalc.getData(), inputObjectFracDimCalc.getId());
+        this.smiles = inputObjectFracDimCalc.smiles;
     }
 
-    public String getVersion() {
-        return DescriptorConstants.DESCRIPTOR_ReactionIndex.version;
+    public String getSmiles() {
+        return smiles;
     }
-
-    public int[] createDescriptor(Reaction rxn) {
-	    if (rxn ==null)
-		    return null;
-
-        int[] descriptor = new ReactionSearcher().createIndex(rxn);
-        return (descriptor == null) ? FAILED_OBJECT : descriptor;
-    }
-    
-	public DescriptorHandler<int[], Reaction> getThreadSafeCopy() {
-		return this;
-	}
-
 }

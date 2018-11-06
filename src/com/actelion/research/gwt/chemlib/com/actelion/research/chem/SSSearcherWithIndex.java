@@ -35,6 +35,8 @@ package com.actelion.research.chem;
 
 import java.util.ArrayList;
 
+// TODO purge mMoleculeIndexInt,mFragmentIndexInt and related methods from this class. Long versions were introduced Aug 3, 2018
+
 public class SSSearcherWithIndex {
 	public static final String cIndexVersion = "1.2.1";
 
@@ -555,7 +557,8 @@ public class SSSearcherWithIndex {
 	private static StereoMolecule[]  sKeyFragment;
 	private SSSearcher			mSSSearcher;
 	private StereoMolecule		mMolecule,mFragment;
-	private int[]				mMoleculeIndex,mFragmentIndex;
+	private int[]				mMoleculeIndexInt,mFragmentIndexInt;
+	private long[]				mMoleculeIndexLong,mFragmentIndexLong;
 	private byte[]				mMoleculeIDCode,mFragmentIDCode;
 
 	public static int getNoOfKeys() {
@@ -574,73 +577,150 @@ public class SSSearcherWithIndex {
 		}
 
 
-	public StereoMolecule getKeyFragment(int no) {
+	public static StereoMolecule getKeyFragment(int no) {
 		return sKeyFragment[no];
 		}
 
 
+	@Deprecated // Use long version of this method
 	public void setFragment(StereoMolecule fragment, int[] index) {
 		mFragmentIDCode = null;
+		mFragmentIndexLong = null;
 		mFragment = fragment;
 		if (index == null)
-			mFragmentIndex = createIndex(fragment);
+			mFragmentIndexInt = createIndex(fragment);
 		else
-			mFragmentIndex = index;
+			mFragmentIndexInt = index;
 		}
 
 
+	@Deprecated // Use long version of this method
 	public void setFragment(String idcode, int[] index) {
 	    setFragment(idcode.getBytes(), index);
 		}
 
 
+	@Deprecated // Use long version of this method
 	public void setFragment(byte[] idcode, int[] index) {
 		mFragmentIDCode = idcode;
+		mFragmentIndexLong = null;
 		if (index == null) {
 			mFragment = (new IDCodeParser(false)).getCompactMolecule(idcode);
-			mFragmentIndex = createIndex(mFragment);
+			mFragmentIndexInt = createIndex(mFragment);
 			}
 		else {
 			mFragment = null;
-			mFragmentIndex = index;
+			mFragmentIndexInt = index;
 			}
 		}
 
 
+	@Deprecated // Use long version of this method
 	public void setMolecule(StereoMolecule molecule, int[] index) {
 		mMoleculeIDCode = null;
+		mMoleculeIndexLong = null;
 		mMolecule = molecule;
 		if (index == null)
-			mMoleculeIndex = createIndex(molecule);
+			mMoleculeIndexInt = createIndex(molecule);
 		else
-			mMoleculeIndex = index;
+			mMoleculeIndexInt = index;
 		}
 
 
+	@Deprecated // Use long version of this method
 	public void setMolecule(String idcode, int[] index) {
 	    setMolecule(idcode.getBytes(), index);
 		}
 
 
+	@Deprecated // Use long version of this method
 	public void setMolecule(byte[] idcode, int[] index) {
 		mMoleculeIDCode = idcode;
+		mMoleculeIndexLong = null;
 		if (index == null) {
 			mMolecule = (new IDCodeParser(false)).getCompactMolecule(idcode);
-			mMoleculeIndex = createIndex(mMolecule);
+			mMoleculeIndexInt = createIndex(mMolecule);
 			}
 		else {
 			mMolecule = null;
-			mMoleculeIndex = index;
+			mMoleculeIndexInt = index;
 			}
 		}
 
 
-	public int getFirstHittingIndexBlockNo() {
-		for (int i=0; i<mMoleculeIndex.length; i++)
-			if ((mFragmentIndex[i] & ~mMoleculeIndex[i]) != 0)
-				return i;
-        return -1;
-        }
+	public void setFragment(StereoMolecule fragment, long[] index) {
+		mFragmentIDCode = null;
+		mFragmentIndexInt = null;
+		mFragment = fragment;
+		if (index == null)
+			mFragmentIndexLong = createLongIndex(fragment);
+		else
+			mFragmentIndexLong = index;
+		}
+
+
+	public void setFragment(String idcode, long[] index) {
+		setFragment(idcode.getBytes(), index);
+	}
+
+
+	public void setFragment(byte[] idcode, long[] index) {
+		mFragmentIDCode = idcode;
+		mFragmentIndexInt = null;
+		if (index == null) {
+			mFragment = (new IDCodeParser(false)).getCompactMolecule(idcode);
+			mFragmentIndexLong = createLongIndex(mFragment);
+			}
+		else {
+			mFragment = null;
+			mFragmentIndexLong = index;
+			}
+		}
+
+
+	public void setMolecule(StereoMolecule molecule, long[] index) {
+		mMoleculeIDCode = null;
+		mMoleculeIndexInt = null;
+		mMolecule = molecule;
+		if (index == null)
+			mMoleculeIndexLong = createLongIndex(molecule);
+		else
+			mMoleculeIndexLong = index;
+	}
+
+
+	public void setMolecule(String idcode, long[] index) {
+		setMolecule(idcode.getBytes(), index);
+	}
+
+
+	public void setMolecule(byte[] idcode, long[] index) {
+		mMoleculeIDCode = idcode;
+		mMoleculeIndexInt = null;
+		if (index == null) {
+			mMolecule = (new IDCodeParser(false)).getCompactMolecule(idcode);
+			mMoleculeIndexLong = createLongIndex(mMolecule);
+		}
+		else {
+			mMolecule = null;
+			mMoleculeIndexLong = index;
+		}
+	}
+
+
+	public int getFirstHittingLongIndexBlockNo() {
+		if (mMoleculeIndexInt == null) {
+			for (int i=0; i<mMoleculeIndexLong.length; i++)
+				if ((mFragmentIndexLong[i] & ~mMoleculeIndexLong[i]) != 0)
+					return i;
+			}
+		else {
+			for (int i=0; i<mMoleculeIndexInt.length; i++)
+				if ((mFragmentIndexInt[i] & ~mMoleculeIndexInt[i]) != 0)
+					return i;
+			}
+		return -1;
+		}
 
 
 	/**
@@ -661,9 +741,16 @@ public class SSSearcherWithIndex {
 	 * @return whether the fragment fingerprint bits are all present in the molecule bits
 	 */
 	public boolean isFragmentIndexInMoleculeIndex() {
-		for (int i=0; i<mMoleculeIndex.length; i++)
-			if ((mFragmentIndex[i] & ~mMoleculeIndex[i]) != 0)
-				return false;
+		if (mMoleculeIndexInt == null) {
+			for (int i=0; i<mMoleculeIndexLong.length; i++)
+				if ((mFragmentIndexLong[i] & ~mMoleculeIndexLong[i]) != 0)
+					return false;
+			}
+		else {
+			for (int i=0; i<mMoleculeIndexInt.length; i++)
+				if ((mFragmentIndexInt[i] & ~mMoleculeIndexInt[i]) != 0)
+					return false;
+			}
 
 		return true;
 		}
@@ -682,18 +769,32 @@ public class SSSearcherWithIndex {
 
 
 	public boolean isFragmentInMolecule() {
-		for (int i=0; i<mMoleculeIndex.length; i++)
-			if ((mFragmentIndex[i] & ~mMoleculeIndex[i]) != 0)
-				return false;
+		if (mMoleculeIndexInt == null) {
+			for (int i=0; i<mMoleculeIndexLong.length; i++)
+				if ((mFragmentIndexLong[i] & ~mMoleculeIndexLong[i]) != 0)
+					return false;
+			}
+		else {
+			for (int i=0; i<mMoleculeIndexInt.length; i++)
+				if ((mFragmentIndexInt[i] & ~mMoleculeIndexInt[i]) != 0)
+					return false;
+			}
 
 		return isFragmentInMoleculeWithoutIndex();
 		}
 
 
 	public int findFragmentInMolecule() {
-		for (int i=0; i<mMoleculeIndex.length; i++)
-			if ((mFragmentIndex[i] & ~mMoleculeIndex[i]) != 0)
-				return 0;
+		if (mMoleculeIndexInt == null) {
+			for (int i=0; i<mMoleculeIndexLong.length; i++)
+				if ((mFragmentIndexLong[i] & ~mMoleculeIndexLong[i]) != 0)
+					return 0;
+			}
+		else {
+			for (int i=0; i<mMoleculeIndexInt.length; i++)
+				if ((mFragmentIndexInt[i] & ~mMoleculeIndexInt[i]) != 0)
+					return 0;
+			}
 
 		if (mMolecule == null)
 			mMolecule = (new IDCodeParser(false)).getCompactMolecule(mMoleculeIDCode);
@@ -711,9 +812,16 @@ public class SSSearcherWithIndex {
 	    }
 
 	public int findFragmentInMolecule(int countMode, int matchMode, final boolean[] atomExcluded) {
-		for (int i=0; i<mMoleculeIndex.length; i++)
-			if ((mFragmentIndex[i] & ~mMoleculeIndex[i]) != 0)
-				return 0;
+		if (mMoleculeIndexInt == null) {
+			for (int i=0; i<mMoleculeIndexLong.length; i++)
+				if ((mFragmentIndexLong[i] & ~mMoleculeIndexLong[i]) != 0)
+					return 0;
+			}
+		else {
+			for (int i=0; i<mMoleculeIndexInt.length; i++)
+				if ((mFragmentIndexInt[i] & ~mMoleculeIndexInt[i]) != 0)
+					return 0;
+			}
 
 		if (mMolecule == null)
 			mMolecule = (new IDCodeParser(false)).getCompactMolecule(mMoleculeIDCode);
@@ -757,6 +865,23 @@ public class SSSearcherWithIndex {
 		}
 
 
+	public long[] createLongIndex(StereoMolecule mol) {
+		if (mol == null)
+			return null;
+
+		long[] index = new long[(cKeyIDCode.length+63)/64];
+		mol = removeExcludeGroups(mol);
+		mSSSearcher.setMolecule(mol);
+		for (int i=0; i<cKeyIDCode.length; i++) {
+			mSSSearcher.setFragment(sKeyFragment[i]);
+			if (mSSSearcher.isFragmentInMolecule(SSSearcher.cIndexMatchMode))
+				index[i/64] |= (1L << (63-i%64));
+			}
+
+		return index;
+		}
+
+
 	private StereoMolecule removeExcludeGroups(StereoMolecule mol) {
 		if (mol.isFragment()) {
 			for (int atom=0; atom<mol.getAllAtoms(); atom++) {
@@ -777,13 +902,22 @@ public class SSSearcherWithIndex {
         int sharedKeys = 0;
         int allKeys = 0;
         for (int i=0; i<index1.length; i++) {
-            final int i1 = index1[i];
-            final int i2 = index2[i];
-            sharedKeys += bitCount(i1 & i2);
-            allKeys += bitCount(i1 | i2);
+            sharedKeys += Integer.bitCount(index1[i] & index2[i]);
+            allKeys += Integer.bitCount(index1[i] | index2[i]);
         	}
         return (float)sharedKeys/(float)allKeys;
         }
+
+
+	public static float getSimilarityTanimoto(final long[] index1, final long[] index2) {
+		int sharedKeys = 0;
+		int allKeys = 0;
+		for (int i=0; i<index1.length; i++) {
+			sharedKeys += Long.bitCount(index1[i] & index2[i]);
+			allKeys += Long.bitCount(index1[i] | index2[i]);
+			}
+		return (float)sharedKeys/(float)allKeys;
+		}
 
 
     public static float getSimilarityAngleCosine(int[] index1, int[] index2) {
@@ -791,9 +925,9 @@ public class SSSearcherWithIndex {
         int index1Keys = 0;
         int index2Keys = 0;
         for (int i=0; i<index1.length; i++) {
-            sharedKeys += bitCount(index1[i] & index2[i]);
-            index1Keys += bitCount(index1[i]);
-            index2Keys += bitCount(index2[i]);
+            sharedKeys += Integer.bitCount(index1[i] & index2[i]);
+            index1Keys += Integer.bitCount(index1[i]);
+            index2Keys += Integer.bitCount(index2[i]);
         	}
         return (float)sharedKeys/(float)Math.sqrt(index1Keys*index2Keys);
     	}
@@ -835,6 +969,42 @@ public class SSSearcherWithIndex {
 		}
 
 
+	public static long[] getLongIndexFromHexString(String hex) {
+		if (hex.length() == 0 || (hex.length() & 15) != 0)
+			return null;
+
+		long[] index = new long[hex.length()/16];
+		for (int i=0; i<hex.length(); i++) {
+			int j = i/16;
+			long code = hex.charAt(i) - '0';
+			if (code > 16)
+				code -= 7;
+			index[j] <<= 4;
+			index[j] += code;
+			}
+
+		return index;
+		}
+
+
+	public static long[] getLongIndexFromHexString(byte[] bytes) {
+		if (bytes==null || bytes.length==0 || (bytes.length & 15) != 0)
+			return null;
+
+		long[] index = new long[bytes.length/16];
+		for (int i=0; i<bytes.length; i++) {
+			int j = i/16;
+			long code = (long)bytes[i] - '0';
+			if (code > 16)
+				code -= 7;
+			index[j] <<= 4;
+			index[j] += code;
+			}
+
+		return index;
+		}
+
+
 	public static String getHexStringFromIndex(int[] index) {
 	    if (index == null)
 	        return null;
@@ -855,6 +1025,8 @@ public class SSSearcherWithIndex {
 		}
 
 	
+/*  use Integer.bitCount() instead, which is supposed to use the POPCNT processor command on x86
+
     public static int bitCount(int x) {
         int temp;
 
@@ -868,7 +1040,7 @@ public class SSSearcherWithIndex {
         x = (x & temp) + (x >>> 8 & temp);
 
         return (x & 0x1F) + (x >>> 16);
-    	}
+    	}   */
 
 
 	private void init() {
