@@ -376,7 +376,7 @@ See [Depictor options](#depictor-options)
 
 You can test it on line:
 * <a href="https://cheminfo.github.io/openchemlib-js/dist/Editor.html" target="_blank">Editor</a>
-* <a href="https://github.com/cheminfo/openchemlib-js/blob/master/dist/ShowStructures.html" target="_blank">showStructures</a>
+* <a href="https://cheminfo.github.io/openchemlib-js/dist/ShowStructures.html" target="_blank">showStructures</a>
 * <a href="https://cheminfo.github.io/openchemlib-js/dist/SVG.html" target="_blank">SVG</a>
 
 
