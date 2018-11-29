@@ -128,18 +128,18 @@
 
     <script>
       var idcode = '';
+      var editorCtrl = null;
 
       function changeMolecule(idc) {
         if (idc != idcode) {
           var svg = window.OCL.SVGRenderer.renderMolecule(idc, 400, 400);
           document.getElementById('svg').innerHTML = svg;
           document.getElementById('svgCode').innerHTML = svg;
-
+          console.log('New ID code: ' + editorCtrl.getIDCode());
           idcode = idc;
         }
       }
 
-      var editorCtrl = null;
       function onAtomHighlight(atom, sel) {
         console.log('Atom selected ' + atom + ' ' + sel);
       }
