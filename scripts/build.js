@@ -18,6 +18,7 @@ const argv = yargs
     'copy:openchemlib',
     'Copy the required java files from the openchemlib project.'
   )
+  .command('build', 'Compile and export')
   .command('compile', 'Execute the GWT compiler.')
   .command('export', 'Transform the GWT compiled files to JavaScript modules.')
   .demandCommand()
