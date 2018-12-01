@@ -9,12 +9,17 @@
     "SMILES"
   ],
   "scripts": {
-    "copy:openchemlib": "gulp copy:openchemlib",
-    "build": "gulp build:min && npm run build-pretty",
-    "build-core": "gulp build:min -m core",
-    "build-minimal": "gulp build:min -m minimal",
-    "build-pretty": "gulp build:pretty -m full --suffix pretty",
-    "eslint": "eslint __tests__ gulpfile.js benchmark openchemlib/classes.js",
+    "build:min": "node scripts/build.js build --mode=min",
+    "build:pretty": "node scripts/build.js build --mode=pretty",
+    "compile:min": "node scripts/build.js compile --mode=min",
+    "compile:pretty": "node scripts/build.js compile --mode=pretty",
+    "copy:openchemlib": "node scripts/build.js copy:openchemlib",
+    "export": "node scripts/build.js export",
+    "build": "npm run build:min && npm run build-pretty",
+    "build-core": "npm run build:min -- -m core",
+    "build-minimal": "npm run build:min -- -m minimal",
+    "build-pretty": "npm run build:pretty -- -m full -s pretty",
+    "eslint": "eslint __tests__ scripts benchmark",
     "eslint-fix": "npm run eslint -- --fix",
     "test": "npm run build && npm run test-only && npm run eslint",
     "test-only": "jest"
@@ -44,15 +49,14 @@
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "eslint": "^5.8.0",
+    "eslint": "^5.9.0",
     "eslint-config-cheminfo": "^1.18.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^21.27.2",
-    "fs-extra": "^7.0.0",
-    "gulp": "^3.9.1",
+    "eslint-plugin-jest": "^22.1.0",
+    "fs-extra": "^7.0.1",
     "gwt-api-exporter": "^1.2.1",
     "jest": "^23.6.0",
-    "minimist": "^1.2.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "yargs": "^12.0.5"
   }
 }
