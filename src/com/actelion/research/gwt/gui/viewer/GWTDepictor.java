@@ -64,14 +64,14 @@ public class GWTDepictor extends AbstractDepictor
     }
 
     static ColorMap MOLECULECOLORS[] = {
-        new ColorMap(Molecule.cAtomColorNone, CssColor.make("BLACK")),
-        new ColorMap(Molecule.cAtomColorBlue, CssColor.make("BLUE")),
-        new ColorMap(Molecule.cAtomColorRed, CssColor.make("RED")),
-        new ColorMap(Molecule.cAtomColorGreen, CssColor.make("GREEN")),
-        new ColorMap(Molecule.cAtomColorMagenta, CssColor.make("MAGENTA")),
-        new ColorMap(Molecule.cAtomColorOrange, CssColor.make("ORANGE")),
-        new ColorMap(Molecule.cAtomColorDarkGreen, CssColor.make(0, 160, 0)),
-        new ColorMap(Molecule.cAtomColorDarkRed, CssColor.make(160, 0, 0))
+            new ColorMap(Molecule.cAtomColorNone, CssColor.make("BLACK")),
+            new ColorMap(Molecule.cAtomColorBlue, CssColor.make("BLUE")),
+            new ColorMap(Molecule.cAtomColorRed, CssColor.make("RED")),
+            new ColorMap(Molecule.cAtomColorGreen, CssColor.make("GREEN")),
+            new ColorMap(Molecule.cAtomColorMagenta, CssColor.make("MAGENTA")),
+            new ColorMap(Molecule.cAtomColorOrange, CssColor.make("ORANGE")),
+            new ColorMap(Molecule.cAtomColorDarkGreen, CssColor.make(0, 160, 0)),
+            new ColorMap(Molecule.cAtomColorDarkRed, CssColor.make(160, 0, 0))
     };
 
     private Context2d ctx = null;
@@ -85,11 +85,11 @@ public class GWTDepictor extends AbstractDepictor
     {
         this(mol, 0);
     }
-    
+
     public GWTDepictor(StereoMolecule mol, int displayMode)
     {
-    	super(mol, displayMode);
-    	//this.ctx = ctx;
+        super(mol, displayMode);
+        //this.ctx = ctx;
     }
 
     @Override
@@ -148,14 +148,11 @@ public class GWTDepictor extends AbstractDepictor
     }
 
     @Override
-    protected void fillCircle(double x, double y, double r)
+    protected void fillCircle(double x, double y, double d)
     {
         ctx.setFillStyle(currentColor);
         ctx.beginPath();
-        ctx.arc(
-            (double) x, (double) y,
-            (double) r, (double) 0,
-             Math.PI*2);
+        ctx.arc(x + d / 2, y + d / 2, d / 2, (double) 0, Math.PI * 2);
         ctx.fill();
     }
 
@@ -187,11 +184,6 @@ public class GWTDepictor extends AbstractDepictor
     protected void setLineWidth(double lineWidth)
     {
         this.lineWidth = lineWidth;
-//        if (ctx != null) {
-//            ctx.setLineWidth(lineWidth);
-//            ctx.setLineCap(Context2d.LineCap.ROUND);
-//            ctx.setLineJoin(Context2d.LineJoin.MITER);
-//        }
     }
 
 
@@ -201,12 +193,12 @@ public class GWTDepictor extends AbstractDepictor
         return lineWidth;
     }
 
-    @Override
-    public void setColor(int theColor)
-    {
-        currentColor = getColor(theColor);
-    }
-
+//    @Override
+//    public void setColor(int theColor)
+//    {
+//        currentColor = getColor(theColor);
+//    }
+//
 
     @Override
     protected void setColor(Color theColor)
@@ -214,26 +206,26 @@ public class GWTDepictor extends AbstractDepictor
         currentColor = CssColor.make(theColor.getRed(), theColor.getGreen(), theColor.getBlue());
     }
 
-    protected int getColor()
-    {
-        for (ColorMap cm : MOLECULECOLORS) {
-            if (currentColor.equals(cm.color)) {
-                return cm.molcol;
-            }
-        }
-        return Molecule.cAtomColorNone;
-    }
-
-
-    private CssColor getColor(int i)
-    {
-        for (ColorMap cm : MOLECULECOLORS) {
-            if (cm.molcol == i) {
-                return cm.color;
-            }
-        }
-        return MOLECULECOLORS[0].color;
-    }
+//    protected int getColor()
+//    {
+//        for (ColorMap cm : MOLECULECOLORS) {
+//            if (currentColor.equals(cm.color)) {
+//                return cm.molcol;
+//            }
+//        }
+//        return Molecule.cAtomColorNone;
+//    }
+//
+//
+//    private CssColor getColor(int i)
+//    {
+//        for (ColorMap cm : MOLECULECOLORS) {
+//            if (cm.molcol == i) {
+//                return cm.color;
+//            }
+//        }
+//        return MOLECULECOLORS[0].color;
+//    }
 
 
 //    private ColorMap getColor(Color i)
