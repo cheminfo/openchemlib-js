@@ -34,6 +34,7 @@ package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.IDCodeParser;
+import com.actelion.research.chem.MolfileParser;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
@@ -541,11 +542,22 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
+
     public boolean onPasteString(String s)
     {
-        IDCodeParser p  = new IDCodeParser(true);
+//        Log.console("Paste " + s);
         try {
             StereoMolecule mol = new StereoMolecule();
+            MolfileParser parser = new MolfileParser();
+            parser.parse(mol,s);
+            model.addMolecule(mol,0,0);
+            return true;
+        } catch (Exception e) {
+            Log.console("Parse exception " + e);
+        }
+        try {
+            StereoMolecule mol = new StereoMolecule();
+            IDCodeParser p  = new IDCodeParser(true);
             p.parse(mol,s);
             model.addMolecule(mol, 0, 0);
             return true;

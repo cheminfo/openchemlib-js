@@ -34,8 +34,10 @@ package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.IDCodeParser;
+import com.actelion.research.chem.MolfileV3Creator;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
+import com.actelion.research.gwt.gui.viewer.Console;
 import com.actelion.research.gwt.gui.viewer.GraphicsContext;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
@@ -135,11 +137,21 @@ class DrawArea implements IChangeListener
 
     public static native void copy(String text)
     /*-{
-        console.log(addPasteHandler + text);
-        var copyEvent = new ClipboardEvent('copy', { dataType: 'text/plain', data: 'Data to be copied' } );
-
-        $doc.dispatchEvent(copyEvent);
+//        console.log(text);
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.id="copyItem";
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
     }-*/;
+//    /*-{
+//        console.log(text);
+//        var copyEvent = new ClipboardEvent('copy', { dataType: 'text/plain', data: 'Data to be copied' } );
+//
+//        $doc.dispatchEvent(copyEvent);
+//    }-*/;
 
     public Element createElement(Element parent, int left, int top, int width, int height)
     {
@@ -324,29 +336,42 @@ class DrawArea implements IChangeListener
 
     }
 
+    private boolean copyMolecule()
+    {
+        StereoMolecule molecule = model.getMolecule();
+        MolfileV3Creator c = new MolfileV3Creator(molecule);
+        copy(c.getMolfile());
+        return true;
+    }
+    boolean meta = false;
     public void setOnKeyPressed(final ACTKeyEventHandler handler)
     {
-
         canvas.addKeyDownHandler(new KeyDownHandler()
         {
             @Override
             public void onKeyDown(KeyDownEvent event)
             {
                 down = true;
+                meta = event.isMetaKeyDown();
                 code = event.getNativeKeyCode();
-                if (isValidKey(code)) {
+                if (!meta && isValidKey(code)) {
                     event.preventDefault();
+                } else if (meta) {
+                    if (code == KeyCodes.KEY_C) {
+//                        copy(model.getIDCode());
+                        copyMolecule();
+                        event.preventDefault();
+                    }
                 }
             }
         });
-
         canvas.addKeyUpHandler(new KeyUpHandler()
         {
             @Override
             public void onKeyUp(KeyUpEvent event)
             {
                 code = event.getNativeKeyCode();
-                if (isValidKey(code)){
+                if (!meta &&  isValidKey(code)){
                     event.preventDefault();
                     handler.onKey(new ACTKeyEvent(
                             code,
