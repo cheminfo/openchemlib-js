@@ -46,6 +46,7 @@ import com.actelion.research.share.gui.editor.io.IKeyEvent;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
 
 import java.awt.geom.Point2D;
+import java.util.function.Consumer;
 
 
 /**
@@ -321,6 +322,18 @@ public abstract class AtomHighlightAction extends DrawAction
         StereoMolecule mol = model.getMolecule();
         if (mol != null) {
             IAtomQueryFeaturesDialog dlg = factory.createAtomQueryFeatureDialog(/*new AtomQueryFeaturesDialog*/mol, atom);
+            dlg.setResultHandler(new Consumer<DialogResult>()
+            {
+                @Override
+                public void accept(DialogResult res)
+                {
+                    if (res == DialogResult.IDOK) {
+                        model.setSelectedAtom(-1);
+                        model.changed();
+                    }
+                }
+            });
+
             return dlg.doModalAt(lastHightlightPoint.getX(), lastHightlightPoint.getY()) == DialogResult.IDOK;
         }
         return false;

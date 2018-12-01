@@ -36,6 +36,7 @@ import com.actelion.research.gwt.gui.editor.ToolBar;
 import com.actelion.research.gwt.gui.viewer.Console;
 import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.DialogResult;
+import com.actelion.research.share.gui.editor.dialogs.IDialog;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
@@ -44,14 +45,19 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.actelion.research.gwt.gui.editor.Window;
 
+import java.util.function.Consumer;
+
 /**
  * Project:
  * User: rufenec
  * Date: 7/4/2014
  * Time: 10:47 AM
  */
-public abstract class TDialog extends DialogBox
+public abstract class TDialog extends DialogBox// implements IDialog
 {
+
+
+    private Consumer<DialogResult> resultHandler;
 
     private static final String cornerIE6 =
             "iVBORw0KGgoAAAANSUhEUgAAABoAAABDCAMAAAC1FeXDAAAAAXNSR0IArs4c6QAAADxQTFRFAAAAvb29vr6/psvwzMzMvNLnvtPnsbGxksHww9nuwtz1yuH13t/i3uDi0OT28vX68/X69Pb6////u7u7tq5AQwAAAAF0Uk5TAEDm2GYAAAABYktHRACIBR1IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH2QEQDiMAIKvDAwAAAMxJREFUOMvV1GETgiAMBuChK0jUIv7/fw0XUjK2us4++H7bPTdvTgQAZgo80yhy2Syo3BQSWYWMQgheJqUL2jMRQfNNPpH8wPmbCa1CRiEUyMt0YrTaxXIi8+cknMBSknACQ0EEToCUnxal7VB85SPSul3b+iimhBG+sqVYwnYY7zkasTEOQCX/X29K2W595tHEKYQpRnbmU0+gLH318CEUq2i85Yw1ddeSjv964qU3rNUg3mxLn3R6k+1BKY7SmLB3OT0jV1KTe8se9AD3aUjt61de2QAAAABJRU5ErkJggg==";
@@ -90,7 +96,9 @@ public abstract class TDialog extends DialogBox
 
     public void onClose(DialogResult res)
     {
-
+        if (resultHandler != null) {
+            resultHandler.accept(res);
+        }
     }
 
     public DialogResult doModal()
@@ -217,4 +225,10 @@ public abstract class TDialog extends DialogBox
                 "background: url(data:image/png;base64," + vborder + ") repeat-y -4px 0px;" +
                         "-background: url(data:image/png;base64," + vborderIE6 + ") repeat-y -4px 0px;");
     }
+
+    public void setResultHandler(Consumer<DialogResult> resultHandler)
+    {
+        this.resultHandler = resultHandler;
+    }
+
 }

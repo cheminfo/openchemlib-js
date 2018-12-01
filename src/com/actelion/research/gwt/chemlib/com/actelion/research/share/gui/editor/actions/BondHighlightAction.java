@@ -44,6 +44,7 @@ import com.actelion.research.share.gui.editor.io.IKeyEvent;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
 
 import java.awt.geom.Point2D;
+import java.util.function.Consumer;
 
 
 /**
@@ -221,6 +222,18 @@ public abstract class BondHighlightAction extends AtomHighlightAction
         if (mol != null) {
             GeomFactory factory = model.getGeomFactory();
             IBondQueryFeaturesDialog dlg = factory.createBondFeaturesDialog(/*new BondQueryFeaturesDialog(*/mol, bond);
+            dlg.setResultHandler(new Consumer<DialogResult>()
+            {
+                @Override
+                public void accept(DialogResult res)
+                {
+                    if (res == DialogResult.IDOK) {
+                        model.setSelectedBond(-1);
+                        model.changed();
+                    }
+                }
+            });
+
             return dlg.doModalAt(lastHightlightPoint.getX(),lastHightlightPoint.getY()) == DialogResult.IDOK;
         }
         return false;
