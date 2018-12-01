@@ -2,6 +2,7 @@
 
 const childProcess = require('child_process');
 const path = require('path');
+const os = require('os');
 
 const fs = require('fs-extra');
 const rimraf = require('rimraf');
@@ -76,7 +77,8 @@ classpathList.push(
   path.resolve(config.gwt, 'gwt-user.jar')
 );
 
-const classpath = classpathList.join(':');
+const sep = os.platform() === 'win32' ? ';' : ':';
+const classpath = classpathList.join(sep);
 
 run(argv._[0]);
 
