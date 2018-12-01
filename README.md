@@ -8,15 +8,15 @@ JavaScript interface with the [openchemlib](https://github.com/actelion/openchem
 
 ## [Documentation](./Documentation.md)
 
-[Test the chemical molecule editor online](https://cheminfo.github.io/openchemlib-js/dist/Editor.html )
+[Test the chemical molecule editor online](https://cheminfo.github.io/openchemlib-js/dist/Editor.html)
 
 ## Development
 
 To build this project, you need :
 
-* java >= 1.7
-* GWT 2.8 ([Download build here](http://www.gwtproject.org/download.html))
-* Node.js ([link](https://nodejs.org/en/download/current/))
+- java >= 1.7
+- GWT 2.8 ([Download build here](http://www.gwtproject.org/download.html))
+- Node.js ([link](https://nodejs.org/en/download/current/))
 
 ### Install dependencies
 
@@ -27,28 +27,31 @@ To build this project, you need :
 Copy `config.default.json` to `config.json` and put the path to the GWT classes on your computer.  
 If you want to update the java code from openchemlib, provide the path to the openchemlib source.
 
-### Gulp tasks
+### npm scripts
 
-**Options**
+To run one of the scripts, use `npm run <scriptName>`.  
+To pass an options, use `npm run <scriptName> -- --option`.
 
-* -m [name]: only process module "name"
-* -v: verbose output
+**Options**:
+
+- -m [name]: only process module "name"
+- -v: verbose output
 
 #### compile:min / compile:pretty
 
-Execute the GWT compiler
+Execute the GWT compiler.
 
 #### export
 
-Transform the GWT compiled files to javascript modules
+Transform the GWT compiled files to JavaScript modules.
 
 #### build:min / build:pretty
 
-Compile and export
+Compile and export.
 
 #### copy:openchemlib
 
-Copy the required java files from the openchemlib project
+Copy the required java files from the openchemlib project.
 
 ## License
 
