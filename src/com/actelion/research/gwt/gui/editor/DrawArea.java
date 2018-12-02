@@ -352,7 +352,7 @@ class DrawArea implements IChangeListener
             public void onKeyDown(KeyDownEvent event)
             {
                 down = true;
-                meta = event.isMetaKeyDown();
+                meta = event.isMetaKeyDown() || event.isControlKeyDown();
                 code = event.getNativeKeyCode();
                 if (!meta && isValidKey(code)) {
                     event.preventDefault();
