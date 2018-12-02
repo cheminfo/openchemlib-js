@@ -8,7 +8,7 @@ JavaScript interface with the [openchemlib](https://github.com/actelion/openchem
 
 ## [Documentation](./Documentation.md)
 
-[Test the chemical molecule editor online](https://cheminfo.github.io/openchemlib-js/dist/Editor.html)
+[Test the chemical molecule editor online](https://cheminfo.github.io/openchemlib-js/examples/Editor.html)
 
 ## Development
 

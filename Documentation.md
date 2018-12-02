@@ -32,8 +32,8 @@ If you do not need stereo features and want the fastest parsing, use this method
 
 **Options**
 
-* `noCoordinates` - disable extra coordinate computation (default: false).
-* `noStereo` - disable stereo features parsing (default: false).
+- `noCoordinates` - disable extra coordinate computation (default: false).
+- `noStereo` - disable stereo features parsing (default: false).
 
 ### Molecule.fromMolfile(molfile)
 
@@ -49,9 +49,9 @@ Parse the provided `idcode` and return a `Molecule`.
 
 **Arguments**
 
-* `idcode` - string with the idcode
-* `ensure2DCoordinates` - boolean indicating if the 2D coordinates should be computed (default: true)
-* `coordinates` - string with the idcoordinates to use
+- `idcode` - string with the idcode
+- `ensure2DCoordinates` - boolean indicating if the 2D coordinates should be computed (default: true)
+- `coordinates` - string with the idcoordinates to use
 
 ### molecule.toSmiles()
 
@@ -71,9 +71,9 @@ Returns an SVG string representing the structure in two dimensions.
 
 **Options**
 
-* `factorTextSize` (default: 1)
-* `fontWeight`: font-weight attribute of atom labels
-* `strokeWidth`: stroke-width styling property of bonds
+- `factorTextSize` (default: 1)
+- `fontWeight`: font-weight attribute of atom labels
+- `strokeWidth`: stroke-width styling property of bonds
 
 See [Depictor options](#depictor-options) for other options
 
@@ -107,7 +107,7 @@ Expand and find a position for all the hydrogens of the 2D molecule. If `atomNum
 
 **Options**
 
-* `atomNumber`- The atom number according to the molfile (default: all the atoms)
+- `atomNumber`- The atom number according to the molfile (default: all the atoms)
 
 ### molecule.removeExplicitHydrogens()
 
@@ -129,8 +129,8 @@ This function returns an array of HOSE(Hierarchical Organisation of Spherical En
 
 **Options**
 
-* `maxSphereSize` - Maximum number of atoms from the center (default: 5).
-* `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
+- `maxSphereSize` - Maximum number of atoms from the center (default: 5).
+- `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
 
 ### molecule.setFragment(isFragment)
 
@@ -178,8 +178,8 @@ Create a new parser
 
 **Arguments**
 
-* `sdf` - string with the sdf
-* `fields` - array of field names to parse. If null, the sdf is scanned to find all possible names (not efficient)
+- `sdf` - string with the sdf
+- `fields` - array of field names to parse. If null, the sdf is scanned to find all possible names (not efficient)
 
 ### parser.next()
 
@@ -230,7 +230,7 @@ Set the `fragment` to search
 
 **Arguments**
 
-* `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
+- `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
 
 ### searcher.setMolecule(molecule)
 
@@ -238,7 +238,7 @@ Set the target `molecule` in which the search will be done
 
 **Arguments**
 
-* `molecule` - [Molecule](#molecule) instance to set as target molecule
+- `molecule` - [Molecule](#molecule) instance to set as target molecule
 
 ### searcher.setMol(fragment, molecule)
 
@@ -278,8 +278,8 @@ Set the `fragment` to search
 
 **Arguments**
 
-* `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
-* `index` - If the index for this fragment was computed previously, it can be provided here to save time
+- `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
+- `index` - If the index for this fragment was computed previously, it can be provided here to save time
 
 ### searcher.setMolecule(molecule, [index])
 
@@ -287,8 +287,8 @@ Set the target `molecule` in which the search will be done
 
 **Arguments**
 
-* `molecule` - [Molecule](#molecule) instance to set as target molecule
-* `index` - If the index for this fragment was computed previously, it can be provided here to save time
+- `molecule` - [Molecule](#molecule) instance to set as target molecule
+- `index` - If the index for this fragment was computed previously, it can be provided here to save time
 
 ### searcher.isFragmentInMolecule()
 
@@ -302,17 +302,17 @@ Returns true if the set fragment is in the target molecule, false otherwise
 
 ### Risk constants
 
-* ToxicityPredictor.RISK_UNKNOWN
-* ToxicityPredictor.RISK_NO
-* ToxicityPredictor.RISK_LOW
-* ToxicityPredictor.RISK_HIGH
+- ToxicityPredictor.RISK_UNKNOWN
+- ToxicityPredictor.RISK_NO
+- ToxicityPredictor.RISK_LOW
+- ToxicityPredictor.RISK_HIGH
 
 ### Toxicity type constants
 
-* ToxicityPredictor.TYPE_MUTAGENIC
-* ToxicityPredictor.TYPE_TUMORIGENIC
-* ToxicityPredictor.TYPE_IRRITANT
-* ToxicityPredictor.TYPE_REPRODUCTIVE_EFFECTIVE
+- ToxicityPredictor.TYPE_MUTAGENIC
+- ToxicityPredictor.TYPE_TUMORIGENIC
+- ToxicityPredictor.TYPE_IRRITANT
+- ToxicityPredictor.TYPE_REPRODUCTIVE_EFFECTIVE
 
 ### predictor.assessRisk(molecule, type)
 
@@ -329,7 +329,7 @@ that are responsible for it.
 
 ### Constants
 
-* DruglikenessPredictor.DRUGLIKENESS_UNKNOWN
+- DruglikenessPredictor.DRUGLIKENESS_UNKNOWN
 
 ### predictor.assessDruglikeness(molecule)
 
@@ -357,8 +357,8 @@ Returns the HOSE(Hierarchical Organisation of Spherical Environments) code for t
 
 **Options**
 
-* `maxSphereSize` - Maximum number of atoms from the center (default: 5).
-* `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
+- `maxSphereSize` - Maximum number of atoms from the center (default: 5).
+- `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
 
 ---
 
@@ -375,10 +375,10 @@ See [Depictor options](#depictor-options)
 ## StructureEditor
 
 You can test it on line:
-* <a href="https://cheminfo.github.io/openchemlib-js/dist/Editor.html" target="_blank">Editor</a>
-* <a href="https://cheminfo.github.io/openchemlib-js/dist/ShowStructures.html" target="_blank">showStructures</a>
-* <a href="https://cheminfo.github.io/openchemlib-js/dist/SVG.html" target="_blank">SVG</a>
 
+- <a href="https://cheminfo.github.io/openchemlib-js/examples/Editor.html" target="_blank">Editor</a>
+- <a href="https://cheminfo.github.io/openchemlib-js/examples/ShowStructures.html" target="_blank">showStructures</a>
+- <a href="https://cheminfo.github.io/openchemlib-js/examples/SVG.html" target="_blank">SVG</a>
 
 ### StructureEditor.createEditor(id)
 
@@ -478,24 +478,24 @@ execute the following JS:
 
 The following options are all boolean and they default to `false`.
 
-* `inflateToMaxAVBL`
-* `inflateToHighResAVBL`
-* `chiralTextBelowMolecule`
-* `chiralTextAboveMolecule`
-* `chiralTextOnFrameTop`
-* `chiralTextOnFrameBottom`
+- `inflateToMaxAVBL`
+- `inflateToHighResAVBL`
+- `chiralTextBelowMolecule`
+- `chiralTextAboveMolecule`
+- `chiralTextOnFrameTop`
+- `chiralTextOnFrameBottom`
   ``
-* `noTabus`
-* `showAtomNumber`
-* `showBondNumber`
-* `highlightQueryFeatures`
-* `showMapping`
-* `suppressChiralText`
-* `suppressCIPParity`
-* `suppressESR`
+- `noTabus`
+- `showAtomNumber`
+- `showBondNumber`
+- `highlightQueryFeatures`
+- `showMapping`
+- `suppressChiralText`
+- `suppressCIPParity`
+- `suppressESR`
   ``
-* `showSymmetrySimple`
-* `showSymmetryDiastereotopic`
-* `showSymmetryEnantiotopic`
-* `noImplicitAtomLabelColors`
-* `noStereoProblem`
+- `showSymmetrySimple`
+- `showSymmetryDiastereotopic`
+- `showSymmetryEnantiotopic`
+- `noImplicitAtomLabelColors`
+- `noStereoProblem`
