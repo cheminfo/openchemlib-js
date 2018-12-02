@@ -1,3 +1,11 @@
+5.7.0 / 2018-12-02
+==================
+
+* Update OCL to 2018.12.0
+* Added support for copying and pasting molfiles
+* Fixed display of query features
+* Fixed emitting change event for modifications coming from dialogs
+
 5.6.1 / 2018-11-06
 ==================
 
