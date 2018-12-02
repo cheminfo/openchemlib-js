@@ -3,6 +3,7 @@
 
 * Update OCL to 2018.12.0
 * Added support for copying and pasting molfiles
+* Added molecule.toIsomericSmiles(includeAtomMapping)
 * Fixed display of query features
 * Fixed emitting change event for modifications coming from dialogs
 

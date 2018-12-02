@@ -55,7 +55,11 @@ Parse the provided `idcode` and return a `Molecule`.
 
 ### molecule.toSmiles()
 
-Returns a smiles string.
+Returns a SMILES string.
+
+### molecule.toIsomericSmiles(includeAtomMapping = false)
+
+Returns an isomeric SMILES string.
 
 ### molecule.toMolfile()
 
@@ -69,7 +73,7 @@ Returns a molfile (V3000) string.
 
 Returns an SVG string representing the structure in two dimensions.
 
-**Options**
+**Options**:
 
 - `factorTextSize` (default: 1)
 - `fontWeight`: font-weight attribute of atom labels

@@ -4,24 +4,30 @@ const fs = require('fs');
 
 const Molecule = require('../minimal').Molecule;
 
-describe('Molecule', function () {
-  it('fromSmiles', function () {
-    testFromSmiles('C');
-    testFromSmiles('COCOC');
-    testFromSmiles('c1cc2cccc3c4cccc5cccc(c(c1)c23)c54');
-
-    expect(function () {
-      Molecule.fromSmiles('ABC');
-    }).toThrow(/SmilesParser: unknown element label found/);
-
-    function testFromSmiles(smiles) {
+describe('from and to SMILES', () => {
+  it.each(['C', 'COCOC', 'c1cc2cccc3c4cccc5cccc(c(c1)c23)c54'])(
+    'fromSmiles',
+    (smiles) => {
       const mol = Molecule.fromSmiles(smiles);
       expect(Molecule.fromSmiles(mol.toSmiles()).getIDCode()).toBe(
         mol.getIDCode()
       );
     }
+  );
+
+  it('should throw on syntax error', () => {
+    expect(function () {
+      Molecule.fromSmiles('ABC');
+    }).toThrow(/SmilesParser: unknown element label found/);
   });
 
+  it('toIsomericSmiles', () => {
+    const mol = Molecule.fromSmiles('C1CC1');
+    expect(mol.toIsomericSmiles()).toBe('C1CC1');
+  });
+});
+
+describe('Molecule', function () {
   it('medley', function () {
     const idcode =
       'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';

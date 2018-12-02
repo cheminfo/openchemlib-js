@@ -77,6 +77,10 @@ public class JSMolecule {
 	public String toSmiles() {
 		return new SmilesCreator().generateSmiles(oclMolecule);
 	}
+
+	public String toIsomericSmiles(boolean includeAtomMapping) {
+		return new IsomericSmilesCreator(oclMolecule, includeAtomMapping).getSmiles();
+	}
 	
 	public String toMolfile() {
 		MolfileCreator creator = new MolfileCreator(oclMolecule);
