@@ -57,16 +57,11 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Project:
- * User: rufenec
- * Date: 7/1/2014
- * Time: 10:05 AM
+ * Project: User: rufenec Date: 7/1/2014 Time: 10:05 AM
  */
 @JsType(namespace = "OCL")
-public class StructureEditor implements IChangeListener//,Exportable
-{
+public class StructureEditor implements IChangeListener {
     static int TEXTHEIGHT = 20;
     static int TOOLBARWIDTH = 45;
 
@@ -90,28 +85,21 @@ public class StructureEditor implements IChangeListener//,Exportable
     }
 
     @JsIgnore
-    public StructureEditor()
-    {
+    public StructureEditor() {
         this("editor");
     }
 
-//    private native NodeList querySelector(String selectors)/*-{
-//        return $doc.querySelectorAll(selectors);
-//    }-*/;
-
     @JsIgnore
-    public StructureEditor(String id)
-    {
-        this(id,false,1);
+    public StructureEditor(String id) {
+        this(id, false, 1);
     }
 
-    public StructureEditor(String id, boolean useSVG, int scale)
-    {
+    public StructureEditor(String id, boolean useSVG, int scale) {
         this.scale = scale;
         container = Document.get().getElementById(id);
 
         if (container != null) {
-            model = new GWTEditorModel(new GWTGeomFactory(new GWTDrawConfig()),0);
+            model = new GWTEditorModel(new GWTGeomFactory(new GWTDrawConfig()), 0);
             String vo = container.getAttribute("view-only");
             viewOnly = Boolean.parseBoolean(vo);
 
@@ -134,10 +122,9 @@ public class StructureEditor implements IChangeListener//,Exportable
             String isfragment = container.getAttribute("is-fragment");
             boolean isFragment = Boolean.parseBoolean(isfragment);
 
-
             String style = container.getAttribute("style");
             style += ";overflow:hidden;position:relative;";
-            container.setAttribute("style",style);
+            container.setAttribute("style", style);
 
             final int width = container.getClientWidth();
             final int height = container.getClientHeight();
@@ -145,7 +132,7 @@ public class StructureEditor implements IChangeListener//,Exportable
 
             final int toolBarWidth = getToolbarWidth();
             if (useSVG)
-                toolBar = new SVGToolBarImpl(model,scale);
+                toolBar = new SVGToolBarImpl(model, scale);
             else
                 toolBar = new ToolBarImpl(model);
             Element toolBarElement = toolBar.createElement(container, toolBarWidth, height - TEXTHEIGHT - 5);
@@ -153,7 +140,8 @@ public class StructureEditor implements IChangeListener//,Exportable
                 container.appendChild(toolBarElement);
 
             drawPane = new DrawArea(model);
-            Element drawAreaElement = drawPane.createElement(container, toolBarWidth,0,(width - toolBarWidth), height - TEXTHEIGHT - 5);
+            Element drawAreaElement = drawPane.createElement(container, toolBarWidth, 0, (width - toolBarWidth),
+                    height - TEXTHEIGHT - 5);
             container.appendChild(drawAreaElement);
 
             int idcodewidth = showFragmentIndicator ? width - 50 : width;
@@ -182,17 +170,16 @@ public class StructureEditor implements IChangeListener//,Exportable
 
             model.setDisplayMode(displayMode);
             model.addChangeListener(this);
-            StereoMolecule mol = createMolecule(idcode, isFragment/*, (width - toolBarWidth), height - TEXTHEIGHT - 5*/);
+            StereoMolecule mol = createMolecule(idcode,
+                    isFragment/* , (width - toolBarWidth), height - TEXTHEIGHT - 5 */);
             model.setValue(mol, true);
 
             setUpHandlers();
             setupMouseHandlers();
 
             // Respond to resizing
-            com.google.gwt.user.client.Window.addResizeHandler(new ResizeHandler()
-            {
-                public void onResize(ResizeEvent ev)
-                {
+            com.google.gwt.user.client.Window.addResizeHandler(new ResizeHandler() {
+                public void onResize(ResizeEvent ev) {
                     int w = container.getClientWidth();
                     int h = container.getClientHeight();
                     int idcodewidth = showFragmentIndicator ? w - 30 : h;
@@ -201,25 +188,24 @@ public class StructureEditor implements IChangeListener//,Exportable
                         if (idcodeTextElement != null)
                             setElementSizePos(idcodeTextElement, 0, h - TEXTHEIGHT - 5, TEXTHEIGHT, idcodewidth);
                         if (fragmentStatus != null)
-                            setElementSizePos(fragmentStatus, w-30, h - TEXTHEIGHT - 5, TEXTHEIGHT, 30);
+                            setElementSizePos(fragmentStatus, w - 30, h - TEXTHEIGHT - 5, TEXTHEIGHT, 30);
                     }
                 }
             });
         }
-        addPasteHandler(this,"onMouseClicked ");
+        addPasteHandler(this, "onMouseClicked ");
     }
 
-    public static StructureEditor createEditor(String id)
-    {
+    public static StructureEditor createEditor(String id) {
         return new StructureEditor(id);
     }
 
-    public static StructureEditor createSVGEditor(String id, int scale)
-    {
-        return new StructureEditor(id,true,scale);
+    public static StructureEditor createSVGEditor(String id, int scale) {
+        return new StructureEditor(id, true, scale);
     }
 
-    private native static void initObserver() /*-{
+    private native static void initObserver()
+    /*-{
         if ('MutationObserver' in $wnd) {
             $wnd.edit$observer = new $wnd.MutationObserver(function (mutations) {
                 mutations.forEach(function (mutation) {
@@ -229,8 +215,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }-*/;
 
-    public static void notify(Object o)
-    {
+    public static void notify(Object o) {
         for (StructureEditor e : map) {
             e.drawPane.draw();
             int w = e.container.getClientWidth();
@@ -241,35 +226,24 @@ public class StructureEditor implements IChangeListener//,Exportable
 
     }
 
-    private int getToolbarWidth()
-    {
-        return viewOnly ? 0 : TOOLBARWIDTH *scale;
+    private int getToolbarWidth() {
+        return viewOnly ? 0 : TOOLBARWIDTH * scale;
     }
 
-    private void setElementSizePos(Element el, int x, int y, int h, int w)
-    {
-        el.setAttribute("style",
-                "position:absolute;" +
-                        "left:" + x + "px; " +
-                        "top:" + y + "px;" +
-                        "width:" + w + "px;" +
-                        "height:" + h + "px;");
-
-//        idcodeTextElement.setAttribute("style", "position:relative;float:left;width:" + (w - 5) + "px;height:" + TEXTHEIGHT + "px;");
+    private void setElementSizePos(Element el, int x, int y, int h, int w) {
+        el.setAttribute("style", "position:absolute;" + "left:" + x + "px; " + "top:" + y + "px;" + "width:" + w + "px;"
+                + "height:" + h + "px;");
     }
-
 
     public JSMolecule getMolecule() {
         return new JSMolecule(model.getMolecule());
     }
 
-    public String getIDCode()
-    {
+    public String getIDCode() {
         return model.getIDCode();
     }
 
-    public void setIDCode(String idCode)
-    {
+    public void setIDCode(String idCode) {
         try {
             StereoMolecule mol = new StereoMolecule();
             IDCodeParser p = new IDCodeParser();
@@ -287,50 +261,39 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
-    public void setFragment(boolean set)
-    {
+    public void setFragment(boolean set) {
         model.setFragment(set);
     }
 
-    public boolean isFragment()
-    {
+    public boolean isFragment() {
         return model.isFragment();
     }
 
-    public String getMolFile()
-    {
+    public String getMolFile() {
         return model.getMolFile(false);
     }
 
-    public void setMolFile(String molFile)
-    {
+    public void setMolFile(String molFile) {
         model.setMolFile(molFile);
     }
 
-    public String getMolFileV3()
-    {
+    public String getMolFileV3() {
         return model.getMolFile(true);
     }
 
-    public String getSmiles()
-    {
+    public String getSmiles() {
         return model.getSmiles();
     }
 
-    public void setSmiles(String smiles)
-    {
+    public void setSmiles(String smiles) {
         model.setSmiles(smiles);
     }
 
-
-    public void setAtomHightlightCallback(final JavaScriptObject atomHightlightCallback)
-    {
+    public void setAtomHightlightCallback(final JavaScriptObject atomHightlightCallback) {
         if (atomHightlightCallback != null) {
-            model.registerAtomHighlightCallback(new Model.AtomHighlightCallback()
-            {
+            model.registerAtomHighlightCallback(new Model.AtomHighlightCallback() {
                 @Override
-                public void onHighlight(int atom, boolean selected)
-                {
+                public void onHighlight(int atom, boolean selected) {
                     callFuncIZ(atomHightlightCallback, atom, selected);
                 }
             });
@@ -338,14 +301,11 @@ public class StructureEditor implements IChangeListener//,Exportable
             model.registerAtomHighlightCallback(null);
     }
 
-    public void setBondHightlightCallback(final JavaScriptObject bondHightlightCallback)
-    {
+    public void setBondHightlightCallback(final JavaScriptObject bondHightlightCallback) {
         if (bondHightlightCallback != null) {
-            model.registerBondHighlightCallback(new Model.BondHighlightCallback()
-            {
+            model.registerBondHighlightCallback(new Model.BondHighlightCallback() {
                 @Override
-                public void onHighlight(int bond, boolean selected)
-                {
+                public void onHighlight(int bond, boolean selected) {
                     callFuncIZ(bondHightlightCallback, bond, selected);
                 }
             });
@@ -353,15 +313,11 @@ public class StructureEditor implements IChangeListener//,Exportable
             model.registerBondHighlightCallback(null);
     }
 
-
-    public void setChangeListenerCallback(final JavaScriptObject cb)
-    {
+    public void setChangeListenerCallback(final JavaScriptObject cb) {
         if (cb != null) {
-            model.addChangeListener(new IChangeListener()
-            {
+            model.addChangeListener(new IChangeListener() {
                 @Override
-                public void onChange()
-                {
+                public void onChange() {
                     String idcode = model.getIDCode();
                     callFuncS(cb, idcode, getMolecule());
 
@@ -370,8 +326,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
-    private StereoMolecule createMolecule(String idcode, boolean fragment/*, int width, int height*/)
-    {
+    private StereoMolecule createMolecule(String idcode, boolean fragment/* , int width, int height */) {
         StereoMolecule mol = new StereoMolecule();
         mol.setFragment(fragment);
         if (idcode != null && idcode.trim().length() > 0) {
@@ -383,123 +338,93 @@ public class StructureEditor implements IChangeListener//,Exportable
                 p.parse(mol, elements[0], elements[1]);
 
             mol.setStereoBondsFromParity();
-/*
-            GWTDepictor depictor = new GWTDepictor(mol);
-            depictor.updateCoords(null,
-                    new java.awt.geom.Rectangle2D.Double(0, 0, (float) width, (float) height),
-                    GWTDepictor.cModeInflateToMaxAVBL
-            );
-*/
+            /*
+             * GWTDepictor depictor = new GWTDepictor(mol); depictor.updateCoords(null, new
+             * java.awt.geom.Rectangle2D.Double(0, 0, (float) width, (float) height),
+             * GWTDepictor.cModeInflateToMaxAVBL );
+             */
 
         }
         return mol;
     }
 
-
-    private void setUpHandlers()
-    {
+    private void setUpHandlers() {
     }
 
-    private Context2d getContext2d()
-    {
+    private Context2d getContext2d() {
         return drawPane.canvas.getContext2d();
     }
 
-    private void setupMouseHandlers()
-    {
-        drawPane.setOnMouseClicked(new ClickHandler()
-        {
+    private void setupMouseHandlers() {
+        drawPane.setOnMouseClicked(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event)
-            {
+            public void onClick(ClickEvent event) {
                 onMouseClicked(event, false);
             }
-        }, new DoubleClickHandler()
-        {
+        }, new DoubleClickHandler() {
             @Override
-            public void onDoubleClick(DoubleClickEvent event)
-            {
+            public void onDoubleClick(DoubleClickEvent event) {
                 onMouseClicked(event, true);
 
             }
         });
 
-        drawPane.setOnMouseDragged(new MouseMoveHandler()
-        {
+        drawPane.setOnMouseDragged(new MouseMoveHandler() {
             @Override
-            public void onMouseMove(MouseMoveEvent event)
-            {
+            public void onMouseMove(MouseMoveEvent event) {
                 if (drag)
                     onMouseDragged(event);
 
             }
         });
-        drawPane.setOnMouseMoved(new MouseMoveHandler()
-        {
+        drawPane.setOnMouseMoved(new MouseMoveHandler() {
             @Override
-            public void onMouseMove(MouseMoveEvent event)
-            {
+            public void onMouseMove(MouseMoveEvent event) {
                 boolean moved = mousePoint == null ? false : true;
-//                        mousePoint.distance(event.getX(), event.getY()) > 1;
                 if (!drag && moved) {
                     onMouseMoved(event);
                 }
                 mousePoint = new Point2D.Double(event.getX(), event.getY());
             }
         });
-        drawPane.setOnMouseOut(new MouseOutHandler()
-        {
+        drawPane.setOnMouseOut(new MouseOutHandler() {
             @Override
-            public void onMouseOut(MouseOutEvent event)
-            {
+            public void onMouseOut(MouseOutEvent event) {
                 mousePoint = null;
             }
         });
-        drawPane.setOnMousePressed(new MouseDownHandler()
-        {
+        drawPane.setOnMousePressed(new MouseDownHandler() {
             @Override
-            public void onMouseDown(MouseDownEvent event)
-            {
+            public void onMouseDown(MouseDownEvent event) {
 
                 drag = true;
                 onMousePressed(event);
             }
         });
-        drawPane.setOnMouseReleased(new MouseUpHandler()
-        {
+        drawPane.setOnMouseReleased(new MouseUpHandler() {
             @Override
-            public void onMouseUp(MouseUpEvent event)
-            {
+            public void onMouseUp(MouseUpEvent event) {
                 drag = false;
                 onMouseReleased(event);
                 mousePoint = null;
             }
         });
-        drawPane.setOnKeyPressed(new ACTKeyEventHandler()
-        {
+        drawPane.setOnKeyPressed(new ACTKeyEventHandler() {
             @Override
-            public void onKey(IKeyEvent event)
-            {
+            public void onKey(IKeyEvent event) {
                 onKeyPressed(event);
             }
         });
 
-
-/*
-        drawPane.setOnKeyReleased(new ACTKeyEventHandler()
-        {
-            @Override
-            public void onKey(IKeyEvent event)
-            {
-                onKeyPressed(event);
-            }
-        });
-*/
+        /*
+         * drawPane.setOnKeyReleased(new ACTKeyEventHandler() {
+         * 
+         * @Override public void onKey(IKeyEvent event) { onKeyPressed(event); } });
+         */
 
     }
 
-    private void onKeyPressed(IKeyEvent keyEvent)
-    {
+    private void onKeyPressed(IKeyEvent keyEvent) {
         Action a = toolBar.getCurrentAction();
         if (a != null) {
             if (a.onKeyPressed(keyEvent)) {
@@ -510,12 +435,10 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
-    private void handleKeyEvent(IKeyEvent keyEvent)
-    {
+    private void handleKeyEvent(IKeyEvent keyEvent) {
     }
 
-    private void onMouseMoved(MouseEvent evt)
-    {
+    private void onMouseMoved(MouseEvent evt) {
         if (!rightClick) {
             Action a = toolBar.getCurrentAction();
             if (a != null && !a.isCommand()) {
@@ -527,8 +450,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
-    private void onMouseDragged(MouseEvent evt)
-    {
+    private void onMouseDragged(MouseEvent evt) {
         if (!rightClick) {
             Action a = toolBar.getCurrentAction();
             if (a != null && !a.isCommand()) {
@@ -542,23 +464,20 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
-
-    public boolean onPasteString(String s)
-    {
-//        Log.console("Paste " + s);
+    public boolean onPasteString(String s) {
         try {
             StereoMolecule mol = new StereoMolecule();
             MolfileParser parser = new MolfileParser();
-            parser.parse(mol,s);
-            model.addMolecule(mol,0,0);
+            parser.parse(mol, s);
+            model.addMolecule(mol, 0, 0);
             return true;
         } catch (Exception e) {
             Log.console("Parse exception " + e);
         }
         try {
             StereoMolecule mol = new StereoMolecule();
-            IDCodeParser p  = new IDCodeParser(true);
-            p.parse(mol,s);
+            IDCodeParser p = new IDCodeParser(true);
+            p.parse(mol, s);
             model.addMolecule(mol, 0, 0);
             return true;
         } catch (Exception e) {
@@ -567,17 +486,15 @@ public class StructureEditor implements IChangeListener//,Exportable
         return false;
     }
 
-    public boolean onPasteImage(Object s)
-    {
+    public boolean onPasteImage(Object s) {
         return false;
     }
 
-    public boolean hasFocus()
-    {
+    public boolean hasFocus() {
         return drawPane.hasFocus() || toolBar.hasFocus();
     }
 
-        public static native void addPasteHandler(StructureEditor self, String text)
+    public static native void addPasteHandler(StructureEditor self, String text)
     /*-{
         $doc.addEventListener('paste', function (e) {
             var foxus = self.@com.actelion.research.gwt.gui.editor.StructureEditor::hasFocus()();
@@ -593,7 +510,7 @@ public class StructureEditor implements IChangeListener//,Exportable
                             var blob = items[i].getAsFile();
                             var URLObj = window.URL || window.webkitURL;
                             var source = URLObj.createObjectURL(blob);
-
+    
                             var pastedImage = new Image();
                             pastedImage.onload = function () {
                                 if(self.@com.actelion.research.gwt.gui.editor.StructureEditor::onPasteImage(Ljava/lang/Object;)(pastedImage)) {
@@ -607,45 +524,35 @@ public class StructureEditor implements IChangeListener//,Exportable
                                    done = true;
                                }
                             });
-
+    
                         }
                     }
                     e.preventDefault();
                 }
             }
-
+    
         }, false); //official paste handler
-
-
-
-
-//        vaddPasteHandlerconsole.log("Copy Event " + copyEvent);
-//        $doc.dispatchEvent(copyEvent);
     }-*/;
 
-    private void onMouseClicked(MouseEvent evt, boolean dbl)
-    {
+    private void onMouseClicked(MouseEvent evt, boolean dbl) {
         if (!rightClick) {
             Action a = toolBar.getCurrentAction();
             if (a != null && !a.isCommand()) {
                 if (dbl && a.onDoubleClick(new ACTMouseEvent(evt))) {
                     drawPane.draw(a);
-//                    a.paint(drawPane.getDrawContext());
                 }
             }
         }
 
     }
 
-    private void onMouseReleased(MouseEvent evt)
-    {
+    private void onMouseReleased(MouseEvent evt) {
         if (!rightClick) {
             Action a = toolBar.getCurrentAction();
             if (a != null && !a.isCommand()) {
                 FakeMouseEvent thisEvt = new FakeMouseEvent(evt);
                 FakeMouseEvent syntheticEvt = null;
-                if (mousePressEvt != null &&
-                    isSmallMovement(thisEvt, mousePressEvt)) {
+                if (mousePressEvt != null && isSmallMovement(thisEvt, mousePressEvt)) {
                     syntheticEvt = mousePressEvt;
                 } else {
                     syntheticEvt = thisEvt;
@@ -661,8 +568,7 @@ public class StructureEditor implements IChangeListener//,Exportable
         mousePressEvt = null;
     }
 
-    private void onMousePressed(MouseEvent evt)
-    {
+    private void onMousePressed(MouseEvent evt) {
         mousePressEvt = new FakeMouseEvent(evt);
         if (evt.getNativeButton() == NativeEvent.BUTTON_RIGHT) {
             rightClick = true;
@@ -681,32 +587,28 @@ public class StructureEditor implements IChangeListener//,Exportable
         return distance <= 36.0;
     }
 
-    private void setCursor(int c)
-    {
+    private void setCursor(int c) {
         switch (c) {
-            case ICursor.SE_RESIZE:
-                drawPane.setCursor(Style.Cursor.SE_RESIZE);
-                break;
-            case ICursor.CROSSHAIR:
-                drawPane.setCursor(Style.Cursor.CROSSHAIR);
-                break;
-            case ICursor.DEFAULT:
-            default:
-                drawPane.setCursor(Style.Cursor.DEFAULT);
-                break;
+        case ICursor.SE_RESIZE:
+            drawPane.setCursor(Style.Cursor.SE_RESIZE);
+            break;
+        case ICursor.CROSSHAIR:
+            drawPane.setCursor(Style.Cursor.CROSSHAIR);
+            break;
+        case ICursor.DEFAULT:
+        default:
+            drawPane.setCursor(Style.Cursor.DEFAULT);
+            break;
         }
     }
 
-    private void doAction(Action a)
-    {
+    private void doAction(Action a) {
         toolBar.doAction(a);
         drawPane.requestLayout();
     }
 
-
     @Override
-    public void onChange()
-    {
+    public void onChange() {
         if (idcodeTextElement != null) {
             String idcode = model.getIDCode();
             idcodeTextElement.setValue(idcode);
@@ -716,14 +618,12 @@ public class StructureEditor implements IChangeListener//,Exportable
         }
     }
 
-
     private native void callFuncIZ(JavaScriptObject func, int param, boolean b) /*-{
-        func(param, b);
-    }-*/;
+                                                                                func(param, b);
+                                                                                }-*/;
 
     private native void callFuncS(JavaScriptObject func, String f, JSMolecule jsMolecule) /*-{
-        func(f, jsMolecule);
-    }-*/;
+                                                                                          func(f, jsMolecule);
+                                                                                          }-*/;
 
 }
-

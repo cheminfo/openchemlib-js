@@ -39,14 +39,9 @@ import com.actelion.research.chem.StereoMolecule;
 /**
  * Created by rufenec on 20/03/15.
  */
-public class TestIDC
-{
-    public static void main(String[] args)
-    {
+public class TestIDC {
+    public static void main(String[] args) {
         String idCode = "gFp@DiTvjh@ !Bg~w@k_}mvw@`";
-
-//        Log.java:70 gFp@DiTvjh@ !B_g~w_K_}mvw_@
-
         try {
             StereoMolecule mol = new StereoMolecule();
             IDCodeParser p = new IDCodeParser(false);
@@ -57,7 +52,6 @@ public class TestIDC
                     p.parse(mol, parts[0], parts[1]);
                 } else
                     p.parse(mol, idCode);
-
 
                 System.out.println("renderMolecule: " + mol.isFragment());
                 System.out.println(idCode);

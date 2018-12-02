@@ -35,21 +35,22 @@ package com.actelion.research.gwt.gui.editor;
 import com.actelion.research.share.gui.editor.io.IKeyCode;
 import com.google.gwt.event.dom.client.KeyCodes;
 
-public class ACTKeyCode implements IKeyCode
-{
-      public static final ACTKeyCode DELETE = new ACTKeyCode(KeyCodes.KEY_DELETE, "Delete",0);
-    public static final ACTKeyCode ESCAPE = new ACTKeyCode(KeyCodes.KEY_ESCAPE, "Escape",0);
-    public static final ACTKeyCode BACK_SPACE = new ACTKeyCode(KeyCodes.KEY_BACKSPACE, "Escape",0);
-    public static final ACTKeyCode ENTER = new ACTKeyCode(KeyCodes.KEY_ENTER, "Escape",0);
+public class ACTKeyCode implements IKeyCode {
+    public static final ACTKeyCode DELETE = new ACTKeyCode(KeyCodes.KEY_DELETE, "Delete", 0);
+    public static final ACTKeyCode ESCAPE = new ACTKeyCode(KeyCodes.KEY_ESCAPE, "Escape", 0);
+    public static final ACTKeyCode BACK_SPACE = new ACTKeyCode(KeyCodes.KEY_BACKSPACE, "Escape", 0);
+    public static final ACTKeyCode ENTER = new ACTKeyCode(KeyCodes.KEY_ENTER, "Escape", 0);
 
     final int code;
     final String ch;
     final String name;
     private int mask;
 
-    // Need to bundle this in another class to avoid "forward reference" compiler error
+    // Need to bundle this in another class to avoid "forward reference" compiler
+    // error
     private static class KeyCodeClass {
-        private KeyCodeClass() {};
+        private KeyCodeClass() {
+        };
 
         private static final int FUNCTION = 1;
         private static final int NAVIGATION = 1 << 1;
@@ -66,16 +67,12 @@ public class ACTKeyCode implements IKeyCode
         this.code = code;
         this.name = name;
         this.mask = mask;
-        // ch = new String(Character.toChars(code));
-        ch = String.valueOf((char)code);
+        ch = String.valueOf((char) code);
     }
-
-//    public KeyCode(int code, String name) {
-//        this(code, name, 0);
-//    }
 
     /**
      * Function keys like F1, F2, etc...
+     * 
      * @return true if this key code corresponds to a functional key
      * @since 2.2
      */
@@ -84,8 +81,9 @@ public class ACTKeyCode implements IKeyCode
     }
 
     /**
-     * Navigation keys are arrow keys and Page Down, Page Up, Home, End
-     * (including keypad keys)
+     * Navigation keys are arrow keys and Page Down, Page Up, Home, End (including
+     * keypad keys)
+     * 
      * @return true if this key code corresponds to a navigation key
      * @since 2.2
      */
@@ -95,6 +93,7 @@ public class ACTKeyCode implements IKeyCode
 
     /**
      * Left, right, up, down keys (including the keypad arrows)
+     * 
      * @return true if this key code corresponds to an arrow key
      * @since 2.2
      */
@@ -104,6 +103,7 @@ public class ACTKeyCode implements IKeyCode
 
     /**
      * Keys that could act as a modifier
+     * 
      * @return true if this key code corresponds to a modifier key
      * @since 2.2
      */
@@ -113,6 +113,7 @@ public class ACTKeyCode implements IKeyCode
 
     /**
      * All keys with letters
+     * 
      * @return true if this key code corresponds to a letter key
      * @since 2.2
      */
@@ -122,6 +123,7 @@ public class ACTKeyCode implements IKeyCode
 
     /**
      * All Digit keys (including the keypad digits)
+     * 
      * @return true if this key code corresponds to a digit key
      * @since 2.2
      */
@@ -131,6 +133,7 @@ public class ACTKeyCode implements IKeyCode
 
     /**
      * All keys on the keypad
+     * 
      * @return true if this key code corresponds to a keypad key
      * @since 2.2
      */
@@ -140,6 +143,7 @@ public class ACTKeyCode implements IKeyCode
 
     /**
      * Space, tab and enter
+     * 
      * @return true if this key code corresponds to a whitespace key
      * @since 2.2
      */
@@ -149,6 +153,7 @@ public class ACTKeyCode implements IKeyCode
 
     /**
      * All multimedia keys (channel up/down, volume control, etc...)
+     * 
      * @return true if this key code corresponds to a media key
      * @since 2.2
      */
@@ -158,69 +163,15 @@ public class ACTKeyCode implements IKeyCode
 
     /**
      * Gets name of this key code.
+     * 
      * @return Name of this key code
      */
     public final String getName() {
         return name;
     }
 
-//    /**
-//     * @treatAsPrivate implementation detail
-//     * @deprecated This is an internal API that is not intended for use and will be removed in the next version
-//     */
-//    @Deprecated
-//    public String impl_getChar() {
-//        return ch;
-//    }
-//
-//    /**
-//     * @treatAsPrivate implementation detail
-//     * @deprecated This is an internal API that is not intended for use and will be removed in the next version
-//     */
-//    // SB-dependency: RT-22749 has been filed to track this
-//    @Deprecated
-//    public int impl_getCode() {
-//        return code;
-//    }
-//
-//    private static final Map<Integer, KeyCode> charMap;
-//    private static final Map<String, KeyCode> nameMap;
-//    static {
-//        charMap = new HashMap<Integer, KeyCode>(KeyCode.values().length);
-//        nameMap = new HashMap<String, KeyCode>(KeyCode.values().length);
-//        for (KeyCode c : KeyCode.values()) {
-//            charMap.put(c.code, c);
-//            nameMap.put(c.name, c);
-//        }
-//    }
-//
-//    /**
-//     * Returns KeyCode object for the given numeric code
-//     * @param code Numeric code of the key
-//     * @return KeyCode object for the given numeric code, null if no such key
-//     *                 code exists
-//     * @treatAsPrivate implementation detail
-//     * @deprecated This is an internal API that is not intended for use and will be removed in the next version
-//     */
-//    @Deprecated
-//    static KeyCode impl_valueOf(int code) {
-//        return charMap.get(code);
-//    }
-//
-//    /**
-//     * Parses textual representation of a key.
-//     * @param name Textual representation of the key
-//     * @return KeyCode for the key with the given name, null if the string
-//     *                 is unknown.
-//     */
-//    public static KeyCode getKeyCode(String name) {
-//        return nameMap.get(name);
-//    }
-
-
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -229,10 +180,8 @@ public class ACTKeyCode implements IKeyCode
         }
 
         ACTKeyCode keyCode = (ACTKeyCode) o;
-//        System.out.println("Equals code " + this.code + " " + ((KeyCode) o).code);
-//        System.out.println("Equals mask " + this.mask + " " + ((KeyCode) o).mask);
 
-        if (code != keyCode.code /*|| mask != keyCode.mask*/) {
+        if (code != keyCode.code) {
             return false;
         }
 
@@ -240,8 +189,7 @@ public class ACTKeyCode implements IKeyCode
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return code;
     }
 }

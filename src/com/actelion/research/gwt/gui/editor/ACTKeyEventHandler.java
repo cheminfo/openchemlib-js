@@ -34,9 +34,7 @@ package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.share.gui.editor.io.IKeyEvent;
 
-
-public interface ACTKeyEventHandler
-{
+public interface ACTKeyEventHandler {
 
     void onKey(IKeyEvent event);
 

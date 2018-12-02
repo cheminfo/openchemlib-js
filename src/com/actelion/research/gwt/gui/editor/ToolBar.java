@@ -32,17 +32,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.actelion.research.gwt.gui.editor;
 
-
 import com.actelion.research.share.gui.editor.actions.Action;
 
 /**
- * Project:
- * User: rufenec
- * Date: 7/2/2014
- * Time: 10:53 AM
+ * Project: User: rufenec Date: 7/2/2014 Time: 10:53 AM
  */
-public interface ToolBar<T>
-{
+public interface ToolBar<T> {
 
     public static final double IMAGE_WIDTH = 45;
     public static final double IMAGE_HEIGHT = 360;
@@ -53,7 +48,10 @@ public interface ToolBar<T>
     double ESR_IMAGE_ROWS = 3;
 
     public T createElement(T parent, int width, int height);
+
     public void doAction(Action a);
+
     public Action getCurrentAction();
+
     public boolean hasFocus();
 }

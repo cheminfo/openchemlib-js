@@ -32,21 +32,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.actelion.research.gwt.gui.editor;
 
-
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
 import com.google.gwt.event.dom.client.MouseEvent;
 
-
-public class FakeMouseEvent implements IMouseEvent
-{
+public class FakeMouseEvent implements IMouseEvent {
     private int x = 0;
     private int y = 0;
     private boolean shift = false;
     private boolean ctrl = false;
     private boolean alt = false;
 
-    public FakeMouseEvent(MouseEvent evt)
-    {
+    public FakeMouseEvent(MouseEvent evt) {
         x = evt.getX();
         y = evt.getY();
         shift = evt.isShiftKeyDown();
@@ -54,24 +50,19 @@ public class FakeMouseEvent implements IMouseEvent
         alt = evt.isAltKeyDown();
     }
 
-    public double getX()
-    {
+    public double getX() {
         return x;
     }
 
-    public double getY()
-    {
+    public double getY() {
         return y;
     }
 
-    public boolean isShiftDown()
-    {
+    public boolean isShiftDown() {
         return shift;
     }
 
-
-    public boolean isControlDown()
-    {
+    public boolean isControlDown() {
         return ctrl;
     }
 

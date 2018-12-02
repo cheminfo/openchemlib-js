@@ -42,13 +42,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 
 /**
- * Project:
- * User: rufenec
- * Date: 7/4/2014
- * Time: 11:18 AM
+ * Project: User: rufenec Date: 7/4/2014 Time: 11:18 AM
  */
-public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeaturesDialog
-{
+public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeaturesDialog {
     private static final String BUTTON_WIDTH = "75px";
     static final String CLIENT_WIDTH = "300px";
     static final String CLIENT_HEIGHT = "100px";
@@ -57,16 +53,14 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
     private CheckBox mCBSingle, mCBDouble, mCBTriple, mCBDelocalized, mCBIsBridge, mCBMatchStereo;
     private ComboBox mComboBoxRing, mComboBoxRingSize, mComboBoxMinAtoms, mComboBoxMaxAtoms;
 
-    public BondQueryFeaturesDialog(StereoMolecule mol, int bond)
-    {
+    public BondQueryFeaturesDialog(StereoMolecule mol, int bond) {
         super(null, "Query Bond Properties");
         mMol = mol;
         mBond = bond;
     }
 
     @Override
-    protected void buildGUI(RootPanel root)
-    {
+    protected void buildGUI(RootPanel root) {
         FlexTable grid = new FlexTable();
 
         Label land = new Label("and");
@@ -94,7 +88,6 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
         mComboBoxRing.addItem("is ring bond");
         mComboBoxRing.addItem("is chain bond");
 
-
         mComboBoxRingSize.addItem("any ring size");
         mComboBoxRingSize.addItem("is in 3-membered ring");
         mComboBoxRingSize.addItem("is in 4-membered ring");
@@ -105,10 +98,10 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
         cancel.setWidth(BUTTON_WIDTH);
         ok.setWidth(BUTTON_WIDTH);
 
-        grid.setWidget(0, 0,mCBSingle);
-        grid.setWidget(1, 0,mCBDouble);
-        grid.setWidget(2, 0,mCBTriple);
-        grid.setWidget(3, 0,mCBDelocalized);
+        grid.setWidget(0, 0, mCBSingle);
+        grid.setWidget(1, 0, mCBDouble);
+        grid.setWidget(2, 0, mCBTriple);
+        grid.setWidget(3, 0, mCBDelocalized);
         grid.setWidget(4, 0, mComboBoxRing);
 
         grid.getFlexCellFormatter().setColSpan(1, 2, 4);
@@ -124,7 +117,6 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
         grid.setWidget(5, 0, mCBMatchStereo);
         grid.setWidget(7, 4, cancel);
         grid.setWidget(7, 5, ok);
-//
         grid.setWidth(CLIENT_WIDTH);
         grid.setHeight(CLIENT_HEIGHT);
 
@@ -144,20 +136,16 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
     }
 
     @Override
-    protected void onInitialUpdate()
-    {
+    protected void onInitialUpdate() {
         mCBMatchStereo.setEnabled((mMol.getBondQueryFeatures(mBond) & Molecule.cBondQFMatchStereo) != 0);
         mMol.ensureHelperArrays(Molecule.cHelperRings);
         setInitialStates();
     }
 
-    private void setupControlHandlers()
-    {
-        mComboBoxMinAtoms.addClickHandler(new ClickHandler()
-        {
+    private void setupControlHandlers() {
+        mComboBoxMinAtoms.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event)
-            {
+            public void onClick(ClickEvent event) {
                 int minAtoms = mComboBoxMinAtoms.getSelectedIndex();
                 if (mFirstSpanItem != minAtoms) {
                     int maxAtoms = mFirstSpanItem + mComboBoxMaxAtoms.getSelectedIndex();
@@ -174,46 +162,35 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
             }
         });
 
-        mCBIsBridge.addClickHandler(new ClickHandler()
-        {
+        mCBIsBridge.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event)
-            {
+            public void onClick(ClickEvent event) {
                 enableItems();
             }
         });
     }
 
-    private void setupButtonHandlers(Button cancel, Button ok)
-    {
-        ok.addClickHandler(new ClickHandler()
-        {
+    private void setupButtonHandlers(Button cancel, Button ok) {
+        ok.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event)
-            {
+            public void onClick(ClickEvent event) {
                 setQueryFeatures();
                 onOK();
             }
         });
 
-        cancel.addClickHandler(new ClickHandler()
-        {
+        cancel.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event)
-            {
+            public void onClick(ClickEvent event) {
                 onCancel();
             }
         });
-//        ok.setDefaultButton(true);
-//        cancel.setCancelButton(true);
     }
 
-    private void setInitialStates()
-    {
+    private void setInitialStates() {
         int queryFeatures = mMol.getBondQueryFeatures(mBond);
-        int bondType = (mMol.getBondType(mBond) == Molecule.cBondTypeDelocalized
-                || mMol.isDelocalizedBond(mBond)) ?
-                0 : mMol.getBondOrder(mBond);
+        int bondType = (mMol.getBondType(mBond) == Molecule.cBondTypeDelocalized || mMol.isDelocalizedBond(mBond)) ? 0
+                : mMol.getBondOrder(mBond);
 
         if ((queryFeatures & Molecule.cBondQFSingle) != 0 || bondType == 1)
             mCBSingle.setValue(true);
@@ -249,9 +226,7 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
         enableItems();
     }
 
-
-    private int populateComboBoxMaxAtoms(int minAtoms)
-    {
+    private int populateComboBoxMaxAtoms(int minAtoms) {
         mComboBoxMaxAtoms.clear();
         ;
         int itemCount = (1 << Molecule.cBondQFBridgeSpanBits);
@@ -261,15 +236,14 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
         return itemCount;
     }
 
-    private void enableItems()
-    {
+    private void enableItems() {
         boolean bridgeIsSelected = mCBIsBridge.getValue();
         mCBSingle.setEnabled(!bridgeIsSelected);
         mCBDouble.setEnabled(!bridgeIsSelected);
         mCBTriple.setEnabled(!bridgeIsSelected);
         mCBDelocalized.setEnabled(!bridgeIsSelected);
-        mCBMatchStereo.setEnabled(!(bridgeIsSelected
-                && mMol.getBondOrder(mBond) == 2    // exclude BINAP-type stereo bonds for now
+        mCBMatchStereo.setEnabled(!(bridgeIsSelected && mMol.getBondOrder(mBond) == 2 // exclude BINAP-type stereo bonds
+                                                                                      // for now
                 && mMol.getBondParity(mBond) != Molecule.cBondParityNone
                 && mMol.getBondParity(mBond) != Molecule.cBondParityUnknown));
         mComboBoxRing.setEnabled(!bridgeIsSelected);
@@ -278,9 +252,7 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
         mComboBoxMaxAtoms.setEnabled(bridgeIsSelected);
     }
 
-
-    private void setQueryFeatures()
-    {
+    private void setQueryFeatures() {
         if (isSelectedBond(mBond)) {
             for (int bond = 0; bond < mMol.getAllBonds(); bond++) {
                 if (isSelectedBond(bond))
@@ -291,9 +263,7 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
         }
     }
 
-
-    private void setQueryFeatures(int bond)
-    {
+    private void setQueryFeatures(int bond) {
         int queryFeatures = 0;
 
         if (mCBIsBridge.getValue()) {
@@ -341,14 +311,11 @@ public class BondQueryFeaturesDialog extends TDialog implements IBondQueryFeatur
         if (mComboBoxRingSize.getSelectedIndex() != 0)
             queryFeatures |= ((mComboBoxRingSize.getSelectedIndex() + 2) << Molecule.cBondQFRingSizeShift);
 
-//        mMol.setBondQueryFeature(bond, 0xFFFFFFFF, false);
         mMol.setBondQueryFeature(bond, Molecule.cBondQFAllFeatures, false);
         mMol.setBondQueryFeature(bond, queryFeatures, true);
     }
 
-    private boolean isSelectedBond(int bond)
-    {
-        return mMol.isSelectedAtom(mMol.getBondAtom(0, bond))
-                && mMol.isSelectedAtom(mMol.getBondAtom(1, bond));
+    private boolean isSelectedBond(int bond) {
+        return mMol.isSelectedAtom(mMol.getBondAtom(0, bond)) && mMol.isSelectedAtom(mMol.getBondAtom(1, bond));
     }
 }

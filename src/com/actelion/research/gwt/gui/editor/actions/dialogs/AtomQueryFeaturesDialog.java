@@ -45,33 +45,27 @@ import com.google.gwt.user.client.ui.*;
 import java.util.Arrays;
 
 /**
- * Project:
- * User: rufenec
- * Date: 7/4/2014
- * Time: 10:50 AM
+ * Project: User: rufenec Date: 7/4/2014 Time: 10:50 AM
  */
-public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeaturesDialog
-{
+public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeaturesDialog {
     private static final String CB_WIDTH = "200px";
     private ExtendedMolecule mMol;
     private int mAtom;
 
-    private CheckBox mCBAny, mCBBlocked, mCBSubstituted, mCBMatchStereo,mCBExcludeGroup;
-    private ComboBox mChoiceArom, mChoiceRingState, mChoiceRingSize, mChoiceCharge,
-            mChoiceNeighbours, mChoiceHydrogen, mChoicePi;
+    private CheckBox mCBAny, mCBBlocked, mCBSubstituted, mCBMatchStereo, mCBExcludeGroup;
+    private ComboBox mChoiceArom, mChoiceRingState, mChoiceRingSize, mChoiceCharge, mChoiceNeighbours, mChoiceHydrogen,
+            mChoicePi;
     private TextBox mTFAtomList;
     private Label mLabelAtomList;
-    private Button cancel ,ok;
+    private Button cancel, ok;
 
-    public AtomQueryFeaturesDialog(StereoMolecule mol, int atom)
-    {
+    public AtomQueryFeaturesDialog(StereoMolecule mol, int atom) {
         super(null, "Query Atom Properties");
         mMol = mol;
         mAtom = atom;
     }
 
-    protected void buildGUI(RootPanel root)
-    {
+    protected void buildGUI(RootPanel root) {
 
         Grid grid = new Grid(15, 2);
         grid.setCellPadding(0);
@@ -90,8 +84,6 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
         panel.add(mLabelAtomList);
         panel.add(mTFAtomList);
         grid.setWidget(2, 0, panel);
-//        grid.setWidget(2,0,mLabelAtomList);
-//        grid.setWidget(2,1,mTFAtomList);
 
         mChoiceArom = new ComboBox();
         mChoiceArom.setWidth(CB_WIDTH);
@@ -102,7 +94,6 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
         mChoiceRingState = new ComboBox();
         mChoiceRingState.setWidth(CB_WIDTH);
-//        mChoiceRingState.setOpaque(opaque);
         mChoiceRingState.addItem("any ring state");
         mChoiceRingState.addItem("is chain atom");
         mChoiceRingState.addItem("is any ring atom");
@@ -113,7 +104,6 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
         mChoiceRingSize = new ComboBox();
         mChoiceRingSize.setWidth(CB_WIDTH);
-//        mChoiceRingSize.setOpaque(opaque);
         mChoiceRingSize.addItem("any ring size");
         mChoiceRingSize.addItem("is in 3-membered ring");
         mChoiceRingSize.addItem("is in 4-membered ring");
@@ -124,7 +114,6 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
         mChoiceCharge = new ComboBox();
         mChoiceCharge.setWidth(CB_WIDTH);
-//        mChoiceCharge.setOpaque(opaque);
         mChoiceCharge.addItem("any atom charge");
         mChoiceCharge.addItem("has no charge");
         mChoiceCharge.addItem("has negative charge");
@@ -133,7 +122,6 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
         mChoiceNeighbours = new ComboBox();
         mChoiceNeighbours.setWidth(CB_WIDTH);
-//        mChoiceNeighbours.setOpaque(opaque);
         mChoiceNeighbours.addItem("any non-H neighbour count");
         mChoiceNeighbours.addItem("has exactly 1 neighbour");
         mChoiceNeighbours.addItem("has exactly 2 neighbours");
@@ -187,12 +175,9 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
         buttonPanel.add(cancel);
         buttonPanel.add(ok);
         grid.setWidget(14, 1, buttonPanel);
-//        grid.setWidget(13,2,cancel);
-//        grid.setWidget(13,3,ok);
 
         grid.setWidth("300px");
         grid.setHeight("200px");
-
 
         setWidget(grid);
         setWidth("300px");
@@ -201,32 +186,25 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
         setupHandlers();
     }
 
-    private void setupHandlers()
-    {
-        ok.addClickHandler(new ClickHandler()
-        {
+    private void setupHandlers() {
+        ok.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event)
-            {
+            public void onClick(ClickEvent event) {
                 setQueryFeatures();
                 onOK();
             }
         });
 
-        cancel.addClickHandler(new ClickHandler()
-        {
+        cancel.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event)
-            {
+            public void onClick(ClickEvent event) {
                 onCancel();
 
             }
         });
-        mCBAny.addValueChangeHandler(new ValueChangeHandler<Boolean>()
-        {
+        mCBAny.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
             @Override
-            public void onValueChange(ValueChangeEvent<Boolean> event)
-            {
+            public void onValueChange(ValueChangeEvent<Boolean> event) {
                 if (event.getValue())
                     mLabelAtomList.setText("excluded atoms:");
                 else
@@ -234,11 +212,9 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
             }
         });
 
-        mCBBlocked.addValueChangeHandler(new ValueChangeHandler<Boolean>()
-        {
+        mCBBlocked.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
             @Override
-            public void onValueChange(ValueChangeEvent<Boolean> event)
-            {
+            public void onValueChange(ValueChangeEvent<Boolean> event) {
                 if (event.getValue()) {
                     mCBSubstituted.setValue(false);
                     mChoiceNeighbours.setSelectedIndex(0);
@@ -246,24 +222,20 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
             }
         });
 
-        mCBSubstituted.addValueChangeHandler(new ValueChangeHandler<Boolean>()
-        {
+        mCBSubstituted.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
             @Override
-            public void onValueChange(ValueChangeEvent<Boolean> event)
-            {
+            public void onValueChange(ValueChangeEvent<Boolean> event) {
                 mCBBlocked.setValue(false);
 
             }
         });
     }
 
-    protected void onInitialUpdate()
-    {
+    protected void onInitialUpdate() {
         setInitialStates();
     }
 
-    private void setInitialStates()
-    {
+    private void setInitialStates() {
         int queryFeatures = mMol.getAtomQueryFeatures(mAtom);
 
         if ((queryFeatures & Molecule.cAtomQFAny) != 0) {
@@ -281,21 +253,21 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
         int ringState = queryFeatures & Molecule.cAtomQFRingState;
         switch (ringState) {
-            case Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds:
-                mChoiceRingState.setSelectedIndex(1);
-                break;
-            case Molecule.cAtomQFNotChain:
-                mChoiceRingState.setSelectedIndex(2);
-                break;
-            case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds:
-                mChoiceRingState.setSelectedIndex(3);
-                break;
-            case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot4RingBonds:
-                mChoiceRingState.setSelectedIndex(4);
-                break;
-            case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds:
-                mChoiceRingState.setSelectedIndex(5);
-                break;
+        case Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds:
+            mChoiceRingState.setSelectedIndex(1);
+            break;
+        case Molecule.cAtomQFNotChain:
+            mChoiceRingState.setSelectedIndex(2);
+            break;
+        case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds:
+            mChoiceRingState.setSelectedIndex(3);
+            break;
+        case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot4RingBonds:
+            mChoiceRingState.setSelectedIndex(4);
+            break;
+        case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds:
+            mChoiceRingState.setSelectedIndex(5);
+            break;
         }
 
         int ringSize = (queryFeatures & Molecule.cAtomQFRingSize) >> Molecule.cAtomQFRingSizeShift;
@@ -303,87 +275,87 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
         int neighbourFeatures = queryFeatures & Molecule.cAtomQFNeighbours;
         switch (neighbourFeatures) {
-            case Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot1Neighbour:
-                mChoiceNeighbours.setSelectedIndex(1);
-                break;
-            case Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot2Neighbours:
-                mChoiceNeighbours.setSelectedIndex(2);
-                break;
-            case Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot3Neighbours:
-                mChoiceNeighbours.setSelectedIndex(3);
-                break;
-            case Molecule.cAtomQFNot3Neighbours | Molecule.cAtomQFNot4Neighbours:
-                mChoiceNeighbours.setSelectedIndex(4);
-                break;
-            case Molecule.cAtomQFNot4Neighbours:
-                mChoiceNeighbours.setSelectedIndex(5);
-                break;
-            case Molecule.cAtomQFNot0Neighbours | Molecule.cAtomQFNot1Neighbour:
-                mChoiceNeighbours.setSelectedIndex(6);
-                break;
-            case Molecule.cAtomQFNot0Neighbours | Molecule.cAtomQFNot1Neighbour | Molecule.cAtomQFNot2Neighbours:
-                mChoiceNeighbours.setSelectedIndex(7);
-                break;
-            case Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot4Neighbours:
-                mChoiceNeighbours.setSelectedIndex(8);
-                break;
+        case Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot1Neighbour:
+            mChoiceNeighbours.setSelectedIndex(1);
+            break;
+        case Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot2Neighbours:
+            mChoiceNeighbours.setSelectedIndex(2);
+            break;
+        case Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot3Neighbours:
+            mChoiceNeighbours.setSelectedIndex(3);
+            break;
+        case Molecule.cAtomQFNot3Neighbours | Molecule.cAtomQFNot4Neighbours:
+            mChoiceNeighbours.setSelectedIndex(4);
+            break;
+        case Molecule.cAtomQFNot4Neighbours:
+            mChoiceNeighbours.setSelectedIndex(5);
+            break;
+        case Molecule.cAtomQFNot0Neighbours | Molecule.cAtomQFNot1Neighbour:
+            mChoiceNeighbours.setSelectedIndex(6);
+            break;
+        case Molecule.cAtomQFNot0Neighbours | Molecule.cAtomQFNot1Neighbour | Molecule.cAtomQFNot2Neighbours:
+            mChoiceNeighbours.setSelectedIndex(7);
+            break;
+        case Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot4Neighbours:
+            mChoiceNeighbours.setSelectedIndex(8);
+            break;
         }
 
         int chargeFeatures = queryFeatures & Molecule.cAtomQFCharge;
         switch (chargeFeatures) {
-            case Molecule.cAtomQFNotChargeNeg | Molecule.cAtomQFNotChargePos:
-                mChoiceCharge.setSelectedIndex(1);
-                break;
-            case Molecule.cAtomQFNotCharge0 | Molecule.cAtomQFNotChargePos:
-                mChoiceCharge.setSelectedIndex(2);
-                break;
-            case Molecule.cAtomQFNotCharge0 | Molecule.cAtomQFNotChargeNeg:
-                mChoiceCharge.setSelectedIndex(3);
-                break;
+        case Molecule.cAtomQFNotChargeNeg | Molecule.cAtomQFNotChargePos:
+            mChoiceCharge.setSelectedIndex(1);
+            break;
+        case Molecule.cAtomQFNotCharge0 | Molecule.cAtomQFNotChargePos:
+            mChoiceCharge.setSelectedIndex(2);
+            break;
+        case Molecule.cAtomQFNotCharge0 | Molecule.cAtomQFNotChargeNeg:
+            mChoiceCharge.setSelectedIndex(3);
+            break;
         }
 
         int hydrogenFeatures = queryFeatures & Molecule.cAtomQFHydrogen;
         switch (hydrogenFeatures) {
-            case Molecule.cAtomQFNot1Hydrogen | Molecule.cAtomQFNot2Hydrogen | Molecule.cAtomQFNot3Hydrogen:
-                mChoiceHydrogen.setSelectedIndex(1);
-                break;
-            case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot2Hydrogen | Molecule.cAtomQFNot3Hydrogen:
-                mChoiceHydrogen.setSelectedIndex(2);
-                break;
-            case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen | Molecule.cAtomQFNot3Hydrogen:
-                mChoiceHydrogen.setSelectedIndex(3);
-                break;
-            case Molecule.cAtomQFNot0Hydrogen:
-                mChoiceHydrogen.setSelectedIndex(4);
-                break;
-            case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen:
-                mChoiceHydrogen.setSelectedIndex(5);
-                break;
-            case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen | Molecule.cAtomQFNot2Hydrogen:
-                mChoiceHydrogen.setSelectedIndex(6);
-                break;
-            case Molecule.cAtomQFNot2Hydrogen | Molecule.cAtomQFNot3Hydrogen:
-                mChoiceHydrogen.setSelectedIndex(7);
-                break;
-            case Molecule.cAtomQFNot3Hydrogen:
-                mChoiceHydrogen.setSelectedIndex(8);
-                break;
+        case Molecule.cAtomQFNot1Hydrogen | Molecule.cAtomQFNot2Hydrogen | Molecule.cAtomQFNot3Hydrogen:
+            mChoiceHydrogen.setSelectedIndex(1);
+            break;
+        case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot2Hydrogen | Molecule.cAtomQFNot3Hydrogen:
+            mChoiceHydrogen.setSelectedIndex(2);
+            break;
+        case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen | Molecule.cAtomQFNot3Hydrogen:
+            mChoiceHydrogen.setSelectedIndex(3);
+            break;
+        case Molecule.cAtomQFNot0Hydrogen:
+            mChoiceHydrogen.setSelectedIndex(4);
+            break;
+        case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen:
+            mChoiceHydrogen.setSelectedIndex(5);
+            break;
+        case Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen | Molecule.cAtomQFNot2Hydrogen:
+            mChoiceHydrogen.setSelectedIndex(6);
+            break;
+        case Molecule.cAtomQFNot2Hydrogen | Molecule.cAtomQFNot3Hydrogen:
+            mChoiceHydrogen.setSelectedIndex(7);
+            break;
+        case Molecule.cAtomQFNot3Hydrogen:
+            mChoiceHydrogen.setSelectedIndex(8);
+            break;
         }
 
         int piFeatures = queryFeatures & Molecule.cAtomQFPiElectrons;
         switch (piFeatures) {
-            case Molecule.cAtomQFNot1PiElectron | Molecule.cAtomQFNot2PiElectrons:
-                mChoicePi.setSelectedIndex(1);
-                break;
-            case Molecule.cAtomQFNot0PiElectrons | Molecule.cAtomQFNot2PiElectrons:
-                mChoicePi.setSelectedIndex(2);
-                break;
-            case Molecule.cAtomQFNot0PiElectrons | Molecule.cAtomQFNot1PiElectron:
-                mChoicePi.setSelectedIndex(3);
-                break;
-            case Molecule.cAtomQFNot0PiElectrons:
-                mChoicePi.setSelectedIndex(4);
-                break;
+        case Molecule.cAtomQFNot1PiElectron | Molecule.cAtomQFNot2PiElectrons:
+            mChoicePi.setSelectedIndex(1);
+            break;
+        case Molecule.cAtomQFNot0PiElectrons | Molecule.cAtomQFNot2PiElectrons:
+            mChoicePi.setSelectedIndex(2);
+            break;
+        case Molecule.cAtomQFNot0PiElectrons | Molecule.cAtomQFNot1PiElectron:
+            mChoicePi.setSelectedIndex(3);
+            break;
+        case Molecule.cAtomQFNot0PiElectrons:
+            mChoicePi.setSelectedIndex(4);
+            break;
         }
 
         if ((queryFeatures & Molecule.cAtomQFNoMoreNeighbours) != 0)
@@ -400,8 +372,7 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
     }
 
-    private void setQueryFeatures()
-    {
+    private void setQueryFeatures() {
         int[] atomList = createAtomList();
         if (mMol.isSelectedAtom(mAtom)) {
             for (int atom = 0; atom < mMol.getAllAtoms(); atom++)
@@ -412,9 +383,7 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
         }
     }
 
-
-    private void setQueryFeatures(int atom, int[] atomList)
-    {
+    private void setQueryFeatures(int atom, int[] atomList) {
         int queryFeatures = 0;
 
         if (mCBAny.getValue()) {
@@ -435,153 +404,140 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
             if (mMol.isRingBond(mMol.getConnBond(atom, i)))
                 ringBonds++;
         switch (mChoiceRingState.getSelectedIndex()) {
-            case 1:
-                if (ringBonds == 0)
-                    queryFeatures |= (Molecule.cAtomQFNot2RingBonds
-                            | Molecule.cAtomQFNot3RingBonds
-                            | Molecule.cAtomQFNot4RingBonds);
-                break;
-            case 2:
-                queryFeatures |= Molecule.cAtomQFNotChain;
-                break;
-            case 3:
-                if (ringBonds < 3)
-                    queryFeatures |= (Molecule.cAtomQFNotChain
-                            | Molecule.cAtomQFNot3RingBonds
-                            | Molecule.cAtomQFNot4RingBonds);
-                break;
-            case 4:
-                if (ringBonds < 4)
-                    queryFeatures |= (Molecule.cAtomQFNotChain
-                            | Molecule.cAtomQFNot2RingBonds
-                            | Molecule.cAtomQFNot4RingBonds);
-                break;
-            case 5:
-                queryFeatures |= (Molecule.cAtomQFNotChain
-                        | Molecule.cAtomQFNot2RingBonds
-                        | Molecule.cAtomQFNot3RingBonds);
-                break;
+        case 1:
+            if (ringBonds == 0)
+                queryFeatures |= (Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds
+                        | Molecule.cAtomQFNot4RingBonds);
+            break;
+        case 2:
+            queryFeatures |= Molecule.cAtomQFNotChain;
+            break;
+        case 3:
+            if (ringBonds < 3)
+                queryFeatures |= (Molecule.cAtomQFNotChain | Molecule.cAtomQFNot3RingBonds
+                        | Molecule.cAtomQFNot4RingBonds);
+            break;
+        case 4:
+            if (ringBonds < 4)
+                queryFeatures |= (Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds
+                        | Molecule.cAtomQFNot4RingBonds);
+            break;
+        case 5:
+            queryFeatures |= (Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds);
+            break;
         }
 
         if (mChoiceRingSize.getSelectedIndex() != 0)
             queryFeatures |= ((mChoiceRingSize.getSelectedIndex() + 2) << Molecule.cAtomQFRingSizeShift);
 
         switch (mChoiceCharge.getSelectedIndex()) {
-            case 1:
-                queryFeatures |= (Molecule.cAtomQFCharge & ~Molecule.cAtomQFNotCharge0);
-                break;
-            case 2:
-                queryFeatures |= (Molecule.cAtomQFCharge & ~Molecule.cAtomQFNotChargeNeg);
-                break;
-            case 3:
-                queryFeatures |= (Molecule.cAtomQFCharge & ~Molecule.cAtomQFNotChargePos);
-                break;
+        case 1:
+            queryFeatures |= (Molecule.cAtomQFCharge & ~Molecule.cAtomQFNotCharge0);
+            break;
+        case 2:
+            queryFeatures |= (Molecule.cAtomQFCharge & ~Molecule.cAtomQFNotChargeNeg);
+            break;
+        case 3:
+            queryFeatures |= (Molecule.cAtomQFCharge & ~Molecule.cAtomQFNotChargePos);
+            break;
         }
 
         switch (mChoiceNeighbours.getSelectedIndex()) {
-            case 1:
-                if (mMol.getConnAtoms(atom) == 1)
-                    queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
-                else if (mMol.getConnAtoms(atom) < 1)
-                    queryFeatures |= (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot1Neighbour);
-                break;
-            case 2:
-                if (mMol.getConnAtoms(atom) == 2)
-                    queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
-                else if (mMol.getConnAtoms(atom) < 2)
-                    queryFeatures |= (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot2Neighbours);
-                break;
-            case 3:
-                if (mMol.getConnAtoms(atom) == 3)
-                    queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
-                else if (mMol.getConnAtoms(atom) < 3)
-                    queryFeatures |= (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot3Neighbours);
-                break;
-            case 4: // less than 3 non-H neighbours
-                if (mMol.getConnAtoms(atom) == 2)
-                    queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
-                else if (mMol.getConnAtoms(atom) < 2)
-                    queryFeatures |= (Molecule.cAtomQFNot3Neighbours | Molecule.cAtomQFNot4Neighbours);
-                break;
-            case 5: // less than 4 non-H neighbours
-                if (mMol.getConnAtoms(atom) == 3)
-                    queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
-                else if (mMol.getConnAtoms(atom) < 3)
-                    queryFeatures |= Molecule.cAtomQFNot4Neighbours;
-                break;
-            case 6: // more than 1 non-H neighbour
-                if (mMol.getConnAtoms(atom) == 1)
-                    queryFeatures |= Molecule.cAtomQFMoreNeighbours;
-                else if (mMol.getConnAtoms(atom) < 1)
-                    queryFeatures |= (Molecule.cAtomQFNot0Neighbours | Molecule.cAtomQFNot1Neighbour);
-                break;
-            case 7: // more than 2 non-H neighbours
-                if (mMol.getConnAtoms(atom) == 2)
-                    queryFeatures |= Molecule.cAtomQFMoreNeighbours;
-                else if (mMol.getConnAtoms(atom) < 2)
-                    queryFeatures |= (Molecule.cAtomQFNot0Neighbours | Molecule.cAtomQFNot1Neighbour | Molecule.cAtomQFNot2Neighbours);
-                break;
-            case 8: // more than 3 non-H neighbours
-                if (mMol.getConnAtoms(atom) == 3)
-                    queryFeatures |= Molecule.cAtomQFMoreNeighbours;
-                else if (mMol.getConnAtoms(atom) < 3)
-                    queryFeatures |= (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot4Neighbours);
-                break;
+        case 1:
+            if (mMol.getConnAtoms(atom) == 1)
+                queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
+            else if (mMol.getConnAtoms(atom) < 1)
+                queryFeatures |= (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot1Neighbour);
+            break;
+        case 2:
+            if (mMol.getConnAtoms(atom) == 2)
+                queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
+            else if (mMol.getConnAtoms(atom) < 2)
+                queryFeatures |= (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot2Neighbours);
+            break;
+        case 3:
+            if (mMol.getConnAtoms(atom) == 3)
+                queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
+            else if (mMol.getConnAtoms(atom) < 3)
+                queryFeatures |= (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot3Neighbours);
+            break;
+        case 4: // less than 3 non-H neighbours
+            if (mMol.getConnAtoms(atom) == 2)
+                queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
+            else if (mMol.getConnAtoms(atom) < 2)
+                queryFeatures |= (Molecule.cAtomQFNot3Neighbours | Molecule.cAtomQFNot4Neighbours);
+            break;
+        case 5: // less than 4 non-H neighbours
+            if (mMol.getConnAtoms(atom) == 3)
+                queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
+            else if (mMol.getConnAtoms(atom) < 3)
+                queryFeatures |= Molecule.cAtomQFNot4Neighbours;
+            break;
+        case 6: // more than 1 non-H neighbour
+            if (mMol.getConnAtoms(atom) == 1)
+                queryFeatures |= Molecule.cAtomQFMoreNeighbours;
+            else if (mMol.getConnAtoms(atom) < 1)
+                queryFeatures |= (Molecule.cAtomQFNot0Neighbours | Molecule.cAtomQFNot1Neighbour);
+            break;
+        case 7: // more than 2 non-H neighbours
+            if (mMol.getConnAtoms(atom) == 2)
+                queryFeatures |= Molecule.cAtomQFMoreNeighbours;
+            else if (mMol.getConnAtoms(atom) < 2)
+                queryFeatures |= (Molecule.cAtomQFNot0Neighbours | Molecule.cAtomQFNot1Neighbour
+                        | Molecule.cAtomQFNot2Neighbours);
+            break;
+        case 8: // more than 3 non-H neighbours
+            if (mMol.getConnAtoms(atom) == 3)
+                queryFeatures |= Molecule.cAtomQFMoreNeighbours;
+            else if (mMol.getConnAtoms(atom) < 3)
+                queryFeatures |= (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot4Neighbours);
+            break;
         }
 
         switch (mChoiceHydrogen.getSelectedIndex()) {
-            case 1:    // no hydrogens
-                queryFeatures |= (Molecule.cAtomQFNot1Hydrogen
-                        | Molecule.cAtomQFNot2Hydrogen
-                        | Molecule.cAtomQFNot3Hydrogen);
-                break;
-            case 2:    // exactly 1 hydrogen
-                queryFeatures |= (Molecule.cAtomQFNot0Hydrogen
-                        | Molecule.cAtomQFNot2Hydrogen
-                        | Molecule.cAtomQFNot3Hydrogen);
-                break;
-            case 3: // exactly 2 hydrogen
-                queryFeatures |= (Molecule.cAtomQFNot0Hydrogen
-                        | Molecule.cAtomQFNot1Hydrogen
-                        | Molecule.cAtomQFNot3Hydrogen);
-                break;
-            case 4:    // at least 1 hydrogen
-                queryFeatures |= Molecule.cAtomQFNot0Hydrogen;
-                break;
-            case 5:    // at least 2 hydrogens
-                queryFeatures |= (Molecule.cAtomQFNot0Hydrogen
-                        | Molecule.cAtomQFNot1Hydrogen);
-                break;
-            case 6:	// at least 3 hydrogens
-                queryFeatures |= (Molecule.cAtomQFNot0Hydrogen
-                        | Molecule.cAtomQFNot1Hydrogen
-                        | Molecule.cAtomQFNot2Hydrogen);
-                break;
-            case 7: // less than 2 hydrogens
-                queryFeatures |= (Molecule.cAtomQFNot2Hydrogen
-                        | Molecule.cAtomQFNot3Hydrogen);
-                break;
-            case 8: // less than 3 hydrogens
-                queryFeatures |= (Molecule.cAtomQFNot3Hydrogen);
-                break;
+        case 1: // no hydrogens
+            queryFeatures |= (Molecule.cAtomQFNot1Hydrogen | Molecule.cAtomQFNot2Hydrogen
+                    | Molecule.cAtomQFNot3Hydrogen);
+            break;
+        case 2: // exactly 1 hydrogen
+            queryFeatures |= (Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot2Hydrogen
+                    | Molecule.cAtomQFNot3Hydrogen);
+            break;
+        case 3: // exactly 2 hydrogen
+            queryFeatures |= (Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen
+                    | Molecule.cAtomQFNot3Hydrogen);
+            break;
+        case 4: // at least 1 hydrogen
+            queryFeatures |= Molecule.cAtomQFNot0Hydrogen;
+            break;
+        case 5: // at least 2 hydrogens
+            queryFeatures |= (Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen);
+            break;
+        case 6: // at least 3 hydrogens
+            queryFeatures |= (Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen
+                    | Molecule.cAtomQFNot2Hydrogen);
+            break;
+        case 7: // less than 2 hydrogens
+            queryFeatures |= (Molecule.cAtomQFNot2Hydrogen | Molecule.cAtomQFNot3Hydrogen);
+            break;
+        case 8: // less than 3 hydrogens
+            queryFeatures |= (Molecule.cAtomQFNot3Hydrogen);
+            break;
         }
 
         switch (mChoicePi.getSelectedIndex()) {
-            case 1: // no pi electrons
-                queryFeatures |= (Molecule.cAtomQFNot1PiElectron
-                        | Molecule.cAtomQFNot2PiElectrons);
-                break;
-            case 2: // exactly 1 pi electron
-                queryFeatures |= (Molecule.cAtomQFNot0PiElectrons
-                        | Molecule.cAtomQFNot2PiElectrons);
-                break;
-            case 3: // exactly 2 pi electrons
-                queryFeatures |= (Molecule.cAtomQFNot0PiElectrons
-                        | Molecule.cAtomQFNot1PiElectron);
-                break;
-            case 4: // at least 1 pi electron
-                queryFeatures |= Molecule.cAtomQFNot0PiElectrons;
-                break;
+        case 1: // no pi electrons
+            queryFeatures |= (Molecule.cAtomQFNot1PiElectron | Molecule.cAtomQFNot2PiElectrons);
+            break;
+        case 2: // exactly 1 pi electron
+            queryFeatures |= (Molecule.cAtomQFNot0PiElectrons | Molecule.cAtomQFNot2PiElectrons);
+            break;
+        case 3: // exactly 2 pi electrons
+            queryFeatures |= (Molecule.cAtomQFNot0PiElectrons | Molecule.cAtomQFNot1PiElectron);
+            break;
+        case 4: // at least 1 pi electron
+            queryFeatures |= Molecule.cAtomQFNot0PiElectrons;
+            break;
         }
 
         if (mCBBlocked.getValue() && mMol.getFreeValence(atom) > 0)
@@ -596,14 +552,11 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
         if (mCBExcludeGroup.getValue())
             queryFeatures |= Molecule.cAtomQFExcludeGroup;
 
-
         mMol.setAtomQueryFeature(atom, 0xFFFFFFFF, false);
         mMol.setAtomQueryFeature(atom, queryFeatures, true);
     }
 
-
-    private int[] createAtomList()
-    {
+    private int[] createAtomList() {
         String listString = mTFAtomList.getText();
         if (listString.length() == 0)
             return null;

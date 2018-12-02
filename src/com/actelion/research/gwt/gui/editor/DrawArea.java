@@ -63,12 +63,10 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-class DrawArea implements IChangeListener
-{
+class DrawArea implements IChangeListener {
     private boolean down = false;
     private boolean pressed = false;
     private int code = 0;
-//    protected static final GeomFactory builder = GeomFactory.getGeomFactory();
     protected final GeomFactory builder;
 
     public static final CssColor WHITE = CssColor.make("WHITE");
@@ -81,50 +79,42 @@ class DrawArea implements IChangeListener
     private RootPanel container;
     private boolean focus = false;
 
-    DrawArea(Model m)
-    {
+    DrawArea(Model m) {
         model = m;
         builder = model.getGeomFactory();
         model.addChangeListener(this);
 
         instanceCount++;
 
-
-
     }
 
     private void setupDropHandler() {
-        canvas.addDomHandler(new DragOverHandler()
-        {
+        canvas.addDomHandler(new DragOverHandler() {
             @Override
-            public void onDragOver(DragOverEvent event)
-            {
+            public void onDragOver(DragOverEvent event) {
                 canvas.addStyleName("dropping");
             }
         }, DragOverEvent.getType());
 
-        canvas.addDomHandler(new DragLeaveHandler()
-        {
+        canvas.addDomHandler(new DragLeaveHandler() {
             @Override
-            public void onDragLeave(DragLeaveEvent event)
-            {
+            public void onDragLeave(DragLeaveEvent event) {
                 canvas.removeStyleName("dropping");
             }
         }, DragLeaveEvent.getType());
 
-        canvas.addDomHandler(new DropHandler()
-        {
+        canvas.addDomHandler(new DropHandler() {
             @Override
-            public void onDrop(DropEvent event)
-            {
+            public void onDrop(DropEvent event) {
                 try {
                     String idcode = event.getData("text");
                     StereoMolecule mol = new StereoMolecule();
                     IDCodeParser parser = new IDCodeParser();
-                    parser.parse(mol,idcode);
+                    parser.parse(mol, idcode);
                     model.setNewMolecule();
                     // todo maybe change to something like:
-                    // model.addMolecule(mol, event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                    // model.addMolecule(mol, event.getNativeEvent().getClientX(),
+                    // event.getNativeEvent().getClientY());
                     model.addMolecule(mol, 0, 0);
                     event.preventDefault();
                 } catch (Exception e) {
@@ -137,7 +127,6 @@ class DrawArea implements IChangeListener
 
     public static native void copy(String text)
     /*-{
-//        console.log(text);
         var textArea = document.createElement("textarea");
         textArea.value = text;
         textArea.id="copyItem";
@@ -146,24 +135,13 @@ class DrawArea implements IChangeListener
         document.execCommand("Copy");
         textArea.remove();
     }-*/;
-//    /*-{
-//        console.log(text);
-//        var copyEvent = new ClipboardEvent('copy', { dataType: 'text/plain', data: 'Data to be copied' } );
-//
-//        $doc.dispatchEvent(copyEvent);
-//    }-*/;
 
-    public Element createElement(Element parent, int left, int top, int width, int height)
-    {
+    public Element createElement(Element parent, int left, int top, int width, int height) {
         String drawAreaID = "drawarea" + instanceCount;
         DivElement drawAreaContainer = Document.get().createDivElement();
         drawAreaContainer.setId(drawAreaID);
         drawAreaContainer.setAttribute("style",
-                "position:absolute;" +
-                        "left:" + left + "px; " +
-                        "width:" + width + "px;" +
-                        "height:" + height + "px;");
-//        "position:relative;float:right;width:" + width + "px;height:" + height + "px;");
+                "position:absolute;" + "left:" + left + "px; " + "width:" + width + "px;" + "height:" + height + "px;");
 
         parent.appendChild(drawAreaContainer);
         canvas = Canvas.createIfSupported();
@@ -192,20 +170,16 @@ class DrawArea implements IChangeListener
         return drawAreaContainer;
     }
 
-    public void draw(com.actelion.research.share.gui.editor.actions.Action a)
-    {
+    public void draw(com.actelion.research.share.gui.editor.actions.Action a) {
         action = a;
         draw(canvas);
-//        a.paint(new GraphicsContext(canvas.getContext2d()));
     }
 
-    public void draw()
-    {
+    public void draw() {
         draw(canvas);
     }
 
-    private void draw(Canvas canvas)
-    {
+    private void draw(Canvas canvas) {
         long fg = builder.getForegroundColor();
         Context2d context2d = canvas.getContext2d();
         int w = (int) model.getDisplaySize().getWidth();
@@ -221,18 +195,14 @@ class DrawArea implements IChangeListener
                 model.cleanReaction(true);
         }
 
-//        AbstractDepictor depictor;
-//        depictor = new GWTDepictor(context2d, model.getMolecule());
         AbstractExtendedDepictor depictor = createDepictor();
         depictor.setDisplayMode(displayMode);
 
         if (model.needsLayout()) {
-            depictor.updateCoords(null,
-                    new java.awt.geom.Rectangle2D.Double(0, 0, (float) w, (float) h), AbstractDepictor.cModeInflateToMaxAVBL);
+            depictor.updateCoords(null, new java.awt.geom.Rectangle2D.Double(0, 0, (float) w, (float) h),
+                    AbstractDepictor.cModeInflateToMaxAVBL);
         }
         model.needsLayout(false);
-
-
 
         depictor.paint(context2d);
         // Let the actions draw if needed e.g. NewChainAction
@@ -253,55 +223,40 @@ class DrawArea implements IChangeListener
     }
 
     @Override
-    public void onChange()
-    {
-//        Log.console("onChange");
-//        System.out.println("DrawArea on change...");
+    public void onChange() {
         draw(canvas);
     }
 
-    public void requestLayout()
-    {
+    public void requestLayout() {
         draw(canvas);
     }
 
-
-    public void setOnMouseClicked(ClickHandler handler, DoubleClickHandler dbl)
-    {
+    public void setOnMouseClicked(ClickHandler handler, DoubleClickHandler dbl) {
         canvas.addClickHandler(handler);
         canvas.addDoubleClickHandler(dbl);
-
-//        Removed for LPatiny
-//        canvas.addDomHandler(new ContextHandler(), ContextMenuEvent.getType());
     }
 
-    public void setOnMouseDragged(MouseMoveHandler handler)
-    {
+    public void setOnMouseDragged(MouseMoveHandler handler) {
         canvas.addMouseMoveHandler(handler);
     }
 
-    public void setOnMouseMoved(MouseMoveHandler handler)
-    {
+    public void setOnMouseMoved(MouseMoveHandler handler) {
         canvas.addMouseMoveHandler(handler);
     }
 
-    public void setOnMouseOut(MouseOutHandler h)
-    {
+    public void setOnMouseOut(MouseOutHandler h) {
         canvas.addMouseOutHandler(h);
     }
 
-    public void setOnMousePressed(MouseDownHandler h)
-    {
+    public void setOnMousePressed(MouseDownHandler h) {
         canvas.addMouseDownHandler(h);
     }
 
-    public void setOnMouseReleased(MouseUpHandler handler)
-    {
+    public void setOnMouseReleased(MouseUpHandler handler) {
         canvas.addMouseUpHandler(handler);
     }
 
-    protected boolean isMarkush()
-    {
+    protected boolean isMarkush() {
         int mode = model.getMode();
         return (mode & Model.MODE_MARKUSH_STRUCTURE) != 0;
 
@@ -316,41 +271,37 @@ class DrawArea implements IChangeListener
         AbstractExtendedDepictor mDepictor;
         Context2d ctx = canvas.getContext2d();
         if (isReaction())
-            mDepictor = new MoleculeDrawDepictor(ctx,new Reaction(model.getFragments(), model.getReactantCount()), model.getDrawingObjects(), false,builder.getDrawConfig());
+            mDepictor = new MoleculeDrawDepictor(ctx, new Reaction(model.getFragments(), model.getReactantCount()),
+                    model.getDrawingObjects(), false, builder.getDrawConfig());
         else if (isMarkush()) {
-            mDepictor = new MoleculeDrawDepictor(ctx,model.getFragments(), model.getMarkushCount(), null,builder.getDrawConfig());
+            mDepictor = new MoleculeDrawDepictor(ctx, model.getFragments(), model.getMarkushCount(), null,
+                    builder.getDrawConfig());
         } else {
-            mDepictor = new MoleculeDrawDepictor(ctx,model.getMolecule(), model.getDrawingObjects(),builder.getDrawConfig());
+            mDepictor = new MoleculeDrawDepictor(ctx, model.getMolecule(), model.getDrawingObjects(),
+                    builder.getDrawConfig());
         }
         return mDepictor;
     }
 
-    private boolean isValidKey(int kc)
-    {
-        return  (  (kc >= KeyCodes.KEY_A && kc <= KeyCodes.KEY_Z)
-                || (kc >= KeyCodes.KEY_ZERO && kc <= KeyCodes.KEY_NINE)
-                || (kc == KeyCodes.KEY_DELETE)
-                || (kc == KeyCodes.KEY_ENTER)
-                || (kc == KeyCodes.KEY_BACKSPACE)
-                ) ;
+    private boolean isValidKey(int kc) {
+        return ((kc >= KeyCodes.KEY_A && kc <= KeyCodes.KEY_Z) || (kc >= KeyCodes.KEY_ZERO && kc <= KeyCodes.KEY_NINE)
+                || (kc == KeyCodes.KEY_DELETE) || (kc == KeyCodes.KEY_ENTER) || (kc == KeyCodes.KEY_BACKSPACE));
 
     }
 
-    private boolean copyMolecule()
-    {
+    private boolean copyMolecule() {
         StereoMolecule molecule = model.getMolecule();
         MolfileV3Creator c = new MolfileV3Creator(molecule);
         copy(c.getMolfile());
         return true;
     }
+
     boolean meta = false;
-    public void setOnKeyPressed(final ACTKeyEventHandler handler)
-    {
-        canvas.addKeyDownHandler(new KeyDownHandler()
-        {
+
+    public void setOnKeyPressed(final ACTKeyEventHandler handler) {
+        canvas.addKeyDownHandler(new KeyDownHandler() {
             @Override
-            public void onKeyDown(KeyDownEvent event)
-            {
+            public void onKeyDown(KeyDownEvent event) {
                 down = true;
                 meta = event.isMetaKeyDown() || event.isControlKeyDown();
                 code = event.getNativeKeyCode();
@@ -358,35 +309,28 @@ class DrawArea implements IChangeListener
                     event.preventDefault();
                 } else if (meta) {
                     if (code == KeyCodes.KEY_C) {
-//                        copy(model.getIDCode());
                         copyMolecule();
                         event.preventDefault();
                     }
                 }
             }
         });
-        canvas.addKeyUpHandler(new KeyUpHandler()
-        {
+        canvas.addKeyUpHandler(new KeyUpHandler() {
             @Override
-            public void onKeyUp(KeyUpEvent event)
-            {
+            public void onKeyUp(KeyUpEvent event) {
                 code = event.getNativeKeyCode();
-                if (!meta &&  isValidKey(code)){
+                if (!meta && isValidKey(code)) {
                     event.preventDefault();
-                    handler.onKey(new ACTKeyEvent(
-                            code,
-                            event,//.isShiftKeyDown(),
+                    handler.onKey(new ACTKeyEvent(code, event, // .isShiftKeyDown(),
                             pressed ? (ACTKeyEvent.LETTER | ACTKeyEvent.DIGIT) : 0));
                 }
                 down = pressed = false;
             }
         });
 
-        canvas.addKeyPressHandler(new KeyPressHandler()
-        {
+        canvas.addKeyPressHandler(new KeyPressHandler() {
             @Override
-            public void onKeyPress(KeyPressEvent event)
-            {
+            public void onKeyPress(KeyPressEvent event) {
                 pressed = true;
                 code = event.getCharCode();
                 if (isValidKey(code)) {
@@ -396,25 +340,19 @@ class DrawArea implements IChangeListener
         });
     }
 
-
-    public void requestFocus()
-    {
+    public void requestFocus() {
         canvas.setFocus(true);
     }
 
-    public GraphicsContext getDrawContext()
-    {
+    public GraphicsContext getDrawContext() {
         return new GraphicsContext(canvas.getContext2d());
     }
 
-    public void setCursor(Style.Cursor c)
-    {
+    public void setCursor(Style.Cursor c) {
         canvas.getCanvasElement().getStyle().setCursor(c);
     }
 
-    public void setSize(int width, int height)
-    {
-//        Log.console("Setting panel size to " + width);
+    public void setSize(int width, int height) {
         container.setWidth(width + "px");
         container.setHeight(height + "px");
         panel.setWidth(width + "px");
@@ -424,9 +362,7 @@ class DrawArea implements IChangeListener
         draw();
     }
 
-    private void setDrawSize(int width, int height)
-    {
-//        Log.console("Setting canvas size to " + width);
+    private void setDrawSize(int width, int height) {
         canvas.setCoordinateSpaceWidth(width);
         canvas.setCoordinateSpaceHeight(height);
         canvas.setWidth(width + "px");
@@ -439,35 +375,25 @@ class DrawArea implements IChangeListener
     }
 }
 
-
-class ContextHandler implements ContextMenuHandler
-{
-    class MenuItem
-    {
+class ContextHandler implements ContextMenuHandler {
+    class MenuItem {
         String name;
 
-        MenuItem(String n)
-        {
+        MenuItem(String n) {
             name = n;
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return name;
         }
     }
 
-    class MenuCell extends AbstractCell<MenuItem>
-    {
+    class MenuCell extends AbstractCell<MenuItem> {
 
         @Override
-        public void render(com.google.gwt.cell.client.Cell.Context context,
-                           MenuItem value, SafeHtmlBuilder sb)
-        {
-            SafeHtml html = SafeHtmlUtils
-                    .fromSafeConstant("<div class='cell'> " + value
-                            + "</div>");
+        public void render(com.google.gwt.cell.client.Cell.Context context, MenuItem value, SafeHtmlBuilder sb) {
+            SafeHtml html = SafeHtmlUtils.fromSafeConstant("<div class='cell'> " + value + "</div>");
             sb.append(html);
         }
 
@@ -480,9 +406,7 @@ class ContextHandler implements ContextMenuHandler
     private MenuItem paste = new MenuItem("Paste");
     final PopupPanel contextMenu = new PopupPanel(true);
 
-
-    ContextHandler()
-    {
+    ContextHandler() {
         ArrayList<MenuItem> items = new ArrayList<MenuItem>();
         items.add(copy);
         items.add(paste);
@@ -499,11 +423,9 @@ class ContextHandler implements ContextMenuHandler
     }
 
     @Override
-    public void onContextMenu(ContextMenuEvent event)
-    {
+    public void onContextMenu(ContextMenuEvent event) {
         event.preventDefault();
         event.stopPropagation();
     }
-
 
 }

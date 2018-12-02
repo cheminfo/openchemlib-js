@@ -33,10 +33,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.share.gui.Delegator;
-public class Window extends Delegator<com.google.gwt.user.client.ui.Widget>
-{
-    public Window(com.google.gwt.user.client.ui.Widget window)
-    {
+
+public class Window extends Delegator<com.google.gwt.user.client.ui.Widget> {
+    public Window(com.google.gwt.user.client.ui.Widget window) {
         super(window);
     }
 }

@@ -65,13 +65,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import java.awt.geom.Point2D;
 
 /**
- * Project:
- * User: rufenec
- * Date: 7/2/2014
- * Time: 10:53 AM
+ * Project: User: rufenec Date: 7/2/2014 Time: 10:53 AM
  */
-class ToolBarImpl implements ToolBar<Element>, IChangeListener
-{
+class ToolBarImpl implements ToolBar<Element>, IChangeListener {
     static int instanceCount = 0;
 
     private final Image BUTTON_UP = new Image(ImageHolder.DRAWBUTTONUP64);
@@ -81,7 +77,6 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
 
     public static final int ESR_BUTTON_ROW = 3;
     public static final int ESR_BORDER = 3;
-
 
     private Action[][] ACTIONS = null;
     private Model model = null;
@@ -93,33 +88,26 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
     private boolean loaded = false;
     private boolean focus;
 
-
-    ToolBarImpl(Model model)
-    {
+    ToolBarImpl(Model model) {
         this.model = model;
         instanceCount++;
     }
 
-    public Element createElement(Element parent, int width, int height)
-    {
+    public Element createElement(Element parent, int width, int height) {
         String toolBarId = "toolbar" + instanceCount;
 
-        BUTTON_UP.addLoadHandler(new LoadHandler()
-        {
+        BUTTON_UP.addLoadHandler(new LoadHandler() {
             @Override
-            public void onLoad(LoadEvent event)
-            {
+            public void onLoad(LoadEvent event) {
                 if (loaded)
                     requestLayout();
                 loaded = true;
             }
         });
 
-        BUTTON_DOWN.addLoadHandler(new LoadHandler()
-        {
+        BUTTON_DOWN.addLoadHandler(new LoadHandler() {
             @Override
-            public void onLoad(LoadEvent event)
-            {
+            public void onLoad(LoadEvent event) {
                 if (loaded)
                     requestLayout();
                 loaded = true;
@@ -128,15 +116,14 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
 
         DivElement toolbarHolder = Document.get().createDivElement();
         toolbarHolder.setId(toolBarId);
-        toolbarHolder.setAttribute(
-            "style", "position:absolute;width:" + width + "px;height:" + height + "px;");
+        toolbarHolder.setAttribute("style", "position:absolute;width:" + width + "px;height:" + height + "px;");
         parent.appendChild(toolbarHolder);
         canvas = Canvas.createIfSupported();
         canvas.setCoordinateSpaceWidth(width);
         canvas.setCoordinateSpaceHeight(height);
         canvas.setWidth(width + "px");
         canvas.setHeight(height + "px");
-        canvas.getElement().setAttribute("style","outline: none");
+        canvas.getElement().setAttribute("style", "outline: none");
 
         canvas.addFocusHandler(new FocusHandler() {
             @Override
@@ -153,7 +140,7 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         });
         RootPanel.get(toolBarId).add(canvas);
 
-        //  This is to force addLoadHandler
+        // This is to force addLoadHandler
         BUTTON_UP.setVisible(false);
         RootPanel.get(toolBarId).add(BUTTON_UP);
         BUTTON_DOWN.setVisible(false);
@@ -166,26 +153,18 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         return toolbarHolder;
     }
 
-    private void requestLayout()
-    {
+    private void requestLayout() {
         draw(canvas);
     }
 
-
-
-    private void draw(Canvas toolBar)
-    {
+    private void draw(Canvas toolBar) {
         Context2d context2d = toolBar.getContext2d();
-//        context2d.drawImage(ImageElement.as(ESR_BUTTON_UP.getElement()), 0, 0);
         GraphicsContext ctx = new GraphicsContext(context2d);
         drawButtons(ctx);
         drawESRButtons(ctx);
     }
 
-
-
-    private void drawButtons(GraphicsContext ctx)
-    {
+    private void drawButtons(GraphicsContext ctx) {
         ctx.drawImage(BUTTON_UP, 0, 0);
 
         if (selectedRow != -1 && selectetCol != -1) {
@@ -196,9 +175,8 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
             ctx.drawImage(BUTTON_DOWN, x, y, dx, dy, x, y, dx, dy);
         }
 
-        // Draw  inactive buttons
-        for (int row =0; row < ACTIONS.length; row++)
-        {
+        // Draw inactive buttons
+        for (int row = 0; row < ACTIONS.length; row++) {
             double dx = IMAGE_WIDTH / COLS;
             double dy = IMAGE_HEIGHT / ROWS;
             for (int col = 0; col < ACTIONS[row].length; col++) {
@@ -207,15 +185,14 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
                     int x = (int) (IMAGE_WIDTH / COLS * col);
                     ctx.save();
                     ctx.setFill(0xFFFFFFAA);
-                    ctx.fillRect(x+2,y+2,dx-4,dy-2);
+                    ctx.fillRect(x + 2, y + 2, dx - 4, dy - 2);
                     ctx.restore();
                 }
             }
         }
     }
 
-    private void drawESRButtons(GraphicsContext ctx)
-    {
+    private void drawESRButtons(GraphicsContext ctx) {
 
         double ESRdx = ESR_IMAGE_WIDTH - 2 * ESR_BORDER;
         double ESRdy = (ESR_IMAGE_HEIGHT - 2 * ESR_BORDER) / ESR_IMAGE_ROWS;
@@ -230,116 +207,45 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         }
     }
 
-    private void setupMouseHandlers()
-    {
-//        canvas.addMouseMoveHandler(new MouseMoveHandler()
-//        {
-//            @Override
-//            public void onMouseMove(MouseMoveEvent event)
-//            {
-//                onMouseMove();
-//            }
-//        });
-        canvas.addMouseDownHandler(new MouseDownHandler()
-        {
+    private void setupMouseHandlers() {
+        canvas.addMouseDownHandler(new MouseDownHandler() {
             @Override
-            public void onMouseDown(MouseDownEvent event)
-            {
-//                System.out.println("Mouse Down in Toolbar " + event);
+            public void onMouseDown(MouseDownEvent event) {
                 onMousePressed(event);
 
             }
         });
 
-        canvas.addMouseUpHandler(new MouseUpHandler()
-        {
+        canvas.addMouseUpHandler(new MouseUpHandler() {
             @Override
-            public void onMouseUp(MouseUpEvent event)
-            {
+            public void onMouseUp(MouseUpEvent event) {
                 onMouseReleased(event);
             }
         });
 
     }
 
-    private void setupHandlers()
-    {
-        ACTIONS = new Action[][]
-            {
-                {
-                    new ClearAction(model),
-                    new UndoAction(model)
-                },
-                {
-                    new CleanAction(model),
-                    new ZoomRotateAction(model)
-                },
-                {
-                    new SelectionAction(model),
-                    model.isReaction() ? new AtomMapAction(model) : null,
-                },
-                {
-                    new UnknownParityAction(model),
-                    new ESRTypeAction(model)
-                },
-                {
-                    new DeleteAction(model),
-                    null
-                },
-                {
-                    new NewBondAction(model),
-                    new NewChainAction(model)
-                },
-                {
-                    new UpBondAction(model),
-                    new DownBondAction(model),
-                },
-                {
-                    new AddRingAction(model, 3, false),
-                    new AddRingAction(model, 4, false),
-                },
-                {
-                    new AddRingAction(model, 5, false),
-                    new AddRingAction(model, 6, false),
-                },
-                {
-                    new AddRingAction(model, 7, false),
-                    new AddRingAction(model, 6, true),
-                },
-                {
-                    new ChangeChargeAction(model, true),
-                    new ChangeChargeAction(model, false),
-                },
-                {
-                    new ChangeAtomAction(model, 6),
-                    new ChangeAtomAction(model, 14),
-                },
-                {
-                    new ChangeAtomAction(model, 7),
-                    new ChangeAtomAction(model, 15),
-                },
-                {
-                    new ChangeAtomAction(model, 8),
-                    new ChangeAtomAction(model, 16),
-                },
-                {
-                    new ChangeAtomAction(model, 9),
-                    new ChangeAtomAction(model, 17),
-                },
-                {
-                    new ChangeAtomAction(model, 35),
-                    new ChangeAtomAction(model, 53),
-                },
-                {
-                    new ChangeAtomAction(model, 1),
-                    new ChangeAtomPropertiesAction(model)
-                },
-            };
+    private void setupHandlers() {
+        ACTIONS = new Action[][] { { new ClearAction(model), new UndoAction(model) },
+                { new CleanAction(model), new ZoomRotateAction(model) },
+                { new SelectionAction(model), model.isReaction() ? new AtomMapAction(model) : null, },
+                { new UnknownParityAction(model), new ESRTypeAction(model) }, { new DeleteAction(model), null },
+                { new NewBondAction(model), new NewChainAction(model) },
+                { new UpBondAction(model), new DownBondAction(model), },
+                { new AddRingAction(model, 3, false), new AddRingAction(model, 4, false), },
+                { new AddRingAction(model, 5, false), new AddRingAction(model, 6, false), },
+                { new AddRingAction(model, 7, false), new AddRingAction(model, 6, true), },
+                { new ChangeChargeAction(model, true), new ChangeChargeAction(model, false), },
+                { new ChangeAtomAction(model, 6), new ChangeAtomAction(model, 14), },
+                { new ChangeAtomAction(model, 7), new ChangeAtomAction(model, 15), },
+                { new ChangeAtomAction(model, 8), new ChangeAtomAction(model, 16), },
+                { new ChangeAtomAction(model, 9), new ChangeAtomAction(model, 17), },
+                { new ChangeAtomAction(model, 35), new ChangeAtomAction(model, 53), },
+                { new ChangeAtomAction(model, 1), new ChangeAtomPropertiesAction(model) }, };
         lastAction = setAction(2, 0);// currentAction = ACTIONS[selectedRow][selectetCol];
     }
 
-    Action setAction(Action a)
-    {
+    Action setAction(Action a) {
         selectedRow = -1;
         selectetCol = -1;
         currentAction = a;
@@ -355,8 +261,7 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
         return currentAction;
     }
 
-    Action setAction(int row, int col)
-    {
+    Action setAction(int row, int col) {
         if (ACTIONS[row][col] != null) {
             selectedRow = row;
             selectetCol = col;
@@ -374,8 +279,7 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
 
     }
 
-    private void onMousePressed(MouseEvent evt)
-    {
+    private void onMousePressed(MouseEvent evt) {
         double x = evt.getX();
         double y = evt.getY();
         if (x >= 0 && x <= IMAGE_WIDTH && y >= 0 && y < IMAGE_HEIGHT) {
@@ -388,23 +292,20 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
                 ButtonPressListener bpl = (ButtonPressListener) action;
                 bpl.onButtonPressed(new Window(canvas), new Point2D.Double(x, y));
             }
-            //System.out.printf("Mouse pressed on r/c %d/%d\n", row, col);
             repaint();
         }
     }
 
-    private void repaint()
-    {
+    private void repaint() {
         draw(canvas);
     }
 
-    private void onMouseReleased(MouseEvent evt)
-    {
+    private void onMouseReleased(MouseEvent evt) {
         boolean repaint = false;
         if (currentAction != null) {
             if (currentAction instanceof ButtonPressListener) {
                 ButtonPressListener bpl = (ButtonPressListener) currentAction;
-                bpl.onButtonReleased(/*this.getScene().getWindow()*/null, new Point2D.Double(evt.getX(), evt.getY()));
+                bpl.onButtonReleased(/* this.getScene().getWindow() */null, new Point2D.Double(evt.getX(), evt.getY()));
                 repaint = true;
             }
             if (currentAction.isCommand()) {
@@ -419,8 +320,7 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
     }
 
     @Override
-    public Action getCurrentAction()
-    {
+    public Action getCurrentAction() {
         return currentAction;
     }
 
@@ -430,18 +330,16 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener
     }
 
     @Override
-     public void onChange()
-     {
-         repaint();
-     }
+    public void onChange() {
+        repaint();
+    }
 
-     public void doAction(Action a)
-     {
-         if (a.isCommand()) {
-             a.onCommand();
-         } else {
-             setAction(a);
-         }
-         repaint();
-     }
+    public void doAction(Action a) {
+        if (a.isCommand()) {
+            a.onCommand();
+        } else {
+            setAction(a);
+        }
+        repaint();
+    }
 }

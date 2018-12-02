@@ -35,17 +35,12 @@ package com.actelion.research.gwt.gui.editor.actions.dialogs;
 import com.google.gwt.user.client.ui.ListBox;
 
 /**
- * Project:
- * User: rufenec
- * Date: 7/4/2014
- * Time: 3:51 PM
+ * Project: User: rufenec Date: 7/4/2014 Time: 3:51 PM
  */
-public class ComboBox extends ListBox
-{
-    public ComboBox()
-    {
-        setVisibleItemCount(1);
-        setStyleName("gwt-ComboBox");
-    }
+public class ComboBox extends ListBox {
+  public ComboBox() {
+    setVisibleItemCount(1);
+    setStyleName("gwt-ComboBox");
+  }
 
 }

@@ -44,21 +44,18 @@ import com.google.gwt.user.client.ui.PopupPanel;
 
 import java.awt.geom.Point2D;
 
-public class ESRSVGTypeAction extends AbstractTypeAction
-        //BondHighlightAction implements ButtonPressListener
-{
+public class ESRSVGTypeAction extends AbstractTypeAction {
 
     private int scale = 1;
-    public ESRSVGTypeAction(Model model, int scale)
-    {
-        super(model,scale);
+
+    public ESRSVGTypeAction(Model model, int scale) {
+        super(model, scale);
         this.scale = scale;
     }
 
     @Override
-    public ESRSVGPane createPane()
-    {
-        return new ESRSVGPane(model,scale);
+    public ESRSVGPane createPane() {
+        return new ESRSVGPane(model, scale);
     }
 
 }

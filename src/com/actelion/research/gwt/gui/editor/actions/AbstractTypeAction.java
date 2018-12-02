@@ -37,7 +37,6 @@ import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gwt.gui.editor.ButtonPressListener;
 import com.actelion.research.gwt.gui.editor.ToolBar;
 import com.actelion.research.gwt.gui.editor.Window;
-import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.actions.BondHighlightAction;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
@@ -45,13 +44,12 @@ import com.google.gwt.user.client.ui.PopupPanel;
 
 import java.awt.geom.Point2D;
 
-public abstract class AbstractTypeAction extends BondHighlightAction implements ButtonPressListener
-{
+public abstract class AbstractTypeAction extends BondHighlightAction implements ButtonPressListener {
 
     private volatile AbstractESRPane popup = null;
     protected int scale = 1;
-    public AbstractTypeAction(Model model,int scale)
-    {
+
+    public AbstractTypeAction(Model model, int scale) {
         super(model);
         this.scale = scale;
     }
@@ -59,8 +57,7 @@ public abstract class AbstractTypeAction extends BondHighlightAction implements 
     public abstract AbstractESRPane createPane();
 
     @Override
-    public boolean onMouseUp(IMouseEvent evt)
-    {
+    public boolean onMouseUp(IMouseEvent evt) {
         model.pushUndo();
         int theBond = model.getSelectedBond();
         if (theBond != -1) {
@@ -71,32 +68,24 @@ public abstract class AbstractTypeAction extends BondHighlightAction implements 
     }
 
     @Override
-    public void onButtonPressed(Window parent, Point2D pt)
-    {
+    public void onButtonPressed(Window parent, Point2D pt) {
         createPopup(parent, pt, 0);
     }
 
-
-    //
     @Override
-    public void onButtonReleased(Window parent, Point2D pt)
-    {
+    public void onButtonReleased(Window parent, Point2D pt) {
     }
 
-
-
-    private synchronized void createPopup(final Window parent, Point2D pt, int row)
-    {
+    private synchronized void createPopup(final Window parent, Point2D pt, int row) {
 
         if (popup == null || !popup.isShowing()) {
             popup = createPane();
             popup.setModal(true);
-            popup.setPopupPositionAndShow(new PopupPanel.PositionCallback()
-            {
-                public void setPosition(int offsetWidth, int offsetHeight)
-                {
+            popup.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+                public void setPosition(int offsetWidth, int offsetHeight) {
                     int left = parent.getNative().getAbsoluteLeft() + (int) ToolBar.IMAGE_WIDTH;
-                    int top = parent.getNative().getAbsoluteTop() + (int) (ToolBar.IMAGE_HEIGHT*scale / ToolBar.ROWS * 3);
+                    int top = parent.getNative().getAbsoluteTop()
+                            + (int) (ToolBar.IMAGE_HEIGHT * scale / ToolBar.ROWS * 3);
                     popup.setPopupPosition(left, top);
                     popup.requestLayout();
 
@@ -105,22 +94,19 @@ public abstract class AbstractTypeAction extends BondHighlightAction implements 
         }
     }
 
-    private int getESRAtom(int stereoBond)
-    {
+    private int getESRAtom(int stereoBond) {
         StereoMolecule mMol = model.getMolecule();
         if (mMol != null) {
             int atom = mMol.getBondAtom(0, stereoBond);
             if (mMol.getAtomParity(atom) != Molecule.cAtomParityNone) {
-                return (mMol.isAtomParityPseudo(atom)
-                        || (mMol.getAtomParity(atom) != Molecule.cAtomParity1
+                return (mMol.isAtomParityPseudo(atom) || (mMol.getAtomParity(atom) != Molecule.cAtomParity1
                         && mMol.getAtomParity(atom) != Molecule.cAtomParity2)) ? -1 : atom;
             }
             if (mMol.getAtomPi(atom) == 1) {
                 for (int i = 0; i < mMol.getConnAtoms(atom); i++) {
                     if (mMol.getConnBondOrder(atom, i) == 2) {
                         int connAtom = mMol.getConnAtom(atom, i);
-                        if (mMol.getAtomPi(connAtom) == 2
-                                && (mMol.getAtomParity(connAtom) == Molecule.cAtomParity1
+                        if (mMol.getAtomPi(connAtom) == 2 && (mMol.getAtomParity(connAtom) == Molecule.cAtomParity1
                                 || mMol.getAtomParity(connAtom) == Molecule.cAtomParity2))
                             return connAtom;
                     }
@@ -130,23 +116,19 @@ public abstract class AbstractTypeAction extends BondHighlightAction implements 
         return -1;
     }
 
-    private int getESRBond(int stereoBond)
-    {
+    private int getESRBond(int stereoBond) {
         int bond = -1;
         StereoMolecule mMol = model.getMolecule();
         if (mMol != null) {
             bond = mMol.findBINAPChiralityBond(mMol.getBondAtom(0, stereoBond));
-            if (bond != -1
-                    && mMol.getBondParity(bond) != Molecule.cBondParityEor1
+            if (bond != -1 && mMol.getBondParity(bond) != Molecule.cBondParityEor1
                     && mMol.getBondParity(bond) != Molecule.cBondParityZor2)
                 bond = -1;
         }
         return bond;
     }
 
-
-    private void setESRInfo(int stereoBond, int type)
-    {
+    private void setESRInfo(int stereoBond, int type) {
         int group = -1;
         StereoMolecule mMol = model.getMolecule();
         if (mMol != null) {
@@ -157,8 +139,7 @@ public abstract class AbstractTypeAction extends BondHighlightAction implements 
             if (type != Molecule.cESRTypeAbs) {
                 int maxGroup = -1;
                 for (int i = 0; i < mMol.getAtoms(); i++) {
-                    if (i != atom
-                            && mMol.getAtomESRType(i) == type
+                    if (i != atom && mMol.getAtomESRType(i) == type
                             && (!mMol.isSelectedBond(stereoBond) || !mMol.isSelectedAtom(i))) {
                         int grp = mMol.getAtomESRGroup(i);
                         if (maxGroup < grp)
@@ -166,8 +147,7 @@ public abstract class AbstractTypeAction extends BondHighlightAction implements 
                     }
                 }
                 for (int i = 0; i < mMol.getBonds(); i++) {
-                    if (i != bond
-                            && mMol.getBondESRType(i) == type
+                    if (i != bond && mMol.getBondESRType(i) == type
                             && (!mMol.isSelectedBond(stereoBond) || !mMol.isSelectedBond(i))) {
                         int grp = mMol.getBondESRGroup(i);
                         if (maxGroup < grp)
@@ -182,16 +162,14 @@ public abstract class AbstractTypeAction extends BondHighlightAction implements 
                     if (mMol.isSelectedBond(stereoBond)) {
                         boolean selectedShareOneGroup = true;
                         for (int i = 0; i < mMol.getAtoms(); i++) {
-                            if (i != atom && mMol.isSelectedAtom(i)
-                                    && mMol.getAtomESRType(i) == type
+                            if (i != atom && mMol.isSelectedAtom(i) && mMol.getAtomESRType(i) == type
                                     && mMol.getAtomESRGroup(i) != group) {
                                 selectedShareOneGroup = false;
                                 break;
                             }
                         }
                         for (int i = 0; i < mMol.getBonds(); i++) {
-                            if (i != bond && mMol.isSelectedBond(i)
-                                    && mMol.getBondESRType(i) == type
+                            if (i != bond && mMol.isSelectedBond(i) && mMol.getBondESRType(i) == type
                                     && mMol.getBondESRGroup(i) != group) {
                                 selectedShareOneGroup = false;
                                 break;
@@ -237,6 +215,5 @@ public abstract class AbstractTypeAction extends BondHighlightAction implements 
             }
         }
     }
-
 
 }

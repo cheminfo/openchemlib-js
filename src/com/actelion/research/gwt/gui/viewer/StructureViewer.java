@@ -47,8 +47,9 @@ public class StructureViewer implements EntryPoint
         onLoadImpl();
     }
 
-    private native void onLoadImpl() /*-{
+    private native void onLoadImpl()
+    /*-{
        if ($wnd.structureViewLoaded && typeof $wnd.structureViewLoaded == 'function') $wnd.structureViewLoaded();
-     }-*/;
+    }-*/;
 
 }

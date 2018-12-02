@@ -39,7 +39,6 @@ import com.actelion.research.gwt.gui.editor.ImageHolder;
 import com.actelion.research.gwt.gui.editor.ToolBar;
 import com.actelion.research.gwt.gui.viewer.GraphicsContext;
 import com.actelion.research.gwt.gui.editor.Window;
-import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.actions.BondHighlightAction;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
@@ -51,19 +50,13 @@ import com.google.gwt.user.client.ui.PopupPanel;
 
 import java.awt.geom.Point2D;
 
-public class ESRTypeAction
-        extends AbstractTypeAction
-        //BondHighlightAction implements ButtonPressListener
-{
+public class ESRTypeAction extends AbstractTypeAction {
 
-    public ESRTypeAction(Model model)
-    {
-        super(model,1);
+    public ESRTypeAction(Model model) {
+        super(model, 1);
     }
 
-
-    public ESRPane createPane()
-    {
+    public ESRPane createPane() {
         return new ESRPane(model);
     }
 

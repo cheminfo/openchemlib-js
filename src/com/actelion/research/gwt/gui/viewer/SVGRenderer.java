@@ -41,10 +41,8 @@ import java.awt.geom.Rectangle2D;
  * Created by rufenec on 20/03/15.
  */
 @JsType(namespace = "OCL")
-public class SVGRenderer
-{
-    public static String renderMolecule(String idCode,int width,int height)
-    {
+public class SVGRenderer {
+    public static String renderMolecule(String idCode, int width, int height) {
         try {
             StereoMolecule mol = new StereoMolecule();
             IDCodeParser p = new IDCodeParser(true);
@@ -57,9 +55,10 @@ public class SVGRenderer
                 Canonizer can = new Canonizer(mol);
                 String n = can.getIDCode();
                 String c = can.getEncodedCoordinates();
-                p.parse(mol, n,c);
-                SVGDepictor depictor =new SVGDepictor(mol,null);
-                depictor.validateView(null, new Rectangle2D.Double(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
+                p.parse(mol, n, c);
+                SVGDepictor depictor = new SVGDepictor(mol, null);
+                depictor.validateView(null, new Rectangle2D.Double(0, 0, width, height),
+                        AbstractDepictor.cModeInflateToMaxAVBL);
                 depictor.paint(null);
                 return depictor.toString();
             }

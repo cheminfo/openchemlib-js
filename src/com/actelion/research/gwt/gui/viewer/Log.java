@@ -35,27 +35,23 @@ package com.actelion.research.gwt.gui.viewer;
 import com.google.gwt.core.shared.GWT;
 
 /**
- * Project:
- * User: rufenec
- * Date: 7/15/2014
- * Time: 3:48 PM
+ * Project: User: rufenec Date: 7/15/2014 Time: 3:48 PM
  */
-public class Log
-{
+public class Log {
 
     private static final boolean DEBUG = true;
-    public static void console(String s)
-    {
+
+    public static void console(String s) {
         if (DEBUG)
             _console(s);
     }
+
     private static native void _console(String text)
     /*-{
             console.log(text);
     }-*/;
 
-    public static void println(String s)
-    {
+    public static void println(String s) {
         GWT.log(s);
         console(s);
     }

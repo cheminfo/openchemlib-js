@@ -34,7 +34,6 @@ package com.actelion.research.gwt.gui.editor;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public interface GWTEditorServiceAsync
-{
+public interface GWTEditorServiceAsync {
     void getMessage(String msg, AsyncCallback<String> async);
 }

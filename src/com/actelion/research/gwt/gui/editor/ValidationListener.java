@@ -33,12 +33,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 /**
- * Project:
- * User: rufenec
- * Date: 7/1/2014
- * Time: 4:25 PM
+ * Project: User: rufenec Date: 7/1/2014 Time: 4:25 PM
  */
-public interface ValidationListener
-{
+public interface ValidationListener {
     public void valueInvalidated();
 }

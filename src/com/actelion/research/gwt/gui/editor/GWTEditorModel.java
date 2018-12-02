@@ -43,22 +43,13 @@ import com.actelion.research.share.gui.editor.geom.GeomFactory;
 
 import java.awt.*;
 
-public class GWTEditorModel extends Model
-{
-/*
-    static {
-        GeomFactory.registerFactory(new GWTGeomFactory());
-    }
-*/
-
-    public GWTEditorModel(GeomFactory factory, int mode)
-    {
-        super(factory,mode);
+public class GWTEditorModel extends Model {
+    public GWTEditorModel(GeomFactory factory, int mode) {
+        super(factory, mode);
     }
 
     @Override
-    public void cleanMolecule(boolean invent, boolean selectedOnly)
-    {
+    public void cleanMolecule(boolean invent, boolean selectedOnly) {
         cleanupMultiFragmentCoordinates(selectedOnly);
     }
 
@@ -68,50 +59,37 @@ public class GWTEditorModel extends Model
     }
 
     @Override
-    protected AbstractDepictor createDepictor(StereoMolecule mol)
-    {
-        return new GWTDepictor( mol);
+    protected AbstractDepictor createDepictor(StereoMolecule mol) {
+        return new GWTDepictor(mol);
     }
 
-
-
     @Override
-    public void analyzeReaction()
-    {
+    public void analyzeReaction() {
 
     }
 
     @Override
-    public boolean copyMolecule(boolean selected)
-    {
+    public boolean copyMolecule(boolean selected) {
         return false;
     }
 
     @Override
-    public boolean copyReaction(boolean selected)
-    {
+    public boolean copyReaction(boolean selected) {
         return false;
     }
 
     @Override
-    public StereoMolecule pasteMolecule(double cx, double cy)
-    {
+    public StereoMolecule pasteMolecule(double cx, double cy) {
         return null;
     }
 
     @Override
-    public Reaction pasteReaction(double cx, double cy)
-    {
+    public Reaction pasteReaction(double cx, double cy) {
         return null;
     }
 
+    private void cleanupMultiFragmentCoordinates(boolean selectedOnly) {
 
-    private void cleanupMultiFragmentCoordinates(boolean selectedOnly)
-    {
-
-//        int mc = getMols().length;
-//        for (int fragment = 0; fragment < mc; fragment++) {
-//            StereoMolecule mol = getMols()[fragment];
         StereoMolecule mol = getMolecule();
         {
             if (mol != null) {
@@ -121,10 +99,9 @@ public class GWTEditorModel extends Model
         }
         Dimension dim = getDisplaySize();
         GWTDepictor depictor = new GWTDepictor(mol);
-        depictor.updateCoords((Graphics)null,
-                new java.awt.geom.Rectangle2D.Double(0, 0,
-                        (float) dim.getWidth(), (float) dim.getHeight()), GWTDepictor.cModeInflateToMaxAVBL
-        );
-        setValue(mol,true);
+        depictor.updateCoords((Graphics) null,
+                new java.awt.geom.Rectangle2D.Double(0, 0, (float) dim.getWidth(), (float) dim.getHeight()),
+                GWTDepictor.cModeInflateToMaxAVBL);
+        setValue(mol, true);
     }
 }

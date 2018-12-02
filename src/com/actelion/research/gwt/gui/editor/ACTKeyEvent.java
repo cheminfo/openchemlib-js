@@ -32,16 +32,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.actelion.research.gwt.gui.editor;
 
-
 import com.actelion.research.gwt.gui.viewer.Console;
-import com.actelion.research.gwt.gui.viewer.Log;
 import com.actelion.research.share.gui.editor.io.IKeyCode;
 import com.actelion.research.share.gui.editor.io.IKeyEvent;
 import com.google.gwt.event.dom.client.KeyEvent;
 
-
-public class ACTKeyEvent<T extends KeyEvent> implements IKeyEvent
-{
+public class ACTKeyEvent<T extends KeyEvent> implements IKeyEvent {
 
     public static final int FUNCTION = 1;
     public static final int NAVIGATION = 1 << 1;
@@ -58,32 +54,27 @@ public class ACTKeyEvent<T extends KeyEvent> implements IKeyEvent
     boolean shift;
     int mask = 0;
 
-    public ACTKeyEvent(int code,T evt,int mask)
-    {
+    public ACTKeyEvent(int code, T evt, int mask) {
         this.evt = evt;
-        this.code = (code >= 'A' && code <='Z' && !shift) ? code + 32 : code;
-        this.shift = evt.isShiftKeyDown();// shift;
+        this.code = (code >= 'A' && code <= 'Z' && !shift) ? code + 32 : code;
+        this.shift = evt.isShiftKeyDown();
         this.mask = mask;
     }
 
-    public IKeyCode getCode()
-    {
+    public IKeyCode getCode() {
 
-        ACTKeyCode c = new ACTKeyCode(code  ,"",mask);
-//        System.out.println("Returning code: " + code);
+        ACTKeyCode c = new ACTKeyCode(code, "", mask);
         return c;
     }
 
-    public String getText()
-    {
-        String s = "" + (char)(code);
-//        System.out.println("getText " + s);
+    public String getText() {
+        String s = "" + (char) (code);
         return s;
     }
 
     @Override
     public boolean isControlDown() {
-        return evt.isControlKeyDown();// .isControlDown();
+        return evt.isControlKeyDown();
     }
 
     @Override
@@ -91,16 +82,12 @@ public class ACTKeyEvent<T extends KeyEvent> implements IKeyEvent
         return evt.isShiftKeyDown();
     }
 
-
     @Override
     public boolean isAltDown() {
         return evt.isAltKeyDown();
     }
 
-
-    public String toString()
-    {
+    public String toString() {
         return ("ACT Key Event " + code + " " + shift + " " + mask);
     }
 }
-

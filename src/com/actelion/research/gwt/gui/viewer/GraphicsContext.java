@@ -40,31 +40,26 @@ import com.google.gwt.canvas.dom.client.TextMetrics;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.ui.Image;
 
-public class GraphicsContext implements IDrawContext<Context2d>
-{
+public class GraphicsContext implements IDrawContext<Context2d> {
     Context2d ctx;
     private int textSize = 10;
     private String fontName = "Helvetica";
 
-    public GraphicsContext(Context2d ctx)
-    {
+    public GraphicsContext(Context2d ctx) {
         this.ctx = ctx;
     }
 
-    public Context2d getContext()
-    {
+    public Context2d getContext() {
         return ctx;
     }
 
     @Override
-    public Context2d getNative()
-    {
+    public Context2d getNative() {
         return ctx;
     }
 
     @Override
-    public void drawLine(double x, double y, double x1, double y1)
-    {
+    public void drawLine(double x, double y, double x1, double y1) {
         ctx.setLineCap(Context2d.LineCap.ROUND);
         ctx.setLineJoin(Context2d.LineJoin.MITER);
         ctx.beginPath();
@@ -73,10 +68,8 @@ public class GraphicsContext implements IDrawContext<Context2d>
         ctx.stroke();
     }
 
-
     @Override
-    public void drawDashedLine(double srcx, double srcy, double targetx, double targety, int[] dashPattern)
-    {
+    public void drawDashedLine(double srcx, double srcy, double targetx, double targety, int[] dashPattern) {
         double dx = targetx - srcx;
         double dy = targety - srcy;
         double angle = Math.atan2(dy, dx);
@@ -108,8 +101,7 @@ public class GraphicsContext implements IDrawContext<Context2d>
     }
 
     @Override
-    public void drawPolygon(IPolygon polygon)
-    {
+    public void drawPolygon(IPolygon polygon) {
         ctx.beginPath();
         java.awt.geom.Point2D pt = polygon.get(0);
         ctx.moveTo(pt.getX(), pt.getY());
@@ -121,65 +113,55 @@ public class GraphicsContext implements IDrawContext<Context2d>
         ctx.stroke();
     }
 
-
     @Override
-    public java.awt.Dimension getBounds(String s)
-    {
+    public java.awt.Dimension getBounds(String s) {
         TextMetrics tm = ctx.measureText(s);
         tm.getWidth();
-        java.awt.Dimension bounds = new java.awt.Dimension((int) tm.getWidth(),textSize);
+        java.awt.Dimension bounds = new java.awt.Dimension((int) tm.getWidth(), textSize);
         return bounds;
     }
 
     @Override
-    public void setFont(String name, double size,boolean bold)
-    {
+    public void setFont(String name, double size, boolean bold) {
 
-        textSize = (int)size;
+        textSize = (int) size;
         String fna = (bold ? "bold " : "") + textSize + "px " + name;
         fontName = name;
         ctx.setFont(fna);
     }
 
     @Override
-    public String getFont()
-    {
+    public String getFont() {
         return fontName;
     }
 
     @Override
-    public void setFill(long color)
-    {
+    public void setFill(long color) {
         ctx.setFillStyle(makeRGBA(color));
     }
 
     @Override
-    public void fillText(String str, double x, double y)
-    {
+    public void fillText(String str, double x, double y) {
         ctx.fillText(str, x, y);
     }
 
     @Override
-    public void save()
-    {
+    public void save() {
         ctx.save();
     }
 
     @Override
-    public void restore()
-    {
+    public void restore() {
         ctx.restore();
     }
 
     @Override
-    public void drawRect(double x, double y, double width, double height)
-    {
+    public void drawRect(double x, double y, double width, double height) {
         ctx.strokeRect(x, y, width, height);
     }
 
     @Override
-    public void drawText(String s, double x, double y, boolean centerHorz, boolean centerVert)
-    {
+    public void drawText(String s, double x, double y, boolean centerHorz, boolean centerVert) {
         ctx.setTextAlign(centerHorz ? "CENTER" : "LEFT");
         ctx.setTextBaseline(centerVert ? "CENTER" : "TOP");
         ctx.strokeText(s, x, y);
@@ -187,35 +169,30 @@ public class GraphicsContext implements IDrawContext<Context2d>
     }
 
     @Override
-    public void clearRect(double x, double y, double w, double h)
-    {
+    public void clearRect(double x, double y, double w, double h) {
         ctx.clearRect(x, y, w, h);
     }
 
     @Override
-    public void setStroke(long color)
-    {
+    public void setStroke(long color) {
         ctx.setStrokeStyle(makeRGBA(color));
     }
 
     @Override
-    public void fillElipse(double x, double y, double rx, double ry)
-    {
+    public void fillElipse(double x, double y, double rx, double ry) {
         ctx.beginPath();
-        ctx.arc(x+rx/2,y+ry/2,rx/2,0,Math.PI*2,true);
+        ctx.arc(x + rx / 2, y + ry / 2, rx / 2, 0, Math.PI * 2, true);
         ctx.closePath();
         ctx.fill();
     }
 
     @Override
-    public void fillRect(double x, double y, double w, double h)
-    {
+    public void fillRect(double x, double y, double w, double h) {
         ctx.fillRect(x, y, w, h);
     }
 
     @Override
-    public void strokeLine(double x, double y, double x1, double y1)
-    {
+    public void strokeLine(double x, double y, double x1, double y1) {
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(x1, y1);
@@ -224,13 +201,12 @@ public class GraphicsContext implements IDrawContext<Context2d>
     }
 
     @Override
-    public void fillPolygon(double[] px, double[] py, int num)
-    {
+    public void fillPolygon(double[] px, double[] py, int num) {
         if (num > 2) {
             ctx.beginPath();
-            ctx.moveTo(px[0],py[0]);
-            for (int i = 1 ; i < num; i++) {
-                ctx.lineTo(px[i],py[i]);
+            ctx.moveTo(px[0], py[0]);
+            for (int i = 1; i < num; i++) {
+                ctx.lineTo(px[i], py[i]);
             }
             ctx.lineTo(px[0], py[0]);
             ctx.closePath();
@@ -239,8 +215,7 @@ public class GraphicsContext implements IDrawContext<Context2d>
     }
 
     @Override
-    public void setLineWidth(double i)
-    {
+    public void setLineWidth(double i) {
         ctx.setLineWidth(i);
 
     }
@@ -249,43 +224,37 @@ public class GraphicsContext implements IDrawContext<Context2d>
      * Draws a scaled subset of an image.
      *
      * @param image an {@link com.google.gwt.dom.client.CanvasElement} object
-     * @param sx    the x coordinate of the upper-left corner of the source rectangle
-     * @param sy    the y coordinate of the upper-left corner of the source rectangle
+     * @param sx    the x coordinate of the upper-left corner of the source
+     *              rectangle
+     * @param sy    the y coordinate of the upper-left corner of the source
+     *              rectangle
      * @param sw    the width of the source rectangle
      * @param sh    the width of the source rectangle
-     * @param dx    the x coordinate of the upper-left corner of the destination rectangle
-     * @param dy    the y coordinate of the upper-left corner of the destination rectangle
+     * @param dx    the x coordinate of the upper-left corner of the destination
+     *              rectangle
+     * @param dy    the y coordinate of the upper-left corner of the destination
+     *              rectangle
      * @param dw    the width of the destination rectangle
      * @param dh    the height of the destination rectangle
      */
-    public final void drawImage(Image image, double sx, double sy, double sw, double sh,
-                                double dx, double dy, double dw, double dh)
-    {
+    public final void drawImage(Image image, double sx, double sy, double sw, double sh, double dx, double dy,
+            double dw, double dh) {
         ctx.drawImage(ImageElement.as(image.getElement()), sx, sy, sw, sh, dx, dy, dw, dh);
     }
 
-    public void drawImage(Image image, int x, int y)
-    {
+    public void drawImage(Image image, int x, int y) {
         ctx.drawImage(ImageElement.as(image.getElement()), x, y);
     }
 
-    private String makeRGBA(long color)
-    {
-        String s =  "rgba(" +
-                (int) ((color & 0xFF000000l) >> 24) + "," +
-                (int) ((color & 0x00FF0000l) >> 16) + "," +
-                (int) ((color & 0x0000FF00l) >> 8) + "," +
-                (double) ((color & 0x000000FFl) / 255.0) + ")";
+    private String makeRGBA(long color) {
+        String s = "rgba(" + (int) ((color & 0xFF000000l) >> 24) + "," + (int) ((color & 0x00FF0000l) >> 16) + ","
+                + (int) ((color & 0x0000FF00l) >> 8) + "," + (double) ((color & 0x000000FFl) / 255.0) + ")";
         return s;
     }
 
-    private CssColor createColor(long color)
-    {
-        return CssColor.make(
-                (int) ((color & 0xFF000000l) >> 24),
-                (int) ((color & 0x00FF0000l) >> 16),
+    private CssColor createColor(long color) {
+        return CssColor.make((int) ((color & 0xFF000000l) >> 24), (int) ((color & 0x00FF0000l) >> 16),
                 (int) ((color & 0x0000FF00l) >> 8));
     }
-
 
 }

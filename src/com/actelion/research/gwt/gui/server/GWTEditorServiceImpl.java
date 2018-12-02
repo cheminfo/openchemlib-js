@@ -35,11 +35,9 @@ package com.actelion.research.gwt.gui.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.actelion.research.gwt.gui.editor.GWTEditorService;
 
-public class GWTEditorServiceImpl extends RemoteServiceServlet implements GWTEditorService
-{
-    // Implementation of sample interface method
-    public String getMessage(String msg)
-    {
-        return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!\"";
-    }
+public class GWTEditorServiceImpl extends RemoteServiceServlet implements GWTEditorService {
+  // Implementation of sample interface method
+  public String getMessage(String msg) {
+    return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!\"";
+  }
 }
