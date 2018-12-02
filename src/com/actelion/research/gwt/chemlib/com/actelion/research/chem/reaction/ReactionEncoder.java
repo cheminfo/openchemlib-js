@@ -277,7 +277,7 @@ public class ReactionEncoder
 	 * @return Reaction
 	 */
 	public static Reaction decode(String rxnCode, String rxnMapping, String rxnCoords,
-								  String rxnObjects, String rxnCatalysts, boolean ensureCoordinates) {
+								  String rxnObjects, String rxnCatalysts, boolean ensureCoordinates, Reaction rxn) {
 		if (rxnCode == null || rxnCode.length() == 0) {
 			return null;
 		}
@@ -286,14 +286,17 @@ public class ReactionEncoder
 		int idcodeIndex = 0;
 		int mappingIndex = 0;
 		int coordsIndex = 0;
-		boolean reactionLayoutRequired = false;
 
 		int productIndex = rxnCode.indexOf(PRODUCT_IDENTIFIER);
 		if (productIndex == -1) {
 			return null;
 		}
 
-		Reaction rxn = new Reaction();
+		if (rxn == null)
+			rxn = new Reaction();
+		else
+			rxn.clear();
+
 		while (idcodeIndex != -1) {
 			if (idcodeIndex > productIndex) {
 				isProduct = true;
@@ -339,9 +342,6 @@ public class ReactionEncoder
 			IDCodeParser parser = new IDCodeParser(ensureCoordinates);
 			StereoMolecule mol = parser.getCompactMolecule(idcode, coords);
 
-			if (!reactionLayoutRequired && (coords == null || !parser.coordinatesAreAbsolute(coords)))
-				reactionLayoutRequired = true;
-
 			if (mapping != null) {
 				parser.parseMapping(mapping.getBytes());
 			}
@@ -369,8 +369,6 @@ public class ReactionEncoder
 			rxn.addCatalyst(parser.getCompactMolecule(rxnCatalysts.substring(index1)));
 		}
 
-		rxn.setReactionLayoutRequired(reactionLayoutRequired);
-
 		return rxn;
 	}
 
@@ -394,13 +392,13 @@ public class ReactionEncoder
 		int idcodeIndex = 0;
 		int mappingIndex = 0;
 		int coordsIndex = 0;
-		boolean reactionLayoutRequired = false;
 
 		int productIndex = indexOf(rxnCode, PRODUCT_IDENTIFIER);
 		if (productIndex == -1)
 			return null;
 
 		Reaction rxn = new Reaction();
+
 		while (idcodeIndex != -1) {
 			if (idcodeIndex > productIndex)
 				isProduct = true;
@@ -431,9 +429,6 @@ public class ReactionEncoder
 			IDCodeParser parser = new IDCodeParser(ensureCoordinates);
 			StereoMolecule mol = parser.getCompactMolecule(rxnCode, rxnCoords, idcodeStart, coordsStart);
 
-			if (!reactionLayoutRequired && (coordsStart == -1 || !parser.coordinatesAreAbsolute(rxnCoords, coordsStart)))
-				reactionLayoutRequired = true;
-
 			if (mappingStart != -1)
 				parser.parseMapping(rxnMapping, mappingStart);
 
@@ -459,8 +454,6 @@ public class ReactionEncoder
 			rxn.addCatalyst(parser.getCompactMolecule(rxnCatalysts, index1));
 		}
 
-		rxn.setReactionLayoutRequired(reactionLayoutRequired);
-
 		return rxn;
 	}
 
@@ -480,6 +473,10 @@ public class ReactionEncoder
 		return -1;
 	}
 
+	public static Reaction decode(String s, boolean ensureCoordinates) {
+		return decode(s, ensureCoordinates, null);
+		}
+
 	/**
 	 * Creates a Reaction object by interpreting a reaction code,
 	 * mapping, coordinates and drawing objects that were earlier created
@@ -491,7 +488,7 @@ public class ReactionEncoder
 	 *
 	 * @return Reaction
 	 */
-	public static Reaction decode(String s, boolean ensureCoordinates) {
+	public static Reaction decode(String s, boolean ensureCoordinates, Reaction rxn) {
 		if (s == null)
 			return null;
 
@@ -526,7 +523,7 @@ public class ReactionEncoder
 			}
 		}
 
-		return decode(rxnCode, rxnMapping, rxnCoords, rxnObjects, rxnCatalysts, ensureCoordinates);
+		return decode(rxnCode, rxnMapping, rxnCoords, rxnObjects, rxnCatalysts, ensureCoordinates, rxn);
 	}
 
 
@@ -538,7 +535,7 @@ public class ReactionEncoder
 	 * @param includeOptions
 	 * @return Reaction
 	 */
-	public static Reaction decode(String s, int includeOptions) {
+	public static Reaction decode(String s, int includeOptions, Reaction rxn) {
 		if (s == null)
 			return null;
 
@@ -578,7 +575,7 @@ public class ReactionEncoder
 			(includeOptions & INCLUDE_COORDS) != 0 ? rxnCoords : null,
 			(includeOptions & INCLUDE_DRAWING_OBJECTS) != 0 ? rxnObjects : null,
 			(includeOptions & INCLUDE_CATALYSTS) != 0 ? rxnCatalysts : null,
-			false);
+			false, rxn);
 	}
 
 	/**

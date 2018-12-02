@@ -1318,8 +1318,8 @@ public abstract class Model
         } else {
             Reaction rxn = getReaction();
             String idc = ReactionEncoder.encode(rxn, true, ReactionEncoder.INCLUDE_DEFAULT);
-            if (idc != null)
-                ReactionEncoder.decode(idc, ReactionEncoder.INCLUDE_DEFAULT);
+//            if (idc != null)
+//                ReactionEncoder.decode(idc, ReactionEncoder.INCLUDE_DEFAULT, null);
             return idc;
         }
         return null;
@@ -1387,7 +1387,7 @@ public abstract class Model
                 }
             }
         }
-        rxn = mapper.matchReaction(rxn, sss);
+        rxn = mapper.mapReaction(rxn, sss);
         if (rxn != null) {
             int offset = 0;
             // Sync the display molecule with the reaction fragments

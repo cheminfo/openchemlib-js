@@ -33,6 +33,7 @@
 
 package com.actelion.research.chem.reaction;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -48,7 +49,7 @@ public class Reaction implements java.io.Serializable {
 	private ArrayList<StereoMolecule> mCatalyst;
 	private DrawingObjectList mDrawingObjectList;
 	private String mName;
-	private boolean mReactionLayoutRequired;
+//	private boolean mReactionLayoutRequired;
 	private int mMaxMapNo;
 
 	public Reaction() {
@@ -139,7 +140,7 @@ public class Reaction implements java.io.Serializable {
 		mDrawingObjectList = new DrawingObjectList(rxn.getDrawingObjects());
 		if (rxn.mName != null)
 			mName = new String(rxn.mName);
-		mReactionLayoutRequired = rxn.mReactionLayoutRequired;
+//		mReactionLayoutRequired = rxn.mReactionLayoutRequired;
 		}
 
 	public Reaction(StereoMolecule[] mol, int reactantCount) {
@@ -233,13 +234,60 @@ public class Reaction implements java.io.Serializable {
 		mDrawingObjectList = l;
 		}
 
-	public boolean isReactionLayoutRequired() {
-		return mReactionLayoutRequired;
+	public double getAverageBondLength() {
+		int bondCount = 0;
+		double avbl = 0.0;
+		for (int i=0; i<getMolecules(); i++) {
+			StereoMolecule mol = getMolecule(i);
+			if (mol.getAllBonds() != 0) {
+				bondCount += mol.getAllBonds();
+				avbl += mol.getAverageBondLength() * mol.getAllBonds();
+				}
+			}
+
+		return bondCount == 0 ? Molecule.getDefaultAverageBondLength() : avbl / bondCount;
 		}
 
-	public void setReactionLayoutRequired(boolean b) {
-		mReactionLayoutRequired = b;
+	/**
+	 * @return whether the molecule's atom coordinate bounds touch or overlap
+	 */
+	public boolean isReactionLayoutRequired() {
+		if (getMolecules() <= 1)
+			return false;
+
+		double avbl = getAverageBondLength();
+
+		Rectangle2D.Double[] r = new Rectangle2D.Double[getMolecules()];
+
+		for (int i=0; i<getMolecules(); i++) {
+			r[i] = getMolecule(i).getBounds(null);
+			if (r[i] != null) {
+				for (int j=0; j<i; j++) {
+					if (r[j] != null) {
+						// make new layout, if molecule bounds overlap
+						if (r[i].x + r[i].width >= r[j].x && r[i].x <= r[j].x + r[j].width)
+							return true;
+						if (r[i].y + r[i].height >= r[j].y && r[i].y <= r[j].y + r[j].height)
+							return true;
+						}
+					}
+
+				// make new layout, molecule bounds are unreasonably far from each other
+				if (i != 0 && r[i-1] != null) {
+					if (r[i].x - r[i-1].x - r[i].width > 5 * avbl)
+						return true;
+					if (r[i].y - r[i-1].y - r[i].height > 5 * avbl)
+						return true;
+					}
+				}
+			}
+
+		return false;
 		}
+
+/*	public void setReactionLayoutRequired(boolean b) {
+		mReactionLayoutRequired = b;
+		}*/
 
 	/**
 	 * Checks, whether all non-hydrogen atoms are mapped and whether every reactant atom has exactly one assigned product atom.

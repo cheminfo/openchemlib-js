@@ -35,10 +35,7 @@ package com.actelion.research.gui;
 
 import com.actelion.research.chem.*;
 import com.actelion.research.chem.coords.CoordinateInventor;
-import com.actelion.research.chem.reaction.IReactionMapper;
-import com.actelion.research.chem.reaction.MoleculeAutoMapper;
-import com.actelion.research.chem.reaction.Reaction;
-import com.actelion.research.chem.reaction.ReactionArrow;
+import com.actelion.research.chem.reaction.*;
 import com.actelion.research.gui.clipboard.IClipboardHandler;
 import com.actelion.research.gui.dnd.MoleculeDropAdapter;
 import com.actelion.research.gui.hidpi.HiDPIHelper;
@@ -218,7 +215,7 @@ public class JDrawArea extends JPanel
 		repaint();
 	}
 
-	public void setMapper(IReactionMapper mapper)
+	public void setReactionMapper(IReactionMapper mapper)
 	{
 		mMapper = mapper;
 	}
@@ -1978,6 +1975,12 @@ public class JDrawArea extends JPanel
 		}
 	}
 
+	/**
+	 * Takes the manually mapped atom mapping numbers from the display molecule,
+	 * copies them into the current fragments, creates a reaction from these,
+	 * uses the MCS-mapper to map the reaction and returns the rxn's mapping
+	 * into the display molecule.
+	 */
 	private void tryAutoMapReaction()
 	{
 		if (mMapper == null) {
@@ -1985,47 +1988,88 @@ public class JDrawArea extends JPanel
 			return;
 		}
 
-		SSSearcher sss = new MySSSearcher();
-		syncFragments();
+		// We assume that we use the MCS-mapper, which doesn't care about manually mapped atoms.
+		// Thus, we need a hack to ensure that manually mapped atoms are reliably part of
+		// the MCS-mapper's result. Therefore we give every manually mapped atom pair a
+		// unique fake atomicNo.
+
+		SSSearcher sss = new MySSSearcher();    // TODO this should go into the mcs-mapper
+//		syncFragments();    commented out, because it seems to conflict with outomatic fragment detection; TLS 11Nov2018
 
 		Reaction rxn = getReaction();//new Reaction(reaction);
 
-		// Mark the manually mapped atoms, so we may re-assign them later
-		for (int i = 0; i < rxn.getMolecules(); i++) {
-			StereoMolecule mol = rxn.getMolecule(i);
-			for (int a = 0; a < mol.getAtoms(); a++) {
-				if (mol.getAtomMapNo(a) > 0) {
-					mol.setAtomicNo(a, FAKE_ATOM_NO + mol.getAtomMapNo(a));
-				}
+		// Mark the manually mapped atoms such that the mapper uses them first priority and
+		// to be able to re-assign them later as manually mapped.
+		int[] fragmentAtom = new int[mFragment.length];
+		for (int atom = 0; atom < mMol.getAllAtoms(); atom++) {
+			int fragment = mFragmentNo[atom];
+			mFragment[fragment].setAtomMapNo(fragmentAtom[fragment], 0, false);
+			if (mMol.getAtomMapNo(atom) != 0 && !mMol.isAutoMappedAtom(atom)) {
+				mFragment[fragment].setAtomicNo(fragmentAtom[fragment], FAKE_ATOM_NO + mMol.getAtomMapNo(atom));
 			}
+			fragmentAtom[fragment]++;
 		}
-		rxn = mMapper.matchReaction(rxn, sss);
+
+		rxn = mMapper.mapReaction(rxn, sss);
+
 		if (rxn != null) {
-			int offset = 0;
-			// Sync the display molecule with the reaction fragments
-			{
-				int[] fragmentAtom = new int[mFragment.length];
-				for (int atom = 0; atom < mMol.getAllAtoms(); atom++) {
-					int fragment = mFragmentNo[atom];
-					if (mFragment[fragment].getAtomicNo(fragmentAtom[fragment]) > FAKE_ATOM_NO) {
-						mMol.setAtomMapNo(atom, mFragment[fragment].getAtomicNo(fragmentAtom[fragment]) - FAKE_ATOM_NO, false);
-						offset = Math.max(mMol.getAtomMapNo(atom), offset);
-					}
-					fragmentAtom[fragment]++;
+			// copy mapping numbers from reaction back to the editor's display molecule
+			int[] mapperMapNoToUsedMapNo = new int[mMol.getAllAtoms()+1];
+			boolean[] isUsedMapNo = new boolean[mMol.getAllAtoms()+1];
+
+			// first locate all manually mapped atoms and copy their original mapping numbers
+			fragmentAtom = new int[mFragment.length];
+			for (int atom = 0; atom < mMol.getAllAtoms(); atom++) {
+				int fragment = mFragmentNo[atom];
+				int atomicNo = mFragment[fragment].getAtomicNo(fragmentAtom[fragment]);
+				if (atomicNo > FAKE_ATOM_NO) {
+					int mapperMapNo = mFragment[fragment].getAtomMapNo(fragmentAtom[fragment]);
+					int usedMapNo = atomicNo - FAKE_ATOM_NO;
+					isUsedMapNo[usedMapNo] = true;
+					mMol.setAtomMapNo(atom, usedMapNo, false);
+					mapperMapNoToUsedMapNo[mapperMapNo] = usedMapNo;
 				}
+				fragmentAtom[fragment]++;
 			}
-			{
-				int[] fragmentAtom = new int[mFragment.length];
-				for (int atom = 0; atom < mMol.getAllAtoms(); atom++) {
-					int fragment = mFragmentNo[atom];
-					if (mFragment[fragment].getAtomMapNo(fragmentAtom[fragment]) > 0 && (mFragment[fragment].getAtomicNo(fragmentAtom[fragment]) <= FAKE_ATOM_NO)) {
-						mMol.setAtomMapNo(atom, mFragment[fragment].getAtomMapNo(fragmentAtom[fragment]) + offset, true);
+
+			fragmentAtom = new int[mFragment.length];
+			for (int atom = 0; atom < mMol.getAllAtoms(); atom++) {
+				int fragment = mFragmentNo[atom];
+				int atomicNo = mFragment[fragment].getAtomicNo(fragmentAtom[fragment]);
+				if (atomicNo <= FAKE_ATOM_NO) {
+					int usedMapNo = 0;
+					int mapperMapNo = mFragment[fragment].getAtomMapNo(fragmentAtom[fragment]);
+					if (mapperMapNo != 0) {
+						usedMapNo = mapperMapNoToUsedMapNo[mapperMapNo];
+						if (usedMapNo == 0) {
+							// find first free mapNo
+							for (int i=1; i<isUsedMapNo.length; i++) {
+								if (!isUsedMapNo[i]) {
+									usedMapNo = i;
+									break;
+								}
+							}
+							isUsedMapNo[usedMapNo] = true;
+							mapperMapNoToUsedMapNo[mapperMapNo] = usedMapNo;
+						}
 					}
-					fragmentAtom[fragment]++;
+					mMol.setAtomMapNo(atom, usedMapNo, true);
 				}
+				fragmentAtom[fragment]++;
 			}
 		}
-		syncFragments();
+
+		// restore original atomic numbers in fragments and copy display molecule's mapping number int o fragments
+		fragmentAtom = new int[mFragment.length];
+		for (int atom = 0; atom < mMol.getAllAtoms(); atom++) {
+			int fragment = mFragmentNo[atom];
+			mFragment[fragment].setAtomicNo(fragmentAtom[fragment], mMol.getAtomicNo(atom));
+			mFragment[fragment].setAtomMapNo(fragmentAtom[fragment], mMol.getAtomMapNo(atom), mMol.isAutoMappedAtom(atom));
+			fragmentAtom[fragment]++;
+		}
+
+
+
 
 //		mMapper.resetFragments(mappedReaction);
 

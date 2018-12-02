@@ -106,7 +106,9 @@ function copyOpenchemlib() {
 
   const chemlibClasses = require('./openchemlib/classes');
 
-  rimraf.sync(outDir);
+  if (fs.existsSync(outDir)) {
+    rimraf.sync(outDir);
+  }
 
   fs.copySync(chemlibDir, outDir);
 
