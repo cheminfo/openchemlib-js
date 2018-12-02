@@ -6,7 +6,7 @@ const Molecule = require('../minimal').Molecule;
 
 describe('from and to SMILES', () => {
   it.each(['C', 'COCOC', 'c1cc2cccc3c4cccc5cccc(c(c1)c23)c54'])(
-    'fromSmiles',
+    'fromSmiles: %s',
     (smiles) => {
       const mol = Molecule.fromSmiles(smiles);
       expect(Molecule.fromSmiles(mol.toSmiles()).getIDCode()).toBe(
@@ -21,9 +21,19 @@ describe('from and to SMILES', () => {
     }).toThrow(/SmilesParser: unknown element label found/);
   });
 
-  it('toIsomericSmiles', () => {
-    const mol = Molecule.fromSmiles('C1CC1');
-    expect(mol.toIsomericSmiles()).toBe('C1CC1');
+  it.each([
+    ['C1CC1', 'C1CC1'],
+    ['OCC', 'CCO'],
+    ['[CH3][CH2][OH]', 'CCO'],
+    ['C-C-O', 'CCO'],
+    ['C(O)C', 'CCO']
+    // Next examples don't work rigth now. See https://github.com/Actelion/openchemlib/issues/35
+    // ['OC(=O)C(Br)(Cl)N', 'NC(Cl)(Br)C(=O)O'],
+    // ['ClC(Br)(N)C(=O)O', 'NC(Cl)(Br)C(=O)O'],
+    // ['O=C(O)C(N)(Br)Cl', 'NC(Cl)(Br)C(=O)O']
+  ])('toIsomericSmiles: %s', (input, output) => {
+    const mol = Molecule.fromSmiles(input);
+    expect(mol.toIsomericSmiles()).toBe(output);
   });
 });
 
