@@ -157,12 +157,12 @@ public class SVGDepictor extends AbstractDepictor
     }
 
     @Override
-    protected void fillCircle(double x, double y, double r)
+    protected void fillCircle(double x, double y, double d)
     {
         String s = "<circle " +
-                "cx=\"" + (int) (x+r/2) + "\" " +
-                "cy=\"" + (int) (y+r/2) + "\" " +
-                "r=\"" + (int) (r/2) + "\" " +
+                "cx=\"" + (int) (x+d/2) + "\" " +
+                "cy=\"" + (int) (y+d/2) + "\" " +
+                "r=\"" + (int) (d/2) + "\" " +
                 "fill=\"" + currentColor + "\" />";
         write(s);
     }

@@ -109,7 +109,6 @@ public class HoseCodeCreator {
 				atomID=i;
 				break;
 			};
-
 		}
 		if (atomID>=0) {
 			return HoseCodeCreator.getHoseCodesForAtom(molecule, atomID, maxSphereSize, type);
