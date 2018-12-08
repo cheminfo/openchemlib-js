@@ -1,7 +1,6 @@
 'use strict';
 
-const core = require('..');
-
+const core = require('../core');
 const minimal = require('../minimal');
 const full = require('../full');
 const pretty = require('../dist/openchemlib-full.pretty');
@@ -9,6 +8,7 @@ const pretty = require('../dist/openchemlib-full.pretty');
 describe('Checking for the presence of main APIs', function () {
   const minimalAPI = [
     'Molecule',
+    'RingCollection',
     'SDFileParser',
     'SSSearcher',
     'SSSearcherWithIndex',
@@ -24,34 +24,28 @@ describe('Checking for the presence of main APIs', function () {
     'ToxicityPredictor'
   ];
 
-  const fullAPI = ['StructureView', 'StructureEditor'];
+  const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];
 
   it('minimal', function () {
     checkHas(minimal, minimalAPI);
-    checkHasNot(minimal, coreAPI);
-    checkHasNot(minimal, fullAPI);
+    checkHasNot(minimal, [...coreAPI, ...fullAPI]);
   });
 
   it('core', function () {
     expect(core).toBe(require('..'));
-    checkHas(core, minimalAPI);
-    checkHas(core, coreAPI);
+    checkHas(core, [...minimalAPI, ...coreAPI]);
     checkHasNot(core, fullAPI);
   });
 
   it('full', function () {
     [full, pretty].forEach((lib) => {
-      checkHas(lib, minimalAPI);
-      checkHas(lib, coreAPI);
-      checkHas(lib, fullAPI);
+      checkHas(lib, [...minimalAPI, ...coreAPI, ...fullAPI]);
     });
   });
 });
 
 function checkHas(obj, properties) {
-  properties.forEach((prop) => {
-    expect(obj).toHaveProperty(prop);
-  });
+  expect(Object.keys(obj).sort()).toEqual(properties.sort());
 }
 
 function checkHasNot(obj, properties) {
