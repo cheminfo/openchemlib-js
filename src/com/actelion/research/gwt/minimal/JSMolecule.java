@@ -33,10 +33,11 @@ public class JSMolecule {
 
 	@JsIgnore
 	public JSMolecule() {
-	    this(32, 32, null);
+	  this(32, 32, null);
 	}
 	
-	public static native JSMolecule fromSmiles(String smiles, JavaScriptObject options) throws Exception /*-{
+	public static native JSMolecule fromSmiles(String smiles, JavaScriptObject options) throws Exception
+	/*-{
 		options = options || {};
 		var coordinates = !options.noCoordinates;
 		var stereo = !options.noStereo;
@@ -54,11 +55,13 @@ public class JSMolecule {
 		return createMolfileWithAtomMap(new JSMolecule(mol), map);
 	}
 
-	private static native JavaScriptObject createMolfileWithAtomMap(JSMolecule mol, int[] map) /*-{
+	private static native JavaScriptObject createMolfileWithAtomMap(JSMolecule mol, int[] map)
+	/*-{
 		return {molecule: mol, map: map};
 	}-*/;
 	
-	public static native JSMolecule fromIDCode(String idcode, JavaScriptObject coordinates) /*-{
+	public static native JSMolecule fromIDCode(String idcode, JavaScriptObject coordinates)
+	/*-{
 		var mol;
 		if (typeof coordinates === 'undefined') {
 			coordinates = true;
@@ -92,7 +95,8 @@ public class JSMolecule {
 		return creator.getMolfile();
 	}
 
-	public native String toSVG(int width, int height, String id, JavaScriptObject options) /*-{
+	public native String toSVG(int width, int height, String id, JavaScriptObject options)
+	/*-{
 		//todo: re-enable this check once it becomes possible to change the font
 		//if (!$doc.createElement) {
 		//	throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
@@ -123,7 +127,8 @@ public class JSMolecule {
 		return canonizer.getIDCode();
 	}
 
-	public native JavaScriptObject getIDCodeAndCoordinates() /*-{
+	public native JavaScriptObject getIDCodeAndCoordinates()
+	/*-{
 		return {
 			idCode: this.@com.actelion.research.gwt.minimal.JSMolecule::getIDCode()(),
 			coordinates: this.@com.actelion.research.gwt.minimal.JSMolecule::getIDCoordinates()()
@@ -145,7 +150,8 @@ public class JSMolecule {
 		oclMolecule.setStereoBondsFromParity();
 	}
 
-	public native void addImplicitHydrogens(JavaScriptObject atomNumber) /*-{
+	public native void addImplicitHydrogens(JavaScriptObject atomNumber)
+	/*-{
 		if (atomNumber === undefined) {
 			this.@com.actelion.research.gwt.minimal.JSMolecule::addImplicitHydrogens()();
 		} else {
@@ -161,7 +167,8 @@ public class JSMolecule {
 		return DiastereotopicAtomID.getAtomIds(oclMolecule);
 	}
 
-    public native void addMissingChirality(JavaScriptObject esrType) /*-{
+		public native void addMissingChirality(JavaScriptObject esrType)
+		/*-{
         if (esrType === undefined) {
             this.@com.actelion.research.gwt.minimal.JSMolecule::addMissingChirality()();
         } else {
@@ -179,7 +186,8 @@ public class JSMolecule {
         DiastereotopicAtomID.addMissingChirality(oclMolecule, esrType);
     }
 
-	public native String[][] getHoseCodes(JavaScriptObject options) /*-{
+	public native String[][] getHoseCodes(JavaScriptObject options)
+	/*-{
 		options = options || {};
 		var maxSphereSize = (typeof options.maxSphereSize === 'undefined' ? 5 : options.maxSphereSize) | 0;
 		var type = (typeof options.type === 'undefined' ? 0 : options.type) | 0;
