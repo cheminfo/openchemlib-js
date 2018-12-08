@@ -24,4 +24,30 @@ describe('Reaction class', () => {
     expect(reaction.getProducts()).toBe(1);
     expect(reaction.getCatalysts()).toBe(1);
   });
+
+  it('should be able to create from array', () => {
+    const reactant1 = Molecule.fromSmiles('C');
+    const reactant2 = Molecule.fromSmiles('O');
+    const product = Molecule.fromSmiles('CO');
+    const reaction = Reaction.fromMolecules([reactant1, reactant2, product], 2);
+    expect(reaction.getReactants()).toBe(2);
+    expect(reaction.getProducts()).toBe(1);
+  });
+
+  it('should work with SMILES', () => {
+    const reactant1 = Molecule.fromSmiles('C');
+    const reactant2 = Molecule.fromSmiles('O');
+    const product = Molecule.fromSmiles('CO');
+    const reaction = Reaction.fromMolecules([reactant1, reactant2, product], 2);
+
+    const smiles = reaction.toSmiles();
+    expect(smiles).toBe('C.O>>CO');
+
+    const newReaction = Reaction.fromSmiles(smiles);
+    expect(newReaction.getReactants()).toBe(1);
+    expect(newReaction.getProducts()).toBe(1);
+
+    expect(newReaction.getReactant(0).toSmiles()).toBe('C.O');
+    expect(newReaction.getProduct(0).toSmiles()).toBe('CO');
+  });
 });

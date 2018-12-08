@@ -20,9 +20,18 @@ public class JSReaction {
     return new JSReaction(new Reaction(oclMol, reactantCount));
   }
 
+  public static JSReaction fromSmiles(String smiles) throws Exception {
+		Reaction reaction = new SmilesParser().parseReaction(smiles.getBytes());
+		return new JSReaction(reaction);
+  }
+
   @JsIgnore
   public JSReaction(Reaction reaction) {
     oclReaction = reaction;
+  }
+  
+  public String toSmiles() {
+    return IsomericSmilesCreator.createReactionSmiles(oclReaction);
   }
 
   public JSReaction clone() {
