@@ -38,16 +38,20 @@ describe('Reaction class', () => {
     const reactant1 = Molecule.fromSmiles('C');
     const reactant2 = Molecule.fromSmiles('O');
     const product = Molecule.fromSmiles('CO');
+    const catalyst = Molecule.fromSmiles('[Fe]');
     const reaction = Reaction.fromMolecules([reactant1, reactant2, product], 2);
+    reaction.addCatalyst(catalyst);
 
     const smiles = reaction.toSmiles();
-    expect(smiles).toBe('C.O>>CO');
+    expect(smiles).toBe('C.O>[Fe]>CO');
 
     const newReaction = Reaction.fromSmiles(smiles);
     expect(newReaction.getReactants()).toBe(1);
     expect(newReaction.getProducts()).toBe(1);
+    expect(newReaction.getCatalysts()).toBe(1);
 
     expect(newReaction.getReactant(0).toSmiles()).toBe('C.O');
     expect(newReaction.getProduct(0).toSmiles()).toBe('CO');
+    expect(newReaction.getCatalyst(0).toSmiles()).toBe('[Fe]');
   });
 });
