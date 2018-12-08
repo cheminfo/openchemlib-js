@@ -30,9 +30,13 @@
   "main": "dist/openchemlib-core.js",
   "files": [
     "dist",
+    "types.d.ts",
     "minimal.js",
+    "minimal.d.ts",
     "core.js",
-    "full.js"
+    "core.d.ts",
+    "full.js",
+    "full.d.ts"
   ],
   "repository": {
     "type": "git",
