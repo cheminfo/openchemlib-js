@@ -1,24 +1,28 @@
 # Documentation
 
+## Table of contents
+
 ### Classes present in minimal, core and full builds
 
-[Molecule](#molecule)  
-[SDF parser](#sdfileparser)  
-[Substructure searcher](#sssearcher)  
-[Substructure searcher with index](#sssearcherwithindex)  
-[Util](#util)
+- [Molecule](#molecule)
+- [MolecularFormula](#molecularformula)
+- [Reaction](#reaction)
+- [SDFileParser](#sdfileparser)
+- [SSSearcher](#sssearcher)
+- [SSSearcherWithIndex](#sssearcherwithindex)
+- [Util](#util)
 
 ### Classes present in core and full builds
 
-[Molecule Properties](#moleculeproperties)  
-[Drug likeness predictor](#druglikenesspredictor)  
-[Drug Score Calculator](#drugscorecalculator)
-[Toxicity predictor](#toxicitypredictor)
+- [Molecule Properties](#moleculeproperties)
+- [ToxicityPredictor](#toxicitypredictor)
+- [DruglikenessPredictor](#druglikenesspredictor)
+- [DrugScoreCalculator](#drugscorecalculator)
 
 ### Classes present in full build
 
-[Structure View](#structureview)  
-[Structure Editor](#structureeditor)
+- [StructureView](#structureview)
+- [StructureEditor](#structureeditor)
 
 ---
 
@@ -27,10 +31,13 @@
 ### Molecule.fromSmiles(smiles, [options])
 
 Parse the provided `smiles` and return a `Molecule`.  
-By default, stereo features are parsed, which triggers itself a coordinate computation and coordinates are computed again after parsing to guarantee that they are always the same.  
-If you do not need stereo features and want the fastest parsing, use this method with `{noCoordinates: true, noStereo: true}`.
+By default, stereo features are parsed, which triggers itself a coordinate
+computation and coordinates are computed again after parsing to guarantee that
+they are always the same.  
+If you do not need stereo features and want the fastest parsing, use this method
+with `{noCoordinates: true, noStereo: true}`.
 
-**Options**
+**Options**:
 
 - `noCoordinates` - disable extra coordinate computation (default: false).
 - `noStereo` - disable stereo features parsing (default: false).
@@ -47,10 +54,11 @@ Parse the provided `molfile` and return an object with `Molecule` and map.
 
 Parse the provided `idcode` and return a `Molecule`.
 
-**Arguments**
+**Parameters**:
 
 - `idcode` - string with the idcode
-- `ensure2DCoordinates` - boolean indicating if the 2D coordinates should be computed (default: true)
+- `ensure2DCoordinates` - boolean indicating if the 2D coordinates should be
+  computed (default: `true`)
 - `coordinates` - string with the idcoordinates to use
 
 ### molecule.toSmiles()
@@ -107,11 +115,14 @@ Compute and set atom coordinates for this molecule
 
 ### molecule.addImplicitHydrogens([atomNumber])
 
-Expand and find a position for all the hydrogens of the 2D molecule. If `atomNumber` is specified, the function only applies for the hydrogens of the given atom.
+Expand and find a position for all the hydrogens of the 2D molecule. If
+`atomNumber` is specified, the function only applies for the hydrogens of the
+given atom.
 
-**Options**
+**Options**:
 
-- `atomNumber`- The atom number according to the molfile (default: all the atoms)
+- `atomNumber`- The atom number according to the molfile (default: all the
+  atoms)
 
 ### molecule.removeExplicitHydrogens()
 
@@ -129,9 +140,10 @@ Returns the diastereotopic IDs of all the atoms in the molecule
 
 ### molecule.getHoseCodes(options)
 
-This function returns an array of HOSE(Hierarchical Organisation of Spherical Environments) codes represented as diastereotopic actelion IDs.
+This function returns an array of HOSE(Hierarchical Organisation of Spherical
+Environments) codes represented as diastereotopic actelion IDs.
 
-**Options**
+**Options**:
 
 - `maxSphereSize` - Maximum number of atoms from the center (default: 5).
 - `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
@@ -156,21 +168,154 @@ Returns an array of fragments from the molecule
 
 ### mf.formula
 
-## MoleculeProperties
+---
 
-### p.acceptorCount
+## Reaction
 
-### p.donorCount
+### Reaction.create()
 
-### p.logP
+Returns a new empty `Reaction`.
 
-### p.logS
+### Reaction.fromMolecules(molecules, reactantCount)
 
-### p.polarSurfaceArea
+Returns a new `Reaction` filled with the provided molecules.
 
-### p.rotatableBondCount
+**Parameters**:
 
-### p.stereoCenterCount
+- `molecules` - Array of `Molecule` objects.
+- `reactantCount` - Number of reactants in the `molecules` array. The remaining
+  objects will be treated as products.
+
+### Reaction.fromSmiles(smiles)
+
+Returns a new `Reaction` based on a reaction SMILES string. The `Reaction` will
+contain at most one `Molecule` for each component.
+
+### reaction.toSmiles()
+
+Serialize the `Reaction` to a reaction SMILES string.
+
+### reaction.clone()
+
+Returns a new copy of the `Reaction`.
+
+### reaction.clear()
+
+Empty the `Reaction`.
+
+### reaction.removeCatalysts()
+
+Remove all catalysts from the `Reaction`.
+
+### reaction.isEmpty()
+
+Returns whether the reaction is empty.
+
+### reaction.setFragment(isFragment)
+
+Mark the `Reaction` as `isFragment` (`true` or `false`).
+
+### reaction.isFragment()
+
+Returns whether the `Reaction` is a fragment.
+
+### reaction.getReactant(index)
+
+Returns the reactant `Molecule` at `index`.
+
+### reaction.getReactants()
+
+Returns the number of reactants.
+
+### reaction.getProduct(index)
+
+Returns the product `Molecule` at `index`.
+
+### reaction.getProducts()
+
+Returns the number of products.
+
+### reaction.getCatalyst(index)
+
+Returns the catalyst `Molecule` at `index`.
+
+### reaction.getCatalysts()
+
+Returns the number of catalysts.
+
+### reaction.getMolecules()
+
+Returns the total number of reactants and products.
+
+### reaction.getMolecule(index)
+
+Returns the reactant or product at `index` (starting with reactants).
+
+### reaction.addReactant(reactant)
+
+Add a new `Molecule` in the reactants.
+
+### reaction.addReactantAt(reactant, index)
+
+Add a new `Molecule` in the reactants at `index`.
+
+### reaction.addProduct(product)
+
+Add a new `Molecule` in the products.
+
+### reaction.addProductAt(product, index)
+
+Add a new `Molecule` in the products at `index`.
+
+### reaction.addCatalyst(catalyst)
+
+Add a new `Molecule` in the catalysts.
+
+### reaction.addCatalystAt(catalyst, index)
+
+Add a new `Molecule` in the catalysts at `index`.
+
+### reaction.getName()
+
+Returns the name of the `Reaction`.
+
+### reaction.setName(name)
+
+Sets the name of the `Reaction`.
+
+### reaction.getAverageBondLength()
+
+Returns the average bond length among reactants and products.
+
+### reaction.isReactionLayoutRequired()
+
+Returns whether the molecules` atom coordinate bounds touch or overlap.
+
+### reaction.isPerfectlyMapped()
+
+Returns whether all non-hydrogen atoms are mapped and whether every reactant
+atom has exactly one assigned product atom.
+
+### reaction.getHighestMapNo()
+
+### reaction.validateMapping()
+
+Removes mapping numbers that are only used on one side of the reaction. Throws
+an exception if duplicate mapping numbers occur in reactants or products.
+
+### reaction.getReactionCenterMapNos()
+
+This method determines the largest mapping number in use (maxMapNo), creates a
+boolean array[maxMapNo+1], and within this array flags every mapping number
+that refers to atoms, which change bonds in the course of the reaction. Mapped
+atoms that are connected to unpammed atoms are also considered being part of the
+reaction center. If the reaction is unmapped or has no reactants or products,
+then `null` is returned.
+
+### reaction.getMergedCopy()
+
+Merges all reactants into one `Molecule` and all products into another and
+creates a new `Reaction` object from those.
 
 ---
 
@@ -180,16 +325,17 @@ Returns an array of fragments from the molecule
 
 Create a new parser
 
-**Arguments**
+**Parameters**:
 
 - `sdf` - string with the sdf
-- `fields` - array of field names to parse. If null, the sdf is scanned to find all possible names (not efficient)
+- `fields` - array of field names to parse. If null, the sdf is scanned to find
+  all possible names (not efficient)
 
 ### parser.next()
 
-Move to the next molfile. Returns true if there is one, false otherwise.
+Move to the next molfile. Returns `true` if there is one, `false` otherwise.
 
-**Example**
+**Example**:
 
 ```js
 var sdf = fs.readFileSync('./mysdf.sdf');
@@ -232,15 +378,16 @@ Create a new substructure searcher
 
 Set the `fragment` to search
 
-**Arguments**
+**Parameters**:
 
-- `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
+- `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be
+  flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first.
 
 ### searcher.setMolecule(molecule)
 
 Set the target `molecule` in which the search will be done
 
-**Arguments**
+**Parameters**:
 
 - `molecule` - [Molecule](#molecule) instance to set as target molecule
 
@@ -248,7 +395,7 @@ Set the target `molecule` in which the search will be done
 
 ### searcher.isFragmentInMolecule()
 
-Returns true if the set fragment is in the target molecule, false otherwise
+Returns whether the current fragment is in the target molecule.
 
 ---
 
@@ -280,25 +427,60 @@ Create a new substructure searcher
 
 Set the `fragment` to search
 
-**Arguments**
+**Parameters**:
 
-- `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first
-- `index` - If the index for this fragment was computed previously, it can be provided here to save time
+- `fragment` - [Molecule](#molecule) instance to set as fragment. It has to be
+  flagged with [`setFragment(true)`](#moleculesetfragmentisfragment) first.
+- `index` - If the index for this fragment was computed previously, it can be
+  provided here to save time.
 
 ### searcher.setMolecule(molecule, [index])
 
 Set the target `molecule` in which the search will be done
 
-**Arguments**
+**Parameters**:
 
 - `molecule` - [Molecule](#molecule) instance to set as target molecule
-- `index` - If the index for this fragment was computed previously, it can be provided here to save time
+- `index` - If the index for this fragment was computed previously, it can be
+  provided here to save time.
 
 ### searcher.isFragmentInMolecule()
 
-Returns true if the set fragment is in the target molecule, false otherwise
+Returns whether the current fragment is in the target molecule.
 
 ### searcher.createIndex()
+
+---
+
+## Util
+
+### Util.getHoseCodesFromDiastereotopicID(id, options)
+
+Returns the HOSE(Hierarchical Organisation of Spherical Environments) code for
+the given diasterotopic ID.
+
+**Options**:
+
+- `maxSphereSize` - Maximum number of atoms from the center (default: 5).
+- `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
+
+---
+
+## MoleculeProperties
+
+### p.acceptorCount
+
+### p.donorCount
+
+### p.logP
+
+### p.logS
+
+### p.polarSurfaceArea
+
+### p.rotatableBondCount
+
+### p.stereoCenterCount
 
 ---
 
@@ -353,19 +535,6 @@ Returns detailed information about the previous drug likeness assessment.
 
 ---
 
-## Util
-
-### Util.getHoseCodesFromDiastereotopicID(id, options)
-
-Returns the HOSE(Hierarchical Organisation of Spherical Environments) code for the given diasterotopic ID.
-
-**Options**
-
-- `maxSphereSize` - Maximum number of atoms from the center (default: 5).
-- `type` - 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
-
----
-
 ## StructureView
 
 ### StructureView.drawStructure(id, idcode, coordinates, options)
@@ -415,7 +584,8 @@ Returns String consting of a MDL Molfile Version 3.0
 
 ### editor.setMolFile(molfile)
 
-Sets the editor content to the molecule represented by this Molfile (Version 2.0 or 3.0)
+Sets the editor content to the molecule represented by this Molfile (Version 2.0
+or 3.0).
 
 ### editor.getSmiles()
 
@@ -427,15 +597,18 @@ Sets the editor content to the molecule represented by the passed Smiles
 
 ### editor.setAtomHightlightCallback(onAtomHighlight)
 
-Sets a callback function which is called whenever an atom is selected/unselected during mouse hover. The callback signature is: callback(atom,selected)
+Sets a callback function which is called whenever an atom is selected/unselected
+during mouse hover. The callback signature is: callback(atom,selected)
 
 ### editor.setBondHightlightCallback(onBondHighlight)
 
-Sets a callback function which is called whenever an bond is selected/unselected during mouse hover. The callback signature is: callback(bond,selected)
+Sets a callback function which is called whenever an bond is selected/unselected
+during mouse hover. The callback signature is: callback(bond,selected)
 
 ### editor.setChangeListenerCallback(changeMolecule)
 
-Sets a callback function which is called whenever the structure in the editor has been changed. The callback signature is: callback(newIdCode)
+Sets a callback function which is called whenever the structure in the editor
+has been changed. The callback signature is: callback(newIdCode)
 
 ### Usage in your page
 
@@ -488,7 +661,6 @@ The following options are all boolean and they default to `false`.
 - `chiralTextAboveMolecule`
 - `chiralTextOnFrameTop`
 - `chiralTextOnFrameBottom`
-  ``
 - `noTabus`
 - `showAtomNumber`
 - `showBondNumber`
@@ -497,7 +669,6 @@ The following options are all boolean and they default to `false`.
 - `suppressChiralText`
 - `suppressCIPParity`
 - `suppressESR`
-  ``
 - `showSymmetrySimple`
 - `showSymmetryDiastereotopic`
 - `showSymmetryEnantiotopic`
