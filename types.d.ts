@@ -37,6 +37,13 @@ export interface IHoseCodesOptions {
   type: 0 | 1;
 }
 
+export interface Rectangle {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export declare class Molecule {
   constructor(maxAtoms: number, maxBonds: number);
 
@@ -330,6 +337,11 @@ export declare class Molecule {
    */
   getHoseCodes(options?: IHoseCodesOptions): string[][];
   getRingSet(): RingCollection;
+
+  /**
+   * Returns the rectangle the bounds the molecule.
+   */
+  getBounds(): Rectangle;
 
   addAtom(atomicNo: number): number;
   suggestBondType(atom1: number, atom2: number): number;

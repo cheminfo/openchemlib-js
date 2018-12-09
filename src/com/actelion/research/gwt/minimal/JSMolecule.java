@@ -15,6 +15,7 @@ import jsinterop.annotations.*;
 public class JSMolecule {
 	
 	private static Services services = Services.getInstance();
+	private static Rectangle2D.Double rectangle = new Rectangle2D.Double();
 	
 	private StereoMolecule oclMolecule;
 
@@ -200,8 +201,19 @@ public class JSMolecule {
 	public JSRingCollection getRingSet() {
 		return new JSRingCollection(oclMolecule.getRingSet());
 	}
+
+	public JavaScriptObject getBounds() {
+		Rectangle2D.Double r = oclMolecule.getBounds(rectangle);
+		if (r == null) return null;
+		return getBounds(r.x, r.y, r.width, r.height);
+	}
 	
 	/* public methods after this line will not be accessible from javascript */
+
+	private native JavaScriptObject getBounds(double x, double y, double width, double height)
+	/*-{
+		return { x: x, y: y, width: width, height: height };
+	}-*/;
 
 	private void addImplicitHydrogens() {
 		HydrogenHandler.addImplicitHydrogens(oclMolecule);
