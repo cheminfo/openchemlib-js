@@ -1,6 +1,6 @@
 {
   "name": "openchemlib",
-  "version": "5.7.0",
+  "version": "5.8.0",
   "description": "Manipulate molecules",
   "keywords": [
     "chemistry",
@@ -54,10 +54,10 @@
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "eslint": "^5.9.0",
+    "eslint": "^5.10.0",
     "eslint-config-cheminfo": "^1.18.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^22.1.0",
+    "eslint-plugin-jest": "^22.1.2",
     "fs-extra": "^7.0.1",
     "gwt-api-exporter": "^1.2.1",
     "jest": "^23.6.0",
