@@ -1,8 +1,10 @@
-5.8.0 / 2018-12-XX
+5.8.0 / 2018-12-09
 ==================
 
 * Update OCL to 2018_12_08-04_00_22
 * Added Reaction class
+* Added TypeScript declaration files
+* Ported the documentation to TypeDoc
 
 5.7.0 / 2018-12-02
 ==================
