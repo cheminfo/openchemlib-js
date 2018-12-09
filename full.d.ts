@@ -3,7 +3,7 @@ export {
   StructureView,
   StructureEditor,
   SVGRenderer,
-  AtomHightlightCallback,
-  BondHightlightCallback,
+  AtomHighlightCallback,
+  BondHighlightCallback,
   ChangeListenerCallback
 } from './types';
