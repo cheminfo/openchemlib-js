@@ -62,12 +62,23 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="openchemlib-js">openchemlib-js</h1>
+				<h1 id="openchemlib-js">OpenChemLib JS</h1>
 				<p><a href="https://www.npmjs.com/package/openchemlib"><img src="https://img.shields.io/npm/v/openchemlib.svg?style=flat-square" alt="NPM version"></a>
 					<a href="https://travis-ci.org/cheminfo/openchemlib-js"><img src="https://img.shields.io/travis/cheminfo/openchemlib-js/master.svg?style=flat-square" alt="build status"></a>
 				<a href="https://www.npmjs.com/package/openchemlib"><img src="https://img.shields.io/npm/dm/openchemlib.svg?style=flat-square" alt="npm download"></a></p>
-				<p>JavaScript interface with the <a href="https://github.com/actelion/openchemlib">openchemlib</a> java library</p>
+				<p>JavaScript port of the <a href="https://github.com/actelion/openchemlib">OpenChemLib</a> Java library.</p>
+				<h2 id="installation">Installation</h2>
+				<pre><code class="language-console">npm install openchemlib</code></pre>
 				<h2 id="documentation">Documentation</h2>
+				<p>This library is available in three different builds: <code>minimal</code>, <code>core</code> and <code>full</code>.
+				Each larger build contains all functionalities from the smaller ones.</p>
+				<p>The <code>core</code> build is the one that you get when you <code>require(&#39;openchemlib&#39;)</code>. It
+				contains all functionalities that can be used in Node.js.</p>
+				<p>The <code>minimal</code> (<code>require(&#39;openchemlib/minimal&#39;)</code>) build is a smaller one
+					(~ half the size of <code>core</code>) that is meant to be used in a browser application
+				if bundle size matters and prediction functionalities are not needed.</p>
+				<p>The <code>full</code> build (<code>require(&#39;openchemlib/full&#39;)</code>) build is the largest build.
+				It contains a structure viewer and a structure editor for browser applications.</p>
 				<ul>
 					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/globals.html">TypeDoc home page</a></li>
 				</ul>
@@ -198,6 +209,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/molecularformula.html" class="tsd-kind-icon">Molecular<wbr>Formula</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rectangle.html" class="tsd-kind-icon">Rectangle</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#atomhighlightcallback" class="tsd-kind-icon">Atom<wbr>Highlight<wbr>Callback</a>
