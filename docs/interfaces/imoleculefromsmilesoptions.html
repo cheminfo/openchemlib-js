@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DrugScoreCalculator | OpenChemLib JS</title>
+	<title>IMoleculeFromSmilesOptions | OpenChemLib JS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,68 +54,69 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_types_d_.html">&quot;types.d&quot;</a>
-				</li>
-				<li>
-					<a href="_types_d_.drugscorecalculator.html">DrugScoreCalculator</a>
+					<a href="imoleculefromsmilesoptions.html">IMoleculeFromSmilesOptions</a>
 				</li>
 			</ul>
-			<h1>Module DrugScoreCalculator</h1>
+			<h1>Interface IMoleculeFromSmilesOptions</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">IMoleculeFromSmilesOptions</span>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Functions</h3>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_types_d_.drugscorecalculator.html#calculate" class="tsd-kind-icon">calculate</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="imoleculefromsmilesoptions.html#nocoordinates" class="tsd-kind-icon">no<wbr>Coordinates</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="imoleculefromsmilesoptions.html#nostereo" class="tsd-kind-icon">no<wbr>Stereo</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-					<a name="calculate" class="tsd-anchor"></a>
-					<h3>calculate</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">calculate<span class="tsd-signature-symbol">(</span>mCLogP<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, mSolubility<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, mMolweight<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, mDruglikeness<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, toxRisks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/6fd04d5/types.d.ts#L1069">types.d.ts:1069</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>mCLogP: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>mSolubility: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>mMolweight: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>mDruglikeness: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>toxRisks: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-						</li>
-					</ul>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="nocoordinates" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> no<wbr>Coordinates</h3>
+					<div class="tsd-signature tsd-kind-icon">no<wbr>Coordinates<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/6b77274/types.d.ts#L7">types.d.ts:7</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Disable extra coordinate computation (default: false).</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="nostereo" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> no<wbr>Stereo</h3>
+					<div class="tsd-signature tsd-kind-icon">no<wbr>Stereo<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/6b77274/types.d.ts#L11">types.d.ts:11</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Disable stereo features parsing (default: false).</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -129,8 +130,77 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-						<a href="_types_d_.drugscorecalculator.html#calculate" class="tsd-kind-icon">calculate</a>
+					<li class=" tsd-kind-class">
+						<a href="../classes/druglikenesspredictor.html" class="tsd-kind-icon">Druglikeness<wbr>Predictor</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/molecule.html" class="tsd-kind-icon">Molecule</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/moleculeproperties.html" class="tsd-kind-icon">Molecule<wbr>Properties</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/reaction.html" class="tsd-kind-icon">Reaction</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/ringcollection.html" class="tsd-kind-icon">Ring<wbr>Collection</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/sdfileparser.html" class="tsd-kind-icon">SDFile<wbr>Parser</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/sssearcher.html" class="tsd-kind-icon">SSSearcher</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/sssearcherwithindex.html" class="tsd-kind-icon">SSSearcher<wbr>With<wbr>Index</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/structureeditor.html" class="tsd-kind-icon">Structure<wbr>Editor</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/toxicitypredictor.html" class="tsd-kind-icon">Toxicity<wbr>Predictor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="idepictoroptions.html" class="tsd-kind-icon">IDepictor<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="ihosecodesoptions.html" class="tsd-kind-icon">IHose<wbr>Codes<wbr>Options</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="imoleculefromsmilesoptions.html" class="tsd-kind-icon">IMolecule<wbr>From<wbr>Smiles<wbr>Options</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="imoleculefromsmilesoptions.html#nocoordinates" class="tsd-kind-icon">no<wbr>Coordinates</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="imoleculefromsmilesoptions.html#nostereo" class="tsd-kind-icon">no<wbr>Stereo</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="imoleculetosvgoptions.html" class="tsd-kind-icon">IMolecule<wbr>ToSVGOptions</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iparameterizedstring.html" class="tsd-kind-icon">IParameterized<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="molecularformula.html" class="tsd-kind-icon">Molecular<wbr>Formula</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#atomhighlightcallback" class="tsd-kind-icon">Atom<wbr>Highlight<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#bondhighlightcallback" class="tsd-kind-icon">Bond<wbr>Highlight<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#changelistenercallback" class="tsd-kind-icon">Change<wbr>Listener<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#version" class="tsd-kind-icon">version</a>
 					</li>
 				</ul>
 			</nav>

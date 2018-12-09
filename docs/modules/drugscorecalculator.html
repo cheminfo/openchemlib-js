@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SVGRenderer | OpenChemLib JS</title>
+	<title>DrugScoreCalculator | OpenChemLib JS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_types_d_.html">&quot;types.d&quot;</a>
-				</li>
-				<li>
-					<a href="_types_d_.svgrenderer.html">SVGRenderer</a>
+					<a href="drugscorecalculator.html">DrugScoreCalculator</a>
 				</li>
 			</ul>
-			<h1>Module SVGRenderer</h1>
+			<h1>Module DrugScoreCalculator</h1>
 		</div>
 	</div>
 </header>
@@ -71,43 +68,49 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-not-exported">
+						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_types_d_.svgrenderer.html#rendermolecule" class="tsd-kind-icon">render<wbr>Molecule</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="drugscorecalculator.html#calculate" class="tsd-kind-icon">calculate</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-					<a name="rendermolecule" class="tsd-anchor"></a>
-					<h3>render<wbr>Molecule</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">render<wbr>Molecule<span class="tsd-signature-symbol">(</span>idCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="calculate" class="tsd-anchor"></a>
+					<h3>calculate</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">calculate<span class="tsd-signature-symbol">(</span>mCLogP<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, mSolubility<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, mMolweight<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, mDruglikeness<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, toxRisks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/6fd04d5/types.d.ts#L1219">types.d.ts:1219</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/6b77274/types.d.ts#L1069">types.d.ts:1069</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>idCode: <span class="tsd-signature-type">string</span></h5>
+									<h5>mCLogP: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5>width: <span class="tsd-signature-type">number</span></h5>
+									<h5>mSolubility: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5>height: <span class="tsd-signature-type">number</span></h5>
+									<h5>mMolweight: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>mDruglikeness: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>toxRisks: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -119,12 +122,24 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class="current tsd-kind-module">
+						<a href="drugscorecalculator.html">Drug<wbr>Score<wbr>Calculator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="svgrenderer.html">SVGRenderer</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="structureview.html">Structure<wbr>View</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="util.html">Util</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-						<a href="_types_d_.svgrenderer.html#rendermolecule" class="tsd-kind-icon">render<wbr>Molecule</a>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="drugscorecalculator.html#calculate" class="tsd-kind-icon">calculate</a>
 					</li>
 				</ul>
 			</nav>

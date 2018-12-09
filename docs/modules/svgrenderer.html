@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IHoseCodesOptions | OpenChemLib JS</title>
+	<title>SVGRenderer | OpenChemLib JS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,72 +54,59 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_types_d_.html">&quot;types.d&quot;</a>
-				</li>
-				<li>
-					<a href="_types_d_.ihosecodesoptions.html">IHoseCodesOptions</a>
+					<a href="svgrenderer.html">SVGRenderer</a>
 				</li>
 			</ul>
-			<h1>Interface IHoseCodesOptions</h1>
+			<h1>Module SVGRenderer</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">IHoseCodesOptions</span>
-					</li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_types_d_.ihosecodesoptions.html#maxspheresize" class="tsd-kind-icon">max<wbr>Sphere<wbr>Size</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_types_d_.ihosecodesoptions.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="svgrenderer.html#rendermolecule" class="tsd-kind-icon">render<wbr>Molecule</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="maxspheresize" class="tsd-anchor"></a>
-					<h3>max<wbr>Sphere<wbr>Size</h3>
-					<div class="tsd-signature tsd-kind-icon">max<wbr>Sphere<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/6fd04d5/types.d.ts#L33">types.d.ts:33</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Maximum number of atoms from the center (default: 5).</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/6fd04d5/types.d.ts#L37">types.d.ts:37</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>1: stop if Csp3-Csp3, 0: normal hose code (default: 0).</p>
-						</div>
-					</div>
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="rendermolecule" class="tsd-anchor"></a>
+					<h3>render<wbr>Molecule</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">render<wbr>Molecule<span class="tsd-signature-symbol">(</span>idCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/6b77274/types.d.ts#L1222">types.d.ts:1222</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>idCode: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>width: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>height: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -129,84 +116,24 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class="current tsd-kind-external-module">
-						<a href="../modules/_types_d_.html">"types.d"</a>
+					<li class=" tsd-kind-module">
+						<a href="drugscorecalculator.html">Drug<wbr>Score<wbr>Calculator</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="svgrenderer.html">SVGRenderer</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="structureview.html">Structure<wbr>View</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="util.html">Util</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.druglikenesspredictor.html" class="tsd-kind-icon">Druglikeness<wbr>Predictor</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.molecule.html" class="tsd-kind-icon">Molecule</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.moleculeproperties.html" class="tsd-kind-icon">Molecule<wbr>Properties</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.reaction.html" class="tsd-kind-icon">Reaction</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.ringcollection.html" class="tsd-kind-icon">Ring<wbr>Collection</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.sdfileparser.html" class="tsd-kind-icon">SDFile<wbr>Parser</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.sssearcher.html" class="tsd-kind-icon">SSSearcher</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.sssearcherwithindex.html" class="tsd-kind-icon">SSSearcher<wbr>With<wbr>Index</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.structureeditor.html" class="tsd-kind-icon">Structure<wbr>Editor</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_types_d_.toxicitypredictor.html" class="tsd-kind-icon">Toxicity<wbr>Predictor</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_types_d_.idepictoroptions.html" class="tsd-kind-icon">IDepictor<wbr>Options</a>
-					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_types_d_.ihosecodesoptions.html" class="tsd-kind-icon">IHose<wbr>Codes<wbr>Options</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_types_d_.ihosecodesoptions.html#maxspheresize" class="tsd-kind-icon">max<wbr>Sphere<wbr>Size</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_types_d_.ihosecodesoptions.html#type" class="tsd-kind-icon">type</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_types_d_.imoleculefromsmilesoptions.html" class="tsd-kind-icon">IMolecule<wbr>From<wbr>Smiles<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_types_d_.imoleculetosvgoptions.html" class="tsd-kind-icon">IMolecule<wbr>ToSVGOptions</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_types_d_.iparameterizedstring.html" class="tsd-kind-icon">IParameterized<wbr>String</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_types_d_.molecularformula.html" class="tsd-kind-icon">Molecular<wbr>Formula</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_types_d_.html#atomhighlightcallback" class="tsd-kind-icon">Atom<wbr>Highlight<wbr>Callback</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_types_d_.html#bondhighlightcallback" class="tsd-kind-icon">Bond<wbr>Highlight<wbr>Callback</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_types_d_.html#changelistenercallback" class="tsd-kind-icon">Change<wbr>Listener<wbr>Callback</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-						<a href="../modules/_types_d_.html#version" class="tsd-kind-icon">version</a>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="svgrenderer.html#rendermolecule" class="tsd-kind-icon">render<wbr>Molecule</a>
 					</li>
 				</ul>
 			</nav>
