@@ -12,6 +12,7 @@ describe('Checking for the presence of main APIs', function () {
     'SDFileParser',
     'SSSearcher',
     'SSSearcherWithIndex',
+    'Reaction',
     'Util',
     'version'
   ];
