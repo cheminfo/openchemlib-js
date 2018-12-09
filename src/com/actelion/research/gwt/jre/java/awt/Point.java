@@ -35,36 +35,36 @@ package java.awt;
 import java.awt.geom.Point2D;
 
 public class Point extends Point2D {
-    public int x;
-    public int y;
+  public int x;
+  public int y;
 
-    public Point() {
-        this(0, 0);
-    }
+  public Point() {
+    this(0, 0);
+  }
 
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+  public Point(int x, int y) {
+    this.x = x;
+    this.y = y;
+  }
 
-    public double getX() {
-        return x;
-    }
+  public double getX() {
+    return x;
+  }
 
-    public double getY() {
-        return y;
-    }
+  public double getY() {
+    return y;
+  }
 
-    public void move(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+  public void move(int x, int y) {
+    this.x = x;
+    this.y = y;
+  }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof Point) {
-            Point pt = (Point) obj;
-            return (x == pt.x) && (y == pt.y);
-        }
-        return super.equals(obj);
+  public boolean equals(Object obj) {
+    if (obj instanceof Point) {
+      Point pt = (Point) obj;
+      return (x == pt.x) && (y == pt.y);
     }
+    return super.equals(obj);
+  }
 }

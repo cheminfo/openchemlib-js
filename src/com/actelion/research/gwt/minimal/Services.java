@@ -4,23 +4,24 @@ import com.actelion.research.chem.SSSearcherWithIndex;
 
 public class Services {
 
-	private static Services instance = null;
-	
-	private SSSearcherWithIndex sSSearcherWithIndex = null;
+  private static Services instance = null;
 
-	private Services() {}
-	
-	public static Services getInstance() {
-		if (instance == null) {
-			instance = new Services();
-		}
-		return instance;
-	}
+  private SSSearcherWithIndex sSSearcherWithIndex = null;
 
-	public SSSearcherWithIndex getSSSearcherWithIndex() {
-		if(sSSearcherWithIndex == null) {
-			sSSearcherWithIndex = new SSSearcherWithIndex();
-		}
-		return sSSearcherWithIndex;
-	}
+  private Services() {
+  }
+
+  public static Services getInstance() {
+    if (instance == null) {
+      instance = new Services();
+    }
+    return instance;
+  }
+
+  public SSSearcherWithIndex getSSSearcherWithIndex() {
+    if (sSSearcherWithIndex == null) {
+      sSSearcherWithIndex = new SSSearcherWithIndex();
+    }
+    return sSSearcherWithIndex;
+  }
 }

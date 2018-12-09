@@ -39,16 +39,16 @@ import com.google.gwt.core.client.EntryPoint;
  */
 public class GWTStructureEditor implements EntryPoint {
 
-    /**
-     * This is the entry point method.
-     */
-    public void onModuleLoad() {
-        onLoadImpl();
-    }
+  /**
+   * This is the entry point method.
+   */
+  public void onModuleLoad() {
+    onLoadImpl();
+  }
 
-    private native void onLoadImpl()
-    /*-{
-      if (typeof $wnd.editorLoaded === 'function') $wnd.editorLoaded();
-    }-*/;
+  private native void onLoadImpl()
+  /*-{
+    if (typeof $wnd.editorLoaded === 'function') $wnd.editorLoaded();
+  }-*/;
 
 }

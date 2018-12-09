@@ -21,11 +21,12 @@ import java.io.Serializable;
  * Wraps a native <code>char</code> as an object.
  *
  * TODO(jat): many of the classification methods implemented here are not
- * correct in that they only handle ASCII characters, and many other methods
- * are not currently implemented.  I think the proper approach is to introduce * a deferred binding parameter which substitutes an implementation using
- * a fully-correct Unicode character database, at the expense of additional
- * data being downloaded.  That way developers that need the functionality
- * can get it without those who don't need it paying for it.
+ * correct in that they only handle ASCII characters, and many other methods are
+ * not currently implemented. I think the proper approach is to introduce * a
+ * deferred binding parameter which substitutes an implementation using a
+ * fully-correct Unicode character database, at the expense of additional data
+ * being downloaded. That way developers that need the functionality can get it
+ * without those who don't need it paying for it.
  *
  * <pre>
  * The following methods are still not implemented -- most would require Unicode
@@ -61,17 +62,16 @@ import java.io.Serializable;
  * </pre>
  */
 public final class Character implements Comparable<Character>, Serializable {
-	
-	  public static void checkCriticalArgument(boolean expression) {
-		    if (!expression) {
-		      throw new IllegalArgumentException();
-		    }
-		  }
-	
-	
+
+  public static void checkCriticalArgument(boolean expression) {
+    if (!expression) {
+      throw new IllegalArgumentException();
+    }
+  }
+
   /**
-   * Helper class to share code between implementations, by making a char
-   * array look like a CharSequence.
+   * Helper class to share code between implementations, by making a char array
+   * look like a CharSequence.
    */
   static class CharSequenceAdapter implements CharSequence {
     private char[] charArray;
@@ -97,8 +97,7 @@ public final class Character implements Comparable<Character>, Serializable {
     }
 
     public java.lang.CharSequence subSequence(int start, int end) {
-      return new CharSequenceAdapter(charArray, this.start + start,
-          this.start + end);
+      return new CharSequenceAdapter(charArray, this.start + start, this.start + end);
     }
   }
 
@@ -163,13 +162,11 @@ public final class Character implements Comparable<Character>, Serializable {
     return codePointCount(new CharSequenceAdapter(a), offset, offset + count);
   }
 
-  public static int codePointCount(CharSequence seq, int beginIndex,
-      int endIndex) {
+  public static int codePointCount(CharSequence seq, int beginIndex, int endIndex) {
     int count = 0;
-    for (int idx = beginIndex; idx < endIndex; ) {
+    for (int idx = beginIndex; idx < endIndex;) {
       char ch = seq.charAt(idx++);
-      if (isHighSurrogate(ch) && idx < endIndex
-          && (isLowSurrogate(seq.charAt(idx)))) {
+      if (isHighSurrogate(ch) && idx < endIndex && (isLowSurrogate(seq.charAt(idx)))) {
         // skip the second char of surrogate pairs
         ++idx;
       }
@@ -222,7 +219,7 @@ public final class Character implements Comparable<Character>, Serializable {
   /**
    * @skip
    *
-   * public for shared implementation with Arrays.hashCode
+   *       public for shared implementation with Arrays.hashCode
    */
   public static int hashCode(char c) {
     return c;
@@ -232,11 +229,12 @@ public final class Character implements Comparable<Character>, Serializable {
    * TODO: correct Unicode handling.
    */
   public static boolean isDigit(int c) {
-	  return isDigit((char)c);
+    return isDigit((char) c);
   }
+
   public static native boolean isDigit(char c) /*-{
-    return (null != String.fromCharCode(c).match(/\d/));
-  }-*/;
+                                               return (null != String.fromCharCode(c).match(/\d/));
+                                               }-*/;
 
   public static boolean isHighSurrogate(char ch) {
     return ch >= MIN_HIGH_SURROGATE && ch <= MAX_HIGH_SURROGATE;
@@ -246,22 +244,23 @@ public final class Character implements Comparable<Character>, Serializable {
    * TODO: correct Unicode handling.
    */
   public static native boolean isLetter(char c) /*-{
-    return (null != String.fromCharCode(c).match(/[A-Z]/i));
-  }-*/;
+                                                return (null != String.fromCharCode(c).match(/[A-Z]/i));
+                                                }-*/;
 
   /*
    * TODO: correct Unicode handling.
    */
   public static native boolean isLetterOrDigit(char c) /*-{
-    return (null != String.fromCharCode(c).match(/[A-Z\d]/i));
-  }-*/;
+                                                       return (null != String.fromCharCode(c).match(/[A-Z\d]/i));
+                                                       }-*/;
 
   /*
    * TODO: correct Unicode handling.
    */
   public static boolean isLowerCase(int c) {
-	  return isLowerCase((char)c);
+    return isLowerCase((char) c);
   }
+
   public static boolean isLowerCase(char c) {
     return toLowerCase(c) == c && isLetter(c);
   }
@@ -276,18 +275,18 @@ public final class Character implements Comparable<Character>, Serializable {
   @Deprecated
   public static boolean isSpace(char c) {
     switch (c) {
-      case ' ':
-        return true;
-      case '\n':
-        return true;
-      case '\t':
-        return true;
-      case '\f':
-        return true;
-      case '\r':
-        return true;
-      default:
-        return false;
+    case ' ':
+      return true;
+    case '\n':
+      return true;
+    case '\t':
+      return true;
+    case '\f':
+      return true;
+    case '\r':
+      return true;
+    default:
+      return false;
     }
   }
 
@@ -298,32 +297,28 @@ public final class Character implements Comparable<Character>, Serializable {
   public static boolean isSurrogatePair(char highSurrogate, char lowSurrogate) {
     return isHighSurrogate(highSurrogate) && isLowSurrogate(lowSurrogate);
   }
-  
+
   /*
    * TODO: correct Unicode handling.
    */
   public static boolean isUpperCase(char c) {
     return toUpperCase(c) == c && isLetter(c);
   }
-  
+
   public static boolean isValidCodePoint(int codePoint) {
     return codePoint >= MIN_CODE_POINT && codePoint <= MAX_CODE_POINT;
   }
-  
-  public static int offsetByCodePoints(char[] a, int start, int count, int index,
-      int codePointOffset) {
-    return offsetByCodePoints(new CharSequenceAdapter(a, start, count), index,
-        codePointOffset);
+
+  public static int offsetByCodePoints(char[] a, int start, int count, int index, int codePointOffset) {
+    return offsetByCodePoints(new CharSequenceAdapter(a, start, count), index, codePointOffset);
   }
-  
-  public static int offsetByCodePoints(CharSequence seq, int index,
-      int codePointOffset) {
+
+  public static int offsetByCodePoints(CharSequence seq, int index, int codePointOffset) {
     if (codePointOffset < 0) {
       // move backwards
       while (codePointOffset < 0) {
         --index;
-        if (Character.isLowSurrogate(seq.charAt(index))
-            && Character.isHighSurrogate(seq.charAt(index - 1))) {
+        if (Character.isLowSurrogate(seq.charAt(index)) && Character.isHighSurrogate(seq.charAt(index - 1))) {
           --index;
         }
         ++codePointOffset;
@@ -331,8 +326,7 @@ public final class Character implements Comparable<Character>, Serializable {
     } else {
       // move forwards
       while (codePointOffset > 0) {
-        if (Character.isHighSurrogate(seq.charAt(index))
-            && Character.isLowSurrogate(seq.charAt(index + 1))) {
+        if (Character.isHighSurrogate(seq.charAt(index)) && Character.isLowSurrogate(seq.charAt(index + 1))) {
           ++index;
         }
         ++index;
@@ -346,14 +340,9 @@ public final class Character implements Comparable<Character>, Serializable {
     checkCriticalArgument(codePoint >= 0 && codePoint <= MAX_CODE_POINT);
 
     if (codePoint >= MIN_SUPPLEMENTARY_CODE_POINT) {
-      return new char[] {
-          getHighSurrogate(codePoint),
-          getLowSurrogate(codePoint),
-      };
+      return new char[] { getHighSurrogate(codePoint), getLowSurrogate(codePoint), };
     } else {
-      return new char[] {
-          (char) codePoint,
-      };
+      return new char[] { (char) codePoint, };
     }
   }
 
@@ -372,24 +361,23 @@ public final class Character implements Comparable<Character>, Serializable {
 
   public static int toCodePoint(char highSurrogate, char lowSurrogate) {
     /*
-     * High and low surrogate chars have the bottom 10 bits to store the value
-     * above MIN_SUPPLEMENTARY_CODE_POINT, so grab those bits and add the
-     * offset.
+     * High and low surrogate chars have the bottom 10 bits to store the value above
+     * MIN_SUPPLEMENTARY_CODE_POINT, so grab those bits and add the offset.
      */
     return MIN_SUPPLEMENTARY_CODE_POINT + ((highSurrogate & 1023) << 10) + (lowSurrogate & 1023);
   }
 
   public static native char toLowerCase(char c) /*-{
-    return String.fromCharCode(c).toLowerCase().charCodeAt(0);
-  }-*/;
+                                                return String.fromCharCode(c).toLowerCase().charCodeAt(0);
+                                                }-*/;
 
   public static String toString(char x) {
     return String.valueOf(x);
   }
 
   public static native char toUpperCase(char c) /*-{
-    return String.fromCharCode(c).toUpperCase().charCodeAt(0);
-  }-*/;
+                                                return String.fromCharCode(c).toUpperCase().charCodeAt(0);
+                                                }-*/;
 
   public static Character valueOf(char c) {
     if (c < 128) {
@@ -415,8 +403,7 @@ public final class Character implements Comparable<Character>, Serializable {
   static int codePointBefore(CharSequence cs, int index, int start) {
     char loSurrogate = cs.charAt(--index);
     char highSurrogate;
-    if (isLowSurrogate(loSurrogate) && index > start
-        && isHighSurrogate(highSurrogate = cs.charAt(index - 1))) {
+    if (isLowSurrogate(loSurrogate) && index > start && isHighSurrogate(highSurrogate = cs.charAt(index - 1))) {
       return toCodePoint(highSurrogate, loSurrogate);
     }
     return loSurrogate;
@@ -437,20 +424,19 @@ public final class Character implements Comparable<Character>, Serializable {
    * non-BMP code point. See {@link getLowSurrogate}.
    * 
    * @param codePoint requested codePoint, required to be >=
-   *          MIN_SUPPLEMENTARY_CODE_POINT
+   *                  MIN_SUPPLEMENTARY_CODE_POINT
    * @return high surrogate character
    */
   static char getHighSurrogate(int codePoint) {
-    return (char) (MIN_HIGH_SURROGATE
-        + (((codePoint - MIN_SUPPLEMENTARY_CODE_POINT) >> 10) & 1023));
+    return (char) (MIN_HIGH_SURROGATE + (((codePoint - MIN_SUPPLEMENTARY_CODE_POINT) >> 10) & 1023));
   }
 
   /**
-   * Computes the low surrogate character of the UTF16 representation of a
-   * non-BMP code point. See {@link getHighSurrogate}.
+   * Computes the low surrogate character of the UTF16 representation of a non-BMP
+   * code point. See {@link getHighSurrogate}.
    * 
    * @param codePoint requested codePoint, required to be >=
-   *          MIN_SUPPLEMENTARY_CODE_POINT
+   *                  MIN_SUPPLEMENTARY_CODE_POINT
    * @return low surrogate character
    */
   static char getLowSurrogate(int codePoint) {

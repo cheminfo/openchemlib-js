@@ -1,4 +1,4 @@
 <module>
-	<inherits name="com.google.gwt.i18n.I18N"/>
-	<super-source/>
+  <inherits name="com.google.gwt.i18n.I18N"/>
+  <super-source/>
 </module>

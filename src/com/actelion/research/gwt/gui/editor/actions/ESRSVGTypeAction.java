@@ -46,16 +46,16 @@ import java.awt.geom.Point2D;
 
 public class ESRSVGTypeAction extends AbstractTypeAction {
 
-    private int scale = 1;
+  private int scale = 1;
 
-    public ESRSVGTypeAction(Model model, int scale) {
-        super(model, scale);
-        this.scale = scale;
-    }
+  public ESRSVGTypeAction(Model model, int scale) {
+    super(model, scale);
+    this.scale = scale;
+  }
 
-    @Override
-    public ESRSVGPane createPane() {
-        return new ESRSVGPane(model, scale);
-    }
+  @Override
+  public ESRSVGPane createPane() {
+    return new ESRSVGPane(model, scale);
+  }
 
 }

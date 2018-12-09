@@ -34,9 +34,10 @@ package java.awt;
 
 import java.awt.font.LineMetrics;
 
-public interface FontMetrics
-{
-    int getHeight();
-    LineMetrics getLineMetrics( String str, Graphics context);
-    int getStringWidth(String s);
+public interface FontMetrics {
+  int getHeight();
+
+  LineMetrics getLineMetrics(String str, Graphics context);
+
+  int getStringWidth(String s);
 }

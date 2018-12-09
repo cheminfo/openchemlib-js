@@ -35,83 +35,88 @@ package java.awt.geom;
 import java.io.Serializable;
 
 /**
- *  * JDK Class Emulation for GWT
+ * * JDK Class Emulation for GWT
  */
 
 public abstract class Point2D {
 
-    public static class Float extends Point2D
-    {
-        public float x;
-        public float y;
-        public Float(float x, float y) {
-            this.x = x;
-            this.y = y;
-        }
+  public static class Float extends Point2D {
+    public float x;
+    public float y;
 
-        public double getX() {
-            return (double) x;
-        }
-        public double getY() {
-            return (double) y;
-        }
+    public Float(float x, float y) {
+      this.x = x;
+      this.y = y;
     }
 
-    public static class Double extends Point2D implements Serializable {
-        public double x;
-        public double y;
-        public Double() {
-        }
-        public Double(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-        public double getX() {
-            return x;
-        }
-
-        public double getY() {
-            return y;
-        }
-
+    public double getX() {
+      return (double) x;
     }
 
-    protected Point2D() {
+    public double getY() {
+      return (double) y;
     }
-    public abstract double getX();
-    public abstract double getY();
+  }
 
-    public static double distance(double x1, double y1,
-                                  double x2, double y2)
-    {
-        x1 -= x2;
-        y1 -= y2;
-        return Math.sqrt(x1 * x1 + y1 * y1);
-    }
+  public static class Double extends Point2D implements Serializable {
+    public double x;
+    public double y;
 
-    public double distance(double px, double py) {
-        px -= getX();
-        py -= getY();
-        return Math.sqrt(px * px + py * py);
-    }
-    public double distance(Point2D pt) {
-        double px = pt.getX() - this.getX();
-        double py = pt.getY() - this.getY();
-        return Math.sqrt(px * px + py * py);
+    public Double() {
     }
 
-    public int hashCode() {
-        double sum = getX() + getY();
-        return (int)sum * 37;
+    public Double(double x, double y) {
+      this.x = x;
+      this.y = y;
     }
 
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj instanceof Point2D) {
-            Point2D p2d = (Point2D) obj;
-            return (getX() == p2d.getX()) && (getY() == p2d.getY());
-        }
-        return super.equals(obj);
+    public double getX() {
+      return x;
     }
+
+    public double getY() {
+      return y;
+    }
+
+  }
+
+  protected Point2D() {
+  }
+
+  public abstract double getX();
+
+  public abstract double getY();
+
+  public static double distance(double x1, double y1, double x2, double y2) {
+    x1 -= x2;
+    y1 -= y2;
+    return Math.sqrt(x1 * x1 + y1 * y1);
+  }
+
+  public double distance(double px, double py) {
+    px -= getX();
+    py -= getY();
+    return Math.sqrt(px * px + py * py);
+  }
+
+  public double distance(Point2D pt) {
+    double px = pt.getX() - this.getX();
+    double py = pt.getY() - this.getY();
+    return Math.sqrt(px * px + py * py);
+  }
+
+  public int hashCode() {
+    double sum = getX() + getY();
+    return (int) sum * 37;
+  }
+
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj instanceof Point2D) {
+      Point2D p2d = (Point2D) obj;
+      return (getX() == p2d.getX()) && (getY() == p2d.getY());
+    }
+    return super.equals(obj);
+  }
 }

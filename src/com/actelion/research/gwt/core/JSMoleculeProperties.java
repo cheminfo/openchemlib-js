@@ -8,65 +8,65 @@ import jsinterop.annotations.*;
 @JsType(name = "MoleculeProperties")
 public class JSMoleculeProperties extends PropertyCalculator {
 
-	public JSMoleculeProperties(JSMolecule mol) {
-		super(mol.getStereoMolecule());
-	}
-	
-	@Override
-	@JsProperty
-	public int getAcceptorCount() {
-		return super.getAcceptorCount();
-	}
-	
-	@Override
-	@JsProperty
-	public int getDonorCount() {
-		return super.getDonorCount();
-	}
-	
-	@Override
-	@JsProperty
-	public double getLogP() {
-		return super.getLogP();
-	}
+  public JSMoleculeProperties(JSMolecule mol) {
+    super(mol.getStereoMolecule());
+  }
 
-	@JsProperty
-	public JavaScriptObject getLogPString() {
-		return Util.convertParameterizedStringList(super.getLogPDetail());
-	}
+  @Override
+  @JsProperty
+  public int getAcceptorCount() {
+    return super.getAcceptorCount();
+  }
 
-	@Override
-	@JsProperty
-	public double getLogS() {
-		return super.getLogS();
-	}
+  @Override
+  @JsProperty
+  public int getDonorCount() {
+    return super.getDonorCount();
+  }
 
-	@JsProperty
-	public JavaScriptObject getLogSString() {
-		return Util.convertParameterizedStringList(super.getLogSDetail());
-	}
+  @Override
+  @JsProperty
+  public double getLogP() {
+    return super.getLogP();
+  }
 
-	@Override
-	@JsProperty
-	public double getPolarSurfaceArea() {
-		return super.getPolarSurfaceArea();
-	}
+  @JsProperty
+  public JavaScriptObject getLogPString() {
+    return Util.convertParameterizedStringList(super.getLogPDetail());
+  }
 
-	@JsProperty
-	public JavaScriptObject getPolarSurfaceAreaString() {
-		return Util.convertParameterizedStringList(super.getPolarSurfaceAreaDetail());
-	}
+  @Override
+  @JsProperty
+  public double getLogS() {
+    return super.getLogS();
+  }
 
-	@Override
-	@JsProperty
-	public int getRotatableBondCount() {
-		return super.getRotatableBondCount();
-	}
-	
-	@Override
-	@JsProperty
-	public int getStereoCenterCount() {
-		return super.getStereoCenterCount();
-	}
+  @JsProperty
+  public JavaScriptObject getLogSString() {
+    return Util.convertParameterizedStringList(super.getLogSDetail());
+  }
+
+  @Override
+  @JsProperty
+  public double getPolarSurfaceArea() {
+    return super.getPolarSurfaceArea();
+  }
+
+  @JsProperty
+  public JavaScriptObject getPolarSurfaceAreaString() {
+    return Util.convertParameterizedStringList(super.getPolarSurfaceAreaDetail());
+  }
+
+  @Override
+  @JsProperty
+  public int getRotatableBondCount() {
+    return super.getRotatableBondCount();
+  }
+
+  @Override
+  @JsProperty
+  public int getStereoCenterCount() {
+    return super.getStereoCenterCount();
+  }
 
 }

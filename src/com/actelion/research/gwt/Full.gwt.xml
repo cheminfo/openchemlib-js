@@ -1,5 +1,5 @@
 <module rename-to="oclFull">
-    <inherits name="com.actelion.research.gwt.Core" />
-    <inherits name="com.actelion.research.gwt.StructureViewer" />
-    <inherits name="com.actelion.research.gwt.StructureEditor" />
+  <inherits name="com.actelion.research.gwt.Core" />
+  <inherits name="com.actelion.research.gwt.StructureViewer" />
+  <inherits name="com.actelion.research.gwt.StructureEditor" />
 </module>

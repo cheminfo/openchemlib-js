@@ -36,38 +36,38 @@ import com.actelion.research.share.gui.editor.io.IMouseEvent;
 import com.google.gwt.event.dom.client.MouseEvent;
 
 public class FakeMouseEvent implements IMouseEvent {
-    private int x = 0;
-    private int y = 0;
-    private boolean shift = false;
-    private boolean ctrl = false;
-    private boolean alt = false;
+  private int x = 0;
+  private int y = 0;
+  private boolean shift = false;
+  private boolean ctrl = false;
+  private boolean alt = false;
 
-    public FakeMouseEvent(MouseEvent evt) {
-        x = evt.getX();
-        y = evt.getY();
-        shift = evt.isShiftKeyDown();
-        ctrl = evt.isControlKeyDown();
-        alt = evt.isAltKeyDown();
-    }
+  public FakeMouseEvent(MouseEvent evt) {
+    x = evt.getX();
+    y = evt.getY();
+    shift = evt.isShiftKeyDown();
+    ctrl = evt.isControlKeyDown();
+    alt = evt.isAltKeyDown();
+  }
 
-    public double getX() {
-        return x;
-    }
+  public double getX() {
+    return x;
+  }
 
-    public double getY() {
-        return y;
-    }
+  public double getY() {
+    return y;
+  }
 
-    public boolean isShiftDown() {
-        return shift;
-    }
+  public boolean isShiftDown() {
+    return shift;
+  }
 
-    public boolean isControlDown() {
-        return ctrl;
-    }
+  public boolean isControlDown() {
+    return ctrl;
+  }
 
-    @Override
-    public boolean isAltDown() {
-        return alt;
-    }
+  @Override
+  public boolean isAltDown() {
+    return alt;
+  }
 }

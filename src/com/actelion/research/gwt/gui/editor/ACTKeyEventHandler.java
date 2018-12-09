@@ -36,6 +36,6 @@ import com.actelion.research.share.gui.editor.io.IKeyEvent;
 
 public interface ACTKeyEventHandler {
 
-    void onKey(IKeyEvent event);
+  void onKey(IKeyEvent event);
 
 }

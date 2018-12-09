@@ -7,24 +7,24 @@ import jsinterop.annotations.*;
 
 @JsType(name = "DruglikenessPredictor")
 public class JSDruglikenessPredictor {
-	private static Services services = Services.getInstance();
-	private DruglikenessPredictor predictor;
+  private static Services services = Services.getInstance();
+  private DruglikenessPredictor predictor;
 
-	public static double DRUGLIKENESS_UNKNOWN = DruglikenessPredictor.cDruglikenessUnknown;
+  public static double DRUGLIKENESS_UNKNOWN = DruglikenessPredictor.cDruglikenessUnknown;
 
-	public JSDruglikenessPredictor() {
-		predictor = new DruglikenessPredictor();
-	}
+  public JSDruglikenessPredictor() {
+    predictor = new DruglikenessPredictor();
+  }
 
-	public double assessDruglikeness(JSMolecule molecule) {
-		return predictor.assessDruglikeness(molecule.getStereoMolecule(), services.getThreadMaster());
-	}
+  public double assessDruglikeness(JSMolecule molecule) {
+    return predictor.assessDruglikeness(molecule.getStereoMolecule(), services.getThreadMaster());
+  }
 
-	public String getDruglikenessString(JSMolecule molecule) {
-		return predictor.getDruglikenessString(molecule.getStereoMolecule());
-	}
+  public String getDruglikenessString(JSMolecule molecule) {
+    return predictor.getDruglikenessString(molecule.getStereoMolecule());
+  }
 
-	public JavaScriptObject getDetail() {
-   		return Util.convertParameterizedStringList(predictor.getDetail());
-    }
+  public JavaScriptObject getDetail() {
+    return Util.convertParameterizedStringList(predictor.getDetail());
+  }
 }

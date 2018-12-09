@@ -16,59 +16,59 @@ import com.google.gwt.user.client.ui.PopupPanel;
 
 public abstract class AbstractESRPane extends PopupPanel {
 
-    protected Canvas canvas;
-    protected Model model;
+  protected Canvas canvas;
+  protected Model model;
 
-    public AbstractESRPane(Model m, final int width, final int height) {
-        super(true);
-        this.model = m;
+  public AbstractESRPane(Model m, final int width, final int height) {
+    super(true);
+    this.model = m;
 
-        canvas = Canvas.createIfSupported();
-        canvas.setCoordinateSpaceWidth(width);
-        canvas.setCoordinateSpaceHeight(height);
-        canvas.setWidth(width + "px");
-        canvas.setHeight(height + "px");
-        setWidget(canvas);
+    canvas = Canvas.createIfSupported();
+    canvas.setCoordinateSpaceWidth(width);
+    canvas.setCoordinateSpaceHeight(height);
+    canvas.setWidth(width + "px");
+    canvas.setHeight(height + "px");
+    setWidget(canvas);
 
-        canvas.addMouseDownHandler(new MouseDownHandler() {
-            @Override
-            public void onMouseDown(MouseDownEvent event) {
-                int row = (int) (event.getY() / (height / ToolBar.ESR_IMAGE_ROWS));
-                if (row >= 0 && row < 3) {
-                    model.setESRType(model.esrTypeFromRow(row));
-                }
-                onMouseButtonPressed();
-                requestLayout();
-            }
-        });
+    canvas.addMouseDownHandler(new MouseDownHandler() {
+      @Override
+      public void onMouseDown(MouseDownEvent event) {
+        int row = (int) (event.getY() / (height / ToolBar.ESR_IMAGE_ROWS));
+        if (row >= 0 && row < 3) {
+          model.setESRType(model.esrTypeFromRow(row));
+        }
+        onMouseButtonPressed();
+        requestLayout();
+      }
+    });
 
-        canvas.addMouseUpHandler(new MouseUpHandler() {
-            @Override
-            public void onMouseUp(MouseUpEvent event) {
-                onMouseButtonReleased();
-            }
-        });
+    canvas.addMouseUpHandler(new MouseUpHandler() {
+      @Override
+      public void onMouseUp(MouseUpEvent event) {
+        onMouseButtonReleased();
+      }
+    });
 
-        // This class allows us to modify the pane.
-        // This might be necessary for instance with z-index
-        // if the editor is placed in an app which modifies the z-index e.g.
-        // angular/bootstrap etc.
-        getElement().setClassName("ESRPane");
-    }
+    // This class allows us to modify the pane.
+    // This might be necessary for instance with z-index
+    // if the editor is placed in an app which modifies the z-index e.g.
+    // angular/bootstrap etc.
+    getElement().setClassName("ESRPane");
+  }
 
-    public abstract void onMouseButtonReleased();
+  public abstract void onMouseButtonReleased();
 
-    public abstract void onMouseButtonPressed();
+  public abstract void onMouseButtonPressed();
 
-    void requestLayout() {
-        draw(canvas);
-    }
+  void requestLayout() {
+    draw(canvas);
+  }
 
-    private void draw(Canvas toolBar) {
-        Context2d context2d = toolBar.getContext2d();
-        drawButtons(new GraphicsContext(context2d));
-    }
+  private void draw(Canvas toolBar) {
+    Context2d context2d = toolBar.getContext2d();
+    drawButtons(new GraphicsContext(context2d));
+  }
 
-    public abstract void drawButtons(GraphicsContext ctx);
+  public abstract void drawButtons(GraphicsContext ctx);
 
 }

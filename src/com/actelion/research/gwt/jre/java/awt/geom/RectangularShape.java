@@ -38,56 +38,62 @@ package java.awt.geom;
 
 import java.awt.Shape;
 
-public abstract class RectangularShape implements Shape
-{
-    protected RectangularShape() {
-    }
-    public abstract double getX();
-    public abstract double getY();
-    public abstract double getWidth();
-    public abstract double getHeight();
-    public double getMinX() {
-        return getX();
-    }
+public abstract class RectangularShape implements Shape {
+  protected RectangularShape() {
+  }
 
-    public double getMinY() {
-        return getY();
-    }
+  public abstract double getX();
 
-    public double getMaxX() {
-        return getX() + getWidth();
-    }
-    public double getMaxY() {
-        return getY() + getHeight();
-    }
+  public abstract double getY();
 
-    public double getCenterX() {
-        return getX() + getWidth() / 2.0;
-    }
+  public abstract double getWidth();
 
-    public double getCenterY() {
-        return getY() + getHeight() / 2.0;
-    }
+  public abstract double getHeight();
 
-    public abstract boolean isEmpty();
-    public abstract void setFrame(double x, double y, double w, double h);
-    public void setFrameFromDiagonal(double x1, double y1,
-                                     double x2, double y2) {
-        if (x2 < x1) {
-            double t = x1;
-            x1 = x2;
-            x2 = t;
-        }
-        if (y2 < y1) {
-            double t = y1;
-            y1 = y2;
-            y2 = t;
-        }
-        setFrame(x1, y1, x2 - x1, y2 - y1);
-    }
+  public double getMinX() {
+    return getX();
+  }
 
-    public boolean contains(Rectangle2D r) {
-        return contains(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+  public double getMinY() {
+    return getY();
+  }
+
+  public double getMaxX() {
+    return getX() + getWidth();
+  }
+
+  public double getMaxY() {
+    return getY() + getHeight();
+  }
+
+  public double getCenterX() {
+    return getX() + getWidth() / 2.0;
+  }
+
+  public double getCenterY() {
+    return getY() + getHeight() / 2.0;
+  }
+
+  public abstract boolean isEmpty();
+
+  public abstract void setFrame(double x, double y, double w, double h);
+
+  public void setFrameFromDiagonal(double x1, double y1, double x2, double y2) {
+    if (x2 < x1) {
+      double t = x1;
+      x1 = x2;
+      x2 = t;
     }
+    if (y2 < y1) {
+      double t = y1;
+      y1 = y2;
+      y2 = t;
+    }
+    setFrame(x1, y1, x2 - x1, y2 - y1);
+  }
+
+  public boolean contains(Rectangle2D r) {
+    return contains(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+  }
 
 }

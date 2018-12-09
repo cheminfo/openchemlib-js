@@ -1,12 +1,12 @@
 <module rename-to="oclStructureViewer">
-    <source path="gui/viewer"/>
-    <entry-point class="com.actelion.research.gwt.gui.viewer.StructureViewer" />
+  <source path="gui/viewer"/>
+  <entry-point class="com.actelion.research.gwt.gui.viewer.StructureViewer" />
 
-	<inherits name='com.google.gwt.user.User'/>
-	<inherits name="com.actelion.research.gwt.jre.Jre" />
-    <inherits name="com.actelion.research.gwt.chemlib.ChemLib" />
-    <inherits name="com.actelion.research.gwt.Core" />
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name="com.actelion.research.gwt.jre.Jre" />
+  <inherits name="com.actelion.research.gwt.chemlib.ChemLib" />
+  <inherits name="com.actelion.research.gwt.Core" />
 
-    <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
-    <set-property name="user.agent" value="safari" />
+  <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
+  <set-property name="user.agent" value="safari" />
 </module>

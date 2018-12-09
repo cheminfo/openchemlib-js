@@ -35,39 +35,34 @@ package java.awt;
 /**
  * GWT Emulation
  */
-public abstract class Graphics
-{
+public abstract class Graphics {
 
-    protected Graphics()
-    {
-    }
+  protected Graphics() {
+  }
 
-    public abstract Graphics create();
+  public abstract Graphics create();
 
-    public Graphics create(int x, int y, int width, int height)
-    {
-        Graphics g = create();
-        if (g == null) return null;
-        g.translate(x, y);
-        g.clipRect(0, 0, width, height);
-        return g;
-    }
+  public Graphics create(int x, int y, int width, int height) {
+    Graphics g = create();
+    if (g == null)
+      return null;
+    g.translate(x, y);
+    g.clipRect(0, 0, width, height);
+    return g;
+  }
 
-    public abstract void translate(int x, int y);
+  public abstract void translate(int x, int y);
 
-    public abstract java.awt.Color getColor();
+  public abstract java.awt.Color getColor();
 
-    public abstract void setColor(java.awt.Color c);
+  public abstract void setColor(java.awt.Color c);
 
-    public abstract void clipRect(int x, int y, int width, int height);
+  public abstract void clipRect(int x, int y, int width, int height);
 
+  public abstract void dispose();
 
-
-    public abstract void dispose();
-
-    public void finalize()
-    {
-        dispose();
-    }
+  public void finalize() {
+    dispose();
+  }
 
 }

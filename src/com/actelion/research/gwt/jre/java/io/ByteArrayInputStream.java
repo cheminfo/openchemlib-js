@@ -32,11 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package java.io;
 
+public class ByteArrayInputStream {
+  public ByteArrayInputStream(byte[] buffer) {
 
-public class ByteArrayInputStream
-{
-    public ByteArrayInputStream(byte[] buffer)
-    {
-        
-    }
+  }
 }

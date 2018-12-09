@@ -39,19 +39,19 @@ import com.actelion.research.share.gui.editor.actions.Action;
  */
 public interface ToolBar<T> {
 
-    public static final double IMAGE_WIDTH = 45;
-    public static final double IMAGE_HEIGHT = 360;
-    public static final double ROWS = 17;
-    public static final double COLS = 2;
-    double ESR_IMAGE_WIDTH = 28;
-    double ESR_IMAGE_HEIGHT = 70;
-    double ESR_IMAGE_ROWS = 3;
+  public static final double IMAGE_WIDTH = 45;
+  public static final double IMAGE_HEIGHT = 360;
+  public static final double ROWS = 17;
+  public static final double COLS = 2;
+  double ESR_IMAGE_WIDTH = 28;
+  double ESR_IMAGE_HEIGHT = 70;
+  double ESR_IMAGE_ROWS = 3;
 
-    public T createElement(T parent, int width, int height);
+  public T createElement(T parent, int width, int height);
 
-    public void doAction(Action a);
+  public void doAction(Action a);
 
-    public Action getCurrentAction();
+  public Action getCurrentAction();
 
-    public boolean hasFocus();
+  public boolean hasFocus();
 }

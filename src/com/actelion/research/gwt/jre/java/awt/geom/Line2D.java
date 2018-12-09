@@ -32,183 +32,183 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package java.awt.geom;
 
-
 import java.io.Serializable;
 
 /**
- *  * JDK Class Emulation for GWT
+ * * JDK Class Emulation for GWT
  */
-public abstract class Line2D
-{
-    public static class Float extends Line2D
-        {
-        public float x1;
-        public float y1;
-        public float x2;
-        public float y2;
+public abstract class Line2D {
+  public static class Float extends Line2D {
+    public float x1;
+    public float y1;
+    public float x2;
+    public float y2;
 
-        public Float() {
-        }
-        public Float(float x1, float y1, float x2, float y2) {
-            setLine(x1, y1, x2, y2);
-        }
-
-        public double getX1() {
-            return (double) x1;
-        }
-
-        public double getY1() {
-            return (double) y1;
-        }
-
-        public Point2D getP1() {
-            return new Point2D.Float(x1, y1);
-        }
-
-        public double getX2() {
-            return (double) x2;
-        }
-        public double getY2() {
-            return (double) y2;
-        }
-
-        public Point2D getP2() {
-            return new Point2D.Float(x2, y2);
-        }
-
-        public void setLine(float x1, float y1, float x2, float y2) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-        }
-
+    public Float() {
     }
 
-    public static class Double extends Line2D implements Serializable {
-        public double x1;
-        public double y1;
-        public double x2;
-        public double y2;
-        public Double() {
-        }
-        public Double(double x1, double y1, double x2, double y2) {
-            setLine(x1, y1, x2, y2);
-        }
-        public Double(Point2D p1, Point2D p2) {
-            setLine(p1.getX(),p1.getY(), p2.getX(),p2.getY());
-        }
-        public double getX1() {
-            return x1;
-        }
-        public double getY1() {
-            return y1;
-        }
-        public Point2D getP1() {
-            return new Point2D.Double(x1, y1);
-        }
-        public double getX2() {
-            return x2;
-        }
-        public double getY2() {
-            return y2;
-        }
-        public Point2D getP2() {
-            return new Point2D.Double(x2, y2);
-        }
-        public void setLine(double x1, double y1, double x2, double y2) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-        }
+    public Float(float x1, float y1, float x2, float y2) {
+      setLine(x1, y1, x2, y2);
     }
 
-
-    public abstract double getX1();
-
-    /**
-     * Returns the Y coordinate of the start point in double precision.
-     * @return the Y coordinate of the start point of this
-     *         {@code Line2D} object.
-     * @since 1.2
-     */
-    public abstract double getY1();
-
-    /**
-     * Returns the start <code>Point2D</code> of this <code>Line2D</code>.
-     * @return the start <code>Point2D</code> of this <code>Line2D</code>.
-     * @since 1.2
-     */
-    public abstract Point2D getP1();
-
-    public abstract double getX2();
-
-
-    public abstract double getY2();
-
-    public static double ptSegDistSq(double x1, double y1,
-                                     double x2, double y2,
-                                     double px, double py)
-    {
-        // Adjust vectors relative to x1,y1
-        // x2,y2 becomes relative vector from x1,y1 to end of segment
-        x2 -= x1;
-        y2 -= y1;
-        // px,py becomes relative vector from x1,y1 to test point
-        px -= x1;
-        py -= y1;
-        double dotprod = px * x2 + py * y2;
-        double projlenSq;
-        if (dotprod <= 0.0) {
-            // px,py is on the side of x1,y1 away from x2,y2
-            // distance to segment is length of px,py vector
-            // "length of its (clipped) projection" is now 0.0
-            projlenSq = 0.0;
-        } else {
-            // switch to backwards vectors relative to x2,y2
-            // x2,y2 are already the negative of x1,y1=>x2,y2
-            // to get px,py to be the negative of px,py=>x2,y2
-            // the dot product of two negated vectors is the same
-            // as the dot product of the two normal vectors
-            px = x2 - px;
-            py = y2 - py;
-            dotprod = px * x2 + py * y2;
-            if (dotprod <= 0.0) {
-                // px,py is on the side of x2,y2 away from x1,y1
-                // distance to segment is length of (backwards) px,py vector
-                // "length of its (clipped) projection" is now 0.0
-                projlenSq = 0.0;
-            } else {
-                // px,py is between x1,y1 and x2,y2
-                // dotprod is the length of the px,py vector
-                // projected on the x2,y2=>x1,y1 vector times the
-                // length of the x2,y2=>x1,y1 vector
-                projlenSq = dotprod * dotprod / (x2 * x2 + y2 * y2);
-            }
-        }
-        // Distance to line is now the length of the relative point
-        // vector minus the length of its projection onto the line
-        // (which is zero if the projection falls outside the range
-        //  of the line segment).
-        double lenSq = px * px + py * py - projlenSq;
-        if (lenSq < 0) {
-            lenSq = 0;
-        }
-        return lenSq;
+    public double getX1() {
+      return (double) x1;
     }
 
-    public static double ptSegDist(double x1, double y1,
-                                   double x2, double y2,
-                                   double px, double py)
-    {
-        return Math.sqrt(ptSegDistSq(x1, y1, x2, y2, px, py));
+    public double getY1() {
+      return (double) y1;
     }
 
-
-    public double ptSegDist(double px, double py) {
-        return ptSegDist(getX1(), getY1(), getX2(), getY2(), px, py);
+    public Point2D getP1() {
+      return new Point2D.Float(x1, y1);
     }
 
+    public double getX2() {
+      return (double) x2;
+    }
+
+    public double getY2() {
+      return (double) y2;
+    }
+
+    public Point2D getP2() {
+      return new Point2D.Float(x2, y2);
+    }
+
+    public void setLine(float x1, float y1, float x2, float y2) {
+      this.x1 = x1;
+      this.y1 = y1;
+      this.x2 = x2;
+      this.y2 = y2;
+    }
+
+  }
+
+  public static class Double extends Line2D implements Serializable {
+    public double x1;
+    public double y1;
+    public double x2;
+    public double y2;
+
+    public Double() {
+    }
+
+    public Double(double x1, double y1, double x2, double y2) {
+      setLine(x1, y1, x2, y2);
+    }
+
+    public Double(Point2D p1, Point2D p2) {
+      setLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    }
+
+    public double getX1() {
+      return x1;
+    }
+
+    public double getY1() {
+      return y1;
+    }
+
+    public Point2D getP1() {
+      return new Point2D.Double(x1, y1);
+    }
+
+    public double getX2() {
+      return x2;
+    }
+
+    public double getY2() {
+      return y2;
+    }
+
+    public Point2D getP2() {
+      return new Point2D.Double(x2, y2);
+    }
+
+    public void setLine(double x1, double y1, double x2, double y2) {
+      this.x1 = x1;
+      this.y1 = y1;
+      this.x2 = x2;
+      this.y2 = y2;
+    }
+  }
+
+  public abstract double getX1();
+
+  /**
+   * Returns the Y coordinate of the start point in double precision.
+   * 
+   * @return the Y coordinate of the start point of this {@code Line2D} object.
+   * @since 1.2
+   */
+  public abstract double getY1();
+
+  /**
+   * Returns the start <code>Point2D</code> of this <code>Line2D</code>.
+   * 
+   * @return the start <code>Point2D</code> of this <code>Line2D</code>.
+   * @since 1.2
+   */
+  public abstract Point2D getP1();
+
+  public abstract double getX2();
+
+  public abstract double getY2();
+
+  public static double ptSegDistSq(double x1, double y1, double x2, double y2, double px, double py) {
+    // Adjust vectors relative to x1,y1
+    // x2,y2 becomes relative vector from x1,y1 to end of segment
+    x2 -= x1;
+    y2 -= y1;
+    // px,py becomes relative vector from x1,y1 to test point
+    px -= x1;
+    py -= y1;
+    double dotprod = px * x2 + py * y2;
+    double projlenSq;
+    if (dotprod <= 0.0) {
+      // px,py is on the side of x1,y1 away from x2,y2
+      // distance to segment is length of px,py vector
+      // "length of its (clipped) projection" is now 0.0
+      projlenSq = 0.0;
+    } else {
+      // switch to backwards vectors relative to x2,y2
+      // x2,y2 are already the negative of x1,y1=>x2,y2
+      // to get px,py to be the negative of px,py=>x2,y2
+      // the dot product of two negated vectors is the same
+      // as the dot product of the two normal vectors
+      px = x2 - px;
+      py = y2 - py;
+      dotprod = px * x2 + py * y2;
+      if (dotprod <= 0.0) {
+        // px,py is on the side of x2,y2 away from x1,y1
+        // distance to segment is length of (backwards) px,py vector
+        // "length of its (clipped) projection" is now 0.0
+        projlenSq = 0.0;
+      } else {
+        // px,py is between x1,y1 and x2,y2
+        // dotprod is the length of the px,py vector
+        // projected on the x2,y2=>x1,y1 vector times the
+        // length of the x2,y2=>x1,y1 vector
+        projlenSq = dotprod * dotprod / (x2 * x2 + y2 * y2);
+      }
+    }
+    // Distance to line is now the length of the relative point
+    // vector minus the length of its projection onto the line
+    // (which is zero if the projection falls outside the range
+    // of the line segment).
+    double lenSq = px * px + py * py - projlenSq;
+    if (lenSq < 0) {
+      lenSq = 0;
+    }
+    return lenSq;
+  }
+
+  public static double ptSegDist(double x1, double y1, double x2, double y2, double px, double py) {
+    return Math.sqrt(ptSegDistSq(x1, y1, x2, y2, px, py));
+  }
+
+  public double ptSegDist(double px, double py) {
+    return ptSegDist(getX1(), getY1(), getX2(), getY2(), px, py);
+  }
 
 }

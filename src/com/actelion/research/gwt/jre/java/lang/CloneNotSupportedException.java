@@ -32,10 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package java.lang;
 
-public class CloneNotSupportedException extends RuntimeException
-{
-    public CloneNotSupportedException()
-    {
+public class CloneNotSupportedException extends RuntimeException {
+  public CloneNotSupportedException() {
 
-    }
+  }
 }

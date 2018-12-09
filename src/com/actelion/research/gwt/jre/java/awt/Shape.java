@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package java.awt;
 
 public interface Shape {
-    boolean contains(double x, double y);
-    boolean contains(double x, double y, double w, double h);
+  boolean contains(double x, double y);
+
+  boolean contains(double x, double y, double w, double h);
 }

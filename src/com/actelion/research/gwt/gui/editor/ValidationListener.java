@@ -36,5 +36,5 @@ package com.actelion.research.gwt.gui.editor;
  * Project: User: rufenec Date: 7/1/2014 Time: 4:25 PM
  */
 public interface ValidationListener {
-    public void valueInvalidated();
+  public void valueInvalidated();
 }

@@ -38,18 +38,18 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("GWTEditorService")
 public interface GWTEditorService extends RemoteService {
-    // Sample interface method of remote interface
-    String getMessage(String msg);
+  // Sample interface method of remote interface
+  String getMessage(String msg);
 
-    /**
-     * Utility/Convenience class. Use GWTEditorService.App.getInstance() to access
-     * static instance of GWTEditorServiceAsync
-     */
-    public static class App {
-        private static GWTEditorServiceAsync ourInstance = GWT.create(GWTEditorService.class);
+  /**
+   * Utility/Convenience class. Use GWTEditorService.App.getInstance() to access
+   * static instance of GWTEditorServiceAsync
+   */
+  public static class App {
+    private static GWTEditorServiceAsync ourInstance = GWT.create(GWTEditorService.class);
 
-        public static synchronized GWTEditorServiceAsync getInstance() {
-            return ourInstance;
-        }
+    public static synchronized GWTEditorServiceAsync getInstance() {
+      return ourInstance;
     }
+  }
 }

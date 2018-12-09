@@ -19,44 +19,44 @@ import java.awt.geom.Rectangle2D;
  * Created by rufenec on 25/11/15.
  */
 public class GWTGeomFactory extends GeomFactory {
-    public GWTGeomFactory(DrawConfig cfg) {
-        super(cfg);
-    }
+  public GWTGeomFactory(DrawConfig cfg) {
+    super(cfg);
+  }
 
-    public IArrow createArrow(Rectangle2D r) {
-        return null;
-    }
+  public IArrow createArrow(Rectangle2D r) {
+    return null;
+  }
 
-    public IAtomQueryFeaturesDialog createAtomQueryFeatureDialog(StereoMolecule mol, int atom) {
-        return new AtomQueryFeaturesDialog(mol, atom);
-    }
+  public IAtomQueryFeaturesDialog createAtomQueryFeatureDialog(StereoMolecule mol, int atom) {
+    return new AtomQueryFeaturesDialog(mol, atom);
+  }
 
-    public IBondQueryFeaturesDialog createBondFeaturesDialog(StereoMolecule mol, int bond) {
-        return new BondQueryFeaturesDialog(mol, bond);
-    }
+  public IBondQueryFeaturesDialog createBondFeaturesDialog(StereoMolecule mol, int bond) {
+    return new BondQueryFeaturesDialog(mol, bond);
+  }
 
-    public IAtomPropertiesDialog createAtomPropertiesDialog(StereoMolecule m, int atom) {
-        return new AtomPropertiesDialog(null, m, atom);
-    }
+  public IAtomPropertiesDialog createAtomPropertiesDialog(StereoMolecule m, int atom) {
+    return new AtomPropertiesDialog(null, m, atom);
+  }
 
-    @Override
-    public Rectangle2D getBoundingRect(StereoMolecule m) {
-        return ChemistryHelper.getBoundingRect(m);
-    }
+  @Override
+  public Rectangle2D getBoundingRect(StereoMolecule m) {
+    return ChemistryHelper.getBoundingRect(m);
+  }
 
-    public IKeyCode getDeleteKey() {
-        return ACTKeyCode.DELETE;
-    }
+  public IKeyCode getDeleteKey() {
+    return ACTKeyCode.DELETE;
+  }
 
-    public IKeyCode getEscapeKey() {
-        return ACTKeyCode.ESCAPE;
-    }
+  public IKeyCode getEscapeKey() {
+    return ACTKeyCode.ESCAPE;
+  }
 
-    public IKeyCode getBackSpaceKey() {
-        return ACTKeyCode.BACK_SPACE;
-    }
+  public IKeyCode getBackSpaceKey() {
+    return ACTKeyCode.BACK_SPACE;
+  }
 
-    public IKeyCode getEnterKey() {
-        return ACTKeyCode.ENTER;
-    }
+  public IKeyCode getEnterKey() {
+    return ACTKeyCode.ENTER;
+  }
 }

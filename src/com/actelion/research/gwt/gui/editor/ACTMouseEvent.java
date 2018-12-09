@@ -36,30 +36,30 @@ import com.actelion.research.share.gui.editor.io.IMouseEvent;
 import com.google.gwt.event.dom.client.MouseEvent;
 
 public class ACTMouseEvent<T extends MouseEvent> implements IMouseEvent {
-    T _evt;
+  T _evt;
 
-    public ACTMouseEvent(T evt) {
-        _evt = evt;
-    }
+  public ACTMouseEvent(T evt) {
+    _evt = evt;
+  }
 
-    public double getX() {
-        return _evt.getX();
-    }
+  public double getX() {
+    return _evt.getX();
+  }
 
-    public double getY() {
-        return _evt.getY();
-    }
+  public double getY() {
+    return _evt.getY();
+  }
 
-    public boolean isShiftDown() {
-        return _evt.isShiftKeyDown();
-    }
+  public boolean isShiftDown() {
+    return _evt.isShiftKeyDown();
+  }
 
-    public boolean isControlDown() {
-        return _evt.isControlKeyDown();
-    }
+  public boolean isControlDown() {
+    return _evt.isControlKeyDown();
+  }
 
-    @Override
-    public boolean isAltDown() {
-        return _evt.isAltKeyDown();
-    }
+  @Override
+  public boolean isAltDown() {
+    return _evt.isAltKeyDown();
+  }
 }

@@ -36,18 +36,17 @@ package java.awt.geom;
  * JDK Class Emulation for GWT
  */
 public abstract class Dimension2D {
-    public Dimension2D() {
-    }
+  public Dimension2D() {
+  }
 
-    public abstract double getWidth();
+  public abstract double getWidth();
 
-    public abstract double getHeight();
+  public abstract double getHeight();
 
-    public abstract void setSize(double width, double height);
+  public abstract void setSize(double width, double height);
 
-    public void setSize(Dimension2D d) {
-        setSize(d.getWidth(), d.getHeight());
-    }
-
+  public void setSize(Dimension2D d) {
+    setSize(d.getWidth(), d.getHeight());
+  }
 
 }

@@ -35,8 +35,8 @@ package com.actelion.research.gwt.gui.editor;
 import java.awt.geom.Point2D;
 
 public interface ButtonPressListener {
-    void onButtonPressed(Window parent, Point2D pt);
+  void onButtonPressed(Window parent, Point2D pt);
 
-    void onButtonReleased(Window parent, Point2D pt);
+  void onButtonReleased(Window parent, Point2D pt);
 
 }

@@ -38,122 +38,119 @@ package java.io;
  */
 public class BufferedReader extends Reader {
 
-    /** The next saved character. */
-    private int savedNextChar;
+  /** The next saved character. */
+  private int savedNextChar;
 
-    private Reader source;
+  private Reader source;
 
-    /**
-     * Constructor.
-     * 
-     * @param source
-     *            The source reader.
-     */
-    public BufferedReader(Reader source) {
-        this.source = source;
-        this.savedNextChar = -2;
+  /**
+   * Constructor.
+   * 
+   * @param source The source reader.
+   */
+  public BufferedReader(Reader source) {
+    this.source = source;
+    this.savedNextChar = -2;
+  }
+
+  /**
+   * Constructor.
+   * 
+   * @param source The source reader.
+   * @param size   The size of the buffer.
+   */
+  public BufferedReader(Reader source, int size) {
+    this.source = source;
+    this.savedNextChar = -2;
+  }
+
+  public BufferedReader(InputStreamReader inputStreamReader) {
+    // TODO Auto-generated constructor stub
+  }
+
+  /**
+   * 
+   */
+  public void close() throws IOException {
+
+  }
+
+  /**
+   * Returns the source reader.
+   * 
+   * @return The source reader.
+   */
+  private Reader getSource() {
+    return source;
+  }
+
+  /**
+   * Returns the next character, either the saved one or the next one from the
+   * source reader.
+   * 
+   * @return The next character.
+   * @throws IOException
+   */
+  public int read() throws IOException {
+    int result = -1;
+
+    if (this.savedNextChar != -2) {
+      result = this.savedNextChar;
+      this.savedNextChar = -2;
+    } else {
+      result = getSource().read();
     }
 
-    /**
-     * Constructor.
-     * 
-     * @param source
-     *            The source reader.
-     * @param size
-     *            The size of the buffer.
-     */
-    public BufferedReader(Reader source, int size) {
-        this.source = source;
-        this.savedNextChar = -2;
-    }
-    
-    public BufferedReader(InputStreamReader inputStreamReader) {
-		// TODO Auto-generated constructor stub
-	}
+    return result;
+  }
 
-	/**
-     * 
-     */
-    public void close() throws IOException {
+  @Override
+  public int read(char[] cbuf, int off, int len) throws IOException {
+    return source.read(cbuf, off, len);
+  }
 
-    }
+  /**
+   * Reads the next line of characters.
+   * 
+   * @return The next line.
+   */
+  public String readLine() throws IOException {
 
-    /**
-     * Returns the source reader.
-     * 
-     * @return The source reader.
-     */
-    private Reader getSource() {
-        return source;
-    }
+    int nextChar = read();
+    if (nextChar == -1)
+      return null;
 
-    /**
-     * Returns the next character, either the saved one or the next one from the
-     * source reader.
-     * 
-     * @return The next character.
-     * @throws IOException
-     */
-    public int read() throws IOException {
-        int result = -1;
+    StringBuilder sb = new StringBuilder();
+    boolean eol = false;
 
-        if (this.savedNextChar != -2) {
-            result = this.savedNextChar;
-            this.savedNextChar = -2;
-        } else {
-            result = getSource().read();
+    while (!eol) {
+      if (nextChar == 10) {
+        eol = true;
+      } else if (nextChar == 13) {
+        eol = true;
+
+        // Check if there is a immediate LF following the CR
+        nextChar = read();
+        if (nextChar != 10) {
+          this.savedNextChar = nextChar;
         }
+      }
 
-        return result;
-    }
-
-    @Override
-    public int read(char[] cbuf, int off, int len) throws IOException {
-        return source.read(cbuf, off, len);
-    }
-
-    /**
-     * Reads the next line of characters.
-     * 
-     * @return The next line.
-     */
-    public String readLine() throws IOException {
-    	
-    	int nextChar = read();
-    	if(nextChar==-1)
-    		return null;
-    	
-        StringBuilder sb = new StringBuilder();
-        boolean eol = false;
-
-        while (!eol) {
-            if (nextChar == 10) {
-                eol = true;
-            } else if (nextChar == 13) {
-                eol = true;
-
-                // Check if there is a immediate LF following the CR
-                nextChar = read();
-                if (nextChar != 10) {
-                    this.savedNextChar = nextChar;
-                }
-            }
-            
-            if (!eol) {
-                if(nextChar == -1) {
-                	break;
-                }
-                sb.append((char) nextChar);
-                nextChar = read();
-            }
-
+      if (!eol) {
+        if (nextChar == -1) {
+          break;
         }
+        sb.append((char) nextChar);
+        nextChar = read();
+      }
 
-        return sb.toString();
     }
 
-	public boolean ready() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    return sb.toString();
+  }
+
+  public boolean ready() {
+    // TODO Auto-generated method stub
+    return false;
+  }
 }

@@ -39,55 +39,55 @@ import com.google.gwt.event.dom.client.KeyEvent;
 
 public class ACTKeyEvent<T extends KeyEvent> implements IKeyEvent {
 
-    public static final int FUNCTION = 1;
-    public static final int NAVIGATION = 1 << 1;
-    public static final int ARROW = 1 << 2;
-    public static final int MODIFIER = 1 << 3;
-    public static final int LETTER = 1 << 4;
-    public static final int DIGIT = 1 << 5;
-    public static final int KEYPAD = 1 << 6;
-    public static final int WHITESPACE = 1 << 7;
-    public static final int MEDIA = 1 << 8;
+  public static final int FUNCTION = 1;
+  public static final int NAVIGATION = 1 << 1;
+  public static final int ARROW = 1 << 2;
+  public static final int MODIFIER = 1 << 3;
+  public static final int LETTER = 1 << 4;
+  public static final int DIGIT = 1 << 5;
+  public static final int KEYPAD = 1 << 6;
+  public static final int WHITESPACE = 1 << 7;
+  public static final int MEDIA = 1 << 8;
 
-    T evt;
-    int code;
-    boolean shift;
-    int mask = 0;
+  T evt;
+  int code;
+  boolean shift;
+  int mask = 0;
 
-    public ACTKeyEvent(int code, T evt, int mask) {
-        this.evt = evt;
-        this.code = (code >= 'A' && code <= 'Z' && !shift) ? code + 32 : code;
-        this.shift = evt.isShiftKeyDown();
-        this.mask = mask;
-    }
+  public ACTKeyEvent(int code, T evt, int mask) {
+    this.evt = evt;
+    this.code = (code >= 'A' && code <= 'Z' && !shift) ? code + 32 : code;
+    this.shift = evt.isShiftKeyDown();
+    this.mask = mask;
+  }
 
-    public IKeyCode getCode() {
+  public IKeyCode getCode() {
 
-        ACTKeyCode c = new ACTKeyCode(code, "", mask);
-        return c;
-    }
+    ACTKeyCode c = new ACTKeyCode(code, "", mask);
+    return c;
+  }
 
-    public String getText() {
-        String s = "" + (char) (code);
-        return s;
-    }
+  public String getText() {
+    String s = "" + (char) (code);
+    return s;
+  }
 
-    @Override
-    public boolean isControlDown() {
-        return evt.isControlKeyDown();
-    }
+  @Override
+  public boolean isControlDown() {
+    return evt.isControlKeyDown();
+  }
 
-    @Override
-    public boolean isShiftDown() {
-        return evt.isShiftKeyDown();
-    }
+  @Override
+  public boolean isShiftDown() {
+    return evt.isShiftKeyDown();
+  }
 
-    @Override
-    public boolean isAltDown() {
-        return evt.isAltKeyDown();
-    }
+  @Override
+  public boolean isAltDown() {
+    return evt.isAltKeyDown();
+  }
 
-    public String toString() {
-        return ("ACT Key Event " + code + " " + shift + " " + mask);
-    }
+  public String toString() {
+    return ("ACT Key Event " + code + " " + shift + " " + mask);
+  }
 }

@@ -52,12 +52,12 @@ import java.awt.geom.Point2D;
 
 public class ESRTypeAction extends AbstractTypeAction {
 
-    public ESRTypeAction(Model model) {
-        super(model, 1);
-    }
+  public ESRTypeAction(Model model) {
+    super(model, 1);
+  }
 
-    public ESRPane createPane() {
-        return new ESRPane(model);
-    }
+  public ESRPane createPane() {
+    return new ESRPane(model);
+  }
 
 }

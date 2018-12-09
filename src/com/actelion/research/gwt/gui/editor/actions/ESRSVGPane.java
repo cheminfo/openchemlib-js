@@ -15,64 +15,64 @@ import com.google.gwt.user.client.ui.PopupPanel;
  */
 
 public class ESRSVGPane extends AbstractESRPane {
-    private boolean pressed = false;
-    private boolean loaded = false;
-    private int scale = 1;
-    private static final Image ESR_BUTTON_UP = new Image(ImageHolder.ESRBUTTONS);
+  private boolean pressed = false;
+  private boolean loaded = false;
+  private int scale = 1;
+  private static final Image ESR_BUTTON_UP = new Image(ImageHolder.ESRBUTTONS);
 
-    public ESRSVGPane(Model m, int scale) {
-        super(m, ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
-        this.scale = scale;
+  public ESRSVGPane(Model m, int scale) {
+    super(m, ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
+    this.scale = scale;
 
-        ESR_BUTTON_UP.addLoadHandler(new LoadHandler() {
-            @Override
-            public void onLoad(LoadEvent event) {
-                if (loaded)
-                    requestLayout();
-                loaded = true;
-            }
-        });
+    ESR_BUTTON_UP.addLoadHandler(new LoadHandler() {
+      @Override
+      public void onLoad(LoadEvent event) {
+        if (loaded)
+          requestLayout();
+        loaded = true;
+      }
+    });
+  }
+
+  @Override
+  public void onMouseButtonReleased() {
+    if (pressed) {
+      hide();
+      requestLayout();
     }
+  }
 
-    @Override
-    public void onMouseButtonReleased() {
-        if (pressed) {
-            hide();
-            requestLayout();
-        }
-    }
+  @Override
+  public void onMouseButtonPressed() {
+    pressed = true;
+  }
 
-    @Override
-    public void onMouseButtonPressed() {
-        pressed = true;
-    }
+  @Override
+  public void drawButtons(GraphicsContext ctx) {
+    drawAllButtons(ctx);
+    drawSelectedButton(ctx);
+  }
 
-    @Override
-    public void drawButtons(GraphicsContext ctx) {
-        drawAllButtons(ctx);
-        drawSelectedButton(ctx);
-    }
+  private void drawSelectedButton(GraphicsContext ctx) {
+    int selectedRow = model.rowFromESRType(model.getESRType());
+    double dx = ESR_BUTTON_UP.getWidth() * scale;
+    double dy = ESR_BUTTON_UP.getHeight() * scale / ToolBar.ESR_IMAGE_ROWS;
+    int y = (int) (ESR_BUTTON_UP.getHeight() * scale / ToolBar.ESR_IMAGE_ROWS * selectedRow);
+    int x = 0;
+    ctx.setFill(model.getGeomFactory().getDrawConfig().createColor(.5, .5, .5, .5));
+    ctx.fillRect(x, y, dx, dy);
+  }
 
-    private void drawSelectedButton(GraphicsContext ctx) {
-        int selectedRow = model.rowFromESRType(model.getESRType());
-        double dx = ESR_BUTTON_UP.getWidth() * scale;
-        double dy = ESR_BUTTON_UP.getHeight() * scale / ToolBar.ESR_IMAGE_ROWS;
-        int y = (int) (ESR_BUTTON_UP.getHeight() * scale / ToolBar.ESR_IMAGE_ROWS * selectedRow);
-        int x = 0;
-        ctx.setFill(model.getGeomFactory().getDrawConfig().createColor(.5, .5, .5, .5));
-        ctx.fillRect(x, y, dx, dy);
-    }
-
-    private void drawAllButtons(GraphicsContext ctx) {
-        ctx.clearRect(0, 0, ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
-        ctx.save();
-        ctx.setFill(model.getGeomFactory().getDrawConfig().createColor(1, 1, 1, 1));
-        ctx.fillRect(0, 0, ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
-        ctx.setStroke(model.getGeomFactory().getDrawConfig().createColor(.5, .5, .5, 1));
-        ctx.drawRect(0, 0, ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
-        ctx.restore();
-        ctx.drawImage(ESR_BUTTON_UP, 0, 0, ESR_BUTTON_UP.getWidth(), ESR_BUTTON_UP.getHeight(), 0, 0,
-                ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
-    }
+  private void drawAllButtons(GraphicsContext ctx) {
+    ctx.clearRect(0, 0, ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
+    ctx.save();
+    ctx.setFill(model.getGeomFactory().getDrawConfig().createColor(1, 1, 1, 1));
+    ctx.fillRect(0, 0, ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
+    ctx.setStroke(model.getGeomFactory().getDrawConfig().createColor(.5, .5, .5, 1));
+    ctx.drawRect(0, 0, ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
+    ctx.restore();
+    ctx.drawImage(ESR_BUTTON_UP, 0, 0, ESR_BUTTON_UP.getWidth(), ESR_BUTTON_UP.getHeight(), 0, 0,
+        ESR_BUTTON_UP.getWidth() * scale, ESR_BUTTON_UP.getHeight() * scale);
+  }
 
 }
