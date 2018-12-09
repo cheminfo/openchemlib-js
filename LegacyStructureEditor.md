@@ -1,11 +1,5 @@
 # Legacy Structure Editor API
 
-You can test it on line:
-
-- <a href="https://cheminfo.github.io/openchemlib-js/examples/Editor.html" target="_blank">Editor</a>
-- <a href="https://cheminfo.github.io/openchemlib-js/examples/ShowStructures.html" target="_blank">showStructures</a>
-- <a href="https://cheminfo.github.io/openchemlib-js/examples/SVG.html" target="_blank">SVG</a>
-
 ## Usage in your page
 
 load this script:

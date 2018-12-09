@@ -6,9 +6,37 @@
 
 JavaScript interface with the [openchemlib](https://github.com/actelion/openchemlib) java library
 
-## [Documentation](./Documentation.md)
+## Documentation
 
-[Test the chemical molecule editor online](https://cheminfo.github.io/openchemlib-js/examples/Editor.html)
+- [TypeDoc home page](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.html)
+
+### Modules present in minimal, core and full builds
+
+- [Molecule](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.molecule.html)
+- [Reaction](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.reaction.html)
+- [SDFileParser](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.sdfileparser.html)
+- [SSSearcher](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.sssearcher.html)
+- [SSSearcherWithIndex](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.sssearcherwithindex.html)
+- [Util](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.util.html)
+
+### Modules present only in core and full builds
+
+- [DruglikenessPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.druglikenesspredictor.html)
+- [DrugScoreCalculator](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.drugscorecalculator.html)
+- [Molecule Properties](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.moleculeproperties.html)
+- [ToxicityPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.toxicitypredictor.html)
+
+### Modules present only in full build
+
+- [StructureEditor](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.structureeditor.html)
+- [StructureView](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.structureview.html)
+- [SVGRenderer](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.svgrenderer.html)
+
+### Online demos
+
+- [Editor](https://cheminfo.github.io/openchemlib-js/examples/Editor.html)
+- [Show structures](https://cheminfo.github.io/openchemlib-js/examples/ShowStructures.html)
+- [SVG](https://cheminfo.github.io/openchemlib-js/examples/SVG.html)
 
 ## Development
 
