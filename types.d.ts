@@ -339,7 +339,7 @@ export declare class Molecule {
   getRingSet(): RingCollection;
 
   /**
-   * Returns the rectangle the bounds the molecule.
+   * Returns the rectangle that bounds the molecule.
    */
   getBounds(): Rectangle;
 
