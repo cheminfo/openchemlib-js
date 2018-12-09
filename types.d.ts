@@ -1016,7 +1016,7 @@ export declare namespace Util {
    * @param diastereotopicID
    * @param options
    */
-  function getHoseCodesFromDiastereotopicID(
+  export function getHoseCodesFromDiastereotopicID(
     diastereotopicID: string,
     options?: IHoseCodesOptions
   ): string[];
@@ -1066,7 +1066,7 @@ export declare class DruglikenessPredictor {
 }
 
 export declare namespace DrugScoreCalculator {
-  function calculate(
+  export function calculate(
     mCLogP: number,
     mSolubility: number,
     mMolweight: number,
@@ -1108,21 +1108,21 @@ export declare class ToxicityPredictor {
 // Full API
 
 export declare namespace StructureView {
-  function showStructures(cssClass: string): void;
-  function renderStructure(id: string): void;
-  function getIDCode(id: string): string;
-  function drawStructure(
+  export function showStructures(cssClass: string): void;
+  export function renderStructure(id: string): void;
+  export function getIDCode(id: string): string;
+  export function drawStructure(
     id: string,
     idcode: string,
     coordinates: string,
     options?: IDepictorOptions
   ): void;
-  function drawMolecule(
+  export function drawMolecule(
     el: HTMLCanvasElement,
     mol: Molecule,
     options?: IDepictorOptions
   ): void;
-  function drawStructureWithText(
+  export function drawStructureWithText(
     id: string,
     idcode: string,
     coordinates: string,
@@ -1211,12 +1211,15 @@ export declare class StructureEditor {
   hasFocus(): boolean;
 }
 
-type AtomHighlightCallback = (atom: number, selected: boolean) => any;
-type BondHighlightCallback = (bond: number, selected: boolean) => any;
-type ChangeListenerCallback = (idcode: string, molecule: Molecule) => any;
+export type AtomHighlightCallback = (atom: number, selected: boolean) => any;
+export type BondHighlightCallback = (bond: number, selected: boolean) => any;
+export type ChangeListenerCallback = (
+  idcode: string,
+  molecule: Molecule
+) => any;
 
 export declare namespace SVGRenderer {
-  function renderMolecule(
+  export function renderMolecule(
     idCode: string,
     width: number,
     height: number

@@ -8,29 +8,29 @@ JavaScript interface with the [openchemlib](https://github.com/actelion/openchem
 
 ## Documentation
 
-- [TypeDoc home page](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.html)
+- [TypeDoc home page](https://cheminfo.github.io/openchemlib-js/docs/globals.html)
 
 ### Modules present in minimal, core and full builds
 
-- [Molecule](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.molecule.html)
-- [Reaction](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.reaction.html)
-- [SDFileParser](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.sdfileparser.html)
-- [SSSearcher](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.sssearcher.html)
-- [SSSearcherWithIndex](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.sssearcherwithindex.html)
-- [Util](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.util.html)
+- [Molecule](https://cheminfo.github.io/openchemlib-js/docs/classes/molecule.html)
+- [Reaction](https://cheminfo.github.io/openchemlib-js/docs/classes/reaction.html)
+- [SDFileParser](https://cheminfo.github.io/openchemlib-js/docs/classes/sdfileparser.html)
+- [SSSearcher](https://cheminfo.github.io/openchemlib-js/docs/classes/sssearcher.html)
+- [SSSearcherWithIndex](https://cheminfo.github.io/openchemlib-js/docs/classes/sssearcherwithindex.html)
+- [Util](https://cheminfo.github.io/openchemlib-js/docs/modules/util.html)
 
 ### Modules present only in core and full builds
 
-- [DruglikenessPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.druglikenesspredictor.html)
-- [DrugScoreCalculator](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.drugscorecalculator.html)
-- [Molecule Properties](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.moleculeproperties.html)
-- [ToxicityPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.toxicitypredictor.html)
+- [DruglikenessPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/druglikenesspredictor.html)
+- [DrugScoreCalculator](https://cheminfo.github.io/openchemlib-js/docs/modules/drugscorecalculator.html)
+- [Molecule Properties](https://cheminfo.github.io/openchemlib-js/docs/classes/moleculeproperties.html)
+- [ToxicityPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/toxicitypredictor.html)
 
 ### Modules present only in full build
 
-- [StructureEditor](https://cheminfo.github.io/openchemlib-js/docs/classes/_types_d_.structureeditor.html)
-- [StructureView](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.structureview.html)
-- [SVGRenderer](https://cheminfo.github.io/openchemlib-js/docs/modules/_types_d_.svgrenderer.html)
+- [StructureEditor](https://cheminfo.github.io/openchemlib-js/docs/classes/structureeditor.html)
+- [StructureView](https://cheminfo.github.io/openchemlib-js/docs/modules/structureview.html)
+- [SVGRenderer](https://cheminfo.github.io/openchemlib-js/docs/modules/svgrenderer.html)
 
 ### Online demos
 

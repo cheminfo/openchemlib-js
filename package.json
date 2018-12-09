@@ -9,7 +9,7 @@
     "SMILES"
   ],
   "scripts": {
-    "build-docs": "typedoc --out docs --name \"OpenChemLib JS\" --includeDeclarations --excludeExternals --hideGenerator types.d.ts",
+    "build-docs": "typedoc --out docs --name \"OpenChemLib JS\" --mode file --includeDeclarations --excludeExternals --hideGenerator --excludePrivate types.d.ts",
     "build:min": "node scripts/build.js build --mode=min",
     "build:pretty": "node scripts/build.js build --mode=pretty -s pretty",
     "compile:min": "node scripts/build.js compile --mode=min",
