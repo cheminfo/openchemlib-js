@@ -28,7 +28,7 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "main": "dist/openchemlib-core.js",
+  "main": "./core.js",
   "files": [
     "dist",
     "types.d.ts",
