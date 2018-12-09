@@ -1,5 +1,6 @@
 export {
   IMoleculeFromSmilesOptions,
+  IMoleculeToSVGOptions,
   IHoseCodesOptions,
   Molecule,
   MolecularFormula,

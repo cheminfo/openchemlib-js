@@ -1,13 +1,40 @@
 // Minimal API
 
 export interface IMoleculeFromSmilesOptions {
+  /**
+   * Disable extra coordinate computation (default: false).
+   */
   noCoordinates?: boolean;
+  /**
+   * Disable stereo features parsing (default: false).
+   */
   noStereo?: boolean;
 }
 
+export interface IMoleculeToSVGOptions extends IDepictorOptions {
+  /**
+   * Default: 1
+   */
+  factorTextSize?: number;
+  /**
+   * font-weight attribute of atom labels.
+   */
+  fontWeight?: string;
+  /**
+   * stroke-width styling property of bonds.
+   */
+  strokeWidth?: string;
+}
+
 export interface IHoseCodesOptions {
+  /**
+   * Maximum number of atoms from the center (default: 5).
+   */
   maxSphereSize: number;
-  type: number;
+  /**
+   * 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
+   */
+  type: 0 | 1;
 }
 
 export declare class Molecule {
@@ -195,15 +222,45 @@ export declare class Molecule {
   static VALIDATION_ERROR_AMBIGUOUS_CONFIGURATION: string;
   static VALIDATION_ERRORS_STEREO: string[];
 
+  /**
+   * Parse the provided `smiles` and return a `Molecule`.
+   * By default, stereo features are parsed, which triggers itself a coordinate
+   * computation and coordinates are computed again after parsing to guarantee that
+   * they are always the same.
+   * If you do not need stereo features and want the fastest parsing, use this method
+   * with `{noCoordinates: true, noStereo: true}`.
+   * @param smiles
+   * @param options
+   */
   static fromSmiles(
     smiles: string,
     options?: IMoleculeFromSmilesOptions
   ): Molecule;
+  /**
+   * Parse the provided `molfile` and return a `Molecule`.
+   * @param molfile - MDL Molfile string in V2000 or V3000
+   */
   static fromMolfile(molfile: string): Molecule;
+  /**
+   * Parse the provided `molfile` and return an object with `Molecule` and map.
+   * @param molfile - MDL Molfile string in V2000 or V3000.
+   */
   static fromMolfileWithAtomMap(
     molfile: string
   ): { molecule: Molecule; map: number[] };
-  static fromIDCode(idcode: string, coordinates?: boolean | string): Molecule;
+  /**
+   * Parse the provided `idcode` and return a `Molecule`.
+   * @param idcode
+   * @param coordinates
+   */
+  static fromIDCode(idcode: string, coordinates: string): Molecule;
+  /**
+   * Parse the provided `idcode` and return a `Molecule`.
+   * @param idcode
+   * @param ensure2DCoordinates - boolean indicating if the 2D coordinates
+   * should be computed (default: `true`).
+   */
+  static fromIDCode(idcode: string, ensure2DCoordinates?: boolean): Molecule;
 
   static getAtomicNoFromLabel(atomLabel: string): number;
   static getAngle(x1: number, y1: number, x2: number, y2: number): number;
@@ -215,23 +272,62 @@ export declare class Molecule {
 
   toSmiles(): string;
   toIsomericSmiles(): string;
+  /**
+   * Returns a MDL Molfile V2000 string.
+   */
   toMolfile(): string;
+  /**
+   * Returns a MDL Molfile V3000 string.
+   */
   toMolfileV3(): string;
+  /**
+   * Returns an SVG string representing the structure in two dimensions.
+   * @param width
+   * @param height
+   * @param id - Id attribute of the resulting svg element. Defaults to "id"
+   * followed by an automatically incremented number.
+   * @param options
+   */
   toSVG(
     width: number,
     height: number,
     id?: string,
-    options?: IDepictorOptions
+    options?: IMoleculeToSVGOptions
   ): string;
   getCanonizedIDCode(flag: number): string;
+  /**
+   * Returns an object with both the ID code and coordinates of the molecule.
+   */
   getIDCodeAndCoordinates(): { idCode: string; coordinates: string };
   getMolecularFormula(): MolecularFormula;
+  /**
+   * Returns the `int[]` index array that can be used for substructure search.
+   */
   getIndex(): number[];
+  /**
+   * Compute and set atom coordinates for this molecule.
+   */
   inventCoordinates(): void;
+  /**
+   * Expand and find a position for all the hydrogens of the 2D molecule. If
+   * `atomNumber` is specified, the function only applies for the hydrogens of
+   * the given atom.
+   */
   addImplicitHydrogens(atomNumber?: number): void;
+  /**
+   * Returns the count of hydrogens in the molecule.
+   */
   getNumberOfHydrogens(): number;
+  /**
+   * Returns the diastereotopic Ids of all the atoms in the molecule.
+   */
   getDiastereotopicAtomIDs(): string[];
   addMissingChirality(esrType?: number): void;
+  /**
+   * This function returns an array of HOSE(Hierarchical Organisation of
+   * Spherical Environments) codes represented as diastereotopic actelion IDs.
+   * @param options
+   */
   getHoseCodes(options?: IHoseCodesOptions): string[][];
   getRingSet(): RingCollection;
 
@@ -392,6 +488,10 @@ export declare class Molecule {
   setAtomCustomLabel(atom: number, label: string): void;
   setAtomESR(atom: number, type: number, group: number): void;
   setBondESR(bond: number, type: number, group: number): void;
+  /**
+   * Flags the molecule as a fragment or unflags it (useful for substructure search).
+   * @param isFragment
+   */
   setFragment(isFragment: boolean): void;
   setName(name: string): void;
   removeQueryFeatures(): boolean;
@@ -462,6 +562,12 @@ export declare class Molecule {
   shareSameFragment(atom1: number, atom2: number): boolean;
   addFragment(sourceMol: Molecule, rootAtom: number, atomMap: number[]): void;
   getFragmentAtoms(rootAtom: number, considerMetalBonds: boolean): number[];
+  /**
+   * Returns the number of fragments in the molecule.
+   * @param fragmentNo
+   * @param markedAtomsOnly
+   * @param considerMetalBonds
+   */
   getFragmentNumbers(
     fragmentNo: number[],
     markedAtomsOnly: boolean,
@@ -533,13 +639,25 @@ export declare class Molecule {
   ensureHelperArrays(required: number): void;
   getHandleHydrogenMap(): number[];
   isSimpleHydrogen(atom: number): boolean;
+  /**
+   * Remove the explicit hydrogens in the molecule.
+   */
   removeExplicitHydrogens(): void;
+  /**
+   * Returns an array of fragments from the molecule.
+   */
   getFragments(): Molecule[];
   stripStereoInformation(): void;
   getAbsoluteAtomParity(atom: number): number;
   getAbsoluteBondParity(bond: number): number;
   getSymmetryRank(atom: number): number;
+  /**
+   * Returns the ID code of the molecule.
+   */
   getIDCode(): string;
+  /**
+   * Returns a string representation of the coordinates of the atoms in the molecule.
+   */
   getIDCoordinates(): string;
   getStereoCenterCount(): number;
   setUnknownParitiesToExplicitlyUnknown(): void;
@@ -584,6 +702,9 @@ export declare class RingCollection {
   qualifiesAsAmideTypeBond(bond: number): boolean;
 }
 
+/**
+ * All depictor options default to `false`.
+ */
 export interface IDepictorOptions {
   inflateToMaxAVBL: boolean;
   inflateToHighResAVBL: boolean;
@@ -609,82 +730,301 @@ export interface IDepictorOptions {
 export declare class Reaction {
   private constructor();
 
+  /**
+   * Returns a new empty `Reaction`.
+   */
   static create(): Reaction;
-  static fromMolecules(mol: Molecule[], reactantCount: number): Reaction;
+  /**
+   * Returns a new `Reaction` filled with the provided molecules.
+   * @param molecules - Array of `Molecule` objects
+   * @param reactantCount - Number of reactants in the `molecules` array.
+   * The remaining objects will be treated as products.
+   */
+  static fromMolecules(molecules: Molecule[], reactantCount: number): Reaction;
+  /**
+   * Returns a new `Reaction` based on a reaction SMILES string. The `Reaction` will contain at most one `Molecule`
+   * for each component.
+   * @param smiles
+   */
   static fromSmiles(smiles: string): Reaction;
 
+  /**
+   * Serialize the `Reaction` to a reaction SMILES string.
+   */
   toSmiles(): string;
+  /**
+   * Returns a new copy of the `Reaction`.
+   */
   clone(): Reaction;
+  /**
+   * Empty the `Reaction`.
+   */
   clear(): void;
+  /**
+   * Remove all catalysts from the `Reaction`.
+   */
   removeCatalysts(): void;
+  /**
+   * Returns whether the reaction is empty.
+   */
   isEmpty(): boolean;
+  /**
+   * Mark the `Reaction` as `isFragment`.
+   * @param isFragment
+   */
   setFragment(isFragment: boolean): void;
+  /**
+   * Returns whether the `Reaction` is a fragment.
+   */
   isFragment(): boolean;
-  getReactant(no: number): Molecule;
+  /**
+   * Returns the reactant `Molecule` at `index`.
+   * @param index
+   */
+  getReactant(index: number): Molecule;
+  /**
+   * Returns the number of reactants.
+   */
   getReactants(): number;
-  getProduct(no: number): Molecule;
+  /**
+   * Returns the product `Molecule` at `index`.
+   * @param index
+   */
+  getProduct(index: number): Molecule;
+  /**
+   * Returns the number of products.
+   */
   getProducts(): number;
-  getCatalyst(no: number): Molecule;
+  /**
+   * Returns the catalyst `Molecule` at `index`.
+   * @param index
+   */
+  getCatalyst(index: number): Molecule;
+  /**
+   * Returns the number of catalysts.
+   */
   getCatalysts(): number;
+  /**
+   * Returns the total number of reactants and products.
+   */
   getMolecules(): number;
-  getMolecule(no: number): Molecule;
+  /**
+   * Returns the reactant or product at `index` (starting with reactants).
+   * @param index
+   */
+  getMolecule(index: number): Molecule;
+  /**
+   * Add a new `Molecule` in the reactants.
+   * @param reactant
+   */
   addReactant(reactant: Molecule): void;
-  addReactantAt(reactant: Molecule, position: number): void;
+  /**
+   * Add a new `Molecule` in the reactants at `index`.
+   * @param reactant
+   * @param index
+   */
+  addReactantAt(reactant: Molecule, index: number): void;
+  /**
+   * Add a new `Molecule` in the products.
+   * @param product
+   */
   addProduct(product: Molecule): void;
-  addProductAt(product: Molecule, position: number): void;
+  /**
+   * Add a new `Molecule` in the products at `index`.
+   * @param product
+   * @param index
+   */
+  addProductAt(product: Molecule, index: number): void;
+  /**
+   * Add a new `Molecule` in the catalysts.
+   * @param catalyst
+   */
   addCatalyst(catalyst: Molecule): void;
-  addCatalystAt(catalyst: Molecule, position: number): void;
+  /**
+   * Add a new `Molecule` in the catalysts at `index`.
+   * @param catalyst
+   * @param index
+   */
+  addCatalystAt(catalyst: Molecule, index: number): void;
+  /**
+   * Returns the name of the `Reaction`.
+   */
   getName(): string;
+  /**
+   * Sets the name of the `Reaction`.
+   * @param name
+   */
   setName(name: string): void;
+  /**
+   * Returns the average bond length among reactants and products.
+   */
   getAverageBondLength(): number;
+  /**
+   * Returns whether the molecules` atom coordinate bounds touch or overlap.
+   */
   isReactionLayoutRequired(): boolean;
+  /**
+   * Returns whether all non-hydrogen atoms are mapped and whether every
+   * reactant atom has exactly one assigned product atom.
+   */
   isPerfectlyMapped(): boolean;
   getHighestMapNo(): number;
+  /**
+   * Removes mapping numbers that are only used on one side of the reaction. Throws an exception if duplicate mapping
+   * numbers occur in reactants or products.
+   */
   validateMapping(): void;
+  /**
+   * This method determines the largest mapping number in use (maxMapNo),
+   * creates a boolean array[maxMapNo+1], and within this array flags every
+   * mapping number that refers to atoms, which change bonds in the course of
+   * the reaction. Mapped atoms that are connected to unpammed atoms are also
+   * considered being part of the reaction center. If the reaction is unmapped
+   * or has no reactants or products, then `null` is returned.
+   */
   getReactionCenterMapNos(): boolean[];
+  /**
+   * Merges all reactants into one `Molecule` and all products into another and
+   * creates a new `Reaction` object from those.
+   */
   getMergedCopy(): Reaction;
 }
 
 export declare class SDFileParser {
+  /**
+   * Creates a new parser.
+   * @param sdf - String with the SDF
+   * @param fields - Array of field names to parse. If null, the SDF is scanned
+   * to find all possible names (not efficient).
+   */
   constructor(sdf: string, fields: string[]);
+  /**
+   * Move to the next Molfile. Returns `true` if there is one, `false` otherwise.
+   * @example
+   * ```js
+   *
+   * const sdf = fs.readFileSync('./mysdf.sdf', 'utf8');
+   * const parser = new SDFileParser(sdf);
+   * while (parser.next()) {
+   *   const molecule = parser.getMolecule();
+   *   // process molecule
+   * }
+   * ```
+   */
   next(): boolean;
+  /**
+   * Returns the current `Molecule`.
+   */
   getMolecule(): Molecule;
+  /**
+   * Returns the current Molfile string.
+   */
   getNextMolFile(): string;
   getNextFieldData(): string;
+  /**
+   * Returns the list of field names for the entire SDF.
+   * @param recordsToInspect - Number of records scanned to determine the list.
+   */
   getFieldNames(recordsToInspect: number): string[];
   getFieldData(index: number): string;
+  /**
+   * Returns the content of the field `name` from the current record or `null`.
+   * @param name
+   */
   getField(name: string): string;
 }
 
+/**
+ * Basic substructure searcher.
+ */
 export declare class SSSearcher {
+  /**
+   * Creates a new substructure searcher.
+   */
   constructor();
-  setMol(fragment: Molecule, molecule: Molecule): void;
+  /**
+   * Set the `fragment` to search.
+   * @param fragment - `Molecule` instance to set as fragment. It has to be
+   * flagged with `setFragment(true)` first.
+   */
   setFragment(fragment: Molecule): void;
+  /**
+   * Set the target `molecule` in which the search will be done.
+   * @param molecule - `Molecule` instance to set as target molecule.
+   */
   setMolecule(molecule: Molecule): void;
+  /**
+   * Set the fragment and molecule in one call.
+   * @param fragment
+   * @param molecule
+   */
+  setMol(fragment: Molecule, molecule: Molecule): void;
+  /**
+   * Returns whether the current fragment is in the target molecule.
+   */
   isFragmentInMolecule(): boolean;
 }
 
+/**
+ * Fast substructure search with index filtering.
+ */
 export declare class SSSearcherWithIndex {
+  /**
+   * Create a new substructure searcher with index.
+   */
   constructor();
-  getKeyIDCode(): string[];
-  setFragment(fragment: Molecule, index: number[]): void;
-  setMolecule(molecule: Molecule, index: number[]): void;
+  /**
+   * Returns an array of the 512 idcodes that are used for computing indexes.
+   */
+  static getKeyIDCode(): string[];
+  /**
+   * Returns the Tanimoto similarity between the two indexes.
+   * @param index1
+   * @param index2
+   */
+  static getSimilarityTanimoto(index1: number[], index2: number[]): number;
+  static getSimilarityAngleCosine(index1: number[], index2: number[]): number;
+  static getIndexFromHexString(hex: string): number[];
+  static getHexStringFromIndex(index: number[]): string;
+  static bitCount(x: number): number;
+  /**
+   * Set the `fragment` to search.
+   * @param fragment - `Molecule` instance to set as fragment. It has to be
+   * flagged with `setFragment(true)` first.
+   * @param index - If the index for this fragment was computed previously, it
+   * can be provided here to save time.
+   */
+  setFragment(fragment: Molecule, index?: number[]): void;
+  /**
+   * Set the target `molecule` in which the search will be done.
+   * @param molecule - `Molecule` instance to set as target molecule.
+   * @param index - If the index for this fragment was computed previously, it
+   * can be provided here to save time.
+   */
+  setMolecule(molecule: Molecule, index?: number[]): void;
+  /**
+   * Returns whether the current fragment is in the target molecule.
+   */
   isFragmentInMolecule(): boolean;
   createIndex(molecule: Molecule): number[];
-  getSimilarityTanimoto(index1: number[], index2: number[]): number;
-  getSimilarityAngleCosine(index1: number[], index2: number[]): number;
-  getIndexFromHexString(hex: string): number[];
-  getHexStringFromIndex(index: number[]): string;
-  bitCount(x: number): number;
 }
 
 export declare namespace Util {
+  /**
+   * Returns the HOSE(Hierarchical Organisation of Spherical Environments) code
+   * for the given diasterotopic ID.
+   * @param diastereotopicID
+   * @param options
+   */
   function getHoseCodesFromDiastereotopicID(
     diastereotopicID: string,
     options?: IHoseCodesOptions
   ): string[];
 }
 
+/**
+ * Version number of the library.
+ */
 export declare const version: string;
 
 // Core API
@@ -710,8 +1050,18 @@ export declare class MoleculeProperties {
 
 export declare class DruglikenessPredictor {
   constructor();
+
+  static DRUGLIKENESS_UNKNOWN: number;
+
+  /**
+   * Returns the calculated drug likeness as a double.
+   * @param molecule
+   */
   assessDruglikeness(molecule: Molecule): number;
   getDruglikenessString(molecule: Molecule): string;
+  /**
+   * Returns detailed information about the previous drug likeness assessment.
+   */
   getDetail(): IParameterizedString[];
 }
 
@@ -740,7 +1090,18 @@ export declare class ToxicityPredictor {
 
   static RISK_NAMES: string[];
 
+  /**
+   * Returns the calculated risk as an integer.
+   * @param molecule
+   * @param riskType
+   */
   assessRisk(molecule: Molecule, riskType: number): number;
+  /**
+   * Returns detailed information about the risk and the substructures that are
+   * responsible for it.
+   * @param molecule
+   * @param riskType
+   */
   getDetail(molecule: Molecule, riskType: number): IParameterizedString[];
 }
 
@@ -766,34 +1127,92 @@ export declare namespace StructureView {
     idcode: string,
     coordinates: string,
     options?: IDepictorOptions,
-    atomText: string[]
+    atomText?: string[]
   ): void;
 }
 
 export declare class StructureEditor {
   constructor(id: string, useSVG?: boolean, scale?: number);
 
+  /**
+   * Create a new structure editor.
+   * @param id - Id of the DOM element
+   */
   static createEditor(id: string): StructureEditor;
+  /**
+   * Create a new structure editor with an SVG toolbar.
+   * @param id  - Id of the DOM element
+   * @param scale
+   */
   static createSVGEditor(id: string, scale: number);
 
   getMolecule(): Molecule;
+  /**
+   * Returns the current molecule as a string that contains its ID Code and
+   * coordinates separated by a space.
+   */
   getIDCode(): string;
+  /**
+   * Sets the current molecule to the provided ID code. The string can optionally
+   * contain coordinates separated by a space.
+   * @param idCode
+   */
   setIDCode(idCode: string): void;
+  /**
+   * Switches the current molecule in the editor in fragment mode or not.
+   * @param isFragment
+   */
   setFragment(isFragment: boolean): void;
+  /**
+   * Returns whether the current molecule is a fragment.
+   */
   isFragment(): boolean;
+  /**
+   * Returns the current molecule as a MDL Molfile V2000.
+   */
   getMolFile(): string;
+  /**
+   * Sets the editor content to the molecule represented by this Molfile
+   * (V2000 or V3000)
+   * @param molfile
+   */
   setMolFile(molfile: string): void;
+  /**
+   * Returns the current molecule as a MDL Molfile V3000.
+   */
   getMolFileV3(): string;
+  /**
+   * Returns the current molecule as a SMILES string.
+   */
   getSmiles(): string;
+  /**
+   * Sets the editor content to the molecule represented by this SMILES.
+   * @param smiles
+   */
   setSmiles(smiles: string): void;
-  setAtomHightlightCallback(callback: AtomHightlightCallback): void;
-  setBondHightlightCallback(callback: BondHightlightCallback): void;
+  /**
+   * Sets a callback function which is called whenever an atom is hovered/unhovered
+   * by the mouse.
+   * @param callback
+   */
+  setAtomHightlightCallback(callback: AtomHighlightCallback): void;
+  /**
+   * Sets a callback function which is called whenever a bond is hovered/unhovered
+   * by the mouse.
+   * @param callback
+   */
+  setBondHightlightCallback(callback: BondHighlightCallback): void;
+  /**
+   * Sets a callback function which is called whenever the structure in the editor
+   * is changed.
+   * @param callback
+   */
   setChangeListenerCallback(callback: ChangeListenerCallback): void;
   hasFocus(): boolean;
 }
 
-type AtomHightlightCallback = (atom: number, selected: boolean) => any;
-type BondHightlightCallback = (bond: number, selected: boolean) => any;
+type AtomHighlightCallback = (atom: number, selected: boolean) => any;
+type BondHighlightCallback = (bond: number, selected: boolean) => any;
 type ChangeListenerCallback = (idcode: string, molecule: Molecule) => any;
 
 export declare namespace SVGRenderer {
