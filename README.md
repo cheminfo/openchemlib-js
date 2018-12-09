@@ -1,12 +1,31 @@
-# openchemlib-js
+# OpenChemLib JS
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
 [![npm download][download-image]][download-url]
 
-JavaScript interface with the [openchemlib](https://github.com/actelion/openchemlib) java library
+JavaScript port of the [OpenChemLib](https://github.com/actelion/openchemlib) Java library.
+
+## Installation
+
+```console
+npm install openchemlib
+```
 
 ## Documentation
+
+This library is available in three different builds: `minimal`, `core` and `full`.
+Each larger build contains all functionalities from the smaller ones.
+
+The `core` build is the one that you get when you `require('openchemlib')`. It
+contains all functionalities that can be used in Node.js.
+
+The `minimal` (`require('openchemlib/minimal')`) build is a smaller one
+(~ half the size of `core`) that is meant to be used in a browser application
+if bundle size matters and prediction functionalities are not needed.
+
+The `full` build (`require('openchemlib/full')`) build is the largest build.
+It contains a structure viewer and a structure editor for browser applications.
 
 - [TypeDoc home page](https://cheminfo.github.io/openchemlib-js/docs/globals.html)
 
