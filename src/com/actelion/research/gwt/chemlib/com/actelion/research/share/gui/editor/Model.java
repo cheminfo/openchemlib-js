@@ -1427,6 +1427,7 @@ public abstract class Model
 
     public void setMolFile(String molFile)
     {
+        pushUndo();
         try {
             MolfileParser p = new MolfileParser();
             StereoMolecule mol = new StereoMolecule();
