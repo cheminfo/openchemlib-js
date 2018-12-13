@@ -60,7 +60,7 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
   private Button cancel, ok;
 
   public AtomQueryFeaturesDialog(StereoMolecule mol, int atom) {
-    super(null, "Query Atom Properties");
+    super(null, (mol.isSelectedAtom(atom)) ? "Multiple Atom Properties" : "Atom Properties");
     mMol = mol;
     mAtom = atom;
   }
@@ -244,7 +244,7 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
     } else
       mLabelAtomList.setText("allowed atoms:");
 
-    mTFAtomList.setText(mMol.getAtomListString(mAtom));
+    mTFAtomList.setText(mMol.getAtomList(mAtom) == null ? "" : mMol.getAtomListString(mAtom));
 
     if ((queryFeatures & Molecule.cAtomQFAromatic) != 0)
       mChoiceArom.setSelectedIndex(1);
@@ -369,7 +369,6 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
     if ((queryFeatures & Molecule.cAtomQFExcludeGroup) != 0)
       mCBExcludeGroup.setValue(true);
-
   }
 
   private void setQueryFeatures() {
@@ -534,10 +533,12 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
       break;
     }
 
-    if (mCBBlocked.getValue() && mMol.getFreeValence(atom) > 0)
+    if (mCBBlocked.getValue() && (mMol.getFreeValence(atom) > 0 || (mMol.getAtomCharge(atom) == 0
+        && (mMol.getAtomicNo(atom) == 5 || mMol.isNitrogenFamily(atom) || mMol.isChalcogene(atom)))))
       queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
 
-    if (mCBSubstituted.getValue() && mMol.getFreeValence(atom) > 0)
+    if (mCBSubstituted.getValue() && (mMol.getFreeValence(atom) > 0 || (mMol.getAtomCharge(atom) == 0
+        && (mMol.getAtomicNo(atom) == 5 || mMol.isNitrogenFamily(atom) || mMol.isChalcogene(atom)))))
       queryFeatures |= Molecule.cAtomQFMoreNeighbours;
 
     if (mCBMatchStereo.getValue())
@@ -572,7 +573,11 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
       int atomicNo = Molecule.getAtomicNoFromLabel(label);
       if (atomicNo != 0) {
-        if (list == null) {
+        if (atomicNo == 1) {
+          // TODO use a GWT dialog?
+          // JOptionPane.showMessageDialog(mParentFrame, "'H' cannot be part of an atom
+          // list and is removed.");
+        } else if (list == null) {
           list = new int[1];
           list[0] = atomicNo;
         } else {
