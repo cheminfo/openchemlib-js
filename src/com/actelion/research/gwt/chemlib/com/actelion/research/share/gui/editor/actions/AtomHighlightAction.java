@@ -274,7 +274,7 @@ public abstract class AtomHighlightAction extends DrawAction
             return true;
         } else if (evt.getCode().equals(factory.getBackSpaceKey())) {
             if (isFirst)
-                return removeAtoms(mol,theAtom);
+                return removeAtoms(mol, theAtom);
             else
                 keyStrokeBuffer.setLength(keyStrokeBuffer.length() - 1);
             return true;

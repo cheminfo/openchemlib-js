@@ -154,7 +154,7 @@ public abstract class BondHighlightAction extends AtomHighlightAction
         GeomFactory factory = model.getGeomFactory();
         StereoMolecule mol = model.getMolecule();
         if (mol != null) {
-            if (evt.getCode().equals(factory.getDeleteKey()) ||evt.getCode().equals(factory.getBackSpaceKey()) ) {
+            if (evt.getCode().equals(factory.getDeleteKey()) || evt.getCode().equals(factory.getBackSpaceKey())) {
                 if (theBond != -1) {
                     mol.deleteBondAndSurrounding(theBond);
                     setHighlightBond(mol, -1);
