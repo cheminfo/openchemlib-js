@@ -2511,12 +2511,12 @@ export declare class Reaction {
   private constructor();
 
   /**
-   * Returns a new empty `Reaction`.
+   * Create a new empty `Reaction`.
    */
   static create(): Reaction;
 
   /**
-   * Returns a new `Reaction` filled with the provided molecules.
+   * Create a new `Reaction` filled with the provided molecules.
    * @param molecules - Array of `Molecule` objects
    * @param reactantCount - Number of reactants in the `molecules` array.
    * The remaining objects will be treated as products.
@@ -2524,16 +2524,32 @@ export declare class Reaction {
   static fromMolecules(molecules: Molecule[], reactantCount: number): Reaction;
 
   /**
-   * Returns a new `Reaction` based on a reaction SMILES string. The `Reaction` will contain at most one `Molecule`
+   * Create a new `Reaction` based on a reaction SMILES string. The `Reaction` will contain at most one `Molecule`
    * for each component.
    * @param smiles
    */
   static fromSmiles(smiles: string): Reaction;
+  
+  /**
+   * Create a new `Reaction` based on a MDL Reaction file (V2000 or V3000).
+   * @param rxn - The RXN file's contents
+   */
+  static fromRxn(rxn: string): Reaction;
 
   /**
    * Serialize the `Reaction` to a reaction SMILES string.
    */
   toSmiles(): string;
+
+  /**
+   * Serialize the `Reaction` to a MDL V2000 Reaction file.
+   */
+  toRxn(programName?: string): string;
+
+  /**
+   * Serialize the `Reaction` to a MDL V3000 Reaction file.
+   */
+  toRxnV3(programName?: string): string;
 
   /**
    * Returns a new copy of the `Reaction`.

@@ -1,6 +1,7 @@
 package com.actelion.research.gwt.minimal;
 
 import com.actelion.research.chem.*;
+import com.actelion.research.chem.io.*;
 import com.actelion.research.chem.reaction.*;
 import jsinterop.annotations.*;
 
@@ -25,6 +26,11 @@ public class JSReaction {
     return new JSReaction(reaction);
   }
 
+  public static JSReaction fromRxn(String rxn) throws Exception {
+    RXNFileParser parser = new RXNFileParser();
+    return new JSReaction(parser.getReaction(rxn));
+  }
+
   @JsIgnore
   public JSReaction(Reaction reaction) {
     oclReaction = reaction;
@@ -32,6 +38,16 @@ public class JSReaction {
 
   public String toSmiles() {
     return IsomericSmilesCreator.createReactionSmiles(oclReaction);
+  }
+
+  public String toRxn(String programName) {
+    RXNFileCreator creator = new RXNFileCreator(oclReaction, programName);
+    return creator.getRXNfile();
+  }
+
+  public String toRxnV3(String programName) {
+    RXNFileV3Creator creator = new RXNFileV3Creator(oclReaction, programName);
+    return creator.getRXNfile();
   }
 
   public JSReaction clone() {
