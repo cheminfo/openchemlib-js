@@ -17,16 +17,14 @@ exports.modified = modified.map(getFilename);
 
 const changed = [
   ['chem/ChemistryHelper', removePrintf],
+  ['chem/io/RXNFileV3Creator', removeRXNStringFormat],
   ['chem/Molecule', changeMolecule],
   ['share/gui/editor/Model', removePrintf],
   ['util/ArrayUtils', changeArrayUtils]
 ];
 
 exports.changed = changed.map((file) => {
-  return [
-    getFilename(file[0]),
-    file[1]
-  ];
+  return [getFilename(file[0]), file[1]];
 });
 
 const removed = [
@@ -62,8 +60,12 @@ function changeMolecule(molecule) {
   const copyOfIndex = molecule.indexOf(copyOf);
   if (copyOfIndex === -1) throw new Error('did not find copyOf method');
   const closeIndex = molecule.indexOf('}', copyOfIndex);
-  molecule = `${molecule.substr(0, closeIndex + 1)}*/${molecule.substr(closeIndex + 1)}`;
-  molecule = `${molecule.substr(0, copyOfIndex)}/*${molecule.substr(copyOfIndex)}`;
+  molecule = `${molecule.substr(0, closeIndex + 1)}*/${molecule.substr(
+    closeIndex + 1
+  )}`;
+  molecule = `${molecule.substr(0, copyOfIndex)}/*${molecule.substr(
+    copyOfIndex
+  )}`;
   molecule = molecule.replace(/\([^)]+\)copyOf/g, 'Arrays.copyOf');
   return molecule;
 }
@@ -90,4 +92,11 @@ function removeSlice(code, start, end) {
     throw new Error(`did not find index for: ${end}`);
   }
   return code.substr(0, startIdx) + code.substr(endIdx + end.length);
+}
+
+function removeRXNStringFormat(code) {
+  return code.replace(
+    'theWriter.write(String.format("M  V30 COUNTS %d %d\\n",rcnt,pcnt));',
+    'theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+"\\n",rcnt,pcnt);'
+  );
 }

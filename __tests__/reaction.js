@@ -54,4 +54,76 @@ describe('Reaction class', () => {
     expect(newReaction.getProduct(0).toSmiles()).toBe('CO');
     expect(newReaction.getCatalyst(0).toSmiles()).toBe('[Fe]');
   });
+
+  it('should load and create RXN files', () => {
+    const rxn = `$RXN
+
+
+JME Molecular Editor
+  2  2
+$MOL
+CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
+JME 2017-11-16 Fri Nov 09 13:48:29 GMT+100 2018
+
+  6  5  0  0  0  0  0  0  0  0999 V2000
+    2.4460    0.0000    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0
+    2.4350    1.4040    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    3.6307    2.1060    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2175    2.1060    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2066    3.5100    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    1.4150    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+M  END
+$MOL
+CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
+JME 2017-11-16 Fri Nov 09 13:48:29 GMT+100 2018
+
+  5  4  0  0  0  0  0  0  0  0999 V2000
+    2.4467    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    3.6508    0.7072    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2233    0.7072    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.8550    0.0191    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0191    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+M  END
+$MOL
+CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
+JME 2017-11-16 Fri Nov 09 13:48:29 GMT+100 2018
+
+  5  4  0  0  0  0  0  0  0  0999 V2000
+    2.4467    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    3.6508    0.7072    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2233    0.7072    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.8550    0.0191    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0191    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+M  END
+$MOL
+CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
+JME 2017-11-16 Fri Nov 09 13:48:29 GMT+100 2018
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+`;
+
+    const reaction = Reaction.fromRxn(rxn);
+    expect(reaction.getReactants()).toBe(2);
+    expect(reaction.getProducts()).toBe(2);
+    expect(reaction.getCatalysts()).toBe(0);
+
+    expect(reaction.toRxn()).toMatchSnapshot();
+
+    expect(reaction.toRxnV3()).toMatchSnapshot();
+  });
 });
