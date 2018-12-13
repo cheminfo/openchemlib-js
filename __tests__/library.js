@@ -26,6 +26,7 @@ describe('Checking for the presence of main APIs', function () {
 
   const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];
 
+  // eslint-disable-next-line jest/expect-expect
   it('minimal', function () {
     checkHas(minimal, minimalAPI);
     checkHasNot(minimal, [...coreAPI, ...fullAPI]);
@@ -37,6 +38,7 @@ describe('Checking for the presence of main APIs', function () {
     checkHasNot(core, fullAPI);
   });
 
+  // eslint-disable-next-line jest/expect-expect
   it('full', function () {
     [full, pretty].forEach((lib) => {
       checkHas(lib, [...minimalAPI, ...coreAPI, ...fullAPI]);
@@ -45,7 +47,7 @@ describe('Checking for the presence of main APIs', function () {
 });
 
 function checkHas(obj, properties) {
-  expect(Object.keys(obj).sort()).toEqual(properties.sort());
+  expect(Object.keys(obj).sort()).toStrictEqual(properties.sort());
 }
 
 function checkHasNot(obj, properties) {
