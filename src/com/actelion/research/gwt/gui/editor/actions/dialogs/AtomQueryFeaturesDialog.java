@@ -239,12 +239,12 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
     int queryFeatures = mMol.getAtomQueryFeatures(mAtom);
 
     if ((queryFeatures & Molecule.cAtomQFAny) != 0) {
-      mCBAny.setValue(true);
+      mCBAny.setSelected(true);
       mLabelAtomList.setText("excluded atoms:");
     } else
       mLabelAtomList.setText("allowed atoms:");
 
-    mTFAtomList.setText(mMol.getAtomListString(mAtom));
+    mTFAtomList.setText(mMol.getAtomList(mAtom) == null ? "" : mMol.getAtomListString(mAtom));
 
     if ((queryFeatures & Molecule.cAtomQFAromatic) != 0)
       mChoiceArom.setSelectedIndex(1);
@@ -359,17 +359,16 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
     }
 
     if ((queryFeatures & Molecule.cAtomQFNoMoreNeighbours) != 0)
-      mCBBlocked.setValue(true);
+      mCBBlocked.setSelected(true);
 
     if ((queryFeatures & Molecule.cAtomQFMoreNeighbours) != 0)
-      mCBSubstituted.setValue(true);
+      mCBSubstituted.setSelected(true);
 
     if ((queryFeatures & Molecule.cAtomQFMatchStereo) != 0)
-      mCBMatchStereo.setValue(true);
+      mCBMatchStereo.setSelected(true);
 
     if ((queryFeatures & Molecule.cAtomQFExcludeGroup) != 0)
-      mCBExcludeGroup.setValue(true);
-
+      mCBExcludeGroup.setSelected(true);
   }
 
   private void setQueryFeatures() {
@@ -386,7 +385,7 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
   private void setQueryFeatures(int atom, int[] atomList) {
     int queryFeatures = 0;
 
-    if (mCBAny.getValue()) {
+    if (mCBAny.isSelected()) {
       queryFeatures |= Molecule.cAtomQFAny;
       mMol.setAtomList(atom, atomList, true);
     } else
@@ -534,16 +533,18 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
       break;
     }
 
-    if (mCBBlocked.getValue() && mMol.getFreeValence(atom) > 0)
+    if (mCBBlocked.isSelected() && (mMol.getFreeValence(atom) > 0 || (mMol.getAtomCharge(atom) == 0
+        && (mMol.getAtomicNo(atom) == 5 || mMol.isNitrogenFamily(atom) || mMol.isChalcogene(atom)))))
       queryFeatures |= Molecule.cAtomQFNoMoreNeighbours;
 
-    if (mCBSubstituted.getValue() && mMol.getFreeValence(atom) > 0)
+    if (mCBSubstituted.isSelected() && (mMol.getFreeValence(atom) > 0 || (mMol.getAtomCharge(atom) == 0
+        && (mMol.getAtomicNo(atom) == 5 || mMol.isNitrogenFamily(atom) || mMol.isChalcogene(atom)))))
       queryFeatures |= Molecule.cAtomQFMoreNeighbours;
 
-    if (mCBMatchStereo.getValue())
+    if (mCBMatchStereo.isSelected())
       queryFeatures |= Molecule.cAtomQFMatchStereo;
 
-    if (mCBExcludeGroup.getValue())
+    if (mCBExcludeGroup.isSelected())
       queryFeatures |= Molecule.cAtomQFExcludeGroup;
 
     mMol.setAtomQueryFeature(atom, 0xFFFFFFFF, false);
@@ -572,7 +573,9 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
 
       int atomicNo = Molecule.getAtomicNoFromLabel(label);
       if (atomicNo != 0) {
-        if (list == null) {
+        if (atomicNo == 1) {
+          JOptionPane.showMessageDialog(mParentFrame, "'H' cannot be part of an atom list and is removed.");
+        } else if (list == null) {
           list = new int[1];
           list[0] = atomicNo;
         } else {
