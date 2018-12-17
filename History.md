@@ -1,3 +1,11 @@
+5.9.0 / 2018-12-17
+==================
+
+* Update OCL to 2018_12_17-16_27_18
+* Added RXN methods to Reaction class
+* Added more options to bond query features in editor
+* Added getBounds method to Molecule class
+
 5.8.0 / 2018-12-09
 ==================
 
