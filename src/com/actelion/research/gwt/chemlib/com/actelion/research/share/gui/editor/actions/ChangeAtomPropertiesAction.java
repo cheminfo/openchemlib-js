@@ -40,8 +40,6 @@ import com.actelion.research.share.gui.editor.dialogs.IAtomPropertiesDialog;
 import com.actelion.research.share.gui.editor.geom.GeomFactory;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
 
-import java.util.function.Consumer;
-
 /**
  * Project:
  * User: rufenec
@@ -65,20 +63,11 @@ public class ChangeAtomPropertiesAction extends AtomHighlightAction
         if (mol != null && theAtom != -1) {
             GeomFactory builder = model.getGeomFactory();
             IAtomPropertiesDialog dlg = builder.createAtomPropertiesDialog(mol,theAtom);
-            dlg.setResultHandler(new Consumer<DialogResult>()
-            {
-                @Override
-                public void accept(DialogResult res)
-                {
-                    if (res == DialogResult.IDOK) {
-                        model.setSelectedAtom(-1);
-                        model.changed();
-                    }
-                }
-            });
-            dlg.doModalAt(evt.getX(),evt.getY());
+            if (dlg.doModalAt(evt.getX(),evt.getY()) == DialogResult.IDOK) {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
 
