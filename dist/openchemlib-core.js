@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v5.9.0
- * @date 2018-12-21T08:20:29.859Z
+ * @version v5.9.1
+ * @date 2018-12-21T08:53:08.409Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -136,7 +136,7 @@ _.put=function BU(a,b){throw dP(new AZ.NT('Put not supported on this map'))};_.p
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '5.9.0';
+        toReturn.version = '5.9.1';
 
         return toReturn;
     }
