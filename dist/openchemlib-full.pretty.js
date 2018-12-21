@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
  * @version v5.9.0
- * @date 2018-12-17T19:24:50.840Z
+ * @date 2018-12-21T08:20:41.860Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -506,7 +506,7 @@ function of(e){
 
 defineClass(17, 1, {4:1, 1:1, 17:1});
 _.$init_238 = function $init_238(){
-  this.stackTrace = initUnidimensionalArray(cggl.Ljava_lang_StackTraceElement_2_classLit, {4:1, 1:1, 6:1}, 68, 0, 0, 1);
+  this.stackTrace = initUnidimensionalArray(cggl.Ljava_lang_StackTraceElement_2_classLit, {4:1, 1:1, 6:1}, 69, 0, 0, 1);
   this.writetableStackTrace = true;
   this.backingJsObject = UNINITIALIZED;
 }
@@ -636,9 +636,9 @@ _.setBackingJsObject = function setBackingJsObject(backingJsObject){
 _.setStackTrace = function setStackTrace(stackTrace){
   var copy, i, length_0;
   length_0 = stackTrace.length;
-  copy = initUnidimensionalArray(cggl.Ljava_lang_StackTraceElement_2_classLit, {4:1, 1:1, 6:1}, 68, length_0, 0, 1);
+  copy = initUnidimensionalArray(cggl.Ljava_lang_StackTraceElement_2_classLit, {4:1, 1:1, 6:1}, 69, length_0, 0, 1);
   for (i = 0; i < length_0; ++i) {
-    copy[i] = castTo(ji2.checkNotNull_0(stackTrace[i]), 68);
+    copy[i] = castTo(ji2.checkNotNull_0(stackTrace[i]), 69);
   }
   this.stackTrace = copy;
 }
@@ -1085,7 +1085,7 @@ _.getStackTrace_0 = function getStackTrace_0(t){
   var i, length_0, stack_0, stackTrace;
   stack_0 = cggcci.getFnStack(t);
   length_0 = cggcc.$length_0(stack_0);
-  stackTrace = initUnidimensionalArray(cggl.Ljava_lang_StackTraceElement_2_classLit, {4:1, 1:1, 6:1}, 68, length_0, 0, 1);
+  stackTrace = initUnidimensionalArray(cggl.Ljava_lang_StackTraceElement_2_classLit, {4:1, 1:1, 6:1}, 69, length_0, 0, 1);
   for (i = 0; i < length_0; i++) {
     stackTrace[i] = new jl.StackTraceElement('Unknown', cggcc.$get_0(stack_0, i), null, -1);
   }
@@ -1117,7 +1117,7 @@ _.createSte = function createSte(fileName, method, line, col){
 _.getStackTrace_0 = function getStackTrace_1(t){
   var addIndex, i, length_0, stack_0, stackTrace, ste;
   stack_0 = cggcci.split_0(t);
-  stackTrace = initUnidimensionalArray(cggl.Ljava_lang_StackTraceElement_2_classLit, {4:1, 1:1, 6:1}, 68, 0, 0, 1);
+  stackTrace = initUnidimensionalArray(cggl.Ljava_lang_StackTraceElement_2_classLit, {4:1, 1:1, 6:1}, 69, 0, 0, 1);
   addIndex = 0;
   length_0 = cggcc.$length_0(stack_0);
   if (length_0 == 0) {
@@ -2946,7 +2946,7 @@ jl.IllegalStateException_0 = function IllegalStateException_0(s){
   this.$init_536();
 }
 ;
-defineClass(65, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, jl.IllegalStateException, jl.IllegalStateException_0);
+defineClass(66, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, jl.IllegalStateException, jl.IllegalStateException_0);
 _.$init_536 = function $init_536(){
 }
 ;
@@ -4822,7 +4822,7 @@ cggl.Ljava_lang_Class_2_classLit = createForClass('java.lang', 'Class', 251, cgg
 cggl.Ljava_lang_ClassCastException_2_classLit = createForClass('java.lang', 'ClassCastException', 419, cggl.Ljava_lang_RuntimeException_2_classLit);
 cggl.Ljava_lang_Number_2_classLit = createForClass('java.lang', 'Number', 118, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljava_lang_Double_2_classLit = createForClass('java.lang', 'Double', 418, cggl.Ljava_lang_Number_2_classLit);
-cggl.Ljava_lang_IllegalStateException_2_classLit = createForClass('java.lang', 'IllegalStateException', 65, cggl.Ljava_lang_RuntimeException_2_classLit);
+cggl.Ljava_lang_IllegalStateException_2_classLit = createForClass('java.lang', 'IllegalStateException', 66, cggl.Ljava_lang_RuntimeException_2_classLit);
 cggl.Ljava_lang_IndexOutOfBoundsException_2_classLit = createForClass('java.lang', 'IndexOutOfBoundsException', 42, cggl.Ljava_lang_RuntimeException_2_classLit);
 cggl.Ljava_lang_Integer_2_classLit = createForClass('java.lang', 'Integer', 50, cggl.Ljava_lang_Number_2_classLit);
 cggl.Ljava_lang_NullPointerException_2_classLit = createForClass('java.lang', 'NullPointerException', 98, cggl.Ljava_lang_JsException_2_classLit);
@@ -6872,7 +6872,7 @@ carc2.AbstractDepictor$DepictorLine = function AbstractDepictor$DepictorLine(){
   this.$init_2();
 }
 ;
-defineClass(72, 1, {1:1}, carc2.AbstractDepictor$DepictorLine);
+defineClass(73, 1, {1:1}, carc2.AbstractDepictor$DepictorLine);
 _.$init_2 = function $init_2(){
 }
 ;
@@ -6880,7 +6880,7 @@ _.x1 = 0;
 _.x2 = 0;
 _.y1 = 0;
 _.y2 = 0;
-cggl.Lcom_actelion_research_chem_AbstractDepictor$DepictorLine_2_classLit = createForClass('com.actelion.research.chem', 'AbstractDepictor/DepictorLine', 72, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_AbstractDepictor$DepictorLine_2_classLit = createForClass('com.actelion.research.chem', 'AbstractDepictor/DepictorLine', 73, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_AbstractDrawingObject = function $clinit_AbstractDrawingObject(){
   carc2.$clinit_AbstractDrawingObject = emptyMethod;
   jl.$clinit_Object();
@@ -10495,7 +10495,18 @@ _.idCodeCreate = function idCodeCreate(){
   isSecondFeatureBlock = false;
   if (this.mMol.isFragment_0()) {
     this.addAtomQueryFeatures(0, false, nbits, 2048, 1, -1);
-    this.addBondQueryFeatures(2, false, nbits, 8, 1, -1);
+    count = 0;
+    for (bond3 = 0; bond3 < this.mMol.getBonds_0(); bond3++)
+      if (this.mMol.getBondType_0(this.mGraphBond[bond3]) == 64)
+        count++;
+    if (count != 0) {
+      this.encodeBits(1, 1);
+      this.encodeBits(2, 4);
+      this.encodeBits(count, nbits);
+      for (bond4 = 0; bond4 < this.mMol.getBonds_0(); bond4++)
+        if (this.mMol.getBondType_0(this.mGraphBond[bond4]) == 64)
+          this.encodeBits(bond4, nbits);
+    }
     this.addAtomQueryFeatures(3, false, nbits, 4096, 1, -1);
     this.addAtomQueryFeatures(4, false, nbits, 120, 4, 3);
     this.addAtomQueryFeatures(5, false, nbits, 6, 2, 1);
@@ -13242,7 +13253,7 @@ carc2.setDefaultAverageBondLength = function setDefaultAverageBondLength(default
   carc2.sDefaultAVBL = defaultAVBL;
 }
 ;
-defineClass(78, 1, {78:1, 4:1, 1:1});
+defineClass(64, 1, {64:1, 4:1, 1:1});
 _.$init_23 = function $init_23(){
 }
 ;
@@ -15401,7 +15412,7 @@ carc2.cMoleculeColorDefault = 0;
 carc2.cMoleculeColorNeutral = 1;
 carc2.sDefaultAVBL = 24;
 carc2.serialVersionUID_0 = 537920272;
-cggl.Lcom_actelion_research_chem_Molecule_2_classLit = createForClass('com.actelion.research.chem', 'Molecule', 78, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_Molecule_2_classLit = createForClass('com.actelion.research.chem', 'Molecule', 64, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_ExtendedMolecule = function $clinit_ExtendedMolecule(){
   carc2.$clinit_ExtendedMolecule = emptyMethod;
   carc2.$clinit_Molecule();
@@ -15429,7 +15440,7 @@ carc2.ExtendedMolecule_1 = function ExtendedMolecule_1(mol){
     mol.copyMolecule_0(this);
 }
 ;
-defineClass(86, 78, {86:1, 78:1, 4:1, 1:1});
+defineClass(86, 64, {86:1, 64:1, 4:1, 1:1});
 _.$init_24 = function $init_24(){
 }
 ;
@@ -16805,7 +16816,7 @@ _.isChalcogene_0 = function isChalcogene(atom){
   return atomicNo == 8 || atomicNo == 16 || atomicNo == 34 || atomicNo == 52;
 }
 ;
-_.isDelocalizedBond_0 = function isDelocalizedBond(bond){
+_.isDelocalizedBond_0 = function isDelocalizedBond_0(bond){
   return (this.mBondFlags[bond] & 512) != 0;
 }
 ;
@@ -17460,7 +17471,7 @@ _.validate_0 = function validate(){
 ;
 _.validateBondType = function validateBondType_0(bond, type_0){
   var ok;
-  ok = getClassPrototype(78).validateBondType.call(this, bond, type_0);
+  ok = getClassPrototype(64).validateBondType.call(this, bond, type_0);
   if (ok && type_0 == 26) {
     this.ensureHelperArrays_0(3);
     ok = ok & !this.isSmallRingBond_0(bond);
@@ -17646,7 +17657,7 @@ _.parse_2 = function parse_2(mol, idcode, coordinates){
 }
 ;
 _.parse_3 = function parse_3(mol, idcode, coordinates, idcodeStart, coordsStart){
-  var EZCount, THCount, abits, allAtoms, allBonds, aromState, aromaticSPBond, atom, atom0, atom1, atom2, atomList, atomicNo, atoms, avbl, avblDefault, avblInt, base, bbits, binCount, bond, bond$array, bond$index, bond$max, bond0, bondOrder, bondTypes, bridgeData, charge, chargedAtoms, closureBonds, coords2DAvailable, coordsAre3D, coordsAreAbsolute, count, dataType, dbits, decodeOldCoordinates, dif, dx, dy, dz, e, f, factor, from, hCount, hydrogen, hydrogenCount, i, i0, i1, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i2, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29, i3, i30, i31, i32, i33, i34, i4, i5, i6, i7, i8, i9, index_0, isAromaticBond, j, label_0, lbits, mass, neighbours, nitrogens, no, offset, otherAtoms, oxygens, parity, piElectrons, resolutionBits, ringSize, ringState, targetAVBL, version, xInt, xOffset, yInt, yOffset, zInt, zOffset;
+  var EZCount, THCount, abits, allAtoms, allBonds, aromState, aromaticSPBond, atom, atom0, atom1, atom2, atomList, atomicNo, atoms, avbl, avblDefault, avblInt, base, bbits, binCount, bond, bond$array, bond$index, bond$max, bond0, bondOrder, bondTypes, bridgeData, charge, chargedAtoms, closureBonds, coords2DAvailable, coordsAre3D, coordsAreAbsolute, count, dataType, dbits, decodeOldCoordinates, dif, dx, dy, dz, e, f, factor, from, hCount, hydrogen, hydrogenCount, i, i0, i1, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i2, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29, i3, i30, i31, i32, i33, i34, i4, i5, i6, i7, i8, i9, index_0, isDelocalizedBond, j, label_0, lbits, mass, neighbours, nitrogens, no, offset, otherAtoms, oxygens, parity, piElectrons, resolutionBits, ringSize, ringState, targetAVBL, version, xInt, xOffset, yInt, yOffset, zInt, zOffset;
   mol.deleteMolecule_0();
   if (jsEquals(idcode, null) || idcodeStart >= idcode.length)
     return;
@@ -17744,12 +17755,12 @@ _.parse_3 = function parse_3(mol, idcode, coordinates, idcodeStart, coordsStart)
   }
   for (i5 = 0; i5 < closureBonds; i5++)
     this.mMol.addBond_1(this.decodeBits(abits), this.decodeBits(abits), 1);
-  isAromaticBond = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, allBonds, 16, 1);
+  isDelocalizedBond = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, allBonds, 16, 1);
   for (bond0 = 0; bond0 < allBonds; bond0++) {
     bondOrder = this.decodeBits(2);
     switch (bondOrder) {
       case 0:
-        isAromaticBond[bond0] = true;
+        isDelocalizedBond[bond0] = true;
         break;
       case 2:
         this.mMol.setBondType_0(bond0, 2);
@@ -17854,7 +17865,7 @@ _.parse_3 = function parse_3(mol, idcode, coordinates, idcodeStart, coordsStart)
         no = this.decodeBits(bbits);
         for (i10 = 0; i10 < no; i10++) {
           bond = this.decodeBits(bbits);
-          this.mMol.setBondType_0(bond, 8);
+          this.mMol.setBondType_0(bond, 64);
         }
 
         break;
@@ -18078,7 +18089,7 @@ _.parse_3 = function parse_3(mol, idcode, coordinates, idcodeStart, coordsStart)
         break;
     }
   }
-  (new carc2.AromaticityResolver(this.mMol)).locateDelocalizedDoubleBonds(isAromaticBond);
+  (new carc2.AromaticityResolver(this.mMol)).locateDelocalizedDoubleBonds(isDelocalizedBond);
   if (jsNotEquals(aromaticSPBond, null))
     for (bond$array = aromaticSPBond , bond$index = 0 , bond$max = bond$array.length; bond$index < bond$max; ++bond$index) {
       bond = bond$array[bond$index];
@@ -18380,7 +18391,7 @@ _.addAtomString = function addAtomString(smilesAtom, builder){
 _.addHighestRankingChain = function addHighestRankingChain(graphIndex, isSideChain){
   var atom, bond, isFirst, neighborIndex, parent_0;
   isFirst = true;
-  parent_0 = castTo(this.mGraphAtomList.getAtIndex(graphIndex), 64).atom;
+  parent_0 = castTo(this.mGraphAtomList.getAtIndex(graphIndex), 65).atom;
   neighborIndex = this.getUnusedConnAtomIndex(parent_0);
   while (neighborIndex != -1) {
     atom = this.mMol.getConnAtom_0(parent_0, neighborIndex);
@@ -18451,11 +18462,11 @@ _.appendClosureBonds = function appendClosureBonds(smilesAtom, builder){
 _.calculateEZBonds = function calculateEZBonds(){
   var bond, branchSA, childAtom, childSA, connAtom, currentSA, currentSA$iterator, group, halfParity, halfParity1, halfParity2, i, i0, j, parentSA;
   for (currentSA$iterator = this.mGraphAtomList.iterator(); currentSA$iterator.hasNext_0();) {
-    currentSA = castTo(currentSA$iterator.next_3(), 64);
+    currentSA = castTo(currentSA$iterator.next_3(), 65);
     if (currentSA.parent_0 != -1) {
       bond = this.mMol.getBond_0(currentSA.atom, currentSA.parent_0);
       if (!this.mMol.isBINAPChiralityBond_0(bond) && !this.mMol.isSmallRingBond_0(bond) && (this.mMol.getBondParity_0(bond) == 1 || this.mMol.getBondParity_0(bond) == 2)) {
-        parentSA = castTo(this.mGraphAtomList.getAtIndex(this.mSmilesIndex[currentSA.parent_0]), 64);
+        parentSA = castTo(this.mGraphAtomList.getAtIndex(this.mSmilesIndex[currentSA.parent_0]), 65);
         halfParity1 = parentSA.ezHalfParity;
         if (halfParity1 == 0)
           halfParity1 = parentSA.ezHalfParity = 1;
@@ -18464,7 +18475,7 @@ _.calculateEZBonds = function calculateEZBonds(){
           for (i0 = 0; i0 < this.mMol.getConnAtoms_0(parentSA.atom); i0++) {
             connAtom = this.mMol.getConnAtom_0(parentSA.atom, i0);
             if (connAtom != parentSA.parent_0 && connAtom != currentSA.atom) {
-              branchSA = castTo(this.mGraphAtomList.getAtIndex(this.mSmilesIndex[connAtom]), 64);
+              branchSA = castTo(this.mGraphAtomList.getAtIndex(this.mSmilesIndex[connAtom]), 65);
               if (branchSA.parent_0 == parentSA.atom)
                 branchSA.ezHalfParity = halfParity1;
               if (connAtom < parentSA.parent_0)
@@ -18498,7 +18509,7 @@ _.calculateEZBonds = function calculateEZBonds(){
               if (this.mPseudoStereoGroupInversion[group])
                 halfParity2 = 3 - halfParity2;
             }
-            childSA = castTo(this.mGraphAtomList.getAtIndex(this.mSmilesIndex[childAtom]), 64);
+            childSA = castTo(this.mGraphAtomList.getAtIndex(this.mSmilesIndex[childAtom]), 65);
             if (childSA.parent_0 == currentSA.atom)
               childSA.ezHalfParity = halfParity2;
           }
@@ -18523,7 +18534,7 @@ _.createSmiles = function createSmiles(){
   sb = new jl.StringBuilder;
   isFirst = true;
   for (smilesAtom$iterator = this.mGraphAtomList.iterator(); smilesAtom$iterator.hasNext_0();) {
-    smilesAtom = castTo(smilesAtom$iterator.next_3(), 64);
+    smilesAtom = castTo(smilesAtom$iterator.next_3(), 65);
     if (smilesAtom.parent_0 == -1) {
       if (isFirst)
         isFirst = false;
@@ -18540,7 +18551,7 @@ _.findRingClosures = function findRingClosures(){
   closureNumberUsed = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, this.mMol.getBonds_0(), 16, 1);
   this.mClosureNumber = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMol.getBonds_0(), 15, 1);
   for (smilesAtom$iterator = this.mGraphAtomList.iterator(); smilesAtom$iterator.hasNext_0();) {
-    smilesAtom = castTo(smilesAtom$iterator.next_3(), 64);
+    smilesAtom = castTo(smilesAtom$iterator.next_3(), 65);
     for (i = 0; i < this.mMol.getConnAtoms_0(smilesAtom.atom); i++) {
       bond = this.mMol.getConnBond_0(smilesAtom.atom, i);
       closureNumberUsed[this.mClosureNumber[bond]] = false;
@@ -18590,7 +18601,7 @@ _.generateCanonicalTree = function generateCanonicalTree(){
     if (this.mMol.getConnAtoms_0(atom) != 0) {
       this.addHighestRankingChain(graphIndex, false);
       while (graphIndex < this.mGraphAtomList.size() - 1) {
-        while (this.hasUnusedNeighborAtom(castTo(this.mGraphAtomList.getAtIndex(graphIndex), 64).atom))
+        while (this.hasUnusedNeighborAtom(castTo(this.mGraphAtomList.getAtIndex(graphIndex), 65).atom))
           this.addHighestRankingChain(graphIndex, true);
         graphIndex++;
       }
@@ -18600,7 +18611,7 @@ _.generateCanonicalTree = function generateCanonicalTree(){
   this.mSmilesIndex = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMol.getAtoms_0(), 15, 1);
   index_0 = 0;
   for (smilesAtom$iterator = this.mGraphAtomList.iterator(); smilesAtom$iterator.hasNext_0();) {
-    smilesAtom = castTo(smilesAtom$iterator.next_3(), 64);
+    smilesAtom = castTo(smilesAtom$iterator.next_3(), 65);
     this.mSmilesIndex[smilesAtom.atom] = index_0++;
   }
 }
@@ -20854,7 +20865,7 @@ carc2.PropertyCalculator = function PropertyCalculator(mol){
   this.mMolecule = mol;
 }
 ;
-defineClass(69, 1, {1:1});
+defineClass(70, 1, {1:1});
 _.$init_33 = function $init_33(){
 }
 ;
@@ -20921,7 +20932,7 @@ _.getStereoCenterCount_0 = function getStereoCenterCount(){
   return this.mMolecule.getStereoCenterCount_0();
 }
 ;
-cggl.Lcom_actelion_research_chem_PropertyCalculator_2_classLit = createForClass('com.actelion.research.chem', 'PropertyCalculator', 69, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_PropertyCalculator_2_classLit = createForClass('com.actelion.research.chem', 'PropertyCalculator', 70, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_RingCollection = function $clinit_RingCollection(){
   carc2.$clinit_RingCollection = emptyMethod;
   jl.$clinit_Object();
@@ -22882,7 +22893,7 @@ carc2.SmilesAtom = function SmilesAtom(atom, parent_0, isSideChainStart, isSideC
   this.isSideChainEnd = isSideChainEnd;
 }
 ;
-defineClass(64, 1, {64:1, 1:1}, carc2.SmilesAtom);
+defineClass(65, 1, {65:1, 1:1}, carc2.SmilesAtom);
 _.$init_39 = function $init_39(){
 }
 ;
@@ -22891,7 +22902,7 @@ _.ezHalfParity = 0;
 _.isSideChainEnd = false;
 _.isSideChainStart = false;
 _.parent_0 = 0;
-cggl.Lcom_actelion_research_chem_SmilesAtom_2_classLit = createForClass('com.actelion.research.chem', 'SmilesAtom', 64, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_SmilesAtom_2_classLit = createForClass('com.actelion.research.chem', 'SmilesAtom', 65, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_SmilesCreator = function $clinit_SmilesCreator(){
   carc2.$clinit_SmilesCreator = emptyMethod;
   jl.$clinit_Object();
@@ -24058,12 +24069,12 @@ carc2.StereoMolecule_1 = function StereoMolecule_1(mol){
   this.$init_44();
 }
 ;
-defineClass(16, 86, {86:1, 78:1, 16:1, 4:1, 1:1}, carc2.StereoMolecule, carc2.StereoMolecule_0, carc2.StereoMolecule_1);
+defineClass(16, 86, {86:1, 64:1, 16:1, 4:1, 1:1}, carc2.StereoMolecule, carc2.StereoMolecule_0, carc2.StereoMolecule_1);
 _.$init_44 = function $init_44(){
 }
 ;
 _.copyMoleculeProperties_0 = function copyMoleculeProperties_0(destMol){
-  getClassPrototype(78).copyMoleculeProperties_0.call(this, destMol);
+  getClassPrototype(64).copyMoleculeProperties_0.call(this, destMol);
   if (isNotNull(this.mCanonizer))
     destMol.mValidHelperArrays = 0;
 }
@@ -27090,7 +27101,7 @@ _.close_0 = function close_0(){
     }
      catch ($e0) {
       $e0 = toJava($e0);
-      if (instanceOf($e0, 77)) {
+      if (instanceOf($e0, 78)) {
         ioe = $e0;
       }
        else 
@@ -27515,7 +27526,7 @@ _.advanceToNext = function advanceToNext(){
     }
      catch ($e0) {
       $e0 = toJava($e0);
-      if (instanceOf($e0, 77)) {
+      if (instanceOf($e0, 78)) {
         e = $e0;
         this.mMolfileBuffer.setLength(0);
         return false;
@@ -27592,7 +27603,7 @@ _.extractAllFieldNames = function extractAllFieldNames(recordsToInspect){
     }
      catch ($e0) {
       $e0 = toJava($e0);
-      if (instanceOf($e0, 77)) {
+      if (instanceOf($e0, 78)) {
         e = $e0;
         if (records < recordsToInspect)
           this.mNoOfRecords = records;
@@ -27619,7 +27630,7 @@ _.extractAllFieldNames = function extractAllFieldNames(recordsToInspect){
   }
    catch ($e1) {
     $e1 = toJava($e1);
-    if (instanceOf($e1, 77)) {
+    if (instanceOf($e1, 78)) {
       e = $e1;
     }
      else 
@@ -27804,7 +27815,7 @@ _.getDetail_0 = function getDetail(mol){
     if (errorCount != 0)
       detail.add_3('Warning: ' + errorCount + ' atom type(s) could not be determined.', 2);
     for (type$iterator = countMap.keySet().iterator(); type$iterator.hasNext_0();) {
-      type_0 = castTo(type$iterator.next_3(), 71);
+      type_0 = castTo(type$iterator.next_3(), 72);
       if (carcp.sSortedTypeList.contains_2(type_0))
         detail.add_3(countMap.get(type_0) + ' * ' + formatter.format_1(carcp.INCREMENT[carcp.sSortedTypeList.getIndex_0(type_0)]) + ' AtomType: 0x' + toHexString_0(type_0.longValue()), 2);
       else 
@@ -28513,7 +28524,7 @@ _.readAndSortIDCodeFile = function readAndSortIDCodeFile(file){
     }
      catch ($e0) {
       $e0 = toJava($e0);
-      if (instanceOf($e0, 77)) {
+      if (instanceOf($e0, 78)) {
         e = $e0;
         break;
       }
@@ -28539,7 +28550,7 @@ _.readIDCodeFile = function readIDCodeFile(file){
     }
      catch ($e0) {
       $e0 = toJava($e0);
-      if (instanceOf($e0, 77)) {
+      if (instanceOf($e0, 78)) {
         e = $e0;
         break;
       }
@@ -28727,15 +28738,15 @@ _.getMergedCopy_0 = function getMergedCopy(){
   var i, mergedReaction, product, reactant;
   mergedReaction = new carcr.Reaction;
   if (this.mReactant.size() != 0) {
-    reactant = new carc2.StereoMolecule_1(castTo(this.mReactant.getAtIndex(0), 78));
+    reactant = new carc2.StereoMolecule_1(castTo(this.mReactant.getAtIndex(0), 64));
     for (i = 1; i < this.mReactant.size(); i++)
-      castTo(this.mReactant.getAtIndex(i), 16).copyMolecule_0(reactant);
+      reactant.addMolecule_0(castTo(this.mReactant.getAtIndex(i), 64));
     mergedReaction.addReactant_0(reactant);
   }
   if (this.mProduct.size() != 0) {
-    product = new carc2.StereoMolecule_1(castTo(this.mProduct.getAtIndex(0), 78));
+    product = new carc2.StereoMolecule_1(castTo(this.mProduct.getAtIndex(0), 64));
     for (i = 1; i < this.mProduct.size(); i++)
-      castTo(this.mProduct.getAtIndex(i), 16).copyMolecule_0(product);
+      product.addMolecule_0(castTo(this.mProduct.getAtIndex(i), 64));
     mergedReaction.addProduct_0(product);
   }
   return mergedReaction;
@@ -29309,7 +29320,7 @@ cargc.Core = function Core(){
   this.$init_72();
 }
 ;
-defineClass(325, 1, {76:1, 1:1}, cargc.Core);
+defineClass(325, 1, {77:1, 1:1}, cargc.Core);
 _.$init_72 = function $init_72(){
 }
 ;
@@ -29380,12 +29391,12 @@ cargc.JSMoleculeProperties = function JSMoleculeProperties(mol){
   this.$init_75();
 }
 ;
-defineClass(756, 69, {1:1}, cargc.JSMoleculeProperties);
+defineClass(756, 70, {1:1}, cargc.JSMoleculeProperties);
 _.$init_75 = function $init_75(){
 }
 ;
 defineProperties(_, {acceptorCount:{'get':function getAcceptorCount_0(){
-  return getClassPrototype(69).getAcceptorCount.call(this);
+  return getClassPrototype(70).getAcceptorCount.call(this);
 }
 }});
 _.getAcceptorCount = function(){
@@ -29393,7 +29404,7 @@ _.getAcceptorCount = function(){
 }
 ;
 defineProperties(_, {donorCount:{'get':function getDonorCount_0(){
-  return getClassPrototype(69).getDonorCount.call(this);
+  return getClassPrototype(70).getDonorCount.call(this);
 }
 }});
 _.getDonorCount = function(){
@@ -29401,7 +29412,7 @@ _.getDonorCount = function(){
 }
 ;
 defineProperties(_, {logP:{'get':function getLogP_0(){
-  return getClassPrototype(69).getLogP.call(this);
+  return getClassPrototype(70).getLogP.call(this);
 }
 }});
 _.getLogP = function(){
@@ -29409,11 +29420,11 @@ _.getLogP = function(){
 }
 ;
 defineProperties(_, {logPString:{'get':function getLogPString(){
-  return cargc.convertParameterizedStringList(getClassPrototype(69).getLogPDetail.call(this));
+  return cargc.convertParameterizedStringList(getClassPrototype(70).getLogPDetail.call(this));
 }
 }});
 defineProperties(_, {logS:{'get':function getLogS_0(){
-  return getClassPrototype(69).getLogS.call(this);
+  return getClassPrototype(70).getLogS.call(this);
 }
 }});
 _.getLogS = function(){
@@ -29421,11 +29432,11 @@ _.getLogS = function(){
 }
 ;
 defineProperties(_, {logSString:{'get':function getLogSString(){
-  return cargc.convertParameterizedStringList(getClassPrototype(69).getLogSDetail.call(this));
+  return cargc.convertParameterizedStringList(getClassPrototype(70).getLogSDetail.call(this));
 }
 }});
 defineProperties(_, {polarSurfaceArea:{'get':function getPolarSurfaceArea_0(){
-  return getClassPrototype(69).getPolarSurfaceArea.call(this);
+  return getClassPrototype(70).getPolarSurfaceArea.call(this);
 }
 }});
 _.getPolarSurfaceArea = function(){
@@ -29433,11 +29444,11 @@ _.getPolarSurfaceArea = function(){
 }
 ;
 defineProperties(_, {polarSurfaceAreaString:{'get':function getPolarSurfaceAreaString(){
-  return cargc.convertParameterizedStringList(getClassPrototype(69).getPolarSurfaceAreaDetail.call(this));
+  return cargc.convertParameterizedStringList(getClassPrototype(70).getPolarSurfaceAreaDetail.call(this));
 }
 }});
 defineProperties(_, {rotatableBondCount:{'get':function getRotatableBondCount_1(){
-  return getClassPrototype(69).getRotatableBondCount_0.call(this);
+  return getClassPrototype(70).getRotatableBondCount_0.call(this);
 }
 }});
 _.getRotatableBondCount_0 = function(){
@@ -29445,7 +29456,7 @@ _.getRotatableBondCount_0 = function(){
 }
 ;
 defineProperties(_, {stereoCenterCount:{'get':function getStereoCenterCount_1(){
-  return getClassPrototype(69).getStereoCenterCount_0.call(this);
+  return getClassPrototype(70).getStereoCenterCount_0.call(this);
 }
 }});
 _.getStereoCenterCount_0 = function(){
@@ -31465,7 +31476,7 @@ cargge.GWTStructureEditor = function GWTStructureEditor(){
   this.$init_98();
 }
 ;
-defineClass(330, 1, {76:1, 1:1}, cargge.GWTStructureEditor);
+defineClass(330, 1, {77:1, 1:1}, cargge.GWTStructureEditor);
 _.$init_98 = function $init_98(){
 }
 ;
@@ -35005,7 +35016,7 @@ carsgea.BondHighlightAction = function BondHighlightAction(model){
   this.$init_141();
 }
 ;
-defineClass(74, 59, {23:1, 1:1});
+defineClass(75, 59, {23:1, 1:1});
 _.$init_141 = function $init_141(){
   this.origin_0 = null;
   this.last = null;
@@ -35161,7 +35172,7 @@ _.trackHighLight = function trackHighLight_0(pt){
 }
 ;
 _.dragging = false;
-cggl.Lcom_actelion_research_share_gui_editor_actions_BondHighlightAction_2_classLit = createForClass('com.actelion.research.share.gui.editor.actions', 'BondHighlightAction', 74, cggl.Lcom_actelion_research_share_gui_editor_actions_AtomHighlightAction_2_classLit);
+cggl.Lcom_actelion_research_share_gui_editor_actions_BondHighlightAction_2_classLit = createForClass('com.actelion.research.share.gui.editor.actions', 'BondHighlightAction', 75, cggl.Lcom_actelion_research_share_gui_editor_actions_AtomHighlightAction_2_classLit);
 carggea.$clinit_AbstractTypeAction = function $clinit_AbstractTypeAction(){
   carggea.$clinit_AbstractTypeAction = emptyMethod;
   carsgea.$clinit_BondHighlightAction();
@@ -35174,7 +35185,7 @@ carggea.AbstractTypeAction = function AbstractTypeAction(model, scale){
   this.scale_0 = scale;
 }
 ;
-defineClass(301, 74, {96:1, 23:1, 1:1});
+defineClass(301, 75, {96:1, 23:1, 1:1});
 _.$init_142 = function $init_142(){
   this.popup = null;
   this.scale_0 = 1;
@@ -36927,7 +36938,7 @@ _.populateComboBoxMaxAtoms = function populateComboBoxMaxAtoms(minAtoms){
 }
 ;
 _.setInitialStates_0 = function setInitialStates_0(){
-  var atomSpan, bondOrder, minAtoms, queryFeatures, ringSize;
+  var aromState, atomSpan, bondOrder, minAtoms, queryFeatures, ringSize, ringState;
   queryFeatures = this.mMol.getBondQueryFeatures_0(this.mBond);
   bondOrder = this.mMol.getBondType_0(this.mBond) == 64 || this.mMol.isDelocalizedBond_0(this.mBond)?4:this.mMol.getBondOrder_0(this.mBond);
   if ((queryFeatures & 1) != 0 || bondOrder == 1)
@@ -36943,15 +36954,17 @@ _.setInitialStates_0 = function setInitialStates_0(){
   if ((queryFeatures & 262144) != 0)
     this.mCBMatchStereo.setValue_1(jl.valueOf_16(true));
   this.mComboBoxRing.setSelectedIndex(0);
-  if ((queryFeatures & 32) != 0)
+  ringState = queryFeatures & 96;
+  aromState = queryFeatures & 1572864;
+  if (ringState == 32)
     this.mComboBoxRing.setSelectedIndex(1);
-  else if ((queryFeatures & 64) != 0) {
-    if ((queryFeatures & 1048576) != 0)
-      this.mComboBoxRing.setSelectedIndex(3);
-    else if ((queryFeatures & 524288) != 0)
-      this.mComboBoxRing.setSelectedIndex(4);
-    else 
+  else if (aromState == 524288)
+    this.mComboBoxRing.setSelectedIndex(4);
+  else if (ringState == 64) {
+    if (aromState == 0)
       this.mComboBoxRing.setSelectedIndex(2);
+    else if (aromState == 1048576)
+      this.mComboBoxRing.setSelectedIndex(3);
   }
   ringSize = (queryFeatures & 229376) >> 15;
   this.mComboBoxRingSize.setSelectedIndex(ringSize == 0?0:ringSize - 2);
@@ -36982,7 +36995,7 @@ _.setQueryFeatures_1 = function setQueryFeatures_1(){
 }
 ;
 _.setQueryFeatures_2 = function setQueryFeatures_2(bond){
-  var atomSpan, bondOrder, minAtoms, queryFeatures;
+  var atomSpan, bondOrder, implicitSize, minAtoms, queryFeatures, ringSize;
   queryFeatures = 0;
   if (jl.booleanValue__Z__devirtual$(this.mCBIsBridge.getValue_2())) {
     minAtoms = this.mComboBoxMinAtoms.getSelectedIndex();
@@ -37026,21 +37039,31 @@ _.setQueryFeatures_2 = function setQueryFeatures_2(bond){
       queryFeatures |= 16;
     if (jl.booleanValue__Z__devirtual$(this.mCBMatchStereo.getValue_2()))
       queryFeatures |= 262144;
-    if (!this.mMol.isAromaticBond_0(bond)) {
-      if (this.mComboBoxRing.getSelectedIndex() == 4)
-        queryFeatures |= 524288;
-      else if (this.mComboBoxRing.getSelectedIndex() == 3)
-        queryFeatures |= 1048576 | 64;
-      if (!this.mMol.isRingBond_0(bond)) {
-        if (this.mComboBoxRing.getSelectedIndex() == 2)
-          queryFeatures |= 64;
-        else if (this.mComboBoxRing.getSelectedIndex() == 1)
+    if (this.mComboBoxRing.getSelectedIndex() != 0) {
+      if (this.mComboBoxRing.getSelectedIndex() == 1) {
+        if (!this.mMol.isRingBond_0(bond))
           queryFeatures |= 32;
+      }
+       else if (this.mComboBoxRing.getSelectedIndex() == 2) {
+        if (!this.mMol.isRingBond_0(bond))
+          queryFeatures |= 64;
+      }
+       else if (this.mComboBoxRing.getSelectedIndex() == 3) {
+        if (!this.mMol.isAromaticBond_0(bond))
+          queryFeatures |= 1048576 | 64;
+      }
+       else if (this.mComboBoxRing.getSelectedIndex() == 4) {
+        if (!this.mMol.isAromaticBond_0(bond))
+          queryFeatures |= 524288;
       }
     }
   }
-  if (this.mComboBoxRingSize.getSelectedIndex() != 0)
-    queryFeatures |= this.mComboBoxRingSize.getSelectedIndex() + 2 << 15;
+  if (this.mComboBoxRingSize.getSelectedIndex() != 0) {
+    ringSize = this.mComboBoxRingSize.getSelectedIndex() + 2;
+    implicitSize = this.mMol.getBondRingSize_0(bond);
+    if (ringSize != implicitSize)
+      queryFeatures |= ringSize << 15;
+  }
   this.mMol.setBondQueryFeature_0(bond, 2097151, false);
   this.mMol.setBondQueryFeature_0(bond, queryFeatures, true);
 }
@@ -37602,11 +37625,11 @@ carggead.ComboBox = function ComboBox(){
   this.setStyleName('gwt-ComboBox');
 }
 ;
-defineClass(67, 669, {30:1, 25:1, 20:1, 1:1}, carggead.ComboBox);
+defineClass(68, 669, {30:1, 25:1, 20:1, 1:1}, carggead.ComboBox);
 _.$init_170 = function $init_170(){
 }
 ;
-cggl.Lcom_actelion_research_gwt_gui_editor_actions_dialogs_ComboBox_2_classLit = createForClass('com.actelion.research.gwt.gui.editor.actions.dialogs', 'ComboBox', 67, cggl.Lcom_google_gwt_user_client_ui_ListBox_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_editor_actions_dialogs_ComboBox_2_classLit = createForClass('com.actelion.research.gwt.gui.editor.actions.dialogs', 'ComboBox', 68, cggl.Lcom_google_gwt_user_client_ui_ListBox_2_classLit);
 carggead.$clinit_TDialog$1 = function $clinit_TDialog$1(){
   carggead.$clinit_TDialog$1 = emptyMethod;
   jl.$clinit_Object();
@@ -38282,7 +38305,7 @@ carggv.StructureViewer = function StructureViewer(){
   this.$init_180();
 }
 ;
-defineClass(329, 1, {76:1, 1:1}, carggv.StructureViewer);
+defineClass(329, 1, {77:1, 1:1}, carggv.StructureViewer);
 _.$init_180 = function $init_180(){
 }
 ;
@@ -39152,7 +39175,7 @@ _.isChalcogene = function isChalcogene_0(atom){
   return this.oclMolecule.isChalcogene_0(atom);
 }
 ;
-_.isDelocalizedBond = function isDelocalizedBond_0(bond){
+_.isDelocalizedBond = function isDelocalizedBond_1(bond){
   return this.oclMolecule.isDelocalizedBond_0(bond);
 }
 ;
@@ -40185,7 +40208,7 @@ cargm.Minimal = function Minimal(){
   this.$init_188();
 }
 ;
-defineClass(328, 1, {76:1, 1:1}, cargm.Minimal);
+defineClass(328, 1, {77:1, 1:1}, cargm.Minimal);
 _.$init_188 = function $init_188(){
 }
 ;
@@ -40501,14 +40524,14 @@ carsg.valueOf_0 = function valueOf_0(name_0){
 ;
 carsg.values_0 = function values_0(){
   carsg.$clinit_DialogResult();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_DialogResult_2_classLit, 1), {4:1, 1:1, 6:1}, 75, 0, [carsg.IDOK, carsg.IDCANCEL, carsg.IDYES, carsg.IDNO, carsg.IDABORT, carsg.IDRETRY]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_DialogResult_2_classLit, 1), {4:1, 1:1, 6:1}, 76, 0, [carsg.IDOK, carsg.IDCANCEL, carsg.IDYES, carsg.IDNO, carsg.IDABORT, carsg.IDRETRY]);
 }
 ;
-defineClass(75, 10, {75:1, 4:1, 9:1, 10:1, 1:1}, carsg.DialogResult);
+defineClass(76, 10, {76:1, 4:1, 9:1, 10:1, 1:1}, carsg.DialogResult);
 _.$init_193 = function $init_193(){
 }
 ;
-cggl.Lcom_actelion_research_share_gui_DialogResult_2_classLit = createForEnum('com.actelion.research.share.gui', 'DialogResult', 75, cggl.Ljava_lang_Enum_2_classLit, carsg.values_0, carsg.valueOf_0);
+cggl.Lcom_actelion_research_share_gui_DialogResult_2_classLit = createForEnum('com.actelion.research.share.gui', 'DialogResult', 76, cggl.Ljava_lang_Enum_2_classLit, carsg.values_0, carsg.valueOf_0);
 carsg.$clinit_DialogResult$Map = function $clinit_DialogResult$Map(){
   carsg.$clinit_DialogResult$Map = emptyMethod;
   carsg.$MAP = createValueOfMap(carsg.values_0());
@@ -40720,7 +40743,7 @@ carsgea.AddRingAction = function AddRingAction(m, ringSize, aromatic){
   this.aromatic = aromatic;
 }
 ;
-defineClass(66, 74, {23:1, 1:1}, carsgea.AddRingAction);
+defineClass(67, 75, {23:1, 1:1}, carsgea.AddRingAction);
 _.$init_197 = function $init_197(){
   this.ringSize = 0;
   this.aromatic = false;
@@ -40769,7 +40792,7 @@ _.onMouseUp_0 = function onMouseUp_5(evt){
 ;
 _.aromatic = false;
 _.ringSize = 0;
-cggl.Lcom_actelion_research_share_gui_editor_actions_AddRingAction_2_classLit = createForClass('com.actelion.research.share.gui.editor.actions', 'AddRingAction', 66, cggl.Lcom_actelion_research_share_gui_editor_actions_BondHighlightAction_2_classLit);
+cggl.Lcom_actelion_research_share_gui_editor_actions_AddRingAction_2_classLit = createForClass('com.actelion.research.share.gui.editor.actions', 'AddRingAction', 67, cggl.Lcom_actelion_research_share_gui_editor_actions_BondHighlightAction_2_classLit);
 juf.$clinit_Consumer = function $clinit_Consumer(){
   juf.$clinit_Consumer = emptyMethod;
 }
@@ -40793,7 +40816,7 @@ _.$init_198 = function $init_198(){
 }
 ;
 _.accept_0 = function accept_0(res){
-  this.accept(castTo(res, 75));
+  this.accept(castTo(res, 76));
 }
 ;
 _.accept = function accept(res){
@@ -40955,7 +40978,7 @@ carsgea.BondBaseAction = function BondBaseAction(model){
   this.$init_200();
 }
 ;
-defineClass(619, 74, {23:1, 1:1});
+defineClass(619, 75, {23:1, 1:1});
 _.$init_200 = function $init_200(){
 }
 ;
@@ -41097,7 +41120,7 @@ _.onMouseUp_0 = function onMouseUp_7(evt){
 ;
 _.paint_0 = function paint_5(_ctx){
   var ok;
-  ok = getClassPrototype(74).paint_0.call(this, _ctx);
+  ok = getClassPrototype(75).paint_0.call(this, _ctx);
   if (this.dragging) {
     this.drawBondLine(_ctx);
     ok = true;
@@ -41124,7 +41147,7 @@ _.$init_201 = function $init_201(){
 }
 ;
 _.accept_0 = function accept_2(res){
-  this.accept(castTo(res, 75));
+  this.accept(castTo(res, 76));
 }
 ;
 _.accept = function accept_1(res){
@@ -41232,7 +41255,7 @@ _.$init_204 = function $init_204(){
 }
 ;
 _.accept_0 = function accept_4(res){
-  this.accept(castTo(res, 75));
+  this.accept(castTo(res, 76));
 }
 ;
 _.accept = function accept_3(res){
@@ -41401,7 +41424,7 @@ carsgea.DeleteAction = function DeleteAction(model){
   this.$init_209();
 }
 ;
-defineClass(305, 74, {23:1, 1:1}, carsgea.DeleteAction);
+defineClass(305, 75, {23:1, 1:1}, carsgea.DeleteAction);
 _.$init_209 = function $init_209(){
 }
 ;
@@ -41500,7 +41523,7 @@ carsgea.NewChainAction = function NewChainAction(model){
   this.$init_212();
 }
 ;
-defineClass(306, 74, {23:1, 1:1}, carsgea.NewChainAction);
+defineClass(306, 75, {23:1, 1:1}, carsgea.NewChainAction);
 _.$init_212 = function $init_212(){
   this.sourceAtom = -1;
   this.numChainAtoms = 0;
@@ -41712,7 +41735,7 @@ _.paint_0 = function paint_7(ctx){
   mol = this.model_0.getMolecule_0();
   if (isNotNull(mol)) {
     if (!this.dragging) {
-      getClassPrototype(74).paint_0.call(this, ctx);
+      getClassPrototype(75).paint_0.call(this, ctx);
     }
      else {
       theAtom = this.model_0.getSelectedAtom();
@@ -41738,7 +41761,7 @@ carsgea.SelectionAction = function SelectionAction(model){
   this.polygon = this.factory.createPolygon();
 }
 ;
-defineClass(298, 74, {23:1, 1:1}, carsgea.SelectionAction);
+defineClass(298, 75, {23:1, 1:1}, carsgea.SelectionAction);
 _.$init_213 = function $init_213(){
   this.atom = -1;
   this.bond = -1;
@@ -41944,7 +41967,7 @@ _.onDoubleClick_0 = function onDoubleClick_2(evt){
 _.onKeyPressed_0 = function onKeyPressed_5(evt){
   this.shift_0 = evt.isShiftDown();
   this.rectangular = evt.isAltDown();
-  return getClassPrototype(74).onKeyPressed_0.call(this, evt);
+  return getClassPrototype(75).onKeyPressed_0.call(this, evt);
 }
 ;
 _.onMouseDown_0 = function onMouseDown_9(evt){
@@ -42029,7 +42052,7 @@ _.onMouseUp_0 = function onMouseUp_14(ev){
 _.paint_0 = function paint_8(ctx){
   var obj;
   ctx.save_0();
-  getClassPrototype(74).paint_0.call(this, ctx);
+  getClassPrototype(75).paint_0.call(this, ctx);
   ctx.setStroke(this.factory.getSelectionColor());
   if (this.rectangular && isNotNull(this.origin_0) && isNotNull(this.last)) {
     this.drawDashedRect(ctx);
@@ -42172,7 +42195,7 @@ _.trackHighLight = function trackHighLight_4(pt){
       break;
     }
   }
-  ok = selected || isNotNull(lastSelected) || getClassPrototype(74).trackHighLight.call(this, pt);
+  ok = selected || isNotNull(lastSelected) || getClassPrototype(75).trackHighLight.call(this, pt);
   return ok;
 }
 ;
@@ -53991,12 +54014,12 @@ cggl.$clinit_com_00046actelion_00046research_00046gwt_00046Full__EntryMethodHold
 ;
 function init_5(){
   cggl.$clinit_com_00046actelion_00046research_00046gwt_00046Full__EntryMethodHolder();
-  castTo(new cargc.Core, 76).onModuleLoad();
-  castTo(new cgguc2.UserAgentAsserter$UserAgentAsserterDisabled, 76).onModuleLoad();
-  castTo(new cgguc.DocumentModeAsserter, 76).onModuleLoad();
-  castTo(new cargm.Minimal, 76).onModuleLoad();
-  castTo(new carggv.StructureViewer, 76).onModuleLoad();
-  castTo(new cargge.GWTStructureEditor, 76).onModuleLoad();
+  castTo(new cargc.Core, 77).onModuleLoad();
+  castTo(new cgguc2.UserAgentAsserter$UserAgentAsserterDisabled, 77).onModuleLoad();
+  castTo(new cgguc.DocumentModeAsserter, 77).onModuleLoad();
+  castTo(new cargm.Minimal, 77).onModuleLoad();
+  castTo(new carggv.StructureViewer, 77).onModuleLoad();
+  castTo(new cargge.GWTStructureEditor, 77).onModuleLoad();
 }
 
 defineClass(703, 1, {1:1});
@@ -54673,7 +54696,7 @@ cgguc.DocumentModeAsserter = function DocumentModeAsserter(){
   this.$init_410();
 }
 ;
-defineClass(327, 1, {76:1, 1:1}, cgguc.DocumentModeAsserter);
+defineClass(327, 1, {77:1, 1:1}, cgguc.DocumentModeAsserter);
 _.$init_410 = function $init_410(){
 }
 ;
@@ -57740,7 +57763,7 @@ cggucu.Image_1 = function Image_1(url_0){
   cggucu.Image_0.call(this, cggss.unsafeCastFromUntrustedString(url_0));
 }
 ;
-defineClass(73, 20, {30:1, 25:1, 20:1, 1:1}, cggucu.Image_1);
+defineClass(74, 20, {30:1, 25:1, 20:1, 1:1}, cggucu.Image_1);
 _.$init_458 = function $init_458(){
 }
 ;
@@ -57813,7 +57836,7 @@ _.onLoad_0 = function onLoad_8(){
 }
 ;
 cggucu.UNHANDLED_EVENT_ATTR = '__gwtLastUnhandledEvent';
-cggl.Lcom_google_gwt_user_client_ui_Image_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Image', 73, cggl.Lcom_google_gwt_user_client_ui_Widget_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_Image_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Image', 74, cggl.Lcom_google_gwt_user_client_ui_Widget_2_classLit);
 cggucu.$clinit_Image$State = function $clinit_Image$State(){
   cggucu.$clinit_Image$State = emptyMethod;
   jl.$clinit_Object();
@@ -59166,7 +59189,7 @@ cgguc2.UserAgentAsserter$UserAgentAsserterDisabled = function UserAgentAsserter$
   this.$init_491();
 }
 ;
-defineClass(326, 1, {76:1, 1:1}, cgguc2.UserAgentAsserter$UserAgentAsserterDisabled);
+defineClass(326, 1, {77:1, 1:1}, cgguc2.UserAgentAsserter$UserAgentAsserterDisabled);
 _.$init_491 = function $init_491(){
 }
 ;
@@ -60258,11 +60281,11 @@ ji.IOException_0 = function IOException_0(throwable){
   this.$init_516();
 }
 ;
-defineClass(77, 13, {77:1, 4:1, 13:1, 1:1, 17:1}, ji.IOException_0);
+defineClass(78, 13, {78:1, 4:1, 13:1, 1:1, 17:1}, ji.IOException_0);
 _.$init_516 = function $init_516(){
 }
 ;
-cggl.Ljava_io_IOException_2_classLit = createForClass('java.io', 'IOException', 77, cggl.Ljava_lang_Exception_2_classLit);
+cggl.Ljava_io_IOException_2_classLit = createForClass('java.io', 'IOException', 78, cggl.Ljava_lang_Exception_2_classLit);
 ji.$clinit_PrintStream = function $clinit_PrintStream(){
   ji.$clinit_PrintStream = emptyMethod;
   ji.$clinit_FilterOutputStream();
@@ -60430,7 +60453,7 @@ ji.UnsupportedEncodingException = function UnsupportedEncodingException(msg){
   this.$init_521();
 }
 ;
-defineClass(333, 77, {77:1, 4:1, 13:1, 1:1, 17:1}, ji.UnsupportedEncodingException);
+defineClass(333, 78, {78:1, 4:1, 13:1, 1:1, 17:1}, ji.UnsupportedEncodingException);
 _.$init_521 = function $init_521(){
 }
 ;
@@ -61327,12 +61350,12 @@ jl.valueOf_23 = function valueOf_23(i){
   return new jl.Long(i);
 }
 ;
-defineClass(71, 118, {4:1, 9:1, 71:1, 1:1}, jl.Long);
+defineClass(72, 118, {4:1, 9:1, 72:1, 1:1}, jl.Long);
 _.$init_538 = function $init_538(){
 }
 ;
 _.compareTo_1 = function compareTo_14(b){
-  return this.compareTo_7(castTo(b, 71));
+  return this.compareTo_7(castTo(b, 72));
 }
 ;
 _.byteValue = function byteValue_3(){
@@ -61348,7 +61371,7 @@ _.doubleValue = function doubleValue_3(){
 }
 ;
 _.equals_0 = function equals_23(o){
-  return instanceOf(o, 71) && eq(castTo(o, 71).value_0, this.value_0);
+  return instanceOf(o, 72) && eq(castTo(o, 72).value_0, this.value_0);
 }
 ;
 _.floatValue = function floatValue_2(){
@@ -61381,11 +61404,11 @@ var MAX_VALUE_5 = {l:4194303, m:4194303, h:524287};
 var MIN_VALUE_5 = {l:0, m:0, h:524288};
 var SIZE_4 = 64;
 var TYPE_29;
-cggl.Ljava_lang_Long_2_classLit = createForClass('java.lang', 'Long', 71, cggl.Ljava_lang_Number_2_classLit);
+cggl.Ljava_lang_Long_2_classLit = createForClass('java.lang', 'Long', 72, cggl.Ljava_lang_Number_2_classLit);
 jl.$clinit_Long$BoxedValues = function $clinit_Long$BoxedValues(){
   jl.$clinit_Long$BoxedValues = emptyMethod;
   jl.$clinit_Object();
-  jl.boxedValues_2 = initUnidimensionalArray(cggl.Ljava_lang_Long_2_classLit, {4:1, 1:1, 6:1}, 71, 256, 0, 1);
+  jl.boxedValues_2 = initUnidimensionalArray(cggl.Ljava_lang_Long_2_classLit, {4:1, 1:1, 6:1}, 72, 256, 0, 1);
 }
 ;
 defineClass(804, 1, {1:1});
@@ -61639,14 +61662,14 @@ jl.StackTraceElement = function StackTraceElement(className, methodName, fileNam
   this.lineNumber = lineNumber;
 }
 ;
-defineClass(68, 1, {4:1, 1:1, 68:1}, jl.StackTraceElement);
+defineClass(69, 1, {4:1, 1:1, 69:1}, jl.StackTraceElement);
 _.$init_544 = function $init_544(){
 }
 ;
 _.equals_0 = function equals_25(other){
   var st;
-  if (instanceOf(other, 68)) {
-    st = castTo(other, 68);
+  if (instanceOf(other, 69)) {
+    st = castTo(other, 69);
     return this.lineNumber == st.lineNumber && ju.equals_38(this.methodName, st.methodName) && ju.equals_38(this.className_0, st.className_0) && ju.equals_38(this.fileName, st.fileName);
   }
   return false;
@@ -61669,7 +61692,7 @@ _.toString_0 = function toString_39(){
 }
 ;
 _.lineNumber = 0;
-cggl.Ljava_lang_StackTraceElement_2_classLit = createForClass('java.lang', 'StackTraceElement', 68, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_lang_StackTraceElement_2_classLit = createForClass('java.lang', 'StackTraceElement', 69, cggl.Ljava_lang_Object_2_classLit);
 jl.$clinit_String$NativeFunction = function $clinit_String$NativeFunction(){
   jl.$clinit_String$NativeFunction = emptyMethod;
   jl.$clinit_Object();
@@ -64252,7 +64275,7 @@ ju.HashMap_1 = function HashMap_1(toBeCopied){
   this.$init_589();
 }
 ;
-defineClass(70, 194, {4:1, 1:1, 63:1}, ju.HashMap, ju.HashMap_0, ju.HashMap_1);
+defineClass(71, 194, {4:1, 1:1, 63:1}, ju.HashMap, ju.HashMap_0, ju.HashMap_1);
 _.$init_589 = function $init_589(){
 }
 ;
@@ -64270,7 +64293,7 @@ _.getHashCode = function getHashCode(key){
   return ji2.ensureInt(hashCode);
 }
 ;
-cggl.Ljava_util_HashMap_2_classLit = createForClass('java.util', 'HashMap', 70, cggl.Ljava_util_AbstractHashMap_2_classLit);
+cggl.Ljava_util_HashMap_2_classLit = createForClass('java.util', 'HashMap', 71, cggl.Ljava_util_AbstractHashMap_2_classLit);
 ju.$clinit_HashSet = function $clinit_HashSet(){
   ju.$clinit_HashSet = emptyMethod;
   ju.$clinit_AbstractSet();
