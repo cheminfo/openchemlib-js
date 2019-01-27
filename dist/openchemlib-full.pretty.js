@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v5.9.1
- * @date 2018-12-21T08:53:18.479Z
+ * @version v6.0.0
+ * @date 2019-01-27T16:47:51.773Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -2543,7 +2543,7 @@ jl.shortValue__S__devirtual$ = function shortValue__S__devirtual$(this$static){
   return instanceOfDouble(this$static)?jl.$shortValue(this$static):this$static.shortValue();
 }
 ;
-defineClass(118, 1, {4:1, 1:1});
+defineClass(119, 1, {4:1, 1:1});
 _.$init_527 = function $init_527(){
 }
 ;
@@ -3115,7 +3115,7 @@ jl.valueOf_22 = function valueOf_22(i){
   return new jl.Integer(i);
 }
 ;
-defineClass(50, 118, {4:1, 9:1, 50:1, 1:1}, jl.Integer);
+defineClass(50, 119, {4:1, 9:1, 50:1, 1:1}, jl.Integer);
 _.$init_537 = function $init_537(){
 }
 ;
@@ -4820,7 +4820,7 @@ cggl.Ljava_lang_CharSequence_2_classLit = createForInterface('java.lang', 'CharS
 cggl.Ljava_lang_reflect_Type_2_classLit = createForInterface('java.lang.reflect', 'Type');
 cggl.Ljava_lang_Class_2_classLit = createForClass('java.lang', 'Class', 251, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljava_lang_ClassCastException_2_classLit = createForClass('java.lang', 'ClassCastException', 419, cggl.Ljava_lang_RuntimeException_2_classLit);
-cggl.Ljava_lang_Number_2_classLit = createForClass('java.lang', 'Number', 118, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_lang_Number_2_classLit = createForClass('java.lang', 'Number', 119, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljava_lang_Double_2_classLit = createForClass('java.lang', 'Double', 418, cggl.Ljava_lang_Number_2_classLit);
 cggl.Ljava_lang_IllegalStateException_2_classLit = createForClass('java.lang', 'IllegalStateException', 66, cggl.Ljava_lang_RuntimeException_2_classLit);
 cggl.Ljava_lang_IndexOutOfBoundsException_2_classLit = createForClass('java.lang', 'IndexOutOfBoundsException', 42, cggl.Ljava_lang_RuntimeException_2_classLit);
@@ -12803,7 +12803,7 @@ ju.ArrayList_0 = function ArrayList_0(c){
   ji2.insertTo_0(this.array, 0, c.toArray());
 }
 ;
-defineClass(18, 139, {4:1, 1:1, 18:1, 33:1, 47:1, 126:1}, ju.ArrayList, ju.ArrayList_0);
+defineClass(18, 139, {4:1, 1:1, 18:1, 33:1, 47:1, 127:1}, ju.ArrayList, ju.ArrayList_0);
 _.$init_19 = function $init_19(){
   this.array = castToArray(initUnidimensionalArray(cggl.Ljava_lang_Object_2_classLit, {4:1, 1:1, 6:1}, 1, 0, 5, 1));
 }
@@ -13008,7 +13008,7 @@ carc2.DrawingObjectList_0 = function DrawingObjectList_0(objectString){
   }
 }
 ;
-defineClass(262, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 126:1}, carc2.DrawingObjectList, carc2.DrawingObjectList_0);
+defineClass(262, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 127:1}, carc2.DrawingObjectList, carc2.DrawingObjectList_0);
 _.$init_20 = function $init_20(){
 }
 ;
@@ -18338,7 +18338,7 @@ carc2.createReactionSmiles = function createReactionSmiles(rxn){
   return sb.toString_0();
 }
 ;
-defineClass(128, 1, {1:1}, carc2.IsomericSmilesCreator, carc2.IsomericSmilesCreator_0);
+defineClass(129, 1, {1:1}, carc2.IsomericSmilesCreator, carc2.IsomericSmilesCreator_0);
 _.$init_27 = function $init_27(){
 }
 ;
@@ -18740,7 +18740,7 @@ _.qualifiesForAtomParity = function qualifiesForAtomParity(atom){
 }
 ;
 _.mIncludeMapping = false;
-cggl.Lcom_actelion_research_chem_IsomericSmilesCreator_2_classLit = createForClass('com.actelion.research.chem', 'IsomericSmilesCreator', 128, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_IsomericSmilesCreator_2_classLit = createForClass('com.actelion.research.chem', 'IsomericSmilesCreator', 129, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_Isotope = function $clinit_Isotope(){
   carc2.$clinit_Isotope = emptyMethod;
   jl.$clinit_Object();
@@ -19414,7 +19414,7 @@ carc2.MolfileCreator_2 = function MolfileCreator_2(mol, allowScaling, builder){
   carc2.MolfileCreator_1.call(this, mol, allowScaling, 0, builder);
 }
 ;
-defineClass(129, 1, {1:1}, carc2.MolfileCreator, carc2.MolfileCreator_1);
+defineClass(130, 1, {1:1}, carc2.MolfileCreator, carc2.MolfileCreator_1);
 _.$init_30 = function $init_30(){
 }
 ;
@@ -19458,7 +19458,7 @@ _.writeMolfile = function writeMolfile(theWriter){
 }
 ;
 carc2.TARGET_AVBL = 1.5;
-cggl.Lcom_actelion_research_chem_MolfileCreator_2_classLit = createForClass('com.actelion.research.chem', 'MolfileCreator', 129, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_MolfileCreator_2_classLit = createForClass('com.actelion.research.chem', 'MolfileCreator', 130, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_MolfileParser = function $clinit_MolfileParser(){
   carc2.$clinit_MolfileParser = emptyMethod;
   jl.$clinit_Object();
@@ -20487,7 +20487,7 @@ carc2.writeCTAB = function writeCTAB(mol, scalingFactor){
   return mf.getMolfile();
 }
 ;
-defineClass(130, 1, {1:1}, carc2.MolfileV3Creator, carc2.MolfileV3Creator_0);
+defineClass(131, 1, {1:1}, carc2.MolfileV3Creator, carc2.MolfileV3Creator_0);
 _.$init_32 = function $init_32(){
   this.mScalingFactor = 1;
 }
@@ -20798,7 +20798,7 @@ _.writeMolfile = function writeMolfile_0(theWriter){
 _.mScalingFactor = 0;
 carc2.PRECISION_FACTOR = 10000;
 carc2.TARGET_AVBL_0 = 1.5;
-cggl.Lcom_actelion_research_chem_MolfileV3Creator_2_classLit = createForClass('com.actelion.research.chem', 'MolfileV3Creator', 130, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_MolfileV3Creator_2_classLit = createForClass('com.actelion.research.chem', 'MolfileV3Creator', 131, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_NamedSubstituents = function $clinit_NamedSubstituents(){
   carc2.$clinit_NamedSubstituents = emptyMethod;
   jl.$clinit_Object();
@@ -26636,7 +26636,7 @@ carcc2.InventorDefaultTemplateList = function InventorDefaultTemplateList(){
   }
 }
 ;
-defineClass(579, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 126:1}, carcc2.InventorDefaultTemplateList);
+defineClass(579, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 127:1}, carcc2.InventorDefaultTemplateList);
 _.$init_54 = function $init_54(){
 }
 ;
@@ -29604,7 +29604,7 @@ cargge.ACTKeyCode = function ACTKeyCode(code_0, name_0, mask){
   this.ch_0 = jl.valueOf_25(narrow_char(code_0));
 }
 ;
-defineClass(123, 1, {123:1, 1:1}, cargge.ACTKeyCode);
+defineClass(124, 1, {124:1, 1:1}, cargge.ACTKeyCode);
 _.$init_79 = function $init_79(){
 }
 ;
@@ -29616,7 +29616,7 @@ _.equals_0 = function equals_9(o){
   if (jsEquals(o, null) || jsNotEquals(jl.getClass__Ljava_lang_Class___devirtual$(this), jl.getClass__Ljava_lang_Class___devirtual$(o))) {
     return false;
   }
-  keyCode = castTo(o, 123);
+  keyCode = castTo(o, 124);
   if (this.code_0 != keyCode.code_0) {
     return false;
   }
@@ -29633,7 +29633,7 @@ _.hashCode_0 = function hashCode_2(){
 ;
 _.code_0 = 0;
 _.mask = 0;
-cggl.Lcom_actelion_research_gwt_gui_editor_ACTKeyCode_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'ACTKeyCode', 123, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_editor_ACTKeyCode_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'ACTKeyCode', 124, cggl.Ljava_lang_Object_2_classLit);
 cargge.$clinit_ACTKeyCode$KeyCodeClass = function $clinit_ACTKeyCode$KeyCodeClass(){
   cargge.$clinit_ACTKeyCode$KeyCodeClass = emptyMethod;
 }
@@ -32293,66 +32293,60 @@ cargge.$clinit_StructureEditor = function $clinit_StructureEditor(){
 }
 ;
 cargge.StructureEditor = function StructureEditor(){
-  cargge.StructureEditor_0.call(this, 'editor');
+  cargge.StructureEditor_2.call(this, 'editor', false, 1);
 }
 ;
-cargge.StructureEditor_0 = function StructureEditor_0(id_0){
-  cargge.StructureEditor_1.call(this, id_0, false, 1);
-}
-;
-cargge.StructureEditor_1 = function StructureEditor_1(id_0, useSVG, scale){
+cargge.StructureEditor_0 = function StructureEditor_0(container, useSVG, scale){
   cargge.$clinit_StructureEditor();
   var displayMode, drawAreaElement, height, idcode, idcodewidth, ignoreStereoErrors, isFragment, isfragment, mol, noStereoText, se, sf, showFragmentIndicator, showIDCode, si, st, style, t, toolBarElement, toolBarWidth, vo, width_0;
   Object_0.call(this);
   this.$init_109();
   this.scale = scale;
-  this.container = cggdc.$getElementById(cggdc.get_4(), id_0);
-  if (isNotNull(this.container)) {
+  this.container = container;
+  if (isNotNull(container)) {
     this.model = new cargge.GWTEditorModel(new cargge.GWTGeomFactory(new cargge.GWTDrawConfig), 0);
-    vo = cggdc.$getAttribute(this.container, 'view-only');
+    vo = cggdc.$getAttribute(container, 'view-only');
     this.viewOnly = jl.valueOf_16(parseBoolean(vo));
-    se = cggdc.$getAttribute(this.container, 'ignore-stereo-errors');
+    se = cggdc.$getAttribute(container, 'ignore-stereo-errors');
     ignoreStereoErrors = parseBoolean(se);
-    st = cggdc.$getAttribute(this.container, 'no-stereo-text');
+    st = cggdc.$getAttribute(container, 'no-stereo-text');
     noStereoText = parseBoolean(st);
-    sf = cggdc.$getAttribute(this.container, 'show-fragment-indicator');
+    sf = cggdc.$getAttribute(container, 'show-fragment-indicator');
     showFragmentIndicator = parseBoolean(sf);
-    si = cggdc.$getAttribute(this.container, 'show-idcode');
+    si = cggdc.$getAttribute(container, 'show-idcode');
     showIDCode = parseBoolean(si);
-    isfragment = cggdc.$getAttribute(this.container, 'is-fragment');
+    isfragment = cggdc.$getAttribute(container, 'is-fragment');
     isFragment = parseBoolean(isfragment);
-    style = cggdc.$getAttribute(this.container, 'style');
+    style = cggdc.$getAttribute(container, 'style');
     style += ';overflow:hidden;position:relative;';
-    cggdc.$setAttribute(this.container, 'style', style);
-    width_0 = cggdc.$getClientWidth(this.container);
-    height = cggdc.$getClientHeight(this.container);
-    idcode = cggdc.$getAttribute(this.container, 'data-idcode');
+    cggdc.$setAttribute(container, 'style', style);
+    width_0 = cggdc.$getClientWidth(container);
+    height = cggdc.$getClientHeight(container);
+    idcode = cggdc.$getAttribute(container, 'data-idcode');
     toolBarWidth = this.getToolbarWidth();
     if (useSVG)
       this.toolBar = new cargge.SVGToolBarImpl(this.model, scale);
     else 
       this.toolBar = new cargge.ToolBarImpl(this.model);
-    toolBarElement = castToJso(this.toolBar.createElement_2(this.container, toolBarWidth, height - cargge.TEXTHEIGHT - 5));
+    toolBarElement = castToJso(this.toolBar.createElement_2(container, toolBarWidth, height - cargge.TEXTHEIGHT - 5));
     if (!jl.booleanValue__Z__devirtual$(this.viewOnly))
-      cggdc.$appendChild(this.container, toolBarElement);
+      cggdc.$appendChild(container, toolBarElement);
     this.drawPane = new cargge.DrawArea(this.model);
-    drawAreaElement = this.drawPane.createElement_0(this.container, toolBarWidth, 0, width_0 - toolBarWidth, height - cargge.TEXTHEIGHT - 5);
-    cggdc.$appendChild(this.container, drawAreaElement);
+    drawAreaElement = this.drawPane.createElement_0(container, toolBarWidth, 0, width_0 - toolBarWidth, height - cargge.TEXTHEIGHT - 5);
+    cggdc.$appendChild(container, drawAreaElement);
     idcodewidth = showFragmentIndicator?width_0 - 50:width_0;
     if (showFragmentIndicator) {
       this.fragmentStatus = cggdc.$createLabelElement(cggdc.get_4());
-      cggdc.$setId(this.fragmentStatus, id_0 + '-fragment-element');
       this.setElementSizePos(this.fragmentStatus, width_0 - 50, height - cargge.TEXTHEIGHT - 5, cargge.TEXTHEIGHT, 50);
       t = cggdc.$getAttribute(this.fragmentStatus, 'style');
       cggdc.$setAttribute(this.fragmentStatus, 'style', t + 'text-align:center;');
       cggdc.$setInnerText(this.fragmentStatus, this.model.isFragment_0()?'Q':'');
-      cggdc.$appendChild(this.container, this.fragmentStatus);
+      cggdc.$appendChild(container, this.fragmentStatus);
     }
     if (showIDCode) {
       this.idcodeTextElement = cggdc.$createTextInputElement(cggdc.get_4());
-      cggdc.$setId(this.idcodeTextElement, id_0 + '-idcode-element');
       this.setElementSizePos(this.idcodeTextElement, 0, height - cargge.TEXTHEIGHT - 5, cargge.TEXTHEIGHT, idcodewidth);
-      cggdc.$appendChild(this.container, this.idcodeTextElement);
+      cggdc.$appendChild(container, this.idcodeTextElement);
     }
     displayMode = this.model.getDisplayMode();
     if (ignoreStereoErrors)
@@ -32365,9 +32359,17 @@ cargge.StructureEditor_1 = function StructureEditor_1(id_0, useSVG, scale){
     this.model.setValue(mol, true);
     this.setUpHandlers();
     this.setupMouseHandlers_0();
-    cgguc.addResizeHandler(new cargge.StructureEditor$1(this, showFragmentIndicator, width_0, height, toolBarWidth));
+    cgguc.addResizeHandler(new cargge.StructureEditor$1(this, container, showFragmentIndicator, width_0, height, toolBarWidth));
   }
   cargge.addPasteHandler(this, 'onMouseClicked ');
+}
+;
+cargge.StructureEditor_1 = function StructureEditor_1(id_0){
+  cargge.StructureEditor_2.call(this, id_0, false, 1);
+}
+;
+cargge.StructureEditor_2 = function StructureEditor_2(id_0, useSVG, scale){
+  cargge.StructureEditor_0.call(this, cggdc.$getElementById(cggdc.get_4(), id_0), useSVG, scale);
 }
 ;
 cargge.addPasteHandler = function addPasteHandler(self_0, text_0){
@@ -32411,12 +32413,12 @@ cargge.addPasteHandler = function addPasteHandler(self_0, text_0){
 ;
 cargge.createEditor = function createEditor(id_0){
   cargge.$clinit_StructureEditor();
-  return new cargge.StructureEditor_0(id_0);
+  return new cargge.StructureEditor_1(id_0);
 }
 ;
 cargge.createSVGEditor = function createSVGEditor(id_0, scale){
   cargge.$clinit_StructureEditor();
-  return new cargge.StructureEditor_1(id_0, true, scale);
+  return new cargge.StructureEditor_2(id_0, true, scale);
 }
 ;
 cargge.initObserver = function initObserver(){
@@ -32435,7 +32437,7 @@ cargge.notify = function notify(o){
   cargge.$clinit_StructureEditor();
   var e, e$iterator, h, toolBarWidth, w;
   for (e$iterator = cargge.map_1.iterator(); e$iterator.hasNext_0();) {
-    e = castTo(e$iterator.next_3(), 131);
+    e = castTo(e$iterator.next_3(), 115);
     e.drawPane.draw();
     w = cggdc.$getClientWidth(e.container);
     h = cggdc.$getClientHeight(e.container);
@@ -32444,7 +32446,7 @@ cargge.notify = function notify(o){
   }
 }
 ;
-defineClass(131, 1, {131:1, 180:1, 1:1}, cargge.StructureEditor_0, cargge.StructureEditor_1);
+defineClass(115, 1, {115:1, 180:1, 1:1}, cargge.StructureEditor_0, cargge.StructureEditor_1, cargge.StructureEditor_2);
 _.$init_109 = function $init_109(){
   this.drag = false;
   this.mousePoint = null;
@@ -32782,7 +32784,7 @@ _.rightClick = false;
 _.scale = 0;
 cargge.TEXTHEIGHT = 20;
 cargge.TOOLBARWIDTH = 45;
-cggl.Lcom_actelion_research_gwt_gui_editor_StructureEditor_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'StructureEditor', 131, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_editor_StructureEditor_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'StructureEditor', 115, cggl.Ljava_lang_Object_2_classLit);
 cggels.$clinit_ResizeHandler = function $clinit_ResizeHandler(){
   cggels.$clinit_ResizeHandler = emptyMethod;
 }
@@ -32793,13 +32795,14 @@ cargge.$clinit_StructureEditor$1 = function $clinit_StructureEditor$1(){
   jl.$clinit_Object();
 }
 ;
-cargge.StructureEditor$1 = function StructureEditor$1(this$0, val$showFragmentIndicator, val$width, val$height, val$toolBarWidth){
+cargge.StructureEditor$1 = function StructureEditor$1(this$0, val$container, val$showFragmentIndicator, val$width, val$height, val$toolBarWidth){
   cargge.$clinit_StructureEditor$1();
   this.this$01 = this$0;
-  this.val$showFragmentIndicator2 = val$showFragmentIndicator;
-  this.val$width3 = val$width;
-  this.val$height4 = val$height;
-  this.val$toolBarWidth5 = val$toolBarWidth;
+  this.val$container2 = val$container;
+  this.val$showFragmentIndicator3 = val$showFragmentIndicator;
+  this.val$width4 = val$width;
+  this.val$height5 = val$height;
+  this.val$toolBarWidth6 = val$toolBarWidth;
   Object_0.call(this);
   this.$init_110();
 }
@@ -32810,11 +32813,11 @@ _.$init_110 = function $init_110(){
 ;
 _.onResize = function onResize(ev){
   var h, idcodewidth, w;
-  w = cggdc.$getClientWidth(this.this$01.container);
-  h = cggdc.$getClientHeight(this.this$01.container);
-  idcodewidth = this.val$showFragmentIndicator2?w - 30:h;
-  if (this.val$width3 != w || this.val$height4 != h) {
-    this.this$01.drawPane.setSize_0(w - this.val$toolBarWidth5, h - (cargge.$clinit_StructureEditor() , cargge.TEXTHEIGHT) - 5);
+  w = cggdc.$getClientWidth(this.val$container2);
+  h = cggdc.$getClientHeight(this.val$container2);
+  idcodewidth = this.val$showFragmentIndicator3?w - 30:h;
+  if (this.val$width4 != w || this.val$height5 != h) {
+    this.this$01.drawPane.setSize_0(w - this.val$toolBarWidth6, h - (cargge.$clinit_StructureEditor() , cargge.TEXTHEIGHT) - 5);
     if (isNotNull(this.this$01.idcodeTextElement))
       this.this$01.setElementSizePos(this.this$01.idcodeTextElement, 0, h - (cargge.$clinit_StructureEditor() , cargge.TEXTHEIGHT) - 5, (cargge.$clinit_StructureEditor() , cargge.TEXTHEIGHT), idcodewidth);
     if (isNotNull(this.this$01.fragmentStatus))
@@ -32822,10 +32825,10 @@ _.onResize = function onResize(ev){
   }
 }
 ;
-_.val$height4 = 0;
-_.val$showFragmentIndicator2 = false;
-_.val$toolBarWidth5 = 0;
-_.val$width3 = 0;
+_.val$height5 = 0;
+_.val$showFragmentIndicator3 = false;
+_.val$toolBarWidth6 = 0;
+_.val$width4 = 0;
 cggl.Lcom_actelion_research_gwt_gui_editor_StructureEditor$1_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'StructureEditor/1', 368, cggl.Ljava_lang_Object_2_classLit);
 cargge.$clinit_StructureEditor$10 = function $clinit_StructureEditor$10(){
   cargge.$clinit_StructureEditor$10 = emptyMethod;
@@ -43555,10 +43558,10 @@ cggcdc.valueOf_3 = function valueOf_3(name_0){
 ;
 cggcdc.values_3 = function values_3(){
   cggcdc.$clinit_Context2d$TextAlign();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextAlign_2_classLit, 1), {4:1, 1:1, 6:1}, 115, 0, [cggcdc.CENTER, cggcdc.END, cggcdc.LEFT, cggcdc.RIGHT, cggcdc.START]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextAlign_2_classLit, 1), {4:1, 1:1, 6:1}, 116, 0, [cggcdc.CENTER, cggcdc.END, cggcdc.LEFT, cggcdc.RIGHT, cggcdc.START]);
 }
 ;
-defineClass(115, 10, {115:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$TextAlign);
+defineClass(116, 10, {116:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$TextAlign);
 _.$init_236 = function $init_236(){
 }
 ;
@@ -43566,7 +43569,7 @@ _.getValue_0 = function getValue_2(){
   return this.value_0;
 }
 ;
-cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextAlign_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/TextAlign', 115, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_3, cggcdc.valueOf_3);
+cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextAlign_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/TextAlign', 116, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_3, cggcdc.valueOf_3);
 cggcdc.$clinit_Context2d$TextAlign$Map = function $clinit_Context2d$TextAlign$Map(){
   cggcdc.$clinit_Context2d$TextAlign$Map = emptyMethod;
   cggcdc.$MAP_2 = createValueOfMap(cggcdc.values_3());
@@ -49213,7 +49216,7 @@ cggedc.init_4 = function init_4(){
   cggedc.registered = new cggedc.PrivateMap;
 }
 ;
-defineClass(117, 104, {1:1});
+defineClass(118, 104, {1:1});
 _.$init_336 = function $init_336(){
 }
 ;
@@ -49251,7 +49254,7 @@ _.stopPropagation_0 = function stopPropagation(){
   cggdc.$stopPropagation(this.nativeEvent);
 }
 ;
-cggl.Lcom_google_gwt_event_dom_client_DomEvent_2_classLit = createForClass('com.google.gwt.event.dom.client', 'DomEvent', 117, cggl.Lcom_google_gwt_event_shared_GwtEvent_2_classLit);
+cggl.Lcom_google_gwt_event_dom_client_DomEvent_2_classLit = createForClass('com.google.gwt.event.dom.client', 'DomEvent', 118, cggl.Lcom_google_gwt_event_shared_GwtEvent_2_classLit);
 cggedc.$clinit_BlurEvent = function $clinit_BlurEvent(){
   cggedc.$clinit_BlurEvent = emptyMethod;
   cggedc.$clinit_DomEvent();
@@ -49268,7 +49271,7 @@ cggedc.getType_8 = function getType_8(){
   return cggedc.TYPE;
 }
 ;
-defineClass(560, 117, {1:1}, cggedc.BlurEvent);
+defineClass(560, 118, {1:1}, cggedc.BlurEvent);
 _.$init_337 = function $init_337(){
 }
 ;
@@ -49301,7 +49304,7 @@ cggedc.getType_9 = function getType_9(){
   return cggedc.TYPE_0;
 }
 ;
-defineClass(683, 117, {1:1}, cggedc.ChangeEvent);
+defineClass(683, 118, {1:1}, cggedc.ChangeEvent);
 _.$init_338 = function $init_338(){
 }
 ;
@@ -49334,7 +49337,7 @@ cggedc.HumanInputEvent = function HumanInputEvent(){
   this.$init_339();
 }
 ;
-defineClass(383, 117, {1:1});
+defineClass(383, 118, {1:1});
 _.$init_339 = function $init_339(){
 }
 ;
@@ -49366,7 +49369,7 @@ cggedc.MouseEvent_0 = function MouseEvent_0(){
   this.$init_340();
 }
 ;
-defineClass(116, 383, {1:1});
+defineClass(117, 383, {1:1});
 _.$init_340 = function $init_340(){
 }
 ;
@@ -49412,7 +49415,7 @@ _.getY_0 = function getY_1(){
   return this.getClientY();
 }
 ;
-cggl.Lcom_google_gwt_event_dom_client_MouseEvent_2_classLit = createForClass('com.google.gwt.event.dom.client', 'MouseEvent', 116, cggl.Lcom_google_gwt_event_dom_client_HumanInputEvent_2_classLit);
+cggl.Lcom_google_gwt_event_dom_client_MouseEvent_2_classLit = createForClass('com.google.gwt.event.dom.client', 'MouseEvent', 117, cggl.Lcom_google_gwt_event_dom_client_HumanInputEvent_2_classLit);
 cggedc.$clinit_ClickEvent = function $clinit_ClickEvent(){
   cggedc.$clinit_ClickEvent = emptyMethod;
   cggedc.$clinit_MouseEvent();
@@ -49429,7 +49432,7 @@ cggedc.getType_10 = function getType_10(){
   return cggedc.TYPE_1;
 }
 ;
-defineClass(566, 116, {1:1}, cggedc.ClickEvent);
+defineClass(566, 117, {1:1}, cggedc.ClickEvent);
 _.$init_341 = function $init_341(){
 }
 ;
@@ -49537,7 +49540,7 @@ cggedc.getType_11 = function getType_11(){
   return cggedc.TYPE_2;
 }
 ;
-defineClass(567, 116, {1:1}, cggedc.DoubleClickEvent);
+defineClass(567, 117, {1:1}, cggedc.DoubleClickEvent);
 _.$init_345 = function $init_345(){
 }
 ;
@@ -49565,7 +49568,7 @@ cggedc.DragDropEventBase = function DragDropEventBase(){
   this.$init_346();
 }
 ;
-defineClass(196, 117, {1:1});
+defineClass(196, 118, {1:1});
 _.$init_346 = function $init_346(){
 }
 ;
@@ -49744,7 +49747,7 @@ cggedc.getType_16 = function getType_16(){
   return cggedc.TYPE_7;
 }
 ;
-defineClass(559, 117, {1:1}, cggedc.FocusEvent_0);
+defineClass(559, 118, {1:1}, cggedc.FocusEvent_0);
 _.$init_351 = function $init_351(){
 }
 ;
@@ -49782,7 +49785,7 @@ cggedc.KeyEvent_0 = function KeyEvent_0(){
   this.$init_352();
 }
 ;
-defineClass(285, 117, {1:1});
+defineClass(285, 118, {1:1});
 _.$init_352 = function $init_352(){
 }
 ;
@@ -49946,7 +49949,7 @@ cggedc.getType_20 = function getType_20(){
   return cggedc.TYPE_11;
 }
 ;
-defineClass(609, 117, {1:1}, cggedc.LoadEvent);
+defineClass(609, 118, {1:1}, cggedc.LoadEvent);
 _.$init_357 = function $init_357(){
 }
 ;
@@ -49979,7 +49982,7 @@ cggedc.getType_21 = function getType_21(){
   return cggedc.TYPE_12;
 }
 ;
-defineClass(570, 116, {1:1}, cggedc.MouseDownEvent);
+defineClass(570, 117, {1:1}, cggedc.MouseDownEvent);
 _.$init_358 = function $init_358(){
 }
 ;
@@ -50012,7 +50015,7 @@ cggedc.getType_22 = function getType_22(){
   return cggedc.TYPE_13;
 }
 ;
-defineClass(568, 116, {1:1}, cggedc.MouseMoveEvent);
+defineClass(568, 117, {1:1}, cggedc.MouseMoveEvent);
 _.$init_359 = function $init_359(){
 }
 ;
@@ -50045,7 +50048,7 @@ cggedc.getType_23 = function getType_23(){
   return cggedc.TYPE_14;
 }
 ;
-defineClass(569, 116, {1:1}, cggedc.MouseOutEvent);
+defineClass(569, 117, {1:1}, cggedc.MouseOutEvent);
 _.$init_360 = function $init_360(){
 }
 ;
@@ -50078,7 +50081,7 @@ cggedc.getType_24 = function getType_24(){
   return cggedc.TYPE_15;
 }
 ;
-defineClass(679, 116, {1:1}, cggedc.MouseOverEvent);
+defineClass(679, 117, {1:1}, cggedc.MouseOverEvent);
 _.$init_361 = function $init_361(){
 }
 ;
@@ -50116,7 +50119,7 @@ cggedc.getType_25 = function getType_25(){
   return cggedc.TYPE_16;
 }
 ;
-defineClass(571, 116, {1:1}, cggedc.MouseUpEvent);
+defineClass(571, 117, {1:1}, cggedc.MouseUpEvent);
 _.$init_362 = function $init_362(){
 }
 ;
@@ -56120,11 +56123,11 @@ cggucu.Button_0 = function Button_0(html){
   this.setHTML_0(html);
 }
 ;
-defineClass(125, 318, {30:1, 25:1, 20:1, 1:1}, cggucu.Button_0);
+defineClass(126, 318, {30:1, 25:1, 20:1, 1:1}, cggucu.Button_0);
 _.$init_432 = function $init_432(){
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_Button_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Button', 125, cggl.Lcom_google_gwt_user_client_ui_ButtonBase_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_Button_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Button', 126, cggl.Lcom_google_gwt_user_client_ui_ButtonBase_2_classLit);
 cggucu.$clinit_CellPanel = function $clinit_CellPanel(){
   cggucu.$clinit_CellPanel = emptyMethod;
   cggucu.$clinit_ComplexPanel();
@@ -56542,8 +56545,8 @@ _.updateHorizontalAlignment = function updateHorizontalAlignment(){
   if (isNull(this.autoHorizontalAlignment)) {
     align_0 = null;
   }
-   else if (instanceOf(this.autoHorizontalAlignment, 124)) {
-    align_0 = castTo(this.autoHorizontalAlignment, 124);
+   else if (instanceOf(this.autoHorizontalAlignment, 125)) {
+    align_0 = castTo(this.autoHorizontalAlignment, 125);
   }
    else {
     align_0 = jsEquals(this.autoHorizontalAlignment, (cggucu.$clinit_HasAutoHorizontalAlignment() , cggucu.ALIGN_CONTENT_START))?cggucu.startOf(this.directionalTextHelper.getTextDirection()):cggucu.endOf(this.directionalTextHelper.getTextDirection());
@@ -57651,7 +57654,7 @@ cggucu.startOf = function startOf(direction){
   return jsEquals(direction, (cggic.$clinit_HasDirection$Direction() , cggic.LTR))?(cggucu.$clinit_HasHorizontalAlignment() , cggucu.ALIGN_LEFT):jsEquals(direction, (cggic.$clinit_HasDirection$Direction() , cggic.RTL))?(cggucu.$clinit_HasHorizontalAlignment() , cggucu.ALIGN_RIGHT):(cggucu.$clinit_HasHorizontalAlignment() , cggucu.ALIGN_LOCALE_START);
 }
 ;
-defineClass(124, 244, {124:1, 1:1}, cggucu.HasHorizontalAlignment$HorizontalAlignmentConstant);
+defineClass(125, 244, {125:1, 1:1}, cggucu.HasHorizontalAlignment$HorizontalAlignmentConstant);
 _.$init_455 = function $init_455(){
 }
 ;
@@ -57659,7 +57662,7 @@ _.getTextAlignString = function getTextAlignString(){
   return this.textAlignString;
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_HasHorizontalAlignment$HorizontalAlignmentConstant_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HasHorizontalAlignment/HorizontalAlignmentConstant', 124, cggl.Lcom_google_gwt_user_client_ui_HasHorizontalAlignment$AutoHorizontalAlignmentConstant_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_HasHorizontalAlignment$HorizontalAlignmentConstant_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HasHorizontalAlignment/HorizontalAlignmentConstant', 125, cggl.Lcom_google_gwt_user_client_ui_HasHorizontalAlignment$AutoHorizontalAlignmentConstant_2_classLit);
 cggucu.$clinit_HasVerticalAlignment$VerticalAlignmentConstant = function $clinit_HasVerticalAlignment$VerticalAlignmentConstant(){
   cggucu.$clinit_HasVerticalAlignment$VerticalAlignmentConstant = emptyMethod;
   jl.$clinit_Object();
@@ -57963,7 +57966,7 @@ cggucu.getKeyboardModifiers = function getKeyboardModifiers(event_0){
   return (cggdc.$getShiftKey(event_0)?1:0) | (cggdc.$getMetaKey(event_0)?8:0) | (cggdc.$getCtrlKey(event_0)?2:0) | (cggdc.$getAltKey(event_0)?4:0);
 }
 ;
-defineClass(1162, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 126:1});
+defineClass(1162, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 127:1});
 cggl.Lcom_google_gwt_user_client_ui_KeyboardListenerCollection_2_classLit = createForClass('com.google.gwt.user.client.ui', 'KeyboardListenerCollection', 1162, cggl.Ljava_util_ArrayList_2_classLit);
 cggucu.$clinit_PopupPanel$1 = function $clinit_PopupPanel$1(){
   cggucu.$clinit_PopupPanel$1 = emptyMethod;
@@ -60471,7 +60474,7 @@ jl.AbstractStringBuilder = function AbstractStringBuilder(string){
   this.string = string;
 }
 ;
-defineClass(127, 1, {172:1, 1:1});
+defineClass(128, 1, {172:1, 1:1});
 _.$init_522 = function $init_522(){
 }
 ;
@@ -60542,7 +60545,7 @@ _.toString_0 = function toString_22(){
   return this.string;
 }
 ;
-cggl.Ljava_lang_AbstractStringBuilder_2_classLit = createForClass('java.lang', 'AbstractStringBuilder', 127, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_lang_AbstractStringBuilder_2_classLit = createForClass('java.lang', 'AbstractStringBuilder', 128, cggl.Ljava_lang_Object_2_classLit);
 jl.$clinit_ArithmeticException = function $clinit_ArithmeticException(){
   jl.$clinit_ArithmeticException = emptyMethod;
   jl.$clinit_RuntimeException();
@@ -60641,7 +60644,7 @@ jl.valueOf_17 = function valueOf_17(b){
   return result;
 }
 ;
-defineClass(135, 118, {4:1, 135:1, 9:1, 1:1}, jl.Byte);
+defineClass(135, 119, {4:1, 135:1, 9:1, 1:1}, jl.Byte);
 _.$init_528 = function $init_528(){
 }
 ;
@@ -61021,12 +61024,12 @@ function valueOf_18(c){
   return new Character(c);
 }
 
-defineClass(119, 1, {4:1, 119:1, 9:1, 1:1}, Character);
+defineClass(120, 1, {4:1, 120:1, 9:1, 1:1}, Character);
 _.$init_530 = function $init_530(){
 }
 ;
 _.compareTo_1 = function compareTo_8(c){
-  return this.compareTo_4(castTo(c, 119));
+  return this.compareTo_4(castTo(c, 120));
 }
 ;
 _.charValue = function charValue(){
@@ -61038,7 +61041,7 @@ _.compareTo_4 = function compareTo_7(c){
 }
 ;
 _.equals_0 = function equals_20(o){
-  return instanceOf(o, 119) && castTo(o, 119).value_0 == this.value_0;
+  return instanceOf(o, 120) && castTo(o, 120).value_0 == this.value_0;
 }
 ;
 _.hashCode_0 = function hashCode_13(){
@@ -61065,11 +61068,11 @@ var MIN_SURROGATE = 55296;
 var MIN_VALUE_1 = 0;
 var SIZE_0 = 16;
 var TYPE_25;
-cggl.Ljava_lang_Character_2_classLit = createForClass('java.lang', 'Character', 119, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_lang_Character_2_classLit = createForClass('java.lang', 'Character', 120, cggl.Ljava_lang_Object_2_classLit);
 jl.$clinit_Character$BoxedValues = function $clinit_Character$BoxedValues(){
   jl.$clinit_Character$BoxedValues = emptyMethod;
   jl.$clinit_Object();
-  jl.boxedValues_0 = initUnidimensionalArray(cggl.Ljava_lang_Character_2_classLit, {4:1, 1:1, 6:1}, 119, 128, 0, 1);
+  jl.boxedValues_0 = initUnidimensionalArray(cggl.Ljava_lang_Character_2_classLit, {4:1, 1:1, 6:1}, 120, 128, 0, 1);
 }
 ;
 defineClass(800, 1, {1:1});
@@ -61160,7 +61163,7 @@ jl.valueOf_21 = function valueOf_21(f){
   return new jl.Float(f);
 }
 ;
-defineClass(157, 118, {4:1, 9:1, 157:1, 1:1}, jl.Float);
+defineClass(157, 119, {4:1, 9:1, 157:1, 1:1}, jl.Float);
 _.$init_534 = function $init_534(){
 }
 ;
@@ -61350,7 +61353,7 @@ jl.valueOf_23 = function valueOf_23(i){
   return new jl.Long(i);
 }
 ;
-defineClass(72, 118, {4:1, 9:1, 72:1, 1:1}, jl.Long);
+defineClass(72, 119, {4:1, 9:1, 72:1, 1:1}, jl.Long);
 _.$init_538 = function $init_538(){
 }
 ;
@@ -61584,12 +61587,12 @@ jl.valueOf_24 = function valueOf_24(s){
   return new jl.Short(s);
 }
 ;
-defineClass(120, 118, {4:1, 9:1, 1:1, 120:1}, jl.Short);
+defineClass(121, 119, {4:1, 9:1, 1:1, 121:1}, jl.Short);
 _.$init_543 = function $init_543(){
 }
 ;
 _.compareTo_1 = function compareTo_15(b){
-  return this.compareTo_8(castTo(b, 120));
+  return this.compareTo_8(castTo(b, 121));
 }
 ;
 _.byteValue = function byteValue_4(){
@@ -61605,7 +61608,7 @@ _.doubleValue = function doubleValue_4(){
 }
 ;
 _.equals_0 = function equals_24(o){
-  return instanceOf(o, 120) && castTo(o, 120).value_0 == this.value_0;
+  return instanceOf(o, 121) && castTo(o, 121).value_0 == this.value_0;
 }
 ;
 _.floatValue = function floatValue_3(){
@@ -61638,11 +61641,11 @@ var MAX_VALUE_6 = 0;
 var MIN_VALUE_6 = 0;
 var SIZE_5 = 16;
 var TYPE_30;
-cggl.Ljava_lang_Short_2_classLit = createForClass('java.lang', 'Short', 120, cggl.Ljava_lang_Number_2_classLit);
+cggl.Ljava_lang_Short_2_classLit = createForClass('java.lang', 'Short', 121, cggl.Ljava_lang_Number_2_classLit);
 jl.$clinit_Short$BoxedValues = function $clinit_Short$BoxedValues(){
   jl.$clinit_Short$BoxedValues = emptyMethod;
   jl.$clinit_Object();
-  jl.boxedValues_3 = initUnidimensionalArray(cggl.Ljava_lang_Short_2_classLit, {4:1, 1:1, 6:1}, 120, 256, 0, 1);
+  jl.boxedValues_3 = initUnidimensionalArray(cggl.Ljava_lang_Short_2_classLit, {4:1, 1:1, 6:1}, 121, 256, 0, 1);
 }
 ;
 defineClass(805, 1, {1:1});
@@ -61726,7 +61729,7 @@ jl.StringBuffer_1 = function StringBuffer_1(s){
   this.$init_546();
 }
 ;
-defineClass(85, 127, {172:1, 1:1}, jl.StringBuffer, jl.StringBuffer_0, jl.StringBuffer_1);
+defineClass(85, 128, {172:1, 1:1}, jl.StringBuffer, jl.StringBuffer_0, jl.StringBuffer_1);
 _.$init_546 = function $init_546(){
 }
 ;
@@ -61769,7 +61772,7 @@ jl.StringBuilder_1 = function StringBuilder_1(s){
   this.$init_547();
 }
 ;
-defineClass(39, 127, {172:1, 1:1}, jl.StringBuilder, jl.StringBuilder_0, jl.StringBuilder_1);
+defineClass(39, 128, {172:1, 1:1}, jl.StringBuilder, jl.StringBuilder_0, jl.StringBuilder_1);
 _.$init_547 = function $init_547(){
 }
 ;
@@ -63486,7 +63489,7 @@ ju.$clinit_Arrays$ArrayList = function $clinit_Arrays$ArrayList(){
   ju.$clinit_Arrays$ArrayList = emptyMethod;
 }
 ;
-defineClass(966, 139, {4:1, 1:1, 33:1, 47:1, 126:1});
+defineClass(966, 139, {4:1, 1:1, 33:1, 47:1, 127:1});
 cggl.Ljava_util_Arrays$ArrayList_2_classLit = createForClass('java.util', 'Arrays/ArrayList', 966, cggl.Ljava_util_AbstractList_2_classLit);
 ju.$clinit_Arrays$lambda$0$Type = function $clinit_Arrays$lambda$0$Type(){
   ju.$clinit_Arrays$lambda$0$Type = emptyMethod;
@@ -63572,7 +63575,7 @@ ju.sort_9 = function sort_9(target, c){
 ;
 ju.unmodifiableList = function unmodifiableList(list){
   ju.$clinit_Collections();
-  return instanceOf(list, 126)?new ju.Collections$UnmodifiableRandomAccessList(list):new ju.Collections$UnmodifiableList(list);
+  return instanceOf(list, 127)?new ju.Collections$UnmodifiableRandomAccessList(list):new ju.Collections$UnmodifiableList(list);
 }
 ;
 ju.unmodifiableSet = function unmodifiableSet(set_0){
@@ -63603,7 +63606,7 @@ ju.Collections$EmptyList = function Collections$EmptyList(){
   this.$init_576();
 }
 ;
-defineClass(534, 139, {4:1, 1:1, 33:1, 47:1, 126:1}, ju.Collections$EmptyList);
+defineClass(534, 139, {4:1, 1:1, 33:1, 47:1, 127:1}, ju.Collections$EmptyList);
 _.$init_576 = function $init_576(){
 }
 ;
@@ -64063,7 +64066,7 @@ ju.Collections$UnmodifiableRandomAccessList = function Collections$UnmodifiableR
   this.$init_585();
 }
 ;
-defineClass(539, 231, {1:1, 33:1, 47:1, 126:1}, ju.Collections$UnmodifiableRandomAccessList);
+defineClass(539, 231, {1:1, 33:1, 47:1, 127:1}, ju.Collections$UnmodifiableRandomAccessList);
 _.$init_585 = function $init_585(){
 }
 ;
@@ -64977,11 +64980,11 @@ ju.NoSuchElementException = function NoSuchElementException(){
   this.$init_601();
 }
 ;
-defineClass(122, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, ju.NoSuchElementException);
+defineClass(123, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, ju.NoSuchElementException);
 _.$init_601 = function $init_601(){
 }
 ;
-cggl.Ljava_util_NoSuchElementException_2_classLit = createForClass('java.util', 'NoSuchElementException', 122, cggl.Ljava_lang_RuntimeException_2_classLit);
+cggl.Ljava_util_NoSuchElementException_2_classLit = createForClass('java.util', 'NoSuchElementException', 123, cggl.Ljava_lang_RuntimeException_2_classLit);
 ju.$clinit_Objects = function $clinit_Objects(){
   ju.$clinit_Objects = emptyMethod;
   jl.$clinit_Object();
@@ -65818,7 +65821,7 @@ ju.otherChild = function otherChild(child){
   return 1 - child;
 }
 ;
-defineClass(121, 546, {4:1, 1:1, 63:1}, ju.TreeMap, ju.TreeMap_0);
+defineClass(122, 546, {4:1, 1:1, 63:1}, ju.TreeMap, ju.TreeMap_0);
 _.$init_612 = function $init_612(){
   this.size_0 = 0;
 }
@@ -66066,7 +66069,7 @@ _.smaller = function smaller(a, b, orEqual){
 _.size_0 = 0;
 ju.LEFT_3 = 0;
 ju.RIGHT_3 = 1;
-cggl.Ljava_util_TreeMap_2_classLit = createForClass('java.util', 'TreeMap', 121, cggl.Ljava_util_AbstractNavigableMap_2_classLit);
+cggl.Ljava_util_TreeMap_2_classLit = createForClass('java.util', 'TreeMap', 122, cggl.Ljava_util_AbstractNavigableMap_2_classLit);
 ju.$clinit_TreeMap$DescendingEntryIterator = function $clinit_TreeMap$DescendingEntryIterator(){
   ju.$clinit_TreeMap$DescendingEntryIterator = emptyMethod;
 }
@@ -66386,7 +66389,7 @@ ju.checkArrayIndexOutOfBounds = function checkArrayIndexOutOfBounds(expression, 
   }
 }
 ;
-defineClass(280, 139, {4:1, 1:1, 33:1, 47:1, 126:1}, ju.Vector, ju.Vector_0);
+defineClass(280, 139, {4:1, 1:1, 33:1, 47:1, 127:1}, ju.Vector, ju.Vector_0);
 _.$init_622 = function $init_622(){
 }
 ;
@@ -68690,7 +68693,7 @@ carggv.$clinit_SVGRenderer();
 _ = provide('OCL.SVGRenderer', carggv.SVGRenderer);
 _.renderMolecule = carggv.renderMolecule;
 cargge.$clinit_StructureEditor();
-_ = provide('OCL.StructureEditor', cargge.StructureEditor_1);
+_ = provide('OCL.StructureEditor', cargge.StructureEditor_0);
 _.addPasteHandler = cargge.addPasteHandler;
 _.createEditor = cargge.createEditor;
 _.createSVGEditor = cargge.createSVGEditor;
@@ -68753,7 +68756,7 @@ $gwt && $gwt.permProps && __gwtModuleFunction.__moduleStartupDone($gwt.permProps
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '5.9.1';
+        toReturn.version = '6.0.0';
 
         return toReturn;
     }
