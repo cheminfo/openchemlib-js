@@ -41,7 +41,6 @@ public class DoubleFormat {
 	 * Double values that are effectively integers are turned into the scientific
 	 * format only, if they consist of more than 8 digits.
 	 * @param theDouble
-	 * @param significantDigits
 	 * @return
 	 */
 	public static String toString(double theDouble) {
@@ -66,9 +65,10 @@ public class DoubleFormat {
 	 * rounded to a definable number of digits, e.g. 1.2345e-6.
 	 * Double values that are effectively integers are turned into the scientific
 	 * format only, if they consist of more than significantDigits+3 digits.
+	 * If skipTrailingZeros is true, then integer output is not rounded: 7173 instead of 7200.
 	 * @param value
 	 * @param significantDigits
-	 * @param skipTrailingZeros if true then trailing zeros after a decimal point are not shown
+	 * @param skipTrailingZeros if true then trailing zeros after a decimal point are not shown and integers are not rounded
 	 * @return
 	 */
 	public static String toString(double value, int significantDigits, boolean skipTrailingZeros) {
@@ -79,6 +79,13 @@ public class DoubleFormat {
 
 		if (value == 0.0)
 			return (skipTrailingZeros || significantDigits==1) ? "0" : "0."+zeros(significantDigits-1);
+
+		// determine cipher count of integer fraction in excess of significant digits.
+		// For those cases, where the number is not expressed in scientific notation,
+		// the increase significant digits to prevent trailing zeros through rounding.
+		int cipherExcess = Long.toString(Math.round(value)).length() - significantDigits;
+		if (cipherExcess > 0 && cipherExcess <= 4)
+			significantDigits += cipherExcess;
 
 		double limit1 = 1;
 		for (int i=1; i<significantDigits; i++)

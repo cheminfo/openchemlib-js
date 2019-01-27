@@ -94,6 +94,18 @@ public class Conformer {
 		return this;
 		}
 
+	/**
+	 * Translate this conformer's coordinates by adding the dx,dy,dz shifts
+	 * to all atom coordinates.
+	 * @return this conformer with translated coordinates
+	 */
+	public Conformer translate(double dx, double dy, double dz) {
+		for (int atom=0; atom<mMol.getAllAtoms(); atom++)
+			mCoordinates[atom].add(dx, dy, dz);
+
+		return this;
+		}
+
 	public int getSize() {
 		return mCoordinates.length;
 		}
@@ -138,6 +150,37 @@ public class Conformer {
 		}
 	public void setZ(int atom, double z) {
 		mCoordinates[atom].z = z;
+		}
+
+	/**
+	 * Removes atoms Coordinates objects from those atoms that are marked in the given array.
+	 * Make sure to also remove those atoms from the underlying Molecule.
+	 * @param isToBeDeleted
+	 * @return
+	 */
+	public int deleteAtoms(boolean[] isToBeDeleted) {
+		int count = 0;
+		for (int i=0; i<mCoordinates.length; i++)
+			if (isToBeDeleted[i])
+				count++;
+
+		if (count != 0) {
+			Coordinates[] newCoords = new Coordinates[mCoordinates.length - count];
+			short[] newBondTorsion = (mBondTorsion == null) ? null : new short[mCoordinates.length - count];
+			int newIndex = 0;
+			for (int i=0; i<mCoordinates.length; i++) {
+				if (!isToBeDeleted[i]) {
+					newCoords[newIndex] = mCoordinates[i];
+					if (newBondTorsion != null)
+						newBondTorsion[newIndex] = mBondTorsion[i];
+					newIndex++;
+					}
+				}
+			mCoordinates = newCoords;
+			mBondTorsion = newBondTorsion;
+			}
+
+		return count;
 		}
 
 	/**

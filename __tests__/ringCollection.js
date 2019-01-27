@@ -12,8 +12,8 @@ test('simple ring', () => {
   const mol = Molecule.fromSmiles('COC1CCCCC1OC');
   const coll = mol.getRingSet();
   expect(coll.getSize()).toBe(1);
-  expect(coll.getRingAtoms(0).slice()).toEqual([2, 3, 4, 5, 6, 7]);
-  expect(coll.getRingBonds(0).slice()).toEqual([2, 3, 4, 5, 6, 7]);
+  expect(coll.getRingAtoms(0).slice()).toStrictEqual([2, 3, 4, 5, 6, 7]);
+  expect(coll.getRingBonds(0).slice()).toStrictEqual([2, 3, 4, 5, 6, 7]);
   expect(coll.getRingSize(0)).toBe(6);
   expect(coll.isAromatic(0)).toBe(false);
   expect(coll.isDelocalized(0)).toBe(false);
@@ -27,8 +27,8 @@ test('aromatic ring', () => {
   const mol = Molecule.fromSmiles('COc1ccccc1OC');
   const coll = mol.getRingSet();
   expect(coll.getSize()).toBe(1);
-  expect(coll.getRingAtoms(0).slice()).toEqual([2, 3, 4, 5, 6, 7]);
-  expect(coll.getRingBonds(0).slice()).toEqual([2, 3, 4, 5, 6, 7]);
+  expect(coll.getRingAtoms(0).slice()).toStrictEqual([2, 3, 4, 5, 6, 7]);
+  expect(coll.getRingBonds(0).slice()).toStrictEqual([2, 3, 4, 5, 6, 7]);
   expect(coll.getRingSize(0)).toBe(6);
   expect(coll.isAromatic(0)).toBe(true);
   expect(coll.isDelocalized(0)).toBe(true);
@@ -40,7 +40,9 @@ test('aromatic ring', () => {
 
 test('multiple rings', () => {
   // Source: https://en.wikipedia.org/wiki/Heroin
-  const mol = Molecule.fromSmiles('CC(OC1=C(O[C@@H]2[C@]34CCN(C)[C@@H]([C@@H]4C=C[C@@H]2OC(C)=O)C5)C3=C5C=C1)=O');
+  const mol = Molecule.fromSmiles(
+    'CC(OC1=C(O[C@@H]2[C@]34CCN(C)[C@@H]([C@@H]4C=C[C@@H]2OC(C)=O)C5)C3=C5C=C1)=O'
+  );
   const coll = mol.getRingSet();
   expect(coll.getSize()).toBe(5);
   const sizes = [6, 5, 6, 6, 6];

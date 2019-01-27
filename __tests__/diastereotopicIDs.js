@@ -6,7 +6,7 @@ describe('diastereotopicIDs', function () {
   it('methylcyclohexane', function () {
     let molecule = Molecule.fromSmiles('C1CCCCC1C');
     var diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
-    expect(diaIDs).toEqual([
+    expect(diaIDs).toStrictEqual([
       'gOp@DiekjjiJ@qAP_iDCaU@',
       'gOp@DiVMjjij@qAP_iDCaU@',
       'gOp@DiWMjj`FHJC}H`\\Jh',
@@ -21,7 +21,7 @@ describe('diastereotopicIDs', function () {
       expect(diaIDsH.indexOf(diaID)).toBeGreaterThan(-1);
     }
 
-    expect(diaIDsH).toEqual([
+    expect(diaIDsH).toStrictEqual([
       'gOp@DiekjjiJ@qAP_iDCaU@',
       'gOp@DiVMjjij@qAP_iDCaU@',
       'gOp@DiWMjj`FHJC}H`\\Jh',
