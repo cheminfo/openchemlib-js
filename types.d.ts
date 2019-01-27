@@ -2999,7 +2999,7 @@ export declare namespace StructureView {
 }
 
 export declare class StructureEditor {
-  constructor(id: string, useSVG?: boolean, scale?: number);
+  constructor(element: HTMLElement, useSVG?: boolean, scale?: number);
 
   /**
    * Create a new structure editor.

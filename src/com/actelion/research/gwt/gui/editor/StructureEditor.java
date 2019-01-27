@@ -86,7 +86,7 @@ public class StructureEditor implements IChangeListener {
 
   @JsIgnore
   public StructureEditor() {
-    this("editor");
+    this("editor", false, 1);
   }
 
   @JsIgnore
@@ -94,9 +94,14 @@ public class StructureEditor implements IChangeListener {
     this(id, false, 1);
   }
 
+  @JsIgnore
   public StructureEditor(String id, boolean useSVG, int scale) {
+    this(Document.get().getElementById(id), useSVG, scale);
+  }
+
+  public StructureEditor(Element container, boolean useSVG, int scale) {
     this.scale = scale;
-    container = Document.get().getElementById(id);
+    this.container = container;
 
     if (container != null) {
       model = new GWTEditorModel(new GWTGeomFactory(new GWTDrawConfig()), 0);
@@ -147,7 +152,6 @@ public class StructureEditor implements IChangeListener {
       int idcodewidth = showFragmentIndicator ? width - 50 : width;
       if (showFragmentIndicator) {
         fragmentStatus = Document.get().createLabelElement();
-        fragmentStatus.setId(id + "-fragment-element");
         setElementSizePos(fragmentStatus, width - 50, height - TEXTHEIGHT - 5, TEXTHEIGHT, 50);
         String t = fragmentStatus.getAttribute("style");
         fragmentStatus.setAttribute("style", t + "text-align:center;");
@@ -156,7 +160,6 @@ public class StructureEditor implements IChangeListener {
       }
       if (showIDCode) {
         idcodeTextElement = Document.get().createTextInputElement();
-        idcodeTextElement.setId(id + "-idcode-element");
         setElementSizePos(idcodeTextElement, 0, height - TEXTHEIGHT - 5, TEXTHEIGHT, idcodewidth);
         container.appendChild(idcodeTextElement);
       }
