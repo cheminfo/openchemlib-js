@@ -1422,7 +1422,7 @@ export declare class Molecule {
    * charge or radical influences, e.g. N or N(+) -> 3.
    * @param atom
    */
-  getMaxValenceUncharged(atom: number);
+  getMaxValenceUncharged(atom: number): number;
 
   /**
    * This is the default maximum valence of the atom neglecting atom charge or
@@ -3012,7 +3012,7 @@ export declare class StructureEditor {
    * @param id  - Id of the DOM element
    * @param scale
    */
-  static createSVGEditor(id: string, scale: number);
+  static createSVGEditor(id: string, scale: number): StructureEditor;
 
   getMolecule(): Molecule;
 
