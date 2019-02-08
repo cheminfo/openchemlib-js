@@ -144,7 +144,7 @@ class DrawArea implements IChangeListener {
         "position:absolute;" + "left:" + left + "px; " + "width:" + width + "px;" + "height:" + height + "px;");
 
     parent.appendChild(drawAreaContainer);
-    canvas = Canvas.createIfSupported();
+    canvas = Util.createScaledCanvas(width, height);
     canvas.getCanvasElement().setAttribute("style", "outline: none;");
     canvas.addFocusHandler(new FocusHandler() {
 
@@ -363,10 +363,7 @@ class DrawArea implements IChangeListener {
   }
 
   private void setDrawSize(int width, int height) {
-    canvas.setCoordinateSpaceWidth(width);
-    canvas.setCoordinateSpaceHeight(height);
-    canvas.setWidth(width + "px");
-    canvas.setHeight(height + "px");
+    Util.scaleCanvas(canvas, width, height);
     model.setDisplaySize(new Dimension(width, height));
   }
 

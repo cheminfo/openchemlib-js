@@ -151,12 +151,12 @@
       //function editorLoaded()
       {
         /* Find the DIV element by name and place the editor into it */
-        editorCtrl = window.OCL.StructureEditor.createEditor('editor');
+        editorCtrl = window.OCL.StructureEditor.createSVGEditor('editor', 1);
         editorCtrl.setAtomHightlightCallback(onAtomHighlight);
         editorCtrl.setBondHightlightCallback(onBondHighlight);
         editorCtrl.setChangeListenerCallback(changeMolecule);
 
-        window.OCL.StructureEditor.createEditor('editor2');
+        window.OCL.StructureEditor.createSVGEditor('editor2', 1);
       }
     </script>
     <script>

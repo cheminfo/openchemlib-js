@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
  * @version v6.0.0
- * @date 2019-01-27T16:47:51.773Z
+ * @date 2019-02-08T15:47:17.706Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -751,7 +751,7 @@ jl.JsException_1 = function JsException_1(msg){
   this.$init_244();
 }
 ;
-defineClass(146, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, jl.JsException_0);
+defineClass(147, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, jl.JsException_0);
 _.$init_244 = function $init_244(){
 }
 ;
@@ -766,7 +766,7 @@ cggcci.JavaScriptExceptionBase = function JavaScriptExceptionBase(e){
   this.$init_245();
 }
 ;
-defineClass(510, 146, {4:1, 13:1, 1:1, 21:1, 17:1});
+defineClass(510, 147, {4:1, 13:1, 1:1, 21:1, 17:1});
 _.$init_245 = function $init_245(){
 }
 ;
@@ -820,7 +820,7 @@ cggcc.getExceptionName0 = function getExceptionName0(e){
   return e == null?null:e.name;
 }
 ;
-defineClass(156, 510, {156:1, 4:1, 13:1, 1:1, 21:1, 17:1}, cggcc.JavaScriptException);
+defineClass(157, 510, {157:1, 4:1, 13:1, 1:1, 21:1, 17:1}, cggcc.JavaScriptException);
 _.$init_246 = function $init_246(){
   this.description = '';
 }
@@ -1800,8 +1800,8 @@ defineClass(791, 1, {1:1});
 _.$init_399 = function $init_399(){
 }
 ;
-cggl.$clinit_Util_1 = function $clinit_Util_1(){
-  cggl.$clinit_Util_1 = emptyMethod;
+cggl.$clinit_Util_2 = function $clinit_Util_2(){
+  cggl.$clinit_Util_2 = emptyMethod;
   jl.$clinit_Object();
 }
 ;
@@ -1811,27 +1811,27 @@ function Util(){
 }
 
 function getCastableTypeMap(o){
-  cggl.$clinit_Util_1();
+  cggl.$clinit_Util_2();
   return o.castableTypeMap;
 }
 
 function hasTypeMarker(o){
-  cggl.$clinit_Util_1();
+  cggl.$clinit_Util_2();
   return o.typeMarker === typeMarkerFn;
 }
 
 function makeEnumName(enumName){
-  cggl.$clinit_Util_1();
+  cggl.$clinit_Util_2();
   return enumName;
 }
 
 function setCastableTypeMap(o, castableTypeMap){
-  cggl.$clinit_Util_1();
+  cggl.$clinit_Util_2();
   o.castableTypeMap = castableTypeMap;
 }
 
 function setTypeMarker(o){
-  cggl.$clinit_Util_1();
+  cggl.$clinit_Util_2();
   o.typeMarker = typeMarkerFn;
 }
 
@@ -1862,7 +1862,7 @@ jl.Error_2 = function Error_2(message, cause){
   this.$init_492();
 }
 ;
-defineClass(97, 17, {4:1, 97:1, 1:1, 17:1});
+defineClass(98, 17, {4:1, 98:1, 1:1, 17:1});
 _.$init_492 = function $init_492(){
 }
 ;
@@ -1918,7 +1918,7 @@ jl.AssertionError_7 = function AssertionError_7(message){
   jl.AssertionError_6.call(this, jl.valueOf_31(message));
 }
 ;
-defineClass(35, 97, {4:1, 97:1, 1:1, 17:1}, jl.AssertionError, jl.AssertionError_0, jl.AssertionError_1, jl.AssertionError_2, jl.AssertionError_3, jl.AssertionError_4, jl.AssertionError_5, jl.AssertionError_7);
+defineClass(35, 98, {4:1, 98:1, 1:1, 17:1}, jl.AssertionError, jl.AssertionError_0, jl.AssertionError_1, jl.AssertionError_2, jl.AssertionError_3, jl.AssertionError_4, jl.AssertionError_5, jl.AssertionError_7);
 _.$init_493 = function $init_493(){
 }
 ;
@@ -2543,7 +2543,7 @@ jl.shortValue__S__devirtual$ = function shortValue__S__devirtual$(this$static){
   return instanceOfDouble(this$static)?jl.$shortValue(this$static):this$static.shortValue();
 }
 ;
-defineClass(119, 1, {4:1, 1:1});
+defineClass(120, 1, {4:1, 1:1});
 _.$init_527 = function $init_527(){
 }
 ;
@@ -3115,7 +3115,7 @@ jl.valueOf_22 = function valueOf_22(i){
   return new jl.Integer(i);
 }
 ;
-defineClass(50, 119, {4:1, 9:1, 50:1, 1:1}, jl.Integer);
+defineClass(50, 120, {4:1, 9:1, 50:1, 1:1}, jl.Integer);
 _.$init_537 = function $init_537(){
 }
 ;
@@ -3135,7 +3135,7 @@ _.doubleValue = function doubleValue_2(){
   return this.value_0;
 }
 ;
-_.equals_0 = function equals_22(o){
+_.equals_0 = function equals_23(o){
   return instanceOf(o, 50) && castTo(o, 50).value_0 == this.value_0;
 }
 ;
@@ -3192,7 +3192,7 @@ jl.NullPointerException_1 = function NullPointerException_1(message){
   this.$init_540();
 }
 ;
-defineClass(98, 146, {4:1, 13:1, 1:1, 21:1, 17:1}, jl.NullPointerException, jl.NullPointerException_0, jl.NullPointerException_1);
+defineClass(99, 147, {4:1, 13:1, 1:1, 21:1, 17:1}, jl.NullPointerException, jl.NullPointerException_0, jl.NullPointerException_1);
 _.$init_540 = function $init_540(){
 }
 ;
@@ -3309,7 +3309,7 @@ jl.$create_9 = function $create_9(bytes, ofs, len, charsetName){
 }
 ;
 jl.$create_10 = function $create_10(bytes, ofs, len, charset){
-  return jl.valueOf_32(castTo(charset, 111).decodeString(bytes, ofs, len));
+  return jl.valueOf_32(castTo(charset, 113).decodeString(bytes, ofs, len));
 }
 ;
 jl.$create_11 = function $create_11(bytes, charsetName){
@@ -3368,7 +3368,7 @@ jl.$getBytes_0 = function $getBytes_0(this$static, charsetName){
 }
 ;
 jl.$getBytes_1 = function $getBytes_1(this$static, charset){
-  return castTo(charset, 111).getBytes(this$static);
+  return castTo(charset, 113).getBytes(this$static);
 }
 ;
 jl.$getChars = function $getChars(this$static, srcBegin, srcEnd, dst, dstBegin){
@@ -3868,7 +3868,7 @@ function join_1(delimiter, elements){
   var e, e$iterator, joiner;
   joiner = new ju.StringJoiner(delimiter);
   for (e$iterator = elements.iterator(); e$iterator.hasNext_0();) {
-    e = castTo(e$iterator.next_3(), 172);
+    e = castTo(e$iterator.next_3(), 173);
     joiner.add_11(e);
   }
   return joiner.toString_0();
@@ -4084,7 +4084,7 @@ jl.valueOf_33 = function valueOf_33(x_0, offset, count){
   return s;
 }
 ;
-stringCastMap = {4:1, 172:1, 9:1, 1:1, 2:1};
+stringCastMap = {4:1, 173:1, 9:1, 1:1, 2:1};
 var CASE_INSENSITIVE_ORDER;
 ju.$clinit_Comparator = function $clinit_Comparator(){
   ju.$clinit_Comparator = emptyMethod;
@@ -4110,7 +4110,7 @@ _.compare_0 = function compare_29(a, b){
   return this.compare_5(castToString(a), castToString(b));
 }
 ;
-_.equals_0 = function equals_26(other){
+_.equals_0 = function equals_27(other){
   return getClassPrototype(1).equals_0.call(this, other);
 }
 ;
@@ -4153,7 +4153,7 @@ ji2.ensureInt = function ensureInt(value_0){
   return value_0 | 0;
 }
 ;
-defineClass(1003, 1, {1:1});
+defineClass(1004, 1, {1:1});
 ji2.$clinit_HashCodes = function $clinit_HashCodes(){
   ji2.$clinit_HashCodes = emptyMethod;
   jl.$clinit_Object();
@@ -4634,19 +4634,19 @@ ji2.format_4 = function format_4(template, args){
     if (placeholderStart == -1) {
       break;
     }
-    builder.append_7(jl.substring_II_Ljava_lang_String___devirtual$(template, templateStart, placeholderStart));
-    builder.append_6(args[i++]);
+    builder.append_8(jl.substring_II_Ljava_lang_String___devirtual$(template, templateStart, placeholderStart));
+    builder.append_7(args[i++]);
     templateStart = placeholderStart + 2;
   }
-  builder.append_7(jl.substring_I_Ljava_lang_String___devirtual$(template, templateStart));
+  builder.append_8(jl.substring_I_Ljava_lang_String___devirtual$(template, templateStart));
   if (i < args.length) {
-    builder.append_7(' [');
-    builder.append_6(args[i++]);
+    builder.append_8(' [');
+    builder.append_7(args[i++]);
     while (i < args.length) {
-      builder.append_7(', ');
-      builder.append_6(args[i++]);
+      builder.append_8(', ');
+      builder.append_7(args[i++]);
     }
-    builder.append_3(93);
+    builder.append_4(93);
   }
   return builder.toString_0();
 }
@@ -4799,9 +4799,9 @@ cggl.Ljava_io_Serializable_2_classLit = createForInterface('java.io', 'Serializa
 cggl.Ljava_lang_Throwable_2_classLit = createForClass('java.lang', 'Throwable', 17, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljava_lang_Exception_2_classLit = createForClass('java.lang', 'Exception', 13, cggl.Ljava_lang_Throwable_2_classLit);
 cggl.Ljava_lang_RuntimeException_2_classLit = createForClass('java.lang', 'RuntimeException', 21, cggl.Ljava_lang_Exception_2_classLit);
-cggl.Ljava_lang_JsException_2_classLit = createForClass('java.lang', 'JsException', 146, cggl.Ljava_lang_RuntimeException_2_classLit);
+cggl.Ljava_lang_JsException_2_classLit = createForClass('java.lang', 'JsException', 147, cggl.Ljava_lang_RuntimeException_2_classLit);
 cggl.Lcom_google_gwt_core_client_impl_JavaScriptExceptionBase_2_classLit = createForClass('com.google.gwt.core.client.impl', 'JavaScriptExceptionBase', 510, cggl.Ljava_lang_JsException_2_classLit);
-cggl.Lcom_google_gwt_core_client_JavaScriptException_2_classLit = createForClass('com.google.gwt.core.client', 'JavaScriptException', 156, cggl.Lcom_google_gwt_core_client_impl_JavaScriptExceptionBase_2_classLit);
+cggl.Lcom_google_gwt_core_client_JavaScriptException_2_classLit = createForClass('com.google.gwt.core.client', 'JavaScriptException', 157, cggl.Lcom_google_gwt_core_client_impl_JavaScriptExceptionBase_2_classLit);
 cggl.Lcom_google_gwt_core_client_JavaScriptObject_2_classLit = createForClass('com.google.gwt.core.client', 'JavaScriptObject$', 0, cggl.Ljava_lang_Object_2_classLit);
 cggl.Lcom_google_gwt_core_client_impl_StackTraceCreator_2_classLit = createForClass('com.google.gwt.core.client.impl', 'StackTraceCreator', 821, cggl.Ljava_lang_Object_2_classLit);
 cggl.Lcom_google_gwt_core_client_impl_StackTraceCreator$Collector_2_classLit = createForClass('com.google.gwt.core.client.impl', 'StackTraceCreator/Collector', 187, cggl.Ljava_lang_Object_2_classLit);
@@ -4812,7 +4812,7 @@ cggl.Lcom_google_gwt_lang_Array_2_classLit = createForClass('com.google.gwt.lang
 cggl.Lcom_google_gwt_lang_Cast_2_classLit = createForClass('com.google.gwt.lang', 'Cast', 789, cggl.Ljava_lang_Object_2_classLit);
 cggl.Lcom_google_gwt_lang_Exceptions_2_classLit = createForClass('com.google.gwt.lang', 'Exceptions', 791, cggl.Ljava_lang_Object_2_classLit);
 cggl.Lcom_google_gwt_lang_Util_2_classLit = createForClass('com.google.gwt.lang', 'Util', 796, cggl.Ljava_lang_Object_2_classLit);
-cggl.Ljava_lang_Error_2_classLit = createForClass('java.lang', 'Error', 97, cggl.Ljava_lang_Throwable_2_classLit);
+cggl.Ljava_lang_Error_2_classLit = createForClass('java.lang', 'Error', 98, cggl.Ljava_lang_Throwable_2_classLit);
 cggl.Ljava_lang_AssertionError_2_classLit = createForClass('java.lang', 'AssertionError', 35, cggl.Ljava_lang_Error_2_classLit);
 cggl.Ljava_lang_Comparable_2_classLit = createForInterface('java.lang', 'Comparable');
 cggl.Ljava_lang_Boolean_2_classLit = createForClass('java.lang', 'Boolean', 397, cggl.Ljava_lang_Object_2_classLit);
@@ -4820,17 +4820,17 @@ cggl.Ljava_lang_CharSequence_2_classLit = createForInterface('java.lang', 'CharS
 cggl.Ljava_lang_reflect_Type_2_classLit = createForInterface('java.lang.reflect', 'Type');
 cggl.Ljava_lang_Class_2_classLit = createForClass('java.lang', 'Class', 251, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljava_lang_ClassCastException_2_classLit = createForClass('java.lang', 'ClassCastException', 419, cggl.Ljava_lang_RuntimeException_2_classLit);
-cggl.Ljava_lang_Number_2_classLit = createForClass('java.lang', 'Number', 119, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_lang_Number_2_classLit = createForClass('java.lang', 'Number', 120, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljava_lang_Double_2_classLit = createForClass('java.lang', 'Double', 418, cggl.Ljava_lang_Number_2_classLit);
 cggl.Ljava_lang_IllegalStateException_2_classLit = createForClass('java.lang', 'IllegalStateException', 66, cggl.Ljava_lang_RuntimeException_2_classLit);
 cggl.Ljava_lang_IndexOutOfBoundsException_2_classLit = createForClass('java.lang', 'IndexOutOfBoundsException', 42, cggl.Ljava_lang_RuntimeException_2_classLit);
 cggl.Ljava_lang_Integer_2_classLit = createForClass('java.lang', 'Integer', 50, cggl.Ljava_lang_Number_2_classLit);
-cggl.Ljava_lang_NullPointerException_2_classLit = createForClass('java.lang', 'NullPointerException', 98, cggl.Ljava_lang_JsException_2_classLit);
+cggl.Ljava_lang_NullPointerException_2_classLit = createForClass('java.lang', 'NullPointerException', 99, cggl.Ljava_lang_JsException_2_classLit);
 cggl.Ljava_lang_String_2_classLit = createForClass('java.lang', 'String', 2, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljava_util_Comparator_2_classLit = createForInterface('java.util', 'Comparator');
 cggl.Ljava_lang_String$1_2_classLit = createForClass('java.lang', 'String/1', 332, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljava_lang_StringIndexOutOfBoundsException_2_classLit = createForClass('java.lang', 'StringIndexOutOfBoundsException', 273, cggl.Ljava_lang_IndexOutOfBoundsException_2_classLit);
-cggl.Ljavaemul_internal_Coercions_2_classLit = createForClass('javaemul.internal', 'Coercions', 1003, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljavaemul_internal_Coercions_2_classLit = createForClass('javaemul.internal', 'Coercions', 1004, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljavaemul_internal_HashCodes_2_classLit = createForClass('javaemul.internal', 'HashCodes', 820, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljavaemul_internal_InternalPreconditions_2_classLit = createForClass('javaemul.internal', 'InternalPreconditions', 817, cggl.Ljava_lang_Object_2_classLit);
 cggl.Ljavaemul_internal_JsUtils_2_classLit = createForClass('javaemul.internal', 'JsUtils', 807, cggl.Ljava_lang_Object_2_classLit);
@@ -4877,7 +4877,7 @@ carc2.AbstractDepictor = function AbstractDepictor(mol, displayMode){
   this.init();
 }
 ;
-defineClass(105, 1, {105:1, 1:1});
+defineClass(107, 1, {107:1, 1:1});
 _.$init_0 = function $init_0(){
   this.mBoundingRect = new jag.Rectangle2D$Double;
 }
@@ -5086,7 +5086,7 @@ _.drawWedge = function drawWedge(theWedge, atom1, atom2){
 _.expandBoundsByTabuZones = function expandBoundsByTabuZones(avbl){
   var border, i;
   for (i = 0; i < this.mpTabuZone.size(); i++)
-    this.mBoundingRect = castTo(this.mBoundingRect.createUnion(castTo(this.mpTabuZone.getAtIndex(i), 101)), 27);
+    this.mBoundingRect = castTo(this.mBoundingRect.createUnion(castTo(this.mpTabuZone.getAtIndex(i), 103)), 27);
   this.expandByHiliteBackgrounds(avbl);
   border = 0.1 * avbl;
   this.mBoundingRect.x_0 -= border;
@@ -6838,7 +6838,7 @@ carc2.cModeInflateToHighResAVBL = 131072;
 carc2.cModeInflateToMaxAVBL = 65536;
 carc2.cModeMaxBondLength = 65535;
 carc2.cOptAvBondLen = 24;
-cggl.Lcom_actelion_research_chem_AbstractDepictor_2_classLit = createForClass('com.actelion.research.chem', 'AbstractDepictor', 105, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_AbstractDepictor_2_classLit = createForClass('com.actelion.research.chem', 'AbstractDepictor', 107, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_AbstractDepictor$DepictorDot = function $clinit_AbstractDepictor$DepictorDot(){
   carc2.$clinit_AbstractDepictor$DepictorDot = emptyMethod;
   jl.$clinit_Object();
@@ -6916,7 +6916,7 @@ carc2.AromaticityResolver = function AromaticityResolver(mol){
   this.mMol = mol;
 }
 ;
-defineClass(175, 1, {1:1}, carc2.AromaticityResolver);
+defineClass(176, 1, {1:1}, carc2.AromaticityResolver);
 _.$init_3 = function $init_3(){
 }
 ;
@@ -7583,7 +7583,7 @@ _.mAllHydrogensAreExplicit = false;
 _.mAromaticAtoms = 0;
 _.mAromaticBonds = 0;
 _.mPiElectronsAdded = 0;
-cggl.Lcom_actelion_research_chem_AromaticityResolver_2_classLit = createForClass('com.actelion.research.chem', 'AromaticityResolver', 175, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_AromaticityResolver_2_classLit = createForClass('com.actelion.research.chem', 'AromaticityResolver', 176, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_AtomFunctionAnalyzer = function $clinit_AtomFunctionAnalyzer(){
   carc2.$clinit_AtomFunctionAnalyzer = emptyMethod;
   jl.$clinit_Object();
@@ -7896,8 +7896,8 @@ carc2.isVinylogFakeOxo = function isVinylogFakeOxo(mol, atom){
   return false;
 }
 ;
-defineClass(996, 1, {1:1});
-cggl.Lcom_actelion_research_chem_AtomFunctionAnalyzer_2_classLit = createForClass('com.actelion.research.chem', 'AtomFunctionAnalyzer', 996, cggl.Ljava_lang_Object_2_classLit);
+defineClass(997, 1, {1:1});
+cggl.Lcom_actelion_research_chem_AtomFunctionAnalyzer_2_classLit = createForClass('com.actelion.research.chem', 'AtomFunctionAnalyzer', 997, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_AtomTypeCalculator = function $clinit_AtomTypeCalculator(){
   carc2.$clinit_AtomTypeCalculator = emptyMethod;
   jl.$clinit_Object();
@@ -9025,7 +9025,7 @@ _.canInitializeRanking = function canInitializeRanking(){
     this.mMaxConnAtoms = $wnd.Math.max(this.mMaxConnAtoms, this.mMol.getConnAtoms_0(atom0) + this.mMol.getMetalBondedConnAtoms_0(atom0));
   baseValueSize = $wnd.Math.max(2, bondQueryFeaturesPresent?narrow_int((62 + 16 + this.mMaxConnAtoms * (16 + 21)) / 63):narrow_int((62 + 16 + this.mMaxConnAtoms * (16 + 5)) / 63));
   this.mCanRank = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMol.getAllAtoms_0(), 15, 1);
-  this.mCanBase = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_CanonizerBaseValue_2_classLit, {4:1, 1:1, 6:1}, 141, this.mMol.getAtoms_0(), 0, 1);
+  this.mCanBase = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_CanonizerBaseValue_2_classLit, {4:1, 1:1, 6:1}, 142, this.mMol.getAtoms_0(), 0, 1);
   for (atom1 = 0; atom1 < this.mMol.getAtoms_0(); atom1++)
     setCheck(this.mCanBase, atom1, new carc2.CanonizerBaseValue(baseValueSize));
   atomListFound = false;
@@ -9697,7 +9697,7 @@ _.cipCompileRelativeRanks = function cipCompileRelativeRanks(graphRank, graphPar
   var comparator, consolidatedRank, count, i, i0, i1, level, levelOffset, rankObject;
   levelOffset = levelStart[currentLevel];
   count = levelStart[currentLevel + 1] - levelOffset;
-  rankObject = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_Canonizer$2RankObject_2_classLit, {4:1, 1:1, 6:1}, 159, count, 0, 1);
+  rankObject = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_Canonizer$2RankObject_2_classLit, {4:1, 1:1, 6:1}, 160, count, 0, 1);
   for (i0 = 0; i0 < count; i0++) {
     setCheck(rankObject, i0, new carc2.Canonizer$2RankObject(this));
     rankObject[i0].rank = graphRank[i0 + levelOffset];
@@ -9760,7 +9760,7 @@ _.cipUpdateParentRanking = function cipUpdateParentRanking(graphIsPseudo, graphR
   var baseIndex, comparator, consolidatedRank, i, level, nextBaseIndex, parent_0, parent0, parentCount, parentIndex, rankObject;
   for (level = currentLevel; level > 1; level--) {
     parentCount = levelStart[level] - levelStart[level - 1];
-    rankObject = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_Canonizer$1RankObject_2_classLit, {4:1, 1:1, 6:1}, 158, parentCount, 0, 1);
+    rankObject = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_Canonizer$1RankObject_2_classLit, {4:1, 1:1, 6:1}, 159, parentCount, 0, 1);
     baseIndex = levelStart[level];
     for (parent0 = 0; parent0 < parentCount; parent0++) {
       parentIndex = levelStart[level - 1] + parent0;
@@ -9921,7 +9921,7 @@ _.encodeAtomCoords = function encodeAtomCoords(atom, from, maxDeltaPlusHalfIncre
 _.encodeBits = function encodeBits(data_0, bits){
   while (bits != 0) {
     if (this.mEncodingBitsAvail == 0) {
-      this.mEncodingBuffer.append_3(narrow_char(this.mEncodingTempData + 64));
+      this.mEncodingBuffer.append_4(narrow_char(this.mEncodingTempData + 64));
       this.mEncodingBitsAvail = 6;
       this.mEncodingTempData = 0;
     }
@@ -9935,7 +9935,7 @@ _.encodeBits = function encodeBits(data_0, bits){
 ;
 _.encodeBitsEnd = function encodeBitsEnd(){
   this.mEncodingTempData <<= this.mEncodingBitsAvail;
-  this.mEncodingBuffer.append_3(narrow_char(this.mEncodingTempData + 64));
+  this.mEncodingBuffer.append_4(narrow_char(this.mEncodingTempData + 64));
   return this.mEncodingBuffer.toString_0();
 }
 ;
@@ -9963,7 +9963,7 @@ _.encodeCoordinates = function encodeCoordinates(keepPositionAndScale){
   }
   resolutionBits = this.mZCoordinatesAvailable?16:8;
   this.encodeBitsStart();
-  this.mEncodingBuffer.append_3(includeHydrogenCoordinates?35:33);
+  this.mEncodingBuffer.append_4(includeHydrogenCoordinates?35:33);
   this.encodeBits(this.mZCoordinatesAvailable?1:0, 1);
   this.encodeBits(keepPositionAndScale?1:0, 1);
   this.encodeBits(narrow_int(resolutionBits / 2), 4);
@@ -10979,7 +10979,7 @@ _.$init_5 = function $init_5(){
 }
 ;
 _.compare_0 = function compare_1(r1, r2){
-  return this.compare(castTo(r1, 158), castTo(r2, 158));
+  return this.compare(castTo(r1, 159), castTo(r2, 159));
 }
 ;
 _.equals_0 = function equals_0(other){
@@ -11019,14 +11019,14 @@ carc2.Canonizer$1RankObject = function Canonizer$1RankObject(this$0){
   this.$init_6();
 }
 ;
-defineClass(158, 1, {158:1, 1:1}, carc2.Canonizer$1RankObject);
+defineClass(159, 1, {159:1, 1:1}, carc2.Canonizer$1RankObject);
 _.$init_6 = function $init_6(){
 }
 ;
 _.parentHCount = 0;
 _.parentIndex = 0;
 _.parentRank = 0;
-cggl.Lcom_actelion_research_chem_Canonizer$1RankObject_2_classLit = createForClass('com.actelion.research.chem', 'Canonizer/1RankObject', 158, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_Canonizer$1RankObject_2_classLit = createForClass('com.actelion.research.chem', 'Canonizer/1RankObject', 159, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_Canonizer$2 = function $clinit_Canonizer$2(){
   carc2.$clinit_Canonizer$2 = emptyMethod;
   jl.$clinit_Object();
@@ -11045,7 +11045,7 @@ _.$init_7 = function $init_7(){
 }
 ;
 _.compare_0 = function compare_3(r1, r2){
-  return this.compare_1(castTo(r1, 159), castTo(r2, 159));
+  return this.compare_1(castTo(r1, 160), castTo(r2, 160));
 }
 ;
 _.equals_0 = function equals_1(other){
@@ -11071,14 +11071,14 @@ carc2.Canonizer$2RankObject = function Canonizer$2RankObject(this$0){
   this.$init_8();
 }
 ;
-defineClass(159, 1, {159:1, 1:1}, carc2.Canonizer$2RankObject);
+defineClass(160, 1, {160:1, 1:1}, carc2.Canonizer$2RankObject);
 _.$init_8 = function $init_8(){
 }
 ;
 _.index_0 = 0;
 _.parent_0 = 0;
 _.rank = 0;
-cggl.Lcom_actelion_research_chem_Canonizer$2RankObject_2_classLit = createForClass('com.actelion.research.chem', 'Canonizer/2RankObject', 159, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_Canonizer$2RankObject_2_classLit = createForClass('com.actelion.research.chem', 'Canonizer/2RankObject', 160, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_Canonizer$ESRGroup = function $clinit_Canonizer$ESRGroup(){
   carc2.$clinit_Canonizer$ESRGroup = emptyMethod;
 }
@@ -11097,12 +11097,12 @@ carc2.CanonizerBaseValue = function CanonizerBaseValue(size_0){
   this.mValue = initUnidimensionalArray(cggl.J_classLit, {4:1, 1:1}, 5, size_0, 14, 1);
 }
 ;
-defineClass(141, 1, {141:1, 9:1, 1:1}, carc2.CanonizerBaseValue);
+defineClass(142, 1, {142:1, 9:1, 1:1}, carc2.CanonizerBaseValue);
 _.$init_9 = function $init_9(){
 }
 ;
 _.compareTo_1 = function compareTo_0(b){
-  return this.compareTo_0(castTo(b, 141));
+  return this.compareTo_0(castTo(b, 142));
 }
 ;
 _.add_0 = function add_1(bits, data_0){
@@ -11157,7 +11157,7 @@ _.init_0 = function init_0(atom){
 _.mAtom = 0;
 _.mAvailableBits = 0;
 _.mIndex = 0;
-cggl.Lcom_actelion_research_chem_CanonizerBaseValue_2_classLit = createForClass('com.actelion.research.chem', 'CanonizerBaseValue', 141, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_CanonizerBaseValue_2_classLit = createForClass('com.actelion.research.chem', 'CanonizerBaseValue', 142, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_CanonizerFragment = function $clinit_CanonizerFragment(){
   carc2.$clinit_CanonizerFragment = emptyMethod;
   jl.$clinit_Object();
@@ -11441,7 +11441,7 @@ _.normalizeESRGroupSwappingAndRemoval = function normalizeESRGroupSwappingAndRem
   doneAny = false;
   for (i = this.mESRGroupNormalizationInfoList.size() - 1; i >= 0; i--) {
     done = false;
-    info = castTo(this.mESRGroupNormalizationInfoList.getAtIndex(i), 108);
+    info = castTo(this.mESRGroupNormalizationInfoList.getAtIndex(i), 110);
     if (info.action == 2) {
       done = this.normalizeESRGroupSwapping(info.fragment_0, info.group, info.type_0, canRank);
     }
@@ -12122,7 +12122,7 @@ carc2.getBoundingRect_1 = function getBoundingRect_1(mols){
 ;
 carc2.getProducts = function getProducts(r){
   var i, ret;
-  ret = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_ExtendedMolecule_2_classLit, {4:1, 1:1, 6:1}, 86, r.getProducts_0(), 0, 1);
+  ret = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_ExtendedMolecule_2_classLit, {4:1, 1:1, 6:1}, 87, r.getProducts_0(), 0, 1);
   for (i = 0; i < ret.length; i++) {
     setCheck(ret, i, r.getProduct_0(i));
   }
@@ -12131,7 +12131,7 @@ carc2.getProducts = function getProducts(r){
 ;
 carc2.getReactants = function getReactants(r){
   var i, ret;
-  ret = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_ExtendedMolecule_2_classLit, {4:1, 1:1, 6:1}, 86, r.getReactants_0(), 0, 1);
+  ret = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_ExtendedMolecule_2_classLit, {4:1, 1:1, 6:1}, 87, r.getReactants_0(), 0, 1);
   for (i = 0; i < ret.length; i++) {
     setCheck(ret, i, r.getReactant_0(i));
   }
@@ -12206,12 +12206,12 @@ carc2.transformMolecules = function transformMolecules(mols, offsetx, offsety, s
   }
 }
 ;
-defineClass(1013, 1, {1:1});
+defineClass(1014, 1, {1:1});
 carc2.REACTION_TYPE_NOMOLS = 0;
 carc2.REACTION_TYPE_NOPRODUCTS = 1;
 carc2.REACTION_TYPE_NORMAL = 3;
 carc2.REACTION_TYPE_REACTANTS = 2;
-cggl.Lcom_actelion_research_chem_ChemistryHelper_2_classLit = createForClass('com.actelion.research.chem', 'ChemistryHelper', 1013, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_ChemistryHelper_2_classLit = createForClass('com.actelion.research.chem', 'ChemistryHelper', 1014, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_Coordinates = function $clinit_Coordinates(){
   carc2.$clinit_Coordinates = emptyMethod;
   jl.$clinit_Object();
@@ -12231,12 +12231,12 @@ carc2.Coordinates_1 = function Coordinates_1(x_0, y_0, z_0){
   this.z_0 = z_0;
 }
 ;
-defineClass(87, 1, {87:1, 4:1, 9:1, 1:1}, carc2.Coordinates_0, carc2.Coordinates_1);
+defineClass(88, 1, {88:1, 4:1, 9:1, 1:1}, carc2.Coordinates_0, carc2.Coordinates_1);
 _.$init_15 = function $init_15(){
 }
 ;
 _.compareTo_1 = function compareTo_2(o){
-  return this.compareTo_2(castTo(o, 87));
+  return this.compareTo_2(castTo(o, 88));
 }
 ;
 _.compareTo_2 = function compareTo_1(o){
@@ -12275,9 +12275,9 @@ _.dot = function dot_0(c){
 ;
 _.equals_0 = function equals_4(o){
   var c;
-  if (jsEquals(o, null) || !instanceOf(o, 87))
+  if (jsEquals(o, null) || !instanceOf(o, 88))
     return false;
-  c = castTo(o, 87);
+  c = castTo(o, 88);
   return $wnd.Math.abs(c.x_0 - this.x_0) + $wnd.Math.abs(c.y_0 - this.y_0) + $wnd.Math.abs(c.z_0 - this.z_0) < 1.0E-6;
 }
 ;
@@ -12313,7 +12313,7 @@ _.toString_0 = function toString_2(){
 _.x_0 = 0;
 _.y_0 = 0;
 _.z_0 = 0;
-cggl.Lcom_actelion_research_chem_Coordinates_2_classLit = createForClass('com.actelion.research.chem', 'Coordinates', 87, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_Coordinates_2_classLit = createForClass('com.actelion.research.chem', 'Coordinates', 88, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_DepictorTransformation = function $clinit_DepictorTransformation(){
   carc2.$clinit_DepictorTransformation = emptyMethod;
   jl.$clinit_Object();
@@ -12379,7 +12379,7 @@ carc2.DepictorTransformation_1 = function DepictorTransformation_1(bounds, view,
   }
 }
 ;
-defineClass(106, 1, {1:1}, carc2.DepictorTransformation, carc2.DepictorTransformation_0, carc2.DepictorTransformation_1);
+defineClass(108, 1, {1:1}, carc2.DepictorTransformation, carc2.DepictorTransformation_0, carc2.DepictorTransformation_1);
 _.$init_16 = function $init_16(){
 }
 ;
@@ -12440,7 +12440,7 @@ _.transformY = function transformY(y_0){
 _.mOffsetX = 0;
 _.mOffsetY = 0;
 _.mScaling = 0;
-cggl.Lcom_actelion_research_chem_DepictorTransformation_2_classLit = createForClass('com.actelion.research.chem', 'DepictorTransformation', 106, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_DepictorTransformation_2_classLit = createForClass('com.actelion.research.chem', 'DepictorTransformation', 108, cggl.Ljava_lang_Object_2_classLit);
 jl.$clinit_Iterable = function $clinit_Iterable(){
   jl.$clinit_Iterable = emptyMethod;
 }
@@ -12520,7 +12520,7 @@ _.advanceToFind = function advanceToFind(o, remove){
   var e, iter;
   for (iter = this.iterator(); iter.hasNext_0();) {
     e = iter.next_3();
-    if (ju.equals_37(o, e)) {
+    if (ju.equals_38(o, e)) {
       if (remove) {
         iter.remove_4();
       }
@@ -12654,7 +12654,7 @@ ju.AbstractList = function AbstractList(){
   this.$init_18();
 }
 ;
-defineClass(139, 225, {1:1, 33:1, 47:1});
+defineClass(140, 225, {1:1, 33:1, 47:1});
 _.$init_18 = function $init_18(){
 }
 ;
@@ -12707,7 +12707,7 @@ _.equals_0 = function equals_5(o){
   for (elem$iterator = this.iterator(); elem$iterator.hasNext_0();) {
     elem = elem$iterator.next_3();
     elemOther = iterOther.next_3();
-    if (!ju.equals_37(elem, elemOther)) {
+    if (!ju.equals_38(elem, elemOther)) {
       return false;
     }
   }
@@ -12721,7 +12721,7 @@ _.hashCode_0 = function hashCode_1(){
 _.indexOf = function indexOf(toFind){
   var i, n;
   for (i = 0 , n = this.size(); i < n; ++i) {
-    if (ju.equals_37(toFind, this.getAtIndex(i))) {
+    if (ju.equals_38(toFind, this.getAtIndex(i))) {
       return i;
     }
   }
@@ -12735,7 +12735,7 @@ _.iterator = function iterator_0(){
 _.lastIndexOf = function lastIndexOf(toFind){
   var i;
   for (i = this.size() - 1; i > -1; --i) {
-    if (ju.equals_37(toFind, this.getAtIndex(i))) {
+    if (ju.equals_38(toFind, this.getAtIndex(i))) {
       return i;
     }
   }
@@ -12771,7 +12771,7 @@ _.subList = function subList(fromIndex, toIndex){
   return new ju.AbstractList$SubList(this, fromIndex, toIndex);
 }
 ;
-cggl.Ljava_util_AbstractList_2_classLit = createForClass('java.util', 'AbstractList', 139, cggl.Ljava_util_AbstractCollection_2_classLit);
+cggl.Ljava_util_AbstractList_2_classLit = createForClass('java.util', 'AbstractList', 140, cggl.Ljava_util_AbstractCollection_2_classLit);
 jl.$clinit_Cloneable = function $clinit_Cloneable(){
   jl.$clinit_Cloneable = emptyMethod;
 }
@@ -12803,7 +12803,7 @@ ju.ArrayList_0 = function ArrayList_0(c){
   ji2.insertTo_0(this.array, 0, c.toArray());
 }
 ;
-defineClass(18, 139, {4:1, 1:1, 18:1, 33:1, 47:1, 127:1}, ju.ArrayList, ju.ArrayList_0);
+defineClass(18, 140, {4:1, 1:1, 18:1, 33:1, 47:1, 128:1}, ju.ArrayList, ju.ArrayList_0);
 _.$init_19 = function $init_19(){
   this.array = castToArray(initUnidimensionalArray(cggl.Ljava_lang_Object_2_classLit, {4:1, 1:1, 6:1}, 1, 0, 5, 1));
 }
@@ -12873,7 +12873,7 @@ _.indexOf = function indexOf_0(o){
 ;
 _.indexOf_0 = function indexOf_1(o, index_0){
   for (; index_0 < this.array.length; ++index_0) {
-    if (ju.equals_37(o, this.array[index_0])) {
+    if (ju.equals_38(o, this.array[index_0])) {
       return index_0;
     }
   }
@@ -12894,7 +12894,7 @@ _.lastIndexOf = function lastIndexOf_0(o){
 ;
 _.lastIndexOf_0 = function lastIndexOf_1(o, index_0){
   for (; index_0 >= 0; --index_0) {
-    if (ju.equals_37(o, this.array[index_0])) {
+    if (ju.equals_38(o, this.array[index_0])) {
       return index_0;
     }
   }
@@ -13008,7 +13008,7 @@ carc2.DrawingObjectList_0 = function DrawingObjectList_0(objectString){
   }
 }
 ;
-defineClass(262, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 127:1}, carc2.DrawingObjectList, carc2.DrawingObjectList_0);
+defineClass(262, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 128:1}, carc2.DrawingObjectList, carc2.DrawingObjectList_0);
 _.$init_20 = function $init_20(){
 }
 ;
@@ -13016,7 +13016,7 @@ _.toString_0 = function toString_5(){
   var i, objectString;
   objectString = new jl.StringBuffer;
   for (i = 0; i < this.size(); i++)
-    objectString.append_1(castTo(this.getAtIndex(i), 197).getDescriptor() + '\n');
+    objectString.append_2(castTo(this.getAtIndex(i), 197).getDescriptor() + '\n');
   return objectString.toString_0();
 }
 ;
@@ -13037,7 +13037,7 @@ carc2.ESRGroupNormalizationInfo = function ESRGroupNormalizationInfo(fragment, a
   this.type_0 = type_0;
 }
 ;
-defineClass(108, 1, {108:1, 1:1}, carc2.ESRGroupNormalizationInfo);
+defineClass(110, 1, {110:1, 1:1}, carc2.ESRGroupNormalizationInfo);
 _.$init_21 = function $init_21(){
 }
 ;
@@ -13045,7 +13045,7 @@ _.action = 0;
 _.fragment_0 = 0;
 _.group = 0;
 _.type_0 = 0;
-cggl.Lcom_actelion_research_chem_ESRGroupNormalizationInfo_2_classLit = createForClass('com.actelion.research.chem', 'ESRGroupNormalizationInfo', 108, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_ESRGroupNormalizationInfo_2_classLit = createForClass('com.actelion.research.chem', 'ESRGroupNormalizationInfo', 110, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_EZHalfParity = function $clinit_EZHalfParity(){
   carc2.$clinit_EZHalfParity = emptyMethod;
   jl.$clinit_Object();
@@ -13090,7 +13090,7 @@ carc2.EZHalfParity = function EZHalfParity(mol, rank, atom1, atom2){
   }
 }
 ;
-defineClass(137, 1, {1:1}, carc2.EZHalfParity);
+defineClass(138, 1, {1:1}, carc2.EZHalfParity);
 _.$init_22 = function $init_22(){
 }
 ;
@@ -13140,7 +13140,7 @@ _.mRanksEqual = false;
 _.mRemoteAxialAtom = 0;
 _.mStereoBondFound = false;
 _.mValue = 0;
-cggl.Lcom_actelion_research_chem_EZHalfParity_2_classLit = createForClass('com.actelion.research.chem', 'EZHalfParity', 137, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_EZHalfParity_2_classLit = createForClass('com.actelion.research.chem', 'EZHalfParity', 138, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_Molecule = function $clinit_Molecule(){
   carc2.$clinit_Molecule = emptyMethod;
   jl.$clinit_Object();
@@ -13152,8 +13152,8 @@ carc2.$clinit_Molecule = function $clinit_Molecule(){
   carc2.cHelperSymmetryEnantiotopic = 15 | 64;
   carc2.cAtomLabel = stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_lang_String_2_classLit, 1), {4:1, 1:1, 6:1, 12:1}, 2, 6, ['?', 'H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og', '??', '??', '??', '??', '??', '??', '??', '??', '??', '??', 'R4', 'R5', 'R6', 'R7', 'R8', 'R9', 'R10', 'R11', 'R12', 'R13', 'R14', 'R15', 'R16', 'R1', 'R2', 'R3', 'A', 'A1', 'A2', 'A3', '??', '??', 'D', 'T', 'X', 'R', 'H2', 'H+', 'Nnn', 'HYD', 'Pol', '??', '??', '??', '??', '??', '??', '??', '??', '??', '??', '??', 'Ala', 'Arg', 'Asn', 'Asp', 'Cys', 'Gln', 'Glu', 'Gly', 'His', 'Ile', 'Leu', 'Lys', 'Met', 'Phe', 'Pro', 'Ser', 'Thr', 'Trp', 'Tyr', 'Val']);
   carc2.cRoundedMass = stampJavaTypeInfo(getClassLiteralForArray(cggl.S_classLit, 1), {4:1, 1:1}, 5, 15, [0, 1, 4, 7, 9, 11, 12, 14, 16, 19, 20, 23, 24, 27, 28, 31, 32, 35, 40, 39, 40, 45, 48, 51, 52, 55, 56, 59, 58, 63, 64, 69, 74, 75, 80, 79, 84, 85, 88, 89, 90, 93, 98, 0, 102, 103, 106, 107, 114, 115, 120, 121, 130, 127, 132, 133, 138, 139, 140, 141, 142, 0, 152, 153, 158, 159, 164, 165, 166, 169, 174, 175, 180, 181, 184, 187, 192, 193, 195, 197, 202, 205, 208, 209, 209, 210, 222, 223, 226, 227, 232, 231, 238, 237, 244, 243, 247, 247, 251, 252, 257, 258, 259, 262, 267, 268, 271, 270, 277, 276, 281, 281, 283, 285, 289, 289, 293, 294, 294, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 156, 114, 115, 103, 128, 129, 57, 137, 113, 113, 128, 131, 147, 97, 87, 101, 186, 163, 99]);
-  carc2.cAtomValence = stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 2), {177:1, 4:1, 1:1, 6:1}, 11, 0, [null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3, 5, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, null, null, null, null, null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3, 5, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2, 3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, null, null, null, null, null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3, 5, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0, 2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2])]);
-  carc2.cCommonOxidationState = stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 2), {177:1, 4:1, 1:1, 6:1}, 11, 0, [null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3, 4, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3, 4, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-3, 3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4, 6, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-3, 3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4, 6, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2, 2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1, 1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4, 5, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4, 5, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4, 5, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4, 5, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3])]);
+  carc2.cAtomValence = stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 2), {178:1, 4:1, 1:1, 6:1}, 11, 0, [null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3, 5, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, null, null, null, null, null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3, 5, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2, 3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, null, null, null, null, null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3, 5, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0, 2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2])]);
+  carc2.cCommonOxidationState = stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 2), {178:1, 4:1, 1:1, 6:1}, 11, 0, [null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3, 4, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3, 4, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-3, 3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4, 6, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-3, 3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4, 6, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-2, 2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [-1, 1]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4, 5, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4, 5, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4, 5, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4, 5, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3])]);
 }
 ;
 carc2.Molecule = function Molecule(){
@@ -13689,7 +13689,7 @@ _.copyAtom_0 = function copyAtom(destMol, sourceAtom, esrGroupOffsetAND, esrGrou
     destMol.mAtomCustomLabel[destAtom] = null;
   if (jsNotEquals(this.mAtomCustomLabel, null) && jsNotEquals(this.mAtomCustomLabel[sourceAtom], null)) {
     if (jsEquals(destMol.mAtomCustomLabel, null))
-      destMol.mAtomCustomLabel = initUnidimensionalArray(cggl.B_classLit, {177:1, 4:1, 1:1, 6:1}, 11, destMol.mAtomicNo.length, 0, 2);
+      destMol.mAtomCustomLabel = initUnidimensionalArray(cggl.B_classLit, {178:1, 4:1, 1:1, 6:1}, 11, destMol.mAtomicNo.length, 0, 2);
     destMol.mAtomCustomLabel[destAtom] = initUnidimensionalArray(cggl.B_classLit, {11:1, 4:1, 1:1}, 5, this.mAtomCustomLabel[sourceAtom].length, 15, 1);
     for (i = 0; i < this.mAtomCustomLabel[sourceAtom].length; i++)
       destMol.mAtomCustomLabel[destAtom][i] = this.mAtomCustomLabel[sourceAtom][i];
@@ -14360,7 +14360,7 @@ _.init_1 = function init_1(){
   this.mAtomicNo = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMaxAtoms, 15, 1);
   this.mAtomCharge = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMaxAtoms, 15, 1);
   this.mAtomMapNo = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMaxAtoms, 15, 1);
-  this.mCoordinates = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_Coordinates_2_classLit, {754:1, 4:1, 1:1, 6:1}, 87, this.mMaxAtoms, 0, 1);
+  this.mCoordinates = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_Coordinates_2_classLit, {754:1, 4:1, 1:1, 6:1}, 88, this.mMaxAtoms, 0, 1);
   for (i = 0; i < this.mMaxAtoms; i++)
     this.mCoordinates[i] = new carc2.Coordinates_0;
   this.mAtomMass = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMaxAtoms, 15, 1);
@@ -14751,7 +14751,7 @@ _.setAtomCustomLabel_0 = function setAtomCustomLabel(atom, label_0){
   }
    else {
     if (jsEquals(this.mAtomCustomLabel, null))
-      this.mAtomCustomLabel = initUnidimensionalArray(cggl.B_classLit, {177:1, 4:1, 1:1, 6:1}, 11, this.mMaxAtoms, 0, 2);
+      this.mAtomCustomLabel = initUnidimensionalArray(cggl.B_classLit, {178:1, 4:1, 1:1, 6:1}, 11, this.mMaxAtoms, 0, 2);
     this.mAtomCustomLabel[atom] = jl.getBytes___B__devirtual$(label_0);
   }
 }
@@ -14765,7 +14765,7 @@ _.setAtomCustomLabel_1 = function setAtomCustomLabel_0(atom, label_0){
   }
    else {
     if (jsEquals(this.mAtomCustomLabel, null))
-      this.mAtomCustomLabel = initUnidimensionalArray(cggl.B_classLit, {177:1, 4:1, 1:1, 6:1}, 11, this.mMaxAtoms, 0, 2);
+      this.mAtomCustomLabel = initUnidimensionalArray(cggl.B_classLit, {178:1, 4:1, 1:1, 6:1}, 11, this.mMaxAtoms, 0, 2);
     this.mAtomCustomLabel[atom] = label_0;
   }
 }
@@ -15029,7 +15029,7 @@ _.setMaxAtoms_0 = function setMaxAtoms(v){
   if (jsNotEquals(this.mAtomList, null))
     this.mAtomList = castTo(ju.copyOf_1(this.mAtomList, v), 46);
   if (jsNotEquals(this.mAtomCustomLabel, null))
-    this.mAtomCustomLabel = castTo(ju.copyOf_1(this.mAtomCustomLabel, v), 177);
+    this.mAtomCustomLabel = castTo(ju.copyOf_1(this.mAtomCustomLabel, v), 178);
   this.mMaxAtoms = v;
 }
 ;
@@ -15440,7 +15440,7 @@ carc2.ExtendedMolecule_1 = function ExtendedMolecule_1(mol){
     mol.copyMolecule_0(this);
 }
 ;
-defineClass(86, 64, {86:1, 64:1, 4:1, 1:1});
+defineClass(87, 64, {87:1, 64:1, 4:1, 1:1});
 _.$init_24 = function $init_24(){
 }
 ;
@@ -17533,7 +17533,7 @@ carc2.FISCHER_PROJECTION_LIMIT = 0;
 carc2.STEREO_ANGLE_LIMIT = 0;
 carc2.cMaxConnAtoms = 16;
 carc2.serialVersionUID_1 = 537316094;
-cggl.Lcom_actelion_research_chem_ExtendedMolecule_2_classLit = createForClass('com.actelion.research.chem', 'ExtendedMolecule', 86, cggl.Lcom_actelion_research_chem_Molecule_2_classLit);
+cggl.Lcom_actelion_research_chem_ExtendedMolecule_2_classLit = createForClass('com.actelion.research.chem', 'ExtendedMolecule', 87, cggl.Lcom_actelion_research_chem_Molecule_2_classLit);
 carc2.$clinit_IDCodeParserWithoutCoordinateInvention = function $clinit_IDCodeParserWithoutCoordinateInvention(){
   carc2.$clinit_IDCodeParserWithoutCoordinateInvention = emptyMethod;
   jl.$clinit_Object();
@@ -18320,25 +18320,25 @@ carc2.createReactionSmiles = function createReactionSmiles(rxn){
   sb = new jl.StringBuilder;
   for (i0 = 0; i0 < rxn.getReactants_0(); i0++) {
     if (i0 != 0)
-      sb.append_3(46);
-    sb.append_7((new carc2.IsomericSmilesCreator_0(rxn.getReactant_0(i0), true)).getSmiles_0());
+      sb.append_4(46);
+    sb.append_8((new carc2.IsomericSmilesCreator_0(rxn.getReactant_0(i0), true)).getSmiles_0());
   }
-  sb.append_3(62);
+  sb.append_4(62);
   for (i1 = 0; i1 < rxn.getCatalysts_0(); i1++) {
     if (i1 != 0)
-      sb.append_3(46);
-    sb.append_7((new carc2.IsomericSmilesCreator(rxn.getCatalyst_0(i1))).getSmiles_0());
+      sb.append_4(46);
+    sb.append_8((new carc2.IsomericSmilesCreator(rxn.getCatalyst_0(i1))).getSmiles_0());
   }
-  sb.append_3(62);
+  sb.append_4(62);
   for (i = 0; i < rxn.getProducts_0(); i++) {
     if (i != 0)
-      sb.append_3(46);
-    sb.append_7((new carc2.IsomericSmilesCreator_0(rxn.getProduct_0(i), true)).getSmiles_0());
+      sb.append_4(46);
+    sb.append_8((new carc2.IsomericSmilesCreator_0(rxn.getProduct_0(i), true)).getSmiles_0());
   }
   return sb.toString_0();
 }
 ;
-defineClass(129, 1, {1:1}, carc2.IsomericSmilesCreator, carc2.IsomericSmilesCreator_0);
+defineClass(130, 1, {1:1}, carc2.IsomericSmilesCreator, carc2.IsomericSmilesCreator_0);
 _.$init_27 = function $init_27(){
 }
 ;
@@ -18350,7 +18350,7 @@ _.addAtomString = function addAtomString(smilesAtom, builder){
   if (this.mMol.isAromaticAtom_1(atom))
     label_0 = jl.toLowerCase__Ljava_lang_String___devirtual$(label_0);
   if (smilesAtom.isSideChainStart)
-    builder.append_3(40);
+    builder.append_4(40);
   if (parent_0 != -1)
     this.appendBondOrderSymbol_0(smilesAtom, builder);
   charge = this.mMol.getAtomCharge_0(atom);
@@ -18358,34 +18358,34 @@ _.addAtomString = function addAtomString(smilesAtom, builder){
   mapNo = this.mIncludeMapping?this.mMol.getAtomMapNo_0(atom):0;
   useBrackets = !this.isOrganic(this.mMol.getAtomicNo_0(atom)) || this.qualifiesForAtomParity(atom) || charge != 0 || isotop != 0 || mapNo != 0 || this.mMol.getAtomAbnormalValence_0(atom) != -1 || this.mMol.isAromaticAtom_1(atom) && this.mMol.getAtomPi_0(atom) == 0 && this.mMol.getImplicitHydrogens_0(atom) != 0;
   if (useBrackets)
-    builder.append_3(91);
+    builder.append_4(91);
   if (isotop != 0)
-    builder.append_4(isotop);
-  builder.append_7(label_0);
+    builder.append_5(isotop);
+  builder.append_8(label_0);
   if (this.qualifiesForAtomParity(atom))
-    builder.append_7(this.getAtomParitySymbol(atom, parent_0));
+    builder.append_8(this.getAtomParitySymbol(atom, parent_0));
   if (useBrackets) {
     hCount = this.mMol.getImplicitHydrogens_0(atom);
     if (hCount != 0) {
-      builder.append_3(72);
+      builder.append_4(72);
       if (hCount > 1)
-        builder.append_7(jl.toString_33(hCount));
+        builder.append_8(jl.toString_33(hCount));
     }
   }
   if (charge != 0) {
-    builder.append_3(charge > 0?43:45);
+    builder.append_4(charge > 0?43:45);
     if ($wnd.Math.abs(charge) > 1)
-      builder.append_7(jl.toString_33($wnd.Math.abs(charge)));
+      builder.append_8(jl.toString_33($wnd.Math.abs(charge)));
   }
   if (mapNo != 0) {
-    builder.append_3(58);
-    builder.append_7(jl.toString_33(mapNo));
+    builder.append_4(58);
+    builder.append_8(jl.toString_33(mapNo));
   }
   if (useBrackets)
-    builder.append_3(93);
+    builder.append_4(93);
   this.appendClosureBonds(smilesAtom, builder);
   if (smilesAtom.isSideChainEnd)
-    builder.append_3(41);
+    builder.append_4(41);
 }
 ;
 _.addHighestRankingChain = function addHighestRankingChain(graphIndex, isSideChain){
@@ -18416,18 +18416,18 @@ _.appendBondOrderSymbol = function appendBondOrderSymbol(bond, builder){
     order = this.mMol.getBondType_0(bond) & 103;
     if (order == 1) {
       if (this.mMol.isAromaticAtom_1(this.mMol.getBondAtom_0(0, bond)) && this.mMol.isAromaticAtom_1(this.mMol.getBondAtom_0(1, bond)))
-        builder.append_3(45);
+        builder.append_4(45);
     }
      else if (order == 2)
-      builder.append_3(61);
+      builder.append_4(61);
     else if (order == 4)
-      builder.append_3(35);
+      builder.append_4(35);
   }
 }
 ;
 _.appendBondOrderSymbol_0 = function appendBondOrderSymbol_0(smilesAtom, builder){
   if (smilesAtom.ezHalfParity != 0) {
-    builder.append_3(smilesAtom.ezHalfParity == 1?47:92);
+    builder.append_4(smilesAtom.ezHalfParity == 1?47:92);
     return;
   }
   this.appendBondOrderSymbol(this.mMol.getBond_0(smilesAtom.atom, smilesAtom.parent_0), builder);
@@ -18453,8 +18453,8 @@ _.appendClosureBonds = function appendClosureBonds(smilesAtom, builder){
         this.appendBondOrderSymbol(bond, builder);
       }
       if (closureNumber > 9)
-        builder.append_3(37);
-      builder.append_7(jl.toString_33(closureNumber));
+        builder.append_4(37);
+      builder.append_8(jl.toString_33(closureNumber));
     }
   }
 }
@@ -18539,7 +18539,7 @@ _.createSmiles = function createSmiles(){
       if (isFirst)
         isFirst = false;
       else 
-        sb.append_3(46);
+        sb.append_4(46);
     }
     this.addAtomString(smilesAtom, sb);
   }
@@ -18740,7 +18740,7 @@ _.qualifiesForAtomParity = function qualifiesForAtomParity(atom){
 }
 ;
 _.mIncludeMapping = false;
-cggl.Lcom_actelion_research_chem_IsomericSmilesCreator_2_classLit = createForClass('com.actelion.research.chem', 'IsomericSmilesCreator', 129, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_IsomericSmilesCreator_2_classLit = createForClass('com.actelion.research.chem', 'IsomericSmilesCreator', 130, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_Isotope = function $clinit_Isotope(){
   carc2.$clinit_Isotope = emptyMethod;
   jl.$clinit_Object();
@@ -18779,8 +18779,8 @@ carc2.getAbsoluteMass = function getAbsoluteMass(atomicNo, mass){
   return NaN;
 }
 ;
-defineClass(989, 1, {1:1});
-cggl.Lcom_actelion_research_chem_IsotopeHelper_2_classLit = createForClass('com.actelion.research.chem', 'IsotopeHelper', 989, cggl.Ljava_lang_Object_2_classLit);
+defineClass(990, 1, {1:1});
+cggl.Lcom_actelion_research_chem_IsotopeHelper_2_classLit = createForClass('com.actelion.research.chem', 'IsotopeHelper', 990, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_MesoFragmentBranch = function $clinit_MesoFragmentBranch(){
   carc2.$clinit_MesoFragmentBranch = emptyMethod;
 }
@@ -18994,8 +18994,20 @@ carc2.MolecularFormula = function MolecularFormula(mol){
   }
 }
 ;
-defineClass(178, 1, {1:1});
+defineClass(102, 1, {102:1, 1:1});
 _.$init_29 = function $init_29(){
+}
+;
+_.equals_0 = function equals_6(f){
+  var i;
+  if (f === this)
+    return true;
+  if (!instanceOf(f, 102))
+    return false;
+  for (i = 0; i < this.mAtomCount.length; i++)
+    if (this.mAtomCount[i] != castTo(f, 102).mAtomCount[i])
+      return false;
+  return true;
 }
 ;
 _.getAbsoluteWeight = function getAbsoluteWeight(){
@@ -19010,9 +19022,9 @@ _.getFormula = function getFormula(){
   var formula, i;
   formula = new jl.StringBuffer;
   for (i = 0; i < this.mAtomCount.length; i++) {
-    formula.append_1((carc2.$clinit_Molecule() , carc2.cAtomLabel)[this.mAtomicNo[i]]);
+    formula.append_2((carc2.$clinit_Molecule() , carc2.cAtomLabel)[this.mAtomicNo[i]]);
     if (this.mAtomCount[i] > 1)
-      formula.append_1(jl.toString_33(this.mAtomCount[i]));
+      formula.append_1(this.mAtomCount[i]);
   }
   return formula.toString_0();
 }
@@ -19027,7 +19039,7 @@ _.getRelativeWeight = function getRelativeWeight(){
 ;
 _.mAbsoluteIsotopeWeightIncrement = 0;
 _.mRelativeIsotopeWeightIncrement = 0;
-cggl.Lcom_actelion_research_chem_MolecularFormula_2_classLit = createForClass('com.actelion.research.chem', 'MolecularFormula', 178, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_MolecularFormula_2_classLit = createForClass('com.actelion.research.chem', 'MolecularFormula', 102, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_MolfileCreator = function $clinit_MolfileCreator(){
   carc2.$clinit_MolfileCreator = emptyMethod;
   jl.$clinit_Object();
@@ -19074,13 +19086,13 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
   }
   this.mBuilder = isNull(builder)?new jl.StringBuilder:builder;
   name_0 = jsNotEquals(mol.getName_0(), null)?mol.getName_0():'';
-  this.mBuilder.append_7(name_0 + '\n');
-  this.mBuilder.append_7('Actelion Java MolfileCreator 1.0\n\n');
+  this.mBuilder.append_8(name_0 + '\n');
+  this.mBuilder.append_8('Actelion Java MolfileCreator 1.0\n\n');
   this.appendThreeDigitInt(mol.getAllAtoms_0());
   this.appendThreeDigitInt(mol.getAllBonds_0());
-  this.mBuilder.append_7('  0  0');
+  this.mBuilder.append_8('  0  0');
   this.appendThreeDigitInt(!isRacemic?1:0);
-  this.mBuilder.append_7('  0  0  0  0  0999 V2000\n');
+  this.mBuilder.append_8('  0  0  0  0  0999 V2000\n');
   hasCoordinates = mol.getAllAtoms_0() == 1;
   for (atom3 = 1; atom3 < mol.getAllAtoms_0(); atom3++) {
     if (mol.getAtomX_1(atom3) != mol.getAtomX_1(0) || mol.getAtomY_1(atom3) != mol.getAtomY_1(0) || mol.getAtomZ_0(atom3) != mol.getAtomZ_0(0)) {
@@ -19122,43 +19134,43 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
       this.appendTenDigitDouble(grafac * -mol.getAtomZ_0(atom4));
     }
      else {
-      this.mBuilder.append_7('    0.0000    0.0000    0.0000');
+      this.mBuilder.append_8('    0.0000    0.0000    0.0000');
     }
     if (jsNotEquals(mol.getAtomList_0(atom4), null))
-      this.mBuilder.append_7(' L  ');
+      this.mBuilder.append_8(' L  ');
     else if ((mol.getAtomQueryFeatures_0(atom4) & 1) != 0)
-      this.mBuilder.append_7(' A  ');
+      this.mBuilder.append_8(' A  ');
     else {
       atomLabel = mol.getAtomLabel_0(atom4);
-      this.mBuilder.append_7(' ' + atomLabel);
+      this.mBuilder.append_8(' ' + atomLabel);
       if (jl.length__I__devirtual$_0(atomLabel) == 1)
-        this.mBuilder.append_7('  ');
+        this.mBuilder.append_8('  ');
       else if (jl.length__I__devirtual$_0(atomLabel) == 2)
-        this.mBuilder.append_7(' ');
+        this.mBuilder.append_8(' ');
     }
-    this.mBuilder.append_7(' 0  0  0');
+    this.mBuilder.append_8(' 0  0  0');
     hydrogenFlags = 1920 & mol.getAtomQueryFeatures_0(atom4);
     if (hydrogenFlags == 0)
-      this.mBuilder.append_7('  0');
+      this.mBuilder.append_8('  0');
     else if (hydrogenFlags == (128 | 256))
-      this.mBuilder.append_7('  3');
+      this.mBuilder.append_8('  3');
     else if (hydrogenFlags == 128)
-      this.mBuilder.append_7('  2');
+      this.mBuilder.append_8('  2');
     else if (hydrogenFlags == (256 | 512 | 1024))
-      this.mBuilder.append_7('  1');
+      this.mBuilder.append_8('  1');
     else if (hydrogenFlags == (128 | 512 | 1024))
-      this.mBuilder.append_7('  2');
-    this.mBuilder.append_7((mol.getAtomQueryFeatures_0(atom4) & 8192) != 0?'  1':'  0');
+      this.mBuilder.append_8('  2');
+    this.mBuilder.append_8((mol.getAtomQueryFeatures_0(atom4) & 8192) != 0?'  1':'  0');
     valence = mol.getAtomAbnormalValence_0(atom4);
     if (valence == -1)
-      this.mBuilder.append_7('  0');
+      this.mBuilder.append_8('  0');
     else if (valence == 0)
-      this.mBuilder.append_7(' 15');
+      this.mBuilder.append_8(' 15');
     else 
       this.appendThreeDigitInt(valence);
-    this.mBuilder.append_7('  0  0  0');
+    this.mBuilder.append_8('  0  0  0');
     this.appendThreeDigitInt(mol.getAtomMapNo_0(atom4));
-    this.mBuilder.append_7('  0  0\n');
+    this.mBuilder.append_8('  0  0\n');
   }
   for (bond = 0; bond < mol.getAllBonds_0(); bond++) {
     switch (mol.getBondType_0(bond)) {
@@ -19221,9 +19233,9 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
     this.appendThreeDigitInt(1 + mol.getBondAtom_0(1, bond));
     this.appendThreeDigitInt(order);
     this.appendThreeDigitInt(stereo);
-    this.mBuilder.append_7('  0');
+    this.mBuilder.append_8('  0');
     this.appendThreeDigitInt(topology);
-    this.mBuilder.append_7('  0\n');
+    this.mBuilder.append_8('  0\n');
   }
   no = 0;
   for (atom5 = 0; atom5 < mol.getAllAtoms_0(); atom5++)
@@ -19234,23 +19246,23 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
     for (atom1 = 0; atom1 < mol.getAllAtoms_0(); atom1++) {
       if (mol.getAtomCharge_0(atom1) != 0) {
         if (count == 0) {
-          this.mBuilder.append_7('M  CHG');
+          this.mBuilder.append_8('M  CHG');
           this.appendThreeDigitInt($wnd.Math.min(8, no));
         }
-        this.mBuilder.append_7(' ');
+        this.mBuilder.append_8(' ');
         this.appendThreeDigitInt(atom1 + 1);
         charge = mol.getAtomCharge_0(atom1);
         if (charge < 0) {
-          this.mBuilder.append_7('  -');
+          this.mBuilder.append_8('  -');
           charge = -charge;
         }
          else 
-          this.mBuilder.append_7('   ');
-        this.mBuilder.append_3(narrow_char(48 + charge));
+          this.mBuilder.append_8('   ');
+        this.mBuilder.append_4(narrow_char(48 + charge));
         no--;
         if (++count == 8 || no == 0) {
           count = 0;
-          this.mBuilder.append_7('\n');
+          this.mBuilder.append_8('\n');
         }
       }
     }
@@ -19264,17 +19276,17 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
     for (atom1 = 0; atom1 < mol.getAllAtoms_0(); atom1++) {
       if (!mol.isNaturalAbundance_0(atom1)) {
         if (count == 0) {
-          this.mBuilder.append_7('M  ISO');
+          this.mBuilder.append_8('M  ISO');
           this.appendThreeDigitInt($wnd.Math.min(8, no));
         }
-        this.mBuilder.append_7(' ');
+        this.mBuilder.append_8(' ');
         this.appendThreeDigitInt(atom1 + 1);
-        this.mBuilder.append_7(' ');
+        this.mBuilder.append_8(' ');
         this.appendThreeDigitInt(mol.getAtomMass_0(atom1));
         no--;
         if (++count == 8 || no == 0) {
           count = 0;
-          this.mBuilder.append_7('\n');
+          this.mBuilder.append_8('\n');
         }
       }
     }
@@ -19288,26 +19300,26 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
     for (atom = 0; atom < mol.getAllAtoms_0(); atom++) {
       if (mol.getAtomRadical_0(atom) != 0) {
         if (count == 0) {
-          this.mBuilder.append_7('M  RAD');
+          this.mBuilder.append_8('M  RAD');
           this.appendThreeDigitInt($wnd.Math.min(8, no));
         }
-        this.mBuilder.append_7(' ');
+        this.mBuilder.append_8(' ');
         this.appendThreeDigitInt(atom + 1);
         switch (mol.getAtomRadical_0(atom)) {
           case 16:
-            this.mBuilder.append_7('   1');
+            this.mBuilder.append_8('   1');
             break;
           case 32:
-            this.mBuilder.append_7('   2');
+            this.mBuilder.append_8('   2');
             break;
           case 48:
-            this.mBuilder.append_7('   3');
+            this.mBuilder.append_8('   3');
             break;
         }
         no--;
         if (++count == 8 || no == 0) {
           count = 0;
-          this.mBuilder.append_7('\n');
+          this.mBuilder.append_8('\n');
         }
       }
     }
@@ -19323,32 +19335,32 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
         ringFeatures = mol.getAtomQueryFeatures_0(atom2) & 120;
         if (ringFeatures != 0) {
           if (count == 0) {
-            this.mBuilder.append_7('M  RBC');
+            this.mBuilder.append_8('M  RBC');
             this.appendThreeDigitInt($wnd.Math.min(8, no));
           }
-          this.mBuilder.append_7(' ');
+          this.mBuilder.append_8(' ');
           this.appendThreeDigitInt(atom2 + 1);
           switch (ringFeatures) {
             case 16 | 32 | 64:
-              this.mBuilder.append_7('  -1');
+              this.mBuilder.append_8('  -1');
               break;
             case 8:
-              this.mBuilder.append_7('   1');
+              this.mBuilder.append_8('   1');
               break;
             case 8 | 32 | 64:
-              this.mBuilder.append_7('   2');
+              this.mBuilder.append_8('   2');
               break;
             case 8 | 16 | 64:
-              this.mBuilder.append_7('   3');
+              this.mBuilder.append_8('   3');
               break;
             case 8 | 16 | 32:
-              this.mBuilder.append_7('   4');
+              this.mBuilder.append_8('   4');
               break;
           }
           no--;
           if (++count == 8 || no == 0) {
             count = 0;
-            this.mBuilder.append_7('\n');
+            this.mBuilder.append_8('\n');
           }
         }
       }
@@ -19356,27 +19368,27 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
     for (atom8 = 0; atom8 < mol.getAllAtoms_0(); atom8++) {
       atomList = mol.getAtomList_0(atom8);
       if (jsNotEquals(atomList, null)) {
-        this.mBuilder.append_7('M  ALS ');
+        this.mBuilder.append_8('M  ALS ');
         this.appendThreeDigitInt(atom8 + 1);
         this.appendThreeDigitInt(atomList.length);
-        this.mBuilder.append_7((mol.getAtomQueryFeatures_0(atom8) & 1) != 0?' T ':' F ');
+        this.mBuilder.append_8((mol.getAtomQueryFeatures_0(atom8) & 1) != 0?' T ':' F ');
         for (i = 0; i < atomList.length; i++) {
           label_0 = (carc2.$clinit_Molecule() , carc2.cAtomLabel)[atomList[i]];
           switch (jl.length__I__devirtual$_0(label_0)) {
             case 1:
-              this.mBuilder.append_7(label_0 + '   ');
+              this.mBuilder.append_8(label_0 + '   ');
               break;
             case 2:
-              this.mBuilder.append_7(label_0 + '  ');
+              this.mBuilder.append_8(label_0 + '  ');
               break;
             case 3:
-              this.mBuilder.append_7(label_0 + ' ');
+              this.mBuilder.append_8(label_0 + ' ');
               break;
-            default:this.mBuilder.append_7('   ?');
+            default:this.mBuilder.append_8('   ?');
               break;
           }
         }
-        this.mBuilder.append_7('\n');
+        this.mBuilder.append_8('\n');
       }
     }
     no = 0;
@@ -19389,32 +19401,32 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
         substitution = mol.getAtomQueryFeatures_0(atom) & (4096 | 2048);
         if (substitution != 0) {
           if (count == 0) {
-            this.mBuilder.append_7('M  SUB');
+            this.mBuilder.append_8('M  SUB');
             this.appendThreeDigitInt($wnd.Math.min(8, no));
           }
-          this.mBuilder.append_7(' ');
+          this.mBuilder.append_8(' ');
           this.appendThreeDigitInt(atom + 1);
           if ((substitution & 4096) != 0)
-            this.mBuilder.append_7('   ' + (mol.getAllConnAtoms_0(atom) + 1));
+            this.mBuilder.append_8('   ' + (mol.getAllConnAtoms_0(atom) + 1));
           else 
-            this.mBuilder.append_7('  -2');
+            this.mBuilder.append_8('  -2');
           no--;
           if (++count == 8 || no == 0) {
             count = 0;
-            this.mBuilder.append_7('\n');
+            this.mBuilder.append_8('\n');
           }
         }
       }
     }
   }
-  this.mBuilder.append_7('M  END\n');
+  this.mBuilder.append_8('M  END\n');
 }
 ;
 carc2.MolfileCreator_2 = function MolfileCreator_2(mol, allowScaling, builder){
   carc2.MolfileCreator_1.call(this, mol, allowScaling, 0, builder);
 }
 ;
-defineClass(130, 1, {1:1}, carc2.MolfileCreator, carc2.MolfileCreator_1);
+defineClass(131, 1, {1:1}, carc2.MolfileCreator, carc2.MolfileCreator_1);
 _.$init_30 = function $init_30(){
 }
 ;
@@ -19422,14 +19434,14 @@ _.appendTenDigitDouble = function appendTenDigitDouble(theDouble){
   var i, val;
   val = this.mDoubleFormat.format(theDouble);
   for (i = jl.length__I__devirtual$_0(val); i < 10; i++)
-    this.mBuilder.append_3(32);
-  this.mBuilder.append_7(val);
+    this.mBuilder.append_4(32);
+  this.mBuilder.append_8(val);
 }
 ;
 _.appendThreeDigitInt = function appendThreeDigitInt(data_0){
   var digitFound, i, theChar;
   if (data_0 < 0 || data_0 > 999) {
-    this.mBuilder.append_7('  ?');
+    this.mBuilder.append_8('  ?');
     return;
   }
   digitFound = false;
@@ -19437,12 +19449,12 @@ _.appendThreeDigitInt = function appendThreeDigitInt(data_0){
     theChar = narrow_int(data_0 / 100);
     if (theChar == 0) {
       if (i == 2 || digitFound)
-        this.mBuilder.append_3(48);
+        this.mBuilder.append_4(48);
       else 
-        this.mBuilder.append_3(32);
+        this.mBuilder.append_4(32);
     }
      else {
-      this.mBuilder.append_3(narrow_char(48 + theChar));
+      this.mBuilder.append_4(narrow_char(48 + theChar));
       digitFound = true;
     }
     data_0 = 10 * (data_0 % 100);
@@ -19458,7 +19470,7 @@ _.writeMolfile = function writeMolfile(theWriter){
 }
 ;
 carc2.TARGET_AVBL = 1.5;
-cggl.Lcom_actelion_research_chem_MolfileCreator_2_classLit = createForClass('com.actelion.research.chem', 'MolfileCreator', 130, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_MolfileCreator_2_classLit = createForClass('com.actelion.research.chem', 'MolfileCreator', 131, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_MolfileParser = function $clinit_MolfileParser(){
   carc2.$clinit_MolfileParser = emptyMethod;
   jl.$clinit_Object();
@@ -19478,7 +19490,7 @@ carc2.MolfileParser_0 = function MolfileParser_0(mode){
   this.mMode = mode;
 }
 ;
-defineClass(112, 1, {1:1}, carc2.MolfileParser, carc2.MolfileParser_0);
+defineClass(114, 1, {1:1}, carc2.MolfileParser, carc2.MolfileParser_0);
 _.$init_31 = function $init_31(){
 }
 ;
@@ -20397,7 +20409,7 @@ _.mMode = 0;
 _.mTreatAnyAsMetalBond = false;
 carc2.MODE_KEEP_HYDROGEN_MAP = 1;
 carc2.debug = false;
-cggl.Lcom_actelion_research_chem_MolfileParser_2_classLit = createForClass('com.actelion.research.chem', 'MolfileParser', 112, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_MolfileParser_2_classLit = createForClass('com.actelion.research.chem', 'MolfileParser', 114, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_MolfileV3Creator = function $clinit_MolfileV3Creator(){
   carc2.$clinit_MolfileV3Creator = emptyMethod;
   jl.$clinit_Object();
@@ -20425,9 +20437,9 @@ carc2.MolfileV3Creator_2 = function MolfileV3Creator_2(mol, allowScaling, scalin
   mol.ensureHelperArrays_0(7);
   this.mMolfile = isNull(builder)?new jl.StringBuilder:builder;
   name_0 = jsNotEquals(mol.getName_0(), null)?mol.getName_0():'';
-  this.mMolfile.append_7(name_0 + '\n');
-  this.mMolfile.append_7('Actelion Java MolfileCreator 2.0\n\n');
-  this.mMolfile.append_7('  0  0  0  0  0  0              0 V3000\n');
+  this.mMolfile.append_8(name_0 + '\n');
+  this.mMolfile.append_8('Actelion Java MolfileCreator 2.0\n\n');
+  this.mMolfile.append_8('  0  0  0  0  0  0              0 V3000\n');
   this.mScalingFactor = 1;
   hasCoordinates = carc2.hasCoordinates_0(mol);
   if (hasCoordinates) {
@@ -20437,7 +20449,7 @@ carc2.MolfileV3Creator_2 = function MolfileV3Creator_2(mol, allowScaling, scalin
       this.mScalingFactor = carc2.calculateScalingFactor(mol);
   }
   this.writeBody(mol, hasCoordinates);
-  this.mMolfile.append_7('M  END\n');
+  this.mMolfile.append_8('M  END\n');
 }
 ;
 carc2.calculateScalingFactor = function calculateScalingFactor(mol){
@@ -20487,7 +20499,7 @@ carc2.writeCTAB = function writeCTAB(mol, scalingFactor){
   return mf.getMolfile();
 }
 ;
-defineClass(131, 1, {1:1}, carc2.MolfileV3Creator, carc2.MolfileV3Creator_0);
+defineClass(132, 1, {1:1}, carc2.MolfileV3Creator, carc2.MolfileV3Creator_0);
 _.$init_32 = function $init_32(){
   this.mScalingFactor = 1;
 }
@@ -20498,132 +20510,132 @@ _.getMolfile = function getMolfile_0(){
 ;
 _.writeBody = function writeBody(mol, hasCoordinates){
   var absAtomsCount, absBondsCount, andAtomsCount, andBondsCount, atom, atom0, atom1, atomList, bond, bond0, bond1, bondType, group, hydrogenFlags, i, label_0, notlist, orAtomsCount, orBondsCount, order, paritiesFound, ringFeatures, ringState, stereo, substitution, topology, type_0, valence;
-  this.mMolfile.append_7('M  V30 BEGIN CTAB\n');
-  this.mMolfile.append_7('M  V30 COUNTS ' + mol.getAllAtoms_0() + ' ' + mol.getAllBonds_0() + ' 0 0 0\n');
-  this.mMolfile.append_7('M  V30 BEGIN ATOM\n');
+  this.mMolfile.append_8('M  V30 BEGIN CTAB\n');
+  this.mMolfile.append_8('M  V30 COUNTS ' + mol.getAllAtoms_0() + ' ' + mol.getAllBonds_0() + ' 0 0 0\n');
+  this.mMolfile.append_8('M  V30 BEGIN ATOM\n');
   for (atom0 = 0; atom0 < mol.getAllAtoms_0(); atom0++) {
-    this.mMolfile.append_7('M  V30 ' + (atom0 + 1));
+    this.mMolfile.append_8('M  V30 ' + (atom0 + 1));
     if (jsNotEquals(mol.getAtomList_0(atom0), null)) {
       atomList = mol.getAtomList_0(atom0);
       notlist = (mol.getAtomQueryFeatures_0(atom0) & 1) != 0;
-      this.mMolfile.append_7(notlist?' NOT[':' [');
+      this.mMolfile.append_8(notlist?' NOT[':' [');
       for (i = 0; i < atomList.length; i++) {
         if (i > 0) {
-          this.mMolfile.append_7(',');
+          this.mMolfile.append_8(',');
         }
         label_0 = (carc2.$clinit_Molecule() , carc2.cAtomLabel)[atomList[i]];
         switch (jl.length__I__devirtual$_0(label_0)) {
           case 1:
-            this.mMolfile.append_7(label_0);
+            this.mMolfile.append_8(label_0);
             break;
           case 2:
-            this.mMolfile.append_7(label_0);
+            this.mMolfile.append_8(label_0);
             break;
           case 3:
-            this.mMolfile.append_7(label_0);
+            this.mMolfile.append_8(label_0);
             break;
-          default:this.mMolfile.append_7('?');
+          default:this.mMolfile.append_8('?');
             break;
         }
       }
-      this.mMolfile.append_7(']');
+      this.mMolfile.append_8(']');
     }
      else if ((mol.getAtomQueryFeatures_0(atom0) & 1) != 0) {
-      this.mMolfile.append_7(' A');
+      this.mMolfile.append_8(' A');
     }
      else {
-      this.mMolfile.append_7(' ' + mol.getAtomLabel_0(atom0));
+      this.mMolfile.append_8(' ' + mol.getAtomLabel_0(atom0));
     }
     if (hasCoordinates) {
-      this.mMolfile.append_7(' ' + round_int(10000 * this.mScalingFactor * mol.getAtomX_1(atom0)) / 10000);
-      this.mMolfile.append_7(' ' + round_int(10000 * this.mScalingFactor * -mol.getAtomY_1(atom0)) / 10000);
-      this.mMolfile.append_7(' ' + round_int(10000 * this.mScalingFactor * -mol.getAtomZ_0(atom0)) / 10000);
+      this.mMolfile.append_8(' ' + round_int(10000 * this.mScalingFactor * mol.getAtomX_1(atom0)) / 10000);
+      this.mMolfile.append_8(' ' + round_int(10000 * this.mScalingFactor * -mol.getAtomY_1(atom0)) / 10000);
+      this.mMolfile.append_8(' ' + round_int(10000 * this.mScalingFactor * -mol.getAtomZ_0(atom0)) / 10000);
     }
      else {
-      this.mMolfile.append_7(' 0 0 0');
+      this.mMolfile.append_8(' 0 0 0');
     }
-    this.mMolfile.append_7(' ' + mol.getAtomMapNo_0(atom0));
+    this.mMolfile.append_8(' ' + mol.getAtomMapNo_0(atom0));
     if (mol.getAtomCharge_0(atom0) != 0) {
-      this.mMolfile.append_7(' CHG=' + mol.getAtomCharge_0(atom0));
+      this.mMolfile.append_8(' CHG=' + mol.getAtomCharge_0(atom0));
     }
     if (mol.getAtomRadical_0(atom0) != 0) {
-      this.mMolfile.append_7(' RAD=');
+      this.mMolfile.append_8(' RAD=');
       switch (mol.getAtomRadical_0(atom0)) {
         case 16:
-          this.mMolfile.append_7('1');
+          this.mMolfile.append_8('1');
           break;
         case 32:
-          this.mMolfile.append_7('2');
+          this.mMolfile.append_8('2');
           break;
         case 48:
-          this.mMolfile.append_7('3');
+          this.mMolfile.append_8('3');
           break;
       }
     }
     if (mol.getAtomParity_0(atom0) == 1 || mol.getAtomParity_0(atom0) == 2) {
-      this.mMolfile.append_7(' CFG=');
+      this.mMolfile.append_8(' CFG=');
       if (mol.getAtomParity_0(atom0) == 1) {
-        this.mMolfile.append_7('1');
+        this.mMolfile.append_8('1');
       }
        else {
-        this.mMolfile.append_7('2');
+        this.mMolfile.append_8('2');
       }
     }
     if (mol.getAtomMass_0(atom0) != 0) {
-      this.mMolfile.append_7(' MASS=' + mol.getAtomMass_0(atom0));
+      this.mMolfile.append_8(' MASS=' + mol.getAtomMass_0(atom0));
     }
     valence = mol.getAtomAbnormalValence_0(atom0);
     if (valence != -1) {
-      this.mMolfile.append_7(' VAL=' + (valence == 0?'-1':jl.valueOf_22(valence)));
+      this.mMolfile.append_8(' VAL=' + (valence == 0?'-1':jl.valueOf_22(valence)));
     }
     hydrogenFlags = 1920 & mol.getAtomQueryFeatures_0(atom0);
     if (hydrogenFlags == (128 | 256)) {
-      this.mMolfile.append_7(' HCOUNT=2');
+      this.mMolfile.append_8(' HCOUNT=2');
     }
      else if (hydrogenFlags == 128) {
-      this.mMolfile.append_7(' HCOUNT=1');
+      this.mMolfile.append_8(' HCOUNT=1');
     }
      else if (hydrogenFlags == (256 | 512 | 1024)) {
-      this.mMolfile.append_7(' HCOUNT=-1');
+      this.mMolfile.append_8(' HCOUNT=-1');
     }
      else if (hydrogenFlags == (128 | 512 | 1024)) {
-      this.mMolfile.append_7(' HCOUNT=1');
+      this.mMolfile.append_8(' HCOUNT=1');
     }
     substitution = mol.getAtomQueryFeatures_0(atom0) & (4096 | 2048);
     if (substitution != 0) {
       if ((substitution & 4096) != 0) {
-        this.mMolfile.append_7(' SUBST=' + (mol.getAllConnAtoms_0(atom0) + 1));
+        this.mMolfile.append_8(' SUBST=' + (mol.getAllConnAtoms_0(atom0) + 1));
       }
        else {
-        this.mMolfile.append_7(' SUBST=-1');
+        this.mMolfile.append_8(' SUBST=-1');
       }
     }
     ringFeatures = mol.getAtomQueryFeatures_0(atom0) & 120;
     if (ringFeatures != 0) {
       switch (ringFeatures) {
         case 16 | 32 | 64:
-          this.mMolfile.append_7(' RBCNT=-1');
+          this.mMolfile.append_8(' RBCNT=-1');
           break;
         case 8:
-          this.mMolfile.append_7(' RBCNT=2');
+          this.mMolfile.append_8(' RBCNT=2');
           break;
         case 8 | 32 | 64:
-          this.mMolfile.append_7(' RBCNT=2');
+          this.mMolfile.append_8(' RBCNT=2');
           break;
         case 8 | 16 | 64:
-          this.mMolfile.append_7(' RBCNT=3');
+          this.mMolfile.append_8(' RBCNT=3');
           break;
         case 8 | 16 | 32:
-          this.mMolfile.append_7(' RBCNT=4');
+          this.mMolfile.append_8(' RBCNT=4');
           break;
       }
     }
-    this.mMolfile.append_7('\n');
+    this.mMolfile.append_8('\n');
   }
-  this.mMolfile.append_7('M  V30 END ATOM\n');
-  this.mMolfile.append_7('M  V30 BEGIN BOND\n');
+  this.mMolfile.append_8('M  V30 END ATOM\n');
+  this.mMolfile.append_8('M  V30 BEGIN BOND\n');
   for (bond0 = 0; bond0 < mol.getAllBonds_0(); bond0++) {
-    this.mMolfile.append_7('M  V30 ' + (bond0 + 1));
+    this.mMolfile.append_8('M  V30 ' + (bond0 + 1));
     switch (mol.getBondType_0(bond0)) {
       case 1:
         order = 1;
@@ -20679,18 +20691,18 @@ _.writeBody = function writeBody(mol, hasCoordinates){
         order = 8;
       }
     }
-    this.mMolfile.append_7(' ' + order + ' ' + (mol.getBondAtom_0(0, bond0) + 1) + ' ' + (mol.getBondAtom_0(1, bond0) + 1));
+    this.mMolfile.append_8(' ' + order + ' ' + (mol.getBondAtom_0(0, bond0) + 1) + ' ' + (mol.getBondAtom_0(1, bond0) + 1));
     if (stereo != 0) {
-      this.mMolfile.append_7(' CFG=' + stereo);
+      this.mMolfile.append_8(' CFG=' + stereo);
     }
     ringState = mol.getBondQueryFeatures_0(bond0) & 96;
     topology = ringState == 0?0:ringState == 64?1:2;
     if (topology != 0) {
-      this.mMolfile.append_7(' TOPO=' + topology);
+      this.mMolfile.append_8(' TOPO=' + topology);
     }
-    this.mMolfile.append_7('\n');
+    this.mMolfile.append_8('\n');
   }
-  this.mMolfile.append_7('M  V30 END BOND\n');
+  this.mMolfile.append_8('M  V30 END BOND\n');
   paritiesFound = false;
   absAtomsCount = 0;
   orAtomsCount = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, 32, 15, 1);
@@ -20729,66 +20741,66 @@ _.writeBody = function writeBody(mol, hasCoordinates){
     }
   }
   if (paritiesFound) {
-    this.mMolfile.append_7('M  V30 BEGIN COLLECTION\n');
+    this.mMolfile.append_8('M  V30 BEGIN COLLECTION\n');
     if (absAtomsCount != 0) {
-      this.mMolfile.append_7('M  V30 MDLV30/STEABS ATOMS=(' + absAtomsCount);
+      this.mMolfile.append_8('M  V30 MDLV30/STEABS ATOMS=(' + absAtomsCount);
       for (atom = 0; atom < mol.getAtoms_0(); atom++) {
         if ((mol.getAtomParity_0(atom) == 1 || mol.getAtomParity_0(atom) == 2) && mol.getAtomESRType_0(atom) == 0) {
-          this.mMolfile.append_7(' ' + (atom + 1));
+          this.mMolfile.append_8(' ' + (atom + 1));
         }
       }
-      this.mMolfile.append_7(')\n');
+      this.mMolfile.append_8(')\n');
     }
     if (absBondsCount != 0) {
-      this.mMolfile.append_7('M  V30 MDLV30/STEABS BONDS=(' + absBondsCount);
+      this.mMolfile.append_8('M  V30 MDLV30/STEABS BONDS=(' + absBondsCount);
       for (bond = 0; bond < mol.getBonds_0(); bond++) {
         if (mol.getBondOrder_0(bond) != 2 && (mol.getBondParity_0(bond) == 1 || mol.getBondParity_0(bond) == 2) && mol.getBondESRType_0(bond) == 0) {
-          this.mMolfile.append_7(' ' + (bond + 1));
+          this.mMolfile.append_8(' ' + (bond + 1));
         }
       }
-      this.mMolfile.append_7(')\n');
+      this.mMolfile.append_8(')\n');
     }
     for (group = 0; group < 32; group++) {
       if (orAtomsCount[group] != 0) {
-        this.mMolfile.append_7('M  V30 MDLV30/STEREL' + (group + 1) + ' ATOMS=(' + orAtomsCount[group]);
+        this.mMolfile.append_8('M  V30 MDLV30/STEREL' + (group + 1) + ' ATOMS=(' + orAtomsCount[group]);
         for (atom = 0; atom < mol.getAtoms_0(); atom++) {
           if ((mol.getAtomParity_0(atom) == 1 || mol.getAtomParity_0(atom) == 2) && mol.getAtomESRType_0(atom) == 2 && mol.getAtomESRGroup_0(atom) == group) {
-            this.mMolfile.append_7(' ' + (atom + 1));
+            this.mMolfile.append_8(' ' + (atom + 1));
           }
         }
-        this.mMolfile.append_7(')\n');
+        this.mMolfile.append_8(')\n');
       }
       if (andAtomsCount[group] != 0) {
-        this.mMolfile.append_7('M  V30 MDLV30/STERAC' + (group + 1) + ' ATOMS=(' + andAtomsCount[group]);
+        this.mMolfile.append_8('M  V30 MDLV30/STERAC' + (group + 1) + ' ATOMS=(' + andAtomsCount[group]);
         for (atom = 0; atom < mol.getAtoms_0(); atom++) {
           if ((mol.getAtomParity_0(atom) == 1 || mol.getAtomParity_0(atom) == 2) && mol.getAtomESRType_0(atom) == 1 && mol.getAtomESRGroup_0(atom) == group) {
-            this.mMolfile.append_7(' ' + (atom + 1));
+            this.mMolfile.append_8(' ' + (atom + 1));
           }
         }
-        this.mMolfile.append_7(')\n');
+        this.mMolfile.append_8(')\n');
       }
       if (orBondsCount[group] != 0) {
-        this.mMolfile.append_7('M  V30 MDLV30/STEREL' + (group + 1) + ' BONDS=(' + orBondsCount[group]);
+        this.mMolfile.append_8('M  V30 MDLV30/STEREL' + (group + 1) + ' BONDS=(' + orBondsCount[group]);
         for (bond = 0; bond < mol.getBonds_0(); bond++) {
           if (mol.getBondOrder_0(bond) != 2 && (mol.getBondParity_0(bond) == 1 || mol.getBondParity_0(bond) == 2) && mol.getBondESRType_0(bond) == 2 && mol.getBondESRGroup_0(bond) == group) {
-            this.mMolfile.append_7(' ' + (bond + 1));
+            this.mMolfile.append_8(' ' + (bond + 1));
           }
         }
-        this.mMolfile.append_7(')\n');
+        this.mMolfile.append_8(')\n');
       }
       if (andBondsCount[group] != 0) {
-        this.mMolfile.append_7('M  V30 MDLV30/STERAC' + (group + 1) + ' BONDS=(' + andBondsCount[group]);
+        this.mMolfile.append_8('M  V30 MDLV30/STERAC' + (group + 1) + ' BONDS=(' + andBondsCount[group]);
         for (bond = 0; bond < mol.getBonds_0(); bond++) {
           if (mol.getBondOrder_0(bond) != 2 && (mol.getBondParity_0(bond) == 1 || mol.getBondParity_0(bond) == 2) && mol.getBondESRType_0(bond) == 1 && mol.getBondESRGroup_0(bond) == group) {
-            this.mMolfile.append_7(' ' + (bond + 1));
+            this.mMolfile.append_8(' ' + (bond + 1));
           }
         }
-        this.mMolfile.append_7(')\n');
+        this.mMolfile.append_8(')\n');
       }
     }
-    this.mMolfile.append_7('M  V30 END COLLECTION\n');
+    this.mMolfile.append_8('M  V30 END COLLECTION\n');
   }
-  this.mMolfile.append_7('M  V30 END CTAB\n');
+  this.mMolfile.append_8('M  V30 END CTAB\n');
 }
 ;
 _.writeMolfile = function writeMolfile_0(theWriter){
@@ -20798,7 +20810,7 @@ _.writeMolfile = function writeMolfile_0(theWriter){
 _.mScalingFactor = 0;
 carc2.PRECISION_FACTOR = 10000;
 carc2.TARGET_AVBL_0 = 1.5;
-cggl.Lcom_actelion_research_chem_MolfileV3Creator_2_classLit = createForClass('com.actelion.research.chem', 'MolfileV3Creator', 131, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_MolfileV3Creator_2_classLit = createForClass('com.actelion.research.chem', 'MolfileV3Creator', 132, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_NamedSubstituents = function $clinit_NamedSubstituents(){
   carc2.$clinit_NamedSubstituents = emptyMethod;
   jl.$clinit_Object();
@@ -20850,9 +20862,9 @@ carc2.normalize = function normalize(s){
   return jl.replace_Ljava_lang_CharSequence_Ljava_lang_CharSequence__Ljava_lang_String___devirtual$(jl.toLowerCase__Ljava_lang_String___devirtual$(s), '-', '');
 }
 ;
-defineClass(1146, 1, {1:1});
+defineClass(1147, 1, {1:1});
 carc2.sIDCodeMap = null;
-cggl.Lcom_actelion_research_chem_NamedSubstituents_2_classLit = createForClass('com.actelion.research.chem', 'NamedSubstituents', 1146, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_NamedSubstituents_2_classLit = createForClass('com.actelion.research.chem', 'NamedSubstituents', 1147, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_PropertyCalculator = function $clinit_PropertyCalculator(){
   carc2.$clinit_PropertyCalculator = emptyMethod;
   jl.$clinit_Object();
@@ -21035,7 +21047,7 @@ carc2.RingCollection_0 = function RingCollection_0(mol, mode, maxSmallRingSize){
   }
 }
 ;
-defineClass(176, 1, {1:1}, carc2.RingCollection);
+defineClass(177, 1, {1:1}, carc2.RingCollection);
 _.$init_34 = function $init_34(){
 }
 ;
@@ -21480,7 +21492,7 @@ carc2.MODE_SMALL_AND_LARGE_RINGS_AND_AROMATICITY = 0;
 carc2.MODE_SMALL_RINGS = 1;
 carc2.MODE_SMALL_RINGS_AND_AROMATICITY = 0;
 carc2.MODE_SMALL_RINGS_ONLY = 1;
-cggl.Lcom_actelion_research_chem_RingCollection_2_classLit = createForClass('com.actelion.research.chem', 'RingCollection', 176, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_RingCollection_2_classLit = createForClass('com.actelion.research.chem', 'RingCollection', 177, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_SSSearcher = function $clinit_SSSearcher(){
   carc2.$clinit_SSSearcher = emptyMethod;
   jl.$clinit_Object();
@@ -22735,7 +22747,7 @@ carc2.makeColor = function makeColor(r, g, b){
   return 'rgb(' + r + ',' + g + ',' + b + ')';
 }
 ;
-defineClass(215, 105, {105:1, 1:1}, carc2.SVGDepictor, carc2.SVGDepictor_0);
+defineClass(215, 107, {107:1, 1:1}, carc2.SVGDepictor, carc2.SVGDepictor_0);
 _.$init_38 = function $init_38(){
   this.lineWidth_0 = 1;
   this.textSize = 10;
@@ -22772,12 +22784,12 @@ _.drawPolygon = function drawPolygon(x_0, y_0, count){
   var i, s;
   s = new jl.StringBuilder_1('<polygon points="');
   for (i = 0; i < count; i++) {
-    s.append_4(round_int(x_0[i]));
-    s.append_7(',');
-    s.append_4(round_int(y_0[i]));
-    s.append_7(' ');
+    s.append_5(round_int(x_0[i]));
+    s.append_8(',');
+    s.append_5(round_int(y_0[i]));
+    s.append_8(' ');
   }
-  s.append_7('" style="fill:' + this.currentColor + ';' + 'stroke:' + this.currentColor + ';' + 'stroke-width:1"/>');
+  s.append_8('" style="fill:' + this.currentColor + ';' + 'stroke:' + this.currentColor + ';' + 'stroke-width:1"/>');
   this.write_1(s.toString_0());
 }
 ;
@@ -22842,7 +22854,7 @@ _.simpleValidateView = function simpleValidateView_0(viewRect, mode){
   this.height_0 = round_int(viewRect.getHeight());
   img = new jai.BufferedImage(this.width_0, this.height_0, 2);
   this.graphics = img.createGraphics();
-  return getClassPrototype(105).simpleValidateView.call(this, viewRect, mode);
+  return getClassPrototype(107).simpleValidateView.call(this, viewRect, mode);
 }
 ;
 _.toString_0 = function toString_6(){
@@ -22865,9 +22877,9 @@ _.toString_0 = function toString_6(){
 }
 ;
 _.write_1 = function write_0(s){
-  this.buffer.append_1('\t');
-  this.buffer.append_1(s);
-  this.buffer.append_1('\n');
+  this.buffer.append_2('\t');
+  this.buffer.append_2(s);
+  this.buffer.append_2('\n');
 }
 ;
 _.height_0 = 0;
@@ -23503,7 +23515,7 @@ _.parse_8 = function parse_9(mol, smiles, position, endIndex, createCoordinates,
         atomMass = 0;
       }
       if (readStereoFeatures) {
-        parity = isNull(parityMap)?null:castTo(parityMap.get(jl.valueOf_22(fromAtom)), 138);
+        parity = isNull(parityMap)?null:castTo(parityMap.get(jl.valueOf_22(fromAtom)), 139);
         if (isNotNull(parity))
           parity.addNeighbor(atom0, position, atomicNo == 1 && atomMass == 0);
         if (parityFound) {
@@ -23554,10 +23566,10 @@ _.parse_8 = function parse_9(mol, smiles, position, endIndex, createCoordinates,
           if (ringClosureAtom[number] == baseAtom[bracketLevel])
             throw toJs(new jl.Exception_1('SmilesParser: ring closure to same atom'));
           if (readStereoFeatures && isNotNull(parityMap)) {
-            parity = castTo(parityMap.get(jl.valueOf_22(ringClosureAtom[number])), 138);
+            parity = castTo(parityMap.get(jl.valueOf_22(ringClosureAtom[number])), 139);
             if (isNotNull(parity))
               parity.addNeighbor(baseAtom[bracketLevel], ringClosurePosition[number], false);
-            parity = castTo(parityMap.get(jl.valueOf_22(baseAtom[bracketLevel])), 138);
+            parity = castTo(parityMap.get(jl.valueOf_22(baseAtom[bracketLevel])), 139);
             if (isNotNull(parity))
               parity.addNeighbor(ringClosureAtom[number], position - 1, false);
           }
@@ -23704,7 +23716,7 @@ _.parse_8 = function parse_9(mol, smiles, position, endIndex, createCoordinates,
     this.assignKnownEZBondParities();
     if (isNotNull(parityMap)) {
       for (parity$iterator = parityMap.values().iterator(); parity$iterator.hasNext_0();) {
-        parity = castTo(parity$iterator.next_3(), 138);
+        parity = castTo(parity$iterator.next_3(), 139);
         this.mMol.setAtomParity_0(parity.mCentralAtom, parity.calculateParity(handleHydrogenAtomMap), false);
       }
       this.mMol.setParitiesValid_0(0);
@@ -23854,7 +23866,7 @@ carc2.SmilesParser$THParity = function SmilesParser$THParity(this$0, centralAtom
   }
 }
 ;
-defineClass(138, 1, {138:1, 1:1}, carc2.SmilesParser$THParity);
+defineClass(139, 1, {139:1, 1:1}, carc2.SmilesParser$THParity);
 _.$init_42 = function $init_42(){
 }
 ;
@@ -23943,7 +23955,7 @@ _.mFromAtom = 0;
 _.mImplicitHydrogen = 0;
 _.mIsClockwise = false;
 _.mNeighborCount = 0;
-cggl.Lcom_actelion_research_chem_SmilesParser$THParity_2_classLit = createForClass('com.actelion.research.chem', 'SmilesParser/THParity', 138, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_SmilesParser$THParity_2_classLit = createForClass('com.actelion.research.chem', 'SmilesParser/THParity', 139, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_SortedStringList = function $clinit_SortedStringList(){
   carc2.$clinit_SortedStringList = emptyMethod;
   jl.$clinit_Object();
@@ -23955,7 +23967,7 @@ carc2.SortedStringList = function SortedStringList(){
   this.$init_43();
 }
 ;
-defineClass(102, 1, {102:1, 4:1, 1:1}, carc2.SortedStringList);
+defineClass(104, 1, {104:1, 4:1, 1:1}, carc2.SortedStringList);
 _.$init_43 = function $init_43(){
   this.mList = new ju.ArrayList;
 }
@@ -24044,7 +24056,7 @@ _.toArray_1 = function toArray_3(){
 }
 ;
 carc2.serialVersionUID_2 = 537265952;
-cggl.Lcom_actelion_research_chem_SortedStringList_2_classLit = createForClass('com.actelion.research.chem', 'SortedStringList', 102, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_SortedStringList_2_classLit = createForClass('com.actelion.research.chem', 'SortedStringList', 104, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_StereoMolecule = function $clinit_StereoMolecule(){
   carc2.$clinit_StereoMolecule = emptyMethod;
   carc2.$clinit_ExtendedMolecule();
@@ -24069,7 +24081,7 @@ carc2.StereoMolecule_1 = function StereoMolecule_1(mol){
   this.$init_44();
 }
 ;
-defineClass(16, 86, {86:1, 64:1, 16:1, 4:1, 1:1}, carc2.StereoMolecule, carc2.StereoMolecule_0, carc2.StereoMolecule_1);
+defineClass(16, 87, {87:1, 64:1, 16:1, 4:1, 1:1}, carc2.StereoMolecule, carc2.StereoMolecule_0, carc2.StereoMolecule_1);
 _.$init_44 = function $init_44(){
 }
 ;
@@ -24085,7 +24097,7 @@ _.createMolecule = function createMolecule(atoms, bonds){
 ;
 _.ensureHelperArrays_0 = function ensureHelperArrays_0(required){
   var atom, bond, rankBits, rankMode;
-  getClassPrototype(86).ensureHelperArrays_0.call(this, required);
+  getClassPrototype(87).ensureHelperArrays_0.call(this, required);
   if ((required & ~this.mValidHelperArrays) == 0)
     return;
   if (this.mAssignParitiesToNitrogen)
@@ -24258,7 +24270,7 @@ _.stripStereoInformation_0 = function stripStereoInformation(){
 ;
 _.validate_0 = function validate_0(){
   var angle, atom, i, i0, j;
-  getClassPrototype(86).validate_0.call(this);
+  getClassPrototype(87).validate_0.call(this);
   this.ensureHelperArrays_0(15);
   for (atom = 0; atom < this.getAtoms_0(); atom++) {
     if ((this.getAtomESRType_0(atom) == 1 || this.getAtomESRType_0(atom) == 2) && (!this.isAtomStereoCenter_0(atom) || this.getAtomParity_0(atom) == 3))
@@ -24329,7 +24341,7 @@ carc2.UniqueStringList = function UniqueStringList(){
   this.$init_45();
 }
 ;
-defineClass(405, 102, {102:1, 4:1, 1:1}, carc2.UniqueStringList);
+defineClass(405, 104, {104:1, 4:1, 1:1}, carc2.UniqueStringList);
 _.$init_45 = function $init_45(){
   this.mOriginalOrder = new ju.ArrayList;
   this.mIndexList = new ju.ArrayList;
@@ -24337,7 +24349,7 @@ _.$init_45 = function $init_45(){
 ;
 _.addString = function addString_0(theString){
   var index_0, position;
-  index_0 = getClassPrototype(102).addString.call(this, theString);
+  index_0 = getClassPrototype(104).addString.call(this, theString);
   if (index_0 == -1)
     return -1;
   position = this.mOriginalOrder.size();
@@ -24348,7 +24360,7 @@ _.addString = function addString_0(theString){
 ;
 _.getListIndex = function getListIndex_0(s){
   var index_0;
-  index_0 = getClassPrototype(102).getListIndex.call(this, s);
+  index_0 = getClassPrototype(104).getListIndex.call(this, s);
   if (index_0 == -1)
     return -1;
   return castTo(this.mIndexList.getAtIndex(index_0), 50).intValue();
@@ -24822,7 +24834,7 @@ carcc2.getMeanAngle = function getMeanAngle(angle, noOfAngles){
   return new carcc2.InventorAngle(meanAngle, length_0);
 }
 ;
-defineClass(100, 1, {1:1}, carcc2.CoordinateInventor, carcc2.CoordinateInventor_0);
+defineClass(101, 1, {1:1}, carcc2.CoordinateInventor, carcc2.CoordinateInventor_0);
 _.$init_46 = function $init_46(){
 }
 ;
@@ -24867,7 +24879,7 @@ _.calcNextBaseValues = function calcNextBaseValues(baseValue, symRank){
 ;
 _.calculateAtomSymmetries = function calculateAtomSymmetries(){
   var atom, baseValue, bond, bondParity, newNoOfRanks, oldNoOfRanks, symRank;
-  baseValue = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_CanonizerBaseValue_2_classLit, {4:1, 1:1, 6:1}, 141, this.mMol.getAllAtoms_0(), 0, 1);
+  baseValue = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_CanonizerBaseValue_2_classLit, {4:1, 1:1, 6:1}, 142, this.mMol.getAllAtoms_0(), 0, 1);
   for (atom = 0; atom < this.mMol.getAllAtoms_0(); atom++) {
     setCheck(baseValue, atom, new carc2.CanonizerBaseValue(2));
     baseValue[atom].init_0(atom);
@@ -25116,9 +25128,9 @@ _.createMetalBondAssociations = function createMetalBondAssociations(){
           atomIndex2 = temp;
         }
         if (jsEquals(fa, null))
-          fa = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_coords_FragmentAssociation_2_classLit, {4:1, 1:1, 6:1}, 1164, this.mFragmentList.size(), 0, 2);
+          fa = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_coords_FragmentAssociation_2_classLit, {4:1, 1:1, 6:1}, 1165, this.mFragmentList.size(), 0, 2);
         if (jsEquals(fa[f2], null))
-          setCheck(fa, f2, initUnidimensionalArray(cggl.Lcom_actelion_research_chem_coords_FragmentAssociation_2_classLit, {1164:1, 4:1, 1:1, 6:1}, 109, f2, 0, 1));
+          setCheck(fa, f2, initUnidimensionalArray(cggl.Lcom_actelion_research_chem_coords_FragmentAssociation_2_classLit, {1165:1, 4:1, 1:1, 6:1}, 111, f2, 0, 1));
         if (isNotNull(fa[f2][f1]))
           fa[f2][f1].add_2(atomIndex1, atomIndex2);
         else {
@@ -25406,7 +25418,7 @@ _.getMaxPriorityAssociation = function getMaxPriorityAssociation(associationList
   maxPriority = 0;
   maxFA = null;
   for (association$iterator = associationList.iterator(); association$iterator.hasNext_0();) {
-    association = castTo(association$iterator.next_3(), 109);
+    association = castTo(association$iterator.next_3(), 111);
     if (maxPriority < association.getPriority()) {
       maxPriority = association.getPriority();
       maxFA = association;
@@ -26297,7 +26309,7 @@ carcc2.MODE_SKIP_DEFAULT_TEMPLATES = 1;
 carcc2.POSSIBLE_FLIPS = 64;
 carcc2.PREFERRED_FLIPS = 32;
 carcc2.TOTAL_FLIPS = 0;
-cggl.Lcom_actelion_research_chem_coords_CoordinateInventor_2_classLit = createForClass('com.actelion.research.chem.coords', 'CoordinateInventor', 100, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_coords_CoordinateInventor_2_classLit = createForClass('com.actelion.research.chem.coords', 'CoordinateInventor', 101, cggl.Ljava_lang_Object_2_classLit);
 carcc2.$clinit_CoordinateInventor$1 = function $clinit_CoordinateInventor$1(){
   carcc2.$clinit_CoordinateInventor$1 = emptyMethod;
   jl.$clinit_Object();
@@ -26319,7 +26331,7 @@ _.compare_0 = function compare_9(o1, o2){
   return this.compare_3(castTo(o1, 56), castTo(o2, 56));
 }
 ;
-_.equals_0 = function equals_6(other){
+_.equals_0 = function equals_7(other){
   return getClassPrototype(1).equals_0.call(this, other);
 }
 ;
@@ -26352,7 +26364,7 @@ _.compare_0 = function compare_11(o1, o2){
   return this.compare_3(castTo(o1, 56), castTo(o2, 56));
 }
 ;
-_.equals_0 = function equals_7(other){
+_.equals_0 = function equals_8(other){
   return getClassPrototype(1).equals_0.call(this, other);
 }
 ;
@@ -26385,7 +26397,7 @@ _.compare_0 = function compare_13(o1, o2){
   return this.compare_3(castTo(o1, 56), castTo(o2, 56));
 }
 ;
-_.equals_0 = function equals_8(other){
+_.equals_0 = function equals_9(other){
   return getClassPrototype(1).equals_0.call(this, other);
 }
 ;
@@ -26440,7 +26452,7 @@ carcc2.FragmentAssociation_0 = function FragmentAssociation_0(f1, f2, atomIndex1
   this.mCount[1] = 1;
 }
 ;
-defineClass(109, 1, {109:1, 1:1}, carcc2.FragmentAssociation, carcc2.FragmentAssociation_0);
+defineClass(111, 1, {111:1, 1:1}, carcc2.FragmentAssociation, carcc2.FragmentAssociation_0);
 _.$init_50 = function $init_50(){
 }
 ;
@@ -26512,7 +26524,7 @@ _.getPriority = function getPriority(){
   return this.mFragment[0].size_1() * this.mFragment[1].size_1();
 }
 ;
-cggl.Lcom_actelion_research_chem_coords_FragmentAssociation_2_classLit = createForClass('com.actelion.research.chem.coords', 'FragmentAssociation', 109, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_coords_FragmentAssociation_2_classLit = createForClass('com.actelion.research.chem.coords', 'FragmentAssociation', 111, cggl.Ljava_lang_Object_2_classLit);
 carcc2.$clinit_InventorAngle = function $clinit_InventorAngle(){
   carcc2.$clinit_InventorAngle = emptyMethod;
   jl.$clinit_Object();
@@ -26636,7 +26648,7 @@ carcc2.InventorDefaultTemplateList = function InventorDefaultTemplateList(){
   }
 }
 ;
-defineClass(579, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 127:1}, carcc2.InventorDefaultTemplateList);
+defineClass(579, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 128:1}, carcc2.InventorDefaultTemplateList);
 _.$init_54 = function $init_54(){
 }
 ;
@@ -27303,8 +27315,8 @@ _.parseV2 = function parseV2(theReaction, theReader){
     molfile = new jl.StringBuffer_0(32768);
     do {
       theLine = theReader.readLine();
-      molfile.append_1(theLine);
-      molfile.append_1('\n');
+      molfile.append_2(theLine);
+      molfile.append_2('\n');
     }
      while (jsNotEquals(theLine, null) && !jl.startsWith_Ljava_lang_String__Z__devirtual$(theLine, 'M  END'));
     if (jsEquals(theLine, null)) {
@@ -27322,8 +27334,8 @@ _.parseV2 = function parseV2(theReaction, theReader){
     molfile = new jl.StringBuffer_0(32768);
     do {
       theLine = theReader.readLine();
-      molfile.append_1(theLine);
-      molfile.append_1('\n');
+      molfile.append_2(theLine);
+      molfile.append_2('\n');
     }
      while (jsNotEquals(theLine, null) && !jl.startsWith_Ljava_lang_String__Z__devirtual$(theLine, 'M  END'));
     if (jsEquals(theLine, null)) {
@@ -27360,11 +27372,11 @@ _.parseV3 = function parseV3(theReaction, theReader){
         for (i = 0; i < reactantCount; i++) {
           molecule = new carc2.StereoMolecule;
           molfile = new jl.StringBuffer_0(32768);
-          molfile.append_1('\nActelion Java MolfileCreator 2.0\n\n  0  0  0  0  0  0              0 V3000\n');
+          molfile.append_2('\nActelion Java MolfileCreator 2.0\n\n  0  0  0  0  0  0              0 V3000\n');
           do {
             theLine = theReader.readLine();
-            molfile.append_1(theLine);
-            molfile.append_1('\n');
+            molfile.append_2(theLine);
+            molfile.append_2('\n');
           }
            while (jsNotEquals(theLine, null) && !jl.startsWith_Ljava_lang_String__Z__devirtual$(theLine, 'M  V30 END CTAB'));
           molParser.parse_6(molecule, molfile);
@@ -27379,11 +27391,11 @@ _.parseV3 = function parseV3(theReaction, theReader){
         for (i = 0; i < productCount; i++) {
           molecule = new carc2.StereoMolecule;
           molfile = new jl.StringBuffer_0(32768);
-          molfile.append_1('\nActelion Java MolfileCreator 2.0\n\n  0  0  0  0  0  0              0 V3000\n');
+          molfile.append_2('\nActelion Java MolfileCreator 2.0\n\n  0  0  0  0  0  0              0 V3000\n');
           do {
             theLine = theReader.readLine();
-            molfile.append_1(theLine);
-            molfile.append_1('\n');
+            molfile.append_2(theLine);
+            molfile.append_2('\n');
           }
            while (jsNotEquals(theLine, null) && !jl.startsWith_Ljava_lang_String__Z__devirtual$(theLine, 'M  V30 END CTAB'));
           molParser.parse_6(molecule, molfile);
@@ -27495,7 +27507,7 @@ carci.SDFileParser = function SDFileParser(reader, fieldName){
   this.$init_61();
   this.mNoOfRecords = -1;
   this.mFieldName = fieldName;
-  this.mReader = new ji.BufferedReader(reader);
+  this.mReader = instanceOf(reader, 80)?castTo(reader, 80):new ji.BufferedReader(reader);
   this.init_3();
 }
 ;
@@ -27537,22 +27549,22 @@ _.advanceToNext = function advanceToNext(){
     if (!molfileComplete) {
       if (jl.startsWith_Ljava_lang_String__Z__devirtual$(line, '>')) {
         molfileComplete = true;
-        this.mMolfileBuffer.append_7('M  END');
-        this.mMolfileBuffer.append_3(10);
-        this.mDataBuffer.append_7(line);
-        this.mDataBuffer.append_3(10);
+        this.mMolfileBuffer.append_8('M  END');
+        this.mMolfileBuffer.append_4(10);
+        this.mDataBuffer.append_8(line);
+        this.mDataBuffer.append_4(10);
       }
        else {
-        this.mMolfileBuffer.append_7(line);
-        this.mMolfileBuffer.append_3(10);
+        this.mMolfileBuffer.append_8(line);
+        this.mMolfileBuffer.append_4(10);
         if (jl.startsWith_Ljava_lang_String__Z__devirtual$(line, 'M  END'))
           molfileComplete = true;
         continue;
       }
     }
      else {
-      this.mDataBuffer.append_7(line);
-      this.mDataBuffer.append_3(10);
+      this.mDataBuffer.append_8(line);
+      this.mDataBuffer.append_4(10);
     }
     if (jsNotEquals(this.mFieldName, null)) {
       if (jl.length__I__devirtual$_0(line) == 0) {
@@ -28047,7 +28059,7 @@ carcp.ParameterizedStringList = function ParameterizedStringList(){
   this.$init_67();
 }
 ;
-defineClass(149, 1, {1:1}, carcp.ParameterizedStringList);
+defineClass(150, 1, {1:1}, carcp.ParameterizedStringList);
 _.$init_67 = function $init_67(){
   this.mList = new ju.ArrayList;
 }
@@ -28071,7 +28083,7 @@ _.getStringTypeAt = function getStringTypeAt(i){
 carcp.cStringTypeDouble = 3;
 carcp.cStringTypeIDCode = 1;
 carcp.cStringTypeText = 2;
-cggl.Lcom_actelion_research_chem_prediction_ParameterizedStringList_2_classLit = createForClass('com.actelion.research.chem.prediction', 'ParameterizedStringList', 149, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_prediction_ParameterizedStringList_2_classLit = createForClass('com.actelion.research.chem.prediction', 'ParameterizedStringList', 150, cggl.Ljava_lang_Object_2_classLit);
 carcp.$clinit_PolarSurfaceAreaPredictor = function $clinit_PolarSurfaceAreaPredictor(){
   carcp.$clinit_PolarSurfaceAreaPredictor = emptyMethod;
   jl.$clinit_Object();
@@ -28405,7 +28417,7 @@ carcp.ToxicityPredictor = function ToxicityPredictor(){
     cggl.Lcom_actelion_research_chem_prediction_ToxicityPredictor_2_classLit;
     if (!carcp.sInitialized_0) {
       try {
-        carcp.sRiskMolecules = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_SortedStringList_2_classLit, {4:1, 1:1, 6:1}, 102, 4, 0, 1);
+        carcp.sRiskMolecules = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_SortedStringList_2_classLit, {4:1, 1:1, 6:1}, 104, 4, 0, 1);
         carcp.sHighRiskFragments = initUnidimensionalArray(cggl.Ljava_util_ArrayList_2_classLit, {4:1, 1:1, 6:1}, 18, 4, 0, 1);
         carcp.sLowRiskFragments = initUnidimensionalArray(cggl.Ljava_util_ArrayList_2_classLit, {4:1, 1:1, 6:1}, 18, 4, 0, 1);
         setCheck(carcp.sHighRiskFragments, 0, this.readIDCodeFile(carcp.m1_0));
@@ -29163,28 +29175,28 @@ carcr.encode = function encode(reaction, keepAbsoluteCoordinates, mode){
   if (mode != 0) {
     buf.append_0(35);
     if ((mode & 1) != 0 && result.length > 1 && jsNotEquals(result[1], null)) {
-      buf.append_1(result[1]);
+      buf.append_2(result[1]);
     }
   }
   mode &= ~1;
   if (mode != 0) {
     buf.append_0(35);
     if ((mode & 2) != 0 && result.length > 2 && jsNotEquals(result[2], null)) {
-      buf.append_1(result[2]);
+      buf.append_2(result[2]);
     }
   }
   mode &= ~2;
   if (mode != 0) {
     buf.append_0(35);
     if ((mode & 4) != 0 && result.length > 3 && jsNotEquals(result[3], null)) {
-      buf.append_1(result[3]);
+      buf.append_2(result[3]);
     }
   }
   mode &= ~4;
   if (mode != 0) {
     buf.append_0(35);
     if ((mode & 8) != 0 && result.length > 4 && jsNotEquals(result[4], null)) {
-      buf.append_1(result[4]);
+      buf.append_2(result[4]);
     }
   }
   return buf.toString_0();
@@ -29223,18 +29235,18 @@ carcr.encode_0 = function encode_0(reaction, keepAbsoluteCoordinates, sortByIDCo
       }
     }
     if (i1 > 0) {
-      idcodeSequence.append_3(32);
-      mappingSequence.append_3(32);
-      coordsSequence.append_3(32);
+      idcodeSequence.append_4(32);
+      mappingSequence.append_4(32);
+      coordsSequence.append_4(32);
     }
-    idcodeSequence.append_7(idcode[index_0]);
-    mappingSequence.append_7(mapping[index_0]);
-    coordsSequence.append_7(coords[index_0]);
+    idcodeSequence.append_8(idcode[index_0]);
+    mappingSequence.append_8(mapping[index_0]);
+    coordsSequence.append_8(coords[index_0]);
     idcode[index_0] = '';
   }
-  idcodeSequence.append_3(33);
-  mappingSequence.append_3(32);
-  coordsSequence.append_3(32);
+  idcodeSequence.append_4(33);
+  mappingSequence.append_4(32);
+  coordsSequence.append_4(32);
   for (i = reaction.getReactants_0(); i < reaction.getMolecules_0(); i++) {
     index_0 = i;
     if (sortByIDCode) {
@@ -29248,13 +29260,13 @@ carcr.encode_0 = function encode_0(reaction, keepAbsoluteCoordinates, sortByIDCo
       }
     }
     if (i > reaction.getReactants_0()) {
-      idcodeSequence.append_3(32);
-      mappingSequence.append_3(32);
-      coordsSequence.append_3(32);
+      idcodeSequence.append_4(32);
+      mappingSequence.append_4(32);
+      coordsSequence.append_4(32);
     }
-    idcodeSequence.append_7(idcode[index_0]);
-    mappingSequence.append_7(mapping[index_0]);
-    coordsSequence.append_7(coords[index_0]);
+    idcodeSequence.append_8(idcode[index_0]);
+    mappingSequence.append_8(mapping[index_0]);
+    coordsSequence.append_8(coords[index_0]);
     idcode[index_0] = '';
   }
   result = initUnidimensionalArray(cggl.Ljava_lang_String_2_classLit, {4:1, 1:1, 6:1, 12:1}, 2, 5, 6, 1);
@@ -29279,18 +29291,18 @@ carcr.encodeCatalysts = function encodeCatalysts(reaction, keepAbsoluteCoordinat
   sb = new jl.StringBuilder;
   for (i = 0; i < reaction.getCatalysts_0(); i++) {
     if (sb.length_0() != 0)
-      sb.append_3(43);
+      sb.append_4(43);
     canonizer = new carc2.Canonizer(reaction.getCatalyst_0(i));
-    sb.append_7(canonizer.getIDCode_0());
+    sb.append_8(canonizer.getIDCode_0());
     if (keepAbsoluteCoordinates) {
-      sb.append_7(' ');
-      sb.append_7(canonizer.getEncodedCoordinates_0(true));
+      sb.append_8(' ');
+      sb.append_8(canonizer.getEncodedCoordinates_0(true));
     }
   }
   return sb.toString_0();
 }
 ;
-defineClass(970, 1, {1:1});
+defineClass(971, 1, {1:1});
 carcr.CATALYST_DELIMITER = 43;
 carcr.INCLUDE_ALL = 15;
 carcr.INCLUDE_CATALYSTS = 8;
@@ -29303,7 +29315,7 @@ carcr.MOLECULE_DELIMITER = 32;
 carcr.OBJECT_DELIMITER = 35;
 carcr.PRODUCT_IDENTIFIER = 33;
 carcr.RETAIN_REACTANT_AND_PRODUCT_ORDER = 16;
-cggl.Lcom_actelion_research_chem_reaction_ReactionEncoder_2_classLit = createForClass('com.actelion.research.chem.reaction', 'ReactionEncoder', 970, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_chem_reaction_ReactionEncoder_2_classLit = createForClass('com.actelion.research.chem.reaction', 'ReactionEncoder', 971, cggl.Ljava_lang_Object_2_classLit);
 cggcc.$clinit_EntryPoint = function $clinit_EntryPoint(){
   cggcc.$clinit_EntryPoint = emptyMethod;
 }
@@ -29604,11 +29616,11 @@ cargge.ACTKeyCode = function ACTKeyCode(code_0, name_0, mask){
   this.ch_0 = jl.valueOf_25(narrow_char(code_0));
 }
 ;
-defineClass(124, 1, {124:1, 1:1}, cargge.ACTKeyCode);
+defineClass(125, 1, {125:1, 1:1}, cargge.ACTKeyCode);
 _.$init_79 = function $init_79(){
 }
 ;
-_.equals_0 = function equals_9(o){
+_.equals_0 = function equals_10(o){
   var keyCode;
   if (this === o) {
     return true;
@@ -29616,7 +29628,7 @@ _.equals_0 = function equals_9(o){
   if (jsEquals(o, null) || jsNotEquals(jl.getClass__Ljava_lang_Class___devirtual$(this), jl.getClass__Ljava_lang_Class___devirtual$(o))) {
     return false;
   }
-  keyCode = castTo(o, 124);
+  keyCode = castTo(o, 125);
   if (this.code_0 != keyCode.code_0) {
     return false;
   }
@@ -29633,13 +29645,13 @@ _.hashCode_0 = function hashCode_2(){
 ;
 _.code_0 = 0;
 _.mask = 0;
-cggl.Lcom_actelion_research_gwt_gui_editor_ACTKeyCode_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'ACTKeyCode', 124, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_editor_ACTKeyCode_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'ACTKeyCode', 125, cggl.Ljava_lang_Object_2_classLit);
 cargge.$clinit_ACTKeyCode$KeyCodeClass = function $clinit_ACTKeyCode$KeyCodeClass(){
   cargge.$clinit_ACTKeyCode$KeyCodeClass = emptyMethod;
 }
 ;
-defineClass(1142, 1, {1:1});
-cggl.Lcom_actelion_research_gwt_gui_editor_ACTKeyCode$KeyCodeClass_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'ACTKeyCode/KeyCodeClass', 1142, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1143, 1, {1:1});
+cggl.Lcom_actelion_research_gwt_gui_editor_ACTKeyCode$KeyCodeClass_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'ACTKeyCode/KeyCodeClass', 1143, cggl.Ljava_lang_Object_2_classLit);
 carsgei.$clinit_IKeyEvent = function $clinit_IKeyEvent(){
   carsgei.$clinit_IKeyEvent = emptyMethod;
 }
@@ -29732,7 +29744,7 @@ cargge.ACTMouseEvent = function ACTMouseEvent(evt){
   this._evt = evt;
 }
 ;
-defineClass(132, 1, {1:1}, cargge.ACTMouseEvent);
+defineClass(133, 1, {1:1}, cargge.ACTMouseEvent);
 _.$init_81 = function $init_81(){
 }
 ;
@@ -29752,7 +29764,7 @@ _.isShiftDown = function isShiftDown_0(){
   return this._evt.isShiftKeyDown();
 }
 ;
-cggl.Lcom_actelion_research_gwt_gui_editor_ACTMouseEvent_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'ACTMouseEvent', 132, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_editor_ACTMouseEvent_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'ACTMouseEvent', 133, cggl.Ljava_lang_Object_2_classLit);
 cargge.$clinit_ButtonPressListener = function $clinit_ButtonPressListener(){
   cargge.$clinit_ButtonPressListener = emptyMethod;
 }
@@ -29867,7 +29879,7 @@ _.createElement_0 = function createElement(parent_0, left, top_0, width_0, heigh
   cggdc.$setId(drawAreaContainer, drawAreaID);
   cggdc.$setAttribute(drawAreaContainer, 'style', 'position:absolute;left:' + left + 'px; ' + 'width:' + width_0 + 'px;' + 'height:' + height + 'px;');
   cggdc.$appendChild(parent_0, drawAreaContainer);
-  this.canvas = cggcc3.createIfSupported();
+  this.canvas = cargge.createScaledCanvas(width_0, height);
   cggdc.$setAttribute(this.canvas.getCanvasElement(), 'style', 'outline: none;');
   this.canvas.addFocusHandler(new cargge.DrawArea$4(this));
   this.canvas.addBlurHandler(new cargge.DrawArea$5(this));
@@ -29963,10 +29975,7 @@ _.setCursor = function setCursor(c){
 }
 ;
 _.setDrawSize = function setDrawSize(width_0, height){
-  this.canvas.setCoordinateSpaceWidth(width_0);
-  this.canvas.setCoordinateSpaceHeight(height);
-  this.canvas.setWidth(width_0 + 'px');
-  this.canvas.setHeight(height + 'px');
+  cargge.scaleCanvas(this.canvas, width_0, height);
   this.model.setDisplaySize(new ja.Dimension(width_0, height));
 }
 ;
@@ -30499,7 +30508,7 @@ _.calculateCenterOfGravity = function calculateCenterOfGravity(){
 ;
 _.calculateFragmentCenterOfGravity = function calculateFragmentCenterOfGravity(fragmentNo, fragments){
   var atom, fragment, fragment0, fragmentAtoms, fragmentCOG;
-  fragmentCOG = initUnidimensionalArray(cggl.Ljava_awt_Point_2_classLit, {4:1, 1:1, 6:1}, 89, fragments, 0, 1);
+  fragmentCOG = initUnidimensionalArray(cggl.Ljava_awt_Point_2_classLit, {4:1, 1:1, 6:1}, 90, fragments, 0, 1);
   fragmentAtoms = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, fragments, 15, 1);
   for (fragment0 = 0; fragment0 < fragments; fragment0++) {
     setCheck(fragmentCOG, fragment0, new ja.Point_0(0, 0));
@@ -30533,7 +30542,7 @@ _.cleanReaction = function cleanReaction(cleanAll){
   h = dim.getHeight();
   width_0 = w / 5;
   if (w > 0 && h > 0) {
-    arrow = castTo(this.getDrawingObjects_0().getAtIndex(0), 88);
+    arrow = castTo(this.getDrawingObjects_0().getAtIndex(0), 89);
     arrow.setRect(0.5 * w, 0.5 * h, 0.5 * 0.16 * w, 20);
     this.arrowPos = new jag.Point2D$Double_0(0.5 * w, 0.5 * h);
     this.mMode = 1;
@@ -30605,7 +30614,7 @@ _.cleanupMultiFragmentCoordinates = function cleanupMultiFragmentCoordinates(dep
   rawX = 0.5 * spacing;
   for (fragment2 = 0; fragment2 <= this.mFragment.length; fragment2++) {
     if (this.isReaction_0() && fragment2 == this.mReactantCount) {
-      castTo(this.mDrawingObjectList.getAtIndex(0), 88).setRect(rawX - spacing / 20, this.getHeight_0() / 2, arrowWidth, this.getHeight_0() / 2);
+      castTo(this.mDrawingObjectList.getAtIndex(0), 89).setRect(rawX - spacing / 20, this.getHeight_0() / 2, arrowWidth, this.getHeight_0() / 2);
       rawX += arrowWidth;
     }
     if (fragment2 == this.mFragment.length) {
@@ -31013,7 +31022,7 @@ _.registerBondHighlightCallback = function registerBondHighlightCallback(cb){
   this.bondHighlightCallback = cb;
 }
 ;
-_.scale_1 = function scale_0(scale){
+_.scale_2 = function scale_0(scale){
   var d, dt;
   if (!jl.isInfinite(scale)) {
     if (scale != 1 && scale > 0) {
@@ -31067,7 +31076,7 @@ _.setDisplaySize = function setDisplaySize(displaySize){
         dx = displaySize.getWidth() / this.displaySize.getWidth();
         dy = displaySize.getHeight() / this.displaySize.getHeight();
         scale = $wnd.Math.min(dx, dy);
-        this.scale_1(scale);
+        this.scale_2(scale);
       }
     }
   }
@@ -31233,7 +31242,7 @@ _.sortFragmentsByPosition = function sortFragmentsByPosition(fragmentNo, fragmen
   cog = fragmentCOG;
   ju.sort_8(fragmentDescriptor, new carsge.Model$1(this, cog));
   newFragmentIndex = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, fragments, 15, 1);
-  centerOfGravity = initUnidimensionalArray(cggl.Ljava_awt_Point_2_classLit, {4:1, 1:1, 6:1}, 89, fragments, 0, 1);
+  centerOfGravity = initUnidimensionalArray(cggl.Ljava_awt_Point_2_classLit, {4:1, 1:1, 6:1}, 90, fragments, 0, 1);
   for (fragment = 0; fragment < fragments; fragment++) {
     oldIndex = fragmentDescriptor[fragment][0];
     newFragmentIndex[oldIndex] = fragment;
@@ -31304,7 +31313,7 @@ _.tryAutoMapReaction = function tryAutoMapReaction(){
 _.valueInvalidated = function valueInvalidated(){
   var l, l$iterator;
   for (l$iterator = this.validationListeners.iterator(); l$iterator.hasNext_0();) {
-    l = castTo(l$iterator.next_3(), 1174);
+    l = castTo(l$iterator.next_3(), 1175);
     l.valueInvalidated();
   }
 }
@@ -31529,7 +31538,7 @@ carsgec.AbstractExtendedDepictor_2 = function AbstractExtendedDepictor_2(mol, dr
   this.mReactantOrCoreCount = -1;
 }
 ;
-defineClass(143, 1, {1:1});
+defineClass(144, 1, {1:1});
 _.$init_99 = function $init_99(){
 }
 ;
@@ -31595,7 +31604,7 @@ _.initialize = function initialize(mol, drawingObjectList, useGraphics2D, cfg){
   this.drawConfig = cfg;
   this.mTransformation = new carc2.DepictorTransformation;
   if (jsNotEquals(this.mMolecule, null)) {
-    this.mDepictor = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_AbstractDepictor_2_classLit, {4:1, 1:1, 6:1}, 105, this.mMolecule.length, 0, 1);
+    this.mDepictor = initUnidimensionalArray(cggl.Lcom_actelion_research_chem_AbstractDepictor_2_classLit, {4:1, 1:1, 6:1}, 107, this.mMolecule.length, 0, 1);
     for (i = 0; i < this.mMolecule.length; i++) {
       setCheck(this.mDepictor, i, this.createDepictor_1(this.mMolecule[i], this.mUseGraphics2D, this.drawConfig));
     }
@@ -31624,7 +31633,7 @@ _.updateCoords_0 = function updateCoords_0(g, viewRect, mode){
         this.mTransformation.applyTo_0(this.mMolecule[i0]);
     if (isNotNull(this.mDrawingObjectList))
       for (i1 = 0; i1 < this.mDrawingObjectList.size(); i1++) {
-        d = castTo(this.mDrawingObjectList.getAtIndex(i1), 88);
+        d = castTo(this.mDrawingObjectList.getAtIndex(i1), 89);
         b = d.getBoundingRect_1();
         t0 = new jag.Rectangle2D$Double_0(b.getX(), b.getY(), b.getWidth(), b.getHeight());
         this.mTransformation.applyTo_2(t0);
@@ -31651,7 +31660,7 @@ _.validateView = function validateView_0(g, viewRect, mode){
   }
   if (isNotNull(this.mDrawingObjectList)) {
     for (i = 0; i < this.mDrawingObjectList.size(); i++) {
-      b = castTo(this.mDrawingObjectList.getAtIndex(i), 88).getBoundingRect_1();
+      b = castTo(this.mDrawingObjectList.getAtIndex(i), 89).getBoundingRect_1();
       objectBounds = new jag.Rectangle2D$Double_0(b.getX(), b.getY(), b.getWidth(), b.getHeight());
       this.mTransformation.applyTo_2(objectBounds);
       boundingRect = isNull(boundingRect)?objectBounds:castTo(boundingRect.createUnion(objectBounds), 27);
@@ -31676,7 +31685,7 @@ _.mDoLayoutMolecules = false;
 _.mIsMarkushStructure = false;
 _.mReactantOrCoreCount = 0;
 _.mUseGraphics2D = false;
-cggl.Lcom_actelion_research_share_gui_editor_chem_AbstractExtendedDepictor_2_classLit = createForClass('com.actelion.research.share.gui.editor.chem', 'AbstractExtendedDepictor', 143, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_share_gui_editor_chem_AbstractExtendedDepictor_2_classLit = createForClass('com.actelion.research.share.gui.editor.chem', 'AbstractExtendedDepictor', 144, cggl.Ljava_lang_Object_2_classLit);
 carsgec.$clinit_IDepictor = function $clinit_IDepictor(){
   carsgec.$clinit_IDepictor = emptyMethod;
 }
@@ -31708,7 +31717,7 @@ cargge.MoleculeDrawDepictor_1 = function MoleculeDrawDepictor_1(ctx, mol, markus
   this.ctx = ctx;
 }
 ;
-defineClass(222, 143, {1:1}, cargge.MoleculeDrawDepictor, cargge.MoleculeDrawDepictor_0, cargge.MoleculeDrawDepictor_1);
+defineClass(222, 144, {1:1}, cargge.MoleculeDrawDepictor, cargge.MoleculeDrawDepictor_0, cargge.MoleculeDrawDepictor_1);
 _.$init_100 = function $init_100(){
 }
 ;
@@ -31725,7 +31734,7 @@ _.paintStructures = function paintStructures_0(g){
 }
 ;
 _.setDisplayMode = function setDisplayMode_2(displayMode){
-  getClassPrototype(143).setDisplayMode.call(this, displayMode);
+  getClassPrototype(144).setDisplayMode.call(this, displayMode);
 }
 ;
 _.createDepictor_1 = function createDepictor_1(stereoMolecule, mUseGraphics2D, cfg){
@@ -31745,7 +31754,7 @@ _.paintDrawingObjects_0 = function paintDrawingObjects(g){
   var i, object;
   if (isNotNull(this.mDrawingObjectList)) {
     for (i = 0; i < this.mDrawingObjectList.size(); i++) {
-      object = castTo(this.mDrawingObjectList.getAtIndex(i), 88);
+      object = castTo(this.mDrawingObjectList.getAtIndex(i), 89);
       object.draw_5(new carggv.GraphicsContext(this.ctx), this.mTransformation);
     }
   }
@@ -31817,7 +31826,7 @@ cargge.SVGToolBarImpl = function SVGToolBarImpl(model, scale){
   Object_0.call(this);
   this.$init_101();
   this.model = model;
-  this.scale = scale;
+  this.scale_0 = scale;
   cargge.instanceCount_0++;
 }
 ;
@@ -31832,7 +31841,7 @@ _.$init_101 = function $init_101(){
   this.currentAction = null;
   this.lastAction = null;
   this.loaded = false;
-  this.scale = 1;
+  this.scale_0 = 1;
 }
 ;
 _.createElement_2 = function createElement_1(parent_0, width_0, height){
@@ -31845,13 +31854,9 @@ _.createElement_1 = function createElement_0(parent_0, width_0, height){
   this.BUTTON_SVG_IMAGE.addLoadHandler(new cargge.SVGToolBarImpl$1(this));
   toolbarHolder = cggdc.$createDivElement(cggdc.get_4());
   cggdc.$setId(toolbarHolder, toolBarId);
-  cggdc.$setAttribute(toolbarHolder, 'style', 'position:absolute;width:' + width_0 * this.scale + 'px;height:' + height * this.scale + 'px;');
+  cggdc.$setAttribute(toolbarHolder, 'style', 'position:absolute;width:' + width_0 * this.scale_0 + 'px;height:' + height * this.scale_0 + 'px;');
   cggdc.$appendChild(parent_0, toolbarHolder);
-  this.canvas = cggcc3.createIfSupported();
-  this.canvas.setCoordinateSpaceWidth(width_0 * this.scale);
-  this.canvas.setCoordinateSpaceHeight(height * this.scale);
-  this.canvas.setWidth(width_0 * this.scale + 'px');
-  this.canvas.setHeight(height * this.scale + 'px');
+  this.canvas = cargge.createScaledCanvas(width_0 * this.scale_0, height * this.scale_0);
   this.canvas.addFocusHandler(new cargge.SVGToolBarImpl$2(this));
   this.canvas.addBlurHandler(new cargge.SVGToolBarImpl$3(this));
   cggucu.get_11(toolBarId).add_4(this.canvas);
@@ -31883,36 +31888,36 @@ _.draw_2 = function draw_3(canvas){
 ;
 _.drawButtons = function drawButtons(ctx){
   var action, col, dx, dx0, dy, dy0, pt, row, x_0, y_0;
-  ctx.clearRect_0(0, 0, 45 * this.scale, 360 * this.scale);
-  ctx.drawImage_0(this.BUTTON_SVG_IMAGE, 0, 0, 45, 360, 0, 0, 45 * this.scale, 360 * this.scale);
+  ctx.clearRect_0(0, 0, 45 * this.scale_0, 360 * this.scale_0);
+  ctx.drawImage_0(this.BUTTON_SVG_IMAGE, 0, 0, 45, 360, 0, 0, 45 * this.scale_0, 360 * this.scale_0);
   if (this.selectedRow != -1 && this.selectetCol != -1) {
-    dx0 = 45 / 2 * this.scale;
-    dy0 = 360 / 17 * this.scale;
-    y_0 = round_int(360 / 17 * this.selectedRow * this.scale);
-    x_0 = round_int(45 / 2 * this.selectetCol * this.scale);
+    dx0 = 45 / 2 * this.scale_0;
+    dy0 = 360 / 17 * this.scale_0;
+    y_0 = round_int(360 / 17 * this.selectedRow * this.scale_0);
+    x_0 = round_int(45 / 2 * this.selectetCol * this.scale_0);
     action = this.getCurrentAction();
     pt = this.getActionPosition(action);
     ctx.setFill(this.model.getGeomFactory().getDrawConfig().createColor(0.5, 0.5, 0.5, 0.5));
     ctx.fillRect_0(x_0, y_0, dx0, dy0);
   }
-  dy = 360 * this.scale / 17;
-  dx = 45 * this.scale / 2;
+  dy = 360 * this.scale_0 / 17;
+  dx = 45 * this.scale_0 / 2;
   for (row = 0; row < 17 + 1; row++) {
     ctx.setStroke(this.model.getGeomFactory().getDrawConfig().createColor(0.8, 0.8, 0.8, 0.5));
-    ctx.drawLine_0(0, dy * row, 45 * this.scale, dy * row);
+    ctx.drawLine_0(0, dy * row, 45 * this.scale_0, dy * row);
   }
   for (col = 0; col <= 2; col++) {
-    ctx.drawLine_0(col * dx, 0, col * dx, 360 * this.scale);
+    ctx.drawLine_0(col * dx, 0, col * dx, 360 * this.scale_0);
   }
 }
 ;
 _.drawESRButtons = function drawESRButtons(ctx){
   var dx, dy, node, row, x_0, y_0;
   row = carsge.rowFromESRType(this.model.getESRType_0());
-  y_0 = round_int(360 * this.scale / 17 * 3);
-  x_0 = round_int(45 * this.scale / 2 * 1);
-  dx = 45 * this.scale / 2;
-  dy = 360 * this.scale / 17;
+  y_0 = round_int(360 * this.scale_0 / 17 * 3);
+  x_0 = round_int(45 * this.scale_0 / 2 * 1);
+  dx = 45 * this.scale_0 / 2;
+  dy = 360 * this.scale_0 / 17;
   node = null;
   switch (row) {
     case 0:
@@ -31925,19 +31930,19 @@ _.drawESRButtons = function drawESRButtons(ctx){
       break;
   }
   if (isNotNull(node)) {
-    ctx.clearRect_0(x_0, y_0, node.getWidth_1() * this.scale, node.getHeight_1() * this.scale);
-    ctx.drawImage_0(node, 0, 0, node.getWidth_1(), node.getHeight_1(), x_0, y_0, node.getWidth_1() * this.scale, node.getHeight_1() * this.scale);
+    ctx.clearRect_0(x_0, y_0, node.getWidth_1() * this.scale_0, node.getHeight_1() * this.scale_0);
+    ctx.drawImage_0(node, 0, 0, node.getWidth_1(), node.getHeight_1(), x_0, y_0, node.getWidth_1() * this.scale_0, node.getHeight_1() * this.scale_0);
   }
 }
 ;
 _.drawHover = function drawHover(ctx){
   var dx, dy, pt, x_0, y_0;
   if (isNotNull(this.hoverAction) && jsNotEquals(this.hoverAction, this.getCurrentAction())) {
-    dx = 45 / 2 * this.scale;
-    dy = 360 / 17 * this.scale;
+    dx = 45 / 2 * this.scale_0;
+    dy = 360 / 17 * this.scale_0;
     pt = this.getActionPosition(this.hoverAction);
-    y_0 = round_int(360 * this.scale / 17 * pt.y_0);
-    x_0 = round_int(45 * this.scale / 2 * pt.x_0);
+    y_0 = round_int(360 * this.scale_0 / 17 * pt.y_0);
+    x_0 = round_int(45 * this.scale_0 / 2 * pt.x_0);
     ctx.setFill(this.model.getGeomFactory().getDrawConfig().createColor(0.3, 0.3, 0.3, 0.5));
     ctx.fillRect_0(x_0, y_0, dx, dy);
   }
@@ -31986,9 +31991,9 @@ _.onMouseMoved = function onMouseMoved(evt){
   var a, col, dx, dy, row, x_0, y_0;
   x_0 = evt.getX_0();
   y_0 = evt.getY_0();
-  if (x_0 >= 0 && x_0 <= 45 * this.scale && y_0 >= 0 && y_0 < 360 * this.scale) {
-    dy = 360 / 17 * this.scale;
-    dx = 45 / 2 * this.scale;
+  if (x_0 >= 0 && x_0 <= 45 * this.scale_0 && y_0 >= 0 && y_0 < 360 * this.scale_0) {
+    dy = 360 / 17 * this.scale_0;
+    dx = 45 / 2 * this.scale_0;
     col = round_int(x_0 / dx);
     row = round_int(y_0 / dy);
     a = this.getAction(row, col);
@@ -32010,14 +32015,14 @@ _.onMousePressed = function onMousePressed(evt){
   var action, bpl, col, dx, dy, row, x_0, y_0;
   x_0 = evt.getX_0();
   y_0 = evt.getY_0();
-  if (x_0 >= 0 && x_0 <= 45 * this.scale && y_0 >= 0 && y_0 < 360 * this.scale) {
-    dy = 360 / 17 * this.scale;
-    dx = 45 / 2 * this.scale;
+  if (x_0 >= 0 && x_0 <= 45 * this.scale_0 && y_0 >= 0 && y_0 < 360 * this.scale_0) {
+    dy = 360 / 17 * this.scale_0;
+    dx = 45 / 2 * this.scale_0;
     col = round_int(x_0 / dx);
     row = round_int(y_0 / dy);
     action = this.setAction(row, col);
-    if (instanceOf(action, 96)) {
-      bpl = castTo(action, 96);
+    if (instanceOf(action, 97)) {
+      bpl = castTo(action, 97);
       bpl.onButtonPressed(new cargge.Window_0(this.canvas), new jag.Point2D$Double_0(x_0, y_0));
     }
     this.repaint();
@@ -32029,8 +32034,8 @@ _.onMouseReleased = function onMouseReleased(evt){
   var bpl, repaint;
   repaint = false;
   if (isNotNull(this.currentAction)) {
-    if (instanceOf(this.currentAction, 96)) {
-      bpl = castTo(this.currentAction, 96);
+    if (instanceOf(this.currentAction, 97)) {
+      bpl = castTo(this.currentAction, 97);
       bpl.onButtonReleased(null, new jag.Point2D$Double_0(evt.getX_0(), evt.getY_0()));
       repaint = true;
     }
@@ -32091,7 +32096,7 @@ _.setAction_0 = function setAction_0(a){
 }
 ;
 _.setupActions = function setupActions(){
-  this.ACTIONS = stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 2), {4:1, 1:1, 6:1}, 31, 0, [stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ClearAction(this.model), new carsgea.UndoAction(this.model)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.CleanAction(this.model), new carsgea.ZoomRotateAction(this.model)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.SelectionAction(this.model), this.model.isReaction_0()?new carsgea.AtomMapAction(this.model):null]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.UnknownParityAction(this.model), new carggea.ESRSVGTypeAction(this.model, this.scale)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.DeleteAction(this.model), null]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.NewBondAction(this.model), new carsgea.NewChainAction(this.model)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.UpBondAction(this.model), new carsgea.DownBondAction(this.model)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.AddRingAction(this.model, 3, false), new carsgea.AddRingAction(this.model, 4, false)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.AddRingAction(this.model, 5, false), new carsgea.AddRingAction(this.model, 6, false)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.AddRingAction(this.model, 7, false), new carsgea.AddRingAction(this.model, 6, true)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeChargeAction(this.model, true), new carsgea.ChangeChargeAction(this.model, false)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 6), new carsgea.ChangeAtomAction(this.model, 14)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 7), new carsgea.ChangeAtomAction(this.model, 15)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 8), new carsgea.ChangeAtomAction(this.model, 16)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 9), new carsgea.ChangeAtomAction(this.model, 17)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 35), new carsgea.ChangeAtomAction(this.model, 53)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 1), new carsgea.ChangeAtomPropertiesAction(this.model)])]);
+  this.ACTIONS = stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 2), {4:1, 1:1, 6:1}, 31, 0, [stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ClearAction(this.model), new carsgea.UndoAction(this.model)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.CleanAction(this.model), new carsgea.ZoomRotateAction(this.model)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.SelectionAction(this.model), this.model.isReaction_0()?new carsgea.AtomMapAction(this.model):null]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.UnknownParityAction(this.model), new carggea.ESRSVGTypeAction(this.model, this.scale_0)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.DeleteAction(this.model), null]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.NewBondAction(this.model), new carsgea.NewChainAction(this.model)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.UpBondAction(this.model), new carsgea.DownBondAction(this.model)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.AddRingAction(this.model, 3, false), new carsgea.AddRingAction(this.model, 4, false)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.AddRingAction(this.model, 5, false), new carsgea.AddRingAction(this.model, 6, false)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.AddRingAction(this.model, 7, false), new carsgea.AddRingAction(this.model, 6, true)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeChargeAction(this.model, true), new carsgea.ChangeChargeAction(this.model, false)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 6), new carsgea.ChangeAtomAction(this.model, 14)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 7), new carsgea.ChangeAtomAction(this.model, 15)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 8), new carsgea.ChangeAtomAction(this.model, 16)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 9), new carsgea.ChangeAtomAction(this.model, 17)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 35), new carsgea.ChangeAtomAction(this.model, 53)]), stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_share_gui_editor_actions_Action_2_classLit, 1), {31:1, 4:1, 1:1, 6:1}, 23, 0, [new carsgea.ChangeAtomAction(this.model, 1), new carsgea.ChangeAtomPropertiesAction(this.model)])]);
   this.lastAction = this.setAction(2, 0);
 }
 ;
@@ -32104,7 +32109,7 @@ _.setupMouseHandlers = function setupMouseHandlers(){
 ;
 _.focus_0 = false;
 _.loaded = false;
-_.scale = 0;
+_.scale_0 = 0;
 _.selectedRow = 0;
 _.selectetCol = 0;
 cargge.instanceCount_0 = 0;
@@ -32126,7 +32131,7 @@ cargge.SVGToolBarImpl$1 = function SVGToolBarImpl$1(this$0){
   this.$init_102();
 }
 ;
-defineClass(436, 1, {171:1, 19:1, 1:1}, cargge.SVGToolBarImpl$1);
+defineClass(436, 1, {172:1, 19:1, 1:1}, cargge.SVGToolBarImpl$1);
 _.$init_102 = function $init_102(){
 }
 ;
@@ -32301,7 +32306,7 @@ cargge.StructureEditor_0 = function StructureEditor_0(container, useSVG, scale){
   var displayMode, drawAreaElement, height, idcode, idcodewidth, ignoreStereoErrors, isFragment, isfragment, mol, noStereoText, se, sf, showFragmentIndicator, showIDCode, si, st, style, t, toolBarElement, toolBarWidth, vo, width_0;
   Object_0.call(this);
   this.$init_109();
-  this.scale = scale;
+  this.scale_0 = scale;
   this.container = container;
   if (isNotNull(container)) {
     this.model = new cargge.GWTEditorModel(new cargge.GWTGeomFactory(new cargge.GWTDrawConfig), 0);
@@ -32437,7 +32442,7 @@ cargge.notify = function notify(o){
   cargge.$clinit_StructureEditor();
   var e, e$iterator, h, toolBarWidth, w;
   for (e$iterator = cargge.map_1.iterator(); e$iterator.hasNext_0();) {
-    e = castTo(e$iterator.next_3(), 115);
+    e = castTo(e$iterator.next_3(), 116);
     e.drawPane.draw();
     w = cggdc.$getClientWidth(e.container);
     h = cggdc.$getClientHeight(e.container);
@@ -32446,7 +32451,7 @@ cargge.notify = function notify(o){
   }
 }
 ;
-defineClass(115, 1, {115:1, 180:1, 1:1}, cargge.StructureEditor_0, cargge.StructureEditor_1, cargge.StructureEditor_2);
+defineClass(116, 1, {116:1, 180:1, 1:1}, cargge.StructureEditor_0, cargge.StructureEditor_1, cargge.StructureEditor_2);
 _.$init_109 = function $init_109(){
   this.drag = false;
   this.mousePoint = null;
@@ -32454,7 +32459,7 @@ _.$init_109 = function $init_109(){
   this.viewOnly = jl.valueOf_16(false);
   this.rightClick = false;
   this.mousePressEvt = null;
-  this.scale = 1;
+  this.scale_0 = 1;
 }
 ;
 _.callFuncIZ = function callFuncIZ(func, param, b){
@@ -32513,7 +32518,7 @@ _.getSmiles = function getSmiles_1(){
 }
 ;
 _.getToolbarWidth = function getToolbarWidth(){
-  return jl.booleanValue__Z__devirtual$(this.viewOnly)?0:cargge.TOOLBARWIDTH * this.scale;
+  return jl.booleanValue__Z__devirtual$(this.viewOnly)?0:cargge.TOOLBARWIDTH * this.scale_0;
 }
 ;
 _.handleKeyEvent = function handleKeyEvent(keyEvent){
@@ -32781,10 +32786,10 @@ _.setupMouseHandlers_0 = function setupMouseHandlers_0(){
 ;
 _.drag = false;
 _.rightClick = false;
-_.scale = 0;
+_.scale_0 = 0;
 cargge.TEXTHEIGHT = 20;
 cargge.TOOLBARWIDTH = 45;
-cggl.Lcom_actelion_research_gwt_gui_editor_StructureEditor_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'StructureEditor', 115, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_editor_StructureEditor_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'StructureEditor', 116, cggl.Ljava_lang_Object_2_classLit);
 cggels.$clinit_ResizeHandler = function $clinit_ResizeHandler(){
   cggels.$clinit_ResizeHandler = emptyMethod;
 }
@@ -32991,7 +32996,7 @@ cargge.StructureEditor$5 = function StructureEditor$5(this$0){
   this.$init_117();
 }
 ;
-defineClass(372, 1, {90:1, 19:1, 1:1}, cargge.StructureEditor$5);
+defineClass(372, 1, {91:1, 19:1, 1:1}, cargge.StructureEditor$5);
 _.$init_117 = function $init_117(){
 }
 ;
@@ -33135,11 +33140,7 @@ _.createElement_1 = function createElement_2(parent_0, width_0, height){
   cggdc.$setId(toolbarHolder, toolBarId);
   cggdc.$setAttribute(toolbarHolder, 'style', 'position:absolute;width:' + width_0 + 'px;height:' + height + 'px;');
   cggdc.$appendChild(parent_0, toolbarHolder);
-  this.canvas = cggcc3.createIfSupported();
-  this.canvas.setCoordinateSpaceWidth(width_0);
-  this.canvas.setCoordinateSpaceHeight(height);
-  this.canvas.setWidth(width_0 + 'px');
-  this.canvas.setHeight(height + 'px');
+  this.canvas = cargge.createScaledCanvas(width_0, height);
   cggdc.$setAttribute(this.canvas.getElement(), 'style', 'outline: none');
   this.canvas.addFocusHandler(new cargge.ToolBarImpl$3(this));
   this.canvas.addBlurHandler(new cargge.ToolBarImpl$4(this));
@@ -33236,8 +33237,8 @@ _.onMousePressed_1 = function onMousePressed_1(evt){
     col = round_int(x_0 / dx);
     row = round_int(y_0 / dy);
     action = this.setAction(row, col);
-    if (instanceOf(action, 96)) {
-      bpl = castTo(action, 96);
+    if (instanceOf(action, 97)) {
+      bpl = castTo(action, 97);
       bpl.onButtonPressed(new cargge.Window_0(this.canvas), new jag.Point2D$Double_0(x_0, y_0));
     }
     this.repaint_0();
@@ -33249,8 +33250,8 @@ _.onMouseReleased_1 = function onMouseReleased_1(evt){
   var bpl, repaint;
   repaint = false;
   if (isNotNull(this.currentAction)) {
-    if (instanceOf(this.currentAction, 96)) {
-      bpl = castTo(this.currentAction, 96);
+    if (instanceOf(this.currentAction, 97)) {
+      bpl = castTo(this.currentAction, 97);
       bpl.onButtonReleased(null, new jag.Point2D$Double_0(evt.getX_0(), evt.getY_0()));
       repaint = true;
     }
@@ -33340,7 +33341,7 @@ cargge.ToolBarImpl$1 = function ToolBarImpl$1(this$0){
   this.$init_123();
 }
 ;
-defineClass(443, 1, {171:1, 19:1, 1:1}, cargge.ToolBarImpl$1);
+defineClass(443, 1, {172:1, 19:1, 1:1}, cargge.ToolBarImpl$1);
 _.$init_123 = function $init_123(){
 }
 ;
@@ -33363,7 +33364,7 @@ cargge.ToolBarImpl$2 = function ToolBarImpl$2(this$0){
   this.$init_124();
 }
 ;
-defineClass(444, 1, {171:1, 19:1, 1:1}, cargge.ToolBarImpl$2);
+defineClass(444, 1, {172:1, 19:1, 1:1}, cargge.ToolBarImpl$2);
 _.$init_124 = function $init_124(){
 }
 ;
@@ -33458,6 +33459,37 @@ _.onMouseUp = function onMouseUp_1(event_0){
 }
 ;
 cggl.Lcom_actelion_research_gwt_gui_editor_ToolBarImpl$6_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'ToolBarImpl/6', 448, cggl.Ljava_lang_Object_2_classLit);
+cargge.$clinit_Util_0 = function $clinit_Util_0(){
+  cargge.$clinit_Util_0 = emptyMethod;
+  jl.$clinit_Object();
+}
+;
+cargge.createScaledCanvas = function createScaledCanvas(width_0, height){
+  cargge.$clinit_Util_0();
+  var canvas;
+  canvas = cggcc3.createIfSupported();
+  cargge.scaleCanvas(canvas, width_0, height);
+  return canvas;
+}
+;
+cargge.getDevicePixelRatio = function getDevicePixelRatio(){
+  return window.devicePixelRatio || 1;
+}
+;
+cargge.scaleCanvas = function scaleCanvas(canvas, width_0, height){
+  cargge.$clinit_Util_0();
+  var ctx, ratio;
+  canvas.setWidth(width_0 + 'px');
+  canvas.setHeight(height + 'px');
+  ctx = canvas.getContext2d_0();
+  ratio = cargge.getDevicePixelRatio();
+  canvas.setCoordinateSpaceWidth(round_int(width_0 * ratio));
+  canvas.setCoordinateSpaceHeight(round_int(height * ratio));
+  cggcdc.$scale(ctx, ratio, ratio);
+}
+;
+defineClass(969, 1, {1:1});
+cggl.Lcom_actelion_research_gwt_gui_editor_Util_2_classLit = createForClass('com.actelion.research.gwt.gui.editor', 'Util', 969, cggl.Ljava_lang_Object_2_classLit);
 carsg.$clinit_Delegator = function $clinit_Delegator(){
   carsg.$clinit_Delegator = emptyMethod;
   jl.$clinit_Object();
@@ -34021,7 +34053,7 @@ cggucu.SimplePanel_0 = function SimplePanel_0(elem){
   this.setElement(elem);
 }
 ;
-defineClass(107, 228, {30:1, 44:1, 25:1, 20:1, 1:1});
+defineClass(109, 228, {30:1, 44:1, 25:1, 20:1, 1:1});
 _.$init_134 = function $init_134(){
 }
 ;
@@ -34075,7 +34107,7 @@ _.setWidget = function setWidget(w){
   }
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_SimplePanel_2_classLit = createForClass('com.google.gwt.user.client.ui', 'SimplePanel', 107, cggl.Lcom_google_gwt_user_client_ui_Panel_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_SimplePanel_2_classLit = createForClass('com.google.gwt.user.client.ui', 'SimplePanel', 109, cggl.Lcom_google_gwt_user_client_ui_Panel_2_classLit);
 cggucu.$clinit_SourcesPopupEvents = function $clinit_SourcesPopupEvents(){
   cggucu.$clinit_SourcesPopupEvents = emptyMethod;
 }
@@ -34105,7 +34137,7 @@ cggucu.$clinit_PopupPanel = function $clinit_PopupPanel(){
 cggucu.PopupPanel = function PopupPanel(){
   cggucu.SimplePanel.call(this);
   this.$init_135();
-  cggdc.$appendChild(getClassPrototype(107).getContainerElement.call(this), cggucu.impl_0.createElement_4());
+  cggdc.$appendChild(getClassPrototype(109).getContainerElement.call(this), cggucu.impl_0.createElement_4());
   this.setPopupPosition(0, 0);
   this.setStyleName('gwt-PopupPanel');
   cggucu.setStyleName(this.getContainerElement(), 'popupContent');
@@ -34124,7 +34156,7 @@ cggucu.PopupPanel_1 = function PopupPanel_1(autoHide, modal){
   this.modal = modal;
 }
 ;
-defineClass(110, 107, {30:1, 44:1, 25:1, 20:1, 1:1});
+defineClass(112, 109, {30:1, 44:1, 25:1, 20:1, 1:1});
 _.$init_135 = function $init_135(){
   this.glassResizer = new cggucu.PopupPanel$1(this);
   this.animType = (cggucu.$clinit_PopupPanel$AnimationType() , cggucu.CENTER_1);
@@ -34180,7 +34212,7 @@ _.getOffsetWidth = function getOffsetWidth_0(){
 }
 ;
 _.getPopupImplElement = function getPopupImplElement(){
-  return cgguc.getFirstChild(getClassPrototype(107).getContainerElement.call(this));
+  return cgguc.getFirstChild(getClassPrototype(109).getContainerElement.call(this));
 }
 ;
 _.getStyleElement = function getStyleElement_0(){
@@ -34205,7 +34237,7 @@ _.isShowing = function isShowing(){
 ;
 _.maybeUpdateSize = function maybeUpdateSize(){
   var w;
-  w = getClassPrototype(107).getWidget.call(this);
+  w = getClassPrototype(109).getWidget.call(this);
   if (isNotNull(w)) {
     if (jsNotEquals(this.desiredHeight, null)) {
       w.setHeight(this.desiredHeight);
@@ -34385,7 +34417,7 @@ _.setVisible = function setVisible_1(visible){
 }
 ;
 _.setWidget = function setWidget_0(w){
-  getClassPrototype(107).setWidget.call(this, w);
+  getClassPrototype(109).setWidget.call(this, w);
   this.maybeUpdateSize();
 }
 ;
@@ -34434,7 +34466,7 @@ _.showing = false;
 _.topPosition = 0;
 cggucu.ANIMATION_DURATION = 200;
 cggucu.DEFAULT_STYLENAME = 'gwt-PopupPanel';
-cggl.Lcom_google_gwt_user_client_ui_PopupPanel_2_classLit = createForClass('com.google.gwt.user.client.ui', 'PopupPanel', 110, cggl.Lcom_google_gwt_user_client_ui_SimplePanel_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_PopupPanel_2_classLit = createForClass('com.google.gwt.user.client.ui', 'PopupPanel', 112, cggl.Lcom_google_gwt_user_client_ui_SimplePanel_2_classLit);
 carggea.$clinit_AbstractESRPane = function $clinit_AbstractESRPane(){
   carggea.$clinit_AbstractESRPane = emptyMethod;
   cggucu.$clinit_PopupPanel();
@@ -34445,18 +34477,14 @@ carggea.AbstractESRPane = function AbstractESRPane(m, width_0, height){
   cggucu.PopupPanel_0.call(this, true);
   this.$init_136();
   this.model = m;
-  this.canvas = cggcc3.createIfSupported();
-  this.canvas.setCoordinateSpaceWidth(width_0);
-  this.canvas.setCoordinateSpaceHeight(height);
-  this.canvas.setWidth(width_0 + 'px');
-  this.canvas.setHeight(height + 'px');
+  this.canvas = cargge.createScaledCanvas(width_0, height);
   this.setWidget(this.canvas);
   this.canvas.addMouseDownHandler(new carggea.AbstractESRPane$1(this, height));
   this.canvas.addMouseUpHandler(new carggea.AbstractESRPane$2(this));
   cggdc.$setClassName(this.getElement(), 'ESRPane');
 }
 ;
-defineClass(313, 110, {30:1, 44:1, 25:1, 20:1, 1:1});
+defineClass(313, 112, {30:1, 44:1, 25:1, 20:1, 1:1});
 _.$init_136 = function $init_136(){
 }
 ;
@@ -34835,7 +34863,7 @@ _.handleCharacter = function handleCharacter(mol, theAtom, evt){
     return true;
   }
    else if (c > 48 && c <= 57 || c >= 65 && c <= 90 || c >= 97 && c <= 122 || c >= 48 && c <= 57 || c == 45) {
-    keyStrokeBuffer.append_3(c);
+    keyStrokeBuffer.append_4(c);
     return true;
   }
   return false;
@@ -35185,13 +35213,13 @@ carggea.AbstractTypeAction = function AbstractTypeAction(model, scale){
   carggea.$clinit_AbstractTypeAction();
   carsgea.BondHighlightAction.call(this, model);
   this.$init_142();
-  this.scale_0 = scale;
+  this.scale_1 = scale;
 }
 ;
-defineClass(301, 75, {96:1, 23:1, 1:1});
+defineClass(301, 75, {97:1, 23:1, 1:1});
 _.$init_142 = function $init_142(){
   this.popup = null;
-  this.scale_0 = 1;
+  this.scale_1 = 1;
 }
 ;
 _.createPopup_0 = function createPopup_0(parent_0, pt, row){
@@ -35339,7 +35367,7 @@ _.setESRInfo = function setESRInfo(stereoBond, type_0){
   }
 }
 ;
-_.scale_0 = 0;
+_.scale_1 = 0;
 cggl.Lcom_actelion_research_gwt_gui_editor_actions_AbstractTypeAction_2_classLit = createForClass('com.actelion.research.gwt.gui.editor.actions', 'AbstractTypeAction', 301, cggl.Lcom_actelion_research_share_gui_editor_actions_BondHighlightAction_2_classLit);
 cggucu.$clinit_PopupPanel$PositionCallback = function $clinit_PopupPanel$PositionCallback(){
   cggucu.$clinit_PopupPanel$PositionCallback = emptyMethod;
@@ -35366,7 +35394,7 @@ _.$init_143 = function $init_143(){
 _.setPosition = function setPosition(offsetWidth, offsetHeight){
   var left, top_0;
   left = castTo(this.val$parent2.getNative(), 20).getAbsoluteLeft() + round_int(45);
-  top_0 = castTo(this.val$parent2.getNative(), 20).getAbsoluteTop() + round_int(360 * this.this$01.scale_0 / 17 * 3);
+  top_0 = castTo(this.val$parent2.getNative(), 20).getAbsoluteTop() + round_int(360 * this.this$01.scale_1 / 17 * 3);
   this.this$01.popup.setPopupPosition(left, top_0);
   this.this$01.popup.requestLayout_2();
 }
@@ -35425,7 +35453,7 @@ carggea.ESRPane$1 = function ESRPane$1(this$0){
   this.$init_145();
 }
 ;
-defineClass(689, 1, {171:1, 19:1, 1:1}, carggea.ESRPane$1);
+defineClass(689, 1, {172:1, 19:1, 1:1}, carggea.ESRPane$1);
 _.$init_145 = function $init_145(){
 }
 ;
@@ -35448,7 +35476,7 @@ carggea.ESRPane$2 = function ESRPane$2(this$0){
   this.$init_146();
 }
 ;
-defineClass(690, 1, {171:1, 19:1, 1:1}, carggea.ESRPane$2);
+defineClass(690, 1, {172:1, 19:1, 1:1}, carggea.ESRPane$2);
 _.$init_146 = function $init_146(){
 }
 ;
@@ -35469,7 +35497,7 @@ carggea.ESRSVGPane = function ESRSVGPane(m, scale){
   carggea.$clinit_ESRSVGPane();
   carggea.AbstractESRPane.call(this, m, carggea.ESR_BUTTON_UP_0.getWidth_1() * scale, carggea.ESR_BUTTON_UP_0.getHeight_1() * scale);
   this.$init_147();
-  this.scale = scale;
+  this.scale_0 = scale;
   carggea.ESR_BUTTON_UP_0.addLoadHandler(new carggea.ESRSVGPane$1(this));
 }
 ;
@@ -35477,18 +35505,18 @@ defineClass(691, 313, {30:1, 44:1, 25:1, 20:1, 1:1}, carggea.ESRSVGPane);
 _.$init_147 = function $init_147(){
   this.pressed = false;
   this.loaded = false;
-  this.scale = 1;
+  this.scale_0 = 1;
 }
 ;
 _.drawAllButtons = function drawAllButtons(ctx){
-  ctx.clearRect_0(0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale, carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale);
+  ctx.clearRect_0(0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale_0, carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale_0);
   ctx.save_0();
   ctx.setFill(this.model.getGeomFactory().getDrawConfig().createColor(1, 1, 1, 1));
-  ctx.fillRect_0(0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale, carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale);
+  ctx.fillRect_0(0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale_0, carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale_0);
   ctx.setStroke(this.model.getGeomFactory().getDrawConfig().createColor(0.5, 0.5, 0.5, 1));
-  ctx.drawRect(0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale, carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale);
+  ctx.drawRect(0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale_0, carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale_0);
   ctx.restore_0();
-  ctx.drawImage_0(carggea.ESR_BUTTON_UP_0, 0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1(), carggea.ESR_BUTTON_UP_0.getHeight_1(), 0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale, carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale);
+  ctx.drawImage_0(carggea.ESR_BUTTON_UP_0, 0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1(), carggea.ESR_BUTTON_UP_0.getHeight_1(), 0, 0, carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale_0, carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale_0);
 }
 ;
 _.drawButtons_1 = function drawButtons_2(ctx){
@@ -35499,9 +35527,9 @@ _.drawButtons_1 = function drawButtons_2(ctx){
 _.drawSelectedButton = function drawSelectedButton(ctx){
   var dx, dy, selectedRow, x_0, y_0;
   selectedRow = (this.model , carsge.rowFromESRType(this.model.getESRType_0()));
-  dx = carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale;
-  dy = carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale / 3;
-  y_0 = round_int(carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale / 3 * selectedRow);
+  dx = carggea.ESR_BUTTON_UP_0.getWidth_1() * this.scale_0;
+  dy = carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale_0 / 3;
+  y_0 = round_int(carggea.ESR_BUTTON_UP_0.getHeight_1() * this.scale_0 / 3 * selectedRow);
   x_0 = 0;
   ctx.setFill(this.model.getGeomFactory().getDrawConfig().createColor(0.5, 0.5, 0.5, 0.5));
   ctx.fillRect_0(x_0, y_0, dx, dy);
@@ -35520,7 +35548,7 @@ _.onMouseButtonReleased = function onMouseButtonReleased_0(){
 ;
 _.loaded = false;
 _.pressed = false;
-_.scale = 0;
+_.scale_0 = 0;
 cggl.Lcom_actelion_research_gwt_gui_editor_actions_ESRSVGPane_2_classLit = createForClass('com.actelion.research.gwt.gui.editor.actions', 'ESRSVGPane', 691, cggl.Lcom_actelion_research_gwt_gui_editor_actions_AbstractESRPane_2_classLit);
 carggea.$clinit_ESRSVGPane$1 = function $clinit_ESRSVGPane$1(){
   carggea.$clinit_ESRSVGPane$1 = emptyMethod;
@@ -35534,7 +35562,7 @@ carggea.ESRSVGPane$1 = function ESRSVGPane$1(this$0){
   this.$init_148();
 }
 ;
-defineClass(692, 1, {171:1, 19:1, 1:1}, carggea.ESRSVGPane$1);
+defineClass(692, 1, {172:1, 19:1, 1:1}, carggea.ESRSVGPane$1);
 _.$init_148 = function $init_148(){
 }
 ;
@@ -35554,12 +35582,12 @@ carggea.ESRSVGTypeAction = function ESRSVGTypeAction(model, scale){
   carggea.$clinit_ESRSVGTypeAction();
   carggea.AbstractTypeAction.call(this, model, scale);
   this.$init_149();
-  this.scale = scale;
+  this.scale_0 = scale;
 }
 ;
-defineClass(621, 301, {96:1, 23:1, 1:1}, carggea.ESRSVGTypeAction);
+defineClass(621, 301, {97:1, 23:1, 1:1}, carggea.ESRSVGTypeAction);
 _.$init_149 = function $init_149(){
-  this.scale = 1;
+  this.scale_0 = 1;
 }
 ;
 _.createPane = function createPane(){
@@ -35567,10 +35595,10 @@ _.createPane = function createPane(){
 }
 ;
 _.createPane_0 = function createPane_0(){
-  return new carggea.ESRSVGPane(this.model_0, this.scale);
+  return new carggea.ESRSVGPane(this.model_0, this.scale_0);
 }
 ;
-_.scale = 0;
+_.scale_0 = 0;
 cggl.Lcom_actelion_research_gwt_gui_editor_actions_ESRSVGTypeAction_2_classLit = createForClass('com.actelion.research.gwt.gui.editor.actions', 'ESRSVGTypeAction', 621, cggl.Lcom_actelion_research_gwt_gui_editor_actions_AbstractTypeAction_2_classLit);
 carggea.$clinit_ESRTypeAction = function $clinit_ESRTypeAction(){
   carggea.$clinit_ESRTypeAction = emptyMethod;
@@ -35583,7 +35611,7 @@ carggea.ESRTypeAction = function ESRTypeAction(model){
   this.$init_150();
 }
 ;
-defineClass(238, 301, {96:1, 238:1, 23:1, 1:1}, carggea.ESRTypeAction);
+defineClass(238, 301, {97:1, 238:1, 23:1, 1:1}, carggea.ESRTypeAction);
 _.$init_150 = function $init_150(){
 }
 ;
@@ -35610,12 +35638,12 @@ cggucu.DecoratedPopupPanel = function DecoratedPopupPanel(autoHide, modal, prefi
   this.decPanel = new cggucu.DecoratorPanel(rowStyles, 1);
   this.decPanel.setStyleName('');
   this.setStylePrimaryName('gwt-DecoratedPopupPanel');
-  getClassPrototype(110).setWidget.call(this, this.decPanel);
+  getClassPrototype(112).setWidget.call(this, this.decPanel);
   cggucu.setStyleName_0(this.getContainerElement(), 'popupContent', false);
   cggucu.setStyleName_0(this.decPanel.getContainerElement(), prefix + 'Content', true);
 }
 ;
-defineClass(243, 110, {30:1, 44:1, 25:1, 20:1, 1:1});
+defineClass(243, 112, {30:1, 44:1, 25:1, 20:1, 1:1});
 _.$init_151 = function $init_151(){
 }
 ;
@@ -35761,7 +35789,7 @@ _.hide_0 = function hide_1(autoClosed){
     this.resizeHandlerRegistration.removeHandler();
     this.resizeHandlerRegistration = null;
   }
-  getClassPrototype(110).hide_0.call(this, autoClosed);
+  getClassPrototype(112).hide_0.call(this, autoClosed);
 }
 ;
 _.isCaptionEvent = function isCaptionEvent(event_0){
@@ -35826,7 +35854,7 @@ _.onPreviewNativeEvent = function onPreviewNativeEvent_0(event_0){
   if (!event_0.isCanceled_0() && event_0.getTypeInt() == 4 && this.isCaptionEvent(nativeEvent)) {
     cggdc.$preventDefault(nativeEvent);
   }
-  getClassPrototype(110).onPreviewNativeEvent.call(this, event_0);
+  getClassPrototype(112).onPreviewNativeEvent.call(this, event_0);
 }
 ;
 _.setHTML = function setHTML(html){
@@ -35845,7 +35873,7 @@ _.show = function show_0(){
   if (isNull(this.resizeHandlerRegistration)) {
     this.resizeHandlerRegistration = cgguc.addResizeHandler(new cggucu.DialogBox$1(this));
   }
-  getClassPrototype(110).show.call(this);
+  getClassPrototype(112).show.call(this);
 }
 ;
 _.clientLeft = 0;
@@ -35873,7 +35901,7 @@ carggead.TDialog = function TDialog(parent_0, title_0){
   this.buildGUI(cggucu.get_10());
 }
 ;
-defineClass(93, 204, {30:1, 44:1, 25:1, 20:1, 1:1});
+defineClass(94, 204, {30:1, 44:1, 25:1, 20:1, 1:1});
 _.$init_153 = function $init_153(){
   this.status_0 = (carsg.$clinit_DialogResult() , carsg.IDCANCEL);
 }
@@ -35962,7 +35990,7 @@ carggead.hborder = 'iVBORw0KGgoAAAANSUhEUgAAACAAAAuOCAYAAABSa16QAAAAAXNSR0IArs4c
 carggead.hborderIE6 = 'iVBORw0KGgoAAAANSUhEUgAAACAAAAhtCAMAAADEjd0TAAAAAXNSR0IArs4c6QAAAH5QTFRFLUp2ME17NFWHOFySPGKeO2uuQWusPW6yRXK1Q3S7SHnASXvFksHwvby9lcPxmcXxxMTEpMzzq9D0zMzMt9b2utn2vtv319fXxd/43t7e1d/2zOL40OT22eP33ub35ubm5Or45+357+/v7fD38fHx8vT59vf2+Pn8+vv9/////Tw4xQAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sCGQ4zNUu6gSAAAAHKSURBVHja7d1HbtwwAEBRpvfiOInjNLe43f+CWeQAH4gGBGf8/votKIqgtBE1fkYD+Ac+RuMkGqfReBeN+2gGyEGuMFHX0RJg+724ixrcRuMmanAZ7QCcRTNALloAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICNIL+1nwDySIHt4DjaAchzD7YDixYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/hus8Bfyq2gJcBHtBziP9gP8jvYD/IqWAN8jAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAeeBH1OBb1OBrNL5E43PU4FO0A3AUNfgQNXgfjbcRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwUcB/tANxFDW6jGeA6mgGuoiXARdTgPAIAAACAwwH5HnUZAQ8LnEUHAk6jJcBJNLJH0XgcjSfReBqN59F4GY1X0XgdjTfRDJCDnAByJlcAuR5eREuAZ1GD3MT+RDNADvI4WuIqDgPk82Iz+AvBNphaM1gwGgAAAABJRU5ErkJggg==';
 carggead.vborder = 'iVBORw0KGgoAAAANSUhEUgAAAC0AAAAgCAYAAACGhPFEAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAACkSURBVFiF7dI7CgIxFIXhM5bpLNOYHWQV02d/bsElmC0oktomIKScygtW2gmCGGTwDML52rx+LhlOF7ujox72GcARwNk5tx3H8WU95wwze+5JKe1aa5Nz7u19Zgbv/bqUMoUQes+j1ooY4wbADcB11T3xG91BfbJU9CyK/oK+x19YKnqYc1iTZlE0i6JZFM2iaBZFsyiaRdEsimZRNIuiWRTN8gCbWiVKRnlovQAAAABJRU5ErkJggg==';
 carggead.vborderIE6 = 'iVBORw0KGgoAAAANSUhEUgAAAC0AAAAgBAMAAAB0qux3AAAAAXNSR0IArs4c6QAAAB5QTFRFu7u7xsbG1dXV4ODg0OT25+fn7+/v8fHx9PT0////5hugPAAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sCGQ4tO3hDk/gAAAAlSURBVCjPY3ABAkdlzpkThMzCy8tLk8qBoEipgWFUfFR8BIgDALvT/0EuDVlsAAAAAElFTkSuQmCC';
-cggl.Lcom_actelion_research_gwt_gui_editor_actions_dialogs_TDialog_2_classLit = createForClass('com.actelion.research.gwt.gui.editor.actions.dialogs', 'TDialog', 93, cggl.Lcom_google_gwt_user_client_ui_DialogBox_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_editor_actions_dialogs_TDialog_2_classLit = createForClass('com.actelion.research.gwt.gui.editor.actions.dialogs', 'TDialog', 94, cggl.Lcom_google_gwt_user_client_ui_DialogBox_2_classLit);
 carsged.$clinit_IDialog = function $clinit_IDialog(){
   carsged.$clinit_IDialog = emptyMethod;
 }
@@ -35986,7 +36014,7 @@ carggead.AtomPropertiesDialog = function AtomPropertiesDialog(stage, mol, atom){
   this.theAtom = atom;
 }
 ;
-defineClass(636, 93, {30:1, 44:1, 25:1, 20:1, 1:1}, carggead.AtomPropertiesDialog);
+defineClass(636, 94, {30:1, 44:1, 25:1, 20:1, 1:1}, carggead.AtomPropertiesDialog);
 _.$init_154 = function $init_154(){
   this.atomicNo = 0;
   this.mass = 0;
@@ -35995,11 +36023,11 @@ _.$init_154 = function $init_154(){
 }
 ;
 _.doModalAt = function doModalAt_0(x_0, y_0){
-  return getClassPrototype(93).doModalAt.call(this, x_0, y_0);
+  return getClassPrototype(94).doModalAt.call(this, x_0, y_0);
 }
 ;
 _.setResultHandler = function setResultHandler_0(resultHandler){
-  getClassPrototype(93).setResultHandler.call(this, resultHandler);
+  getClassPrototype(94).setResultHandler.call(this, resultHandler);
 }
 ;
 _.buildGUI = function buildGUI(root){
@@ -36074,7 +36102,7 @@ _.handleOK = function handleOK(){
       }
        catch ($e0) {
         $e0 = toJava($e0);
-        if (instanceOf($e0, 136)) {
+        if (instanceOf($e0, 137)) {
           ignored = $e0;
           ok = false;
         }
@@ -36091,7 +36119,7 @@ _.handleOK = function handleOK(){
       }
        catch ($e1) {
         $e1 = toJava($e1);
-        if (instanceOf($e1, 136)) {
+        if (instanceOf($e1, 137)) {
           ignored = $e1;
           ok = false;
         }
@@ -36174,7 +36202,7 @@ carggead.AtomPropertiesDialog$1 = function AtomPropertiesDialog$1(this$0){
   this.$init_155();
 }
 ;
-defineClass(637, 1, {90:1, 19:1, 1:1}, carggead.AtomPropertiesDialog$1);
+defineClass(637, 1, {91:1, 19:1, 1:1}, carggead.AtomPropertiesDialog$1);
 _.$init_155 = function $init_155(){
 }
 ;
@@ -36196,7 +36224,7 @@ carggead.AtomPropertiesDialog$2 = function AtomPropertiesDialog$2(this$0){
   this.$init_156();
 }
 ;
-defineClass(638, 1, {90:1, 19:1, 1:1}, carggead.AtomPropertiesDialog$2);
+defineClass(638, 1, {91:1, 19:1, 1:1}, carggead.AtomPropertiesDialog$2);
 _.$init_156 = function $init_156(){
 }
 ;
@@ -36223,16 +36251,16 @@ carggead.AtomQueryFeaturesDialog = function AtomQueryFeaturesDialog(mol, atom){
   this.mAtom = atom;
 }
 ;
-defineClass(646, 93, {30:1, 44:1, 25:1, 20:1, 1:1}, carggead.AtomQueryFeaturesDialog);
+defineClass(646, 94, {30:1, 44:1, 25:1, 20:1, 1:1}, carggead.AtomQueryFeaturesDialog);
 _.$init_157 = function $init_157(){
 }
 ;
 _.doModalAt = function doModalAt_1(x_0, y_0){
-  return getClassPrototype(93).doModalAt.call(this, x_0, y_0);
+  return getClassPrototype(94).doModalAt.call(this, x_0, y_0);
 }
 ;
 _.setResultHandler = function setResultHandler_1(resultHandler){
-  getClassPrototype(93).setResultHandler.call(this, resultHandler);
+  getClassPrototype(94).setResultHandler.call(this, resultHandler);
 }
 ;
 _.buildGUI = function buildGUI_0(root){
@@ -36705,7 +36733,7 @@ carggead.AtomQueryFeaturesDialog$1 = function AtomQueryFeaturesDialog$1(this$0){
   this.$init_158();
 }
 ;
-defineClass(647, 1, {90:1, 19:1, 1:1}, carggead.AtomQueryFeaturesDialog$1);
+defineClass(647, 1, {91:1, 19:1, 1:1}, carggead.AtomQueryFeaturesDialog$1);
 _.$init_158 = function $init_158(){
 }
 ;
@@ -36727,7 +36755,7 @@ carggead.AtomQueryFeaturesDialog$2 = function AtomQueryFeaturesDialog$2(this$0){
   this.$init_159();
 }
 ;
-defineClass(648, 1, {90:1, 19:1, 1:1}, carggead.AtomQueryFeaturesDialog$2);
+defineClass(648, 1, {91:1, 19:1, 1:1}, carggead.AtomQueryFeaturesDialog$2);
 _.$init_159 = function $init_159(){
 }
 ;
@@ -36828,16 +36856,16 @@ carggead.BondQueryFeaturesDialog = function BondQueryFeaturesDialog(mol, bond){
   this.mBond = bond;
 }
 ;
-defineClass(652, 93, {30:1, 44:1, 25:1, 20:1, 1:1}, carggead.BondQueryFeaturesDialog);
+defineClass(652, 94, {30:1, 44:1, 25:1, 20:1, 1:1}, carggead.BondQueryFeaturesDialog);
 _.$init_163 = function $init_163(){
 }
 ;
 _.doModalAt = function doModalAt_2(x_0, y_0){
-  return getClassPrototype(93).doModalAt.call(this, x_0, y_0);
+  return getClassPrototype(94).doModalAt.call(this, x_0, y_0);
 }
 ;
 _.setResultHandler = function setResultHandler_2(resultHandler){
-  getClassPrototype(93).setResultHandler.call(this, resultHandler);
+  getClassPrototype(94).setResultHandler.call(this, resultHandler);
 }
 ;
 _.buildGUI = function buildGUI_1(root){
@@ -37099,7 +37127,7 @@ carggead.BondQueryFeaturesDialog$1 = function BondQueryFeaturesDialog$1(this$0){
   this.$init_164();
 }
 ;
-defineClass(653, 1, {90:1, 19:1, 1:1}, carggead.BondQueryFeaturesDialog$1);
+defineClass(653, 1, {91:1, 19:1, 1:1}, carggead.BondQueryFeaturesDialog$1);
 _.$init_164 = function $init_164(){
 }
 ;
@@ -37132,7 +37160,7 @@ carggead.BondQueryFeaturesDialog$2 = function BondQueryFeaturesDialog$2(this$0){
   this.$init_165();
 }
 ;
-defineClass(654, 1, {90:1, 19:1, 1:1}, carggead.BondQueryFeaturesDialog$2);
+defineClass(654, 1, {91:1, 19:1, 1:1}, carggead.BondQueryFeaturesDialog$2);
 _.$init_165 = function $init_165(){
 }
 ;
@@ -37153,7 +37181,7 @@ carggead.BondQueryFeaturesDialog$3 = function BondQueryFeaturesDialog$3(this$0){
   this.$init_166();
 }
 ;
-defineClass(655, 1, {90:1, 19:1, 1:1}, carggead.BondQueryFeaturesDialog$3);
+defineClass(655, 1, {91:1, 19:1, 1:1}, carggead.BondQueryFeaturesDialog$3);
 _.$init_166 = function $init_166(){
 }
 ;
@@ -37175,7 +37203,7 @@ carggead.BondQueryFeaturesDialog$4 = function BondQueryFeaturesDialog$4(this$0){
   this.$init_167();
 }
 ;
-defineClass(656, 1, {90:1, 19:1, 1:1}, carggead.BondQueryFeaturesDialog$4);
+defineClass(656, 1, {91:1, 19:1, 1:1}, carggead.BondQueryFeaturesDialog$4);
 _.$init_167 = function $init_167(){
 }
 ;
@@ -37662,7 +37690,7 @@ cggl.Lcom_actelion_research_gwt_gui_editor_actions_dialogs_TDialog$1_2_classLit 
 carggv.$clinit_GWTDepictor = function $clinit_GWTDepictor(){
   carggv.$clinit_GWTDepictor = emptyMethod;
   carc2.$clinit_AbstractDepictor();
-  carggv.MOLECULECOLORS = stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_gwt_gui_viewer_GWTDepictor$ColorMap_2_classLit, 1), {4:1, 1:1, 6:1}, 83, 0, [new carggv.GWTDepictor$ColorMap(0, cggcdc.make_0('BLACK')), new carggv.GWTDepictor$ColorMap(64, cggcdc.make_0('BLUE')), new carggv.GWTDepictor$ColorMap(128, cggcdc.make_0('RED')), new carggv.GWTDepictor$ColorMap(192, cggcdc.make_0('GREEN')), new carggv.GWTDepictor$ColorMap(256, cggcdc.make_0('MAGENTA')), new carggv.GWTDepictor$ColorMap(320, cggcdc.make_0('ORANGE')), new carggv.GWTDepictor$ColorMap(384, cggcdc.make(0, 160, 0)), new carggv.GWTDepictor$ColorMap(448, cggcdc.make(160, 0, 0))]);
+  carggv.MOLECULECOLORS = stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_actelion_research_gwt_gui_viewer_GWTDepictor$ColorMap_2_classLit, 1), {4:1, 1:1, 6:1}, 84, 0, [new carggv.GWTDepictor$ColorMap(0, cggcdc.make_0('BLACK')), new carggv.GWTDepictor$ColorMap(64, cggcdc.make_0('BLUE')), new carggv.GWTDepictor$ColorMap(128, cggcdc.make_0('RED')), new carggv.GWTDepictor$ColorMap(192, cggcdc.make_0('GREEN')), new carggv.GWTDepictor$ColorMap(256, cggcdc.make_0('MAGENTA')), new carggv.GWTDepictor$ColorMap(320, cggcdc.make_0('ORANGE')), new carggv.GWTDepictor$ColorMap(384, cggcdc.make(0, 160, 0)), new carggv.GWTDepictor$ColorMap(448, cggcdc.make(160, 0, 0))]);
 }
 ;
 carggv.GWTDepictor = function GWTDepictor(mol){
@@ -37676,7 +37704,7 @@ carggv.GWTDepictor_0 = function GWTDepictor_0(mol, displayMode){
   this.$init_172();
 }
 ;
-defineClass(133, 105, {105:1, 1:1}, carggv.GWTDepictor, carggv.GWTDepictor_0);
+defineClass(134, 107, {107:1, 1:1}, carggv.GWTDepictor, carggv.GWTDepictor_0);
 _.$init_172 = function $init_172(){
   this.ctx = null;
   this.currentColor = cggcdc.make_0('BLACK');
@@ -37746,7 +37774,7 @@ _.paint = function paint_3(g){
   if (instanceOfJso(g)) {
     this.ctx = castToJso(g);
   }
-  getClassPrototype(105).paint.call(this, g);
+  getClassPrototype(107).paint.call(this, g);
 }
 ;
 _.setColor_0 = function setColor_1(theColor){
@@ -37764,7 +37792,7 @@ _.setTextSize = function setTextSize_0(theSize){
 ;
 _.lineWidth_0 = 0;
 _.textSize = 0;
-cggl.Lcom_actelion_research_gwt_gui_viewer_GWTDepictor_2_classLit = createForClass('com.actelion.research.gwt.gui.viewer', 'GWTDepictor', 133, cggl.Lcom_actelion_research_chem_AbstractDepictor_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_viewer_GWTDepictor_2_classLit = createForClass('com.actelion.research.gwt.gui.viewer', 'GWTDepictor', 134, cggl.Lcom_actelion_research_chem_AbstractDepictor_2_classLit);
 carggv.$clinit_GWTDepictor$ColorMap = function $clinit_GWTDepictor$ColorMap(){
   carggv.$clinit_GWTDepictor$ColorMap = emptyMethod;
   jl.$clinit_Object();
@@ -37778,12 +37806,12 @@ carggv.GWTDepictor$ColorMap = function GWTDepictor$ColorMap(m, c){
   this.color_0 = c;
 }
 ;
-defineClass(83, 1, {83:1, 1:1}, carggv.GWTDepictor$ColorMap);
+defineClass(84, 1, {84:1, 1:1}, carggv.GWTDepictor$ColorMap);
 _.$init_173 = function $init_173(){
 }
 ;
 _.molcol = 0;
-cggl.Lcom_actelion_research_gwt_gui_viewer_GWTDepictor$ColorMap_2_classLit = createForClass('com.actelion.research.gwt.gui.viewer', 'GWTDepictor/ColorMap', 83, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_viewer_GWTDepictor$ColorMap_2_classLit = createForClass('com.actelion.research.gwt.gui.viewer', 'GWTDepictor/ColorMap', 84, cggl.Ljava_lang_Object_2_classLit);
 carsgeg.$clinit_IDrawContext = function $clinit_IDrawContext(){
   carsgeg.$clinit_IDrawContext = emptyMethod;
 }
@@ -37801,7 +37829,7 @@ carggv.GraphicsContext = function GraphicsContext(ctx){
   this.ctx = ctx;
 }
 ;
-defineClass(154, 1, {1:1}, carggv.GraphicsContext);
+defineClass(155, 1, {1:1}, carggv.GraphicsContext);
 _.$init_174 = function $init_174(){
   this.textSize = 10;
   this.fontName = 'Helvetica';
@@ -37950,7 +37978,7 @@ _.setStroke = function setStroke(color_0){
 }
 ;
 _.textSize = 0;
-cggl.Lcom_actelion_research_gwt_gui_viewer_GraphicsContext_2_classLit = createForClass('com.actelion.research.gwt.gui.viewer', 'GraphicsContext', 154, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_viewer_GraphicsContext_2_classLit = createForClass('com.actelion.research.gwt.gui.viewer', 'GraphicsContext', 155, cggl.Ljava_lang_Object_2_classLit);
 carggv.$clinit_Log = function $clinit_Log(){
   carggv.$clinit_Log = emptyMethod;
   jl.$clinit_Object();
@@ -38114,13 +38142,13 @@ carggv.initObserver_0 = function initObserver_0(){
 carggv.notify_0 = function notify_0(o){
   var p, se;
   p = carggv.map_2.get(o);
-  if (instanceOf(p, 155)) {
-    se = castTo(p, 155);
+  if (instanceOf(p, 156)) {
+    se = castTo(p, 156);
     se.draw();
   }
 }
 ;
-defineClass(155, 1, {155:1, 1:1}, carggv.StructureElement);
+defineClass(156, 1, {156:1, 1:1}, carggv.StructureElement);
 _.$init_176 = function $init_176(){
 }
 ;
@@ -38147,7 +38175,7 @@ _.setCanvasSize = function setCanvasSize(width_0, height){
   this.canvas.setHeight(height + 'px');
 }
 ;
-cggl.Lcom_actelion_research_gwt_gui_viewer_StructureElement_2_classLit = createForClass('com.actelion.research.gwt.gui.viewer', 'StructureElement', 155, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_gwt_gui_viewer_StructureElement_2_classLit = createForClass('com.actelion.research.gwt.gui.viewer', 'StructureElement', 156, cggl.Ljava_lang_Object_2_classLit);
 cggedc.$clinit_DragStartHandler = function $clinit_DragStartHandler(){
   cggedc.$clinit_DragStartHandler = emptyMethod;
 }
@@ -39794,7 +39822,7 @@ cargm.fromSmiles_1 = function fromSmiles_1(smiles){
   return new cargm.JSReaction(reaction);
 }
 ;
-defineClass(134, 1, {1:1}, cargm.JSReaction);
+defineClass(135, 1, {1:1}, cargm.JSReaction);
 _.$init_182 = function $init_182(){
 }
 ;
@@ -39930,7 +39958,7 @@ _.validateMapping = function validateMapping_0(){
   this.oclReaction.validateMapping_0();
 }
 ;
-cggl.Lcom_actelion_research_gwt_minimal_JSReaction_2_classLit = createForClass('com.actelion.research.gwt.minimal', 'JSReaction', 134, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_gwt_minimal_JSReaction_2_classLit = createForClass('com.actelion.research.gwt.minimal', 'JSReaction', 135, cggl.Ljava_lang_Object_2_classLit);
 cargm.$clinit_JSRingCollection = function $clinit_JSRingCollection(){
   cargm.$clinit_JSRingCollection = emptyMethod;
   jl.$clinit_Object();
@@ -40230,12 +40258,12 @@ cargm.MolecularFormula_0 = function MolecularFormula_0(mol){
   this.$init_189();
 }
 ;
-defineClass(354, 178, {1:1}, cargm.MolecularFormula_0);
+defineClass(354, 102, {102:1, 1:1}, cargm.MolecularFormula_0);
 _.$init_189 = function $init_189(){
 }
 ;
 defineProperties(_, {absoluteWeight:{'get':function getAbsoluteWeight_0(){
-  return getClassPrototype(178).getAbsoluteWeight.call(this);
+  return getClassPrototype(102).getAbsoluteWeight.call(this);
 }
 }});
 _.getAbsoluteWeight = function(){
@@ -40243,7 +40271,7 @@ _.getAbsoluteWeight = function(){
 }
 ;
 defineProperties(_, {formula:{'get':function getFormula_0(){
-  return getClassPrototype(178).getFormula.call(this);
+  return getClassPrototype(102).getFormula.call(this);
 }
 }});
 _.getFormula = function(){
@@ -40251,7 +40279,7 @@ _.getFormula = function(){
 }
 ;
 defineProperties(_, {relativeWeight:{'get':function getRelativeWeight_0(){
-  return getClassPrototype(178).getRelativeWeight.call(this);
+  return getClassPrototype(102).getRelativeWeight.call(this);
 }
 }});
 _.getRelativeWeight = function(){
@@ -40291,13 +40319,13 @@ _.getSSSearcherWithIndex = function getSSSearcherWithIndex(){
 ;
 cargm.instance_1 = null;
 cggl.Lcom_actelion_research_gwt_minimal_Services_2_classLit = createForClass('com.actelion.research.gwt.minimal', 'Services', 356, cggl.Ljava_lang_Object_2_classLit);
-cargm.$clinit_Util_0 = function $clinit_Util_0(){
-  cargm.$clinit_Util_0 = emptyMethod;
+cargm.$clinit_Util_1 = function $clinit_Util_1(){
+  cargm.$clinit_Util_1 = emptyMethod;
   jl.$clinit_Object();
 }
 ;
 cargm.getDisplayMode_0 = function getDisplayMode_0(options){
-  cargm.$clinit_Util_0();
+  cargm.$clinit_Util_1();
   if (!options)
     return 0;
   var displayMode = 0;
@@ -40362,7 +40390,7 @@ carsg.Arrow = function Arrow(cfg, x_0, y_0, w, h){
   this.rect = new jag.Rectangle2D$Double_0(x_0, y_0, w, h);
 }
 ;
-defineClass(218, 1, {88:1, 1:1}, carsg.Arrow);
+defineClass(218, 1, {89:1, 1:1}, carsg.Arrow);
 _.$init_191 = function $init_191(){
   this.rect = null;
   this.selected_0 = false;
@@ -40470,7 +40498,7 @@ _.compareTo = function compareTo_3(other){
   return this.ordinal_0 - castTo(other, 10).ordinal_0;
 }
 ;
-_.equals = function equals_10(other){
+_.equals = function equals_11(other){
   return this === other;
 }
 ;
@@ -40540,8 +40568,8 @@ carsg.$clinit_DialogResult$Map = function $clinit_DialogResult$Map(){
   carsg.$MAP = createValueOfMap(carsg.values_0());
 }
 ;
-defineClass(1089, 1, {1:1});
-cggl.Lcom_actelion_research_share_gui_DialogResult$Map_2_classLit = createForClass('com.actelion.research.share.gui', 'DialogResult/Map', 1089, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1090, 1, {1:1});
+cggl.Lcom_actelion_research_share_gui_DialogResult$Map_2_classLit = createForClass('com.actelion.research.share.gui', 'DialogResult/Map', 1090, cggl.Ljava_lang_Object_2_classLit);
 carsgeg.$clinit_IPolygon = function $clinit_IPolygon(){
   carsgeg.$clinit_IPolygon = emptyMethod;
 }
@@ -40689,7 +40717,7 @@ _.compare_0 = function compare_14(fragmentDescriptor1, fragmentDescriptor2){
   return this.compare_2(castTo(fragmentDescriptor1, 7), castTo(fragmentDescriptor2, 7));
 }
 ;
-_.equals_0 = function equals_11(other){
+_.equals_0 = function equals_12(other){
   return getClassPrototype(1).equals_0.call(this, other);
 }
 ;
@@ -41783,7 +41811,7 @@ _.deselectAllAtoms = function deselectAllAtoms(){
 _.deselectAllDrawingObjects = function deselectAllDrawingObjects(){
   var d, d$iterator;
   for (d$iterator = this.model_0.getDrawingObjects_0().iterator(); d$iterator.hasNext_0();) {
-    d = castTo(d$iterator.next_3(), 88);
+    d = castTo(d$iterator.next_3(), 89);
     d.setSelected(false);
   }
 }
@@ -41903,7 +41931,7 @@ _.moveSelectedDrawItems = function moveSelectedDrawItems(dx, dy){
   var ok, selectedOne, selectedOne$iterator;
   ok = false;
   for (selectedOne$iterator = this.model_0.getDrawingObjects_0().iterator(); selectedOne$iterator.hasNext_0();) {
-    selectedOne = castTo(selectedOne$iterator.next_3(), 88);
+    selectedOne = castTo(selectedOne$iterator.next_3(), 89);
     if (selectedOne.isSelected() && selectedOne.isMovable()) {
       selectedOne.move_0(-dx, -dy);
       ok = true;
@@ -42088,7 +42116,7 @@ _.selectAtomsInRectangle = function selectAtomsInRectangle(mol, rc){
 _.selectDrawingObjectsInRectangle = function selectDrawingObjectsInRectangle(rc){
   var dw, dw$iterator, r;
   for (dw$iterator = this.model_0.getDrawingObjects_0().iterator(); dw$iterator.hasNext_0();) {
-    dw = castTo(dw$iterator.next_3(), 88);
+    dw = castTo(dw$iterator.next_3(), 89);
     dw.setSelected(false);
     r = dw.getBoundingRect_1();
     if (rc.contains_1(r.getCenterX(), r.getCenterY()))
@@ -42105,7 +42133,7 @@ _.selectFromPolygonRegion = function selectFromPolygonRegion(){
   }
   drawables = this.model_0.getDrawingObjects_0();
   for (d$iterator = drawables.iterator(); d$iterator.hasNext_0();) {
-    d = castTo(d$iterator.next_3(), 88);
+    d = castTo(d$iterator.next_3(), 89);
     r = d.getBoundingRect_1();
     if (this.polygon.contains_1(r.getCenterX(), r.getCenterY()))
       d.setSelected(true);
@@ -42191,7 +42219,7 @@ _.trackHighLight = function trackHighLight_4(pt){
   drawables = this.model_0.getDrawingObjects_0();
   this.model_0.setSelectedDrawingObject(null);
   for (d$iterator = drawables.iterator(); d$iterator.hasNext_0();) {
-    d = castTo(d$iterator.next_3(), 88);
+    d = castTo(d$iterator.next_3(), 89);
     if (d.getBoundingRect_1().contains_1(pt.getX(), pt.getY())) {
       this.model_0.setSelectedDrawingObject(d);
       selected = true;
@@ -42399,8 +42427,8 @@ caru.difference = function difference(a2, a1){
   return a;
 }
 ;
-defineClass(990, 1, {1:1});
-cggl.Lcom_actelion_research_util_Angle_2_classLit = createForClass('com.actelion.research.util', 'Angle', 990, cggl.Ljava_lang_Object_2_classLit);
+defineClass(991, 1, {1:1});
+cggl.Lcom_actelion_research_util_Angle_2_classLit = createForClass('com.actelion.research.util', 'Angle', 991, cggl.Ljava_lang_Object_2_classLit);
 caru.$clinit_ArrayUtils = function $clinit_ArrayUtils(){
   caru.$clinit_ArrayUtils = emptyMethod;
   jl.$clinit_Object();
@@ -42421,8 +42449,8 @@ caru.indexOf_3 = function indexOf_3(array, obj, startIndex){
   return -1;
 }
 ;
-defineClass(974, 1, {1:1});
-cggl.Lcom_actelion_research_util_ArrayUtils_2_classLit = createForClass('com.actelion.research.util', 'ArrayUtils', 974, cggl.Ljava_lang_Object_2_classLit);
+defineClass(975, 1, {1:1});
+cggl.Lcom_actelion_research_util_ArrayUtils_2_classLit = createForClass('com.actelion.research.util', 'ArrayUtils', 975, cggl.Ljava_lang_Object_2_classLit);
 caru.$clinit_ColorHelper = function $clinit_ColorHelper(){
   caru.$clinit_ColorHelper = emptyMethod;
   jl.$clinit_Object();
@@ -42507,9 +42535,9 @@ caru.perceivedBrightness_0 = function perceivedBrightness_0(c){
   return isNull(c)?1:(caru.PERCEIVED_BRIGHTNESS[0] * c.getRed() + caru.PERCEIVED_BRIGHTNESS[1] * c.getGreen() + caru.PERCEIVED_BRIGHTNESS[2] * c.getBlue()) / 255;
 }
 ;
-defineClass(991, 1, {1:1});
+defineClass(992, 1, {1:1});
 caru.MIN_CONTRAST_TO_BACKGROUND = 0.30000001192092896;
-cggl.Lcom_actelion_research_util_ColorHelper_2_classLit = createForClass('com.actelion.research.util', 'ColorHelper', 991, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_util_ColorHelper_2_classLit = createForClass('com.actelion.research.util', 'ColorHelper', 992, cggl.Ljava_lang_Object_2_classLit);
 caru.$clinit_IntArrayComparator = function $clinit_IntArrayComparator(){
   caru.$clinit_IntArrayComparator = emptyMethod;
   jl.$clinit_Object();
@@ -42522,7 +42550,7 @@ caru.IntArrayComparator = function IntArrayComparator(){
   this.$init_218();
 }
 ;
-defineClass(151, 1, {4:1, 1:1, 41:1}, caru.IntArrayComparator);
+defineClass(152, 1, {4:1, 1:1, 41:1}, caru.IntArrayComparator);
 _.$init_218 = function $init_218(){
 }
 ;
@@ -42530,7 +42558,7 @@ _.compare_0 = function compare_16(ia1, ia2){
   return this.compare_2(castTo(ia1, 7), castTo(ia2, 7));
 }
 ;
-_.equals_0 = function equals_12(other){
+_.equals_0 = function equals_13(other){
   return getClassPrototype(1).equals_0.call(this, other);
 }
 ;
@@ -42550,7 +42578,7 @@ _.compare_2 = function compare_17(ia1, ia2){
 }
 ;
 caru.serialVersionUID_6 = 538185762;
-cggl.Lcom_actelion_research_util_IntArrayComparator_2_classLit = createForClass('com.actelion.research.util', 'IntArrayComparator', 151, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_actelion_research_util_IntArrayComparator_2_classLit = createForClass('com.actelion.research.util', 'IntArrayComparator', 152, cggl.Ljava_lang_Object_2_classLit);
 caru.$clinit_SortedList = function $clinit_SortedList(){
   caru.$clinit_SortedList = emptyMethod;
   jl.$clinit_Object();
@@ -42950,8 +42978,8 @@ _.requestAnimationFrame_0 = function requestAnimationFrame_1(callback, element){
 _.updateAnimations = function updateAnimations(){
   cggac.$clinit_AnimationSchedulerImplTimer();
   var curAnimations, duration, requestId, requestId$array, requestId$index, requestId$max;
-  curAnimations = initUnidimensionalArray(cggl.Lcom_google_gwt_animation_client_AnimationSchedulerImplTimer$AnimationHandleImpl_2_classLit, {1172:1, 4:1, 1:1, 6:1}, 250, this.animationRequests.size(), 0, 1);
-  curAnimations = castTo(this.animationRequests.toArray_0(curAnimations), 1172);
+  curAnimations = initUnidimensionalArray(cggl.Lcom_google_gwt_animation_client_AnimationSchedulerImplTimer$AnimationHandleImpl_2_classLit, {1173:1, 4:1, 1:1, 6:1}, 250, this.animationRequests.size(), 0, 1);
+  curAnimations = castTo(this.animationRequests.toArray_0(curAnimations), 1173);
   duration = new cggcc.Duration;
   for (requestId$array = curAnimations , requestId$index = 0 , requestId$max = requestId$array.length; requestId$index < requestId$max; ++requestId$index) {
     requestId = requestId$array[requestId$index];
@@ -43314,6 +43342,11 @@ cggcdc.$save = function $save(this$static){
   this$static.save();
 }
 ;
+cggcdc.$scale = function $scale(this$static, x_0, y_0){
+  cggcdc.$clinit_Context2d();
+  this$static.scale(x_0, y_0);
+}
+;
 cggcdc.$setFillStyle = function $setFillStyle(this$static, fillStyle){
   cggcdc.$clinit_Context2d();
   if (isScript()) {
@@ -43464,10 +43497,10 @@ cggcdc.valueOf_1 = function valueOf_1(name_0){
 ;
 cggcdc.values_1 = function values_1(){
   cggcdc.$clinit_Context2d$LineCap();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$LineCap_2_classLit, 1), {4:1, 1:1, 6:1}, 152, 0, [cggcdc.BUTT, cggcdc.ROUND, cggcdc.SQUARE]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$LineCap_2_classLit, 1), {4:1, 1:1, 6:1}, 153, 0, [cggcdc.BUTT, cggcdc.ROUND, cggcdc.SQUARE]);
 }
 ;
-defineClass(152, 10, {152:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$LineCap);
+defineClass(153, 10, {153:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$LineCap);
 _.$init_234 = function $init_234(){
 }
 ;
@@ -43475,7 +43508,7 @@ _.getValue_0 = function getValue_0(){
   return this.value_0;
 }
 ;
-cggl.Lcom_google_gwt_canvas_dom_client_Context2d$LineCap_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/LineCap', 152, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_1, cggcdc.valueOf_1);
+cggl.Lcom_google_gwt_canvas_dom_client_Context2d$LineCap_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/LineCap', 153, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_1, cggcdc.valueOf_1);
 cggcdc.$clinit_Context2d$LineCap$Map = function $clinit_Context2d$LineCap$Map(){
   cggcdc.$clinit_Context2d$LineCap$Map = emptyMethod;
   cggcdc.$MAP_0 = createValueOfMap(cggcdc.values_1());
@@ -43504,10 +43537,10 @@ cggcdc.valueOf_2 = function valueOf_2(name_0){
 ;
 cggcdc.values_2 = function values_2(){
   cggcdc.$clinit_Context2d$LineJoin();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$LineJoin_2_classLit, 1), {4:1, 1:1, 6:1}, 153, 0, [cggcdc.BEVEL, cggcdc.MITER, cggcdc.ROUND_0]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$LineJoin_2_classLit, 1), {4:1, 1:1, 6:1}, 154, 0, [cggcdc.BEVEL, cggcdc.MITER, cggcdc.ROUND_0]);
 }
 ;
-defineClass(153, 10, {153:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$LineJoin);
+defineClass(154, 10, {154:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$LineJoin);
 _.$init_235 = function $init_235(){
 }
 ;
@@ -43515,7 +43548,7 @@ _.getValue_0 = function getValue_1(){
   return this.value_0;
 }
 ;
-cggl.Lcom_google_gwt_canvas_dom_client_Context2d$LineJoin_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/LineJoin', 153, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_2, cggcdc.valueOf_2);
+cggl.Lcom_google_gwt_canvas_dom_client_Context2d$LineJoin_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/LineJoin', 154, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_2, cggcdc.valueOf_2);
 cggcdc.$clinit_Context2d$LineJoin$Map = function $clinit_Context2d$LineJoin$Map(){
   cggcdc.$clinit_Context2d$LineJoin$Map = emptyMethod;
   cggcdc.$MAP_1 = createValueOfMap(cggcdc.values_2());
@@ -43558,10 +43591,10 @@ cggcdc.valueOf_3 = function valueOf_3(name_0){
 ;
 cggcdc.values_3 = function values_3(){
   cggcdc.$clinit_Context2d$TextAlign();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextAlign_2_classLit, 1), {4:1, 1:1, 6:1}, 116, 0, [cggcdc.CENTER, cggcdc.END, cggcdc.LEFT, cggcdc.RIGHT, cggcdc.START]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextAlign_2_classLit, 1), {4:1, 1:1, 6:1}, 117, 0, [cggcdc.CENTER, cggcdc.END, cggcdc.LEFT, cggcdc.RIGHT, cggcdc.START]);
 }
 ;
-defineClass(116, 10, {116:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$TextAlign);
+defineClass(117, 10, {117:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$TextAlign);
 _.$init_236 = function $init_236(){
 }
 ;
@@ -43569,7 +43602,7 @@ _.getValue_0 = function getValue_2(){
   return this.value_0;
 }
 ;
-cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextAlign_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/TextAlign', 116, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_3, cggcdc.valueOf_3);
+cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextAlign_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/TextAlign', 117, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_3, cggcdc.valueOf_3);
 cggcdc.$clinit_Context2d$TextAlign$Map = function $clinit_Context2d$TextAlign$Map(){
   cggcdc.$clinit_Context2d$TextAlign$Map = emptyMethod;
   cggcdc.$MAP_2 = createValueOfMap(cggcdc.values_3());
@@ -43601,10 +43634,10 @@ cggcdc.valueOf_4 = function valueOf_4(name_0){
 ;
 cggcdc.values_4 = function values_4(){
   cggcdc.$clinit_Context2d$TextBaseline();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextBaseline_2_classLit, 1), {4:1, 1:1, 6:1}, 103, 0, [cggcdc.ALPHABETIC, cggcdc.BOTTOM, cggcdc.HANGING, cggcdc.IDEOGRAPHIC, cggcdc.MIDDLE, cggcdc.TOP]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextBaseline_2_classLit, 1), {4:1, 1:1, 6:1}, 105, 0, [cggcdc.ALPHABETIC, cggcdc.BOTTOM, cggcdc.HANGING, cggcdc.IDEOGRAPHIC, cggcdc.MIDDLE, cggcdc.TOP]);
 }
 ;
-defineClass(103, 10, {103:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$TextBaseline);
+defineClass(105, 10, {105:1, 4:1, 9:1, 10:1, 1:1}, cggcdc.Context2d$TextBaseline);
 _.$init_237 = function $init_237(){
 }
 ;
@@ -43612,7 +43645,7 @@ _.getValue_0 = function getValue_3(){
   return this.value_0;
 }
 ;
-cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextBaseline_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/TextBaseline', 103, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_4, cggcdc.valueOf_4);
+cggl.Lcom_google_gwt_canvas_dom_client_Context2d$TextBaseline_2_classLit = createForEnum('com.google.gwt.canvas.dom.client', 'Context2d/TextBaseline', 105, cggl.Ljava_lang_Enum_2_classLit, cggcdc.values_4, cggcdc.valueOf_4);
 cggcdc.$clinit_Context2d$TextBaseline$Map = function $clinit_Context2d$TextBaseline$Map(){
   cggcdc.$clinit_Context2d$TextBaseline$Map = emptyMethod;
   cggcdc.$MAP_3 = createValueOfMap(cggcdc.values_4());
@@ -43676,11 +43709,11 @@ cggcc.CodeDownloadException = function CodeDownloadException(message){
   this.reason = (cggcc.$clinit_CodeDownloadException$Reason() , cggcc.TERMINATED);
 }
 ;
-defineClass(1147, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, cggcc.CodeDownloadException);
+defineClass(1148, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, cggcc.CodeDownloadException);
 _.$init_241 = function $init_241(){
 }
 ;
-cggl.Lcom_google_gwt_core_client_CodeDownloadException_2_classLit = createForClass('com.google.gwt.core.client', 'CodeDownloadException', 1147, cggl.Ljava_lang_RuntimeException_2_classLit);
+cggl.Lcom_google_gwt_core_client_CodeDownloadException_2_classLit = createForClass('com.google.gwt.core.client', 'CodeDownloadException', 1148, cggl.Ljava_lang_RuntimeException_2_classLit);
 cggcc.$clinit_CodeDownloadException$Reason = function $clinit_CodeDownloadException$Reason(){
   cggcc.$clinit_CodeDownloadException$Reason = emptyMethod;
   jl.$clinit_Enum();
@@ -43712,8 +43745,8 @@ cggcc.$clinit_CodeDownloadException$Reason$Map = function $clinit_CodeDownloadEx
   cggcc.$MAP_4 = createValueOfMap(cggcc.values_5());
 }
 ;
-defineClass(1148, 1, {1:1});
-cggl.Lcom_google_gwt_core_client_CodeDownloadException$Reason$Map_2_classLit = createForClass('com.google.gwt.core.client', 'CodeDownloadException/Reason/Map', 1148, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1149, 1, {1:1});
+cggl.Lcom_google_gwt_core_client_CodeDownloadException$Reason$Map_2_classLit = createForClass('com.google.gwt.core.client', 'CodeDownloadException/Reason/Map', 1149, cggl.Ljava_lang_Object_2_classLit);
 cggcc.$clinit_Duration = function $clinit_Duration(){
   cggcc.$clinit_Duration = emptyMethod;
   jl.$clinit_Object();
@@ -43939,14 +43972,14 @@ cggcc.nativeTopWindow = function nativeTopWindow(){
   return $wnd;
 }
 ;
-defineClass(1144, 1, {1:1});
-cggl.Lcom_google_gwt_core_client_ScriptInjector_2_classLit = createForClass('com.google.gwt.core.client', 'ScriptInjector', 1144, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1145, 1, {1:1});
+cggl.Lcom_google_gwt_core_client_ScriptInjector_2_classLit = createForClass('com.google.gwt.core.client', 'ScriptInjector', 1145, cggl.Ljava_lang_Object_2_classLit);
 cggcc.$clinit_ScriptInjector$FromString = function $clinit_ScriptInjector$FromString(){
   cggcc.$clinit_ScriptInjector$FromString = emptyMethod;
 }
 ;
-defineClass(1145, 1, {1:1});
-cggl.Lcom_google_gwt_core_client_ScriptInjector$FromString_2_classLit = createForClass('com.google.gwt.core.client', 'ScriptInjector/FromString', 1145, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1146, 1, {1:1});
+cggl.Lcom_google_gwt_core_client_ScriptInjector$FromString_2_classLit = createForClass('com.google.gwt.core.client', 'ScriptInjector/FromString', 1146, cggl.Ljava_lang_Object_2_classLit);
 cggcc.$clinit_ScriptInjector$FromUrl = function $clinit_ScriptInjector$FromUrl(){
   cggcc.$clinit_ScriptInjector$FromUrl = emptyMethod;
   jl.$clinit_Object();
@@ -44581,7 +44614,7 @@ cggcci.reportToBrowser = function reportToBrowser(e){
 }
 ;
 cggcci.reportToBrowser_0 = function reportToBrowser_0(e){
-  cggcci.reportToBrowser(instanceOf(e, 156)?castTo(e, 156).getThrown():e);
+  cggcci.reportToBrowser(instanceOf(e, 157)?castTo(e, 157).getThrown():e);
 }
 ;
 function reportUncaughtException_0(e){
@@ -45291,8 +45324,8 @@ cggcs.$clinit_GWTBridge = function $clinit_GWTBridge(){
   cggcs.$clinit_GWTBridge = emptyMethod;
 }
 ;
-defineClass(988, 1, {1:1});
-cggl.Lcom_google_gwt_core_shared_GWTBridge_2_classLit = createForClass('com.google.gwt.core.shared', 'GWTBridge', 988, cggl.Ljava_lang_Object_2_classLit);
+defineClass(989, 1, {1:1});
+cggl.Lcom_google_gwt_core_shared_GWTBridge_2_classLit = createForClass('com.google.gwt.core.shared', 'GWTBridge', 989, cggl.Ljava_lang_Object_2_classLit);
 cggcsi.$clinit_JsLogger = function $clinit_JsLogger(){
   cggcsi.$clinit_JsLogger = emptyMethod;
   jl.$clinit_Object();
@@ -45767,7 +45800,7 @@ cggdc.TAG_1 = 'canvas';
 cggdc.$clinit_DOMImpl = function $clinit_DOMImpl(){
   cggdc.$clinit_DOMImpl = emptyMethod;
   jl.$clinit_Object();
-  cggdc.impl_2 = castTo(new cggdc.DOMImplWebkit, 161);
+  cggdc.impl_2 = castTo(new cggdc.DOMImplWebkit, 162);
 }
 ;
 cggdc.DOMImpl = function DOMImpl(){
@@ -45781,7 +45814,7 @@ cggdc.toInt32_0 = function toInt32_0(val){
   return val | 0;
 }
 ;
-defineClass(161, 1, {1:1});
+defineClass(162, 1, {1:1});
 _.$init_271 = function $init_271(){
 }
 ;
@@ -46008,7 +46041,7 @@ _.toString_2 = function toString_12(elem){
   return elem.outerHTML;
 }
 ;
-cggl.Lcom_google_gwt_dom_client_DOMImpl_2_classLit = createForClass('com.google.gwt.dom.client', 'DOMImpl', 161, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_dom_client_DOMImpl_2_classLit = createForClass('com.google.gwt.dom.client', 'DOMImpl', 162, cggl.Ljava_lang_Object_2_classLit);
 cggdc.$clinit_DOMImplStandard = function $clinit_DOMImplStandard(){
   cggdc.$clinit_DOMImplStandard = emptyMethod;
   cggdc.$clinit_DOMImpl();
@@ -46020,7 +46053,7 @@ cggdc.DOMImplStandard = function DOMImplStandard(){
   this.$init_272();
 }
 ;
-defineClass(554, 161, {1:1});
+defineClass(554, 162, {1:1});
 _.$init_272 = function $init_272(){
 }
 ;
@@ -46203,9 +46236,9 @@ _.getAbsoluteTop_0 = function getAbsoluteTop_1(elem){
 ;
 _.getScrollLeft_0 = function getScrollLeft_1(elem){
   if (!cggdc.$hasTagName(elem, 'body') && this.isRTL(elem)) {
-    return getClassPrototype(161).getScrollLeft_0.call(this, elem) - (cggdc.$getScrollWidth(elem) - cggdc.$getClientWidth(elem));
+    return getClassPrototype(162).getScrollLeft_0.call(this, elem) - (cggdc.$getScrollWidth(elem) - cggdc.$getClientWidth(elem));
   }
-  return getClassPrototype(161).getScrollLeft_0.call(this, elem);
+  return getClassPrototype(162).getScrollLeft_0.call(this, elem);
 }
 ;
 _.getTabIndex_0 = function getTabIndex_1(elem){
@@ -46243,7 +46276,7 @@ cggdc.DOMImplWebkit = function DOMImplWebkit(){
   this.$init_274();
 }
 ;
-defineClass(556, 555, {161:1, 1:1}, cggdc.DOMImplWebkit);
+defineClass(556, 555, {162:1, 1:1}, cggdc.DOMImplWebkit);
 _.$init_274 = function $init_274(){
 }
 ;
@@ -46279,14 +46312,14 @@ cggdc.$clinit_DataTransfer$DropEffect = function $clinit_DataTransfer$DropEffect
   cggdc.$clinit_DataTransfer$DropEffect = emptyMethod;
 }
 ;
-defineClass(1157, 10, {4:1, 9:1, 10:1, 1:1});
-cggl.Lcom_google_gwt_dom_client_DataTransfer$DropEffect_2_classLit = createForEnum('com.google.gwt.dom.client', 'DataTransfer/DropEffect', 1157, cggl.Ljava_lang_Enum_2_classLit, null, null);
+defineClass(1158, 10, {4:1, 9:1, 10:1, 1:1});
+cggl.Lcom_google_gwt_dom_client_DataTransfer$DropEffect_2_classLit = createForEnum('com.google.gwt.dom.client', 'DataTransfer/DropEffect', 1158, cggl.Ljava_lang_Enum_2_classLit, null, null);
 cggdc.$clinit_DataTransfer$DropEffect$Map = function $clinit_DataTransfer$DropEffect$Map(){
   cggdc.$clinit_DataTransfer$DropEffect$Map = emptyMethod;
 }
 ;
-defineClass(1158, 1, {1:1});
-cggl.Lcom_google_gwt_dom_client_DataTransfer$DropEffect$Map_2_classLit = createForClass('com.google.gwt.dom.client', 'DataTransfer/DropEffect/Map', 1158, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1159, 1, {1:1});
+cggl.Lcom_google_gwt_dom_client_DataTransfer$DropEffect$Map_2_classLit = createForClass('com.google.gwt.dom.client', 'DataTransfer/DropEffect/Map', 1159, cggl.Ljava_lang_Object_2_classLit);
 cggdc.$clinit_DivElement = function $clinit_DivElement(){
   cggdc.$clinit_DivElement = emptyMethod;
   cggdc.$clinit_Element();
@@ -48304,14 +48337,14 @@ cggdc.valueOf_8 = function valueOf_8(name_0){
 ;
 cggdc.values_8 = function values_8(){
   cggdc.$clinit_Style$Position();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_dom_client_Style$Position_2_classLit, 1), {4:1, 1:1, 6:1}, 81, 0, [cggdc.STATIC, cggdc.RELATIVE, cggdc.ABSOLUTE, cggdc.FIXED]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_dom_client_Style$Position_2_classLit, 1), {4:1, 1:1, 6:1}, 82, 0, [cggdc.STATIC, cggdc.RELATIVE, cggdc.ABSOLUTE, cggdc.FIXED]);
 }
 ;
-defineClass(81, 10, {81:1, 4:1, 9:1, 10:1, 1:1});
+defineClass(82, 10, {82:1, 4:1, 9:1, 10:1, 1:1});
 _.$init_314 = function $init_314(){
 }
 ;
-cggl.Lcom_google_gwt_dom_client_Style$Position_2_classLit = createForEnum('com.google.gwt.dom.client', 'Style/Position', 81, cggl.Ljava_lang_Enum_2_classLit, cggdc.values_8, cggdc.valueOf_8);
+cggl.Lcom_google_gwt_dom_client_Style$Position_2_classLit = createForEnum('com.google.gwt.dom.client', 'Style/Position', 82, cggl.Ljava_lang_Enum_2_classLit, cggdc.values_8, cggdc.valueOf_8);
 cggdc.$clinit_Style$Position$1 = function $clinit_Style$Position$1(){
   cggdc.$clinit_Style$Position$1 = emptyMethod;
   cggdc.$clinit_Style$Position();
@@ -48323,7 +48356,7 @@ cggdc.Style$Position$1 = function Style$Position$1(enum$name, enum$ordinal){
   this.$init_315();
 }
 ;
-defineClass(502, 81, {81:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$Position$1);
+defineClass(502, 82, {82:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$Position$1);
 _.$init_315 = function $init_315(){
 }
 ;
@@ -48343,7 +48376,7 @@ cggdc.Style$Position$2 = function Style$Position$2(enum$name, enum$ordinal){
   this.$init_316();
 }
 ;
-defineClass(503, 81, {81:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$Position$2);
+defineClass(503, 82, {82:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$Position$2);
 _.$init_316 = function $init_316(){
 }
 ;
@@ -48363,7 +48396,7 @@ cggdc.Style$Position$3 = function Style$Position$3(enum$name, enum$ordinal){
   this.$init_317();
 }
 ;
-defineClass(504, 81, {81:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$Position$3);
+defineClass(504, 82, {82:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$Position$3);
 _.$init_317 = function $init_317(){
 }
 ;
@@ -48383,7 +48416,7 @@ cggdc.Style$Position$4 = function Style$Position$4(enum$name, enum$ordinal){
   this.$init_318();
 }
 ;
-defineClass(505, 81, {81:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$Position$4);
+defineClass(505, 82, {82:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$Position$4);
 _.$init_318 = function $init_318(){
 }
 ;
@@ -48445,14 +48478,14 @@ cggdc.valueOf_9 = function valueOf_9(name_0){
 ;
 cggdc.values_9 = function values_9(){
   cggdc.$clinit_Style$TextAlign();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_dom_client_Style$TextAlign_2_classLit, 1), {4:1, 1:1, 6:1}, 82, 0, [cggdc.CENTER_0, cggdc.JUSTIFY, cggdc.LEFT_0, cggdc.RIGHT_0]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_dom_client_Style$TextAlign_2_classLit, 1), {4:1, 1:1, 6:1}, 83, 0, [cggdc.CENTER_0, cggdc.JUSTIFY, cggdc.LEFT_0, cggdc.RIGHT_0]);
 }
 ;
-defineClass(82, 10, {82:1, 4:1, 9:1, 10:1, 1:1});
+defineClass(83, 10, {83:1, 4:1, 9:1, 10:1, 1:1});
 _.$init_319 = function $init_319(){
 }
 ;
-cggl.Lcom_google_gwt_dom_client_Style$TextAlign_2_classLit = createForEnum('com.google.gwt.dom.client', 'Style/TextAlign', 82, cggl.Ljava_lang_Enum_2_classLit, cggdc.values_9, cggdc.valueOf_9);
+cggl.Lcom_google_gwt_dom_client_Style$TextAlign_2_classLit = createForEnum('com.google.gwt.dom.client', 'Style/TextAlign', 83, cggl.Ljava_lang_Enum_2_classLit, cggdc.values_9, cggdc.valueOf_9);
 cggdc.$clinit_Style$TextAlign$1 = function $clinit_Style$TextAlign$1(){
   cggdc.$clinit_Style$TextAlign$1 = emptyMethod;
   cggdc.$clinit_Style$TextAlign();
@@ -48464,7 +48497,7 @@ cggdc.Style$TextAlign$1 = function Style$TextAlign$1(enum$name, enum$ordinal){
   this.$init_320();
 }
 ;
-defineClass(506, 82, {82:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$TextAlign$1);
+defineClass(506, 83, {83:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$TextAlign$1);
 _.$init_320 = function $init_320(){
 }
 ;
@@ -48484,7 +48517,7 @@ cggdc.Style$TextAlign$2 = function Style$TextAlign$2(enum$name, enum$ordinal){
   this.$init_321();
 }
 ;
-defineClass(507, 82, {82:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$TextAlign$2);
+defineClass(507, 83, {83:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$TextAlign$2);
 _.$init_321 = function $init_321(){
 }
 ;
@@ -48504,7 +48537,7 @@ cggdc.Style$TextAlign$3 = function Style$TextAlign$3(enum$name, enum$ordinal){
   this.$init_322();
 }
 ;
-defineClass(508, 82, {82:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$TextAlign$3);
+defineClass(508, 83, {83:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$TextAlign$3);
 _.$init_322 = function $init_322(){
 }
 ;
@@ -48524,7 +48557,7 @@ cggdc.Style$TextAlign$4 = function Style$TextAlign$4(enum$name, enum$ordinal){
   this.$init_323();
 }
 ;
-defineClass(509, 82, {82:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$TextAlign$4);
+defineClass(509, 83, {83:1, 4:1, 9:1, 10:1, 1:1}, cggdc.Style$TextAlign$4);
 _.$init_323 = function $init_323(){
 }
 ;
@@ -49135,7 +49168,7 @@ cgges.GwtEvent = function GwtEvent(){
   this.$init_335();
 }
 ;
-defineClass(104, 221, {1:1});
+defineClass(106, 221, {1:1});
 _.$init_335 = function $init_335(){
 }
 ;
@@ -49174,7 +49207,7 @@ _.revive = function revive(){
 }
 ;
 _.dead = false;
-cggl.Lcom_google_gwt_event_shared_GwtEvent_2_classLit = createForClass('com.google.gwt.event.shared', 'GwtEvent', 104, cggl.Lcom_google_web_bindery_event_shared_Event_2_classLit);
+cggl.Lcom_google_gwt_event_shared_GwtEvent_2_classLit = createForClass('com.google.gwt.event.shared', 'GwtEvent', 106, cggl.Lcom_google_web_bindery_event_shared_Event_2_classLit);
 cggedc.$clinit_HasNativeEvent = function $clinit_HasNativeEvent(){
   cggedc.$clinit_HasNativeEvent = emptyMethod;
 }
@@ -49216,7 +49249,7 @@ cggedc.init_4 = function init_4(){
   cggedc.registered = new cggedc.PrivateMap;
 }
 ;
-defineClass(118, 104, {1:1});
+defineClass(119, 106, {1:1});
 _.$init_336 = function $init_336(){
 }
 ;
@@ -49254,7 +49287,7 @@ _.stopPropagation_0 = function stopPropagation(){
   cggdc.$stopPropagation(this.nativeEvent);
 }
 ;
-cggl.Lcom_google_gwt_event_dom_client_DomEvent_2_classLit = createForClass('com.google.gwt.event.dom.client', 'DomEvent', 118, cggl.Lcom_google_gwt_event_shared_GwtEvent_2_classLit);
+cggl.Lcom_google_gwt_event_dom_client_DomEvent_2_classLit = createForClass('com.google.gwt.event.dom.client', 'DomEvent', 119, cggl.Lcom_google_gwt_event_shared_GwtEvent_2_classLit);
 cggedc.$clinit_BlurEvent = function $clinit_BlurEvent(){
   cggedc.$clinit_BlurEvent = emptyMethod;
   cggedc.$clinit_DomEvent();
@@ -49271,7 +49304,7 @@ cggedc.getType_8 = function getType_8(){
   return cggedc.TYPE;
 }
 ;
-defineClass(560, 118, {1:1}, cggedc.BlurEvent);
+defineClass(560, 119, {1:1}, cggedc.BlurEvent);
 _.$init_337 = function $init_337(){
 }
 ;
@@ -49304,12 +49337,12 @@ cggedc.getType_9 = function getType_9(){
   return cggedc.TYPE_0;
 }
 ;
-defineClass(683, 118, {1:1}, cggedc.ChangeEvent);
+defineClass(683, 119, {1:1}, cggedc.ChangeEvent);
 _.$init_338 = function $init_338(){
 }
 ;
 _.dispatch_0 = function dispatch_3(handler){
-  this.dispatch_2(castTo(handler, 1170));
+  this.dispatch_2(castTo(handler, 1171));
 }
 ;
 _.dispatch_2 = function dispatch_2(handler){
@@ -49337,7 +49370,7 @@ cggedc.HumanInputEvent = function HumanInputEvent(){
   this.$init_339();
 }
 ;
-defineClass(383, 118, {1:1});
+defineClass(383, 119, {1:1});
 _.$init_339 = function $init_339(){
 }
 ;
@@ -49369,7 +49402,7 @@ cggedc.MouseEvent_0 = function MouseEvent_0(){
   this.$init_340();
 }
 ;
-defineClass(117, 383, {1:1});
+defineClass(118, 383, {1:1});
 _.$init_340 = function $init_340(){
 }
 ;
@@ -49415,7 +49448,7 @@ _.getY_0 = function getY_1(){
   return this.getClientY();
 }
 ;
-cggl.Lcom_google_gwt_event_dom_client_MouseEvent_2_classLit = createForClass('com.google.gwt.event.dom.client', 'MouseEvent', 117, cggl.Lcom_google_gwt_event_dom_client_HumanInputEvent_2_classLit);
+cggl.Lcom_google_gwt_event_dom_client_MouseEvent_2_classLit = createForClass('com.google.gwt.event.dom.client', 'MouseEvent', 118, cggl.Lcom_google_gwt_event_dom_client_HumanInputEvent_2_classLit);
 cggedc.$clinit_ClickEvent = function $clinit_ClickEvent(){
   cggedc.$clinit_ClickEvent = emptyMethod;
   cggedc.$clinit_MouseEvent();
@@ -49432,12 +49465,12 @@ cggedc.getType_10 = function getType_10(){
   return cggedc.TYPE_1;
 }
 ;
-defineClass(566, 117, {1:1}, cggedc.ClickEvent);
+defineClass(566, 118, {1:1}, cggedc.ClickEvent);
 _.$init_341 = function $init_341(){
 }
 ;
 _.dispatch_0 = function dispatch_5(handler){
-  this.dispatch_3(castTo(handler, 90));
+  this.dispatch_3(castTo(handler, 91));
 }
 ;
 _.dispatch_3 = function dispatch_4(handler){
@@ -49487,11 +49520,11 @@ cgges.GwtEvent$Type = function GwtEvent$Type(){
   this.$init_343();
 }
 ;
-defineClass(80, 385, {80:1, 1:1}, cgges.GwtEvent$Type);
+defineClass(81, 385, {81:1, 1:1}, cgges.GwtEvent$Type);
 _.$init_343 = function $init_343(){
 }
 ;
-cggl.Lcom_google_gwt_event_shared_GwtEvent$Type_2_classLit = createForClass('com.google.gwt.event.shared', 'GwtEvent/Type', 80, cggl.Lcom_google_web_bindery_event_shared_Event$Type_2_classLit);
+cggl.Lcom_google_gwt_event_shared_GwtEvent$Type_2_classLit = createForClass('com.google.gwt.event.shared', 'GwtEvent/Type', 81, cggl.Lcom_google_web_bindery_event_shared_Event$Type_2_classLit);
 cggedc.$clinit_DomEvent$Type = function $clinit_DomEvent$Type(){
   cggedc.$clinit_DomEvent$Type = emptyMethod;
   cgges.$clinit_GwtEvent$Type();
@@ -49515,7 +49548,7 @@ cggedc.DomEvent$Type = function DomEvent$Type(eventName, flyweight){
   this.name_0 = eventName;
 }
 ;
-defineClass(49, 80, {49:1, 80:1, 1:1}, cggedc.DomEvent$Type);
+defineClass(49, 81, {49:1, 81:1, 1:1}, cggedc.DomEvent$Type);
 _.$init_344 = function $init_344(){
 }
 ;
@@ -49540,7 +49573,7 @@ cggedc.getType_11 = function getType_11(){
   return cggedc.TYPE_2;
 }
 ;
-defineClass(567, 117, {1:1}, cggedc.DoubleClickEvent);
+defineClass(567, 118, {1:1}, cggedc.DoubleClickEvent);
 _.$init_345 = function $init_345(){
 }
 ;
@@ -49568,7 +49601,7 @@ cggedc.DragDropEventBase = function DragDropEventBase(){
   this.$init_346();
 }
 ;
-defineClass(196, 118, {1:1});
+defineClass(196, 119, {1:1});
 _.$init_346 = function $init_346(){
 }
 ;
@@ -49591,14 +49624,14 @@ cggedc.$clinit_DragDropEventBase$DragSupportDetector = function $clinit_DragDrop
   cggedc.$clinit_DragDropEventBase$DragSupportDetector = emptyMethod;
 }
 ;
-defineClass(1001, 1, {1:1});
-cggl.Lcom_google_gwt_event_dom_client_DragDropEventBase$DragSupportDetector_2_classLit = createForClass('com.google.gwt.event.dom.client', 'DragDropEventBase/DragSupportDetector', 1001, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1002, 1, {1:1});
+cggl.Lcom_google_gwt_event_dom_client_DragDropEventBase$DragSupportDetector_2_classLit = createForClass('com.google.gwt.event.dom.client', 'DragDropEventBase/DragSupportDetector', 1002, cggl.Ljava_lang_Object_2_classLit);
 cggedc.$clinit_DragDropEventBase$DragSupportDetectorNo = function $clinit_DragDropEventBase$DragSupportDetectorNo(){
   cggedc.$clinit_DragDropEventBase$DragSupportDetectorNo = emptyMethod;
 }
 ;
-defineClass(1002, 1001, {1:1});
-cggl.Lcom_google_gwt_event_dom_client_DragDropEventBase$DragSupportDetectorNo_2_classLit = createForClass('com.google.gwt.event.dom.client', 'DragDropEventBase/DragSupportDetectorNo', 1002, cggl.Lcom_google_gwt_event_dom_client_DragDropEventBase$DragSupportDetector_2_classLit);
+defineClass(1003, 1002, {1:1});
+cggl.Lcom_google_gwt_event_dom_client_DragDropEventBase$DragSupportDetectorNo_2_classLit = createForClass('com.google.gwt.event.dom.client', 'DragDropEventBase/DragSupportDetectorNo', 1003, cggl.Lcom_google_gwt_event_dom_client_DragDropEventBase$DragSupportDetector_2_classLit);
 cggedc.$clinit_DragLeaveEvent = function $clinit_DragLeaveEvent(){
   cggedc.$clinit_DragLeaveEvent = emptyMethod;
   cggedc.$clinit_DragDropEventBase();
@@ -49747,7 +49780,7 @@ cggedc.getType_16 = function getType_16(){
   return cggedc.TYPE_7;
 }
 ;
-defineClass(559, 118, {1:1}, cggedc.FocusEvent_0);
+defineClass(559, 119, {1:1}, cggedc.FocusEvent_0);
 _.$init_351 = function $init_351(){
 }
 ;
@@ -49785,7 +49818,7 @@ cggedc.KeyEvent_0 = function KeyEvent_0(){
   this.$init_352();
 }
 ;
-defineClass(285, 118, {1:1});
+defineClass(285, 119, {1:1});
 _.$init_352 = function $init_352(){
 }
 ;
@@ -49949,12 +49982,12 @@ cggedc.getType_20 = function getType_20(){
   return cggedc.TYPE_11;
 }
 ;
-defineClass(609, 118, {1:1}, cggedc.LoadEvent);
+defineClass(609, 119, {1:1}, cggedc.LoadEvent);
 _.$init_357 = function $init_357(){
 }
 ;
 _.dispatch_0 = function dispatch_25(handler){
-  this.dispatch_13(castTo(handler, 171));
+  this.dispatch_13(castTo(handler, 172));
 }
 ;
 _.dispatch_13 = function dispatch_24(handler){
@@ -49982,7 +50015,7 @@ cggedc.getType_21 = function getType_21(){
   return cggedc.TYPE_12;
 }
 ;
-defineClass(570, 117, {1:1}, cggedc.MouseDownEvent);
+defineClass(570, 118, {1:1}, cggedc.MouseDownEvent);
 _.$init_358 = function $init_358(){
 }
 ;
@@ -50015,7 +50048,7 @@ cggedc.getType_22 = function getType_22(){
   return cggedc.TYPE_13;
 }
 ;
-defineClass(568, 117, {1:1}, cggedc.MouseMoveEvent);
+defineClass(568, 118, {1:1}, cggedc.MouseMoveEvent);
 _.$init_359 = function $init_359(){
 }
 ;
@@ -50048,7 +50081,7 @@ cggedc.getType_23 = function getType_23(){
   return cggedc.TYPE_14;
 }
 ;
-defineClass(569, 117, {1:1}, cggedc.MouseOutEvent);
+defineClass(569, 118, {1:1}, cggedc.MouseOutEvent);
 _.$init_360 = function $init_360(){
 }
 ;
@@ -50081,12 +50114,12 @@ cggedc.getType_24 = function getType_24(){
   return cggedc.TYPE_15;
 }
 ;
-defineClass(679, 117, {1:1}, cggedc.MouseOverEvent);
+defineClass(679, 118, {1:1}, cggedc.MouseOverEvent);
 _.$init_361 = function $init_361(){
 }
 ;
 _.dispatch_0 = function dispatch_33(handler){
-  this.dispatch_17(castTo(handler, 1168));
+  this.dispatch_17(castTo(handler, 1169));
 }
 ;
 _.dispatch_17 = function dispatch_32(handler){
@@ -50119,7 +50152,7 @@ cggedc.getType_25 = function getType_25(){
   return cggedc.TYPE_16;
 }
 ;
-defineClass(571, 117, {1:1}, cggedc.MouseUpEvent);
+defineClass(571, 118, {1:1}, cggedc.MouseUpEvent);
 _.$init_362 = function $init_362(){
 }
 ;
@@ -50230,12 +50263,12 @@ cggels.fire_0 = function fire_0(source, attached){
   }
 }
 ;
-defineClass(588, 104, {1:1}, cggels.AttachEvent);
+defineClass(588, 106, {1:1}, cggels.AttachEvent);
 _.$init_364 = function $init_364(){
 }
 ;
 _.dispatch_0 = function dispatch_37(handler){
-  this.dispatch_19(castTo(handler, 1180));
+  this.dispatch_19(castTo(handler, 1181));
 }
 ;
 _.dispatch_19 = function dispatch_36(handler){
@@ -50288,7 +50321,7 @@ cggels.getType_26 = function getType_26(){
   return isNotNull(cggels.TYPE_18)?cggels.TYPE_18:(cggels.TYPE_18 = new cgges.GwtEvent$Type);
 }
 ;
-defineClass(625, 104, {1:1}, cggels.CloseEvent_0);
+defineClass(625, 106, {1:1}, cggels.CloseEvent_0);
 _.$init_365 = function $init_365(){
 }
 ;
@@ -50301,7 +50334,7 @@ _.dispatch_20 = function dispatch_38(handler){
 }
 ;
 _.getAssociatedType_0 = function getAssociatedType_20(){
-  return castTo(cggels.TYPE_18, 80);
+  return castTo(cggels.TYPE_18, 81);
 }
 ;
 _.autoClosed = false;
@@ -50350,7 +50383,7 @@ cggels.getType_27 = function getType_27(){
   return cggels.TYPE_19;
 }
 ;
-defineClass(519, 104, {1:1}, cggels.ResizeEvent);
+defineClass(519, 106, {1:1}, cggels.ResizeEvent);
 _.$init_366 = function $init_366(){
 }
 ;
@@ -50405,7 +50438,7 @@ cggels.getType_28 = function getType_28(){
   return cggels.TYPE_20;
 }
 ;
-defineClass(678, 104, {1:1}, cggels.ValueChangeEvent);
+defineClass(678, 106, {1:1}, cggels.ValueChangeEvent);
 _.$init_367 = function $init_367(){
 }
 ;
@@ -50418,7 +50451,7 @@ _.dispatch_22 = function dispatch_42(handler){
 }
 ;
 _.getAssociatedType_0 = function getAssociatedType_22(){
-  return castTo(cggels.TYPE_20, 80);
+  return castTo(cggels.TYPE_20, 81);
 }
 ;
 _.getValue_1 = function getValue_4(){
@@ -50444,7 +50477,7 @@ cgges.HandlerManager_0 = function HandlerManager_0(source, fireInReverseOrder){
   this.source = source;
 }
 ;
-defineClass(160, 1, {1:1}, cgges.HandlerManager, cgges.HandlerManager_0);
+defineClass(161, 1, {1:1}, cgges.HandlerManager, cgges.HandlerManager_0);
 _.$init_368 = function $init_368(){
 }
 ;
@@ -50464,7 +50497,7 @@ _.fireEvent = function fireEvent_0(event_0){
   }
    catch ($e0) {
     $e0 = toJava($e0);
-    if (instanceOf($e0, 140)) {
+    if (instanceOf($e0, 141)) {
       e = $e0;
       throw toJs(new cgges.UmbrellaException_0(e.getCauses()));
     }
@@ -50485,7 +50518,7 @@ _.isEventHandled = function isEventHandled(e){
   return this.eventBus.isEventHandled_0(e);
 }
 ;
-cggl.Lcom_google_gwt_event_shared_HandlerManager_2_classLit = createForClass('com.google.gwt.event.shared', 'HandlerManager', 160, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_event_shared_HandlerManager_2_classLit = createForClass('com.google.gwt.event.shared', 'HandlerManager', 161, cggl.Ljava_lang_Object_2_classLit);
 cgwbes.$clinit_EventBus = function $clinit_EventBus(){
   cgwbes.$clinit_EventBus = emptyMethod;
   jl.$clinit_Object();
@@ -50755,7 +50788,7 @@ cgges.LegacyHandlerWrapper = function LegacyHandlerWrapper(real){
   this.real = real;
 }
 ;
-defineClass(587, 1, {1:1}, cgges.LegacyHandlerWrapper);
+defineClass(586, 1, {1:1}, cgges.LegacyHandlerWrapper);
 _.$init_372 = function $init_372(){
 }
 ;
@@ -50763,7 +50796,7 @@ _.removeHandler = function removeHandler(){
   this.real.removeHandler();
 }
 ;
-cggl.Lcom_google_gwt_event_shared_LegacyHandlerWrapper_2_classLit = createForClass('com.google.gwt.event.shared', 'LegacyHandlerWrapper', 587, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_event_shared_LegacyHandlerWrapper_2_classLit = createForClass('com.google.gwt.event.shared', 'LegacyHandlerWrapper', 586, cggl.Ljava_lang_Object_2_classLit);
 cgwbes.$clinit_UmbrellaException = function $clinit_UmbrellaException(){
   cgwbes.$clinit_UmbrellaException = emptyMethod;
   jl.$clinit_RuntimeException();
@@ -50803,14 +50836,14 @@ cgwbes.makeMessage = function makeMessage(causes){
       first = false;
     }
      else {
-      b.append_7('; ');
+      b.append_8('; ');
     }
-    b.append_7(t.getMessage());
+    b.append_8(t.getMessage());
   }
   return b.toString_0();
 }
 ;
-defineClass(140, 21, {140:1, 4:1, 13:1, 1:1, 21:1, 17:1}, cgwbes.UmbrellaException);
+defineClass(141, 21, {141:1, 4:1, 13:1, 1:1, 21:1, 17:1}, cgwbes.UmbrellaException);
 _.$init_373 = function $init_373(){
 }
 ;
@@ -50820,7 +50853,7 @@ _.getCauses = function getCauses(){
 ;
 cgwbes.MULTIPLE = ' exceptions caught: ';
 cgwbes.ONE = 'Exception caught: ';
-cggl.Lcom_google_web_bindery_event_shared_UmbrellaException_2_classLit = createForClass('com.google.web.bindery.event.shared', 'UmbrellaException', 140, cggl.Ljava_lang_RuntimeException_2_classLit);
+cggl.Lcom_google_web_bindery_event_shared_UmbrellaException_2_classLit = createForClass('com.google.web.bindery.event.shared', 'UmbrellaException', 141, cggl.Ljava_lang_RuntimeException_2_classLit);
 cgges.$clinit_UmbrellaException_0 = function $clinit_UmbrellaException_0(){
   cgges.$clinit_UmbrellaException_0 = emptyMethod;
   cgwbes.$clinit_UmbrellaException();
@@ -50832,7 +50865,7 @@ cgges.UmbrellaException_0 = function UmbrellaException_0(causes){
   this.$init_374();
 }
 ;
-defineClass(276, 140, {140:1, 4:1, 13:1, 1:1, 21:1, 17:1}, cgges.UmbrellaException_0);
+defineClass(276, 141, {141:1, 4:1, 13:1, 1:1, 21:1, 17:1}, cgges.UmbrellaException_0);
 _.$init_374 = function $init_374(){
 }
 ;
@@ -50933,8 +50966,8 @@ cggic.isBidiEnabled = function isBidiEnabled(){
   return cggic.impl_3.isBidiEnabled();
 }
 ;
-defineClass(1159, 1, {1:1});
-cggl.Lcom_google_gwt_i18n_client_BidiPolicy_2_classLit = createForClass('com.google.gwt.i18n.client', 'BidiPolicy', 1159, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1160, 1, {1:1});
+cggl.Lcom_google_gwt_i18n_client_BidiPolicy_2_classLit = createForClass('com.google.gwt.i18n.client', 'BidiPolicy', 1160, cggl.Ljava_lang_Object_2_classLit);
 cggic.$clinit_BidiPolicy$BidiPolicyImpl = function $clinit_BidiPolicy$BidiPolicyImpl(){
   cggic.$clinit_BidiPolicy$BidiPolicyImpl = emptyMethod;
   jl.$clinit_Object();
@@ -50959,8 +50992,8 @@ cggic.$clinit_BidiPolicy$BidiPolicyImplOn = function $clinit_BidiPolicy$BidiPoli
   cggic.$clinit_BidiPolicy$BidiPolicyImplOn = emptyMethod;
 }
 ;
-defineClass(1160, 210, {210:1, 1:1});
-cggl.Lcom_google_gwt_i18n_client_BidiPolicy$BidiPolicyImplOn_2_classLit = createForClass('com.google.gwt.i18n.client', 'BidiPolicy/BidiPolicyImplOn', 1160, cggl.Lcom_google_gwt_i18n_client_BidiPolicy$BidiPolicyImpl_2_classLit);
+defineClass(1161, 210, {210:1, 1:1});
+cggl.Lcom_google_gwt_i18n_client_BidiPolicy$BidiPolicyImplOn_2_classLit = createForClass('com.google.gwt.i18n.client', 'BidiPolicy/BidiPolicyImplOn', 1161, cggl.Lcom_google_gwt_i18n_client_BidiPolicy$BidiPolicyImpl_2_classLit);
 cggic.$clinit_BidiUtils = function $clinit_BidiUtils(){
   cggic.$clinit_BidiUtils = emptyMethod;
   jl.$clinit_Object();
@@ -51005,11 +51038,11 @@ cggic.setDirectionOnElement = function setDirectionOnElement(elem, direction){
   }
 }
 ;
-defineClass(999, 1, {1:1});
+defineClass(1000, 1, {1:1});
 cggic.DIR_PROPERTY_NAME = 'dir';
 cggic.DIR_PROPERTY_VALUE_LTR = 'ltr';
 cggic.DIR_PROPERTY_VALUE_RTL = 'rtl';
-cggl.Lcom_google_gwt_i18n_client_BidiUtils_2_classLit = createForClass('com.google.gwt.i18n.client', 'BidiUtils', 999, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_i18n_client_BidiUtils_2_classLit = createForClass('com.google.gwt.i18n.client', 'BidiUtils', 1000, cggl.Ljava_lang_Object_2_classLit);
 cggis.$clinit_Localizable_0 = function $clinit_Localizable_0(){
   cggis.$clinit_Localizable_0 = emptyMethod;
 }
@@ -51110,7 +51143,7 @@ cggic.overrideMap = function overrideMap(original, override){
   return original;
 }
 ;
-defineClass(168, 1, {1:1});
+defineClass(169, 1, {1:1});
 _.$init_377 = function $init_377(){
 }
 ;
@@ -51196,15 +51229,15 @@ _.loadCurrencyMapNative = function loadCurrencyMapNative(){
   return {'USD':['USD', '$', 2], 'EUR':['EUR', '\u20AC', 2], 'GBP':['GBP', 'UK\xA3', 2], 'JPY':['JPY', '\xA5', 0]};
 }
 ;
-cggl.Lcom_google_gwt_i18n_client_CurrencyList_2_classLit = createForClass('com.google.gwt.i18n.client', 'CurrencyList', 168, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_i18n_client_CurrencyList_2_classLit = createForClass('com.google.gwt.i18n.client', 'CurrencyList', 169, cggl.Ljava_lang_Object_2_classLit);
 cggic.$clinit_CurrencyList$CurrencyListInstance = function $clinit_CurrencyList$CurrencyListInstance(){
   cggic.$clinit_CurrencyList$CurrencyListInstance = emptyMethod;
   jl.$clinit_Object();
-  cggic.instance_3 = castTo(new cggic.CurrencyList_, 168);
+  cggic.instance_3 = castTo(new cggic.CurrencyList_, 169);
 }
 ;
-defineClass(1050, 1, {1:1});
-cggl.Lcom_google_gwt_i18n_client_CurrencyList$CurrencyListInstance_2_classLit = createForClass('com.google.gwt.i18n.client', 'CurrencyList/CurrencyListInstance', 1050, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1051, 1, {1:1});
+cggl.Lcom_google_gwt_i18n_client_CurrencyList$CurrencyListInstance_2_classLit = createForClass('com.google.gwt.i18n.client', 'CurrencyList/CurrencyListInstance', 1051, cggl.Ljava_lang_Object_2_classLit);
 cggic.$clinit_CurrencyList_ = function $clinit_CurrencyList_(){
   cggic.$clinit_CurrencyList_ = emptyMethod;
   cggic.$clinit_CurrencyList();
@@ -51216,7 +51249,7 @@ cggic.CurrencyList_ = function CurrencyList_(){
   this.$init_378();
 }
 ;
-defineClass(627, 168, {168:1, 1:1}, cggic.CurrencyList_);
+defineClass(627, 169, {169:1, 1:1}, cggic.CurrencyList_);
 _.$init_378 = function $init_378(){
 }
 ;
@@ -51230,7 +51263,7 @@ _.getDefaultNative = function getDefaultNative_0(){
 ;
 _.loadCurrencyMapJava = function loadCurrencyMapJava_0(){
   var result;
-  result = getClassPrototype(168).loadCurrencyMapJava.call(this);
+  result = getClassPrototype(169).loadCurrencyMapJava.call(this);
   result.put('ADP', new cggici.CurrencyDataImpl('ADP', 'ADP', 128, 'ADP', 'ADP'));
   result.put('AED', new cggici.CurrencyDataImpl('AED', 'DH', 2, 'DH', 'dh'));
   result.put('AFA', new cggici.CurrencyDataImpl('AFA', 'AFA', 130, 'AFA', 'AFA'));
@@ -51532,7 +51565,7 @@ _.loadCurrencyMapJava = function loadCurrencyMapJava_0(){
 }
 ;
 _.loadCurrencyMapNative = function loadCurrencyMapNative_0(){
-  return cggic.overrideMap(getClassPrototype(168).loadCurrencyMapNative.call(this), this.loadMyCurrencyMapOverridesNative());
+  return cggic.overrideMap(getClassPrototype(169).loadCurrencyMapNative.call(this), this.loadMyCurrencyMapOverridesNative());
 }
 ;
 _.loadMyCurrencyMapOverridesNative = function loadMyCurrencyMapOverridesNative(){
@@ -51600,25 +51633,25 @@ cggic.valueOf_11 = function valueOf_11(name_0){
 ;
 cggic.values_11 = function values_11(){
   cggic.$clinit_HasDirection$Direction();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_i18n_client_HasDirection$Direction_2_classLit, 1), {4:1, 1:1, 6:1}, 167, 0, [cggic.RTL, cggic.LTR, cggic.DEFAULT_0]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_i18n_client_HasDirection$Direction_2_classLit, 1), {4:1, 1:1, 6:1}, 168, 0, [cggic.RTL, cggic.LTR, cggic.DEFAULT_0]);
 }
 ;
-defineClass(167, 10, {167:1, 4:1, 9:1, 10:1, 1:1}, cggic.HasDirection$Direction);
+defineClass(168, 10, {168:1, 4:1, 9:1, 10:1, 1:1}, cggic.HasDirection$Direction);
 _.$init_380 = function $init_380(){
 }
 ;
-cggl.Lcom_google_gwt_i18n_client_HasDirection$Direction_2_classLit = createForEnum('com.google.gwt.i18n.client', 'HasDirection/Direction', 167, cggl.Ljava_lang_Enum_2_classLit, cggic.values_11, cggic.valueOf_11);
+cggl.Lcom_google_gwt_i18n_client_HasDirection$Direction_2_classLit = createForEnum('com.google.gwt.i18n.client', 'HasDirection/Direction', 168, cggl.Ljava_lang_Enum_2_classLit, cggic.values_11, cggic.valueOf_11);
 cggic.$clinit_HasDirection$Direction$Map = function $clinit_HasDirection$Direction$Map(){
   cggic.$clinit_HasDirection$Direction$Map = emptyMethod;
   cggic.$MAP_10 = createValueOfMap(cggic.values_11());
 }
 ;
-defineClass(1000, 1, {1:1});
-cggl.Lcom_google_gwt_i18n_client_HasDirection$Direction$Map_2_classLit = createForClass('com.google.gwt.i18n.client', 'HasDirection/Direction/Map', 1000, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1001, 1, {1:1});
+cggl.Lcom_google_gwt_i18n_client_HasDirection$Direction$Map_2_classLit = createForClass('com.google.gwt.i18n.client', 'HasDirection/Direction/Map', 1001, cggl.Ljava_lang_Object_2_classLit);
 cggic.$clinit_LocaleInfo = function $clinit_LocaleInfo(){
   cggic.$clinit_LocaleInfo = emptyMethod;
   jl.$clinit_Object();
-  cggic.instance_4 = new cggic.LocaleInfo(castTo(castTo(new cggici.LocaleInfoImpl_, 144), 144), castTo(castTo(new cggici.CldrImpl, 200), 200));
+  cggic.instance_4 = new cggic.LocaleInfo(castTo(castTo(new cggici.LocaleInfoImpl_, 145), 145), castTo(castTo(new cggici.CldrImpl, 199), 199));
 }
 ;
 cggic.LocaleInfo = function LocaleInfo(impl, cldr){
@@ -51732,7 +51765,7 @@ cggic.toPrecision = function toPrecision(d, digits){
 cggic.toScaledString = function toScaledString(buf, val){
   var dot, expDigits, expIdx, scale, startLen;
   startLen = buf.length_0();
-  buf.append_7(cggic.toPrecision(val, 20));
+  buf.append_8(cggic.toPrecision(val, 20));
   scale = 0;
   expIdx = buf.indexOf_3('e', startLen);
   if (expIdx < 0) {
@@ -51775,16 +51808,16 @@ _.$init_382 = function $init_382(){
 ;
 _.addExponent = function addExponent(digits){
   var exponentDigits, i;
-  digits.append_7(this.numberConstants.exponentialSymbol());
+  digits.append_8(this.numberConstants.exponentialSymbol());
   if (this.exponent < 0) {
     this.exponent = -this.exponent;
-    digits.append_7(this.numberConstants.minusSign());
+    digits.append_8(this.numberConstants.minusSign());
   }
   exponentDigits = jl.valueOf_28(this.exponent);
   for (i = jl.length__I__devirtual$_0(exponentDigits); i < this.minExponentDigits; ++i) {
-    digits.append_3(48);
+    digits.append_4(48);
   }
-  digits.append_7(exponentDigits);
+  digits.append_8(exponentDigits);
 }
 ;
 _.addZeroAndDecimal = function addZeroAndDecimal(digits, decimalSeparator){
@@ -51804,7 +51837,7 @@ _.adjustFractionDigits = function adjustFractionDigits(digits){
   requiredDigits = this.decimalPosition + this.minimumFractionDigits;
   if (this.digitsLength < requiredDigits) {
     while (this.digitsLength < requiredDigits) {
-      digits.append_3(48);
+      digits.append_4(48);
       ++this.digitsLength;
     }
   }
@@ -51864,9 +51897,9 @@ _.format = function format_0(number){
   }
   buf = new jl.StringBuilder;
   if (jl.isInfinite(number)) {
-    buf.append_7(isNegative?this.negativePrefix:this.positivePrefix);
-    buf.append_7(this.numberConstants.infinity());
-    buf.append_7(isNegative?this.negativeSuffix:this.positiveSuffix);
+    buf.append_8(isNegative?this.negativePrefix:this.positivePrefix);
+    buf.append_8(this.numberConstants.infinity());
+    buf.append_8(isNegative?this.negativeSuffix:this.positiveSuffix);
     return buf.toString_0();
   }
   number *= this.multiplier;
@@ -51915,7 +51948,7 @@ _.format_0 = function format_1(isNegative, digits, scale){
     this.localizeDigits(digits, zeroChar);
   }
   digits.insert_4(0, isNegative?this.negativePrefix:this.positivePrefix);
-  digits.append_7(isNegative?this.negativeSuffix:this.positiveSuffix);
+  digits.append_8(isNegative?this.negativeSuffix:this.positiveSuffix);
 }
 ;
 _.getNumberConstants = function getNumberConstants_0(){
@@ -51954,7 +51987,7 @@ _.parseAffix = function parseAffix(pattern, start_0, affix, inNegativePattern){
     if (ch_0 == 39) {
       if (pos + 1 < len && jl.charAt_I_C__devirtual$_0(pattern, pos + 1) == 39) {
         ++pos;
-        affix.append_7("'");
+        affix.append_8("'");
       }
        else {
         inQuote = !inQuote;
@@ -51962,7 +51995,7 @@ _.parseAffix = function parseAffix(pattern, start_0, affix, inNegativePattern){
       continue;
     }
     if (inQuote) {
-      affix.append_3(ch_0);
+      affix.append_4(ch_0);
     }
      else {
       switch (ch_0) {
@@ -51978,14 +52011,14 @@ _.parseAffix = function parseAffix(pattern, start_0, affix, inNegativePattern){
             ++pos;
             if (pos < len - 2 && jl.charAt_I_C__devirtual$_0(pattern, pos + 1) == 164 && jl.charAt_I_C__devirtual$_0(pattern, pos + 2) == 164) {
               pos += 2;
-              affix.append_7(cggici.getSimpleCurrencySymbol__Ljava_lang_String___devirtual$(this.currencyData));
+              affix.append_8(cggici.getSimpleCurrencySymbol__Ljava_lang_String___devirtual$(this.currencyData));
             }
              else {
-              affix.append_7(cggici.getCurrencyCode__Ljava_lang_String___devirtual$(this.currencyData));
+              affix.append_8(cggici.getCurrencyCode__Ljava_lang_String___devirtual$(this.currencyData));
             }
           }
            else {
-            affix.append_7(cggici.getCurrencySymbol__Ljava_lang_String___devirtual$(this.currencyData));
+            affix.append_8(cggici.getCurrencySymbol__Ljava_lang_String___devirtual$(this.currencyData));
           }
 
           break;
@@ -51997,7 +52030,7 @@ _.parseAffix = function parseAffix(pattern, start_0, affix, inNegativePattern){
             this.multiplier = 100;
           }
 
-          affix.append_7(this.numberConstants.percent());
+          affix.append_8(this.numberConstants.percent());
           break;
         case 8240:
           if (!inNegativePattern) {
@@ -52007,12 +52040,12 @@ _.parseAffix = function parseAffix(pattern, start_0, affix, inNegativePattern){
             this.multiplier = 1000;
           }
 
-          affix.append_7(this.numberConstants.perMill());
+          affix.append_8(this.numberConstants.perMill());
           break;
         case 45:
-          affix.append_7('-');
+          affix.append_8('-');
           break;
-        default:affix.append_3(ch_0);
+        default:affix.append_4(ch_0);
       }
     }
   }
@@ -52156,7 +52189,7 @@ _.processLeadingZeros = function processLeadingZeros(digits){
   var i, prefix, strip;
   if (this.decimalPosition > this.digitsLength) {
     while (this.digitsLength < this.decimalPosition) {
-      digits.append_3(48);
+      digits.append_4(48);
       ++this.digitsLength;
     }
   }
@@ -52164,7 +52197,7 @@ _.processLeadingZeros = function processLeadingZeros(digits){
     if (this.decimalPosition < this.minimumIntegerDigits) {
       prefix = new jl.StringBuilder;
       while (this.decimalPosition < this.minimumIntegerDigits) {
-        prefix.append_3(48);
+        prefix.append_4(48);
         ++this.decimalPosition;
         ++this.digitsLength;
       }
@@ -52252,8 +52285,8 @@ cggic.$clinit_NumberFormat$1 = function $clinit_NumberFormat$1(){
   cggic.$clinit_NumberFormat$1 = emptyMethod;
 }
 ;
-defineClass(1004, 1, {1:1});
-cggl.Lcom_google_gwt_i18n_client_NumberFormat$1_2_classLit = createForClass('com.google.gwt.i18n.client', 'NumberFormat/1', 1004, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1005, 1, {1:1});
+cggl.Lcom_google_gwt_i18n_client_NumberFormat$1_2_classLit = createForClass('com.google.gwt.i18n.client', 'NumberFormat/1', 1005, cggl.Ljava_lang_Object_2_classLit);
 cggicc.$clinit_NumberConstantsImpl = function $clinit_NumberConstantsImpl(){
   cggicc.$clinit_NumberConstantsImpl = emptyMethod;
 }
@@ -52330,7 +52363,7 @@ cggici.CldrImpl = function CldrImpl(){
   this.$init_384();
 }
 ;
-defineClass(200, 1, {200:1, 1:1}, cggici.CldrImpl);
+defineClass(199, 1, {199:1, 1:1}, cggici.CldrImpl);
 _.$init_384 = function $init_384(){
 }
 ;
@@ -52338,7 +52371,7 @@ _.isRTL_0 = function isRTL_1(){
   return false;
 }
 ;
-cggl.Lcom_google_gwt_i18n_client_impl_CldrImpl_2_classLit = createForClass('com.google.gwt.i18n.client.impl', 'CldrImpl', 200, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_i18n_client_impl_CldrImpl_2_classLit = createForClass('com.google.gwt.i18n.client.impl', 'CldrImpl', 199, cggl.Ljava_lang_Object_2_classLit);
 cggici.$clinit_CurrencyDataImpl = function $clinit_CurrencyDataImpl(){
   cggici.$clinit_CurrencyDataImpl = emptyMethod;
   cggic.$clinit_DefaultCurrencyData();
@@ -52452,7 +52485,7 @@ cggici.LocaleInfoImpl = function LocaleInfoImpl(){
   this.$init_386();
 }
 ;
-defineClass(144, 1, {144:1, 1:1});
+defineClass(145, 1, {145:1, 1:1});
 _.$init_386 = function $init_386(){
 }
 ;
@@ -52464,7 +52497,7 @@ _.hasAnyRTL = function hasAnyRTL_0(){
   return false;
 }
 ;
-cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_2_classLit = createForClass('com.google.gwt.i18n.client.impl', 'LocaleInfoImpl', 144, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_2_classLit = createForClass('com.google.gwt.i18n.client.impl', 'LocaleInfoImpl', 145, cggl.Ljava_lang_Object_2_classLit);
 cggici.$clinit_LocaleInfoImpl_shared = function $clinit_LocaleInfoImpl_shared(){
   cggici.$clinit_LocaleInfoImpl_shared = emptyMethod;
   cggici.$clinit_LocaleInfoImpl();
@@ -52476,7 +52509,7 @@ cggici.LocaleInfoImpl_shared = function LocaleInfoImpl_shared(){
   this.$init_387();
 }
 ;
-defineClass(583, 144, {144:1, 1:1});
+defineClass(582, 145, {145:1, 1:1});
 _.$init_387 = function $init_387(){
 }
 ;
@@ -52484,7 +52517,7 @@ _.hasAnyRTL = function hasAnyRTL_1(){
   return false;
 }
 ;
-cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_1shared_2_classLit = createForClass('com.google.gwt.i18n.client.impl', 'LocaleInfoImpl_shared', 583, cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_2_classLit);
+cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_1shared_2_classLit = createForClass('com.google.gwt.i18n.client.impl', 'LocaleInfoImpl_shared', 582, cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_2_classLit);
 cggici.$clinit_LocaleInfoImpl_ = function $clinit_LocaleInfoImpl_(){
   cggici.$clinit_LocaleInfoImpl_ = emptyMethod;
   cggici.$clinit_LocaleInfoImpl_shared();
@@ -52496,7 +52529,7 @@ cggici.LocaleInfoImpl_ = function LocaleInfoImpl_(){
   this.$init_388();
 }
 ;
-defineClass(584, 583, {144:1, 1:1}, cggici.LocaleInfoImpl_);
+defineClass(583, 582, {145:1, 1:1}, cggici.LocaleInfoImpl_);
 _.$init_388 = function $init_388(){
 }
 ;
@@ -52504,7 +52537,7 @@ _.getNumberConstants = function getNumberConstants_2(){
   return castTo(new cggicc.NumberConstantsImpl_, 699);
 }
 ;
-cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_1_2_classLit = createForClass('com.google.gwt.i18n.client.impl', 'LocaleInfoImpl_', 584, cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_1shared_2_classLit);
+cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_1_2_classLit = createForClass('com.google.gwt.i18n.client.impl', 'LocaleInfoImpl_', 583, cggl.Lcom_google_gwt_i18n_client_impl_LocaleInfoImpl_1shared_2_classLit);
 cggis.$clinit_BidiFormatterBase = function $clinit_BidiFormatterBase(){
   cggis.$clinit_BidiFormatterBase = emptyMethod;
   jl.$clinit_Object();
@@ -52548,17 +52581,17 @@ _.spanWrapWithKnownDirBase = function spanWrapWithKnownDirBase(dir_0, str, isHtm
   }
   result = new jl.StringBuilder;
   if (this.alwaysSpan || dirCondition) {
-    result.append_7('<span');
+    result.append_8('<span');
     if (dirCondition) {
-      result.append_7(' ');
-      result.append_7(jsEquals(dir_0, (cggic.$clinit_HasDirection$Direction() , cggic.RTL))?'dir=rtl':'dir=ltr');
+      result.append_8(' ');
+      result.append_8(jsEquals(dir_0, (cggic.$clinit_HasDirection$Direction() , cggic.RTL))?'dir=rtl':'dir=ltr');
     }
-    result.append_7('>' + str + '<\/span>');
+    result.append_8('>' + str + '<\/span>');
   }
    else {
-    result.append_7(str);
+    result.append_8(str);
   }
-  result.append_7(this.dirResetIfNeeded(origStr, dir_0, isHtml, dirReset));
+  result.append_8(this.dirResetIfNeeded(origStr, dir_0, isHtml, dirReset));
   return result.toString_0();
 }
 ;
@@ -52566,14 +52599,14 @@ _.unicodeWrapWithKnownDirBase = function unicodeWrapWithKnownDirBase(dir_0, str,
   var result;
   result = new jl.StringBuilder;
   if (jsNotEquals(dir_0, (cggic.$clinit_HasDirection$Direction() , cggic.DEFAULT_0)) && jsNotEquals(dir_0, this.contextDir)) {
-    result.append_3(jsEquals(dir_0, (cggic.$clinit_HasDirection$Direction() , cggic.RTL))?8235:8234);
-    result.append_7(str);
-    result.append_3(8236);
+    result.append_4(jsEquals(dir_0, (cggic.$clinit_HasDirection$Direction() , cggic.RTL))?8235:8234);
+    result.append_8(str);
+    result.append_4(8236);
   }
    else {
-    result.append_7(str);
+    result.append_8(str);
   }
-  result.append_7(this.dirResetIfNeeded(str, dir_0, isHtml, dirReset));
+  result.append_8(this.dirResetIfNeeded(str, dir_0, isHtml, dirReset));
   return result.toString_0();
 }
 ;
@@ -52630,7 +52663,7 @@ cggis.BidiFormatterBase$Factory = function BidiFormatterBase$Factory(){
   cggis.$clinit_BidiFormatterBase$Factory();
   Object_0.call(this);
   this.$init_391();
-  this.instances = castTo(initUnidimensionalArray(cggl.Lcom_google_gwt_i18n_shared_BidiFormatterBase_2_classLit, {1171:1, 4:1, 1:1, 6:1}, 211, 6, 0, 1), 1171);
+  this.instances = castTo(initUnidimensionalArray(cggl.Lcom_google_gwt_i18n_shared_BidiFormatterBase_2_classLit, {1172:1, 4:1, 1:1, 6:1}, 211, 6, 0, 1), 1172);
 }
 ;
 defineClass(686, 1, {1:1});
@@ -52661,7 +52694,7 @@ cggis.$clinit_BidiFormatterBase$Format = function $clinit_BidiFormatterBase$Form
   cggis.RLM_STRING = jl.toString_27(8207);
 }
 ;
-defineClass(1161, 1, {1:1});
+defineClass(1162, 1, {1:1});
 cggis.LEFT_1 = 'left';
 cggis.LRE = 8234;
 cggis.LRM = 8206;
@@ -52669,7 +52702,7 @@ cggis.PDF = 8236;
 cggis.RIGHT_1 = 'right';
 cggis.RLE = 8235;
 cggis.RLM = 8207;
-cggl.Lcom_google_gwt_i18n_shared_BidiFormatterBase$Format_2_classLit = createForClass('com.google.gwt.i18n.shared', 'BidiFormatterBase/Format', 1161, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_i18n_shared_BidiFormatterBase$Format_2_classLit = createForClass('com.google.gwt.i18n.shared', 'BidiFormatterBase/Format', 1162, cggl.Ljava_lang_Object_2_classLit);
 cggis.$clinit_BidiUtils_0 = function $clinit_BidiUtils_0(){
   cggis.$clinit_BidiUtils_0 = emptyMethod;
   jl.$clinit_Object();
@@ -54090,7 +54123,7 @@ _.asString = function asString(){
   return this.html;
 }
 ;
-_.equals_0 = function equals_13(obj){
+_.equals_0 = function equals_14(obj){
   if (!instanceOf(obj, 702)) {
     return false;
   }
@@ -54146,9 +54179,9 @@ cggss.htmlEscape = function htmlEscape(s){
   return s;
 }
 ;
-defineClass(1156, 1, {1:1});
+defineClass(1157, 1, {1:1});
 cggss.HTML_ENTITY_REGEX = '[a-z]+|#[0-9]+|#x[0-9a-fA-F]+';
-cggl.Lcom_google_gwt_safehtml_shared_SafeHtmlUtils_2_classLit = createForClass('com.google.gwt.safehtml.shared', 'SafeHtmlUtils', 1156, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_safehtml_shared_SafeHtmlUtils_2_classLit = createForClass('com.google.gwt.safehtml.shared', 'SafeHtmlUtils', 1157, cggl.Ljava_lang_Object_2_classLit);
 cggss.$clinit_SafeUri = function $clinit_SafeUri(){
   cggss.$clinit_SafeUri = emptyMethod;
 }
@@ -54177,7 +54210,7 @@ _.asString = function asString_0(){
   return this.uri_0;
 }
 ;
-_.equals_0 = function equals_14(obj){
+_.equals_0 = function equals_15(obj){
   if (!instanceOf(obj, 700)) {
     return false;
   }
@@ -54205,9 +54238,9 @@ cggss.unsafeCastFromUntrustedString = function unsafeCastFromUntrustedString(s){
   return new cggss.SafeUriString(s);
 }
 ;
-defineClass(1006, 1, {1:1});
+defineClass(1007, 1, {1:1});
 cggss.DONT_NEED_ENCODING = ";/?:@&=+$,-_.!~*'()#[]";
-cggl.Lcom_google_gwt_safehtml_shared_UriUtils_2_classLit = createForClass('com.google.gwt.safehtml.shared', 'UriUtils', 1006, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_safehtml_shared_UriUtils_2_classLit = createForClass('com.google.gwt.safehtml.shared', 'UriUtils', 1007, cggl.Ljava_lang_Object_2_classLit);
 cggts.$clinit_Renderer = function $clinit_Renderer(){
   cggts.$clinit_Renderer = emptyMethod;
 }
@@ -54455,8 +54488,8 @@ cgguc.$clinit_BaseListenerWrapper = function $clinit_BaseListenerWrapper(){
   cgguc.$clinit_BaseListenerWrapper = emptyMethod;
 }
 ;
-defineClass(1008, 1, {19:1, 1:1});
-cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit = createForClass('com.google.gwt.user.client', 'BaseListenerWrapper', 1008, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1009, 1, {19:1, 1:1});
+cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit = createForClass('com.google.gwt.user.client', 'BaseListenerWrapper', 1009, cggl.Ljava_lang_Object_2_classLit);
 cgguc.$clinit_Window$ClosingHandler = function $clinit_Window$ClosingHandler(){
   cgguc.$clinit_Window$ClosingHandler = emptyMethod;
 }
@@ -54466,14 +54499,14 @@ cgguc.$clinit_BaseListenerWrapper$WrapWindowClose = function $clinit_BaseListene
   cgguc.$clinit_BaseListenerWrapper$WrapWindowClose = emptyMethod;
 }
 ;
-defineClass(1010, 1008, {698:1, 19:1, 1166:1, 1:1});
-cggl.Lcom_google_gwt_user_client_BaseListenerWrapper$WrapWindowClose_2_classLit = createForClass('com.google.gwt.user.client', 'BaseListenerWrapper/WrapWindowClose', 1010, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
+defineClass(1011, 1009, {698:1, 19:1, 1167:1, 1:1});
+cggl.Lcom_google_gwt_user_client_BaseListenerWrapper$WrapWindowClose_2_classLit = createForClass('com.google.gwt.user.client', 'BaseListenerWrapper/WrapWindowClose', 1011, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
 cgguc.$clinit_BaseListenerWrapper$WrapWindowResize = function $clinit_BaseListenerWrapper$WrapWindowResize(){
   cgguc.$clinit_BaseListenerWrapper$WrapWindowResize = emptyMethod;
 }
 ;
-defineClass(1011, 1008, {181:1, 19:1, 1:1});
-cggl.Lcom_google_gwt_user_client_BaseListenerWrapper$WrapWindowResize_2_classLit = createForClass('com.google.gwt.user.client', 'BaseListenerWrapper/WrapWindowResize', 1011, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
+defineClass(1012, 1009, {181:1, 19:1, 1:1});
+cggl.Lcom_google_gwt_user_client_BaseListenerWrapper$WrapWindowResize_2_classLit = createForClass('com.google.gwt.user.client', 'BaseListenerWrapper/WrapWindowResize', 1012, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
 cgguc.$clinit_Window$ScrollHandler = function $clinit_Window$ScrollHandler(){
   cgguc.$clinit_Window$ScrollHandler = emptyMethod;
 }
@@ -54483,8 +54516,8 @@ cgguc.$clinit_BaseListenerWrapper$WrapWindowScroll = function $clinit_BaseListen
   cgguc.$clinit_BaseListenerWrapper$WrapWindowScroll = emptyMethod;
 }
 ;
-defineClass(1012, 1008, {19:1, 1:1});
-cggl.Lcom_google_gwt_user_client_BaseListenerWrapper$WrapWindowScroll_2_classLit = createForClass('com.google.gwt.user.client', 'BaseListenerWrapper/WrapWindowScroll', 1012, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
+defineClass(1013, 1009, {19:1, 1:1});
+cggl.Lcom_google_gwt_user_client_BaseListenerWrapper$WrapWindowScroll_2_classLit = createForClass('com.google.gwt.user.client', 'BaseListenerWrapper/WrapWindowScroll', 1013, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
 cgguc.$clinit_DOM = function $clinit_DOM(){
   cgguc.$clinit_DOM = emptyMethod;
   jl.$clinit_Object();
@@ -54674,9 +54707,9 @@ cgguc.sinkEvents_1 = function sinkEvents_1(elem, eventBits){
   cgguc.impl_4.sinkEvents_0(elem, eventBits);
 }
 ;
-defineClass(1007, 1, {1:1});
+defineClass(1008, 1, {1:1});
 cgguc.currentEvent = null;
-cggl.Lcom_google_gwt_user_client_DOM_2_classLit = createForClass('com.google.gwt.user.client', 'DOM', 1007, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_user_client_DOM_2_classLit = createForClass('com.google.gwt.user.client', 'DOM', 1008, cggl.Ljava_lang_Object_2_classLit);
 cgguc.$clinit_Event$NativePreviewHandler = function $clinit_Event$NativePreviewHandler(){
   cgguc.$clinit_Event$NativePreviewHandler = emptyMethod;
 }
@@ -54686,8 +54719,8 @@ cgguc.$clinit_DOM$NativePreview = function $clinit_DOM$NativePreview(){
   cgguc.$clinit_DOM$NativePreview = emptyMethod;
 }
 ;
-defineClass(1009, 1008, {19:1, 701:1, 1:1});
-cggl.Lcom_google_gwt_user_client_DOM$NativePreview_2_classLit = createForClass('com.google.gwt.user.client', 'DOM/NativePreview', 1009, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
+defineClass(1010, 1009, {19:1, 701:1, 1:1});
+cggl.Lcom_google_gwt_user_client_DOM$NativePreview_2_classLit = createForClass('com.google.gwt.user.client', 'DOM/NativePreview', 1010, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
 cgguc.$clinit_DocumentModeAsserter = function $clinit_DocumentModeAsserter(){
   cgguc.$clinit_DocumentModeAsserter = emptyMethod;
   jl.$clinit_Object();
@@ -54759,14 +54792,14 @@ cgguc.valueOf_12 = function valueOf_12(name_0){
 ;
 cgguc.values_12 = function values_12(){
   cgguc.$clinit_DocumentModeAsserter$Severity();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_user_client_DocumentModeAsserter$Severity_2_classLit, 1), {4:1, 1:1, 6:1}, 148, 0, [cgguc.ERROR, cgguc.IGNORE, cgguc.WARN]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_user_client_DocumentModeAsserter$Severity_2_classLit, 1), {4:1, 1:1, 6:1}, 149, 0, [cgguc.ERROR, cgguc.IGNORE, cgguc.WARN]);
 }
 ;
-defineClass(148, 10, {148:1, 4:1, 9:1, 10:1, 1:1}, cgguc.DocumentModeAsserter$Severity);
+defineClass(149, 10, {149:1, 4:1, 9:1, 10:1, 1:1}, cgguc.DocumentModeAsserter$Severity);
 _.$init_411 = function $init_411(){
 }
 ;
-cggl.Lcom_google_gwt_user_client_DocumentModeAsserter$Severity_2_classLit = createForEnum('com.google.gwt.user.client', 'DocumentModeAsserter/Severity', 148, cggl.Ljava_lang_Enum_2_classLit, cgguc.values_12, cgguc.valueOf_12);
+cggl.Lcom_google_gwt_user_client_DocumentModeAsserter$Severity_2_classLit = createForEnum('com.google.gwt.user.client', 'DocumentModeAsserter/Severity', 149, cggl.Ljava_lang_Enum_2_classLit, cgguc.values_12, cgguc.valueOf_12);
 cgguc.$clinit_DocumentModeAsserter$Severity$Map = function $clinit_DocumentModeAsserter$Severity$Map(){
   cgguc.$clinit_DocumentModeAsserter$Severity$Map = emptyMethod;
   cgguc.$MAP_11 = createValueOfMap(cgguc.values_12());
@@ -54937,7 +54970,7 @@ cgguc.getType_29 = function getType_29(){
   return cgguc.TYPE_21;
 }
 ;
-defineClass(582, 104, {1:1}, cgguc.Event$NativePreviewEvent);
+defineClass(581, 106, {1:1}, cgguc.Event$NativePreviewEvent);
 _.$init_413 = function $init_413(){
   this.isCanceled = false;
   this.isConsumed = false;
@@ -54986,7 +55019,7 @@ _.isFirstHandler_0 = function isFirstHandler(){
 }
 ;
 _.revive = function revive_0(){
-  getClassPrototype(104).revive.call(this);
+  getClassPrototype(106).revive.call(this);
   this.isCanceled = false;
   this.isConsumed = false;
   this.isFirstHandler = true;
@@ -55000,7 +55033,7 @@ _.setNativeEvent_0 = function setNativeEvent_0(nativeEvent){
 _.isCanceled = false;
 _.isConsumed = false;
 _.isFirstHandler = false;
-cggl.Lcom_google_gwt_user_client_Event$NativePreviewEvent_2_classLit = createForClass('com.google.gwt.user.client', 'Event/NativePreviewEvent', 582, cggl.Lcom_google_gwt_event_shared_GwtEvent_2_classLit);
+cggl.Lcom_google_gwt_user_client_Event$NativePreviewEvent_2_classLit = createForClass('com.google.gwt.user.client', 'Event/NativePreviewEvent', 581, cggl.Lcom_google_gwt_event_shared_GwtEvent_2_classLit);
 cgguc.$clinit_History = function $clinit_History(){
   cgguc.$clinit_History = emptyMethod;
   jl.$clinit_Object();
@@ -55038,8 +55071,8 @@ cgguc.onHashChanged = function onHashChanged(){
   }
 }
 ;
-defineClass(1152, 1, {1:1});
-cggl.Lcom_google_gwt_user_client_History_2_classLit = createForClass('com.google.gwt.user.client', 'History', 1152, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1153, 1, {1:1});
+cggl.Lcom_google_gwt_user_client_History_2_classLit = createForClass('com.google.gwt.user.client', 'History', 1153, cggl.Ljava_lang_Object_2_classLit);
 cgguc.$clinit_History$HistoryEventSource = function $clinit_History$HistoryEventSource(){
   cgguc.$clinit_History$HistoryEventSource = emptyMethod;
   jl.$clinit_Object();
@@ -55095,8 +55128,8 @@ cgguc.$clinit_History$HistoryImplIE8 = function $clinit_History$HistoryImplIE8()
   cgguc.$clinit_History$HistoryImplIE8 = emptyMethod;
 }
 ;
-defineClass(1154, 209, {209:1, 1:1});
-cggl.Lcom_google_gwt_user_client_History$HistoryImplIE8_2_classLit = createForClass('com.google.gwt.user.client', 'History/HistoryImplIE8', 1154, cggl.Lcom_google_gwt_user_client_History$HistoryImpl_2_classLit);
+defineClass(1155, 209, {209:1, 1:1});
+cggl.Lcom_google_gwt_user_client_History$HistoryImplIE8_2_classLit = createForClass('com.google.gwt.user.client', 'History/HistoryImplIE8', 1155, cggl.Lcom_google_gwt_user_client_History$HistoryImpl_2_classLit);
 cgguc.$clinit_History$HistoryTokenEncoder = function $clinit_History$HistoryTokenEncoder(){
   cgguc.$clinit_History$HistoryTokenEncoder = emptyMethod;
   jl.$clinit_Object();
@@ -55121,14 +55154,14 @@ cgguc.$clinit_History$NoopHistoryTokenEncoder = function $clinit_History$NoopHis
   cgguc.$clinit_History$NoopHistoryTokenEncoder = emptyMethod;
 }
 ;
-defineClass(1153, 208, {208:1, 1:1});
-cggl.Lcom_google_gwt_user_client_History$NoopHistoryTokenEncoder_2_classLit = createForClass('com.google.gwt.user.client', 'History/NoopHistoryTokenEncoder', 1153, cggl.Lcom_google_gwt_user_client_History$HistoryTokenEncoder_2_classLit);
+defineClass(1154, 208, {208:1, 1:1});
+cggl.Lcom_google_gwt_user_client_History$NoopHistoryTokenEncoder_2_classLit = createForClass('com.google.gwt.user.client', 'History/NoopHistoryTokenEncoder', 1154, cggl.Lcom_google_gwt_user_client_History$HistoryTokenEncoder_2_classLit);
 cgguc.$clinit_History$WrapHistory = function $clinit_History$WrapHistory(){
   cgguc.$clinit_History$WrapHistory = emptyMethod;
 }
 ;
-defineClass(1155, 1008, {212:1, 19:1, 1:1});
-cggl.Lcom_google_gwt_user_client_History$WrapHistory_2_classLit = createForClass('com.google.gwt.user.client', 'History/WrapHistory', 1155, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
+defineClass(1156, 1009, {212:1, 19:1, 1:1});
+cggl.Lcom_google_gwt_user_client_History$WrapHistory_2_classLit = createForClass('com.google.gwt.user.client', 'History/WrapHistory', 1156, cggl.Lcom_google_gwt_user_client_BaseListenerWrapper_2_classLit);
 cgguc.$clinit_TakesValue = function $clinit_TakesValue(){
   cgguc.$clinit_TakesValue = emptyMethod;
 }
@@ -55244,13 +55277,13 @@ cgguc.Window$ClosingEvent = function Window$ClosingEvent(){
   this.$init_417();
 }
 ;
-defineClass(449, 104, {1:1}, cgguc.Window$ClosingEvent);
+defineClass(449, 106, {1:1}, cgguc.Window$ClosingEvent);
 _.$init_417 = function $init_417(){
   this.message_0 = null;
 }
 ;
 _.dispatch_0 = function dispatch_46(handler){
-  this.dispatch_24(castTo(handler, 1166));
+  this.dispatch_24(castTo(handler, 1167));
 }
 ;
 _.dispatch_24 = function dispatch_47(handler){
@@ -55289,7 +55322,7 @@ cgguc.$clinit_Window$ScrollEvent = function $clinit_Window$ScrollEvent(){
   cgguc.$clinit_Window$ScrollEvent = emptyMethod;
 }
 ;
-defineClass(836, 104, {1:1});
+defineClass(836, 106, {1:1});
 cggl.Lcom_google_gwt_user_client_Window$ScrollEvent_2_classLit = createForClass('com.google.gwt.user.client', 'Window/ScrollEvent', 836, cggl.Lcom_google_gwt_event_shared_GwtEvent_2_classLit);
 cgguc.$clinit_Window$WindowHandlers = function $clinit_Window$WindowHandlers(){
   cgguc.$clinit_Window$WindowHandlers = emptyMethod;
@@ -55302,7 +55335,7 @@ cgguc.Window$WindowHandlers = function Window$WindowHandlers(){
   this.$init_418();
 }
 ;
-defineClass(450, 160, {1:1}, cgguc.Window$WindowHandlers);
+defineClass(450, 161, {1:1}, cgguc.Window$WindowHandlers);
 _.$init_418 = function $init_418(){
 }
 ;
@@ -55851,7 +55884,7 @@ cggucu.ComplexPanel = function ComplexPanel(){
   this.$init_426();
 }
 ;
-defineClass(162, 228, {30:1, 44:1, 25:1, 20:1, 1:1});
+defineClass(163, 228, {30:1, 44:1, 25:1, 20:1, 1:1});
 _.$init_426 = function $init_426(){
   this.children = new cggucu.WidgetCollection(this);
 }
@@ -55934,7 +55967,7 @@ _.remove_0 = function remove_9(w){
   return true;
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_ComplexPanel_2_classLit = createForClass('com.google.gwt.user.client.ui', 'ComplexPanel', 162, cggl.Lcom_google_gwt_user_client_ui_Panel_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_ComplexPanel_2_classLit = createForClass('com.google.gwt.user.client.ui', 'ComplexPanel', 163, cggl.Lcom_google_gwt_user_client_ui_Panel_2_classLit);
 cggucu.$clinit_InsertPanel = function $clinit_InsertPanel(){
   cggucu.$clinit_InsertPanel = emptyMethod;
 }
@@ -55963,12 +55996,12 @@ cggucu.changeToStaticPositioning = function changeToStaticPositioning(elem){
   cggdc.$setProperty_0(cggdc.$getStyle(elem), 'position', '');
 }
 ;
-defineClass(512, 162, {30:1, 44:1, 25:1, 20:1, 1:1});
+defineClass(512, 163, {30:1, 44:1, 25:1, 20:1, 1:1});
 _.$init_427 = function $init_427(){
 }
 ;
 _.add_4 = function add_19(w){
-  getClassPrototype(162).add_9.call(this, w, this.getElement());
+  getClassPrototype(163).add_9.call(this, w, this.getElement());
 }
 ;
 _.insert_1 = function insert_1(w, beforeIndex){
@@ -55977,7 +56010,7 @@ _.insert_1 = function insert_1(w, beforeIndex){
 ;
 _.remove_0 = function remove_10(w){
   var removed;
-  removed = getClassPrototype(162).remove_0.call(this, w);
+  removed = getClassPrototype(163).remove_0.call(this, w);
   if (removed) {
     cggucu.changeToStaticPositioning(w.getElement());
   }
@@ -56024,7 +56057,7 @@ cggucu.tryCommand = function tryCommand(hasWidgets, c){
   }
 }
 ;
-defineClass(516, 276, {140:1, 4:1, 13:1, 1:1, 21:1, 17:1}, cggucu.AttachDetachException);
+defineClass(516, 276, {141:1, 4:1, 13:1, 1:1, 21:1, 17:1}, cggucu.AttachDetachException);
 _.$init_428 = function $init_428(){
 }
 ;
@@ -56123,11 +56156,11 @@ cggucu.Button_0 = function Button_0(html){
   this.setHTML_0(html);
 }
 ;
-defineClass(126, 318, {30:1, 25:1, 20:1, 1:1}, cggucu.Button_0);
+defineClass(127, 318, {30:1, 25:1, 20:1, 1:1}, cggucu.Button_0);
 _.$init_432 = function $init_432(){
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_Button_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Button', 126, cggl.Lcom_google_gwt_user_client_ui_ButtonBase_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_Button_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Button', 127, cggl.Lcom_google_gwt_user_client_ui_ButtonBase_2_classLit);
 cggucu.$clinit_CellPanel = function $clinit_CellPanel(){
   cggucu.$clinit_CellPanel = emptyMethod;
   cggucu.$clinit_ComplexPanel();
@@ -56143,7 +56176,7 @@ cggucu.CellPanel = function CellPanel(){
   this.setElement(this.table);
 }
 ;
-defineClass(670, 162, {30:1, 44:1, 25:1, 20:1, 1:1});
+defineClass(670, 163, {30:1, 44:1, 25:1, 20:1, 1:1});
 _.$init_433 = function $init_433(){
 }
 ;
@@ -56370,7 +56403,7 @@ cggucu.CheckBox$1 = function CheckBox$1(this$0){
   this.$init_435();
 }
 ;
-defineClass(671, 1, {90:1, 19:1, 1:1}, cggucu.CheckBox$1);
+defineClass(671, 1, {91:1, 19:1, 1:1}, cggucu.CheckBox$1);
 _.$init_435 = function $init_435(){
 }
 ;
@@ -56383,8 +56416,8 @@ cggucu.$clinit_ComplexPanel$1 = function $clinit_ComplexPanel$1(){
   cggucu.$clinit_ComplexPanel$1 = emptyMethod;
 }
 ;
-defineClass(969, 1, {1:1});
-cggl.Lcom_google_gwt_user_client_ui_ComplexPanel$1_2_classLit = createForClass('com.google.gwt.user.client.ui', 'ComplexPanel/1', 969, cggl.Ljava_lang_Object_2_classLit);
+defineClass(970, 1, {1:1});
+cggl.Lcom_google_gwt_user_client_ui_ComplexPanel$1_2_classLit = createForClass('com.google.gwt.user.client.ui', 'ComplexPanel/1', 970, cggl.Ljava_lang_Object_2_classLit);
 cggucu.$clinit_DecoratorPanel = function $clinit_DecoratorPanel(){
   cggucu.$clinit_DecoratorPanel = emptyMethod;
   cggucu.$clinit_SimplePanel();
@@ -56438,7 +56471,7 @@ cggucu.createTR_0 = function createTR_0(styleName){
   return trElem;
 }
 ;
-defineClass(657, 107, {30:1, 44:1, 25:1, 20:1, 1:1}, cggucu.DecoratorPanel);
+defineClass(657, 109, {30:1, 44:1, 25:1, 20:1, 1:1}, cggucu.DecoratorPanel);
 _.$init_436 = function $init_436(){
 }
 ;
@@ -56545,8 +56578,8 @@ _.updateHorizontalAlignment = function updateHorizontalAlignment(){
   if (isNull(this.autoHorizontalAlignment)) {
     align_0 = null;
   }
-   else if (instanceOf(this.autoHorizontalAlignment, 125)) {
-    align_0 = castTo(this.autoHorizontalAlignment, 125);
+   else if (instanceOf(this.autoHorizontalAlignment, 126)) {
+    align_0 = castTo(this.autoHorizontalAlignment, 126);
   }
    else {
     align_0 = jsEquals(this.autoHorizontalAlignment, (cggucu.$clinit_HasAutoHorizontalAlignment() , cggucu.ALIGN_CONTENT_START))?cggucu.startOf(this.directionalTextHelper.getTextDirection()):cggucu.endOf(this.directionalTextHelper.getTextDirection());
@@ -56582,7 +56615,7 @@ cggucu.Label_1 = function Label_1(text_0){
   this.setText(text_0);
 }
 ;
-defineClass(94, 205, {30:1, 25:1, 20:1, 1:1}, cggucu.Label_1);
+defineClass(95, 205, {30:1, 25:1, 20:1, 1:1}, cggucu.Label_1);
 _.$init_439 = function $init_439(){
 }
 ;
@@ -56636,7 +56669,7 @@ _.setText = function setText_2(text_0){
   this.updateHorizontalAlignment();
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_Label_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Label', 94, cggl.Lcom_google_gwt_user_client_ui_LabelBase_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_Label_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Label', 95, cggl.Lcom_google_gwt_user_client_ui_LabelBase_2_classLit);
 cggucu.$clinit_HasDirectionalHtml = function $clinit_HasDirectionalHtml(){
   cggucu.$clinit_HasDirectionalHtml = emptyMethod;
 }
@@ -56654,7 +56687,7 @@ cggucu.HTML = function HTML(){
   this.setStyleName('gwt-HTML');
 }
 ;
-defineClass(640, 94, {30:1, 25:1, 20:1, 1:1});
+defineClass(640, 95, {30:1, 25:1, 20:1, 1:1});
 _.$init_440 = function $init_440(){
 }
 ;
@@ -56701,7 +56734,7 @@ cggucu.DialogBox$MouseHandler = function DialogBox$MouseHandler(this$0){
   this.$init_442();
 }
 ;
-defineClass(642, 1, {183:1, 220:1, 259:1, 1168:1, 184:1, 19:1, 1:1}, cggucu.DialogBox$MouseHandler);
+defineClass(642, 1, {183:1, 220:1, 259:1, 1169:1, 184:1, 19:1, 1:1}, cggucu.DialogBox$MouseHandler);
 _.$init_442 = function $init_442(){
 }
 ;
@@ -56840,7 +56873,7 @@ cggl.Lcom_google_gwt_user_client_ui_SourcesTableEvents_2_classLit = createForInt
 cggucu.$clinit_HTMLTable = function $clinit_HTMLTable(){
   cggucu.$clinit_HTMLTable = emptyMethod;
   cggucu.$clinit_Panel();
-  cggucu.impl_7 = castTo(new cggucu.HTMLTable$HTMLTableStandardImpl, 1169);
+  cggucu.impl_7 = castTo(new cggucu.HTMLTable$HTMLTableStandardImpl, 1170);
 }
 ;
 cggucu.HTMLTable = function HTMLTable(){
@@ -56853,7 +56886,7 @@ cggucu.HTMLTable = function HTMLTable(){
   this.setElement(this.tableElem);
 }
 ;
-defineClass(95, 228, {30:1, 44:1, 25:1, 20:1, 1:1});
+defineClass(96, 228, {30:1, 44:1, 25:1, 20:1, 1:1});
 _.$init_444 = function $init_444(){
   this.widgetMap = new cgguci.ElementMapperImpl;
 }
@@ -57062,7 +57095,7 @@ _.setWidget_0 = function setWidget_2(row, column, widget){
   }
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_HTMLTable_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HTMLTable', 95, cggl.Lcom_google_gwt_user_client_ui_Panel_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_HTMLTable_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HTMLTable', 96, cggl.Lcom_google_gwt_user_client_ui_Panel_2_classLit);
 cggucu.$clinit_FlexTable = function $clinit_FlexTable(){
   cggucu.$clinit_FlexTable = emptyMethod;
   cggucu.$clinit_HTMLTable();
@@ -57077,7 +57110,7 @@ cggucu.FlexTable = function FlexTable(){
   this.setColumnFormatter(new cggucu.HTMLTable$ColumnFormatter(this));
 }
 ;
-defineClass(672, 95, {30:1, 44:1, 25:1, 20:1, 1:1}, cggucu.FlexTable);
+defineClass(672, 96, {30:1, 44:1, 25:1, 20:1, 1:1}, cggucu.FlexTable);
 _.$init_445 = function $init_445(){
 }
 ;
@@ -57095,11 +57128,11 @@ _.getRowCount = function getRowCount_0(){
 }
 ;
 _.insertCell = function insertCell_0(beforeRow, beforeColumn){
-  getClassPrototype(95).insertCell.call(this, beforeRow, beforeColumn);
+  getClassPrototype(96).insertCell.call(this, beforeRow, beforeColumn);
 }
 ;
 _.insertRow = function insertRow_0(beforeRow){
-  return getClassPrototype(95).insertRow.call(this, beforeRow);
+  return getClassPrototype(96).insertRow.call(this, beforeRow);
 }
 ;
 _.prepareCell = function prepareCell(row, column){
@@ -57127,11 +57160,11 @@ _.prepareRow = function prepareRow(row){
 }
 ;
 _.removeCell = function removeCell_0(row, col){
-  getClassPrototype(95).removeCell.call(this, row, col);
+  getClassPrototype(96).removeCell.call(this, row, col);
 }
 ;
 _.removeRow = function removeRow_0(row){
-  getClassPrototype(95).removeRow.call(this, row);
+  getClassPrototype(96).removeRow.call(this, row);
 }
 ;
 cggl.Lcom_google_gwt_user_client_ui_FlexTable_2_classLit = createForClass('com.google.gwt.user.client.ui', 'FlexTable', 672, cggl.Lcom_google_gwt_user_client_ui_HTMLTable_2_classLit);
@@ -57204,7 +57237,7 @@ cggucu.FocusPanel = function FocusPanel(){
   this.$init_448();
 }
 ;
-defineClass(391, 107, {30:1, 44:1, 25:1, 20:1, 1:1}, cggucu.FocusPanel);
+defineClass(391, 109, {30:1, 44:1, 25:1, 20:1, 1:1}, cggucu.FocusPanel);
 _.$init_448 = function $init_448(){
 }
 ;
@@ -57307,13 +57340,13 @@ cggucu.addRows = function addRows(table, rows_0, columns){
   }
 }
 ;
-defineClass(206, 95, {30:1, 44:1, 25:1, 20:1, 1:1}, cggucu.Grid_0);
+defineClass(206, 96, {30:1, 44:1, 25:1, 20:1, 1:1}, cggucu.Grid_0);
 _.$init_449 = function $init_449(){
 }
 ;
 _.createCell = function createCell_0(){
   var td;
-  td = getClassPrototype(95).createCell.call(this);
+  td = getClassPrototype(96).createCell.call(this);
   cggdc.$setInnerHTML(td, '&nbsp;');
   return cgguc.asOld(td);
 }
@@ -57328,7 +57361,7 @@ _.getRowCount = function getRowCount_1(){
 ;
 _.insertRow = function insertRow_1(beforeRow){
   var i, index_0;
-  index_0 = getClassPrototype(95).insertRow.call(this, beforeRow);
+  index_0 = getClassPrototype(96).insertRow.call(this, beforeRow);
   this.numRows++;
   for (i = 0; i < this.numColumns; i++) {
     this.insertCell(index_0, i);
@@ -57356,7 +57389,7 @@ _.prepareRow = function prepareRow_0(row){
 }
 ;
 _.removeRow = function removeRow_1(row){
-  getClassPrototype(95).removeRow.call(this, row);
+  getClassPrototype(96).removeRow.call(this, row);
   this.numRows--;
 }
 ;
@@ -57499,8 +57532,8 @@ cggucu.$clinit_HTMLTable$Cell = function $clinit_HTMLTable$Cell(){
   cggucu.$clinit_HTMLTable$Cell = emptyMethod;
 }
 ;
-defineClass(1150, 1, {1:1});
-cggl.Lcom_google_gwt_user_client_ui_HTMLTable$Cell_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HTMLTable/Cell', 1150, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1151, 1, {1:1});
+cggl.Lcom_google_gwt_user_client_ui_HTMLTable$Cell_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HTMLTable/Cell', 1151, cggl.Ljava_lang_Object_2_classLit);
 cggucu.$clinit_HTMLTable$ColumnFormatter = function $clinit_HTMLTable$ColumnFormatter(){
   cggucu.$clinit_HTMLTable$ColumnFormatter = emptyMethod;
   jl.$clinit_Object();
@@ -57552,8 +57585,8 @@ cggucu.$clinit_HTMLTable$HTMLTableIEImpl = function $clinit_HTMLTable$HTMLTableI
   cggucu.$clinit_HTMLTable$HTMLTableIEImpl = emptyMethod;
 }
 ;
-defineClass(1149, 1, {1:1});
-cggl.Lcom_google_gwt_user_client_ui_HTMLTable$HTMLTableIEImpl_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HTMLTable/HTMLTableIEImpl', 1149, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1150, 1, {1:1});
+cggl.Lcom_google_gwt_user_client_ui_HTMLTable$HTMLTableIEImpl_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HTMLTable/HTMLTableIEImpl', 1150, cggl.Ljava_lang_Object_2_classLit);
 cggucu.$clinit_HTMLTable$HTMLTableStandardImpl = function $clinit_HTMLTable$HTMLTableStandardImpl(){
   cggucu.$clinit_HTMLTable$HTMLTableStandardImpl = emptyMethod;
   jl.$clinit_Object();
@@ -57565,7 +57598,7 @@ cggucu.HTMLTable$HTMLTableStandardImpl = function HTMLTable$HTMLTableStandardImp
   this.$init_452();
 }
 ;
-defineClass(660, 1, {1169:1, 1:1}, cggucu.HTMLTable$HTMLTableStandardImpl);
+defineClass(660, 1, {1170:1, 1:1}, cggucu.HTMLTable$HTMLTableStandardImpl);
 _.$init_452 = function $init_452(){
 }
 ;
@@ -57654,7 +57687,7 @@ cggucu.startOf = function startOf(direction){
   return jsEquals(direction, (cggic.$clinit_HasDirection$Direction() , cggic.LTR))?(cggucu.$clinit_HasHorizontalAlignment() , cggucu.ALIGN_LEFT):jsEquals(direction, (cggic.$clinit_HasDirection$Direction() , cggic.RTL))?(cggucu.$clinit_HasHorizontalAlignment() , cggucu.ALIGN_RIGHT):(cggucu.$clinit_HasHorizontalAlignment() , cggucu.ALIGN_LOCALE_START);
 }
 ;
-defineClass(125, 244, {125:1, 1:1}, cggucu.HasHorizontalAlignment$HorizontalAlignmentConstant);
+defineClass(126, 244, {126:1, 1:1}, cggucu.HasHorizontalAlignment$HorizontalAlignmentConstant);
 _.$init_455 = function $init_455(){
 }
 ;
@@ -57662,7 +57695,7 @@ _.getTextAlignString = function getTextAlignString(){
   return this.textAlignString;
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_HasHorizontalAlignment$HorizontalAlignmentConstant_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HasHorizontalAlignment/HorizontalAlignmentConstant', 125, cggl.Lcom_google_gwt_user_client_ui_HasHorizontalAlignment$AutoHorizontalAlignmentConstant_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_HasHorizontalAlignment$HorizontalAlignmentConstant_2_classLit = createForClass('com.google.gwt.user.client.ui', 'HasHorizontalAlignment/HorizontalAlignmentConstant', 126, cggl.Lcom_google_gwt_user_client_ui_HasHorizontalAlignment$AutoHorizontalAlignmentConstant_2_classLit);
 cggucu.$clinit_HasVerticalAlignment$VerticalAlignmentConstant = function $clinit_HasVerticalAlignment$VerticalAlignmentConstant(){
   cggucu.$clinit_HasVerticalAlignment$VerticalAlignmentConstant = emptyMethod;
   jl.$clinit_Object();
@@ -57731,7 +57764,7 @@ _.insert_1 = function insert_2(w, beforeIndex){
 _.remove_0 = function remove_13(w){
   var removed, td;
   td = cgguc.getParent_0(w.getElement());
-  removed = getClassPrototype(162).remove_0.call(this, w);
+  removed = getClassPrototype(163).remove_0.call(this, w);
   if (removed) {
     cggdc.$removeChild(this.tableRow, td);
   }
@@ -57877,8 +57910,8 @@ cggucu.$clinit_Image$ClippedState = function $clinit_Image$ClippedState(){
   cggucu.$clinit_Image$ClippedState = emptyMethod;
 }
 ;
-defineClass(998, 557, {1:1});
-cggl.Lcom_google_gwt_user_client_ui_Image$ClippedState_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Image/ClippedState', 998, cggl.Lcom_google_gwt_user_client_ui_Image$State_2_classLit);
+defineClass(999, 557, {1:1});
+cggl.Lcom_google_gwt_user_client_ui_Image$ClippedState_2_classLit = createForClass('com.google.gwt.user.client.ui', 'Image/ClippedState', 999, cggl.Lcom_google_gwt_user_client_ui_Image$State_2_classLit);
 cggucu.$clinit_Image$State$1 = function $clinit_Image$State$1(){
   cggucu.$clinit_Image$State$1 = emptyMethod;
   jl.$clinit_Object();
@@ -57966,8 +57999,8 @@ cggucu.getKeyboardModifiers = function getKeyboardModifiers(event_0){
   return (cggdc.$getShiftKey(event_0)?1:0) | (cggdc.$getMetaKey(event_0)?8:0) | (cggdc.$getCtrlKey(event_0)?2:0) | (cggdc.$getAltKey(event_0)?4:0);
 }
 ;
-defineClass(1162, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 127:1});
-cggl.Lcom_google_gwt_user_client_ui_KeyboardListenerCollection_2_classLit = createForClass('com.google.gwt.user.client.ui', 'KeyboardListenerCollection', 1162, cggl.Ljava_util_ArrayList_2_classLit);
+defineClass(1163, 18, {4:1, 1:1, 18:1, 33:1, 47:1, 128:1});
+cggl.Lcom_google_gwt_user_client_ui_KeyboardListenerCollection_2_classLit = createForClass('com.google.gwt.user.client.ui', 'KeyboardListenerCollection', 1163, cggl.Ljava_util_ArrayList_2_classLit);
 cggucu.$clinit_PopupPanel$1 = function $clinit_PopupPanel$1(){
   cggucu.$clinit_PopupPanel$1 = emptyMethod;
   jl.$clinit_Object();
@@ -58004,8 +58037,8 @@ cggucu.$clinit_PopupPanel$2 = function $clinit_PopupPanel$2(){
   cggucu.$clinit_PopupPanel$2 = emptyMethod;
 }
 ;
-defineClass(1052, 1, {1:1});
-cggl.Lcom_google_gwt_user_client_ui_PopupPanel$2_2_classLit = createForClass('com.google.gwt.user.client.ui', 'PopupPanel/2', 1052, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1053, 1, {1:1});
+cggl.Lcom_google_gwt_user_client_ui_PopupPanel$2_2_classLit = createForClass('com.google.gwt.user.client.ui', 'PopupPanel/2', 1053, cggl.Ljava_lang_Object_2_classLit);
 cggucu.$clinit_PopupPanel$3 = function $clinit_PopupPanel$3(){
   cggucu.$clinit_PopupPanel$3 = emptyMethod;
   jl.$clinit_Object();
@@ -58070,21 +58103,21 @@ cggucu.valueOf_13 = function valueOf_13(name_0){
 ;
 cggucu.values_13 = function values_13(){
   cggucu.$clinit_PopupPanel$AnimationType();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_user_client_ui_PopupPanel$AnimationType_2_classLit, 1), {4:1, 1:1, 6:1}, 169, 0, [cggucu.CENTER_1, cggucu.ONE_WAY_CORNER, cggucu.ROLL_DOWN]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_user_client_ui_PopupPanel$AnimationType_2_classLit, 1), {4:1, 1:1, 6:1}, 170, 0, [cggucu.CENTER_1, cggucu.ONE_WAY_CORNER, cggucu.ROLL_DOWN]);
 }
 ;
-defineClass(169, 10, {169:1, 4:1, 9:1, 10:1, 1:1}, cggucu.PopupPanel$AnimationType);
+defineClass(170, 10, {170:1, 4:1, 9:1, 10:1, 1:1}, cggucu.PopupPanel$AnimationType);
 _.$init_465 = function $init_465(){
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_PopupPanel$AnimationType_2_classLit = createForEnum('com.google.gwt.user.client.ui', 'PopupPanel/AnimationType', 169, cggl.Ljava_lang_Enum_2_classLit, cggucu.values_13, cggucu.valueOf_13);
+cggl.Lcom_google_gwt_user_client_ui_PopupPanel$AnimationType_2_classLit = createForEnum('com.google.gwt.user.client.ui', 'PopupPanel/AnimationType', 170, cggl.Ljava_lang_Enum_2_classLit, cggucu.values_13, cggucu.valueOf_13);
 cggucu.$clinit_PopupPanel$AnimationType$Map = function $clinit_PopupPanel$AnimationType$Map(){
   cggucu.$clinit_PopupPanel$AnimationType$Map = emptyMethod;
   cggucu.$MAP_12 = createValueOfMap(cggucu.values_13());
 }
 ;
-defineClass(1051, 1, {1:1});
-cggl.Lcom_google_gwt_user_client_ui_PopupPanel$AnimationType$Map_2_classLit = createForClass('com.google.gwt.user.client.ui', 'PopupPanel/AnimationType/Map', 1051, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1052, 1, {1:1});
+cggl.Lcom_google_gwt_user_client_ui_PopupPanel$AnimationType$Map_2_classLit = createForClass('com.google.gwt.user.client.ui', 'PopupPanel/AnimationType/Map', 1052, cggl.Ljava_lang_Object_2_classLit);
 cggucu.$clinit_PopupPanel$ResizeAnimation = function $clinit_PopupPanel$ResizeAnimation(){
   cggucu.$clinit_PopupPanel$ResizeAnimation = emptyMethod;
   cggac.$clinit_Animation();
@@ -58336,7 +58369,7 @@ cggucu.get_10 = function get_10(){
 cggucu.get_11 = function get_11(id_0){
   cggucu.$clinit_RootPanel();
   var elem, rp;
-  rp = castTo(cggucu.rootPanels.get(id_0), 163);
+  rp = castTo(cggucu.rootPanels.get(id_0), 164);
   elem = null;
   if (jsNotEquals(id_0, null)) {
     if (isNull(elem = cggdc.$getElementById(cggdc.get_4(), id_0))) {
@@ -58396,7 +58429,7 @@ cggucu.isInDetachList = function isInDetachList(widget){
   return cggucu.widgetsToDetach.contains(widget);
 }
 ;
-defineClass(163, 512, {30:1, 44:1, 163:1, 25:1, 20:1, 1:1}, cggucu.RootPanel);
+defineClass(164, 512, {30:1, 44:1, 164:1, 25:1, 20:1, 1:1}, cggucu.RootPanel);
 _.$init_468 = function $init_468(){
 }
 ;
@@ -58407,7 +58440,7 @@ _.clear_1 = function clear_12(clearDom){
   }
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_RootPanel_2_classLit = createForClass('com.google.gwt.user.client.ui', 'RootPanel', 163, cggl.Lcom_google_gwt_user_client_ui_AbsolutePanel_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_RootPanel_2_classLit = createForClass('com.google.gwt.user.client.ui', 'RootPanel', 164, cggl.Lcom_google_gwt_user_client_ui_AbsolutePanel_2_classLit);
 cggucu.$clinit_RootPanel$1 = function $clinit_RootPanel$1(){
   cggucu.$clinit_RootPanel$1 = emptyMethod;
   jl.$clinit_Object();
@@ -58461,7 +58494,7 @@ cggucu.RootPanel$DefaultRootPanel = function RootPanel$DefaultRootPanel(){
   this.$init_471();
 }
 ;
-defineClass(513, 163, {30:1, 44:1, 163:1, 25:1, 20:1, 1:1}, cggucu.RootPanel$DefaultRootPanel);
+defineClass(513, 164, {30:1, 44:1, 164:1, 25:1, 20:1, 1:1}, cggucu.RootPanel$DefaultRootPanel);
 _.$init_471 = function $init_471(){
 }
 ;
@@ -58667,11 +58700,11 @@ cggucu.TextBox_0 = function TextBox_0(element, styleName){
   }
 }
 ;
-defineClass(170, 662, {30:1, 25:1, 20:1, 1:1}, cggucu.TextBox);
+defineClass(171, 662, {30:1, 25:1, 20:1, 1:1}, cggucu.TextBox);
 _.$init_475 = function $init_475(){
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_TextBox_2_classLit = createForClass('com.google.gwt.user.client.ui', 'TextBox', 170, cggl.Lcom_google_gwt_user_client_ui_TextBoxBase_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_TextBox_2_classLit = createForClass('com.google.gwt.user.client.ui', 'TextBox', 171, cggl.Lcom_google_gwt_user_client_ui_TextBoxBase_2_classLit);
 cggucu.$clinit_TextBoxBase$TextAlignConstant = function $clinit_TextBoxBase$TextAlignConstant(){
   cggucu.$clinit_TextBoxBase$TextAlignConstant = emptyMethod;
   jl.$clinit_Object();
@@ -58723,7 +58756,7 @@ cggucu.ValueBoxBase$1 = function ValueBoxBase$1(this$0){
   this.$init_478();
 }
 ;
-defineClass(667, 1, {1170:1, 19:1, 1:1}, cggucu.ValueBoxBase$1);
+defineClass(667, 1, {1171:1, 19:1, 1:1}, cggucu.ValueBoxBase$1);
 _.$init_478 = function $init_478(){
 }
 ;
@@ -58754,14 +58787,14 @@ cggucu.valueOf_14 = function valueOf_14(name_0){
 ;
 cggucu.values_14 = function values_14(){
   cggucu.$clinit_ValueBoxBase$TextAlignment();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_user_client_ui_ValueBoxBase$TextAlignment_2_classLit, 1), {4:1, 1:1, 6:1}, 84, 0, [cggucu.CENTER_2, cggucu.JUSTIFY_0, cggucu.LEFT_2, cggucu.RIGHT_2]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Lcom_google_gwt_user_client_ui_ValueBoxBase$TextAlignment_2_classLit, 1), {4:1, 1:1, 6:1}, 85, 0, [cggucu.CENTER_2, cggucu.JUSTIFY_0, cggucu.LEFT_2, cggucu.RIGHT_2]);
 }
 ;
-defineClass(84, 10, {84:1, 4:1, 9:1, 10:1, 1:1});
+defineClass(85, 10, {85:1, 4:1, 9:1, 10:1, 1:1});
 _.$init_479 = function $init_479(){
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_ValueBoxBase$TextAlignment_2_classLit = createForEnum('com.google.gwt.user.client.ui', 'ValueBoxBase/TextAlignment', 84, cggl.Ljava_lang_Enum_2_classLit, cggucu.values_14, cggucu.valueOf_14);
+cggl.Lcom_google_gwt_user_client_ui_ValueBoxBase$TextAlignment_2_classLit = createForEnum('com.google.gwt.user.client.ui', 'ValueBoxBase/TextAlignment', 85, cggl.Ljava_lang_Enum_2_classLit, cggucu.values_14, cggucu.valueOf_14);
 cggucu.$clinit_ValueBoxBase$TextAlignment$1 = function $clinit_ValueBoxBase$TextAlignment$1(){
   cggucu.$clinit_ValueBoxBase$TextAlignment$1 = emptyMethod;
   cggucu.$clinit_ValueBoxBase$TextAlignment();
@@ -58773,7 +58806,7 @@ cggucu.ValueBoxBase$TextAlignment$1 = function ValueBoxBase$TextAlignment$1(enum
   this.$init_480();
 }
 ;
-defineClass(663, 84, {84:1, 4:1, 9:1, 10:1, 1:1}, cggucu.ValueBoxBase$TextAlignment$1);
+defineClass(663, 85, {85:1, 4:1, 9:1, 10:1, 1:1}, cggucu.ValueBoxBase$TextAlignment$1);
 _.$init_480 = function $init_480(){
 }
 ;
@@ -58793,7 +58826,7 @@ cggucu.ValueBoxBase$TextAlignment$2 = function ValueBoxBase$TextAlignment$2(enum
   this.$init_481();
 }
 ;
-defineClass(664, 84, {84:1, 4:1, 9:1, 10:1, 1:1}, cggucu.ValueBoxBase$TextAlignment$2);
+defineClass(664, 85, {85:1, 4:1, 9:1, 10:1, 1:1}, cggucu.ValueBoxBase$TextAlignment$2);
 _.$init_481 = function $init_481(){
 }
 ;
@@ -58813,7 +58846,7 @@ cggucu.ValueBoxBase$TextAlignment$3 = function ValueBoxBase$TextAlignment$3(enum
   this.$init_482();
 }
 ;
-defineClass(665, 84, {84:1, 4:1, 9:1, 10:1, 1:1}, cggucu.ValueBoxBase$TextAlignment$3);
+defineClass(665, 85, {85:1, 4:1, 9:1, 10:1, 1:1}, cggucu.ValueBoxBase$TextAlignment$3);
 _.$init_482 = function $init_482(){
 }
 ;
@@ -58833,7 +58866,7 @@ cggucu.ValueBoxBase$TextAlignment$4 = function ValueBoxBase$TextAlignment$4(enum
   this.$init_483();
 }
 ;
-defineClass(666, 84, {84:1, 4:1, 9:1, 10:1, 1:1}, cggucu.ValueBoxBase$TextAlignment$4);
+defineClass(666, 85, {85:1, 4:1, 9:1, 10:1, 1:1}, cggucu.ValueBoxBase$TextAlignment$4);
 _.$init_483 = function $init_483(){
 }
 ;
@@ -58847,8 +58880,8 @@ cggucu.$clinit_ValueBoxBase$TextAlignment$Map = function $clinit_ValueBoxBase$Te
   cggucu.$MAP_13 = createValueOfMap(cggucu.values_14());
 }
 ;
-defineClass(1151, 1, {1:1});
-cggl.Lcom_google_gwt_user_client_ui_ValueBoxBase$TextAlignment$Map_2_classLit = createForClass('com.google.gwt.user.client.ui', 'ValueBoxBase/TextAlignment/Map', 1151, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1152, 1, {1:1});
+cggl.Lcom_google_gwt_user_client_ui_ValueBoxBase$TextAlignment$Map_2_classLit = createForClass('com.google.gwt.user.client.ui', 'ValueBoxBase/TextAlignment/Map', 1152, cggl.Ljava_lang_Object_2_classLit);
 cggucu.$clinit_WidgetCollection = function $clinit_WidgetCollection(){
   cggucu.$clinit_WidgetCollection = emptyMethod;
   jl.$clinit_Object();
@@ -58863,7 +58896,7 @@ cggucu.WidgetCollection = function WidgetCollection(parent_0){
   this.array = initUnidimensionalArray(cggl.Lcom_google_gwt_user_client_ui_Widget_2_classLit, {4:1, 1:1, 6:1}, 20, 4, 0, 1);
 }
 ;
-defineClass(585, 1, {1:1}, cggucu.WidgetCollection);
+defineClass(584, 1, {1:1}, cggucu.WidgetCollection);
 _.$init_484 = function $init_484(){
 }
 ;
@@ -58939,7 +58972,7 @@ _.size_1 = function size_6(){
 ;
 _.size_0 = 0;
 cggucu.INITIAL_SIZE = 4;
-cggl.Lcom_google_gwt_user_client_ui_WidgetCollection_2_classLit = createForClass('com.google.gwt.user.client.ui', 'WidgetCollection', 585, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_WidgetCollection_2_classLit = createForClass('com.google.gwt.user.client.ui', 'WidgetCollection', 584, cggl.Ljava_lang_Object_2_classLit);
 cggucu.$clinit_WidgetCollection$WidgetIterator = function $clinit_WidgetCollection$WidgetIterator(){
   cggucu.$clinit_WidgetCollection$WidgetIterator = emptyMethod;
   jl.$clinit_Object();
@@ -58953,7 +58986,7 @@ cggucu.WidgetCollection$WidgetIterator = function WidgetCollection$WidgetIterato
   this.$init_485();
 }
 ;
-defineClass(586, 1, {1:1, 40:1}, cggucu.WidgetCollection$WidgetIterator);
+defineClass(585, 1, {1:1, 40:1}, cggucu.WidgetCollection$WidgetIterator);
 _.$init_485 = function $init_485(){
   this.index_0 = 0;
 }
@@ -58989,12 +59022,12 @@ _.remove_4 = function remove_17(){
 }
 ;
 _.index_0 = 0;
-cggl.Lcom_google_gwt_user_client_ui_WidgetCollection$WidgetIterator_2_classLit = createForClass('com.google.gwt.user.client.ui', 'WidgetCollection/WidgetIterator', 586, cggl.Ljava_lang_Object_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_WidgetCollection$WidgetIterator_2_classLit = createForClass('com.google.gwt.user.client.ui', 'WidgetCollection/WidgetIterator', 585, cggl.Ljava_lang_Object_2_classLit);
 cggucui.$clinit_FocusImpl = function $clinit_FocusImpl(){
   cggucui.$clinit_FocusImpl = emptyMethod;
   jl.$clinit_Object();
   cggucui.implPanel = castTo(new cggucui.FocusImplSafari, 195);
-  cggucui.implWidget = instanceOf(cggucui.implPanel, 199)?new cggucui.FocusImpl:cggucui.implPanel;
+  cggucui.implWidget = instanceOf(cggucui.implPanel, 200)?new cggucui.FocusImpl:cggucui.implPanel;
 }
 ;
 cggucui.FocusImpl = function FocusImpl(){
@@ -59071,7 +59104,7 @@ cggucui.createFocusable0 = function createFocusable0(focusHandler){
   return div;
 }
 ;
-defineClass(199, 195, {199:1, 1:1});
+defineClass(200, 195, {200:1, 1:1});
 _.$init_487 = function $init_487(){
 }
 ;
@@ -59096,7 +59129,7 @@ _.ensureFocusHandler = function ensureFocusHandler(){
   return isNotNull(cggucui.focusHandler_0)?cggucui.focusHandler_0:(cggucui.focusHandler_0 = this.createFocusHandler());
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_impl_FocusImplStandard_2_classLit = createForClass('com.google.gwt.user.client.ui.impl', 'FocusImplStandard', 199, cggl.Lcom_google_gwt_user_client_ui_impl_FocusImpl_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_impl_FocusImplStandard_2_classLit = createForClass('com.google.gwt.user.client.ui.impl', 'FocusImplStandard', 200, cggl.Lcom_google_gwt_user_client_ui_impl_FocusImpl_2_classLit);
 cggucui.$clinit_FocusImplSafari = function $clinit_FocusImplSafari(){
   cggucui.$clinit_FocusImplSafari = emptyMethod;
   cggucui.$clinit_FocusImplStandard();
@@ -59108,7 +59141,7 @@ cggucui.FocusImplSafari = function FocusImplSafari(){
   this.$init_488();
 }
 ;
-defineClass(581, 199, {195:1, 199:1, 1:1}, cggucui.FocusImplSafari);
+defineClass(587, 200, {195:1, 200:1, 1:1}, cggucui.FocusImplSafari);
 _.$init_488 = function $init_488(){
 }
 ;
@@ -59126,7 +59159,7 @@ _.focus_1 = function focus_1(elem){
   , 0);
 }
 ;
-cggl.Lcom_google_gwt_user_client_ui_impl_FocusImplSafari_2_classLit = createForClass('com.google.gwt.user.client.ui.impl', 'FocusImplSafari', 581, cggl.Lcom_google_gwt_user_client_ui_impl_FocusImplStandard_2_classLit);
+cggl.Lcom_google_gwt_user_client_ui_impl_FocusImplSafari_2_classLit = createForClass('com.google.gwt.user.client.ui.impl', 'FocusImplSafari', 587, cggl.Lcom_google_gwt_user_client_ui_impl_FocusImplStandard_2_classLit);
 cggucui.$clinit_PopupImpl = function $clinit_PopupImpl(){
   cggucui.$clinit_PopupImpl = emptyMethod;
   jl.$clinit_Object();
@@ -59204,7 +59237,7 @@ cgguc2.$clinit_UserAgentAsserter$UserAgentAssertionError = function $clinit_User
   cgguc2.$clinit_UserAgentAsserter$UserAgentAssertionError = emptyMethod;
 }
 ;
-defineClass(708, 35, {4:1, 97:1, 1:1, 17:1});
+defineClass(708, 35, {4:1, 98:1, 1:1, 17:1});
 cggl.Lcom_google_gwt_useragent_client_UserAgentAsserter$UserAgentAssertionError_2_classLit = createForClass('com.google.gwt.useragent.client', 'UserAgentAsserter/UserAgentAssertionError', 708, cggl.Ljava_lang_AssertionError_2_classLit);
 cgwbes.$clinit_SimpleEventBus$1 = function $clinit_SimpleEventBus$1(){
   cgwbes.$clinit_SimpleEventBus$1 = emptyMethod;
@@ -59447,16 +59480,16 @@ ja.Dimension = function Dimension(width_0, height){
   this.height_0 = height;
 }
 ;
-defineClass(150, 561, {150:1, 4:1, 1:1}, ja.Dimension);
+defineClass(151, 561, {151:1, 4:1, 1:1}, ja.Dimension);
 _.$init_499 = function $init_499(){
 }
 ;
-_.equals_0 = function equals_15(obj){
+_.equals_0 = function equals_16(obj){
   var d;
   if (this === obj)
     return true;
-  if (instanceOf(obj, 150)) {
-    d = castTo(obj, 150);
+  if (instanceOf(obj, 151)) {
+    d = castTo(obj, 151);
     return this.width_0 == d.width_0 && this.height_0 == d.height_0;
   }
   return false;
@@ -59483,7 +59516,7 @@ _.setSize_0 = function setSize_1(width_0, height){
 ;
 _.height_0 = 0;
 _.width_0 = 0;
-cggl.Ljava_awt_Dimension_2_classLit = createForClass('java.awt', 'Dimension', 150, cggl.Ljava_awt_geom_Dimension2D_2_classLit);
+cggl.Ljava_awt_Dimension_2_classLit = createForClass('java.awt', 'Dimension', 151, cggl.Ljava_awt_geom_Dimension2D_2_classLit);
 ja.$clinit_Font = function $clinit_Font(){
   ja.$clinit_Font = emptyMethod;
   jl.$clinit_Object();
@@ -59607,7 +59640,7 @@ _.distance_0 = function distance_1(pt){
   return $wnd.Math.sqrt(px * px + py * py);
 }
 ;
-_.equals_0 = function equals_16(obj){
+_.equals_0 = function equals_17(obj){
   var p2d;
   if (this === obj)
     return true;
@@ -59643,14 +59676,14 @@ ja.Point_0 = function Point_0(x_0, y_0){
   this.y_0 = y_0;
 }
 ;
-defineClass(89, 54, {89:1, 54:1, 1:1}, ja.Point, ja.Point_0);
+defineClass(90, 54, {90:1, 54:1, 1:1}, ja.Point, ja.Point_0);
 _.$init_503 = function $init_503(){
 }
 ;
-_.equals_0 = function equals_17(obj){
+_.equals_0 = function equals_18(obj){
   var pt;
-  if (instanceOf(obj, 89)) {
-    pt = castTo(obj, 89);
+  if (instanceOf(obj, 90)) {
+    pt = castTo(obj, 90);
     return this.x_0 == pt.x_0 && this.y_0 == pt.y_0;
   }
   return getClassPrototype(54).equals_0.call(this, obj);
@@ -59666,7 +59699,7 @@ _.getY = function getY_2(){
 ;
 _.x_0 = 0;
 _.y_0 = 0;
-cggl.Ljava_awt_Point_2_classLit = createForClass('java.awt', 'Point', 89, cggl.Ljava_awt_geom_Point2D_2_classLit);
+cggl.Ljava_awt_Point_2_classLit = createForClass('java.awt', 'Point', 90, cggl.Ljava_awt_geom_Point2D_2_classLit);
 ja.$clinit_Shape = function $clinit_Shape(){
   ja.$clinit_Shape = emptyMethod;
 }
@@ -59788,8 +59821,8 @@ jag.$clinit_Line2D$Float = function $clinit_Line2D$Float(){
   jag.$clinit_Line2D$Float = emptyMethod;
 }
 ;
-defineClass(1143, 633, {1:1});
-cggl.Ljava_awt_geom_Line2D$Float_2_classLit = createForClass('java.awt.geom', 'Line2D/Float', 1143, cggl.Ljava_awt_geom_Line2D_2_classLit);
+defineClass(1144, 633, {1:1});
+cggl.Ljava_awt_geom_Line2D$Float_2_classLit = createForClass('java.awt.geom', 'Line2D/Float', 1144, cggl.Ljava_awt_geom_Line2D_2_classLit);
 jag.$clinit_Point2D$Double = function $clinit_Point2D$Double(){
   jag.$clinit_Point2D$Double = emptyMethod;
   jag.$clinit_Point2D();
@@ -59910,7 +59943,7 @@ jag.union = function union(src1, src2, dest){
   dest.setFrameFromDiagonal(x1, y1, x2, y2);
 }
 ;
-defineClass(101, 357, {101:1, 1:1});
+defineClass(103, 357, {103:1, 1:1});
 _.$init_509 = function $init_509(){
 }
 ;
@@ -59944,13 +59977,13 @@ _.contains_3 = function contains_7(x_0, y_0, w, h){
   return x_0 >= x0 && y_0 >= y0 && x_0 + w <= x0 + this.getWidth() && y_0 + h <= y0 + this.getHeight();
 }
 ;
-_.equals_0 = function equals_18(obj){
+_.equals_0 = function equals_19(obj){
   var r2d;
   if (obj === this) {
     return true;
   }
-  if (instanceOf(obj, 101)) {
-    r2d = castTo(obj, 101);
+  if (instanceOf(obj, 103)) {
+    r2d = castTo(obj, 103);
     return this.getX() == r2d.getX() && this.getY() == r2d.getY() && this.getWidth() == r2d.getWidth() && this.getHeight() == r2d.getHeight();
   }
   return false;
@@ -59983,7 +60016,7 @@ jag.OUT_BOTTOM = 8;
 jag.OUT_LEFT = 1;
 jag.OUT_RIGHT = 4;
 jag.OUT_TOP = 2;
-cggl.Ljava_awt_geom_Rectangle2D_2_classLit = createForClass('java.awt.geom', 'Rectangle2D', 101, cggl.Ljava_awt_geom_RectangularShape_2_classLit);
+cggl.Ljava_awt_geom_Rectangle2D_2_classLit = createForClass('java.awt.geom', 'Rectangle2D', 103, cggl.Ljava_awt_geom_RectangularShape_2_classLit);
 jag.$clinit_Rectangle2D$Double = function $clinit_Rectangle2D$Double(){
   jag.$clinit_Rectangle2D$Double = emptyMethod;
   jag.$clinit_Rectangle2D();
@@ -60002,7 +60035,7 @@ jag.Rectangle2D$Double_0 = function Rectangle2D$Double_0(x_0, y_0, w, h){
   this.setRect_0(x_0, y_0, w, h);
 }
 ;
-defineClass(27, 101, {101:1, 27:1, 1:1}, jag.Rectangle2D$Double, jag.Rectangle2D$Double_0);
+defineClass(27, 103, {103:1, 27:1, 1:1}, jag.Rectangle2D$Double, jag.Rectangle2D$Double_0);
 _.$init_510 = function $init_510(){
 }
 ;
@@ -60049,7 +60082,7 @@ jag.$clinit_Rectangle2D$Float = function $clinit_Rectangle2D$Float(){
   jag.$clinit_Rectangle2D$Float = emptyMethod;
 }
 ;
-defineClass(755, 101, {101:1, 1:1});
+defineClass(755, 103, {103:1, 1:1});
 cggl.Ljava_awt_geom_Rectangle2D$Float_2_classLit = createForClass('java.awt.geom', 'Rectangle2D/Float', 755, cggl.Ljava_awt_geom_Rectangle2D_2_classLit);
 jai.$clinit_BufferedImage = function $clinit_BufferedImage(){
   jai.$clinit_BufferedImage = emptyMethod;
@@ -60116,7 +60149,7 @@ ji.BufferedReader = function BufferedReader(source){
   this.savedNextChar = -2;
 }
 ;
-defineClass(114, 272, {1:1}, ji.BufferedReader);
+defineClass(80, 272, {80:1, 1:1}, ji.BufferedReader);
 _.$init_513 = function $init_513(){
 }
 ;
@@ -60166,7 +60199,7 @@ _.readLine = function readLine(){
       if (nextChar == -1) {
         break;
       }
-      sb.append_3(narrow_char(nextChar));
+      sb.append_4(narrow_char(nextChar));
       nextChar = this.read_0();
     }
   }
@@ -60174,7 +60207,7 @@ _.readLine = function readLine(){
 }
 ;
 _.savedNextChar = 0;
-cggl.Ljava_io_BufferedReader_2_classLit = createForClass('java.io', 'BufferedReader', 114, cggl.Ljava_io_Reader_2_classLit);
+cggl.Ljava_io_BufferedReader_2_classLit = createForClass('java.io', 'BufferedReader', 80, cggl.Ljava_io_Reader_2_classLit);
 jl.$clinit_AutoCloseable = function $clinit_AutoCloseable(){
   jl.$clinit_AutoCloseable = emptyMethod;
 }
@@ -60327,7 +60360,7 @@ ji.StringReader = function StringReader(text_0){
   this.position_0 = 0;
 }
 ;
-defineClass(113, 272, {1:1}, ji.StringReader);
+defineClass(115, 272, {1:1}, ji.StringReader);
 _.$init_518 = function $init_518(){
 }
 ;
@@ -60349,7 +60382,7 @@ _.read_1 = function read_3(cbuf, off, len){
 }
 ;
 _.position_0 = 0;
-cggl.Ljava_io_StringReader_2_classLit = createForClass('java.io', 'StringReader', 113, cggl.Ljava_io_Reader_2_classLit);
+cggl.Ljava_io_StringReader_2_classLit = createForClass('java.io', 'StringReader', 115, cggl.Ljava_io_Reader_2_classLit);
 jl.$clinit_Appendable = function $clinit_Appendable(){
   jl.$clinit_Appendable = emptyMethod;
 }
@@ -60427,11 +60460,11 @@ _.toString_0 = function toString_21(){
 }
 ;
 _.write_2 = function write_3(str){
-  this.buf.append_1(str);
+  this.buf.append_2(str);
 }
 ;
 _.write_3 = function write_4(str, off, len){
-  this.buf.append_1(jl.substring_II_Ljava_lang_String___devirtual$(str, off, off + len));
+  this.buf.append_2(jl.substring_II_Ljava_lang_String___devirtual$(str, off, off + len));
 }
 ;
 _.write_4 = function write_5(cbuf, off, len){
@@ -60441,7 +60474,7 @@ _.write_4 = function write_5(cbuf, off, len){
    else if (len == 0) {
     return;
   }
-  this.buf.append_2(cbuf, off, len);
+  this.buf.append_3(cbuf, off, len);
 }
 ;
 cggl.Ljava_io_StringWriter_2_classLit = createForClass('java.io', 'StringWriter', 277, cggl.Ljava_io_Writer_2_classLit);
@@ -60474,7 +60507,7 @@ jl.AbstractStringBuilder = function AbstractStringBuilder(string){
   this.string = string;
 }
 ;
-defineClass(128, 1, {172:1, 1:1});
+defineClass(129, 1, {173:1, 1:1});
 _.$init_522 = function $init_522(){
 }
 ;
@@ -60545,7 +60578,7 @@ _.toString_0 = function toString_22(){
   return this.string;
 }
 ;
-cggl.Ljava_lang_AbstractStringBuilder_2_classLit = createForClass('java.lang', 'AbstractStringBuilder', 128, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_lang_AbstractStringBuilder_2_classLit = createForClass('java.lang', 'AbstractStringBuilder', 129, cggl.Ljava_lang_Object_2_classLit);
 jl.$clinit_ArithmeticException = function $clinit_ArithmeticException(){
   jl.$clinit_ArithmeticException = emptyMethod;
   jl.$clinit_RuntimeException();
@@ -60644,12 +60677,12 @@ jl.valueOf_17 = function valueOf_17(b){
   return result;
 }
 ;
-defineClass(135, 119, {4:1, 135:1, 9:1, 1:1}, jl.Byte);
+defineClass(136, 120, {4:1, 136:1, 9:1, 1:1}, jl.Byte);
 _.$init_528 = function $init_528(){
 }
 ;
 _.compareTo_1 = function compareTo_6(b){
-  return this.compareTo_3(castTo(b, 135));
+  return this.compareTo_3(castTo(b, 136));
 }
 ;
 _.byteValue = function byteValue_0(){
@@ -60664,8 +60697,8 @@ _.doubleValue = function doubleValue_0(){
   return this.value_0;
 }
 ;
-_.equals_0 = function equals_19(o){
-  return instanceOf(o, 135) && castTo(o, 135).value_0 == this.value_0;
+_.equals_0 = function equals_20(o){
+  return instanceOf(o, 136) && castTo(o, 136).value_0 == this.value_0;
 }
 ;
 _.floatValue = function floatValue(){
@@ -60698,11 +60731,11 @@ var MAX_VALUE_0 = 0;
 var MIN_VALUE_0 = 0;
 var SIZE = 8;
 var TYPE_24;
-cggl.Ljava_lang_Byte_2_classLit = createForClass('java.lang', 'Byte', 135, cggl.Ljava_lang_Number_2_classLit);
+cggl.Ljava_lang_Byte_2_classLit = createForClass('java.lang', 'Byte', 136, cggl.Ljava_lang_Number_2_classLit);
 jl.$clinit_Byte$BoxedValues = function $clinit_Byte$BoxedValues(){
   jl.$clinit_Byte$BoxedValues = emptyMethod;
   jl.$clinit_Object();
-  jl.boxedValues = initUnidimensionalArray(cggl.Ljava_lang_Byte_2_classLit, {4:1, 1:1, 6:1}, 135, 256, 0, 1);
+  jl.boxedValues = initUnidimensionalArray(cggl.Ljava_lang_Byte_2_classLit, {4:1, 1:1, 6:1}, 136, 256, 0, 1);
 }
 ;
 defineClass(797, 1, {1:1});
@@ -61024,12 +61057,12 @@ function valueOf_18(c){
   return new Character(c);
 }
 
-defineClass(120, 1, {4:1, 120:1, 9:1, 1:1}, Character);
+defineClass(121, 1, {4:1, 121:1, 9:1, 1:1}, Character);
 _.$init_530 = function $init_530(){
 }
 ;
 _.compareTo_1 = function compareTo_8(c){
-  return this.compareTo_4(castTo(c, 120));
+  return this.compareTo_4(castTo(c, 121));
 }
 ;
 _.charValue = function charValue(){
@@ -61040,8 +61073,8 @@ _.compareTo_4 = function compareTo_7(c){
   return compare_23(this.value_0, c.value_0);
 }
 ;
-_.equals_0 = function equals_20(o){
-  return instanceOf(o, 120) && castTo(o, 120).value_0 == this.value_0;
+_.equals_0 = function equals_21(o){
+  return instanceOf(o, 121) && castTo(o, 121).value_0 == this.value_0;
 }
 ;
 _.hashCode_0 = function hashCode_13(){
@@ -61068,11 +61101,11 @@ var MIN_SURROGATE = 55296;
 var MIN_VALUE_1 = 0;
 var SIZE_0 = 16;
 var TYPE_25;
-cggl.Ljava_lang_Character_2_classLit = createForClass('java.lang', 'Character', 120, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_lang_Character_2_classLit = createForClass('java.lang', 'Character', 121, cggl.Ljava_lang_Object_2_classLit);
 jl.$clinit_Character$BoxedValues = function $clinit_Character$BoxedValues(){
   jl.$clinit_Character$BoxedValues = emptyMethod;
   jl.$clinit_Object();
-  jl.boxedValues_0 = initUnidimensionalArray(cggl.Ljava_lang_Character_2_classLit, {4:1, 1:1, 6:1}, 120, 128, 0, 1);
+  jl.boxedValues_0 = initUnidimensionalArray(cggl.Ljava_lang_Character_2_classLit, {4:1, 1:1, 6:1}, 121, 128, 0, 1);
 }
 ;
 defineClass(800, 1, {1:1});
@@ -61081,7 +61114,7 @@ jl.$clinit_Character$CharSequenceAdapter = function $clinit_Character$CharSequen
   jl.$clinit_Character$CharSequenceAdapter = emptyMethod;
 }
 ;
-defineClass(799, 1, {172:1, 1:1});
+defineClass(799, 1, {173:1, 1:1});
 cggl.Ljava_lang_Character$CharSequenceAdapter_2_classLit = createForClass('java.lang', 'Character/CharSequenceAdapter', 799, cggl.Ljava_lang_Object_2_classLit);
 jl.$clinit_CloneNotSupportedException = function $clinit_CloneNotSupportedException(){
   jl.$clinit_CloneNotSupportedException = emptyMethod;
@@ -61163,12 +61196,12 @@ jl.valueOf_21 = function valueOf_21(f){
   return new jl.Float(f);
 }
 ;
-defineClass(157, 119, {4:1, 9:1, 157:1, 1:1}, jl.Float);
+defineClass(158, 120, {4:1, 9:1, 158:1, 1:1}, jl.Float);
 _.$init_534 = function $init_534(){
 }
 ;
 _.compareTo_1 = function compareTo_10(b){
-  return this.compareTo_5(castTo(b, 157));
+  return this.compareTo_5(castTo(b, 158));
 }
 ;
 _.byteValue = function byteValue_1(){
@@ -61183,8 +61216,8 @@ _.doubleValue = function doubleValue_1(){
   return this.value_0;
 }
 ;
-_.equals_0 = function equals_21(o){
-  return instanceOf(o, 157) && castTo(o, 157).value_0 == this.value_0;
+_.equals_0 = function equals_22(o){
+  return instanceOf(o, 158) && castTo(o, 158).value_0 == this.value_0;
 }
 ;
 _.floatValue = function floatValue_0(){
@@ -61232,7 +61265,7 @@ var POSITIVE_INFINITY_0 = 0;
 var POWER_31_INT = 2147483648;
 var SIZE_2 = 32;
 var TYPE_27;
-cggl.Ljava_lang_Float_2_classLit = createForClass('java.lang', 'Float', 157, cggl.Ljava_lang_Number_2_classLit);
+cggl.Ljava_lang_Float_2_classLit = createForClass('java.lang', 'Float', 158, cggl.Ljava_lang_Number_2_classLit);
 jl.$clinit_HasCharSequenceTypeMarker = function $clinit_HasCharSequenceTypeMarker(){
   jl.$clinit_HasCharSequenceTypeMarker = emptyMethod;
 }
@@ -61353,7 +61386,7 @@ jl.valueOf_23 = function valueOf_23(i){
   return new jl.Long(i);
 }
 ;
-defineClass(72, 119, {4:1, 9:1, 72:1, 1:1}, jl.Long);
+defineClass(72, 120, {4:1, 9:1, 72:1, 1:1}, jl.Long);
 _.$init_538 = function $init_538(){
 }
 ;
@@ -61373,7 +61406,7 @@ _.doubleValue = function doubleValue_3(){
   return toDouble_0(this.value_0);
 }
 ;
-_.equals_0 = function equals_23(o){
+_.equals_0 = function equals_24(o){
   return instanceOf(o, 72) && eq(castTo(o, 72).value_0, this.value_0);
 }
 ;
@@ -61536,11 +61569,11 @@ jl.forRadix = function forRadix(radix){
   return new jl.NumberFormatException('radix ' + radix + ' out of range');
 }
 ;
-defineClass(136, 38, {4:1, 13:1, 136:1, 1:1, 21:1, 17:1}, jl.NumberFormatException);
+defineClass(137, 38, {4:1, 13:1, 137:1, 1:1, 21:1, 17:1}, jl.NumberFormatException);
 _.$init_542 = function $init_542(){
 }
 ;
-cggl.Ljava_lang_NumberFormatException_2_classLit = createForClass('java.lang', 'NumberFormatException', 136, cggl.Ljava_lang_IllegalArgumentException_2_classLit);
+cggl.Ljava_lang_NumberFormatException_2_classLit = createForClass('java.lang', 'NumberFormatException', 137, cggl.Ljava_lang_IllegalArgumentException_2_classLit);
 jl.$clinit_Runnable = function $clinit_Runnable(){
   jl.$clinit_Runnable = emptyMethod;
 }
@@ -61587,12 +61620,12 @@ jl.valueOf_24 = function valueOf_24(s){
   return new jl.Short(s);
 }
 ;
-defineClass(121, 119, {4:1, 9:1, 1:1, 121:1}, jl.Short);
+defineClass(122, 120, {4:1, 9:1, 1:1, 122:1}, jl.Short);
 _.$init_543 = function $init_543(){
 }
 ;
 _.compareTo_1 = function compareTo_15(b){
-  return this.compareTo_8(castTo(b, 121));
+  return this.compareTo_8(castTo(b, 122));
 }
 ;
 _.byteValue = function byteValue_4(){
@@ -61607,8 +61640,8 @@ _.doubleValue = function doubleValue_4(){
   return this.value_0;
 }
 ;
-_.equals_0 = function equals_24(o){
-  return instanceOf(o, 121) && castTo(o, 121).value_0 == this.value_0;
+_.equals_0 = function equals_25(o){
+  return instanceOf(o, 122) && castTo(o, 122).value_0 == this.value_0;
 }
 ;
 _.floatValue = function floatValue_3(){
@@ -61641,11 +61674,11 @@ var MAX_VALUE_6 = 0;
 var MIN_VALUE_6 = 0;
 var SIZE_5 = 16;
 var TYPE_30;
-cggl.Ljava_lang_Short_2_classLit = createForClass('java.lang', 'Short', 121, cggl.Ljava_lang_Number_2_classLit);
+cggl.Ljava_lang_Short_2_classLit = createForClass('java.lang', 'Short', 122, cggl.Ljava_lang_Number_2_classLit);
 jl.$clinit_Short$BoxedValues = function $clinit_Short$BoxedValues(){
   jl.$clinit_Short$BoxedValues = emptyMethod;
   jl.$clinit_Object();
-  jl.boxedValues_3 = initUnidimensionalArray(cggl.Ljava_lang_Short_2_classLit, {4:1, 1:1, 6:1}, 121, 256, 0, 1);
+  jl.boxedValues_3 = initUnidimensionalArray(cggl.Ljava_lang_Short_2_classLit, {4:1, 1:1, 6:1}, 122, 256, 0, 1);
 }
 ;
 defineClass(805, 1, {1:1});
@@ -61669,11 +61702,11 @@ defineClass(69, 1, {4:1, 1:1, 69:1}, jl.StackTraceElement);
 _.$init_544 = function $init_544(){
 }
 ;
-_.equals_0 = function equals_25(other){
+_.equals_0 = function equals_26(other){
   var st;
   if (instanceOf(other, 69)) {
     st = castTo(other, 69);
-    return this.lineNumber == st.lineNumber && ju.equals_38(this.methodName, st.methodName) && ju.equals_38(this.className_0, st.className_0) && ju.equals_38(this.fileName, st.fileName);
+    return this.lineNumber == st.lineNumber && ju.equals_39(this.methodName, st.methodName) && ju.equals_39(this.className_0, st.className_0) && ju.equals_39(this.fileName, st.fileName);
   }
   return false;
 }
@@ -61729,7 +61762,7 @@ jl.StringBuffer_1 = function StringBuffer_1(s){
   this.$init_546();
 }
 ;
-defineClass(85, 128, {172:1, 1:1}, jl.StringBuffer, jl.StringBuffer_0, jl.StringBuffer_1);
+defineClass(86, 129, {173:1, 1:1}, jl.StringBuffer, jl.StringBuffer_0, jl.StringBuffer_1);
 _.$init_546 = function $init_546(){
 }
 ;
@@ -61739,16 +61772,21 @@ _.append_0 = function append_0(x_0){
 }
 ;
 _.append_1 = function append_1(x_0){
+  this.string += x_0;
+  return this;
+}
+;
+_.append_2 = function append_2(x_0){
   this.string += '' + x_0;
   return this;
 }
 ;
-_.append_2 = function append_2(x_0, start_0, len){
+_.append_3 = function append_3(x_0, start_0, len){
   this.string += '' + jl.valueOf_33(x_0, start_0, len);
   return this;
 }
 ;
-cggl.Ljava_lang_StringBuffer_2_classLit = createForClass('java.lang', 'StringBuffer', 85, cggl.Ljava_lang_AbstractStringBuilder_2_classLit);
+cggl.Ljava_lang_StringBuffer_2_classLit = createForClass('java.lang', 'StringBuffer', 86, cggl.Ljava_lang_AbstractStringBuilder_2_classLit);
 jl.$clinit_StringBuilder = function $clinit_StringBuilder(){
   jl.$clinit_StringBuilder = emptyMethod;
   jl.$clinit_AbstractStringBuilder();
@@ -61772,22 +61810,17 @@ jl.StringBuilder_1 = function StringBuilder_1(s){
   this.$init_547();
 }
 ;
-defineClass(39, 128, {172:1, 1:1}, jl.StringBuilder, jl.StringBuilder_0, jl.StringBuilder_1);
+defineClass(39, 129, {173:1, 1:1}, jl.StringBuilder, jl.StringBuilder_0, jl.StringBuilder_1);
 _.$init_547 = function $init_547(){
 }
 ;
-_.append_3 = function append_3(x_0){
+_.append_4 = function append_4(x_0){
   this.string += charToString(x_0);
   return this;
 }
 ;
-_.append_4 = function append_4(x_0){
-  this.string += x_0;
-  return this;
-}
-;
 _.append_5 = function append_5(x_0){
-  this.string += '' + x_0;
+  this.string += x_0;
   return this;
 }
 ;
@@ -61797,6 +61830,11 @@ _.append_6 = function append_6(x_0){
 }
 ;
 _.append_7 = function append_7(x_0){
+  this.string += '' + x_0;
+  return this;
+}
+;
+_.append_8 = function append_8(x_0){
   this.string += '' + x_0;
   return this;
 }
@@ -61952,27 +61990,27 @@ jnc.forName = function forName(charsetName){
   }
 }
 ;
-defineClass(99, 1, {9:1, 1:1, 99:1});
+defineClass(100, 1, {9:1, 1:1, 100:1});
 _.$init_550 = function $init_550(){
 }
 ;
 _.compareTo_1 = function compareTo_17(that){
-  return this.compareTo_9(castTo(that, 99));
+  return this.compareTo_9(castTo(that, 100));
 }
 ;
 _.compareTo_9 = function compareTo_18(that){
   return jl.compareToIgnoreCase_Ljava_lang_String__I__devirtual$(this.name_0, that.name_0);
 }
 ;
-_.equals_0 = function equals_27(o){
+_.equals_0 = function equals_28(o){
   var that;
   if (o === this) {
     return true;
   }
-  if (!instanceOf(o, 99)) {
+  if (!instanceOf(o, 100)) {
     return false;
   }
-  that = castTo(o, 99);
+  that = castTo(o, 100);
   return jl.equals_Ljava_lang_Object__Z__devirtual$_2(this.name_0, that.name_0);
 }
 ;
@@ -61988,7 +62026,7 @@ _.toString_0 = function toString_40(){
   return this.name_0;
 }
 ;
-cggl.Ljava_nio_charset_Charset_2_classLit = createForClass('java.nio.charset', 'Charset', 99, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_nio_charset_Charset_2_classLit = createForClass('java.nio.charset', 'Charset', 100, cggl.Ljava_lang_Object_2_classLit);
 jnc.$clinit_Charset$AvailableCharsets = function $clinit_Charset$AvailableCharsets(){
   jnc.$clinit_Charset$AvailableCharsets = emptyMethod;
 }
@@ -62062,7 +62100,7 @@ jt.DecimalFormat_0 = function DecimalFormat_0(pattern, symbols){
   jt.DecimalFormat.call(this, pattern);
 }
 ;
-defineClass(165, 553, {1:1}, jt.DecimalFormat, jt.DecimalFormat_0);
+defineClass(166, 553, {1:1}, jt.DecimalFormat, jt.DecimalFormat_0);
 _.$init_554 = function $init_554(){
 }
 ;
@@ -62074,7 +62112,7 @@ _.format_1 = function format_3(number){
   return this.formatter.format(number);
 }
 ;
-cggl.Ljava_text_DecimalFormat_2_classLit = createForClass('java.text', 'DecimalFormat', 165, cggl.Ljava_text_NumberFormat_2_classLit);
+cggl.Ljava_text_DecimalFormat_2_classLit = createForClass('java.text', 'DecimalFormat', 166, cggl.Ljava_text_NumberFormat_2_classLit);
 jt.$clinit_DecimalFormatSymbols = function $clinit_DecimalFormatSymbols(){
   jt.$clinit_DecimalFormatSymbols = emptyMethod;
   jl.$clinit_Object();
@@ -62135,7 +62173,7 @@ ju.getEntryValueOrNull = function getEntryValueOrNull(entry){
   return isNull(entry)?null:entry.getValue_1();
 }
 ;
-defineClass(164, 1, {1:1, 63:1});
+defineClass(165, 1, {1:1, 63:1});
 _.$init_556 = function $init_556(){
 }
 ;
@@ -62160,7 +62198,7 @@ _.containsEntry = function containsEntry(entry){
   key = entry.getKey();
   value_0 = entry.getValue_1();
   ourValue = this.get(key);
-  if (!ju.equals_37(value_0, ourValue)) {
+  if (!ju.equals_38(value_0, ourValue)) {
     return false;
   }
   if (jsEquals(ourValue, null) && !this.containsKey(key)) {
@@ -62178,14 +62216,14 @@ _.containsValue = function containsValue(value_0){
   for (entry$iterator = this.entrySet().iterator(); entry$iterator.hasNext_0();) {
     entry = castTo(entry$iterator.next_3(), 36);
     v = entry.getValue_1();
-    if (ju.equals_37(value_0, v)) {
+    if (ju.equals_38(value_0, v)) {
       return true;
     }
   }
   return false;
 }
 ;
-_.equals_0 = function equals_28(obj){
+_.equals_0 = function equals_29(obj){
   var entry, entry$iterator, otherMap;
   if (obj === this) {
     return true;
@@ -62219,7 +62257,7 @@ _.implFindEntry = function implFindEntry(key, remove){
   for (iter = this.entrySet().iterator(); iter.hasNext_0();) {
     entry = castTo(iter.next_3(), 36);
     k = entry.getKey();
-    if (ju.equals_37(key, k)) {
+    if (ju.equals_38(key, k)) {
       if (remove) {
         entry = new ju.AbstractMap$SimpleEntry(entry.getKey(), entry.getValue_1());
         iter.remove_4();
@@ -62281,7 +62319,7 @@ _.values = function values_15(){
   return new ju.AbstractMap$2(this);
 }
 ;
-cggl.Ljava_util_AbstractMap_2_classLit = createForClass('java.util', 'AbstractMap', 164, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_util_AbstractMap_2_classLit = createForClass('java.util', 'AbstractMap', 165, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_AbstractHashMap = function $clinit_AbstractHashMap(){
   ju.$clinit_AbstractHashMap = emptyMethod;
   ju.$clinit_AbstractMap();
@@ -62315,7 +62353,7 @@ ju.AbstractHashMap_2 = function AbstractHashMap_2(toBeCopied){
   this.putAll(toBeCopied);
 }
 ;
-defineClass(194, 164, {1:1, 63:1});
+defineClass(194, 165, {1:1, 63:1});
 _.$init_557 = function $init_557(){
 }
 ;
@@ -62424,7 +62462,7 @@ ju.AbstractSet = function AbstractSet(){
   this.$init_558();
 }
 ;
-defineClass(91, 225, {1:1, 33:1, 61:1});
+defineClass(92, 225, {1:1, 33:1, 61:1});
 _.$init_558 = function $init_558(){
 }
 ;
@@ -62432,7 +62470,7 @@ _.spliterator_0 = function spliterator_5(){
   return ju.$spliterator_2(this);
 }
 ;
-_.equals_0 = function equals_29(o){
+_.equals_0 = function equals_30(o){
   var other;
   if (o === this) {
     return true;
@@ -62472,7 +62510,7 @@ _.removeAll = function removeAll_0(c){
   return size_0 != this.size();
 }
 ;
-cggl.Ljava_util_AbstractSet_2_classLit = createForClass('java.util', 'AbstractSet', 91, cggl.Ljava_util_AbstractCollection_2_classLit);
+cggl.Ljava_util_AbstractSet_2_classLit = createForClass('java.util', 'AbstractSet', 92, cggl.Ljava_util_AbstractCollection_2_classLit);
 ju.$clinit_AbstractHashMap$EntrySet = function $clinit_AbstractHashMap$EntrySet(){
   ju.$clinit_AbstractHashMap$EntrySet = emptyMethod;
   ju.$clinit_AbstractSet();
@@ -62485,7 +62523,7 @@ ju.AbstractHashMap$EntrySet = function AbstractHashMap$EntrySet(this$0){
   this.$init_559();
 }
 ;
-defineClass(520, 91, {1:1, 33:1, 61:1}, ju.AbstractHashMap$EntrySet);
+defineClass(520, 92, {1:1, 33:1, 61:1}, ju.AbstractHashMap$EntrySet);
 _.$init_559 = function $init_559(){
 }
 ;
@@ -62679,7 +62717,7 @@ ju.AbstractList$SubList = function AbstractList$SubList(wrapped, fromIndex, toIn
   this.size_0 = toIndex - fromIndex;
 }
 ;
-defineClass(433, 139, {1:1, 33:1, 47:1}, ju.AbstractList$SubList);
+defineClass(433, 140, {1:1, 33:1, 47:1}, ju.AbstractList$SubList);
 _.$init_563 = function $init_563(){
 }
 ;
@@ -62726,7 +62764,7 @@ ju.AbstractMap$1 = function AbstractMap$1(this$0){
   this.$init_564();
 }
 ;
-defineClass(523, 91, {1:1, 33:1, 61:1}, ju.AbstractMap$1);
+defineClass(523, 92, {1:1, 33:1, 61:1}, ju.AbstractMap$1);
 _.$init_564 = function $init_564(){
 }
 ;
@@ -62888,13 +62926,13 @@ defineClass(522, 1, {1:1, 36:1});
 _.$init_568 = function $init_568(){
 }
 ;
-_.equals_0 = function equals_30(other){
+_.equals_0 = function equals_31(other){
   var entry;
   if (!instanceOf(other, 36)) {
     return false;
   }
   entry = castTo(other, 36);
-  return ju.equals_37(this.key, entry.getKey()) && ju.equals_37(this.value_0, entry.getValue_1());
+  return ju.equals_38(this.key, entry.getKey()) && ju.equals_38(this.value_0, entry.getValue_1());
 }
 ;
 _.getKey = function getKey(){
@@ -62941,8 +62979,8 @@ ju.$clinit_AbstractMap$SimpleImmutableEntry = function $clinit_AbstractMap$Simpl
   ju.$clinit_AbstractMap$SimpleImmutableEntry = emptyMethod;
 }
 ;
-defineClass(973, 522, {1:1, 36:1});
-cggl.Ljava_util_AbstractMap$SimpleImmutableEntry_2_classLit = createForClass('java.util', 'AbstractMap/SimpleImmutableEntry', 973, cggl.Ljava_util_AbstractMap$AbstractEntry_2_classLit);
+defineClass(974, 522, {1:1, 36:1});
+cggl.Ljava_util_AbstractMap$SimpleImmutableEntry_2_classLit = createForClass('java.util', 'AbstractMap/SimpleImmutableEntry', 974, cggl.Ljava_util_AbstractMap$AbstractEntry_2_classLit);
 ju.$clinit_AbstractMapEntry = function $clinit_AbstractMapEntry(){
   ju.$clinit_AbstractMapEntry = emptyMethod;
   jl.$clinit_Object();
@@ -62958,13 +62996,13 @@ defineClass(591, 1, {1:1, 36:1});
 _.$init_570 = function $init_570(){
 }
 ;
-_.equals_0 = function equals_31(other){
+_.equals_0 = function equals_32(other){
   var entry;
   if (!instanceOf(other, 36)) {
     return false;
   }
   entry = castTo(other, 36);
-  return ju.equals_37(this.getKey(), entry.getKey()) && ju.equals_37(this.getValue_1(), entry.getValue_1());
+  return ju.equals_38(this.getKey(), entry.getKey()) && ju.equals_38(this.getValue_1(), entry.getValue_1());
 }
 ;
 _.hashCode_0 = function hashCode_29(){
@@ -62998,7 +63036,7 @@ ju.AbstractNavigableMap = function AbstractNavigableMap(){
   this.$init_571();
 }
 ;
-defineClass(546, 164, {1:1, 63:1});
+defineClass(546, 165, {1:1, 63:1});
 _.$init_571 = function $init_571(){
 }
 ;
@@ -63006,7 +63044,7 @@ _.containsEntry = function containsEntry_0(entry){
   var key, lookupEntry;
   key = entry.getKey();
   lookupEntry = this.getEntry(key);
-  return isNotNull(lookupEntry) && ju.equals_37(lookupEntry.getValue_1(), entry.getValue_1());
+  return isNotNull(lookupEntry) && ju.equals_38(lookupEntry.getValue_1(), entry.getValue_1());
 }
 ;
 _.containsKey = function containsKey_1(k){
@@ -63038,8 +63076,8 @@ ju.$clinit_AbstractNavigableMap$DescendingMap = function $clinit_AbstractNavigab
   ju.$clinit_AbstractNavigableMap$DescendingMap = emptyMethod;
 }
 ;
-defineClass(995, 546, {1:1, 63:1});
-cggl.Ljava_util_AbstractNavigableMap$DescendingMap_2_classLit = createForClass('java.util', 'AbstractNavigableMap/DescendingMap', 995, cggl.Ljava_util_AbstractNavigableMap_2_classLit);
+defineClass(996, 546, {1:1, 63:1});
+cggl.Ljava_util_AbstractNavigableMap$DescendingMap_2_classLit = createForClass('java.util', 'AbstractNavigableMap/DescendingMap', 996, cggl.Ljava_util_AbstractNavigableMap_2_classLit);
 ju.$clinit_AbstractNavigableMap$EntrySet = function $clinit_AbstractNavigableMap$EntrySet(){
   ju.$clinit_AbstractNavigableMap$EntrySet = emptyMethod;
   ju.$clinit_AbstractSet();
@@ -63052,7 +63090,7 @@ ju.AbstractNavigableMap$EntrySet = function AbstractNavigableMap$EntrySet(this$0
   this.$init_572();
 }
 ;
-defineClass(283, 91, {1:1, 33:1, 61:1}, ju.AbstractNavigableMap$EntrySet);
+defineClass(283, 92, {1:1, 33:1, 61:1}, ju.AbstractNavigableMap$EntrySet);
 _.$init_572 = function $init_572(){
 }
 ;
@@ -63108,7 +63146,7 @@ ju.AbstractNavigableMap$NavigableKeySet = function AbstractNavigableMap$Navigabl
   this.map_0 = map_0;
 }
 ;
-defineClass(551, 91, {1:1, 33:1, 61:1}, ju.AbstractNavigableMap$NavigableKeySet);
+defineClass(551, 92, {1:1, 33:1, 61:1}, ju.AbstractNavigableMap$NavigableKeySet);
 _.$init_573 = function $init_573(){
 }
 ;
@@ -63189,8 +63227,8 @@ ju.$clinit_AbstractQueue = function $clinit_AbstractQueue(){
   ju.$clinit_AbstractQueue = emptyMethod;
 }
 ;
-defineClass(976, 225, {1:1, 33:1});
-cggl.Ljava_util_AbstractQueue_2_classLit = createForClass('java.util', 'AbstractQueue', 976, cggl.Ljava_util_AbstractCollection_2_classLit);
+defineClass(977, 225, {1:1, 33:1});
+cggl.Ljava_util_AbstractQueue_2_classLit = createForClass('java.util', 'AbstractQueue', 977, cggl.Ljava_util_AbstractCollection_2_classLit);
 ju.$clinit_ArrayList$1 = function $clinit_ArrayList$1(){
   ju.$clinit_ArrayList$1 = emptyMethod;
   jl.$clinit_Object();
@@ -63463,7 +63501,7 @@ ju.Arrays$0methodref$compare$Type = function Arrays$0methodref$compare$Type(){
   ju.$clinit_Arrays$0methodref$compare$Type();
 }
 ;
-defineClass(1177, $wnd.Function, {1:1, 1167:1}, ju.Arrays$0methodref$compare$Type);
+defineClass(1178, $wnd.Function, {1:1, 1168:1}, ju.Arrays$0methodref$compare$Type);
 _.compare_6 = function compare_31(d1, d2){
   return compare_24(d1, d2);
 }
@@ -63480,7 +63518,7 @@ ju.Arrays$1methodref$compare$Type = function Arrays$1methodref$compare$Type(){
   ju.$clinit_Arrays$1methodref$compare$Type();
 }
 ;
-defineClass(1178, $wnd.Function, {1:1, 1179:1}, ju.Arrays$1methodref$compare$Type);
+defineClass(1179, $wnd.Function, {1:1, 1180:1}, ju.Arrays$1methodref$compare$Type);
 _.compare_7 = function compare_32(d1, d2){
   return compare_27(d1, d2);
 }
@@ -63489,7 +63527,7 @@ ju.$clinit_Arrays$ArrayList = function $clinit_Arrays$ArrayList(){
   ju.$clinit_Arrays$ArrayList = emptyMethod;
 }
 ;
-defineClass(966, 139, {4:1, 1:1, 33:1, 47:1, 127:1});
+defineClass(966, 140, {4:1, 1:1, 33:1, 47:1, 128:1});
 cggl.Ljava_util_Arrays$ArrayList_2_classLit = createForClass('java.util', 'Arrays/ArrayList', 966, cggl.Ljava_util_AbstractList_2_classLit);
 ju.$clinit_Arrays$lambda$0$Type = function $clinit_Arrays$lambda$0$Type(){
   ju.$clinit_Arrays$lambda$0$Type = emptyMethod;
@@ -63503,7 +63541,7 @@ ju.Arrays$lambda$0$Type = function Arrays$lambda$0$Type(){
   ju.$clinit_Arrays$lambda$0$Type();
 }
 ;
-defineClass(1176, $wnd.Function, {1:1, 1167:1}, ju.Arrays$lambda$0$Type);
+defineClass(1177, $wnd.Function, {1:1, 1168:1}, ju.Arrays$lambda$0$Type);
 _.compare_6 = function compare_33(d1, d2){
   return ju.lambda$0(d1, d2);
 }
@@ -63528,7 +63566,7 @@ ju.emptyList = function emptyList(){
 ;
 ju.emptyListIterator = function emptyListIterator(){
   ju.$clinit_Collections();
-  return castTo((ju.$clinit_Collections$EmptyListIterator() , ju.INSTANCE_3), 1165);
+  return castTo((ju.$clinit_Collections$EmptyListIterator() , ju.INSTANCE_3), 1166);
 }
 ;
 ju.emptySet = function emptySet(){
@@ -63575,15 +63613,15 @@ ju.sort_9 = function sort_9(target, c){
 ;
 ju.unmodifiableList = function unmodifiableList(list){
   ju.$clinit_Collections();
-  return instanceOf(list, 127)?new ju.Collections$UnmodifiableRandomAccessList(list):new ju.Collections$UnmodifiableList(list);
+  return instanceOf(list, 128)?new ju.Collections$UnmodifiableRandomAccessList(list):new ju.Collections$UnmodifiableList(list);
 }
 ;
 ju.unmodifiableSet = function unmodifiableSet(set_0){
   return new ju.Collections$UnmodifiableSet(set_0);
 }
 ;
-defineClass(975, 1, {1:1});
-cggl.Ljava_util_Collections_2_classLit = createForClass('java.util', 'Collections', 975, cggl.Ljava_lang_Object_2_classLit);
+defineClass(976, 1, {1:1});
+cggl.Ljava_util_Collections_2_classLit = createForClass('java.util', 'Collections', 976, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Enumeration = function $clinit_Enumeration(){
   ju.$clinit_Enumeration = emptyMethod;
 }
@@ -63593,8 +63631,8 @@ ju.$clinit_Collections$1 = function $clinit_Collections$1(){
   ju.$clinit_Collections$1 = emptyMethod;
 }
 ;
-defineClass(987, 1, {1:1});
-cggl.Ljava_util_Collections$1_2_classLit = createForClass('java.util', 'Collections/1', 987, cggl.Ljava_lang_Object_2_classLit);
+defineClass(988, 1, {1:1});
+cggl.Ljava_util_Collections$1_2_classLit = createForClass('java.util', 'Collections/1', 988, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Collections$EmptyList = function $clinit_Collections$EmptyList(){
   ju.$clinit_Collections$EmptyList = emptyMethod;
   ju.$clinit_AbstractList();
@@ -63606,7 +63644,7 @@ ju.Collections$EmptyList = function Collections$EmptyList(){
   this.$init_576();
 }
 ;
-defineClass(534, 139, {4:1, 1:1, 33:1, 47:1, 127:1}, ju.Collections$EmptyList);
+defineClass(534, 140, {4:1, 1:1, 33:1, 47:1, 128:1}, ju.Collections$EmptyList);
 _.$init_576 = function $init_576(){
 }
 ;
@@ -63644,7 +63682,7 @@ ju.Collections$EmptyListIterator = function Collections$EmptyListIterator(){
   this.$init_577();
 }
 ;
-defineClass(535, 1, {1:1, 40:1, 1165:1}, ju.Collections$EmptyListIterator);
+defineClass(535, 1, {1:1, 40:1, 1166:1}, ju.Collections$EmptyListIterator);
 _.$init_577 = function $init_577(){
 }
 ;
@@ -63684,7 +63722,7 @@ ju.Collections$EmptyMap = function Collections$EmptyMap(){
   this.$init_578();
 }
 ;
-defineClass(537, 164, {4:1, 1:1, 63:1}, ju.Collections$EmptyMap);
+defineClass(537, 165, {4:1, 1:1, 63:1}, ju.Collections$EmptyMap);
 _.$init_578 = function $init_578(){
 }
 ;
@@ -63728,7 +63766,7 @@ ju.Collections$EmptySet = function Collections$EmptySet(){
   this.$init_579();
 }
 ;
-defineClass(536, 91, {4:1, 1:1, 33:1, 61:1}, ju.Collections$EmptySet);
+defineClass(536, 92, {4:1, 1:1, 33:1, 61:1}, ju.Collections$EmptySet);
 _.$init_579 = function $init_579(){
 }
 ;
@@ -63749,26 +63787,26 @@ ju.$clinit_Collections$LifoQueue = function $clinit_Collections$LifoQueue(){
   ju.$clinit_Collections$LifoQueue = emptyMethod;
 }
 ;
-defineClass(977, 976, {4:1, 1:1, 33:1});
-cggl.Ljava_util_Collections$LifoQueue_2_classLit = createForClass('java.util', 'Collections/LifoQueue', 977, cggl.Ljava_util_AbstractQueue_2_classLit);
+defineClass(978, 977, {4:1, 1:1, 33:1});
+cggl.Ljava_util_Collections$LifoQueue_2_classLit = createForClass('java.util', 'Collections/LifoQueue', 978, cggl.Ljava_util_AbstractQueue_2_classLit);
 ju.$clinit_Collections$RandomHolder = function $clinit_Collections$RandomHolder(){
   ju.$clinit_Collections$RandomHolder = emptyMethod;
 }
 ;
-defineClass(985, 1, {1:1});
-cggl.Ljava_util_Collections$RandomHolder_2_classLit = createForClass('java.util', 'Collections/RandomHolder', 985, cggl.Ljava_lang_Object_2_classLit);
+defineClass(986, 1, {1:1});
+cggl.Ljava_util_Collections$RandomHolder_2_classLit = createForClass('java.util', 'Collections/RandomHolder', 986, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Collections$SetFromMap = function $clinit_Collections$SetFromMap(){
   ju.$clinit_Collections$SetFromMap = emptyMethod;
 }
 ;
-defineClass(978, 91, {4:1, 1:1, 33:1, 61:1});
-cggl.Ljava_util_Collections$SetFromMap_2_classLit = createForClass('java.util', 'Collections/SetFromMap', 978, cggl.Ljava_util_AbstractSet_2_classLit);
+defineClass(979, 92, {4:1, 1:1, 33:1, 61:1});
+cggl.Ljava_util_Collections$SetFromMap_2_classLit = createForClass('java.util', 'Collections/SetFromMap', 979, cggl.Ljava_util_AbstractSet_2_classLit);
 ju.$clinit_Collections$SingletonList = function $clinit_Collections$SingletonList(){
   ju.$clinit_Collections$SingletonList = emptyMethod;
 }
 ;
-defineClass(979, 139, {4:1, 1:1, 33:1, 47:1});
-cggl.Ljava_util_Collections$SingletonList_2_classLit = createForClass('java.util', 'Collections/SingletonList', 979, cggl.Ljava_util_AbstractList_2_classLit);
+defineClass(980, 140, {4:1, 1:1, 33:1, 47:1});
+cggl.Ljava_util_Collections$SingletonList_2_classLit = createForClass('java.util', 'Collections/SingletonList', 980, cggl.Ljava_util_AbstractList_2_classLit);
 ju.$clinit_Collections$UnmodifiableCollection = function $clinit_Collections$UnmodifiableCollection(){
   ju.$clinit_Collections$UnmodifiableCollection = emptyMethod;
   jl.$clinit_Object();
@@ -63925,7 +63963,7 @@ _.addAllAtIndex = function addAll_4(index_0, c){
   throw toJs(new jl.UnsupportedOperationException);
 }
 ;
-_.equals_0 = function equals_32(o){
+_.equals_0 = function equals_33(o){
   return jl.equals_Ljava_lang_Object__Z__devirtual$(this.list, o);
 }
 ;
@@ -64004,8 +64042,8 @@ ju.$clinit_Collections$UnmodifiableMap = function $clinit_Collections$Unmodifiab
   ju.$clinit_Collections$UnmodifiableMap = emptyMethod;
 }
 ;
-defineClass(980, 1, {1:1, 63:1});
-cggl.Ljava_util_Collections$UnmodifiableMap_2_classLit = createForClass('java.util', 'Collections/UnmodifiableMap', 980, cggl.Ljava_lang_Object_2_classLit);
+defineClass(981, 1, {1:1, 63:1});
+cggl.Ljava_util_Collections$UnmodifiableMap_2_classLit = createForClass('java.util', 'Collections/UnmodifiableMap', 981, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Collections$UnmodifiableSet = function $clinit_Collections$UnmodifiableSet(){
   ju.$clinit_Collections$UnmodifiableSet = emptyMethod;
   ju.$clinit_Collections$UnmodifiableCollection();
@@ -64028,7 +64066,7 @@ _.spliterator_0 = function spliterator_9(){
   return ju.$spliterator_2(this);
 }
 ;
-_.equals_0 = function equals_33(o){
+_.equals_0 = function equals_34(o){
   return jl.equals_Ljava_lang_Object__Z__devirtual$(this.coll, o);
 }
 ;
@@ -64041,20 +64079,20 @@ ju.$clinit_Collections$UnmodifiableMap$UnmodifiableEntrySet = function $clinit_C
   ju.$clinit_Collections$UnmodifiableMap$UnmodifiableEntrySet = emptyMethod;
 }
 ;
-defineClass(981, 538, {1:1, 33:1, 61:1});
-cggl.Ljava_util_Collections$UnmodifiableMap$UnmodifiableEntrySet_2_classLit = createForClass('java.util', 'Collections/UnmodifiableMap/UnmodifiableEntrySet', 981, cggl.Ljava_util_Collections$UnmodifiableSet_2_classLit);
+defineClass(982, 538, {1:1, 33:1, 61:1});
+cggl.Ljava_util_Collections$UnmodifiableMap$UnmodifiableEntrySet_2_classLit = createForClass('java.util', 'Collections/UnmodifiableMap/UnmodifiableEntrySet', 982, cggl.Ljava_util_Collections$UnmodifiableSet_2_classLit);
 ju.$clinit_Collections$UnmodifiableMap$UnmodifiableEntrySet$1 = function $clinit_Collections$UnmodifiableMap$UnmodifiableEntrySet$1(){
   ju.$clinit_Collections$UnmodifiableMap$UnmodifiableEntrySet$1 = emptyMethod;
 }
 ;
-defineClass(986, 1, {1:1, 40:1});
-cggl.Ljava_util_Collections$UnmodifiableMap$UnmodifiableEntrySet$1_2_classLit = createForClass('java.util', 'Collections/UnmodifiableMap/UnmodifiableEntrySet/1', 986, cggl.Ljava_lang_Object_2_classLit);
+defineClass(987, 1, {1:1, 40:1});
+cggl.Ljava_util_Collections$UnmodifiableMap$UnmodifiableEntrySet$1_2_classLit = createForClass('java.util', 'Collections/UnmodifiableMap/UnmodifiableEntrySet/1', 987, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Collections$UnmodifiableMap$UnmodifiableEntrySet$UnmodifiableEntry = function $clinit_Collections$UnmodifiableMap$UnmodifiableEntrySet$UnmodifiableEntry(){
   ju.$clinit_Collections$UnmodifiableMap$UnmodifiableEntrySet$UnmodifiableEntry = emptyMethod;
 }
 ;
-defineClass(982, 1, {1:1, 36:1});
-cggl.Ljava_util_Collections$UnmodifiableMap$UnmodifiableEntrySet$UnmodifiableEntry_2_classLit = createForClass('java.util', 'Collections/UnmodifiableMap/UnmodifiableEntrySet/UnmodifiableEntry', 982, cggl.Ljava_lang_Object_2_classLit);
+defineClass(983, 1, {1:1, 36:1});
+cggl.Ljava_util_Collections$UnmodifiableMap$UnmodifiableEntrySet$UnmodifiableEntry_2_classLit = createForClass('java.util', 'Collections/UnmodifiableMap/UnmodifiableEntrySet/UnmodifiableEntry', 983, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Collections$UnmodifiableRandomAccessList = function $clinit_Collections$UnmodifiableRandomAccessList(){
   ju.$clinit_Collections$UnmodifiableRandomAccessList = emptyMethod;
   ju.$clinit_Collections$UnmodifiableList();
@@ -64066,7 +64104,7 @@ ju.Collections$UnmodifiableRandomAccessList = function Collections$UnmodifiableR
   this.$init_585();
 }
 ;
-defineClass(539, 231, {1:1, 33:1, 47:1, 127:1}, ju.Collections$UnmodifiableRandomAccessList);
+defineClass(539, 231, {1:1, 33:1, 47:1, 128:1}, ju.Collections$UnmodifiableRandomAccessList);
 _.$init_585 = function $init_585(){
 }
 ;
@@ -64075,14 +64113,14 @@ ju.$clinit_Collections$UnmodifiableSortedMap = function $clinit_Collections$Unmo
   ju.$clinit_Collections$UnmodifiableSortedMap = emptyMethod;
 }
 ;
-defineClass(983, 980, {1:1, 63:1});
-cggl.Ljava_util_Collections$UnmodifiableSortedMap_2_classLit = createForClass('java.util', 'Collections/UnmodifiableSortedMap', 983, cggl.Ljava_util_Collections$UnmodifiableMap_2_classLit);
+defineClass(984, 981, {1:1, 63:1});
+cggl.Ljava_util_Collections$UnmodifiableSortedMap_2_classLit = createForClass('java.util', 'Collections/UnmodifiableSortedMap', 984, cggl.Ljava_util_Collections$UnmodifiableMap_2_classLit);
 ju.$clinit_Collections$UnmodifiableSortedSet = function $clinit_Collections$UnmodifiableSortedSet(){
   ju.$clinit_Collections$UnmodifiableSortedSet = emptyMethod;
 }
 ;
-defineClass(984, 538, {1:1, 33:1, 61:1});
-cggl.Ljava_util_Collections$UnmodifiableSortedSet_2_classLit = createForClass('java.util', 'Collections/UnmodifiableSortedSet', 984, cggl.Ljava_util_Collections$UnmodifiableSet_2_classLit);
+defineClass(985, 538, {1:1, 33:1, 61:1});
+cggl.Ljava_util_Collections$UnmodifiableSortedSet_2_classLit = createForClass('java.util', 'Collections/UnmodifiableSortedSet', 985, cggl.Ljava_util_Collections$UnmodifiableSet_2_classLit);
 ju.$clinit_Comparator$lambda$0$Type = function $clinit_Comparator$lambda$0$Type(){
   ju.$clinit_Comparator$lambda$0$Type = emptyMethod;
 }
@@ -64126,8 +64164,8 @@ ju.nullToNaturalOrder = function nullToNaturalOrder(cmp){
   return isNull(cmp)?castTo(ju.INTERNAL_NATURAL_ORDER, 41):cmp;
 }
 ;
-defineClass(1014, 1, {1:1});
-cggl.Ljava_util_Comparators_2_classLit = createForClass('java.util', 'Comparators', 1014, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1015, 1, {1:1});
+cggl.Ljava_util_Comparators_2_classLit = createForClass('java.util', 'Comparators', 1015, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Comparators$NaturalOrderComparator = function $clinit_Comparators$NaturalOrderComparator(){
   ju.$clinit_Comparators$NaturalOrderComparator = emptyMethod;
   jl.$clinit_Object();
@@ -64148,7 +64186,7 @@ _.compare_0 = function compare_35(a, b){
   return this.compare_8(castTo(a, 9), castTo(b, 9));
 }
 ;
-_.equals_0 = function equals_34(other){
+_.equals_0 = function equals_35(other){
   return getClassPrototype(1).equals_0.call(this, other);
 }
 ;
@@ -64161,8 +64199,8 @@ ju.$clinit_Comparators$NullComparator = function $clinit_Comparators$NullCompara
   ju.$clinit_Comparators$NullComparator = emptyMethod;
 }
 ;
-defineClass(1016, 1, {4:1, 1:1, 41:1});
-cggl.Ljava_util_Comparators$NullComparator_2_classLit = createForClass('java.util', 'Comparators/NullComparator', 1016, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1017, 1, {4:1, 1:1, 41:1});
+cggl.Ljava_util_Comparators$NullComparator_2_classLit = createForClass('java.util', 'Comparators/NullComparator', 1017, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Comparators$ReverseNaturalOrderComparator = function $clinit_Comparators$ReverseNaturalOrderComparator(){
   ju.$clinit_Comparators$ReverseNaturalOrderComparator = emptyMethod;
   jl.$clinit_Object();
@@ -64183,7 +64221,7 @@ _.compare_0 = function compare_37(a, b){
   return this.compare_8(castTo(a, 9), castTo(b, 9));
 }
 ;
-_.equals_0 = function equals_35(other){
+_.equals_0 = function equals_36(other){
   return getClassPrototype(1).equals_0.call(this, other);
 }
 ;
@@ -64196,8 +64234,8 @@ ju.$clinit_Comparators$ReversedComparator = function $clinit_Comparators$Reverse
   ju.$clinit_Comparators$ReversedComparator = emptyMethod;
 }
 ;
-defineClass(1015, 1, {4:1, 1:1, 41:1});
-cggl.Ljava_util_Comparators$ReversedComparator_2_classLit = createForClass('java.util', 'Comparators/ReversedComparator', 1015, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1016, 1, {4:1, 1:1, 41:1});
+cggl.Ljava_util_Comparators$ReversedComparator_2_classLit = createForClass('java.util', 'Comparators/ReversedComparator', 1016, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_ConcurrentModificationDetector = function $clinit_ConcurrentModificationDetector(){
   ju.$clinit_ConcurrentModificationDetector = emptyMethod;
   jl.$clinit_Object();
@@ -64233,9 +64271,9 @@ ju.structureChanged = function structureChanged(host){
   modCountable.$modCount = modCount + 1;
 }
 ;
-defineClass(1053, 1, {1:1});
+defineClass(1054, 1, {1:1});
 ju.API_CHECK = false;
-cggl.Ljava_util_ConcurrentModificationDetector_2_classLit = createForClass('java.util', 'ConcurrentModificationDetector', 1053, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_util_ConcurrentModificationDetector_2_classLit = createForClass('java.util', 'ConcurrentModificationDetector', 1054, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_ConcurrentModificationDetector$ModCountable = function $clinit_ConcurrentModificationDetector$ModCountable(){
   ju.$clinit_ConcurrentModificationDetector$ModCountable = emptyMethod;
 }
@@ -64286,8 +64324,8 @@ _.clone_0 = function clone_2(){
   return new ju.HashMap_1(this);
 }
 ;
-_.equals_1 = function equals_36(value1, value2){
-  return ju.equals_37(value1, value2);
+_.equals_1 = function equals_37(value1, value2){
+  return ju.equals_38(value1, value2);
 }
 ;
 _.getHashCode = function getHashCode(key){
@@ -64326,7 +64364,7 @@ ju.HashSet_1 = function HashSet_1(c){
   this.addAll(c);
 }
 ;
-defineClass(166, 91, {4:1, 1:1, 33:1, 61:1}, ju.HashSet, ju.HashSet_0, ju.HashSet_1);
+defineClass(167, 92, {4:1, 1:1, 33:1, 61:1}, ju.HashSet, ju.HashSet_0, ju.HashSet_1);
 _.$init_590 = function $init_590(){
 }
 ;
@@ -64364,7 +64402,7 @@ _.size = function size_19(){
   return this.map_0.size();
 }
 ;
-cggl.Ljava_util_HashSet_2_classLit = createForClass('java.util', 'HashSet', 166, cggl.Ljava_util_AbstractSet_2_classLit);
+cggl.Ljava_util_HashSet_2_classLit = createForClass('java.util', 'HashSet', 167, cggl.Ljava_util_AbstractSet_2_classLit);
 ju.$clinit_InternalHashCodeMap = function $clinit_InternalHashCodeMap(){
   ju.$clinit_InternalHashCodeMap = emptyMethod;
   jl.$clinit_Object();
@@ -64691,8 +64729,8 @@ ju.newJsMap = function newJsMap(){
   return new ju.jsMapCtor;
 }
 ;
-defineClass(1090, 1, {1:1});
-cggl.Ljava_util_InternalJsMapFactory_2_classLit = createForClass('java.util', 'InternalJsMapFactory', 1090, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1091, 1, {1:1});
+cggl.Ljava_util_InternalJsMapFactory_2_classLit = createForClass('java.util', 'InternalJsMapFactory', 1091, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_InternalStringMap = function $clinit_InternalStringMap(){
   ju.$clinit_InternalStringMap = emptyMethod;
   jl.$clinit_Object();
@@ -64872,11 +64910,11 @@ ju.getDefault_0 = function getDefault_0(){
   return ju.defaultLocale;
 }
 ;
-defineClass(174, 1, {1:1});
+defineClass(175, 1, {1:1});
 _.$init_596 = function $init_596(){
 }
 ;
-cggl.Ljava_util_Locale_2_classLit = createForClass('java.util', 'Locale', 174, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_util_Locale_2_classLit = createForClass('java.util', 'Locale', 175, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Locale$1 = function $clinit_Locale$1(){
   ju.$clinit_Locale$1 = emptyMethod;
   ju.$clinit_Locale();
@@ -64888,7 +64926,7 @@ ju.Locale$1 = function Locale$1(){
   this.$init_597();
 }
 ;
-defineClass(345, 174, {1:1}, ju.Locale$1);
+defineClass(345, 175, {1:1}, ju.Locale$1);
 _.$init_597 = function $init_597(){
 }
 ;
@@ -64908,7 +64946,7 @@ ju.Locale$2 = function Locale$2(){
   this.$init_598();
 }
 ;
-defineClass(346, 174, {1:1}, ju.Locale$2);
+defineClass(346, 175, {1:1}, ju.Locale$2);
 _.$init_598 = function $init_598(){
 }
 ;
@@ -64928,7 +64966,7 @@ ju.Locale$3 = function Locale$3(){
   this.$init_599();
 }
 ;
-defineClass(347, 174, {1:1}, ju.Locale$3);
+defineClass(347, 175, {1:1}, ju.Locale$3);
 _.$init_599 = function $init_599(){
 }
 ;
@@ -64948,7 +64986,7 @@ ju.Locale$4 = function Locale$4(){
   this.$init_600();
 }
 ;
-defineClass(348, 174, {1:1}, ju.Locale$4);
+defineClass(348, 175, {1:1}, ju.Locale$4);
 _.$init_600 = function $init_600(){
 }
 ;
@@ -64961,14 +64999,14 @@ ju.$clinit_Map$Entry$lambda$0$Type = function $clinit_Map$Entry$lambda$0$Type(){
   ju.$clinit_Map$Entry$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(971, 1, {4:1, 1:1, 41:1});
-cggl.Ljava_util_Map$Entry$lambda$0$Type_2_classLit = createForClass('java.util', 'Map/Entry/lambda$0$Type', 971, cggl.Ljava_lang_Object_2_classLit);
+defineClass(972, 1, {4:1, 1:1, 41:1});
+cggl.Ljava_util_Map$Entry$lambda$0$Type_2_classLit = createForClass('java.util', 'Map/Entry/lambda$0$Type', 972, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_Map$Entry$lambda$1$Type = function $clinit_Map$Entry$lambda$1$Type(){
   ju.$clinit_Map$Entry$lambda$1$Type = emptyMethod;
 }
 ;
-defineClass(972, 1, {4:1, 1:1, 41:1});
-cggl.Ljava_util_Map$Entry$lambda$1$Type_2_classLit = createForClass('java.util', 'Map/Entry/lambda$1$Type', 972, cggl.Ljava_lang_Object_2_classLit);
+defineClass(973, 1, {4:1, 1:1, 41:1});
+cggl.Ljava_util_Map$Entry$lambda$1$Type_2_classLit = createForClass('java.util', 'Map/Entry/lambda$1$Type', 973, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_NoSuchElementException = function $clinit_NoSuchElementException(){
   ju.$clinit_NoSuchElementException = emptyMethod;
   jl.$clinit_RuntimeException();
@@ -64980,22 +65018,22 @@ ju.NoSuchElementException = function NoSuchElementException(){
   this.$init_601();
 }
 ;
-defineClass(123, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, ju.NoSuchElementException);
+defineClass(124, 21, {4:1, 13:1, 1:1, 21:1, 17:1}, ju.NoSuchElementException);
 _.$init_601 = function $init_601(){
 }
 ;
-cggl.Ljava_util_NoSuchElementException_2_classLit = createForClass('java.util', 'NoSuchElementException', 123, cggl.Ljava_lang_RuntimeException_2_classLit);
+cggl.Ljava_util_NoSuchElementException_2_classLit = createForClass('java.util', 'NoSuchElementException', 124, cggl.Ljava_lang_RuntimeException_2_classLit);
 ju.$clinit_Objects = function $clinit_Objects(){
   ju.$clinit_Objects = emptyMethod;
   jl.$clinit_Object();
 }
 ;
-ju.equals_37 = function equals_37(a, b){
+ju.equals_38 = function equals_38(a, b){
   ju.$clinit_Objects();
   return maskUndefined(a) === maskUndefined(b) || jsNotEquals(a, null) && jl.equals_Ljava_lang_Object__Z__devirtual$(a, b);
 }
 ;
-ju.equals_38 = function equals_38(a, b){
+ju.equals_39 = function equals_39(a, b){
   ju.$clinit_Objects();
   return jsEquals(a, b);
 }
@@ -65010,8 +65048,8 @@ ju.hashCode_35 = function hashCode_35(o){
   return jsNotEquals(o, null)?jl.hashCode__I__devirtual$(o):0;
 }
 ;
-defineClass(997, 1, {1:1});
-cggl.Ljava_util_Objects_2_classLit = createForClass('java.util', 'Objects', 997, cggl.Ljava_lang_Object_2_classLit);
+defineClass(998, 1, {1:1});
+cggl.Ljava_util_Objects_2_classLit = createForClass('java.util', 'Objects', 998, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_PrimitiveIterator$OfDouble = function $clinit_PrimitiveIterator$OfDouble(){
   ju.$clinit_PrimitiveIterator$OfDouble = emptyMethod;
 }
@@ -65760,13 +65798,13 @@ ju.StringJoiner_0 = function StringJoiner_0(delimiter, prefix, suffix){
   this.emptyValue = this.prefix + ('' + this.suffix);
 }
 ;
-defineClass(147, 1, {1:1}, ju.StringJoiner, ju.StringJoiner_0);
+defineClass(148, 1, {1:1}, ju.StringJoiner, ju.StringJoiner_0);
 _.$init_611 = function $init_611(){
 }
 ;
 _.add_11 = function add_28(newElement){
   this.initBuilderOrAddDelimiter();
-  this.builder.append_5(newElement);
+  this.builder.append_6(newElement);
   return this;
 }
 ;
@@ -65775,7 +65813,7 @@ _.initBuilderOrAddDelimiter = function initBuilderOrAddDelimiter(){
     this.builder = new jl.StringBuilder_1(this.prefix);
   }
    else {
-    this.builder.append_7(this.delimiter);
+    this.builder.append_8(this.delimiter);
   }
 }
 ;
@@ -65798,7 +65836,7 @@ _.toString_0 = function toString_51(){
   }
 }
 ;
-cggl.Ljava_util_StringJoiner_2_classLit = createForClass('java.util', 'StringJoiner', 147, cggl.Ljava_lang_Object_2_classLit);
+cggl.Ljava_util_StringJoiner_2_classLit = createForClass('java.util', 'StringJoiner', 148, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_TreeMap = function $clinit_TreeMap(){
   ju.$clinit_TreeMap = emptyMethod;
   ju.$clinit_AbstractNavigableMap();
@@ -65821,7 +65859,7 @@ ju.otherChild = function otherChild(child){
   return 1 - child;
 }
 ;
-defineClass(122, 546, {4:1, 1:1, 63:1}, ju.TreeMap, ju.TreeMap_0);
+defineClass(123, 546, {4:1, 1:1, 63:1}, ju.TreeMap, ju.TreeMap_0);
 _.$init_612 = function $init_612(){
   this.size_0 = 0;
 }
@@ -65971,7 +66009,7 @@ _.removeWithState = function removeWithState(key, state){
     node = node.child[dir_0];
     c = this.cmp.compare_0(key, node.getKey());
     dir_0 = c < 0?0:1;
-    if (c == 0 && (!state.matchValue || ju.equals_37(node.getValue_1(), state.value_0))) {
+    if (c == 0 && (!state.matchValue || ju.equals_38(node.getValue_1(), state.value_0))) {
       found = node;
     }
     if (!this.isRed_0(node) && !this.isRed_0(node.child[dir_0])) {
@@ -66069,13 +66107,13 @@ _.smaller = function smaller(a, b, orEqual){
 _.size_0 = 0;
 ju.LEFT_3 = 0;
 ju.RIGHT_3 = 1;
-cggl.Ljava_util_TreeMap_2_classLit = createForClass('java.util', 'TreeMap', 122, cggl.Ljava_util_AbstractNavigableMap_2_classLit);
+cggl.Ljava_util_TreeMap_2_classLit = createForClass('java.util', 'TreeMap', 123, cggl.Ljava_util_AbstractNavigableMap_2_classLit);
 ju.$clinit_TreeMap$DescendingEntryIterator = function $clinit_TreeMap$DescendingEntryIterator(){
   ju.$clinit_TreeMap$DescendingEntryIterator = emptyMethod;
 }
 ;
-defineClass(992, 1, {1:1, 40:1});
-cggl.Ljava_util_TreeMap$DescendingEntryIterator_2_classLit = createForClass('java.util', 'TreeMap/DescendingEntryIterator', 992, cggl.Ljava_lang_Object_2_classLit);
+defineClass(993, 1, {1:1, 40:1});
+cggl.Ljava_util_TreeMap$DescendingEntryIterator_2_classLit = createForClass('java.util', 'TreeMap/DescendingEntryIterator', 993, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_TreeMap$EntryIterator = function $clinit_TreeMap$EntryIterator(){
   ju.$clinit_TreeMap$EntryIterator = emptyMethod;
   jl.$clinit_Object();
@@ -66161,13 +66199,13 @@ ju.TreeMap$Node_0 = function TreeMap$Node_0(key, value_0, isRed){
   this.isRed = isRed;
 }
 ;
-defineClass(142, 230, {1:1, 36:1, 142:1}, ju.TreeMap$Node);
+defineClass(143, 230, {1:1, 36:1, 143:1}, ju.TreeMap$Node);
 _.$init_615 = function $init_615(){
-  this.child = initUnidimensionalArray(cggl.Ljava_util_TreeMap$Node_2_classLit, {4:1, 1:1, 6:1}, 142, 2, 0, 1);
+  this.child = initUnidimensionalArray(cggl.Ljava_util_TreeMap$Node_2_classLit, {4:1, 1:1, 6:1}, 143, 2, 0, 1);
 }
 ;
 _.isRed = false;
-cggl.Ljava_util_TreeMap$Node_2_classLit = createForClass('java.util', 'TreeMap/Node', 142, cggl.Ljava_util_AbstractMap$SimpleEntry_2_classLit);
+cggl.Ljava_util_TreeMap$Node_2_classLit = createForClass('java.util', 'TreeMap/Node', 143, cggl.Ljava_util_AbstractMap$SimpleEntry_2_classLit);
 ju.$clinit_TreeMap$State = function $clinit_TreeMap$State(){
   ju.$clinit_TreeMap$State = emptyMethod;
   jl.$clinit_Object();
@@ -66195,8 +66233,8 @@ ju.$clinit_TreeMap$SubMap = function $clinit_TreeMap$SubMap(){
   ju.$clinit_TreeMap$SubMap = emptyMethod;
 }
 ;
-defineClass(993, 546, {1:1, 63:1});
-cggl.Ljava_util_TreeMap$SubMap_2_classLit = createForClass('java.util', 'TreeMap/SubMap', 993, cggl.Ljava_util_AbstractNavigableMap_2_classLit);
+defineClass(994, 546, {1:1, 63:1});
+cggl.Ljava_util_TreeMap$SubMap_2_classLit = createForClass('java.util', 'TreeMap/SubMap', 994, cggl.Ljava_util_AbstractNavigableMap_2_classLit);
 ju.$clinit_TreeMap$SubMapType = function $clinit_TreeMap$SubMapType(){
   ju.$clinit_TreeMap$SubMapType = emptyMethod;
   jl.$clinit_Enum();
@@ -66219,10 +66257,10 @@ ju.valueOf_34 = function valueOf_34(name_0){
 ;
 ju.values_17 = function values_17(){
   ju.$clinit_TreeMap$SubMapType();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_util_TreeMap$SubMapType_2_classLit, 1), {4:1, 1:1, 6:1}, 92, 0, [ju.All, ju.Head, ju.Range_0, ju.Tail]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_util_TreeMap$SubMapType_2_classLit, 1), {4:1, 1:1, 6:1}, 93, 0, [ju.All, ju.Head, ju.Range_0, ju.Tail]);
 }
 ;
-defineClass(92, 10, {4:1, 9:1, 10:1, 1:1, 92:1}, ju.TreeMap$SubMapType);
+defineClass(93, 10, {4:1, 9:1, 10:1, 1:1, 93:1}, ju.TreeMap$SubMapType);
 _.$init_617 = function $init_617(){
 }
 ;
@@ -66234,7 +66272,7 @@ _.toKeyValid = function toKeyValid(){
   return false;
 }
 ;
-cggl.Ljava_util_TreeMap$SubMapType_2_classLit = createForEnum('java.util', 'TreeMap/SubMapType', 92, cggl.Ljava_lang_Enum_2_classLit, ju.values_17, ju.valueOf_34);
+cggl.Ljava_util_TreeMap$SubMapType_2_classLit = createForEnum('java.util', 'TreeMap/SubMapType', 93, cggl.Ljava_lang_Enum_2_classLit, ju.values_17, ju.valueOf_34);
 ju.$clinit_TreeMap$SubMapType$1 = function $clinit_TreeMap$SubMapType$1(){
   ju.$clinit_TreeMap$SubMapType$1 = emptyMethod;
   ju.$clinit_TreeMap$SubMapType();
@@ -66246,7 +66284,7 @@ ju.TreeMap$SubMapType$1 = function TreeMap$SubMapType$1(enum$name, enum$ordinal)
   this.$init_618();
 }
 ;
-defineClass(548, 92, {4:1, 9:1, 10:1, 1:1, 92:1}, ju.TreeMap$SubMapType$1);
+defineClass(548, 93, {4:1, 9:1, 10:1, 1:1, 93:1}, ju.TreeMap$SubMapType$1);
 _.$init_618 = function $init_618(){
 }
 ;
@@ -66266,7 +66304,7 @@ ju.TreeMap$SubMapType$2 = function TreeMap$SubMapType$2(enum$name, enum$ordinal)
   this.$init_619();
 }
 ;
-defineClass(549, 92, {4:1, 9:1, 10:1, 1:1, 92:1}, ju.TreeMap$SubMapType$2);
+defineClass(549, 93, {4:1, 9:1, 10:1, 1:1, 93:1}, ju.TreeMap$SubMapType$2);
 _.$init_619 = function $init_619(){
 }
 ;
@@ -66290,7 +66328,7 @@ ju.TreeMap$SubMapType$3 = function TreeMap$SubMapType$3(enum$name, enum$ordinal)
   this.$init_620();
 }
 ;
-defineClass(550, 92, {4:1, 9:1, 10:1, 1:1, 92:1}, ju.TreeMap$SubMapType$3);
+defineClass(550, 93, {4:1, 9:1, 10:1, 1:1, 93:1}, ju.TreeMap$SubMapType$3);
 _.$init_620 = function $init_620(){
 }
 ;
@@ -66304,8 +66342,8 @@ ju.$clinit_TreeMap$SubMapType$Map = function $clinit_TreeMap$SubMapType$Map(){
   ju.$MAP_14 = createValueOfMap(ju.values_17());
 }
 ;
-defineClass(994, 1, {1:1});
-cggl.Ljava_util_TreeMap$SubMapType$Map_2_classLit = createForClass('java.util', 'TreeMap/SubMapType/Map', 994, cggl.Ljava_lang_Object_2_classLit);
+defineClass(995, 1, {1:1});
+cggl.Ljava_util_TreeMap$SubMapType$Map_2_classLit = createForClass('java.util', 'TreeMap/SubMapType/Map', 995, cggl.Ljava_lang_Object_2_classLit);
 ju.$clinit_TreeSet = function $clinit_TreeSet(){
   ju.$clinit_TreeSet = emptyMethod;
   ju.$clinit_AbstractSet();
@@ -66322,7 +66360,7 @@ ju.TreeSet = function TreeSet(c){
   this.map_0 = new ju.TreeMap_0(c);
 }
 ;
-defineClass(182, 91, {4:1, 1:1, 33:1, 61:1}, ju.TreeSet);
+defineClass(182, 92, {4:1, 1:1, 33:1, 61:1}, ju.TreeSet);
 _.$init_621 = function $init_621(){
 }
 ;
@@ -66389,7 +66427,7 @@ ju.checkArrayIndexOutOfBounds = function checkArrayIndexOutOfBounds(expression, 
   }
 }
 ;
-defineClass(280, 139, {4:1, 1:1, 33:1, 47:1, 127:1}, ju.Vector, ju.Vector_0);
+defineClass(280, 140, {4:1, 1:1, 33:1, 47:1, 128:1}, ju.Vector, ju.Vector_0);
 _.$init_622 = function $init_622(){
 }
 ;
@@ -66519,8 +66557,8 @@ juf.$clinit_BiConsumer$lambda$0$Type = function $clinit_BiConsumer$lambda$0$Type
   juf.$clinit_BiConsumer$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1085, 1, {1:1});
-cggl.Ljava_util_function_BiConsumer$lambda$0$Type_2_classLit = createForClass('java.util.function', 'BiConsumer/lambda$0$Type', 1085, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1086, 1, {1:1});
+cggl.Ljava_util_function_BiConsumer$lambda$0$Type_2_classLit = createForClass('java.util.function', 'BiConsumer/lambda$0$Type', 1086, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_BiFunction = function $clinit_BiFunction(){
   juf.$clinit_BiFunction = emptyMethod;
 }
@@ -66530,8 +66568,8 @@ juf.$clinit_BiFunction$lambda$0$Type = function $clinit_BiFunction$lambda$0$Type
   juf.$clinit_BiFunction$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1044, 1, {1:1});
-cggl.Ljava_util_function_BiFunction$lambda$0$Type_2_classLit = createForClass('java.util.function', 'BiFunction/lambda$0$Type', 1044, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1045, 1, {1:1});
+cggl.Ljava_util_function_BiFunction$lambda$0$Type_2_classLit = createForClass('java.util.function', 'BiFunction/lambda$0$Type', 1045, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_BinaryOperator = function $clinit_BinaryOperator(){
   juf.$clinit_BinaryOperator = emptyMethod;
 }
@@ -66541,14 +66579,14 @@ juf.$clinit_BinaryOperator$lambda$0$Type = function $clinit_BinaryOperator$lambd
   juf.$clinit_BinaryOperator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1042, 1, {1:1});
-cggl.Ljava_util_function_BinaryOperator$lambda$0$Type_2_classLit = createForClass('java.util.function', 'BinaryOperator/lambda$0$Type', 1042, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1043, 1, {1:1});
+cggl.Ljava_util_function_BinaryOperator$lambda$0$Type_2_classLit = createForClass('java.util.function', 'BinaryOperator/lambda$0$Type', 1043, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_BinaryOperator$lambda$1$Type = function $clinit_BinaryOperator$lambda$1$Type(){
   juf.$clinit_BinaryOperator$lambda$1$Type = emptyMethod;
 }
 ;
-defineClass(1043, 1, {1:1});
-cggl.Ljava_util_function_BinaryOperator$lambda$1$Type_2_classLit = createForClass('java.util.function', 'BinaryOperator/lambda$1$Type', 1043, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1044, 1, {1:1});
+cggl.Ljava_util_function_BinaryOperator$lambda$1$Type_2_classLit = createForClass('java.util.function', 'BinaryOperator/lambda$1$Type', 1044, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_Consumer$lambda$0$Type = function $clinit_Consumer$lambda$0$Type(){
   juf.$clinit_Consumer$lambda$0$Type = emptyMethod;
 }
@@ -66622,20 +66660,20 @@ juf.$clinit_IntPredicate$lambda$0$Type = function $clinit_IntPredicate$lambda$0$
   juf.$clinit_IntPredicate$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1086, 1, {1:1});
-cggl.Ljava_util_function_IntPredicate$lambda$0$Type_2_classLit = createForClass('java.util.function', 'IntPredicate/lambda$0$Type', 1086, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1087, 1, {1:1});
+cggl.Ljava_util_function_IntPredicate$lambda$0$Type_2_classLit = createForClass('java.util.function', 'IntPredicate/lambda$0$Type', 1087, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_IntPredicate$lambda$1$Type = function $clinit_IntPredicate$lambda$1$Type(){
   juf.$clinit_IntPredicate$lambda$1$Type = emptyMethod;
 }
 ;
-defineClass(1087, 1, {1:1});
-cggl.Ljava_util_function_IntPredicate$lambda$1$Type_2_classLit = createForClass('java.util.function', 'IntPredicate/lambda$1$Type', 1087, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1088, 1, {1:1});
+cggl.Ljava_util_function_IntPredicate$lambda$1$Type_2_classLit = createForClass('java.util.function', 'IntPredicate/lambda$1$Type', 1088, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_IntPredicate$lambda$2$Type = function $clinit_IntPredicate$lambda$2$Type(){
   juf.$clinit_IntPredicate$lambda$2$Type = emptyMethod;
 }
 ;
-defineClass(1088, 1, {1:1});
-cggl.Ljava_util_function_IntPredicate$lambda$2$Type_2_classLit = createForClass('java.util.function', 'IntPredicate/lambda$2$Type', 1088, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1089, 1, {1:1});
+cggl.Ljava_util_function_IntPredicate$lambda$2$Type_2_classLit = createForClass('java.util.function', 'IntPredicate/lambda$2$Type', 1089, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_IntToDoubleFunction = function $clinit_IntToDoubleFunction(){
   juf.$clinit_IntToDoubleFunction = emptyMethod;
 }
@@ -66666,32 +66704,32 @@ juf.$clinit_Predicate$0methodref$isNull$Type = function $clinit_Predicate$0metho
   juf.$clinit_Predicate$0methodref$isNull$Type = emptyMethod;
 }
 ;
-defineClass(1045, 1, {1:1});
-cggl.Ljava_util_function_Predicate$0methodref$isNull$Type_2_classLit = createForClass('java.util.function', 'Predicate/0methodref$isNull$Type', 1045, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1046, 1, {1:1});
+cggl.Ljava_util_function_Predicate$0methodref$isNull$Type_2_classLit = createForClass('java.util.function', 'Predicate/0methodref$isNull$Type', 1046, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_Predicate$1methodref$equals$Type = function $clinit_Predicate$1methodref$equals$Type(){
   juf.$clinit_Predicate$1methodref$equals$Type = emptyMethod;
 }
 ;
-defineClass(1046, 1, {1:1});
-cggl.Ljava_util_function_Predicate$1methodref$equals$Type_2_classLit = createForClass('java.util.function', 'Predicate/1methodref$equals$Type', 1046, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1047, 1, {1:1});
+cggl.Ljava_util_function_Predicate$1methodref$equals$Type_2_classLit = createForClass('java.util.function', 'Predicate/1methodref$equals$Type', 1047, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_Predicate$lambda$0$Type = function $clinit_Predicate$lambda$0$Type(){
   juf.$clinit_Predicate$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1047, 1, {1:1});
-cggl.Ljava_util_function_Predicate$lambda$0$Type_2_classLit = createForClass('java.util.function', 'Predicate/lambda$0$Type', 1047, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1048, 1, {1:1});
+cggl.Ljava_util_function_Predicate$lambda$0$Type_2_classLit = createForClass('java.util.function', 'Predicate/lambda$0$Type', 1048, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_Predicate$lambda$1$Type = function $clinit_Predicate$lambda$1$Type(){
   juf.$clinit_Predicate$lambda$1$Type = emptyMethod;
 }
 ;
-defineClass(1048, 1, {1:1});
-cggl.Ljava_util_function_Predicate$lambda$1$Type_2_classLit = createForClass('java.util.function', 'Predicate/lambda$1$Type', 1048, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1049, 1, {1:1});
+cggl.Ljava_util_function_Predicate$lambda$1$Type_2_classLit = createForClass('java.util.function', 'Predicate/lambda$1$Type', 1049, cggl.Ljava_lang_Object_2_classLit);
 juf.$clinit_Predicate$lambda$2$Type = function $clinit_Predicate$lambda$2$Type(){
   juf.$clinit_Predicate$lambda$2$Type = emptyMethod;
 }
 ;
-defineClass(1049, 1, {1:1});
-cggl.Ljava_util_function_Predicate$lambda$2$Type_2_classLit = createForClass('java.util.function', 'Predicate/lambda$2$Type', 1049, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1050, 1, {1:1});
+cggl.Ljava_util_function_Predicate$lambda$2$Type_2_classLit = createForClass('java.util.function', 'Predicate/lambda$2$Type', 1050, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_BaseStream = function $clinit_BaseStream(){
   jus.$clinit_BaseStream = emptyMethod;
 }
@@ -66731,21 +66769,21 @@ jus.valueOf_35 = function valueOf_35(name_0){
 ;
 jus.values_18 = function values_18(){
   jus.$clinit_Collector$Characteristics();
-  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_util_stream_Collector$Characteristics_2_classLit, 1), {4:1, 1:1, 6:1}, 145, 0, [jus.CONCURRENT_0, jus.IDENTITY_FINISH, jus.UNORDERED]);
+  return stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_util_stream_Collector$Characteristics_2_classLit, 1), {4:1, 1:1, 6:1}, 146, 0, [jus.CONCURRENT_0, jus.IDENTITY_FINISH, jus.UNORDERED]);
 }
 ;
-defineClass(145, 10, {4:1, 9:1, 10:1, 1:1, 145:1}, jus.Collector$Characteristics);
+defineClass(146, 10, {4:1, 9:1, 10:1, 1:1, 146:1}, jus.Collector$Characteristics);
 _.$init_623 = function $init_623(){
 }
 ;
-cggl.Ljava_util_stream_Collector$Characteristics_2_classLit = createForEnum('java.util.stream', 'Collector/Characteristics', 145, cggl.Ljava_lang_Enum_2_classLit, jus.values_18, jus.valueOf_35);
+cggl.Ljava_util_stream_Collector$Characteristics_2_classLit = createForEnum('java.util.stream', 'Collector/Characteristics', 146, cggl.Ljava_lang_Enum_2_classLit, jus.values_18, jus.valueOf_35);
 jus.$clinit_Collector$Characteristics$Map = function $clinit_Collector$Characteristics$Map(){
   jus.$clinit_Collector$Characteristics$Map = emptyMethod;
   jus.$MAP_15 = createValueOfMap(jus.values_18());
 }
 ;
-defineClass(1141, 1, {1:1});
-cggl.Ljava_util_stream_Collector$Characteristics$Map_2_classLit = createForClass('java.util.stream', 'Collector/Characteristics/Map', 1141, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1142, 1, {1:1});
+cggl.Ljava_util_stream_Collector$Characteristics$Map_2_classLit = createForClass('java.util.stream', 'Collector/Characteristics/Map', 1142, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_CollectorImpl = function $clinit_CollectorImpl(){
   jus.$clinit_CollectorImpl = emptyMethod;
   jl.$clinit_Object();
@@ -66799,7 +66837,7 @@ jus.lambda$21 = function lambda$21(c1_0, c2_1){
 }
 ;
 jus.toCollection = function toCollection(collectionFactory){
-  return jus.of_0(collectionFactory, new jus.Collectors$20methodref$add$Type, new jus.Collectors$lambda$21$Type, stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_util_stream_Collector$Characteristics_2_classLit, 1), {4:1, 1:1, 6:1}, 145, 0, [(jus.$clinit_Collector$Characteristics() , jus.IDENTITY_FINISH)]));
+  return jus.of_0(collectionFactory, new jus.Collectors$20methodref$add$Type, new jus.Collectors$lambda$21$Type, stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_util_stream_Collector$Characteristics_2_classLit, 1), {4:1, 1:1, 6:1}, 146, 0, [(jus.$clinit_Collector$Characteristics() , jus.IDENTITY_FINISH)]));
 }
 ;
 jus.toList = function toList(){
@@ -66807,80 +66845,80 @@ jus.toList = function toList(){
   return jus.toCollection(new jus.Collectors$21methodref$ctor$Type);
 }
 ;
-defineClass(1091, 1, {1:1});
-cggl.Ljava_util_stream_Collectors_2_classLit = createForClass('java.util.stream', 'Collectors', 1091, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1092, 1, {1:1});
+cggl.Ljava_util_stream_Collectors_2_classLit = createForClass('java.util.stream', 'Collectors', 1092, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$0methodref$getAverage$Type = function $clinit_Collectors$0methodref$getAverage$Type(){
   jus.$clinit_Collectors$0methodref$getAverage$Type = emptyMethod;
 }
 ;
-defineClass(1092, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$0methodref$getAverage$Type_2_classLit = createForClass('java.util.stream', 'Collectors/0methodref$getAverage$Type', 1092, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1093, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$0methodref$getAverage$Type_2_classLit = createForClass('java.util.stream', 'Collectors/0methodref$getAverage$Type', 1093, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$10methodref$merge$Type = function $clinit_Collectors$10methodref$merge$Type(){
   jus.$clinit_Collectors$10methodref$merge$Type = emptyMethod;
 }
 ;
-defineClass(1109, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$10methodref$merge$Type_2_classLit = createForClass('java.util.stream', 'Collectors/10methodref$merge$Type', 1109, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1110, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$10methodref$merge$Type_2_classLit = createForClass('java.util.stream', 'Collectors/10methodref$merge$Type', 1110, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$11methodref$toString$Type = function $clinit_Collectors$11methodref$toString$Type(){
   jus.$clinit_Collectors$11methodref$toString$Type = emptyMethod;
 }
 ;
-defineClass(1110, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$11methodref$toString$Type_2_classLit = createForClass('java.util.stream', 'Collectors/11methodref$toString$Type', 1110, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1111, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$11methodref$toString$Type_2_classLit = createForClass('java.util.stream', 'Collectors/11methodref$toString$Type', 1111, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$12methodref$test$Type = function $clinit_Collectors$12methodref$test$Type(){
   jus.$clinit_Collectors$12methodref$test$Type = emptyMethod;
 }
 ;
-defineClass(1112, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$12methodref$test$Type_2_classLit = createForClass('java.util.stream', 'Collectors/12methodref$test$Type', 1112, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1113, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$12methodref$test$Type_2_classLit = createForClass('java.util.stream', 'Collectors/12methodref$test$Type', 1113, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$13methodref$ctor$Type = function $clinit_Collectors$13methodref$ctor$Type(){
   jus.$clinit_Collectors$13methodref$ctor$Type = emptyMethod;
 }
 ;
-defineClass(1113, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$13methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/13methodref$ctor$Type', 1113, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1114, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$13methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/13methodref$ctor$Type', 1114, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$14methodref$of$Type = function $clinit_Collectors$14methodref$of$Type(){
   jus.$clinit_Collectors$14methodref$of$Type = emptyMethod;
 }
 ;
-defineClass(1115, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$14methodref$of$Type_2_classLit = createForClass('java.util.stream', 'Collectors/14methodref$of$Type', 1115, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1116, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$14methodref$of$Type_2_classLit = createForClass('java.util.stream', 'Collectors/14methodref$of$Type', 1116, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$15methodref$ctor$Type = function $clinit_Collectors$15methodref$ctor$Type(){
   jus.$clinit_Collectors$15methodref$ctor$Type = emptyMethod;
 }
 ;
-defineClass(1121, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$15methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/15methodref$ctor$Type', 1121, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1122, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$15methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/15methodref$ctor$Type', 1122, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$16methodref$ctor$Type = function $clinit_Collectors$16methodref$ctor$Type(){
   jus.$clinit_Collectors$16methodref$ctor$Type = emptyMethod;
 }
 ;
-defineClass(1124, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$16methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/16methodref$ctor$Type', 1124, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1125, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$16methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/16methodref$ctor$Type', 1125, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$17methodref$ctor$Type = function $clinit_Collectors$17methodref$ctor$Type(){
   jus.$clinit_Collectors$17methodref$ctor$Type = emptyMethod;
 }
 ;
-defineClass(1127, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$17methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/17methodref$ctor$Type', 1127, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1128, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$17methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/17methodref$ctor$Type', 1128, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$18methodref$getSum$Type = function $clinit_Collectors$18methodref$getSum$Type(){
   jus.$clinit_Collectors$18methodref$getSum$Type = emptyMethod;
 }
 ;
-defineClass(1130, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$18methodref$getSum$Type_2_classLit = createForClass('java.util.stream', 'Collectors/18methodref$getSum$Type', 1130, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1131, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$18methodref$getSum$Type_2_classLit = createForClass('java.util.stream', 'Collectors/18methodref$getSum$Type', 1131, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$19methodref$getSum$Type = function $clinit_Collectors$19methodref$getSum$Type(){
   jus.$clinit_Collectors$19methodref$getSum$Type = emptyMethod;
 }
 ;
-defineClass(1132, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$19methodref$getSum$Type_2_classLit = createForClass('java.util.stream', 'Collectors/19methodref$getSum$Type', 1132, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1133, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$19methodref$getSum$Type_2_classLit = createForClass('java.util.stream', 'Collectors/19methodref$getSum$Type', 1133, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$1methodref$getAverage$Type = function $clinit_Collectors$1methodref$getAverage$Type(){
   jus.$clinit_Collectors$1methodref$getAverage$Type = emptyMethod;
 }
 ;
-defineClass(1093, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$1methodref$getAverage$Type_2_classLit = createForClass('java.util.stream', 'Collectors/1methodref$getAverage$Type', 1093, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1094, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$1methodref$getAverage$Type_2_classLit = createForClass('java.util.stream', 'Collectors/1methodref$getAverage$Type', 1094, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$20methodref$add$Type = function $clinit_Collectors$20methodref$add$Type(){
   jus.$clinit_Collectors$20methodref$add$Type = emptyMethod;
 }
@@ -66913,152 +66951,152 @@ jus.$clinit_Collectors$22methodref$ctor$Type = function $clinit_Collectors$22met
   jus.$clinit_Collectors$22methodref$ctor$Type = emptyMethod;
 }
 ;
-defineClass(1134, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$22methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/22methodref$ctor$Type', 1134, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1135, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$22methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/22methodref$ctor$Type', 1135, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$23methodref$ctor$Type = function $clinit_Collectors$23methodref$ctor$Type(){
   jus.$clinit_Collectors$23methodref$ctor$Type = emptyMethod;
 }
 ;
-defineClass(1137, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$23methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/23methodref$ctor$Type', 1137, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1138, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$23methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/23methodref$ctor$Type', 1138, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$24methodref$add$Type = function $clinit_Collectors$24methodref$add$Type(){
   jus.$clinit_Collectors$24methodref$add$Type = emptyMethod;
 }
 ;
-defineClass(1138, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$24methodref$add$Type_2_classLit = createForClass('java.util.stream', 'Collectors/24methodref$add$Type', 1138, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1139, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$24methodref$add$Type_2_classLit = createForClass('java.util.stream', 'Collectors/24methodref$add$Type', 1139, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$2methodref$getAverage$Type = function $clinit_Collectors$2methodref$getAverage$Type(){
   jus.$clinit_Collectors$2methodref$getAverage$Type = emptyMethod;
 }
 ;
-defineClass(1094, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$2methodref$getAverage$Type_2_classLit = createForClass('java.util.stream', 'Collectors/2methodref$getAverage$Type', 1094, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1095, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$2methodref$getAverage$Type_2_classLit = createForClass('java.util.stream', 'Collectors/2methodref$getAverage$Type', 1095, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$3methodref$ctor$Type = function $clinit_Collectors$3methodref$ctor$Type(){
   jus.$clinit_Collectors$3methodref$ctor$Type = emptyMethod;
 }
 ;
-defineClass(1097, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$3methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/3methodref$ctor$Type', 1097, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1098, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$3methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/3methodref$ctor$Type', 1098, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$4methodref$addAll$Type = function $clinit_Collectors$4methodref$addAll$Type(){
   jus.$clinit_Collectors$4methodref$addAll$Type = emptyMethod;
 }
 ;
-defineClass(1100, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$4methodref$addAll$Type_2_classLit = createForClass('java.util.stream', 'Collectors/4methodref$addAll$Type', 1100, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1101, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$4methodref$addAll$Type_2_classLit = createForClass('java.util.stream', 'Collectors/4methodref$addAll$Type', 1101, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$5methodref$ctor$Type = function $clinit_Collectors$5methodref$ctor$Type(){
   jus.$clinit_Collectors$5methodref$ctor$Type = emptyMethod;
 }
 ;
-defineClass(1103, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$5methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/5methodref$ctor$Type', 1103, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1104, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$5methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'Collectors/5methodref$ctor$Type', 1104, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$6methodref$append$Type = function $clinit_Collectors$6methodref$append$Type(){
   jus.$clinit_Collectors$6methodref$append$Type = emptyMethod;
 }
 ;
-defineClass(1104, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$6methodref$append$Type_2_classLit = createForClass('java.util.stream', 'Collectors/6methodref$append$Type', 1104, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1105, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$6methodref$append$Type_2_classLit = createForClass('java.util.stream', 'Collectors/6methodref$append$Type', 1105, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$7methodref$append$Type = function $clinit_Collectors$7methodref$append$Type(){
   jus.$clinit_Collectors$7methodref$append$Type = emptyMethod;
 }
 ;
-defineClass(1105, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$7methodref$append$Type_2_classLit = createForClass('java.util.stream', 'Collectors/7methodref$append$Type', 1105, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1106, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$7methodref$append$Type_2_classLit = createForClass('java.util.stream', 'Collectors/7methodref$append$Type', 1106, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$8methodref$toString$Type = function $clinit_Collectors$8methodref$toString$Type(){
   jus.$clinit_Collectors$8methodref$toString$Type = emptyMethod;
 }
 ;
-defineClass(1106, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$8methodref$toString$Type_2_classLit = createForClass('java.util.stream', 'Collectors/8methodref$toString$Type', 1106, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1107, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$8methodref$toString$Type_2_classLit = createForClass('java.util.stream', 'Collectors/8methodref$toString$Type', 1107, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$9methodref$add$Type = function $clinit_Collectors$9methodref$add$Type(){
   jus.$clinit_Collectors$9methodref$add$Type = emptyMethod;
 }
 ;
-defineClass(1108, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$9methodref$add$Type_2_classLit = createForClass('java.util.stream', 'Collectors/9methodref$add$Type', 1108, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1109, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$9methodref$add$Type_2_classLit = createForClass('java.util.stream', 'Collectors/9methodref$add$Type', 1109, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$0$Type = function $clinit_Collectors$lambda$0$Type(){
   jus.$clinit_Collectors$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1095, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$0$Type', 1095, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1096, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$0$Type', 1096, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$1$Type = function $clinit_Collectors$lambda$1$Type(){
   jus.$clinit_Collectors$lambda$1$Type = emptyMethod;
 }
 ;
-defineClass(1096, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$1$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$1$Type', 1096, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1097, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$1$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$1$Type', 1097, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$10$Type = function $clinit_Collectors$lambda$10$Type(){
   jus.$clinit_Collectors$lambda$10$Type = emptyMethod;
 }
 ;
-defineClass(1117, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$lambda$10$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$10$Type', 1117, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1118, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$lambda$10$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$10$Type', 1118, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$11$Type = function $clinit_Collectors$lambda$11$Type(){
   jus.$clinit_Collectors$lambda$11$Type = emptyMethod;
 }
 ;
-defineClass(1118, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$11$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$11$Type', 1118, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1119, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$11$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$11$Type', 1119, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$12$Type = function $clinit_Collectors$lambda$12$Type(){
   jus.$clinit_Collectors$lambda$12$Type = emptyMethod;
 }
 ;
-defineClass(1119, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$12$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$12$Type', 1119, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1120, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$12$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$12$Type', 1120, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$13$Type = function $clinit_Collectors$lambda$13$Type(){
   jus.$clinit_Collectors$lambda$13$Type = emptyMethod;
 }
 ;
-defineClass(1120, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$13$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$13$Type', 1120, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1121, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$13$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$13$Type', 1121, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$14$Type = function $clinit_Collectors$lambda$14$Type(){
   jus.$clinit_Collectors$lambda$14$Type = emptyMethod;
 }
 ;
-defineClass(1122, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$14$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$14$Type', 1122, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1123, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$14$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$14$Type', 1123, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$15$Type = function $clinit_Collectors$lambda$15$Type(){
   jus.$clinit_Collectors$lambda$15$Type = emptyMethod;
 }
 ;
-defineClass(1123, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$15$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$15$Type', 1123, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1124, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$15$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$15$Type', 1124, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$16$Type = function $clinit_Collectors$lambda$16$Type(){
   jus.$clinit_Collectors$lambda$16$Type = emptyMethod;
 }
 ;
-defineClass(1125, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$16$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$16$Type', 1125, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1126, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$16$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$16$Type', 1126, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$17$Type = function $clinit_Collectors$lambda$17$Type(){
   jus.$clinit_Collectors$lambda$17$Type = emptyMethod;
 }
 ;
-defineClass(1126, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$17$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$17$Type', 1126, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1127, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$17$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$17$Type', 1127, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$18$Type = function $clinit_Collectors$lambda$18$Type(){
   jus.$clinit_Collectors$lambda$18$Type = emptyMethod;
 }
 ;
-defineClass(1128, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$18$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$18$Type', 1128, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1129, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$18$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$18$Type', 1129, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$19$Type = function $clinit_Collectors$lambda$19$Type(){
   jus.$clinit_Collectors$lambda$19$Type = emptyMethod;
 }
 ;
-defineClass(1129, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$19$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$19$Type', 1129, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1130, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$19$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$19$Type', 1130, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$2$Type = function $clinit_Collectors$lambda$2$Type(){
   jus.$clinit_Collectors$lambda$2$Type = emptyMethod;
 }
 ;
-defineClass(1098, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$lambda$2$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$2$Type', 1098, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1099, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$lambda$2$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$2$Type', 1099, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$20$Type = function $clinit_Collectors$lambda$20$Type(){
   jus.$clinit_Collectors$lambda$20$Type = emptyMethod;
 }
 ;
-defineClass(1131, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$20$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$20$Type', 1131, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1132, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$20$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$20$Type', 1132, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$21$Type = function $clinit_Collectors$lambda$21$Type(){
   jus.$clinit_Collectors$lambda$21$Type = emptyMethod;
 }
@@ -67077,74 +67115,74 @@ jus.$clinit_Collectors$lambda$22$Type = function $clinit_Collectors$lambda$22$Ty
   jus.$clinit_Collectors$lambda$22$Type = emptyMethod;
 }
 ;
-defineClass(1133, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$22$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$22$Type', 1133, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1134, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$22$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$22$Type', 1134, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$23$Type = function $clinit_Collectors$lambda$23$Type(){
   jus.$clinit_Collectors$lambda$23$Type = emptyMethod;
 }
 ;
-defineClass(1135, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$23$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$23$Type', 1135, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1136, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$23$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$23$Type', 1136, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$24$Type = function $clinit_Collectors$lambda$24$Type(){
   jus.$clinit_Collectors$lambda$24$Type = emptyMethod;
 }
 ;
-defineClass(1136, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$24$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$24$Type', 1136, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1137, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$24$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$24$Type', 1137, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$25$Type = function $clinit_Collectors$lambda$25$Type(){
   jus.$clinit_Collectors$lambda$25$Type = emptyMethod;
 }
 ;
-defineClass(1139, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$25$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$25$Type', 1139, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1140, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$25$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$25$Type', 1140, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$26$Type = function $clinit_Collectors$lambda$26$Type(){
   jus.$clinit_Collectors$lambda$26$Type = emptyMethod;
 }
 ;
-defineClass(1140, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$26$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$26$Type', 1140, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1141, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$26$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$26$Type', 1141, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$3$Type = function $clinit_Collectors$lambda$3$Type(){
   jus.$clinit_Collectors$lambda$3$Type = emptyMethod;
 }
 ;
-defineClass(1099, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$3$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$3$Type', 1099, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1100, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$3$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$3$Type', 1100, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$4$Type = function $clinit_Collectors$lambda$4$Type(){
   jus.$clinit_Collectors$lambda$4$Type = emptyMethod;
 }
 ;
-defineClass(1101, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$4$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$4$Type', 1101, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1102, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$4$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$4$Type', 1102, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$5$Type = function $clinit_Collectors$lambda$5$Type(){
   jus.$clinit_Collectors$lambda$5$Type = emptyMethod;
 }
 ;
-defineClass(1102, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$5$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$5$Type', 1102, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1103, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$5$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$5$Type', 1103, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$6$Type = function $clinit_Collectors$lambda$6$Type(){
   jus.$clinit_Collectors$lambda$6$Type = emptyMethod;
 }
 ;
-defineClass(1107, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$lambda$6$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$6$Type', 1107, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1108, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$lambda$6$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$6$Type', 1108, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$7$Type = function $clinit_Collectors$lambda$7$Type(){
   jus.$clinit_Collectors$lambda$7$Type = emptyMethod;
 }
 ;
-defineClass(1111, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$7$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$7$Type', 1111, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1112, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$7$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$7$Type', 1112, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$8$Type = function $clinit_Collectors$lambda$8$Type(){
   jus.$clinit_Collectors$lambda$8$Type = emptyMethod;
 }
 ;
-defineClass(1114, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_Collectors$lambda$8$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$8$Type', 1114, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1115, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_Collectors$lambda$8$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$8$Type', 1115, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Collectors$lambda$9$Type = function $clinit_Collectors$lambda$9$Type(){
   jus.$clinit_Collectors$lambda$9$Type = emptyMethod;
 }
 ;
-defineClass(1116, 1, {1:1});
-cggl.Ljava_util_stream_Collectors$lambda$9$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$9$Type', 1116, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1117, 1, {1:1});
+cggl.Ljava_util_stream_Collectors$lambda$9$Type_2_classLit = createForClass('java.util.stream', 'Collectors/lambda$9$Type', 1117, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStream = function $clinit_IntStream(){
   jus.$clinit_IntStream = emptyMethod;
 }
@@ -67280,8 +67318,8 @@ _.runClosers = function runClosers(){
     if (instanceOf(e, 21)) {
       throw toJs(castTo(e, 21));
     }
-    if (instanceOf(e, 97)) {
-      throw toJs(castTo(e, 97));
+    if (instanceOf(e, 98)) {
+      throw toJs(castTo(e, 98));
     }
   }
 }
@@ -67349,188 +67387,188 @@ jus.$clinit_IntStreamImpl$0methodref$ctor$Type = function $clinit_IntStreamImpl$
   jus.$clinit_IntStreamImpl$0methodref$ctor$Type = emptyMethod;
 }
 ;
-defineClass(1069, 1, {1:1, 57:1});
-cggl.Ljava_util_stream_IntStreamImpl$0methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/0methodref$ctor$Type', 1069, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1070, 1, {1:1, 57:1});
+cggl.Ljava_util_stream_IntStreamImpl$0methodref$ctor$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/0methodref$ctor$Type', 1070, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$1 = function $clinit_IntStreamImpl$1(){
   jus.$clinit_IntStreamImpl$1 = emptyMethod;
 }
 ;
-defineClass(1076, 253, {1:1, 24:1, 55:1});
-cggl.Ljava_util_stream_IntStreamImpl$1_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/1', 1076, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
+defineClass(1077, 253, {1:1, 24:1, 55:1});
+cggl.Ljava_util_stream_IntStreamImpl$1_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/1', 1077, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$1$lambda$0$Type = function $clinit_IntStreamImpl$1$lambda$0$Type(){
   jus.$clinit_IntStreamImpl$1$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1077, 1, {1:1});
-cggl.Ljava_util_stream_IntStreamImpl$1$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/1/lambda$0$Type', 1077, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1078, 1, {1:1});
+cggl.Ljava_util_stream_IntStreamImpl$1$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/1/lambda$0$Type', 1078, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$1methodref$combine$Type = function $clinit_IntStreamImpl$1methodref$combine$Type(){
   jus.$clinit_IntStreamImpl$1methodref$combine$Type = emptyMethod;
 }
 ;
-defineClass(1071, 1, {1:1});
-cggl.Ljava_util_stream_IntStreamImpl$1methodref$combine$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/1methodref$combine$Type', 1071, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1072, 1, {1:1});
+cggl.Ljava_util_stream_IntStreamImpl$1methodref$combine$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/1methodref$combine$Type', 1072, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$2 = function $clinit_IntStreamImpl$2(){
   jus.$clinit_IntStreamImpl$2 = emptyMethod;
 }
 ;
-defineClass(1079, 253, {1:1, 24:1, 55:1});
-cggl.Ljava_util_stream_IntStreamImpl$2_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/2', 1079, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
+defineClass(1080, 253, {1:1, 24:1, 55:1});
+cggl.Ljava_util_stream_IntStreamImpl$2_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/2', 1080, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$2$lambda$0$Type = function $clinit_IntStreamImpl$2$lambda$0$Type(){
   jus.$clinit_IntStreamImpl$2$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1080, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$2$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/2/lambda$0$Type', 1080, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1081, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$2$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/2/lambda$0$Type', 1081, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$2methodref$add$Type = function $clinit_IntStreamImpl$2methodref$add$Type(){
   jus.$clinit_IntStreamImpl$2methodref$add$Type = emptyMethod;
 }
 ;
-defineClass(1078, 1, {1:1});
-cggl.Ljava_util_stream_IntStreamImpl$2methodref$add$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/2methodref$add$Type', 1078, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1079, 1, {1:1});
+cggl.Ljava_util_stream_IntStreamImpl$2methodref$add$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/2methodref$add$Type', 1079, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$3 = function $clinit_IntStreamImpl$3(){
   jus.$clinit_IntStreamImpl$3 = emptyMethod;
 }
 ;
-defineClass(1081, 253, {1:1, 24:1, 55:1});
-cggl.Ljava_util_stream_IntStreamImpl$3_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/3', 1081, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
+defineClass(1082, 253, {1:1, 24:1, 55:1});
+cggl.Ljava_util_stream_IntStreamImpl$3_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/3', 1082, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$3methodref$valueOf$Type = function $clinit_IntStreamImpl$3methodref$valueOf$Type(){
   jus.$clinit_IntStreamImpl$3methodref$valueOf$Type = emptyMethod;
 }
 ;
-defineClass(1084, 1, {1:1});
-cggl.Ljava_util_stream_IntStreamImpl$3methodref$valueOf$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/3methodref$valueOf$Type', 1084, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1085, 1, {1:1});
+cggl.Ljava_util_stream_IntStreamImpl$3methodref$valueOf$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/3methodref$valueOf$Type', 1085, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$Empty = function $clinit_IntStreamImpl$Empty(){
   jus.$clinit_IntStreamImpl$Empty = emptyMethod;
 }
 ;
-defineClass(1054, 201, {1:1});
-cggl.Ljava_util_stream_IntStreamImpl$Empty_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/Empty', 1054, cggl.Ljava_util_stream_TerminatableStream_2_classLit);
+defineClass(1055, 201, {1:1});
+cggl.Ljava_util_stream_IntStreamImpl$Empty_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/Empty', 1055, cggl.Ljava_util_stream_TerminatableStream_2_classLit);
 jus.$clinit_IntStreamImpl$FilterSpliterator = function $clinit_IntStreamImpl$FilterSpliterator(){
   jus.$clinit_IntStreamImpl$FilterSpliterator = emptyMethod;
 }
 ;
-defineClass(1059, 253, {1:1, 24:1, 55:1});
-cggl.Ljava_util_stream_IntStreamImpl$FilterSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/FilterSpliterator', 1059, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
+defineClass(1060, 253, {1:1, 24:1, 55:1});
+cggl.Ljava_util_stream_IntStreamImpl$FilterSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/FilterSpliterator', 1060, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$FilterSpliterator$lambda$0$Type = function $clinit_IntStreamImpl$FilterSpliterator$lambda$0$Type(){
   jus.$clinit_IntStreamImpl$FilterSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1067, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$FilterSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/FilterSpliterator/lambda$0$Type', 1067, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1068, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$FilterSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/FilterSpliterator/lambda$0$Type', 1068, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$LimitSpliterator = function $clinit_IntStreamImpl$LimitSpliterator(){
   jus.$clinit_IntStreamImpl$LimitSpliterator = emptyMethod;
 }
 ;
-defineClass(1061, 253, {1:1, 24:1, 55:1});
-cggl.Ljava_util_stream_IntStreamImpl$LimitSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/LimitSpliterator', 1061, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
+defineClass(1062, 253, {1:1, 24:1, 55:1});
+cggl.Ljava_util_stream_IntStreamImpl$LimitSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/LimitSpliterator', 1062, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$MapToDoubleSpliterator = function $clinit_IntStreamImpl$MapToDoubleSpliterator(){
   jus.$clinit_IntStreamImpl$MapToDoubleSpliterator = emptyMethod;
 }
 ;
-defineClass(1058, 723, {1:1, 24:1});
-cggl.Ljava_util_stream_IntStreamImpl$MapToDoubleSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToDoubleSpliterator', 1058, cggl.Ljava_util_Spliterators$AbstractDoubleSpliterator_2_classLit);
+defineClass(1059, 723, {1:1, 24:1});
+cggl.Ljava_util_stream_IntStreamImpl$MapToDoubleSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToDoubleSpliterator', 1059, cggl.Ljava_util_Spliterators$AbstractDoubleSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$MapToDoubleSpliterator$lambda$0$Type = function $clinit_IntStreamImpl$MapToDoubleSpliterator$lambda$0$Type(){
   jus.$clinit_IntStreamImpl$MapToDoubleSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1066, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$MapToDoubleSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToDoubleSpliterator/lambda$0$Type', 1066, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1067, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$MapToDoubleSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToDoubleSpliterator/lambda$0$Type', 1067, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$MapToIntSpliterator = function $clinit_IntStreamImpl$MapToIntSpliterator(){
   jus.$clinit_IntStreamImpl$MapToIntSpliterator = emptyMethod;
 }
 ;
-defineClass(1055, 253, {1:1, 24:1, 55:1});
-cggl.Ljava_util_stream_IntStreamImpl$MapToIntSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToIntSpliterator', 1055, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
+defineClass(1056, 253, {1:1, 24:1, 55:1});
+cggl.Ljava_util_stream_IntStreamImpl$MapToIntSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToIntSpliterator', 1056, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$MapToIntSpliterator$lambda$0$Type = function $clinit_IntStreamImpl$MapToIntSpliterator$lambda$0$Type(){
   jus.$clinit_IntStreamImpl$MapToIntSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1063, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$MapToIntSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToIntSpliterator/lambda$0$Type', 1063, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1064, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$MapToIntSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToIntSpliterator/lambda$0$Type', 1064, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$MapToLongSpliterator = function $clinit_IntStreamImpl$MapToLongSpliterator(){
   jus.$clinit_IntStreamImpl$MapToLongSpliterator = emptyMethod;
 }
 ;
-defineClass(1057, 724, {1:1, 24:1});
-cggl.Ljava_util_stream_IntStreamImpl$MapToLongSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToLongSpliterator', 1057, cggl.Ljava_util_Spliterators$AbstractLongSpliterator_2_classLit);
+defineClass(1058, 724, {1:1, 24:1});
+cggl.Ljava_util_stream_IntStreamImpl$MapToLongSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToLongSpliterator', 1058, cggl.Ljava_util_Spliterators$AbstractLongSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$MapToLongSpliterator$lambda$0$Type = function $clinit_IntStreamImpl$MapToLongSpliterator$lambda$0$Type(){
   jus.$clinit_IntStreamImpl$MapToLongSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1065, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$MapToLongSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToLongSpliterator/lambda$0$Type', 1065, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1066, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$MapToLongSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToLongSpliterator/lambda$0$Type', 1066, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$MapToObjSpliterator = function $clinit_IntStreamImpl$MapToObjSpliterator(){
   jus.$clinit_IntStreamImpl$MapToObjSpliterator = emptyMethod;
 }
 ;
-defineClass(1056, 341, {1:1, 24:1});
-cggl.Ljava_util_stream_IntStreamImpl$MapToObjSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToObjSpliterator', 1056, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
+defineClass(1057, 341, {1:1, 24:1});
+cggl.Ljava_util_stream_IntStreamImpl$MapToObjSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToObjSpliterator', 1057, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$MapToObjSpliterator$lambda$0$Type = function $clinit_IntStreamImpl$MapToObjSpliterator$lambda$0$Type(){
   jus.$clinit_IntStreamImpl$MapToObjSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1064, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$MapToObjSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToObjSpliterator/lambda$0$Type', 1064, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1065, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$MapToObjSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/MapToObjSpliterator/lambda$0$Type', 1065, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$SkipSpliterator = function $clinit_IntStreamImpl$SkipSpliterator(){
   jus.$clinit_IntStreamImpl$SkipSpliterator = emptyMethod;
 }
 ;
-defineClass(1060, 253, {1:1, 24:1, 55:1});
-cggl.Ljava_util_stream_IntStreamImpl$SkipSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/SkipSpliterator', 1060, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
+defineClass(1061, 253, {1:1, 24:1, 55:1});
+cggl.Ljava_util_stream_IntStreamImpl$SkipSpliterator_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/SkipSpliterator', 1061, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
 jus.$clinit_IntStreamImpl$SkipSpliterator$lambda$0$Type = function $clinit_IntStreamImpl$SkipSpliterator$lambda$0$Type(){
   jus.$clinit_IntStreamImpl$SkipSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1068, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$SkipSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/SkipSpliterator/lambda$0$Type', 1068, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1069, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$SkipSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/SkipSpliterator/lambda$0$Type', 1069, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$ValueConsumer = function $clinit_IntStreamImpl$ValueConsumer(){
   jus.$clinit_IntStreamImpl$ValueConsumer = emptyMethod;
 }
 ;
-defineClass(1062, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$ValueConsumer_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/ValueConsumer', 1062, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1063, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$ValueConsumer_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/ValueConsumer', 1063, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$lambda$0$Type = function $clinit_IntStreamImpl$lambda$0$Type(){
   jus.$clinit_IntStreamImpl$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1070, 1, {1:1});
-cggl.Ljava_util_stream_IntStreamImpl$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$0$Type', 1070, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1071, 1, {1:1});
+cggl.Ljava_util_stream_IntStreamImpl$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$0$Type', 1071, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$lambda$1$Type = function $clinit_IntStreamImpl$lambda$1$Type(){
   jus.$clinit_IntStreamImpl$lambda$1$Type = emptyMethod;
 }
 ;
-defineClass(1072, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$lambda$1$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$1$Type', 1072, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1073, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$lambda$1$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$1$Type', 1073, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$lambda$2$Type = function $clinit_IntStreamImpl$lambda$2$Type(){
   jus.$clinit_IntStreamImpl$lambda$2$Type = emptyMethod;
 }
 ;
-defineClass(1073, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$lambda$2$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$2$Type', 1073, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1074, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$lambda$2$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$2$Type', 1074, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$lambda$3$Type = function $clinit_IntStreamImpl$lambda$3$Type(){
   jus.$clinit_IntStreamImpl$lambda$3$Type = emptyMethod;
 }
 ;
-defineClass(1074, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$lambda$3$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$3$Type', 1074, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1075, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$lambda$3$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$3$Type', 1075, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$lambda$4$Type = function $clinit_IntStreamImpl$lambda$4$Type(){
   jus.$clinit_IntStreamImpl$lambda$4$Type = emptyMethod;
 }
 ;
-defineClass(1075, 1, {1:1, 32:1});
-cggl.Ljava_util_stream_IntStreamImpl$lambda$4$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$4$Type', 1075, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1076, 1, {1:1, 32:1});
+cggl.Ljava_util_stream_IntStreamImpl$lambda$4$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$4$Type', 1076, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$lambda$5$Type = function $clinit_IntStreamImpl$lambda$5$Type(){
   jus.$clinit_IntStreamImpl$lambda$5$Type = emptyMethod;
 }
 ;
-defineClass(1082, 1, {1:1});
-cggl.Ljava_util_stream_IntStreamImpl$lambda$5$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$5$Type', 1082, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1083, 1, {1:1});
+cggl.Ljava_util_stream_IntStreamImpl$lambda$5$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$5$Type', 1083, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_IntStreamImpl$lambda$6$Type = function $clinit_IntStreamImpl$lambda$6$Type(){
   jus.$clinit_IntStreamImpl$lambda$6$Type = emptyMethod;
 }
 ;
-defineClass(1083, 1, {1:1});
-cggl.Ljava_util_stream_IntStreamImpl$lambda$6$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$6$Type', 1083, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1084, 1, {1:1});
+cggl.Ljava_util_stream_IntStreamImpl$lambda$6$Type_2_classLit = createForClass('java.util.stream', 'IntStreamImpl/lambda$6$Type', 1084, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_Stream = function $clinit_Stream(){
   jus.$clinit_Stream = emptyMethod;
 }
@@ -67708,20 +67746,20 @@ jus.$clinit_StreamImpl$1 = function $clinit_StreamImpl$1(){
   jus.$clinit_StreamImpl$1 = emptyMethod;
 }
 ;
-defineClass(1031, 341, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$1_2_classLit = createForClass('java.util.stream', 'StreamImpl/1', 1031, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
+defineClass(1032, 341, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$1_2_classLit = createForClass('java.util.stream', 'StreamImpl/1', 1032, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
 jus.$clinit_StreamImpl$1$lambda$0$Type = function $clinit_StreamImpl$1$lambda$0$Type(){
   jus.$clinit_StreamImpl$1$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1032, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$1$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/1/lambda$0$Type', 1032, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1033, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$1$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/1/lambda$0$Type', 1033, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$1methodref$add$Type = function $clinit_StreamImpl$1methodref$add$Type(){
   jus.$clinit_StreamImpl$1methodref$add$Type = emptyMethod;
 }
 ;
-defineClass(1037, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$1methodref$add$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/1methodref$add$Type', 1037, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1038, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$1methodref$add$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/1methodref$add$Type', 1038, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$2 = function $clinit_StreamImpl$2(){
   jus.$clinit_StreamImpl$2 = emptyMethod;
   ju.$clinit_Spliterators$AbstractIntSpliterator();
@@ -67796,110 +67834,110 @@ jus.$clinit_StreamImpl$3 = function $clinit_StreamImpl$3(){
   jus.$clinit_StreamImpl$3 = emptyMethod;
 }
 ;
-defineClass(1033, 724, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$3_2_classLit = createForClass('java.util.stream', 'StreamImpl/3', 1033, cggl.Ljava_util_Spliterators$AbstractLongSpliterator_2_classLit);
+defineClass(1034, 724, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$3_2_classLit = createForClass('java.util.stream', 'StreamImpl/3', 1034, cggl.Ljava_util_Spliterators$AbstractLongSpliterator_2_classLit);
 jus.$clinit_StreamImpl$3$lambda$0$Type = function $clinit_StreamImpl$3$lambda$0$Type(){
   jus.$clinit_StreamImpl$3$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1034, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$3$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/3/lambda$0$Type', 1034, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1035, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$3$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/3/lambda$0$Type', 1035, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$4 = function $clinit_StreamImpl$4(){
   jus.$clinit_StreamImpl$4 = emptyMethod;
 }
 ;
-defineClass(1035, 723, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$4_2_classLit = createForClass('java.util.stream', 'StreamImpl/4', 1035, cggl.Ljava_util_Spliterators$AbstractDoubleSpliterator_2_classLit);
+defineClass(1036, 723, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$4_2_classLit = createForClass('java.util.stream', 'StreamImpl/4', 1036, cggl.Ljava_util_Spliterators$AbstractDoubleSpliterator_2_classLit);
 jus.$clinit_StreamImpl$4$lambda$0$Type = function $clinit_StreamImpl$4$lambda$0$Type(){
   jus.$clinit_StreamImpl$4$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1036, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$4$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/4/lambda$0$Type', 1036, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1037, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$4$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/4/lambda$0$Type', 1037, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$5 = function $clinit_StreamImpl$5(){
   jus.$clinit_StreamImpl$5 = emptyMethod;
 }
 ;
-defineClass(1038, 341, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$5_2_classLit = createForClass('java.util.stream', 'StreamImpl/5', 1038, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
+defineClass(1039, 341, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$5_2_classLit = createForClass('java.util.stream', 'StreamImpl/5', 1039, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
 jus.$clinit_StreamImpl$5$2methodref$add$Type = function $clinit_StreamImpl$5$2methodref$add$Type(){
   jus.$clinit_StreamImpl$5$2methodref$add$Type = emptyMethod;
 }
 ;
-defineClass(1039, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$5$2methodref$add$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/5/2methodref$add$Type', 1039, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1040, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$5$2methodref$add$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/5/2methodref$add$Type', 1040, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$6 = function $clinit_StreamImpl$6(){
   jus.$clinit_StreamImpl$6 = emptyMethod;
 }
 ;
-defineClass(1040, 341, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$6_2_classLit = createForClass('java.util.stream', 'StreamImpl/6', 1040, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
+defineClass(1041, 341, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$6_2_classLit = createForClass('java.util.stream', 'StreamImpl/6', 1041, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
 jus.$clinit_StreamImpl$6$lambda$0$Type = function $clinit_StreamImpl$6$lambda$0$Type(){
   jus.$clinit_StreamImpl$6$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1041, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$6$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/6/lambda$0$Type', 1041, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1042, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$6$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/6/lambda$0$Type', 1042, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$Empty = function $clinit_StreamImpl$Empty(){
   jus.$clinit_StreamImpl$Empty = emptyMethod;
 }
 ;
-defineClass(1017, 201, {1:1});
-cggl.Ljava_util_stream_StreamImpl$Empty_2_classLit = createForClass('java.util.stream', 'StreamImpl/Empty', 1017, cggl.Ljava_util_stream_TerminatableStream_2_classLit);
+defineClass(1018, 201, {1:1});
+cggl.Ljava_util_stream_StreamImpl$Empty_2_classLit = createForClass('java.util.stream', 'StreamImpl/Empty', 1018, cggl.Ljava_util_stream_TerminatableStream_2_classLit);
 jus.$clinit_StreamImpl$FilterSpliterator = function $clinit_StreamImpl$FilterSpliterator(){
   jus.$clinit_StreamImpl$FilterSpliterator = emptyMethod;
 }
 ;
-defineClass(1021, 341, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$FilterSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/FilterSpliterator', 1021, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
+defineClass(1022, 341, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$FilterSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/FilterSpliterator', 1022, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
 jus.$clinit_StreamImpl$FilterSpliterator$lambda$0$Type = function $clinit_StreamImpl$FilterSpliterator$lambda$0$Type(){
   jus.$clinit_StreamImpl$FilterSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1027, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$FilterSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/FilterSpliterator/lambda$0$Type', 1027, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1028, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$FilterSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/FilterSpliterator/lambda$0$Type', 1028, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$LimitSpliterator = function $clinit_StreamImpl$LimitSpliterator(){
   jus.$clinit_StreamImpl$LimitSpliterator = emptyMethod;
 }
 ;
-defineClass(1023, 341, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$LimitSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/LimitSpliterator', 1023, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
+defineClass(1024, 341, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$LimitSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/LimitSpliterator', 1024, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
 jus.$clinit_StreamImpl$MapToDoubleSpliterator = function $clinit_StreamImpl$MapToDoubleSpliterator(){
   jus.$clinit_StreamImpl$MapToDoubleSpliterator = emptyMethod;
 }
 ;
-defineClass(1020, 723, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$MapToDoubleSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToDoubleSpliterator', 1020, cggl.Ljava_util_Spliterators$AbstractDoubleSpliterator_2_classLit);
+defineClass(1021, 723, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$MapToDoubleSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToDoubleSpliterator', 1021, cggl.Ljava_util_Spliterators$AbstractDoubleSpliterator_2_classLit);
 jus.$clinit_StreamImpl$MapToDoubleSpliterator$lambda$0$Type = function $clinit_StreamImpl$MapToDoubleSpliterator$lambda$0$Type(){
   jus.$clinit_StreamImpl$MapToDoubleSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1026, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$MapToDoubleSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToDoubleSpliterator/lambda$0$Type', 1026, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1027, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$MapToDoubleSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToDoubleSpliterator/lambda$0$Type', 1027, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$MapToIntSpliterator = function $clinit_StreamImpl$MapToIntSpliterator(){
   jus.$clinit_StreamImpl$MapToIntSpliterator = emptyMethod;
 }
 ;
-defineClass(1018, 253, {1:1, 24:1, 55:1});
-cggl.Ljava_util_stream_StreamImpl$MapToIntSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToIntSpliterator', 1018, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
+defineClass(1019, 253, {1:1, 24:1, 55:1});
+cggl.Ljava_util_stream_StreamImpl$MapToIntSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToIntSpliterator', 1019, cggl.Ljava_util_Spliterators$AbstractIntSpliterator_2_classLit);
 jus.$clinit_StreamImpl$MapToIntSpliterator$lambda$0$Type = function $clinit_StreamImpl$MapToIntSpliterator$lambda$0$Type(){
   jus.$clinit_StreamImpl$MapToIntSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1024, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$MapToIntSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToIntSpliterator/lambda$0$Type', 1024, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1025, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$MapToIntSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToIntSpliterator/lambda$0$Type', 1025, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$MapToLongSpliterator = function $clinit_StreamImpl$MapToLongSpliterator(){
   jus.$clinit_StreamImpl$MapToLongSpliterator = emptyMethod;
 }
 ;
-defineClass(1019, 724, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$MapToLongSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToLongSpliterator', 1019, cggl.Ljava_util_Spliterators$AbstractLongSpliterator_2_classLit);
+defineClass(1020, 724, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$MapToLongSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToLongSpliterator', 1020, cggl.Ljava_util_Spliterators$AbstractLongSpliterator_2_classLit);
 jus.$clinit_StreamImpl$MapToLongSpliterator$lambda$0$Type = function $clinit_StreamImpl$MapToLongSpliterator$lambda$0$Type(){
   jus.$clinit_StreamImpl$MapToLongSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1025, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$MapToLongSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToLongSpliterator/lambda$0$Type', 1025, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1026, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$MapToLongSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/MapToLongSpliterator/lambda$0$Type', 1026, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$MapToObjSpliterator = function $clinit_StreamImpl$MapToObjSpliterator(){
   jus.$clinit_StreamImpl$MapToObjSpliterator = emptyMethod;
   ju.$clinit_Spliterators$AbstractSpliterator();
@@ -67948,14 +67986,14 @@ jus.$clinit_StreamImpl$SkipSpliterator = function $clinit_StreamImpl$SkipSpliter
   jus.$clinit_StreamImpl$SkipSpliterator = emptyMethod;
 }
 ;
-defineClass(1022, 341, {1:1, 24:1});
-cggl.Ljava_util_stream_StreamImpl$SkipSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/SkipSpliterator', 1022, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
+defineClass(1023, 341, {1:1, 24:1});
+cggl.Ljava_util_stream_StreamImpl$SkipSpliterator_2_classLit = createForClass('java.util.stream', 'StreamImpl/SkipSpliterator', 1023, cggl.Ljava_util_Spliterators$AbstractSpliterator_2_classLit);
 jus.$clinit_StreamImpl$SkipSpliterator$lambda$0$Type = function $clinit_StreamImpl$SkipSpliterator$lambda$0$Type(){
   jus.$clinit_StreamImpl$SkipSpliterator$lambda$0$Type = emptyMethod;
 }
 ;
-defineClass(1028, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$SkipSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/SkipSpliterator/lambda$0$Type', 1028, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1029, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$SkipSpliterator$lambda$0$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/SkipSpliterator/lambda$0$Type', 1029, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$ValueConsumer = function $clinit_StreamImpl$ValueConsumer(){
   jus.$clinit_StreamImpl$ValueConsumer = emptyMethod;
   jl.$clinit_Object();
@@ -67995,14 +68033,14 @@ jus.$clinit_StreamImpl$lambda$1$Type = function $clinit_StreamImpl$lambda$1$Type
   jus.$clinit_StreamImpl$lambda$1$Type = emptyMethod;
 }
 ;
-defineClass(1029, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$lambda$1$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/lambda$1$Type', 1029, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1030, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$lambda$1$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/lambda$1$Type', 1030, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$lambda$3$Type = function $clinit_StreamImpl$lambda$3$Type(){
   jus.$clinit_StreamImpl$lambda$3$Type = emptyMethod;
 }
 ;
-defineClass(1030, 1, {1:1});
-cggl.Ljava_util_stream_StreamImpl$lambda$3$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/lambda$3$Type', 1030, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1031, 1, {1:1});
+cggl.Ljava_util_stream_StreamImpl$lambda$3$Type_2_classLit = createForClass('java.util.stream', 'StreamImpl/lambda$3$Type', 1031, cggl.Ljava_lang_Object_2_classLit);
 jus.$clinit_StreamImpl$lambda$4$Type = function $clinit_StreamImpl$lambda$4$Type(){
   jus.$clinit_StreamImpl$lambda$4$Type = emptyMethod;
 }
@@ -68236,8 +68274,8 @@ ji2.stampJavaTypeInfo_1 = function stampJavaTypeInfo_1(array, referenceType){
   return cggl.stampJavaTypeInfo_0(array, referenceType);
 }
 ;
-defineClass(1005, 1, {1:1});
-cggl.Ljavaemul_internal_ArrayStamper_2_classLit = createForClass('javaemul.internal', 'ArrayStamper', 1005, cggl.Ljava_lang_Object_2_classLit);
+defineClass(1006, 1, {1:1});
+cggl.Ljavaemul_internal_ArrayStamper_2_classLit = createForClass('javaemul.internal', 'ArrayStamper', 1006, cggl.Ljava_lang_Object_2_classLit);
 ji2.$clinit_EmulatedCharset = function $clinit_EmulatedCharset(){
   ji2.$clinit_EmulatedCharset = emptyMethod;
   jnc.$clinit_Charset();
@@ -68252,11 +68290,11 @@ ji2.EmulatedCharset = function EmulatedCharset(name_0){
   this.$init_631();
 }
 ;
-defineClass(111, 99, {9:1, 1:1, 99:1, 111:1});
+defineClass(113, 100, {9:1, 1:1, 100:1, 113:1});
 _.$init_631 = function $init_631(){
 }
 ;
-cggl.Ljavaemul_internal_EmulatedCharset_2_classLit = createForClass('javaemul.internal', 'EmulatedCharset', 111, cggl.Ljava_nio_charset_Charset_2_classLit);
+cggl.Ljavaemul_internal_EmulatedCharset_2_classLit = createForClass('javaemul.internal', 'EmulatedCharset', 113, cggl.Ljava_nio_charset_Charset_2_classLit);
 ji2.$clinit_EmulatedCharset$LatinCharset = function $clinit_EmulatedCharset$LatinCharset(){
   ji2.$clinit_EmulatedCharset$LatinCharset = emptyMethod;
   ji2.$clinit_EmulatedCharset();
@@ -68268,7 +68306,7 @@ ji2.EmulatedCharset$LatinCharset = function EmulatedCharset$LatinCharset(name_0)
   this.$init_632();
 }
 ;
-defineClass(268, 111, {9:1, 1:1, 99:1, 111:1}, ji2.EmulatedCharset$LatinCharset);
+defineClass(268, 113, {9:1, 1:1, 100:1, 113:1}, ji2.EmulatedCharset$LatinCharset);
 _.$init_632 = function $init_632(){
 }
 ;
@@ -68303,7 +68341,7 @@ ji2.EmulatedCharset$UtfCharset = function EmulatedCharset$UtfCharset(name_0){
   this.$init_633();
 }
 ;
-defineClass(423, 111, {9:1, 1:1, 99:1, 111:1}, ji2.EmulatedCharset$UtfCharset);
+defineClass(423, 113, {9:1, 1:1, 100:1, 113:1}, ji2.EmulatedCharset$UtfCharset);
 _.$init_633 = function $init_633(){
 }
 ;

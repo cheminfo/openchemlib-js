@@ -2,6 +2,7 @@ package com.actelion.research.gwt.gui.editor.actions;
 
 import com.actelion.research.gwt.gui.editor.ImageHolder;
 import com.actelion.research.gwt.gui.editor.ToolBar;
+import com.actelion.research.gwt.gui.editor.Util;
 import com.actelion.research.gwt.gui.viewer.GraphicsContext;
 import com.actelion.research.share.gui.editor.Model;
 import com.google.gwt.canvas.client.Canvas;
@@ -23,11 +24,7 @@ public abstract class AbstractESRPane extends PopupPanel {
     super(true);
     this.model = m;
 
-    canvas = Canvas.createIfSupported();
-    canvas.setCoordinateSpaceWidth(width);
-    canvas.setCoordinateSpaceHeight(height);
-    canvas.setWidth(width + "px");
-    canvas.setHeight(height + "px");
+    canvas = Util.createScaledCanvas(width, height);
     setWidget(canvas);
 
     canvas.addMouseDownHandler(new MouseDownHandler() {

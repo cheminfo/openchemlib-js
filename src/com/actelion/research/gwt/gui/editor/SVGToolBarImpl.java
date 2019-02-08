@@ -103,11 +103,7 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
     toolbarHolder.setAttribute("style",
         "position:absolute;width:" + width * scale + "px;height:" + height * scale + "px;");
     parent.appendChild(toolbarHolder);
-    canvas = Canvas.createIfSupported();
-    canvas.setCoordinateSpaceWidth(width * scale);
-    canvas.setCoordinateSpaceHeight(height * scale);
-    canvas.setWidth(width * scale + "px");
-    canvas.setHeight(height * scale + "px");
+    canvas = Util.createScaledCanvas(width * scale, height * scale);
     canvas.addFocusHandler(new FocusHandler() {
       @Override
       public void onFocus(FocusEvent event) {

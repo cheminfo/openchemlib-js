@@ -118,11 +118,7 @@ class ToolBarImpl implements ToolBar<Element>, IChangeListener {
     toolbarHolder.setId(toolBarId);
     toolbarHolder.setAttribute("style", "position:absolute;width:" + width + "px;height:" + height + "px;");
     parent.appendChild(toolbarHolder);
-    canvas = Canvas.createIfSupported();
-    canvas.setCoordinateSpaceWidth(width);
-    canvas.setCoordinateSpaceHeight(height);
-    canvas.setWidth(width + "px");
-    canvas.setHeight(height + "px");
+    canvas = Util.createScaledCanvas(width, height);
     canvas.getElement().setAttribute("style", "outline: none");
 
     canvas.addFocusHandler(new FocusHandler() {
