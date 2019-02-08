@@ -67,7 +67,6 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
   private Action currentAction = null;
   private Action lastAction = null;
   private Action hoverAction;
-  private boolean loaded = false;
 
   private int scale = 1;
   private boolean focus;
@@ -88,15 +87,6 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
    */
   public Element createElement(Element parent, int width, int height) {
     String toolBarId = "toolbar" + instanceCount;
-
-    BUTTON_SVG_IMAGE.addLoadHandler(new LoadHandler() {
-      @Override
-      public void onLoad(LoadEvent event) {
-        if (loaded)
-          requestLayout();
-        loaded = true;
-      }
-    });
 
     DivElement toolbarHolder = Document.get().createDivElement();
     toolbarHolder.setId(toolBarId);
@@ -119,9 +109,6 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
     });
     // Add the canvas to the toolbar container
     RootPanel.get(toolBarId).add(canvas);
-
-    // This is to force addLoadHandler
-    BUTTON_SVG_IMAGE.setVisible(false);
 
     setupActions();
     setupMouseHandlers();
@@ -151,13 +138,6 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
         { new ChangeAtomAction(model, 35), new ChangeAtomAction(model, 53), },
         { new ChangeAtomAction(model, 1), new ChangeAtomPropertiesAction(model) }, };
     lastAction = setAction(2, 0);// currentAction = ACTIONS[selectedRow][selectetCol];
-  }
-
-  /**
-   * Force redraw of the toolbar
-   */
-  private void requestLayout() {
-    draw(canvas);
   }
 
   /**
