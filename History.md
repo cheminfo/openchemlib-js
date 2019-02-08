@@ -1,3 +1,9 @@
+# 6.0.1 / 2019-02-08
+
+- Update OCL to 2019_02_08-04_00_25
+- Add missing return types in TypeScript declarations
+- Support retina displays in StructureEditor
+
 # 6.0.0 / 2019-01-27
 
 - Update OCL to 2019_01_26-04_00_26
