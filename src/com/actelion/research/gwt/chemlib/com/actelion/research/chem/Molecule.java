@@ -435,6 +435,7 @@ public class Molecule implements Serializable {
 	transient private double mOriginalAngle[];
 	transient private double mOriginalDistance[];
 	transient private String mName;
+	transient private Object mUserData;
 
     public static int getAtomicNoFromLabel(String atomLabel) {
 		for (int i=1; i<cAtomLabel.length; i++)
@@ -1533,6 +1534,40 @@ public class Molecule implements Serializable {
 
 
 	/**
+	 * @param deleteAtom
+	 * @return mapping array from old to new bond indexes resulting from a deletion of flagged atoms
+	 */
+	public int[] getDeleteAtomsBondMap(boolean[] deleteAtom) {
+		boolean[] deleteBond = new boolean[mAllBonds];
+
+		for (int bond=0; bond<mAllBonds; bond++)
+			if (deleteAtom[mBondAtom[0][bond]]
+			 || deleteAtom[mBondAtom[1][bond]])
+				deleteBond[bond] = true;
+
+		int bondDest = 0;
+		int[] bondMap = new int[mAllBonds];
+		for (int bnd=0; bnd<mAllBonds; bnd++)
+			bondMap[bnd] = deleteBond[bnd] ? -1 : bondDest++;
+
+		return bondMap;
+		}
+
+
+	/**
+	 * @param atomList
+	 * @return mapping array from old to new bond indexes resulting from a deletion of flagged atoms
+	 */
+	public int[] getDeleteAtomsBondMap(int[] atomList) {
+		boolean[] deleteAtom = new boolean[mAllAtoms];
+		for (int atom:atomList)
+			deleteAtom[atom] = true;
+
+		return getDeleteAtomsBondMap(deleteAtom);
+		}
+
+
+	/**
 	 * High level function for constructing a molecule.
 	 * Delete all selected atoms and all bonds attached to them.
 	 * After the deletion the original order of atom and bond indexes is retained.
@@ -2143,6 +2178,31 @@ public class Molecule implements Serializable {
 		Coordinates n2 = v2.cross(v3);
 
 		return -Math.atan2(v2.getLength() * v1.dot(n2), n1.dot(n2));
+		}
+
+	/**
+	 * Translate this molecule's 3D-coordinates such that its center of gravity
+	 * is moved to P(0,0,0) assuming all atoms have the same mass.
+	 * @return this conformer with centered coordinates
+	 */
+	public void center() {
+		Coordinates cog = new Coordinates();
+		for (int atom=0; atom<mAllAtoms; atom++)
+			cog.add(mCoordinates[atom]);
+		cog.scale(1.0 / mAllAtoms);
+
+		for (int atom=0; atom<mAllAtoms; atom++)
+			mCoordinates[atom].sub(cog);
+		}
+
+	/**
+	 * Translate this molecule's 3D-coordinates by adding the dx,dy,dz shifts
+	 * to all atom coordinates.
+	 * @return this conformer with translated coordinates
+	 */
+	public void translate(double dx, double dy, double dz) {
+		for (int atom=0; atom<mAllAtoms; atom++)
+			mCoordinates[atom].add(dx, dy, dz);
 		}
 
 
@@ -3247,6 +3307,16 @@ public class Molecule implements Serializable {
 
 	public void setName(String name) {
 		mName = name;
+		}
+
+
+	public Object getUserData() {
+		return mUserData;
+		}
+
+
+	public void setUserData(Object userData) {
+		mUserData = userData;
 		}
 
 
