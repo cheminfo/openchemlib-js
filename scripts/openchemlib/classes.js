@@ -10,6 +10,8 @@ const modified = [
   'chem/AbstractDrawingObject',
   'chem/DepictorTransformation',
 
+  'chem/io/DWARFileParser',
+
   'chem/prediction/DruglikenessPredictor',
   'chem/prediction/IncrementTable',
   'chem/prediction/ToxicityPredictor',
@@ -35,7 +37,6 @@ const removed = [
   'calc/statistics/median/ModelMedianDouble.java', // uses StringFunctions
   'chem/dnd', // ui
   'chem/FingerPrintGenerator.java',
-  'chem/io/DWARFileParser.java',
   'chem/reaction/ClassificationData.java',
   'gui/dnd', // ui
   'gui/hidpi', // ui

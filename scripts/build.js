@@ -141,7 +141,7 @@ function compile(mode) {
   for (var i = 0; i < modules.length; i++) {
     log(`Compiling module ${modules[i].name}`);
     var args = [
-      '-Xmx512m',
+      '-Xmx2G',
       '-cp',
       classpath,
       'com.google.gwt.dev.Compiler',
@@ -161,7 +161,7 @@ function compile(mode) {
     ];
     var result;
     try {
-      result = childProcess.execFileSync('java', args);
+      result = childProcess.execFileSync('java', args, { maxBuffer: Infinity });
     } catch (e) {
       result = e.stdout;
       throw e;
