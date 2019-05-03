@@ -56,8 +56,8 @@ describe('Molecule', function () {
     const mol = Molecule.fromSmiles('CCOCCO');
     let svg = mol.toSVG(300, 150, 'myId');
     expect(svg).toContain('width="300px" height="150px"');
-    expect(svg).toContain('myId:Bond:0-1');
-    expect(svg).toContain('myId:Atom:0');
+    expect(svg).toContain('"myId:Bond:0"');
+    expect(svg).toContain('"myId:Atom:0"');
 
     svg = mol.toSVG(300, 300, 'myId', {
       strokeWidth: 2,
