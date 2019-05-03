@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v6.0.1
- * @date 2019-02-08T16:42:05.959Z
+ * @version v7.0.0
+ * @date 2019-05-03T18:13:35.456Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -5960,7 +5960,7 @@ _.mpDrawBond = function mpDrawBond(bnd){
   atom1 = this.mMol.getBondAtom_0(0, bnd);
   atom2 = this.mMol.getBondAtom_0(1, bnd);
   isExcludeGroup = ((this.mMol.getAtomQueryFeatures_0(atom1) | this.mMol.getAtomQueryFeatures_0(atom2)) & 536870912) != 0;
-  this.onDrawBond(atom1, atom2, this.getAtomX_0(atom1), this.getAtomY_0(atom1), this.getAtomX_0(atom2), this.getAtomY_0(atom2));
+  this.onDrawBond(bnd, this.getAtomX_0(atom1), this.getAtomY_0(atom1), this.getAtomX_0(atom2), this.getAtomY_0(atom2));
   if (!this.mMol.isSelectedAtom_0(atom1) && !this.mMol.isSelectedAtom_0(atom2) && ((this.mMol.getAtomQueryFeatures_0(atom1) | this.mMol.getAtomQueryFeatures_0(atom2)) & 536870912) != 0)
     this.setColor(-8);
   if (isNull(this.mAlternativeCoords[atom1])) {
@@ -6496,7 +6496,7 @@ _.mpShortenLine = function mpShortenLine(theLine, pointNo, tabuZoneNo){
 _.onDrawAtom = function onDrawAtom(atom, symbol, x_0, y_0){
 }
 ;
-_.onDrawBond = function onDrawBond(atom1, atom2, x1, y1, x2, y2){
+_.onDrawBond = function onDrawBond(bond, x1, y1, x2, y2){
 }
 ;
 _.paint = function paint(g){
@@ -6554,7 +6554,7 @@ _.paint = function paint(g){
 }
 ;
 _.requiredHelperArrays = function requiredHelperArrays(){
-  return (this.mDisplayMode & 256) != 0?31:(this.mDisplayMode & 512) != 0?47:(this.mDisplayMode & 1024) != 0?79:15;
+  return (this.mDisplayMode & 256) != 0?63:(this.mDisplayMode & 512) != 0?95:(this.mDisplayMode & 1024) != 0?159:31;
 }
 ;
 _.setAtomText = function setAtomText(atomText){
@@ -6597,12 +6597,12 @@ _.setChiralTextLocation = function setChiralTextLocation(viewRect, avbl, mode){
 _.setColor = function setColor(theColor){
   if (this.mIsValidatingView)
     return;
-  if (theColor != -2 && theColor != -7 && isNotNull(this.mOverruleForeground))
-    theColor = -4;
   if (theColor == -10) {
     this.mCurrentColor = -999;
     theColor = this.mStandardForegroundColor;
   }
+  if (theColor != -2 && theColor != -7 && isNotNull(this.mOverruleForeground))
+    theColor = -4;
   if (theColor == this.mCurrentColor)
     return;
   if (this.mCurrentColor == -8 && theColor != -9)
@@ -7902,34 +7902,40 @@ carc2.$clinit_AtomTypeCalculator = function $clinit_AtomTypeCalculator(){
   carc2.$clinit_AtomTypeCalculator = emptyMethod;
   jl.$clinit_Object();
   carc2.cAtomicNoCode = stampJavaTypeInfo(getClassLiteralForArray(cggl.S_classLit, 1), {4:1, 1:1}, 5, 15, [-1, -1, -1, 0, 0, 1, 2, 3, 4, 5, -1, 0, 0, 0, 6, 7, 8, 9, -1, 0, 0, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 1, 11, 11, 12, 13, -1, 0, 0, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0, 0, 11, 14, -1, 0, 0, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 10, 10, 10, 10, 10, 10, 10, 10, 1, 1, 1, 1, -1, -1, -1, -1, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
-  carc2.cSimpleAtomicNoCode = stampJavaTypeInfo(getClassLiteralForArray(cggl.S_classLit, 1), {4:1, 1:1}, 5, 15, [-1, -1, -1, 0, 0, 0, 2, 5, 5, 5, -1, 0, 0, 0, 0, 9, 9, 9, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 9, -1, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+  carc2.cSimpleAtomicNoCode = stampJavaTypeInfo(getClassLiteralForArray(cggl.S_classLit, 1), {4:1, 1:1}, 5, 15, [-1, -1, -1, 0, 0, 0, 2, 5, 5, 5, -1, 0, 0, 0, 0, 9, 9, 9, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 9, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
   carc2.cAtomicNoCodeString = stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_lang_String_2_classLit, 1), {4:1, 1:1, 6:1, 12:1}, 2, 6, ['MainGroupMetal', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluor', 'Silicon', 'Phosphorous', 'Sulfur', 'Chlorine', 'Transition Metal', 'MainGroupNonMetal', 'Selene', 'Bromine', 'Iodine', 'LanthanideOrActinide']);
+  carc2.cSimpleAtomicNoCodeString = stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_lang_String_2_classLit, 1), {4:1, 1:1, 6:1, 12:1}, 2, 6, ['Metal', '-', 'Carbon', '-', '-', 'Small Hetero', '-', '-', '-', 'Large Hetero', '-', '-', '-', '-', '-', '-']);
 }
 ;
 carc2.getAtomType = function getAtomType(mol, atom, mode){
   carc2.$clinit_AtomTypeCalculator();
-  var ampholytic, atomType, connAtom, connAtomType, connBondOrder, connBondType, ex, i, i0, i1, index_0, j, neighbourType, neighbours, otherNeighbours, ringSize, theType;
-  mol.ensureHelperArrays_0(3);
+  var atomType, connAtom, connBondOrder, connType, i, i0, i1, index_0, j, neighbourType, neighbours, otherNeighbours, ringCount, ringSize;
+  mol.ensureHelperArrays_0(7);
   neighbourType = initUnidimensionalArray(cggl.J_classLit, {4:1, 1:1}, 5, mol.getConnAtoms_0(atom), 14, 1);
   for (i0 = 0; i0 < mol.getConnAtoms_0(atom); i0++) {
-    connAtomType = 0;
-    connBondType = 0;
+    connType = 0;
     if ((mode & 32) != 0) {
       connBondOrder = fromInt_0(mol.getConnBondOrder_0(atom, i0));
-      if (lt(connBondOrder, 3) && mol.isAromaticBond_0(mol.getConnBond_0(atom, i0)))
-        connBondOrder = 0;
-      connBondType = add_16(connBondType, connBondOrder);
+      if (mode == 32190) {
+        if (lt(connBondOrder, 3) && mol.isDelocalizedBond_0(mol.getConnBond_0(atom, i0)) && mol.getAtomPi_0(atom) == 1)
+          connBondOrder = 0;
+      }
+       else {
+        if (lt(connBondOrder, 3) && mol.isAromaticBond_0(mol.getConnBond_0(atom, i0)))
+          connBondOrder = 0;
+      }
+      connType = or_0(connType, shl_0(connBondOrder, 4));
     }
     connAtom = mol.getConnAtom_0(atom, i0);
     if ((mode & 128) != 0) {
       if (carc2.cAtomicNoCode[mol.getAtomicNo_0(connAtom)] == -1)
         throw toJs(new jl.Exception_1('unsupported atomicNo:' + mol.getAtomicNo_0(connAtom)));
-      connAtomType = add_16(connAtomType, fromInt_0(carc2.cAtomicNoCode[mol.getAtomicNo_0(connAtom)]));
+      connType = add_16(connType, fromInt_0(carc2.cAtomicNoCode[mol.getAtomicNo_0(connAtom)]));
     }
      else if ((mode & 64) != 0) {
       if (carc2.cSimpleAtomicNoCode[mol.getAtomicNo_0(connAtom)] == -1)
         throw toJs(new jl.Exception_1('unsupported atomicNo:' + mol.getAtomicNo_0(connAtom)));
-      connAtomType = add_16(connAtomType, fromInt_0(carc2.cSimpleAtomicNoCode[mol.getAtomicNo_0(connAtom)]));
+      connType = add_16(connType, fromInt_0(carc2.cSimpleAtomicNoCode[mol.getAtomicNo_0(connAtom)]));
     }
     if ((mode & 256) != 0) {
       otherNeighbours = mol.getConnAtoms_0(connAtom) - 1;
@@ -7938,29 +7944,31 @@ carc2.getAtomType = function getAtomType(mol, atom, mode){
       if ((mode & 512) == 0)
         if (otherNeighbours > 1)
           otherNeighbours = 1;
-      connAtomType = add_16(connAtomType, fromInt_0(otherNeighbours << 4));
+      connType = or_0(connType, fromInt_0(otherNeighbours << 6));
     }
     if ((mode & 1024) != 0)
       if (mol.isSmallRingAtom_0(connAtom))
-        connAtomType = add_16(connAtomType, 64);
+        connType = or_0(connType, 256);
     if ((mode & 2048) != 0)
       if (mol.isAromaticAtom_1(connAtom))
-        connAtomType = add_16(connAtomType, 128);
-    theType = add_16(connAtomType, shl_0(connBondType, 8));
+        connType = or_0(connType, 512);
+    if ((mode & 16384) != 0)
+      if (mol.isStabilizedAtom_0(connAtom))
+        connType = or_0(connType, 1024);
     index_0 = 0;
-    while (lt(theType, neighbourType[index_0]))
+    while (lt(connType, neighbourType[index_0]))
       index_0++;
     for (j = i0; j > index_0; j--)
       neighbourType[j] = neighbourType[j - 1];
-    neighbourType[index_0] = theType;
+    neighbourType[index_0] = connType;
   }
   neighbours = mol.getConnAtoms_0(atom) < 4?mol.getConnAtoms_0(atom):4;
   atomType = 0;
   for (i1 = 0; i1 < neighbours; i1++) {
-    atomType = shl_0(atomType, 10);
-    atomType = add_16(atomType, neighbourType[i1]);
+    atomType = shl_0(atomType, 11);
+    atomType = or_0(atomType, neighbourType[i1]);
   }
-  atomType = shl_0(atomType, 10);
+  atomType = shl_0(atomType, 15);
   if (carc2.cAtomicNoCode[mol.getAtomicNo_0(atom)] == -1)
     throw toJs(new jl.Exception_1('unsupported atomicNo:' + mol.getAtomicNo_0(atom)));
   atomType = or_0(atomType, fromInt_0(carc2.cAtomicNoCode[mol.getAtomicNo_0(atom)]));
@@ -7977,44 +7985,60 @@ carc2.getAtomType = function getAtomType(mol, atom, mode){
       atomType = or_0(atomType, 64);
   if ((mode & 4) != 0)
     if (mol.isAromaticAtom_1(atom))
-      atomType = add_16(atomType, 128);
+      atomType = or_0(atomType, 1024);
   if ((mode & 8) != 0)
     if (mol.isAllylicAtom_0(atom))
-      atomType = add_16(atomType, 256);
+      atomType = or_0(atomType, 2048);
   if ((mode & 16) != 0)
     if (mol.isStabilizedAtom_0(atom))
-      atomType = add_16(atomType, 512);
-  if (neq(and_0(atomType, {l:0, m:0, h:64}), 0)) {
-    ex = new jl.RuntimeException_1('Bit already set!');
-    ex.printStackTrace();
-  }
-  if (neq(and_0(atomType, {l:0, m:0, h:128}), 0)) {
-    ex = new jl.RuntimeException_1('Bit already set!');
-    ex.printStackTrace();
-  }
+      atomType = or_0(atomType, 4096);
   if ((mode & 4096) != 0) {
     if (carc2.hasUnbalancedAtomCharge(mol, atom))
-      atomType = add_16(atomType, {l:0, m:0, h:64});
-    ampholytic = false;
+      atomType = or_0(atomType, 8192);
     if (carc2.isBasicNitrogen(mol, atom)) {
       for (i = 0; i < mol.getAtoms_0(); i++) {
         if (carc2.isAcidicOxygen(mol, i)) {
-          ampholytic = true;
+          atomType = or_0(atomType, 16384);
           break;
         }
       }
     }
-    if (ampholytic)
-      atomType = add_16(atomType, {l:0, m:0, h:128});
+  }
+  if ((mode & 8192) != 0) {
+    ringCount = fromInt_0(mol.getAtomRingCount_0(atom, 10));
+    atomType = or_0(atomType, shl_0(ringCount, 7));
   }
   return atomType;
 }
 ;
 defineClass(967, 1, {1:1});
-carc2.cPropertiesAll = 8126;
+carc2.ATOM_FLAGS_ATOMICNO = 15;
+carc2.ATOM_FLAGS_RINGCOUNT = 896;
+carc2.ATOM_FLAGS_RINGSIZE = 112;
+carc2.ATOM_FLAG_ALLYLIC = 2048;
+carc2.ATOM_FLAG_AMPHOLYTIC = 16384;
+carc2.ATOM_FLAG_AROMATIC = 1024;
+carc2.ATOM_FLAG_CHARGED = 8192;
+carc2.ATOM_FLAG_COUNT = 15;
+carc2.ATOM_FLAG_SMALLRING = 64;
+carc2.ATOM_FLAG_STABILIZED = 4096;
+carc2.ATOM_SHIFT_RINGCOUNT = 7;
+carc2.ATOM_SHIFT_RINGSIZE = 4;
+carc2.CONN_FLAGS_ALL = 2047;
+carc2.CONN_FLAGS_ATOMICNO = 15;
+carc2.CONN_FLAGS_BONDORDER = 48;
+carc2.CONN_FLAGS_NEIGHBOURS = 192;
+carc2.CONN_FLAG_AROMATIC = 512;
+carc2.CONN_FLAG_COUNT = 11;
+carc2.CONN_FLAG_SMALLRING = 256;
+carc2.CONN_FLAG_STABILIZED = 1024;
+carc2.CONN_SHIFT_BONDORDER = 4;
+carc2.CONN_SHIFT_NEIGHBOURS = 6;
+carc2.cPropertiesAll = 32702;
 carc2.cPropertiesAtomAllylic = 8;
 carc2.cPropertiesAtomAromatic = 4;
 carc2.cPropertiesAtomCharged = 4096;
+carc2.cPropertiesAtomRingCount = 8192;
 carc2.cPropertiesAtomRingSize = 2;
 carc2.cPropertiesAtomSmallRing = 1;
 carc2.cPropertiesAtomStabilized = 16;
@@ -8023,12 +8047,13 @@ carc2.cPropertiesConnAtomAromatic = 2048;
 carc2.cPropertiesConnAtomNeighbours = 256;
 carc2.cPropertiesConnAtomNeighboursExact = 512;
 carc2.cPropertiesConnAtomSmallRing = 1024;
+carc2.cPropertiesConnAtomStabilized = 16384;
 carc2.cPropertiesConnAtomType = 128;
 carc2.cPropertiesConnAtomTypeSimple = 64;
 carc2.cPropertiesConnBondOrder = 32;
 carc2.cPropertiesForCLogP = 2145;
 carc2.cPropertiesForCLogPCharges = 6241;
-carc2.cPropertiesForMutator = 2174;
+carc2.cPropertiesForMutator = 32190;
 carc2.cPropertiesForSolubility = 2144;
 cggl.Lcom_actelion_research_chem_AtomTypeCalculator_2_classLit = createForClass('com.actelion.research.chem', 'AtomTypeCalculator', 967, cggl.Ljava_lang_Object_2_classLit);
 carc2.$clinit_Canonizer = function $clinit_Canonizer(){
@@ -8053,7 +8078,7 @@ carc2.Canonizer_0 = function Canonizer_0(mol, mode){
     throw toJs(new jl.IllegalArgumentException_0('Cannot canonize a molecule having more than ' + 65535 + ' bonds'));
   this.mMol = mol;
   this.mMode = mode;
-  this.mMol.ensureHelperArrays_0(3);
+  this.mMol.ensureHelperArrays_0(7);
   this.canFindNitrogenQualifyingForParity();
   this.mZCoordinatesAvailable = (mode & 64) != 0;
   if (!this.mZCoordinatesAvailable) {
@@ -8518,7 +8543,7 @@ _.canCalcTHParity = function canCalcTHParity(atom, calcProParity){
 ;
 _.canCalcTHParity2D = function canCalcTHParity2D(atom, remappedConn){
   var angle, bnd, i, i0, i1, order, parity, stereoBond, stereoType, up_down;
-  up_down = stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 2), {46:1, 4:1, 1:1, 6:1}, 7, 0, [stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 1, 2, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 2, 2, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 1, 2, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 1, 1, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 2, 1, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 2, 1, 2])]);
+  up_down = stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 2), {45:1, 4:1, 1:1, 6:1}, 7, 0, [stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 1, 2, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 2, 2, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 1, 2, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 1, 1, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 2, 1, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 2, 1, 2])]);
   angle = initUnidimensionalArray(cggl.D_classLit, {22:1, 4:1, 1:1}, 5, this.mMol.getAllConnAtoms_0(atom), 15, 1);
   for (i0 = 0; i0 < this.mMol.getAllConnAtoms_0(atom); i0++)
     angle[i0] = this.mMol.getBondAngle_0(this.mMol.getConnAtom_0(atom, remappedConn[i0]), atom);
@@ -8968,9 +8993,9 @@ _.canFindPseudoParities = function canFindPseudoParities(){
 ;
 _.canGetESRGroupRank = function canGetESRGroupRank(groupMember){
   var atomRank, group, group0, groupRank, groupTypeIndex, i, maxAtomRank, maxGroup, memberCount, rank, rankCount;
-  groupRank = initMultidimensionalArray(cggl.I_classLit, [{46:1, 4:1, 1:1, 6:1}, {7:1, 4:1, 1:1}], [7, 5], 15, [2, 32], 2);
+  groupRank = initMultidimensionalArray(cggl.I_classLit, [{45:1, 4:1, 1:1, 6:1}, {7:1, 4:1, 1:1}], [7, 5], 15, [2, 32], 2);
   for (groupTypeIndex = 0; groupTypeIndex < 2; groupTypeIndex++) {
-    atomRank = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, 32, 0, 2);
+    atomRank = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, 32, 0, 2);
     rankCount = 0;
     for (group0 = 0; group0 < 32; group0++) {
       if (jsNotEquals(groupMember[groupTypeIndex][group0], null)) {
@@ -9790,7 +9815,7 @@ _.cipUpdateParentRanking = function cipUpdateParentRanking(graphIsPseudo, graphR
 ;
 _.compileESRGroupMembers = function compileESRGroupMembers(){
   var atom, esrGroupMember;
-  esrGroupMember = initMultidimensionalArray(cggl.I_classLit, [{4:1, 1:1, 6:1}, {46:1, 4:1, 1:1, 6:1}], [46, 7], 0, [2, 32], 2);
+  esrGroupMember = initMultidimensionalArray(cggl.I_classLit, [{4:1, 1:1, 6:1}, {45:1, 4:1, 1:1, 6:1}], [45, 7], 0, [2, 32], 2);
   for (atom = 0; atom < this.mMol.getAtoms_0(); atom++) {
     if (this.mIsStereoCenter[atom]) {
       if (this.mTHESRType[atom] == 1)
@@ -11315,7 +11340,7 @@ _.findMesoFragments = function findMesoFragments(){
     if (!found)
       mesoFragmentList.remove(atomList);
   }
-  this.mMesoFragmentAtom = castTo(mesoFragmentList.toArray_0(initMultidimensionalArray(cggl.I_classLit, [{46:1, 4:1, 1:1, 6:1}, {7:1, 4:1, 1:1}], [7, 5], 15, [0, 0], 2)), 46);
+  this.mMesoFragmentAtom = castTo(mesoFragmentList.toArray_0(initMultidimensionalArray(cggl.I_classLit, [{45:1, 4:1, 1:1, 6:1}, {7:1, 4:1, 1:1}], [7, 5], 15, [0, 0], 2)), 45);
   ju.sort_8(this.mMesoFragmentAtom, new carc2.CanonizerMesoHelper$1(this));
   this.mIsMesoFragmentMember = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, this.mMol.getAtoms_0(), 16, 1);
   for (i = 0; i < this.mMesoFragmentAtom.length; i++)
@@ -11541,7 +11566,7 @@ _.removeESRGroupFromFragment = function removeESRGroupFromFragment(fragment, can
       break;
     }
   }
-  groupMember = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, 32, 0, 2);
+  groupMember = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, 32, 0, 2);
   for (i1 = 0; i1 < fragmentAtom.length; i1++) {
     atom = fragmentAtom[i1];
     if (this.mIsStereoCenter[atom] && this.mTHESRType[atom] == esrType)
@@ -11762,7 +11787,7 @@ carc2.CanonizerMesoHelper$ESRGroupFragmentMatrix = function CanonizerMesoHelper$
         this.mMatrix[this.groupIndex(atom)][fragment0] = true;
     }
   }
-  this.mGroupNeighbour = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, this.mGroupCount, 0, 2);
+  this.mGroupNeighbour = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, this.mGroupCount, 0, 2);
   for (fragment1 = 0; fragment1 < this$0.mMesoFragmentAtom.length; fragment1++) {
     for (group1 = 1; group1 < this.mGroupCount; group1++) {
       if (this.mMatrix[group1][fragment1]) {
@@ -13144,12 +13169,13 @@ cggl.Lcom_actelion_research_chem_EZHalfParity_2_classLit = createForClass('com.a
 carc2.$clinit_Molecule = function $clinit_Molecule(){
   carc2.$clinit_Molecule = emptyMethod;
   jl.$clinit_Object();
-  carc2.cHelperRings = 1 | 2;
-  carc2.cHelperParities = 3 | 4;
-  carc2.cHelperCIP = 7 | 8;
-  carc2.cHelperSymmetrySimple = 15 | 16;
-  carc2.cHelperSymmetryDiastereotopic = 15 | 32;
-  carc2.cHelperSymmetryEnantiotopic = 15 | 64;
+  carc2.cHelperRingsSimple = 1 | 2;
+  carc2.cHelperRings = 3 | 4;
+  carc2.cHelperParities = 7 | 8;
+  carc2.cHelperCIP = 15 | 16;
+  carc2.cHelperSymmetrySimple = 31 | 32;
+  carc2.cHelperSymmetryDiastereotopic = 31 | 64;
+  carc2.cHelperSymmetryEnantiotopic = 31 | 128;
   carc2.cAtomLabel = stampJavaTypeInfo(getClassLiteralForArray(cggl.Ljava_lang_String_2_classLit, 1), {4:1, 1:1, 6:1, 12:1}, 2, 6, ['?', 'H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og', '??', '??', '??', '??', '??', '??', '??', '??', '??', '??', 'R4', 'R5', 'R6', 'R7', 'R8', 'R9', 'R10', 'R11', 'R12', 'R13', 'R14', 'R15', 'R16', 'R1', 'R2', 'R3', 'A', 'A1', 'A2', 'A3', '??', '??', 'D', 'T', 'X', 'R', 'H2', 'H+', 'Nnn', 'HYD', 'Pol', '??', '??', '??', '??', '??', '??', '??', '??', '??', '??', '??', 'Ala', 'Arg', 'Asn', 'Asp', 'Cys', 'Gln', 'Glu', 'Gly', 'His', 'Ile', 'Leu', 'Lys', 'Met', 'Phe', 'Pro', 'Ser', 'Thr', 'Trp', 'Tyr', 'Val']);
   carc2.cRoundedMass = stampJavaTypeInfo(getClassLiteralForArray(cggl.S_classLit, 1), {4:1, 1:1}, 5, 15, [0, 1, 4, 7, 9, 11, 12, 14, 16, 19, 20, 23, 24, 27, 28, 31, 32, 35, 40, 39, 40, 45, 48, 51, 52, 55, 56, 59, 58, 63, 64, 69, 74, 75, 80, 79, 84, 85, 88, 89, 90, 93, 98, 0, 102, 103, 106, 107, 114, 115, 120, 121, 130, 127, 132, 133, 138, 139, 140, 141, 142, 0, 152, 153, 158, 159, 164, 165, 166, 169, 174, 175, 180, 181, 184, 187, 192, 193, 195, 197, 202, 205, 208, 209, 209, 210, 222, 223, 226, 227, 232, 231, 238, 237, 244, 243, 247, 247, 251, 252, 257, 258, 259, 262, 267, 268, 271, 270, 277, 276, 281, 281, 283, 285, 289, 289, 293, 294, 294, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 156, 114, 115, 103, 128, 129, 57, 137, 113, 113, 128, 131, 147, 97, 87, 101, 186, 163, 99]);
   carc2.cAtomValence = stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 2), {177:1, 4:1, 1:1, 6:1}, 11, 0, [null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3, 5, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, null, null, null, null, null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3, 5, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2, 3, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, null, null, null, null, null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 2, 3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3, 5]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1, 3, 5, 7]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [0, 2, 4, 6]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [3]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.B_classLit, 1), {11:1, 4:1, 1:1}, 5, 15, [2])]);
@@ -13583,7 +13609,7 @@ _.changeBond_0 = function changeBond(bnd, type_0){
     }
   }
   if (bondWasChanged) {
-    this.mValidHelperArrays = (oldType & 103) == (type_0 & 103)?this.mValidHelperArrays & 3:0;
+    this.mValidHelperArrays = (oldType & 103) == (type_0 & 103)?this.mValidHelperArrays & 7:0;
     this.mBondQueryFeatures[bnd] = 0;
   }
   return bondWasChanged;
@@ -13680,7 +13706,7 @@ _.copyAtom_0 = function copyAtom(destMol, sourceAtom, esrGroupOffsetAND, esrGrou
     destMol.mAtomList[destAtom] = null;
   if (jsNotEquals(this.mAtomList, null) && jsNotEquals(this.mAtomList[sourceAtom], null) && destMol.mIsFragment) {
     if (jsEquals(destMol.mAtomList, null))
-      destMol.mAtomList = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, destMol.mAtomicNo.length, 0, 2);
+      destMol.mAtomList = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, destMol.mAtomicNo.length, 0, 2);
     destMol.mAtomList[destAtom] = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAtomList[sourceAtom].length, 15, 1);
     for (i = 0; i < this.mAtomList[sourceAtom].length; i++)
       destMol.mAtomList[destAtom][i] = this.mAtomList[sourceAtom][i];
@@ -13761,7 +13787,7 @@ _.copyMoleculeProperties_0 = function copyMoleculeProperties(destMol){
   destMol.mProtectHydrogen = this.mProtectHydrogen;
   destMol.mChirality = this.mChirality;
   destMol.mName = jsEquals(this.mName, null)?null:jl.$create_4(this.mName);
-  destMol.mValidHelperArrays = this.mValidHelperArrays & (4 | 8);
+  destMol.mValidHelperArrays = this.mValidHelperArrays & (8 | 16);
 }
 ;
 _.deleteAtom_0 = function deleteAtom(atom){
@@ -14320,7 +14346,7 @@ _.incrementBondOrder = function incrementBondOrder(bond){
   }
   if (this.mBondType[bond] == 2) {
     this.mBondType[bond] = 26;
-    this.mValidHelperArrays &= 3;
+    this.mValidHelperArrays &= 7;
     if ((this.mBondFlags[bond] & 128) == 0)
       return true;
   }
@@ -14334,7 +14360,7 @@ _.incrementBondOrder = function incrementBondOrder(bond){
   }
   if ((24 & this.mBondType[bond]) != 0) {
     this.mBondType[bond] = 1;
-    this.mValidHelperArrays &= 3;
+    this.mValidHelperArrays &= 7;
     return true;
   }
   if (!hasMetal && maxBondOrder < 2)
@@ -14368,7 +14394,7 @@ _.init_1 = function init_1(){
   this.mAtomQueryFeatures = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMaxAtoms, 15, 1);
   this.mAtomList = null;
   this.mAtomCustomLabel = null;
-  this.mBondAtom = initMultidimensionalArray(cggl.I_classLit, [{46:1, 4:1, 1:1, 6:1}, {7:1, 4:1, 1:1}], [7, 5], 15, [2, this.mMaxBonds], 2);
+  this.mBondAtom = initMultidimensionalArray(cggl.I_classLit, [{45:1, 4:1, 1:1, 6:1}, {7:1, 4:1, 1:1}], [7, 5], 15, [2, this.mMaxBonds], 2);
   this.mBondType = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMaxBonds, 15, 1);
   this.mBondFlags = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMaxBonds, 15, 1);
   this.mBondQueryFeatures = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMaxBonds, 15, 1);
@@ -14729,7 +14755,7 @@ _.setAtomConfigurationUnknown_0 = function setAtomConfigurationUnknown(atom, u){
     this.mAtomFlags[atom] |= 67108864;
   else 
     this.mAtomFlags[atom] &= ~67108864;
-  this.mValidHelperArrays &= 3;
+  this.mValidHelperArrays &= 7;
 }
 ;
 _.setAtomCustomLabel_0 = function setAtomCustomLabel(atom, label_0){
@@ -14794,12 +14820,12 @@ _.setAtomESR_0 = function setAtomESR(atom, type_0, group){
     this.mAtomFlags[atom] &= ~66584576;
     this.mAtomFlags[atom] |= type_0 << 19 | group << 21;
   }
-  this.mValidHelperArrays &= 3;
+  this.mValidHelperArrays &= 7;
 }
 ;
 _.setAtomList_0 = function setAtomList(atom, list){
   if (jsEquals(this.mAtomList, null))
-    this.mAtomList = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, this.mMaxAtoms, 0, 2);
+    this.mAtomList = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, this.mMaxAtoms, 0, 2);
   if (jsNotEquals(list, null))
     ju.sort_3(list);
   this.mAtomList[atom] = list;
@@ -14823,7 +14849,7 @@ _.setAtomList_1 = function setAtomList_0(atom, list, isExcludeList){
     return;
   }
   if (jsEquals(this.mAtomList, null))
-    this.mAtomList = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, this.mMaxAtoms, 0, 2);
+    this.mAtomList = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, this.mMaxAtoms, 0, 2);
   this.mAtomList[atom] = list;
   if (isExcludeList)
     this.mAtomQueryFeatures[atom] |= 1;
@@ -14844,7 +14870,7 @@ _.setAtomMarker_0 = function setAtomMarker(atom, s){
 ;
 _.setAtomMass_0 = function setAtomMass(atom, mass){
   this.mAtomMass[atom] = mass;
-  this.mValidHelperArrays &= 3;
+  this.mValidHelperArrays &= 7;
 }
 ;
 _.setAtomParity_0 = function setAtomParity(atom, parity, isPseudo){
@@ -14866,7 +14892,7 @@ _.setAtomQueryFeature_0 = function setAtomQueryFeature(atom, feature, value_0){
 _.setAtomRadical_0 = function setAtomRadical(atom, radical){
   this.mAtomFlags[atom] &= ~48;
   this.mAtomFlags[atom] |= radical;
-  this.mValidHelperArrays &= 3;
+  this.mValidHelperArrays &= 7;
 }
 ;
 _.setAtomSelection_0 = function setAtomSelection(atom, s){
@@ -14884,17 +14910,17 @@ _.setAtomStereoCenter = function setAtomStereoCenter(atom, isStereoCenter){
 ;
 _.setAtomX_0 = function setAtomX(atom, x_0){
   this.mCoordinates[atom].x_0 = x_0;
-  this.mValidHelperArrays &= 3;
+  this.mValidHelperArrays &= 7;
 }
 ;
 _.setAtomY_0 = function setAtomY(atom, y_0){
   this.mCoordinates[atom].y_0 = y_0;
-  this.mValidHelperArrays &= 3;
+  this.mValidHelperArrays &= 7;
 }
 ;
 _.setAtomZ_0 = function setAtomZ(atom, z_0){
   this.mCoordinates[atom].z_0 = z_0;
-  this.mValidHelperArrays &= 3;
+  this.mValidHelperArrays &= 7;
 }
 ;
 _.setAtomicNo_0 = function setAtomicNo(atom, no){
@@ -14953,7 +14979,7 @@ _.setBondESR_0 = function setBondESR(bond, type_0, group){
     this.mBondFlags[bond] &= ~130048;
     this.mBondFlags[bond] |= type_0 << 10 | group << 12;
   }
-  this.mValidHelperArrays &= 3;
+  this.mValidHelperArrays &= 7;
 }
 ;
 _.setBondForegroundHiliting_0 = function setBondForegroundHiliting(bond, s){
@@ -15027,7 +15053,7 @@ _.setMaxAtoms_0 = function setMaxAtoms(v){
   this.mAtomFlags = ju.copyOf_0(this.mAtomFlags, v);
   this.mAtomQueryFeatures = ju.copyOf_0(this.mAtomQueryFeatures, v);
   if (jsNotEquals(this.mAtomList, null))
-    this.mAtomList = castTo(ju.copyOf_1(this.mAtomList, v), 46);
+    this.mAtomList = castTo(ju.copyOf_1(this.mAtomList, v), 45);
   if (jsNotEquals(this.mAtomCustomLabel, null))
     this.mAtomCustomLabel = castTo(ju.copyOf_1(this.mAtomCustomLabel, v), 177);
   this.mMaxAtoms = v;
@@ -15171,7 +15197,7 @@ _.zoomAndRotate_0 = function zoomAndRotate(zoom, angle, selected){
     }
   }
   if (selected)
-    this.mValidHelperArrays &= 3;
+    this.mValidHelperArrays &= 7;
 }
 ;
 _.zoomAndRotateInit_0 = function zoomAndRotateInit(x_0, y_0){
@@ -15390,20 +15416,22 @@ carc2.cESRMaxGroups = 32;
 carc2.cESRTypeAbs = 0;
 carc2.cESRTypeAnd = 1;
 carc2.cESRTypeOr = 2;
-carc2.cHelperBitCIP = 8;
-carc2.cHelperBitIncludeNitrogenParities = 128;
+carc2.cHelperBitCIP = 16;
+carc2.cHelperBitIncludeNitrogenParities = 256;
 carc2.cHelperBitNeighbours = 1;
-carc2.cHelperBitParities = 4;
-carc2.cHelperBitRings = 2;
-carc2.cHelperBitSymmetryDiastereotopic = 32;
-carc2.cHelperBitSymmetryEnantiotopic = 64;
-carc2.cHelperBitSymmetrySimple = 16;
-carc2.cHelperBitsStereo = 252;
+carc2.cHelperBitParities = 8;
+carc2.cHelperBitRings = 4;
+carc2.cHelperBitRingsSimple = 2;
+carc2.cHelperBitSymmetryDiastereotopic = 64;
+carc2.cHelperBitSymmetryEnantiotopic = 128;
+carc2.cHelperBitSymmetrySimple = 32;
+carc2.cHelperBitsStereo = 504;
 carc2.cHelperCIP = 0;
 carc2.cHelperNeighbours = 1;
 carc2.cHelperNone = 0;
 carc2.cHelperParities = 0;
 carc2.cHelperRings = 0;
+carc2.cHelperRingsSimple = 0;
 carc2.cHelperSymmetryDiastereotopic = 0;
 carc2.cHelperSymmetryEnantiotopic = 0;
 carc2.cHelperSymmetrySimple = 0;
@@ -15484,12 +15512,12 @@ _.bondsAreParallel = function bondsAreParallel(angle1, angle2){
 }
 ;
 _.calculateNeighbours = function calculateNeighbours(){
-  var allConnAtoms, atom, atom0, atom1, atom2, bnd, bnd0, bnd1, bnd2, connCount, i, metalBondFound, order;
+  var allConnAtoms, atom, atom0, atom1, bnd, bnd0, bnd1, bnd2, connCount, i, metalBondFound, order;
   this.mConnAtoms = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAllAtoms, 15, 1);
   this.mAllConnAtoms = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAllAtoms, 15, 1);
-  this.mConnAtom = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, this.mAllAtoms, 0, 2);
-  this.mConnBond = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, this.mAllAtoms, 0, 2);
-  this.mConnBondOrder = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, this.mAllAtoms, 0, 2);
+  this.mConnAtom = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, this.mAllAtoms, 0, 2);
+  this.mConnBond = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, this.mAllAtoms, 0, 2);
+  this.mConnBondOrder = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, this.mAllAtoms, 0, 2);
   this.mPi = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAtoms, 15, 1);
   connCount = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAllAtoms, 15, 1);
   for (bnd0 = 0; bnd0 < this.mAllBonds; bnd0++) {
@@ -15509,18 +15537,18 @@ _.calculateNeighbours = function calculateNeighbours(){
       continue;
     }
     for (i = 0; i < 2; i++) {
-      atom1 = this.mBondAtom[i][bnd1];
-      allConnAtoms = this.mAllConnAtoms[atom1];
-      this.mConnBondOrder[atom1][allConnAtoms] = order;
-      this.mConnAtom[atom1][allConnAtoms] = this.mBondAtom[1 - i][bnd1];
-      this.mConnBond[atom1][allConnAtoms] = bnd1;
-      this.mAllConnAtoms[atom1]++;
-      this.mConnAtoms[atom1]++;
-      if (atom1 < this.mAtoms) {
+      atom = this.mBondAtom[i][bnd1];
+      allConnAtoms = this.mAllConnAtoms[atom];
+      this.mConnBondOrder[atom][allConnAtoms] = order;
+      this.mConnAtom[atom][allConnAtoms] = this.mBondAtom[1 - i][bnd1];
+      this.mConnBond[atom][allConnAtoms] = bnd1;
+      this.mAllConnAtoms[atom]++;
+      this.mConnAtoms[atom]++;
+      if (atom < this.mAtoms) {
         if (order > 1)
-          this.mPi[atom1] += order + order - 2;
+          this.mPi[atom] += order - 1;
         else if (this.mBondType[bnd1] == 64)
-          this.mPi[atom1] = 2;
+          this.mPi[atom] = 1;
       }
     }
   }
@@ -15531,14 +15559,14 @@ _.calculateNeighbours = function calculateNeighbours(){
       continue;
     }
     for (i = 0; i < 2; i++) {
-      atom1 = this.mBondAtom[i][bnd2];
-      allConnAtoms = this.mAllConnAtoms[atom1];
-      this.mConnBondOrder[atom1][allConnAtoms] = order;
-      this.mConnAtom[atom1][allConnAtoms] = this.mBondAtom[1 - i][bnd2];
-      this.mConnBond[atom1][allConnAtoms] = bnd2;
-      this.mAllConnAtoms[atom1]++;
+      atom = this.mBondAtom[i][bnd2];
+      allConnAtoms = this.mAllConnAtoms[atom];
+      this.mConnBondOrder[atom][allConnAtoms] = order;
+      this.mConnAtom[atom][allConnAtoms] = this.mBondAtom[1 - i][bnd2];
+      this.mConnBond[atom][allConnAtoms] = bnd2;
+      this.mAllConnAtoms[atom]++;
       if (this.mBondAtom[1 - i][bnd2] < this.mAtoms)
-        this.mConnAtoms[atom1]++;
+        this.mConnAtoms[atom]++;
     }
   }
   if (metalBondFound) {
@@ -15549,17 +15577,15 @@ _.calculateNeighbours = function calculateNeighbours(){
       order = this.getBondOrder_0(bnd);
       if (order == 0) {
         for (i = 0; i < 2; i++) {
-          atom2 = this.mBondAtom[i][bnd];
-          this.mConnBondOrder[atom2][allConnAtoms[atom2]] = order;
-          this.mConnAtom[atom2][allConnAtoms[atom2]] = this.mBondAtom[1 - i][bnd];
-          this.mConnBond[atom2][allConnAtoms[atom2]] = bnd;
-          allConnAtoms[atom2]++;
+          atom = this.mBondAtom[i][bnd];
+          this.mConnBondOrder[atom][allConnAtoms[atom]] = order;
+          this.mConnAtom[atom][allConnAtoms[atom]] = this.mBondAtom[1 - i][bnd];
+          this.mConnBond[atom][allConnAtoms[atom]] = bnd;
+          allConnAtoms[atom]++;
         }
       }
     }
   }
-  for (atom = 0; atom < this.mAtoms; atom++)
-    this.mPi[atom] = narrow_int(this.mPi[atom] / 2);
 }
 ;
 _.canonizeCharge_0 = function canonizeCharge(allowUnbalancedCharge){
@@ -15655,7 +15681,7 @@ _.convertStereoBondsToSingleBonds_0 = function convertStereoBondsToSingleBonds(a
 _.copyMoleculeByAtoms_0 = function copyMoleculeByAtoms(destMol, includeAtom, recognizeDelocalizedBonds, atomMap){
   var atom, atom1, atom2, atomCount, bnd;
   if (recognizeDelocalizedBonds)
-    this.ensureHelperArrays_0(3);
+    this.ensureHelperArrays_0(7);
   destMol.mAtomList = null;
   if (this.mIsFragment)
     destMol.setFragment_0(true);
@@ -15693,7 +15719,7 @@ _.copyMoleculeByAtoms_0 = function copyMoleculeByAtoms(destMol, includeAtom, rec
 _.copyMoleculeByBonds_0 = function copyMoleculeByBonds(destMol, includeBond, recognizeDelocalizedBonds, atomMap){
   var atom, atom1, atom2, bnd, i;
   if (recognizeDelocalizedBonds)
-    this.ensureHelperArrays_0(3);
+    this.ensureHelperArrays_0(7);
   destMol.mAtomList = null;
   if (this.mIsFragment)
     destMol.setFragment_0(true);
@@ -15752,12 +15778,17 @@ _.ensureHelperArrays_0 = function ensureHelperArrays(required){
   }
   if ((required & ~this.mValidHelperArrays) == 0)
     return;
-  if ((this.mValidHelperArrays & 2) == 0) {
+  if ((this.mValidHelperArrays & ~(2 | 4)) != 0) {
     for (atom0 = 0; atom0 < this.mAtoms; atom0++)
       this.mAtomFlags[atom0] &= ~31752;
     for (bond0 = 0; bond0 < this.mBonds; bond0++)
       this.mBondFlags[bond0] &= ~960;
-    this.findRings();
+    if ((required & 4) == 0) {
+      this.findRings(1);
+      this.mValidHelperArrays |= 2;
+      return;
+    }
+    this.findRings(7);
     for (bond = 0; bond < this.mBonds; bond++) {
       if (this.mBondType[bond] == 64) {
         this.mAtomFlags[this.mBondAtom[0][bond]] |= 4096;
@@ -15810,8 +15841,8 @@ _.ensureHelperArrays_0 = function ensureHelperArrays(required){
       if (!found)
         break;
     }
-    this.mValidHelperArrays |= 2;
   }
+  this.mValidHelperArrays |= 2 | 4;
 }
 ;
 _.findAlleneCenterAtom_0 = function findAlleneCenterAtom(atom){
@@ -15848,7 +15879,7 @@ _.findBINAPChiralityBond_0 = function findBINAPChiralityBond(atom){
 ;
 _.findRingSystem_0 = function findRingSystem(startAtom, aromaticOnly, isMemberAtom, isMemberBond){
   var candidateAtom, candidateBond, current, graphAtom, highest, i;
-  this.ensureHelperArrays_0(3);
+  this.ensureHelperArrays_0(7);
   if (!this.isRingAtom_0(startAtom) || aromaticOnly && !this.isAromaticAtom_1(startAtom))
     return;
   graphAtom = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAtoms, 15, 1);
@@ -15872,9 +15903,9 @@ _.findRingSystem_0 = function findRingSystem(startAtom, aromaticOnly, isMemberAt
   }
 }
 ;
-_.findRings = function findRings(){
-  var atom, atomRingBondCount, bond, i, ringAtom, ringAtoms, ringBond, ringNo;
-  this.mRingSet = new carc2.RingCollection(this, 7);
+_.findRings = function findRings(mode){
+  var atom, atomRingBondCount, bond, i, includeAromaticity, ringAtom, ringAtoms, ringBond, ringNo;
+  this.mRingSet = new carc2.RingCollection(this, mode);
   atomRingBondCount = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAtoms, 15, 1);
   for (bond = 0; bond < this.mBonds; bond++) {
     if (this.mRingSet.getBondRingSize_0(bond) != 0) {
@@ -15891,6 +15922,7 @@ _.findRings = function findRings(){
     else if (atomRingBondCount[atom] > 3)
       this.mAtomFlags[atom] |= 3072;
   }
+  includeAromaticity = (mode & 5 & ~1) != 0;
   for (ringNo = 0; ringNo < this.mRingSet.getSize_0(); ringNo++) {
     ringAtom = this.mRingSet.getRingAtoms_0(ringNo);
     ringBond = this.mRingSet.getRingBonds_0(ringNo);
@@ -15898,12 +15930,14 @@ _.findRings = function findRings(){
     for (i = 0; i < ringAtoms; i++) {
       this.mAtomFlags[ringAtom[i]] |= 8;
       this.mBondFlags[ringBond[i]] |= 128;
-      if (this.mRingSet.isAromatic_0(ringNo)) {
-        this.mAtomFlags[ringAtom[i]] |= 4096;
-        this.mBondFlags[ringBond[i]] |= 256;
+      if (includeAromaticity) {
+        if (this.mRingSet.isAromatic_0(ringNo)) {
+          this.mAtomFlags[ringAtom[i]] |= 4096;
+          this.mBondFlags[ringBond[i]] |= 256;
+        }
+        if (this.mRingSet.isDelocalized_0(ringNo))
+          this.mBondFlags[ringBond[i]] |= 512;
       }
-      if (this.mRingSet.isDelocalized_0(ringNo))
-        this.mBondFlags[ringBond[i]] |= 512;
       if (this.mBondType[ringBond[i]] == 26)
         this.mBondType[ringBond[i]] = 2;
     }
@@ -15961,7 +15995,7 @@ _.getAllHydrogens_0 = function getAllHydrogens(atom){
 ;
 _.getAromaticRingCount_0 = function getAromaticRingCount(){
   var count, i;
-  this.ensureHelperArrays_0(3);
+  this.ensureHelperArrays_0(7);
   count = 0;
   for (i = 0; i < this.mRingSet.getSize_0(); i++)
     if (this.mRingSet.isAromatic_0(i))
@@ -15974,7 +16008,7 @@ _.getAtomPi_0 = function getAtomPi(atom){
 }
 ;
 _.getAtomPreferredStereoBond_0 = function getAtomPreferredStereoBond(atom){
-  this.ensureHelperArrays_0(3);
+  this.ensureHelperArrays_0(7);
   if (this.mPi[atom] == 2 && this.mConnAtoms[atom] == 2)
     return this.preferredAlleneStereoBond(atom);
   else 
@@ -15989,7 +16023,7 @@ _.getAtomRingBondCount_0 = function getAtomRingBondCount(atom){
 ;
 _.getAtomRingCount_0 = function getAtomRingCount(atom, maxRingSize){
   var bond1, bond2, bondTouched, count, i, isIndependentRing, j, k, neglectBond, pathBond, pathLength, ringAtom;
-  this.ensureHelperArrays_0(3);
+  this.ensureHelperArrays_0(7);
   bondTouched = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, this.mBonds, 16, 1);
   neglectBond = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, this.mBonds, 16, 1);
   ringAtom = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAtoms, 15, 1);
@@ -16237,12 +16271,11 @@ _.getFreeValence_0 = function getFreeValence(atom){
   return this.getMaxValence_0(atom) - this.getOccupiedValence_0(atom);
 }
 ;
-_.getHandleHydrogenMap_0 = function getHandleHydrogenMap(){
-  var atom, i, isSimpleHydrogen, lastNonHAtom, map_0, temp, tempIndex;
+_.getHandleHydrogenAtomMap = function getHandleHydrogenAtomMap(isSimpleHydrogen){
+  var atom, i, lastNonHAtom, map_0, temp, tempIndex;
   map_0 = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mAllAtoms, 15, 1);
   for (i = 0; i < this.mAllAtoms; i++)
     map_0[i] = i;
-  isSimpleHydrogen = this.findSimpleHydrogens();
   lastNonHAtom = this.mAllAtoms;
   do 
     lastNonHAtom--;
@@ -16261,6 +16294,10 @@ _.getHandleHydrogenMap_0 = function getHandleHydrogenMap(){
     }
   }
   return map_0;
+}
+;
+_.getHandleHydrogenMap_0 = function getHandleHydrogenMap(){
+  return this.getHandleHydrogenAtomMap(this.findSimpleHydrogens());
 }
 ;
 _.getHelperArrayStatus_0 = function getHelperArrayStatus(){
@@ -16486,14 +16523,14 @@ _.getPathLength_1 = function getPathLength_0(atom1, atom2, maxLength, neglectAto
 }
 ;
 _.getRingSet_0 = function getRingSet(){
-  this.ensureHelperArrays_0(3);
+  this.ensureHelperArrays_0(7);
   return this.mRingSet;
 }
 ;
 _.getRotatableBondCount_0 = function getRotatableBondCount(){
   var atom1, atom2, bond, connAtom, connBond, i, isRotatable, j, rCount;
   rCount = 0;
-  this.ensureHelperArrays_0(3);
+  this.ensureHelperArrays_0(7);
   for (bond = 0; bond < this.mBonds; bond++) {
     if (this.getBondOrder_0(bond) == 1 && !this.isRingBond_0(bond)) {
       isRotatable = true;
@@ -17101,7 +17138,7 @@ _.preferredTHStereoBond = function preferredTHStereoBond(atom){
 ;
 _.removeExplicitHydrogens_0 = function removeExplicitHydrogens(){
   var abnormalValence, atom, explicitAbnormalValence, newAbnormalValence;
-  this.ensureHelperArrays_0(7);
+  this.ensureHelperArrays_0(15);
   this.mAllAtoms = this.mAtoms;
   this.mAllBonds = this.mBonds;
   for (atom = 0; atom < this.mAtoms; atom++) {
@@ -17216,7 +17253,7 @@ _.setFisherProjectionStereoBondsFromParity = function setFisherProjectionStereoB
 }
 ;
 _.setParitiesValid_0 = function setParitiesValid(helperStereoBits){
-  this.mValidHelperArrays |= 252 & (4 | helperStereoBits);
+  this.mValidHelperArrays |= 504 & (8 | helperStereoBits);
 }
 ;
 _.setStereoBondFromAtomParity_0 = function setStereoBondFromAtomParity(atom){
@@ -17274,7 +17311,7 @@ _.setStereoBondFromAtomParity_0 = function setStereoBondFromAtomParity(atom){
       break;
     }
   }
-  up_down = stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 2), {46:1, 4:1, 1:1, 6:1}, 7, 0, [stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 1, 2, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 2, 2, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 1, 2, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 1, 1, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 2, 1, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 2, 1, 2])]);
+  up_down = stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 2), {45:1, 4:1, 1:1, 6:1}, 7, 0, [stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 1, 2, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 2, 2, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 1, 2, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 1, 1, 2]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2, 2, 1, 1]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1, 2, 1, 2])]);
   for (i = 1; i < allConnAtoms; i++)
     if (angle[i] < angle[0])
       angle[i] += 3.141592653589793 * 2;
@@ -17385,7 +17422,7 @@ _.setStereoBondFromBondParity_0 = function setStereoBondFromBondParity(bond){
 ;
 _.setStereoBondsFromParity_0 = function setStereoBondsFromParity(){
   var atom, bond, bond0;
-  this.ensureHelperArrays_0(3);
+  this.ensureHelperArrays_0(7);
   for (atom = 0; atom < this.mAtoms; atom++)
     this.setStereoBondFromAtomParity_0(atom);
   for (bond0 = 0; bond0 < this.mBonds; bond0++)
@@ -17473,7 +17510,7 @@ _.validateBondType = function validateBondType_0(bond, type_0){
   var ok;
   ok = getClassPrototype(64).validateBondType.call(this, bond, type_0);
   if (ok && type_0 == 26) {
-    this.ensureHelperArrays_0(3);
+    this.ensureHelperArrays_0(7);
     ok = ok & !this.isSmallRingBond_0(bond);
   }
   return ok;
@@ -18206,7 +18243,7 @@ _.parse_3 = function parse_3(mol, idcode, coordinates, idcodeStart, coordsStart)
   }
   coords2DAvailable = jsNotEquals(coordinates, null) && !coordsAre3D;
   if (coords2DAvailable || this.ensure2DCoordinates()) {
-    this.mMol.ensureHelperArrays_0(3);
+    this.mMol.ensureHelperArrays_0(7);
     for (bond = 0; bond < this.mMol.getBonds_0(); bond++)
       if (this.mMol.getBondOrder_0(bond) == 2 && !this.mMol.isSmallRingBond_0(bond) && this.mMol.getBondParity_0(bond) == 0)
         this.mMol.setBondParityUnknownOrNone_0(bond);
@@ -18520,14 +18557,20 @@ _.calculateEZBonds = function calculateEZBonds(){
 }
 ;
 _.createSmiles = function createSmiles(){
-  var groupCount, isFirst, sb, smilesAtom, smilesAtom$iterator;
+  var atom, groupCount, isFirst, sb, smilesAtom, smilesAtom$iterator, type_0;
   if (isNull(this.mMol) || this.mMol.getAllAtoms_0() == 0)
     return '';
-  this.mMol.ensureHelperArrays_0(7);
+  this.mMol.ensureHelperArrays_0(15);
   this.mCanonizer = new carc2.Canonizer_0(this.mMol, 1 | 128);
   groupCount = this.mCanonizer.getPseudoStereoGroupCount();
   this.mPseudoStereoGroupInversion = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, groupCount + 1, 16, 1);
   this.mPseudoStereoGroupInitialized = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, groupCount + 1, 16, 1);
+  this.mKnownTHCountInESRGroup = initMultidimensionalArray(cggl.I_classLit, [{45:1, 4:1, 1:1, 6:1}, {7:1, 4:1, 1:1}], [7, 5], 15, [2, 32], 2);
+  for (atom = 0; atom < this.mMol.getAtoms_0(); atom++) {
+    type_0 = this.mMol.getAtomESRType_0(atom) - 1;
+    if (type_0 != -1)
+      this.mKnownTHCountInESRGroup[type_0][this.mMol.getAtomESRGroup_0(atom)]++;
+  }
   this.generateCanonicalTree();
   this.findRingClosures();
   this.calculateEZBonds();
@@ -18735,8 +18778,14 @@ _.isOrganic = function isOrganic(atomicNo){
   return atomicNo >= 5 && atomicNo <= 9 || atomicNo >= 15 && atomicNo <= 17 || atomicNo == 35 || atomicNo == 53;
 }
 ;
+_.isSingleKnownStereoCenterInESRGroup = function isSingleKnownStereoCenterInESRGroup(atom){
+  var type_0;
+  type_0 = this.mMol.getAtomESRType_0(atom) - 1;
+  return type_0 == -1?false:this.mKnownTHCountInESRGroup[type_0][this.mMol.getAtomESRGroup_0(atom)] <= 1;
+}
+;
 _.qualifiesForAtomParity = function qualifiesForAtomParity(atom){
-  return (this.mMol.getAtomParity_0(atom) == 1 || this.mMol.getAtomParity_0(atom) == 2) && (this.mMol.getAtomicNo_0(atom) != 7 || this.mMol.getAtomCharge_0(atom) > 0);
+  return (this.mMol.getAtomParity_0(atom) == 1 || this.mMol.getAtomParity_0(atom) == 2) && !this.isSingleKnownStereoCenterInESRGroup(atom) && (this.mMol.getAtomicNo_0(atom) != 7 || this.mMol.getAtomCharge_0(atom) > 0);
 }
 ;
 _.mIncludeMapping = false;
@@ -19060,7 +19109,7 @@ carc2.MolfileCreator_1 = function MolfileCreator_1(mol, allowScaling, scalingFac
   Object_0.call(this);
   this.$init_30();
   this.mDoubleFormat = new jt.DecimalFormat_0('0.0000', new jt.DecimalFormatSymbols((ju.$clinit_Locale() , ju.ENGLISH)));
-  mol.ensureHelperArrays_0(7);
+  mol.ensureHelperArrays_0(15);
   isRacemic = true;
   for (atom0 = 0; atom0 < mol.getAtoms_0(); atom0++) {
     if (mol.getAtomParity_0(atom0) != 0 && mol.getAtomParity_0(atom0) != 3 && mol.getAtomESRType_0(atom0) != 1) {
@@ -20195,7 +20244,7 @@ _.readMoleculeFromBuffer = function readMoleculeFromBuffer(reader){
       if (chiral == 0) {
         if ((this.mMode & 1) != 0)
           this.mHydrogenMap = this.mMol.getHandleHydrogenMap_0();
-        this.mMol.ensureHelperArrays_0(7);
+        this.mMol.ensureHelperArrays_0(15);
       }
       return true;
     }
@@ -20333,7 +20382,7 @@ _.readMoleculeFromBuffer = function readMoleculeFromBuffer(reader){
   }
   if ((this.mMode & 1) != 0)
     this.mHydrogenMap = this.mMol.getHandleHydrogenMap_0();
-  this.mMol.ensureHelperArrays_0(7);
+  this.mMol.ensureHelperArrays_0(15);
   return true;
 }
 ;
@@ -20434,7 +20483,7 @@ carc2.MolfileV3Creator_2 = function MolfileV3Creator_2(mol, allowScaling, scalin
   var hasCoordinates, name_0;
   Object_0.call(this);
   this.$init_32();
-  mol.ensureHelperArrays_0(7);
+  mol.ensureHelperArrays_0(15);
   this.mMolfile = isNull(builder)?new jl.StringBuilder:builder;
   name_0 = jsNotEquals(mol.getName_0(), null)?mol.getName_0():'';
   this.mMolfile.append_8(name_0 + '\n');
@@ -20494,7 +20543,7 @@ carc2.writeCTAB = function writeCTAB(mol, scalingFactor){
   var mf;
   mf = new carc2.MolfileV3Creator;
   mf.mScalingFactor = scalingFactor;
-  mol.ensureHelperArrays_0(7);
+  mol.ensureHelperArrays_0(15);
   mf.writeBody(mol, true);
   return mf.getMolfile();
 }
@@ -21264,7 +21313,7 @@ _.determineAromaticity_0 = function determineAromaticity(ringNo, annelatedRing, 
 ;
 _.determineAromaticity_1 = function determineAromaticity_0(isAromatic, isDelocalized, heteroPosition, includeTautomericBonds){
   var annelatedRing, aromaticityHandled, bond, i, i0, j, lastRingsHandled, ring, ring0, ringBond, ringMembership, ringsHandled;
-  annelatedRing = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, this.mRingAtomSet.size(), 0, 2);
+  annelatedRing = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, this.mRingAtomSet.size(), 0, 2);
   for (i0 = 0; i0 < this.mRingAtomSet.size(); i0++) {
     annelatedRing[i0] = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, castTo(this.mRingAtomSet.getAtIndex(i0), 7).length, 15, 1);
     for (j = 0; j < castTo(this.mRingAtomSet.getAtIndex(i0), 7).length; j++)
@@ -22281,14 +22330,14 @@ _.setFragment_1 = function setFragment_0(fragment){
   this.mFragment = fragment;
   this.mFragmentFeaturesValid = false;
   this.mFragment.ensureHelperArrays_0(1);
-  this.mRequiredHelperLevel = 3;
+  this.mRequiredHelperLevel = 7;
   for (atom0 = 0; atom0 < this.mFragment.getAtoms_0(); atom0++)
     if ((this.mFragment.getAtomQueryFeatures_0(atom0) & 8192) != 0)
-      this.mRequiredHelperLevel = 7;
+      this.mRequiredHelperLevel = 15;
   for (bond0 = 0; bond0 < this.mFragment.getBonds_0(); bond0++)
     if ((this.mFragment.getBondQueryFeatures_0(bond0) & 262144) != 0)
-      this.mRequiredHelperLevel = 7;
-  if (this.mMoleculeFeaturesValid && this.mRequiredHelperLevel != 3)
+      this.mRequiredHelperLevel = 15;
+  if (this.mMoleculeFeaturesValid && this.mRequiredHelperLevel != 7)
     this.mMolecule.ensureHelperArrays_0(this.mRequiredHelperLevel);
   this.mFragmentExcludeAtoms = 0;
   this.mIsExcludeAtom = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, this.mFragment.getAtoms_0(), 16, 1);
@@ -22827,9 +22876,9 @@ _.onDrawAtom = function onDrawAtom_0(atom, symbol, x_0, y_0){
   this.atoms.add(s);
 }
 ;
-_.onDrawBond = function onDrawBond_0(atom1, atom2, x1, y1, x2, y2){
+_.onDrawBond = function onDrawBond_0(bond, x1, y1, x2, y2){
   var s;
-  s = '<line id="' + this.getId() + ':Bond:' + atom1 + '-' + atom2 + '" ' + 'class="event" ' + 'x1="' + round_int(x1) + '" ' + 'y1="' + round_int(y1) + '" ' + 'x2="' + round_int(x2) + '" ' + 'y2="' + round_int(y2) + '" ' + 'stroke-width="' + 8 + '" ' + 'stroke-opacity="0"' + '/>';
+  s = '<line id="' + this.getId() + ':Bond:' + bond + '" ' + 'class="event" ' + 'x1="' + round_int(x1) + '" ' + 'y1="' + round_int(y1) + '" ' + 'x2="' + round_int(x2) + '" ' + 'y2="' + round_int(y2) + '" ' + 'stroke-width="' + 8 + '" ' + 'stroke-opacity="0"' + '/>';
   this.bonds.add(s);
 }
 ;
@@ -22934,7 +22983,7 @@ _.generateSmiles = function generateSmiles(inMol){
   var atoms, bonds, i, visitedAllAtoms;
   visitedAllAtoms = false;
   this.mMol = inMol;
-  this.mMol.ensureHelperArrays_0(7);
+  this.mMol.ensureHelperArrays_0(15);
   atoms = this.mMol.getAtoms_0();
   bonds = this.mMol.getBonds_0();
   this.mVisitedMolBond = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, bonds, 16, 1);
@@ -23152,7 +23201,7 @@ _.addLargeAromaticRing = function addLargeAromaticRing(bond){
 ;
 _.assignKnownEZBondParities = function assignKnownEZBondParities(){
   var atom, bond, bond0, connBond, i, i0, i1, isZ, j, otherAtom, paritiesFound, refAtom, refBond;
-  this.mMol.ensureHelperArrays_0(3);
+  this.mMol.ensureHelperArrays_0(7);
   paritiesFound = false;
   refAtom = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, 2, 15, 1);
   refBond = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, 2, 15, 1);
@@ -23301,7 +23350,7 @@ _.locateAromaticDoubleBonds = function locateAromaticDoubleBonds(){
       this.addLargeAromaticRing(bond1);
     }
   }
-  this.mMol.ensureHelperArrays_0(3);
+  this.mMol.ensureHelperArrays_0(7);
   isAromaticBond = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, this.mMol.getBonds_0(), 16, 1);
   for (i2 = 0; i2 < this.mMol.getBonds_0(); i2++)
     isAromaticBond[i2] = this.mIsAromaticBond[i2];
@@ -24101,27 +24150,27 @@ _.ensureHelperArrays_0 = function ensureHelperArrays_0(required){
   if ((required & ~this.mValidHelperArrays) == 0)
     return;
   if (this.mAssignParitiesToNitrogen)
-    required |= 128;
+    required |= 256;
   for (atom = 0; atom < this.getAllAtoms_0(); atom++)
     this.mAtomFlags[atom] &= ~134447111;
   for (bond = 0; bond < this.getBonds_0(); bond++)
     this.mBondFlags[bond] &= ~63;
   rankBits = 0;
   rankMode = 0;
-  if ((required & 16) != 0) {
-    rankBits = 16;
-    rankMode = 1;
-  }
-   else if ((required & 32) != 0) {
+  if ((required & 32) != 0) {
     rankBits = 32;
-    rankMode = 1 | 2;
+    rankMode = 1;
   }
    else if ((required & 64) != 0) {
     rankBits = 64;
+    rankMode = 1 | 2;
+  }
+   else if ((required & 128) != 0) {
+    rankBits = 128;
     rankMode = 1 | 4;
   }
-  if ((required & 128) != 0) {
-    rankBits |= 128;
+  if ((required & 256) != 0) {
+    rankBits |= 256;
     rankMode |= 32;
   }
   this.mCanonizer = new carc2.Canonizer_0(this, rankMode);
@@ -24130,7 +24179,7 @@ _.ensureHelperArrays_0 = function ensureHelperArrays_0(required){
   this.mCanonizer.setCIPParities();
   if (this.validateESR())
     this.mCanonizer = new carc2.Canonizer_0(this, rankMode);
-  this.mValidHelperArrays |= 4 | 8 | rankBits;
+  this.mValidHelperArrays |= 8 | 16 | rankBits;
 }
 ;
 _.getAbsoluteAtomParity_0 = function getAbsoluteAtomParity(atom){
@@ -24143,7 +24192,7 @@ _.getAbsoluteBondParity_0 = function getAbsoluteBondParity(bond){
 ;
 _.getChiralText_0 = function getChiralText_0(){
   var count;
-  this.ensureHelperArrays_0(15);
+  this.ensureHelperArrays_0(31);
   count = this.mChirality & 65535;
   switch (this.mChirality & ~65535) {
     case 65536:
@@ -24215,18 +24264,18 @@ _.getFragments_1 = function getFragments_0(fragmentNo, fragmentCount){
 }
 ;
 _.getIDCode_0 = function getIDCode_0(){
-  this.ensureHelperArrays_0(7);
+  this.ensureHelperArrays_0(15);
   return isNull(this.mCanonizer)?null:this.mCanonizer.getIDCode_0();
 }
 ;
 _.getIDCoordinates_0 = function getIDCoordinates(){
-  this.ensureHelperArrays_0(7);
+  this.ensureHelperArrays_0(15);
   return isNull(this.mCanonizer)?null:this.mCanonizer.getEncodedCoordinates();
 }
 ;
 _.getStereoCenterCount_0 = function getStereoCenterCount_0(){
   var atom, scCount;
-  this.ensureHelperArrays_0(15);
+  this.ensureHelperArrays_0(31);
   scCount = 0;
   for (atom = 0; atom < this.getAtoms_0(); atom++)
     if (this.getAtomParity_0(atom) != 0 && !this.isAtomParityPseudo_0(atom))
@@ -24240,18 +24289,18 @@ _.getSymmetryRank_0 = function getSymmetryRank_0(atom){
 ;
 _.setAssignParitiesToNitrogen_0 = function setAssignParitiesToNitrogen(b){
   this.mAssignParitiesToNitrogen = b;
-  this.mValidHelperArrays &= ~(7 | 128);
+  this.mValidHelperArrays &= ~(15 | 256);
 }
 ;
 _.setUnknownParitiesToExplicitlyUnknown_0 = function setUnknownParitiesToExplicitlyUnknown_0(){
-  this.ensureHelperArrays_0(15);
+  this.ensureHelperArrays_0(31);
   if (isNotNull(this.mCanonizer))
     this.mCanonizer.setUnknownParitiesToExplicitlyUnknown_0();
 }
 ;
 _.stripStereoInformation_0 = function stripStereoInformation(){
   var atom, bond;
-  this.ensureHelperArrays_0(7);
+  this.ensureHelperArrays_0(15);
   this.mIsRacemate = false;
   for (atom = 0; atom < this.mAllAtoms; atom++) {
     this.mAtomFlags[atom] &= ~66584576;
@@ -24265,13 +24314,13 @@ _.stripStereoInformation_0 = function stripStereoInformation(){
       this.mBondType[bond] = 26;
     else 
       this.mBondType[bond] &= ~24;
-  this.mValidHelperArrays &= ~252;
+  this.mValidHelperArrays &= ~504;
 }
 ;
 _.validate_0 = function validate_0(){
   var angle, atom, i, i0, j;
   getClassPrototype(87).validate_0.call(this);
-  this.ensureHelperArrays_0(15);
+  this.ensureHelperArrays_0(31);
   for (atom = 0; atom < this.getAtoms_0(); atom++) {
     if ((this.getAtomESRType_0(atom) == 1 || this.getAtomESRType_0(atom) == 2) && (!this.isAtomStereoCenter_0(atom) || this.getAtomParity_0(atom) == 3))
       throw toJs(new jl.Exception_1('Members of ESR groups must only be stereo centers with known configuration.'));
@@ -24393,7 +24442,7 @@ carcc.addMissingChirality_0 = function addMissingChirality_0(molecule, esrType){
   for (iAtom = 0; iAtom < molecule.getAllAtoms_0(); iAtom++) {
     tempMolecule = molecule.getCompactCopy_0();
     carcc.changeAtomForStereo(tempMolecule, iAtom);
-    tempMolecule.ensureHelperArrays_0(7);
+    tempMolecule.ensureHelperArrays_0(15);
     for (i = 0; i < tempMolecule.getAtoms_0(); i++) {
       if (tempMolecule.isAtomStereoCenter_0(i) && tempMolecule.getStereoBond_0(i) == -1) {
         stereoBond = tempMolecule.getAtomPreferredStereoBond_0(i);
@@ -24442,7 +24491,7 @@ carcc.getAtomIds = function getAtomIds(molecule){
 ;
 carcc.makeRacemic = function makeRacemic(molecule){
   var i;
-  molecule.ensureHelperArrays_0(7);
+  molecule.ensureHelperArrays_0(15);
   for (i = 0; i < molecule.getAllAtoms_0(); i++) {
     if (molecule.getAtomParity_0(i) != 0) {
       molecule.setAtomESR_0(i, 1, 0);
@@ -24462,7 +24511,7 @@ carcc.getHoseCodes = function getHoseCodes(mol, maxSphereSize, type_0){
   carcc.$clinit_HoseCodeCreator();
   var ids, rootAtom;
   ids = initMultidimensionalArray(cggl.Ljava_lang_String_2_classLit, [{4:1, 1:1, 6:1}, {4:1, 1:1, 6:1, 12:1}], [12, 2], 6, [mol.getAtoms_0(), maxSphereSize], 2);
-  mol.ensureHelperArrays_0(3);
+  mol.ensureHelperArrays_0(7);
   for (rootAtom = 0; rootAtom < mol.getAtoms_0(); rootAtom++) {
     ids[rootAtom] = carcc.getHoseCodesForAtom(mol, rootAtom, maxSphereSize, type_0);
   }
@@ -25029,7 +25078,7 @@ _.createLargeRingFragment = function createLargeRingFragment(f, ringAtom, ringBo
   FIRST_RING_SIZE = 9;
   LAST_RING_SIZE = 25;
   cAngleCorrection = stampJavaTypeInfo(getClassLiteralForArray(cggl.D_classLit, 2), {4:1, 1:1, 6:1}, 22, 0, [stampJavaTypeInfo(getClassLiteralForArray(cggl.D_classLit, 1), {22:1, 4:1, 1:1}, 5, 15, [20]), null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.D_classLit, 1), {22:1, 4:1, 1:1}, 5, 15, [0, 10]), null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.D_classLit, 1), {22:1, 4:1, 1:1}, 5, 15, [-4, 12]), stampJavaTypeInfo(getClassLiteralForArray(cggl.D_classLit, 1), {22:1, 4:1, 1:1}, 5, 15, [0, 0, -7.5]), null, null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.D_classLit, 1), {22:1, 4:1, 1:1}, 5, 15, [narrow_int(60 / 7), narrow_int(-60 / 7)]), null, null, null, stampJavaTypeInfo(getClassLiteralForArray(cggl.D_classLit, 1), {22:1, 4:1, 1:1}, 5, 15, [-2.4])]);
-  cBondZList = stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 2), {46:1, 4:1, 1:1, 6:1}, 7, 0, [stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [146]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [627]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2457, 1170]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2451, 8643, 2519]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [9362, 14798]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [34377, -2147448999, 26214]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [37449, 137313, 95703, 34371, 37815, 54891, 132867, -2147309741, 54857, 55129, -2147449005, -2147449065]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [530697, 531819, 899169, 137289, 694617, -2146951863, -2146952797, -2146939175, -2146929547, -2146929564, -2146625111, -2146931799, -2146940503, -2146931935]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1007293, 610915]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [542985, 137283, 2122017, 530691, 2206773, -2144711351, 219209, 2840841, 137555, -2146871031, -2147264167, 613705, -2145360543, -2146625271, 694611, 2454837, -2145356703, -2147345133, -2146928951, -2146931805, -2144641719, -2146951869, -2146625237, -2146624183, 2841963, 1074905, -2146625117, 2799955, -2144723645, 138583, 859225, -2145264843, -2145216253, -2146624149, -2144700727, -2146928917, -2143905527, -2144045771, -2146789097, 2288547, 544407, 2104323, -2146911977, -2144479405, 3633737, -2146870089, -2146952169]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [8487297, 2172633, 2116611, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8829813]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [14071213])]);
+  cBondZList = stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 2), {45:1, 4:1, 1:1, 6:1}, 7, 0, [stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [146]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [627]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2457, 1170]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [2451, 8643, 2519]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [9362, 14798]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [34377, -2147448999, 26214]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [37449, 137313, 95703, 34371, 37815, 54891, 132867, -2147309741, 54857, 55129, -2147449005, -2147449065]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [530697, 531819, 899169, 137289, 694617, -2146951863, -2146952797, -2146939175, -2146929547, -2146929564, -2146625111, -2146931799, -2146940503, -2146931935]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [1007293, 610915]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [542985, 137283, 2122017, 530691, 2206773, -2144711351, 219209, 2840841, 137555, -2146871031, -2147264167, 613705, -2145360543, -2146625271, 694611, 2454837, -2145356703, -2147345133, -2146928951, -2146931805, -2144641719, -2146951869, -2146625237, -2146624183, 2841963, 1074905, -2146625117, 2799955, -2144723645, 138583, 859225, -2145264843, -2145216253, -2146624149, -2144700727, -2146928917, -2143905527, -2144045771, -2146789097, 2288547, 544407, 2104323, -2146911977, -2144479405, 3633737, -2146870089, -2146952169]), null, stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [8487297, 2172633, 2116611, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8829813]), stampJavaTypeInfo(getClassLiteralForArray(cggl.I_classLit, 1), {7:1, 4:1, 1:1}, 5, 15, [14071213])]);
   maxBit = 1 << f.size_1();
   bondEConstraint = 0;
   bondZConstraint = 0;
@@ -25569,13 +25618,13 @@ _.invent = function invent_0(mol){
 ;
 _.invent_0 = function invent_1(mol, ffp){
   var atom, f, f$iterator, i, j, paritiesPresent;
-  paritiesPresent = (mol.getHelperArrayStatus_0() & 7) != 0;
+  paritiesPresent = (mol.getHelperArrayStatus_0() & 15) != 0;
   if (isNull(this.mRandom))
     this.mRandom = new ju.Random;
   if ((this.mMode & 2) != 0)
     mol.removeExplicitHydrogens_0();
   this.mMol = mol;
-  this.mMol.ensureHelperArrays_0(3);
+  this.mMol.ensureHelperArrays_0(7);
   this.mFFP = ffp;
   this.mFragmentList = new ju.ArrayList;
   this.mAtomHandled = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, this.mMol.getAllAtoms_0(), 16, 1);
@@ -26809,7 +26858,7 @@ _.flip = function flip_0(x_0, y_0, mirrorAngle){
 _.flipOneSide = function flipOneSide(bond){
   var angle, atom1, atom2, candidate, coreOffSide, coreOnSide, count, current, distance, flipOtherSide, graphAtom, highest, i, i0, i1, index_0, isOnSide, mirrorAngle, x_0, y_0;
   if (jsEquals(this.mFlipList, null))
-    this.mFlipList = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, this.mMol.getAllBonds_0(), 0, 2);
+    this.mFlipList = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, this.mMol.getAllBonds_0(), 0, 2);
   if (jsEquals(this.mFlipList[bond], null)) {
     graphAtom = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mGlobalAtom.length, 15, 1);
     isOnSide = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, this.mMol.getAllAtoms_0(), 16, 1);
@@ -27742,8 +27791,8 @@ cggl.Lcom_actelion_research_chem_io_SDFileParser_2_classLit = createForClass('co
 carcp.$clinit_CLogPPredictor = function $clinit_CLogPPredictor(){
   carcp.$clinit_CLogPPredictor = emptyMethod;
   jl.$clinit_Object();
-  carcp.ATOM_TYPE = stampJavaTypeInfo(getClassLiteralForArray(cggl.J_classLit, 1), {4:1, 1:1}, 5, 14, [262146, 262148, 264194, 264195, 264196, 264197, 264200, 264201, 264205, 264206, 267266, 267267, 267268, 267273, 267278, 271362, 271363, 271364, 271365, 271374, 395266, 395267, 395268, 395269, 395272, 395273, 395277, 395278, 398338, 398340, 398345, 524292, 526338, 526339, 526340, 526344, 529412, 533508, 533512, 788482, 788483, 136448066, 136448067, 136448068, 136448072, 139593794, 139593795, 139593796, 139593800, 139596866, 139596867, 139596868, 139596872, 143788098, 143788099, 143791170, 143791171, 143791172, 270794754, 270794760, 270794824, 270796802, 270796803, 270796804, 270796808, 270796812, 270796866, 270796867, 270796868, 270796872, 273942530, 273942531, 273942532, 273942536, 273942594, 273942595, 273942596, 273942600, 273945602, 273945608, 273945666, 278134788, 278136834, 278136835, 278136836, 278136840, 278136898, 278136899, 278136900, 278136904, 278139906, 278139907, 278139908, 278139970, 278144002, 278144008, 278144010, 278144066, 405014530, 405014531, 405014532, 405014536, 405014540, 405014594, 405014595, 405014596, 405014600, 405014604, 405017602, 405017603, 405017604, 405017666, 405017672, 405021698, 405021699, 405021700, 405021704, 405021762, 405021763, 405021764, 405021768, 405145602, 405145603, 405145604, 405145608, 405145666, 405145667, 405145668, 405145672, 408160258, 408160260, 408160322, 408163330, 408291330, 408291331, 539232258, 539232259, 539232322, 539232323, 539235330, 539235331, 539235394, 539235395, 539235396, 539239426, 539239427, 539239490, 539239491, 539363330, 539363331, 539363394, 539363395, 539366402, 542377986, 542377987, 542378050, 542378051, 542378052, 542378056, 542381058, 542381059, 542381122, 542381123, 542509058, 542509059, 542509123, 542512130, 546837506, 807667714, 807798786, 810813442, 810816514, 810820610, 810944514, 139722885186, 139722885187, 142944110658, 142944110659, 142947256386, 142947256392, 142947259458, 147239077954, 147242223682, 147246417986, 277161838658, 277161838659, 277164984386, 277164984387, 277164987458, 277164987459, 277169178690, 277169181762, 277296185411, 277296187394, 277296187395, 277296187458, 277296187459, 280383064130, 280383064131, 280386209858, 280386209859, 280386212930, 280390404162, 280390407234, 280517412866, 280517412867, 280517412930, 280517412931, 280520558594, 280520558595, 280520558658, 280520561666, 280520561730, 284678031426, 284681177154, 284681180226, 284685371458, 284685374530, 284812380162, 284812380163, 284812380226, 284812380227, 284815525890, 284815525891, 284815525954, 284815528962, 284819720194, 284819727362, 414600792130, 414600792131, 414603937858, 414603937859, 414603940930, 414603940931, 414608132162, 414608135234, 414735140866, 414735140867, 414735140930, 414735140931, 414738286594, 414738286595, 414738286658, 414738286659, 414738289666, 414738289730, 414742480898, 414742480899, 414742480962, 414742480963, 414742483971, 414742484034, 414742488067, 414869358594, 414869358595, 414869358658, 414869358659, 414869361666, 414869361730, 414869489666, 417822017602, 417825163330, 417825166402, 417956366338, 417956366402, 417959512066, 417959512130, 417963706434, 418090584066, 418090715138, 552174094338, 552174094402, 552174094403, 552177240066, 552177240130, 552177240131, 552177243138, 552177243202, 552181434370, 552181434434, 552181437506, 552181441538, 552181441602, 552308312066, 552308312130, 552308315138, 552308315202, 552308319234, 552308319240, 552308319298, 552308443138, 552308443202, 552311588930, 555395319810, 555395319816, 555395319874, 555395319875, 555395319880, 555398465538, 555398465602, 555398468610, 555398468615, 555398468674, 555398468680, 555402659842, 555402659906, 555402662914, 555402662978, 555402667074, 555529537538, 555529537544, 555529537602, 555529537603, 555529537608, 555529540610, 555529540616, 555529540674, 555529544706, 555529544770, 555529668610, 555529668616, 555529668674, 555532683266, 555532686338, 555532814338, 559690287170, 559693432834, 559693432898, 559693435906, 559693435970, 559697627202, 559697630210, 559697630274, 559824507906, 559824507970, 559827653634, {l:2359363, m:590400, h:16}, {l:2361345, m:590400, h:16}, {l:2361346, m:590400, h:16}, {l:2361410, m:590400, h:16}, {l:2361346, m:1376832, h:16}, {l:2361410, m:1376832, h:16}, {l:2361346, m:1377600, h:16}, {l:2361410, m:1377600, h:16}, {l:1312770, m:1377601, h:16}, {l:1312834, m:1377601, h:16}, {l:1315842, m:1377601, h:16}, {l:2230339, m:2425376, h:16}, {l:2361346, m:2425408, h:16}, {l:2361347, m:2425408, h:16}, {l:2361410, m:2425408, h:16}, {l:2361411, m:2425408, h:16}, {l:2361346, m:2426176, h:16}, {l:1312770, m:2426177, h:16}, {l:1315842, m:2426177, h:16}, {l:2361346, m:2427200, h:16}, {l:2361410, m:2427200, h:16}, {l:1312770, m:2427201, h:16}, {l:1312770, m:2427202, h:16}, {l:1315842, m:2427202, h:16}, {l:1319938, m:2427202, h:16}, {l:2361346, m:590400, h:24}, {l:2361410, m:590400, h:24}, {l:2361346, m:591168, h:24}, {l:2361410, m:591168, h:24}, {l:1312770, m:591169, h:24}, {l:1312834, m:591169, h:24}, {l:1315842, m:591169, h:24}, {l:1319938, m:592194, h:24}, {l:2361346, m:623168, h:24}, {l:2361410, m:623168, h:24}, {l:1312770, m:623169, h:24}, {l:1312834, m:623169, h:24}, {l:2364418, m:623200, h:24}, {l:2364482, m:623200, h:24}, {l:2361346, m:1376832, h:24}, {l:2361410, m:1376832, h:24}, {l:2361347, m:592192, h:32}, {l:2361351, m:1377600, h:32}, {l:1312775, m:1377601, h:32}, {l:1315847, m:1377601, h:32}, {l:1315911, m:1377601, h:32}, {l:1312775, m:1378625, h:32}, {l:1315847, m:1378625, h:32}, {l:1315847, m:1378626, h:32}, {l:1315914, m:1378626, h:32}, {l:1315847, m:1409601, h:32}, {l:2361352, m:1443136, h:32}, {l:2361416, m:1443136, h:32}, {l:1312776, m:1443137, h:32}, {l:1315848, m:1443137, h:32}, {l:1315912, m:1443137, h:32}, {l:2361352, m:1443168, h:32}, {l:2361416, m:1443168, h:32}, {l:2364424, m:1443168, h:32}, {l:2364488, m:1443168, h:32}, {l:2492424, m:1443168, h:32}, {l:2492488, m:1443168, h:32}, {l:1312775, m:2426177, h:32}, {l:1315847, m:2426177, h:32}, {l:1315847, m:2427201, h:32}, {l:1315847, m:2458177, h:32}, {l:264195, m:0, h:64}, {l:264196, m:0, h:64}, {l:264200, m:0, h:64}, {l:267268, m:0, h:64}, {l:271364, m:0, h:64}, {l:395268, m:0, h:64}, {l:398340, m:0, h:64}, {l:529411, m:0, h:64}, {l:2230339, m:32, h:64}, {l:2361347, m:64, h:64}, {l:1312771, m:65, h:64}, {l:1574915, m:129, h:64}, {l:1577987, m:129, h:64}, {l:2364419, m:192, h:64}, {l:2230339, m:66080, h:64}, {l:1181763, m:66081, h:64}, {l:2361347, m:66112, h:64}, {l:2361411, m:66112, h:64}, {l:2230339, m:66848, h:64}, {l:1181763, m:66849, h:64}, {l:1181763, m:98849, h:64}, {l:2361347, m:131648, h:64}, {l:1312771, m:131649, h:64}, {l:1312835, m:131649, h:64}, {l:2364419, m:131680, h:64}, {l:1312771, m:132417, h:64}, {l:1315843, m:132417, h:64}, {l:2364419, m:132448, h:64}, {l:2361347, m:590400, h:80}, {l:2361411, m:590400, h:80}, {l:2361347, m:1376832, h:80}, {l:2361411, m:1376832, h:80}, {l:2361347, m:590400, h:88}, {l:264195, m:0, h:128}, {l:2230339, m:32, h:128}, {l:2361347, m:64, h:128}, {l:2361411, m:64, h:128}, {l:2368579, m:128, h:128}, {l:2361347, m:66112, h:128}, {l:2361411, m:66112, h:128}]);
-  carcp.INCREMENT = stampJavaTypeInfo(getClassLiteralForArray(cggl.F_classLit, 1), {4:1, 1:1}, 5, 15, [0.6966999769210815, 0, 0.4885999858379364, -0.47269999980926514, -0.07490000128746033, 0.6262000203132629, 0.273499995470047, 0.5699999928474426, 0.7009999752044678, 0.9534000158309937, -0.2809000015258789, -0.8259999752044678, -0.1784999966621399, -1.620300054550171, -1.0959999561309814, 0.13950000703334808, -0.29750001430511475, -1.2907999753952026, 1.0161999464035034, -1.3825000524520874, 0.5110999941825867, -0.435699999332428, -0.10409999638795853, 0.3424000144004822, -0.061500001698732376, 0.6035000085830688, 0.7226999998092651, 0.43459999561309814, -0.3310000002384186, -0.49799999594688416, -1.4915000200271606, 0.33169999718666077, 0.4291999936103821, -0.5824000239372253, -0.1834000051021576, 0.1306000053882599, -0.5015000104904175, -0.5257999897003174, 0.4244000017642975, -0.16099999845027924, -0.2777999937534332, 0.2766000032424927, 0.35929998755455017, 0.7714999914169312, 0.3149999976158142, -0.2651999890804291, -0.09650000184774399, 0.420199990272522, 0.18709999322891235, -0.3684000074863434, -0.07779999822378159, 0.8942999839782715, 0.3693999946117401, 0.28790000081062317, 0.4489000141620636, -0.26010000705718994, 0.4771000146865845, 0.1923000067472458, 0.45969998836517334, 0.3384000062942505, 0.6632999777793884, 0.4544000029563904, 0.15970000624656677, 0.633899986743927, 0.35040000081062317, 0.04490000009536743, 0.34200000762939453, 0.26109999418258667, 0.40459999442100525, 0.5218999981880188, -0.36320000886917114, -0.4108000099658966, 0.30570000410079956, -0.14560000598430634, -0.27129998803138733, -0.5192999839782715, 0.45260000228881836, 0.5539000034332275, -0.7070000171661377, -0.48809999227523804, -0.4099999964237213, 0, 0.14790000021457672, 0.3447999954223633, 0.42980000376701355, 0.5579000115394592, -0.1264999955892563, -0.042500000447034836, 0.07670000195503235, 0.6635000109672546, -0.38119998574256897, -0.8367999792098999, 1.0286999940872192, -0.10209999978542328, 0.3587000072002411, -0.5945000052452087, 0.16920000314712524, -0.121799997985363, 0.43810001015663147, 0.16949999332427979, 0.45249998569488525, 0.3352000117301941, 0.1582999974489212, 0.4036000072956085, -0.04800000041723251, 0.5023000240325928, -0.26489999890327454, 0.76910001039505, -0.35519999265670776, 1.0300999879837036, -0.11410000175237656, -0.5932000279426575, 0.17489999532699585, 0.13130000233650208, -0.18039999902248383, 0.399399995803833, 0.22910000383853912, 0.31690001487731934, 0.35989999771118164, -0.0038999998942017555, -0.2955999970436096, 0.49070000648498535, 0.3540000021457672, 0.219200000166893, 0.15649999678134918, 0.6934999823570251, 0.3617999851703644, 0.6735000014305115, 0.5777999758720398, -0.5636000037193298, 0.5569000244140625, 0.30379998683929443, -0.32760000228881836, -0.4659000039100647, 0.38179999589920044, 0.32829999923706055, 0.22390000522136688, 0.20430000126361847, 0.05900000035762787, -0.48350000381469727, 0.6165000200271606, -0.4011000096797943, 0.5577999949455261, -0.21639999747276306, -0.017500000074505806, 0.29809999465942383, 0.10999999940395355, 0.27149999141693115, 0.4408999979496002, -0.16089999675750732, 0.3774999976158142, -0.13459999859333038, -0.6991999745368958, -0.46700000762939453, 0.1565999984741211, 0.046799998730421066, -0.13210000097751617, 1.3686000108718872, 0, -0.4115999937057495, 1.0185999870300293, -0.3935000002384186, 0.5223000049591064, 0.2838999927043915, 0.5128999948501587, 0.1265999972820282, 0.010300000198185444, 1.5192999839782715, 0.2705000042915344, 0.4293999969959259, 0.012000000104308128, -0.33970001339912415, 0.14830000698566437, 0.28060001134872437, 0.3206000030040741, 0.5662000179290771, -0.09870000183582306, -0.10050000250339508, -0.35760000348091125, 0.09610000252723694, -0.6401000022888184, 0.19210000336170197, -0.15330000221729279, -0.4169999957084656, 0.10939999669790268, 0.8230999708175659, -0.3783999979496002, 0.4032000005245209, -0.6460999846458435, 0.8034999966621399, 0.2029000073671341, -0.37450000643730164, 0.33169999718666077, 0.18410000205039978, 0.707099974155426, 0.12269999831914902, 0.7949000000953674, 0.03500000014901161, 0.38179999589920044, -0.15539999306201935, 0.3785000145435333, -0.24050000309944153, 0.23589999973773956, 0.34630000591278076, -0.4925000071525574, -0.09290000051259995, -0.4352000057697296, -0.2206999957561493, -0.9959999918937683, -0.723800003528595, -0.5468999743461609, -1.2939000129699707, -0.01360000018030405, 0.2791000008583069, -0.16529999673366547, -0.12380000203847885, 0.4950999915599823, 0.289900004863739, 0.065700002014637, 0.7189000248908997, 0.05700000002980232, 0.661899983882904, -0.6381000280380249, -0.8072999715805054, 0.23549999296665192, 0.30480000376701355, -0.019899999722838402, -0.07519999891519547, 0.27639999985694885, 0.8011000156402588, -0.17440000176429749, 0.15809999406337738, -0.384799987077713, 0.5993000268936157, 0.5267999768257141, -0.04170000180602074, 0.37700000405311584, 0.6998000144958496, 0.593999981880188, 0.5911999940872192, -0.5570999979972839, 0.023800000548362732, -0.2475000023841858, 0.030700000002980232, -0.38749998807907104, -0.7437000274658203, 0.5144000053405762, 0.00570000009611249, 0.765500009059906, 0.1720000058412552, -2.5624001026153564, -0.30660000443458557, 0.36469998955726624, 0.4733000099658966, -0.3400999903678894, -0.14499999582767487, 0.7088000178337097, -0.13179999589920044, 0.04259999841451645, -0.12030000239610672, -0.36239999532699585, 0.5357999801635742, -0.3700999915599823, -0.5648000240325928, -0.1972000002861023, -0.8769000172615051, -0.3675000071525574, -0.2003999948501587, 0.13359999656677246, -0.16990000009536743, 0.44609999656677246, 0.1559000015258789, 1.1167999505996704, 0.23649999499320984, -0.22059999406337738, 0.4480000138282776, -0.40529999136924744, -0.13609999418258667, 0.2198999971151352, 0.053599998354911804, -0.020999999716877937, 0.6984999775886536, 0.9642999768257141, 0.17270000278949738, -0.03290000185370445, -0.18930000066757202, 0.07020000368356705, 0.14959999918937683, -1.3825000524520874, 0.4146000146865845, -0.5027999877929688, 0.3831999897956848, 0.9545000195503235, -0.41519999504089355, -1.0369000434875488, -0.18299999833106995, 0.5882999897003174, -0.29179999232292175, -0.5293999910354614, -0.6541000008583069, -0.19059999287128448, -0.8483999967575073, -0.3456999957561493, 0.9541000127792358, -0.7924000024795532, -0.6019999980926514, 0.07999999821186066, -0.2596000134944916, 0.8381999731063843, -0.2667999863624573, -0.11060000211000443, 0.03620000183582306, -0.3188999891281128, -0.7278000116348267, -0.08940000087022781, -0.22769999504089355, -0.2393999993801117, -0.2962000072002411, 0.7775999903678894, -0.011800000444054604, -0.4357999861240387, 0.3749000132083893, -0.6069999933242798, -0.18569999933242798, 0.11389999836683273, -0.4415999948978424, -0.37040001153945923, -0.7487000226974487, -0.10790000110864639, -0.29919999837875366, -0.3276999890804291, 0.025100000202655792, -0.9187999963760376, 0.2944999933242798, -0.22339999675750732, 0.3467999994754791, 0.33169999718666077, 0.2890999913215637, 0.2612999975681305, -0.03440000116825104, -0.6004999876022339, -0.6258000135421753, -0.54339998960495, -0.7712000012397766, -0.9057000279426575, -0.16680000722408295, -0.9904999732971191, -1.4915000200271606, -0.03720000013709068, -1.1638000011444092, 0.12620000541210175, -0.5248000025749207, -0.15379999577999115, -0.36820000410079956, 0.3249000012874603, 0.06499999761581421, 0.051100000739097595, -0.46070000529289246, 0.22310000658035278, 0.28220000863075256, 0.1396999955177307, 0.2833000123500824, -0.1225999966263771, -0.459199994802475, -0.3434999883174896, -0.6654000282287598, -0.5055999755859375, -0.863099992275238, 0.15360000729560852, -0.4050999879837036, 0.08910000324249268, -0.6972000002861023, -0.4699000120162964, -0.6773999929428101, -0.062199998646974564, -0.9300000071525574, 0.13369999825954437, -0.49380001425743103, 0.39480000734329224, -0.4074999988079071, -0.6410999894142151, -0.009100000374019146, -0.13330000638961792, -0.5192000269889832, -0.16609999537467957, 0.33169999718666077, -0.6427000164985657, -0.07069999724626541, 0.4805999994277954, 0.38280001282691956, 0.22290000319480896, 0.6159999966621399, -0.08839999884366989, -0.0471000000834465, 0.11060000211000443, 0.382099986076355, 0.09220000356435776, 0.08060000091791153, 0.33709999918937683, 0.188400000333786, 0.13809999823570251, -0.23919999599456787, -3.6435000896453857, -2.150899887084961, 0.4975000023841858, -0.3619999885559082, -2.5383999347686768, -1.6821000576019287, -0.3650999963283539, 0.6262000203132629, -1.618499994277954, -1.065000057220459, 0.8374000191688538, 0.3684999942779541, 0.25769999623298645, 0.3790999948978424, -3.233299970626831, -1.794800043106079, -0.6592000126838684, -1.3148000240325928, -0.7379999756813049, 0.05339999869465828, -1.7552000284194946, -1.8039000034332275, -1.1339999437332153, -0.5652999877929688, -1.2453999519348145, 0.9473000168800354, 1.4230999946594238, 1.011199951171875, -1.9498000144958496, -2.024899959564209, -1.2348999977111816, 0.328000009059906, -3.9189000129699707, -2.19950008392334, 0.18889999389648438, -1.2314000129699707, -1.802299976348877, -0.2994999885559082, -0.4066999852657318, -0.1316000074148178]);
+  carcp.ATOM_TYPE = stampJavaTypeInfo(getClassLiteralForArray(cggl.J_classLit, 1), {4:1, 1:1}, 5, 14, [524290, 524292, 589826, 589827, 589828, 589829, 589832, 589833, 589837, 589838, 598019, 598020, 598024, 606211, 688130, 688131, 688132, 688137, 688142, 696324, 819202, 819203, 819204, 819205, 819214, 827396, 1048580, 1114114, 1114115, 1114116, 1114120, 1212420, 1220611, 1343492, 1343496, 1638402, 1638403, 17367042, 17367043, 17367044, 17367045, 17367048, 17367049, 17367053, 17367054, 17375236, 17465346, 17465348, 17465353, 17473540, 1208483842, 1208483848, 1208483912, 1208549378, 1208549379, 1208549380, 1208549384, 1208549388, 1208549442, 1208549443, 1208549444, 1208549448, 1208557571, 1208565763, 1208565827, 1409875970, 1409875971, 1409875972, 1409875976, 1409876034, 1409876035, 1409876036, 1409876040, 1409884163, 1409974274, 1409974280, 1409974338, 1678245892, 1678311426, 1678311427, 1678311428, 1678311432, 1678311490, 1678311491, 1678311492, 1678311496, 1678409730, 1678409731, 1678409732, 1678409794, 1678540802, 1678540808, 1678540810, 1678540866, 2282291202, 2282291203, 2282291266, 2282291267, 2282389506, 2282389507, 2282389570, 2282389571, 2282389572, 2282520578, 2282520579, 2282520642, 2282520643, 2282537027, 2483617794, 2483617795, 2483617858, 2483617859, 2483617860, 2483617864, 2483716098, 2483716099, 2483716162, 2483716163, 2484150275, 2484248579, 2752675842, 3356033026, 3356139523, 3557359618, 3557457922, 3557588994, 34510798914, 34510798915, 34510798916, 34510798920, 34510807107, 34510815299, 34712125506, 34712125507, 34712125508, 34712125512, 34712223810, 34712223811, 34712223812, 34712223816, 34980560962, 34980560963, 34980659266, 34980659267, 34980659268, 35568287746, 35568287747, 35568287748, 35568287752, 35568287756, 35568287810, 35568287811, 35568287812, 35568287816, 35568287820, 35568386050, 35568386051, 35568386052, 35568386114, 35568386120, 35568517122, 35568517123, 35568517124, 35568517128, 35568517186, 35568517187, 35568517188, 35568517192, 35568812034, 35568812035, 35568812098, 35568812099, 35568910338, 35568910339, 35568910403, 35569336322, 35569434626, 35585064962, 35585064963, 35585064964, 35585064968, 35585065026, 35585065027, 35585065028, 35585065032, 35769614338, 35769614340, 35769614402, 35769712642, 35770138626, 35770236930, 35786391554, 35786391555, 2475109646403, 2475109711874, 2475109711875, 2475109711938, 2475109711939, 2475109720067, 2475109720131, 2475109728259, 2475109728323, 2887426572290, 2887426572291, 2887426572354, 2887426572355, 2887627898882, 2887627898883, 2887627898946, 2887627997186, 2887627997250, 3437182386178, 3437182386179, 3437182386242, 3437182386243, 3437383712770, 3437383712771, 3437383712834, 3437383811074, 3437652148226, 3437652377602, 4674132967426, 4674132967490, 4674132967491, 4674132975619, 4674334294018, 4674334294082, 4674334294083, 4674334302211, 4674334302275, 4674334392322, 4674334392386, 4674602729474, 4674602729538, 4674602827842, 4674602958850, 4674602958914, 5086449827842, 5086449827848, 5086449827906, 5086449827907, 5086449827912, 5086651154434, 5086651154498, 5086651162627, 5086651252738, 5086651252743, 5086651252802, 5086651252808, 5086651260931, 5086919589890, 5086919589954, 5086919688194, 5086919688258, 5086919819330, 5636205641794, 5636406968322, 5636406968386, 5636407066626, 5636407066690, 5636675403842, 5636675502082, 5636675502146, {l:589890, m:73760, h:4}, {l:589891, m:73760, h:4}, {l:598083, m:73760, h:4}, {l:688194, m:73760, h:4}, {l:688195, m:73760, h:4}, {l:696387, m:73760, h:4}, {l:819266, m:73760, h:4}, {l:65602, m:73764, h:4}, {l:65603, m:73764, h:4}, {l:589890, m:172064, h:4}, {l:589891, m:172064, h:4}, {l:598083, m:172064, h:4}, {l:688194, m:172064, h:4}, {l:688195, m:172064, h:4}, {l:696387, m:172064, h:4}, {l:819266, m:172064, h:4}, {l:65602, m:172068, h:4}, {l:65603, m:172068, h:4}, {l:589890, m:172112, h:4}, {l:589891, m:172112, h:4}, {l:688194, m:172112, h:4}, {l:819266, m:172112, h:4}, {l:65602, m:172116, h:4}, {l:65608, m:172116, h:4}, {l:163906, m:172116, h:4}, {l:589890, m:303136, h:4}, {l:688194, m:303136, h:4}, {l:819266, m:303136, h:4}, {l:65602, m:303140, h:4}, {l:589890, m:303184, h:4}, {l:688194, m:303184, h:4}, {l:819266, m:303184, h:4}, {l:65602, m:303188, h:4}, {l:65602, m:303252, h:4}, {l:589826, m:590112, h:4}, {l:589827, m:590112, h:4}, {l:589890, m:590112, h:4}, {l:589891, m:590112, h:4}, {l:589826, m:590160, h:4}, {l:589827, m:590160, h:4}, {l:589890, m:590160, h:4}, {l:589891, m:590160, h:4}, {l:688130, m:590160, h:4}, {l:688194, m:590160, h:4}, {l:589826, m:590224, h:4}, {l:589827, m:590224, h:4}, {l:589890, m:590224, h:4}, {l:589891, m:590224, h:4}, {l:688131, m:590224, h:4}, {l:688194, m:590224, h:4}, {l:819203, m:590224, h:4}, {l:589826, m:590368, h:4}, {l:589890, m:590368, h:4}, {l:688130, m:590368, h:4}, {l:688194, m:590368, h:4}, {l:696323, m:590368, h:4}, {l:819202, m:590368, h:4}, {l:819208, m:590368, h:4}, {l:819266, m:590368, h:4}, {l:589826, m:590416, h:4}, {l:589832, m:590416, h:4}, {l:589890, m:590416, h:4}, {l:589891, m:590416, h:4}, {l:589896, m:590416, h:4}, {l:688130, m:590416, h:4}, {l:688136, m:590416, h:4}, {l:688194, m:590416, h:4}, {l:696323, m:590416, h:4}, {l:819202, m:590416, h:4}, {l:819266, m:590416, h:4}, {l:688130, m:590480, h:4}, {l:688194, m:590480, h:4}, {l:65602, m:598052, h:4}, {l:65603, m:598052, h:4}, {l:65602, m:598100, h:4}, {l:65603, m:598100, h:4}, {l:73795, m:598100, h:4}, {l:163906, m:598100, h:4}, {l:163907, m:598100, h:4}, {l:65602, m:598164, h:4}, {l:163906, m:598164, h:4}, {l:589826, m:598304, h:4}, {l:589827, m:598304, h:4}, {l:589890, m:598304, h:4}, {l:589891, m:598304, h:4}, {l:688130, m:598304, h:4}, {l:688194, m:598304, h:4}, {l:1114114, m:598304, h:4}, {l:1114178, m:598304, h:4}, {l:1212418, m:598304, h:4}, {l:1212424, m:598304, h:4}, {l:1212482, m:598304, h:4}, {l:589826, m:598308, h:4}, {l:589826, m:688416, h:4}, {l:589890, m:688416, h:4}, {l:589826, m:688464, h:4}, {l:589890, m:688464, h:4}, {l:589890, m:688528, h:4}, {l:589826, m:688720, h:4}, {l:688130, m:688720, h:4}, {l:688130, m:688784, h:4}, {l:65602, m:696356, h:4}, {l:65602, m:696404, h:4}, {l:163906, m:696404, h:4}, {l:589826, m:696608, h:4}, {l:1114178, m:696608, h:4}, {l:1212418, m:696608, h:4}, {l:589826, m:696612, h:4}, {l:524355, m:590112, h:288}, {l:589825, m:590112, h:288}, {l:589826, m:590112, h:288}, {l:589890, m:590112, h:288}, {l:598019, m:590112, h:288}, {l:598083, m:590112, h:288}, {l:589826, m:590112, h:336}, {l:589890, m:590112, h:336}, {l:598019, m:590112, h:336}, {l:598083, m:590112, h:336}, {l:589826, m:688416, h:336}, {l:589890, m:688416, h:336}, {l:589826, m:688464, h:336}, {l:589890, m:688464, h:336}, {l:688130, m:688464, h:336}, {l:589826, m:590112, h:400}, {l:589827, m:590112, h:400}, {l:589890, m:590112, h:400}, {l:589891, m:590112, h:400}, {l:589826, m:688416, h:400}, {l:589826, m:688464, h:400}, {l:688130, m:688464, h:400}, {l:589826, m:819488, h:400}, {l:589890, m:819488, h:400}, {l:589826, m:819536, h:400}, {l:589826, m:819600, h:400}, {l:688130, m:819600, h:400}, {l:819202, m:819600, h:400}, {l:589827, m:819488, h:544}, {l:589831, m:688416, h:592}, {l:589831, m:688464, h:592}, {l:688135, m:688464, h:592}, {l:688199, m:688464, h:592}, {l:589831, m:819536, h:592}, {l:688135, m:819536, h:592}, {l:688135, m:819600, h:592}, {l:688202, m:819600, h:592}, {l:589832, m:1212704, h:592}, {l:589896, m:1212704, h:592}, {l:589832, m:1212752, h:592}, {l:688136, m:1212752, h:592}, {l:688200, m:1212752, h:592}, {l:589831, m:688464, h:656}, {l:688135, m:688464, h:656}, {l:688135, m:819536, h:656}, {l:589891, m:65936, h:8228}, {l:589826, m:590112, h:8480}, {l:589890, m:590112, h:8480}, {l:598019, m:590112, h:8480}, {l:589826, m:688416, h:8480}, {l:589890, m:688416, h:8480}, {l:589826, m:688464, h:8480}, {l:589890, m:688464, h:8480}, {l:688130, m:688464, h:8480}, {l:819202, m:819600, h:8480}, {l:688135, m:1212752, h:8480}, {l:589832, m:1213008, h:8480}, {l:589896, m:1213008, h:8480}, {l:688136, m:1213008, h:8480}, {l:688200, m:1213008, h:8480}, {l:688135, m:1343824, h:8480}, {l:589826, m:590112, h:8484}, {l:589890, m:590112, h:8484}, {l:589826, m:590160, h:8484}, {l:589890, m:590160, h:8484}, {l:1212424, m:590416, h:8484}, {l:1212488, m:590416, h:8484}, {l:688130, m:598304, h:8484}, {l:688194, m:598304, h:8484}, {l:589826, m:590112, h:8528}, {l:589890, m:590112, h:8528}]);
+  carcp.INCREMENT = stampJavaTypeInfo(getClassLiteralForArray(cggl.F_classLit, 1), {4:1, 1:1}, 5, 15, [0.6966999769210815, 0, 0.4885999858379364, -0.47269999980926514, -0.07490000128746033, 0.6262000203132629, 0.273499995470047, 0.5699999928474426, 0.7009999752044678, 0.9534000158309937, -3.6435000896453857, -2.150899887084961, 0.4975000023841858, -2.19950008392334, -0.2809000015258789, -0.8259999752044678, -0.1784999966621399, -1.620300054550171, -1.0959999561309814, -0.3619999885559082, 0.13950000703334808, -0.29750001430511475, -1.2907999753952026, 1.0161999464035034, -1.3825000524520874, -2.5383999347686768, 0.33169999718666077, 0.4291999936103821, -0.5824000239372253, -0.1834000051021576, 0.1306000053882599, -0.5015000104904175, 0.6262000203132629, -0.5257999897003174, 0.4244000017642975, -0.16099999845027924, -0.2777999937534332, 0.5110999941825867, -0.435699999332428, -0.10409999638795853, 0.3424000144004822, -0.061500001698732376, 0.6035000085830688, 0.7226999998092651, 0.43459999561309814, -1.6821000576019287, -0.3310000002384186, -0.49799999594688416, -1.4915000200271606, -0.3650999963283539, 0.45969998836517334, 0.3384000062942505, 0.6632999777793884, 0.4544000029563904, 0.15970000624656677, 0.633899986743927, 0.35040000081062317, 0.04490000009536743, 0.34200000762939453, 0.26109999418258667, 0.40459999442100525, 0.5218999981880188, -1.065000057220459, -1.2314000129699707, -1.802299976348877, -0.36320000886917114, -0.4108000099658966, 0.30570000410079956, -0.14560000598430634, -0.27129998803138733, -0.5192999839782715, 0.45260000228881836, 0.5539000034332275, 0.8374000191688538, -0.7070000171661377, -0.48809999227523804, -0.4099999964237213, 0, 0.14790000021457672, 0.3447999954223633, 0.42980000376701355, 0.5579000115394592, -0.1264999955892563, -0.042500000447034836, 0.07670000195503235, 0.6635000109672546, -0.38119998574256897, -0.8367999792098999, 1.0286999940872192, -0.10209999978542328, 0.3587000072002411, -0.5945000052452087, 0.16920000314712524, -0.121799997985363, 0.32829999923706055, 0.22390000522136688, 0.20430000126361847, 0.05900000035762787, -0.48350000381469727, 0.6165000200271606, -0.4011000096797943, 0.5577999949455261, -0.21639999747276306, -0.017500000074505806, 0.29809999465942383, 0.10999999940395355, 0.27149999141693115, -0.2994999885559082, -0.46700000762939453, 0.1565999984741211, 0.046799998730421066, -0.13210000097751617, 1.3686000108718872, 0, -0.4115999937057495, 1.0185999870300293, -0.3935000002384186, 0.5223000049591064, 0.3684999942779541, 0.25769999623298645, 1.5192999839782715, 0.2705000042915344, 0.3790999948978424, 0.012000000104308128, -0.33970001339912415, 0.14830000698566437, 0.2766000032424927, 0.35929998755455017, 0.7714999914169312, 0.3149999976158142, -1.618499994277954, 0.18889999389648438, -0.2651999890804291, -0.09650000184774399, 0.420199990272522, 0.18709999322891235, -0.3684000074863434, -0.07779999822378159, 0.8942999839782715, 0.3693999946117401, 0.28790000081062317, 0.4489000141620636, -0.26010000705718994, 0.4771000146865845, 0.1923000067472458, 0.43810001015663147, 0.16949999332427979, 0.45249998569488525, 0.3352000117301941, 0.1582999974489212, 0.4036000072956085, -0.04800000041723251, 0.5023000240325928, -0.26489999890327454, 0.76910001039505, -0.35519999265670776, 1.0300999879837036, -0.11410000175237656, -0.5932000279426575, 0.17489999532699585, 0.13130000233650208, -0.18039999902248383, 0.399399995803833, 0.22910000383853912, 0.31690001487731934, 0.35989999771118164, -0.0038999998942017555, -0.2955999970436096, 0.4408999979496002, -0.16089999675750732, 0.3774999976158142, -0.13459999859333038, 0.2838999927043915, 0.5128999948501587, 0.1265999972820282, 0.4293999969959259, 0.28060001134872437, 0.49070000648498535, 0.3540000021457672, 0.219200000166893, 0.15649999678134918, 0.6934999823570251, 0.3617999851703644, 0.6735000014305115, 0.5777999758720398, -0.5636000037193298, 0.5569000244140625, 0.30379998683929443, -0.32760000228881836, -0.6991999745368958, 0.010300000198185444, -0.4659000039100647, 0.38179999589920044, 0.33169999718666077, 0.18410000205039978, 0.707099974155426, 0.12269999831914902, 0.7949000000953674, -0.6592000126838684, -1.3148000240325928, -0.4066999852657318, -0.1316000074148178, -0.4925000071525574, -0.09290000051259995, -0.4352000057697296, -0.2206999957561493, -0.9959999918937683, -0.723800003528595, -0.5468999743461609, -1.2939000129699707, -0.01360000018030405, 0.065700002014637, 0.7189000248908997, 0.05700000002980232, 0.661899983882904, -0.6381000280380249, -0.8072999715805054, 0.23549999296665192, 0.30480000376701355, -0.019899999722838402, -0.07519999891519547, 0.44609999656677246, 0.1559000015258789, 1.1167999505996704, -1.8039000034332275, 0.23649999499320984, -0.22059999406337738, 0.4480000138282776, -1.1339999437332153, -0.5652999877929688, -0.40529999136924744, -0.13609999418258667, 0.2198999971151352, 0.053599998354911804, -0.020999999716877937, 0.6984999775886536, 0.9642999768257141, -0.41519999504089355, -1.0369000434875488, -0.18299999833106995, 0.5882999897003174, -0.29179999232292175, -0.5293999910354614, -0.6541000008583069, 0.9473000168800354, -0.19059999287128448, -0.8483999967575073, -0.3456999957561493, 0.9541000127792358, 1.4230999946594238, -0.7924000024795532, -0.6019999980926514, 0.07999999821186066, -0.2596000134944916, 0.8381999731063843, -0.4415999948978424, -0.37040001153945923, -0.7487000226974487, -0.10790000110864639, -0.29919999837875366, -0.3276999890804291, 0.025100000202655792, -0.9187999963760376, 0.10939999669790268, 0.8230999708175659, -3.233299970626831, 0.03500000014901161, 0.38179999589920044, -0.7379999756813049, 0.2791000008583069, 0.3206000030040741, 0.5662000179290771, -0.3783999979496002, 0.4032000005245209, -1.794800043106079, -0.15539999306201935, 0.3785000145435333, 0.05339999869465828, -0.16529999673366547, -0.09870000183582306, -0.10050000250339508, -0.6460999846458435, 0.8034999966621399, -0.24050000309944153, -0.12380000203847885, -0.35760000348091125, 0.09610000252723694, -0.6401000022888184, 0.2029000073671341, 0.23589999973773956, 0.4950999915599823, 0.19210000336170197, -0.37450000643730164, 0.34630000591278076, 0.289900004863739, -0.15330000221729279, -0.4169999957084656, 0.37700000405311584, 0.6998000144958496, 0.593999981880188, 0.5911999940872192, -0.5570999979972839, 0.023800000548362732, -0.2475000023841858, 0.030700000002980232, -0.38749998807907104, -0.7437000274658203, 0.5144000053405762, 0.00570000009611249, 0.765500009059906, 0.1720000058412552, -2.5624001026153564, -0.30660000443458557, 0.36469998955726624, 0.17270000278949738, -0.03290000185370445, -0.18930000066757202, 0.07020000368356705, -1.2453999519348145, 0.14959999918937683, -1.3825000524520874, 0.4146000146865845, -0.2667999863624573, -0.11060000211000443, 0.03620000183582306, -0.3188999891281128, -0.7278000116348267, -0.08940000087022781, -0.22769999504089355, -0.2393999993801117, 1.011199951171875, -0.2962000072002411, 0.7775999903678894, 0.2944999933242798, -0.22339999675750732, 0.27639999985694885, 0.8011000156402588, -0.17440000176429749, 0.15809999406337738, -1.7552000284194946, -0.384799987077713, 0.5993000268936157, 0.5267999768257141, -0.04170000180602074, 0.4733000099658966, -0.3400999903678894, -0.14499999582767487, 0.7088000178337097, -0.13179999589920044, 0.04259999841451645, -0.5027999877929688, 0.3831999897956848, -0.011800000444054604, -0.4357999861240387, 0.3749000132083893, -0.12030000239610672, -0.5648000240325928, -0.1972000002861023, -0.8769000172615051, -0.3675000071525574, -0.2003999948501587, -0.6069999933242798, -0.18569999933242798, 0.3467999994754791, -0.36239999532699585, 0.5357999801635742, -0.3700999915599823, 0.13359999656677246, 0.9545000195503235, 0.11389999836683273, -0.16990000009536743, 0.33169999718666077, 0.2890999913215637, 0.2612999975681305, -0.03440000116825104, -1.9498000144958496, -2.024899959564209, -0.6004999876022339, -0.6258000135421753, -1.2348999977111816, 0.328000009059906, -0.54339998960495, -0.7712000012397766, -0.9057000279426575, -0.16680000722408295, -0.9904999732971191, -0.03720000013709068, -1.1638000011444092, 0.12620000541210175, -0.5248000025749207, -0.15379999577999115, -0.36820000410079956, 0.3249000012874603, 0.06499999761581421, 0.051100000739097595, -0.46070000529289246, 0.22310000658035278, 0.28220000863075256, 0.1396999955177307, -0.49380001425743103, 0.39480000734329224, -0.4074999988079071, -0.6410999894142151, -0.009100000374019146, -0.13330000638961792, -0.5192000269889832, -0.16609999537467957, 0.33169999718666077, -0.07069999724626541, 0.4805999994277954, 0.38280001282691956, 0.22290000319480896, 0.6159999966621399, 0.33709999918937683, 0.188400000333786, 0.13809999823570251, -1.4915000200271606, 0.2833000123500824, -0.1225999966263771, -3.9189000129699707, -0.459199994802475, -0.3434999883174896, -0.6654000282287598, -0.5055999755859375, -0.863099992275238, 0.15360000729560852, -0.6427000164985657, -0.08839999884366989, -0.0471000000834465, 0.11060000211000443, 0.382099986076355, -0.23919999599456787, -0.4050999879837036, 0.08910000324249268, -0.6972000002861023, -0.4699000120162964, 0.09220000356435776, 0.08060000091791153, -0.6773999929428101, -0.062199998646974564, -0.9300000071525574, 0.13369999825954437]);
   carcp.cCLogPUnknown = -999;
 }
 ;
@@ -27771,13 +27820,14 @@ _.$init_62 = function $init_62(){
 }
 ;
 _.assessCLogP = function assessCLogP(mol){
-  var atom, cLogP, e, index_0;
+  var atom, cLogP, e, index_0, type_0;
   cLogP = 0;
   mol.normalizeAmbiguousBonds_0();
-  mol.ensureHelperArrays_0(3);
+  mol.ensureHelperArrays_0(7);
   for (atom = 0; atom < mol.getAtoms_0(); atom++) {
     try {
-      index_0 = carcp.sSortedTypeList.getIndex_0(jl.valueOf_23(carc2.getAtomType(mol, atom, 6241)));
+      type_0 = carc2.getAtomType(mol, atom, 6241);
+      index_0 = carcp.sSortedTypeList.getIndex_0(jl.valueOf_23(type_0));
       if (index_0 != -1)
         cLogP += carcp.INCREMENT[index_0];
     }
@@ -27800,7 +27850,7 @@ _.getDetail_0 = function getDetail(mol){
   detail.add_3('Atom-types are 64-bit numbers describing atoms and their near surrounding.', 2);
   detail.add_3('Recognized atom types and their contributions are:', 2);
   mol.normalizeAmbiguousBonds_0();
-  mol.ensureHelperArrays_0(3);
+  mol.ensureHelperArrays_0(7);
   if (isNotNull(mol)) {
     errorCount = 0;
     countMap = new ju.TreeMap;
@@ -28301,7 +28351,7 @@ _.getPolarAtomType = function getPolarAtomType(mol, atom){
 _.getPolarAtomTypeCounts = function getPolarAtomTypeCounts(mol){
   var atom, count;
   count = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, carcp.cTPSAIncrement.length + 2, 15, 1);
-  mol.ensureHelperArrays_0(3);
+  mol.ensureHelperArrays_0(7);
   for (atom = 0; atom < mol.getAtoms_0(); atom++)
     count[this.getPolarAtomType(mol, atom)]++;
   return count;
@@ -28321,8 +28371,8 @@ carcp.$clinit_SolubilityPredictor = function $clinit_SolubilityPredictor(){
   carcp.$clinit_SolubilityPredictor = emptyMethod;
   jl.$clinit_Object();
   carcp.cSolubilityUnknown = -999;
-  carcp.cIncrement = stampJavaTypeInfo(getClassLiteralForArray(cggl.F_classLit, 1), {4:1, 1:1}, 5, 15, [-0.1899999976158142, 1.2699999809265137, -0.7009999752044678, 2.690999984741211, -0.22699999809265137, 0.029999999329447746, 0.10599999874830246, -0.47600001096725464, -0.44699999690055847, -0.19099999964237213, -0.3330000042915344, 0.0860000029206276, 0.24699999392032623, -0.06199999898672104, 0.01600000075995922, 0.3869999945163727, 0.23499999940395355, -0.4320000112056732, -0.902999997138977, 0.38999998569488525, 0.5809999704360962, 4.52400016784668, -0.6349999904632568, 0.7919999957084656, 0.5920000076293945, 0.9639999866485596, 0.3540000021457672, -0.6850000023841858, -0.3149999976158142, -0.4129999876022339, -0.5950000286102295, 0.2199999988079071, -0.2800000011920929, 0.7699999809265137, -0.05000000074505806, 1.0870000123977661, 0.19200000166893005, 0.19599999487400055, -0.5199999809265137, 0.5419999957084656, 0.3630000054836273, -0.1809999942779541, 2.384000062942505, 1.75, -1.6660000085830688, -1.065999984741211, 1.3270000219345093, 0.8029999732971191, -1.5049999952316284, -2.5369999408721924, -0.17000000178813934, 0.14900000393390656, 0.5210000276565552, 2.9049999713897705, -0.25200000405311584, -1.4320000410079956, -2.253999948501587, 0.4399999976158142, -0.27000001072883606, -0.13300000131130219, -0.26899999380111694, 0.2669999897480011, 0.5720000267028809, -0.5680000185966492, 0.17399999499320984, -0.1850000023841858, -0.23499999940395355, -0.17000000178813934, -0.1809999942779541, -0.34200000762939453, -0.3479999899864197, -0.43700000643730164, -0.8040000200271606, -0.41200000047683716, -0.2150000035762787, -0.625, -0.8309999704360962, 0.4970000088214874, -0.4309999942779541, -1.3309999704360962, 0.5070000290870667, -0.6320000290870667, -0.5989999771118164, 0.8600000143051147, 0.3610000014305115, 0.40299999713897705, 0.004999999888241291, 1.1460000276565552, 0.9359999895095825, -0.30000001192092896, 0.20900000631809235, -0.5830000042915344, -0.024000000208616257, -0.009999999776482582, 1.6469999551773071, 0.843999981880188, 0.125, 0.1420000046491623, -0.17100000381469727, 0.44200000166893005, 0.08799999952316284, 3.065999984741211, 1.6519999504089355, -0.15600000321865082, -0.3529999852180481, -0.164000004529953, -0.4410000145435333, -0.4970000088214874, -1.059999942779541, 0.6110000014305115, 0.4860000014305115, 0.11500000208616257, -0.22499999403953552, -0.15399999916553497, -0.03099999949336052, 0.8619999885559082, -0.03500000014901161, -0.5960000157356262, -1.5740000009536743, -1.093000054359436, 1.1610000133514404, -0.7379999756813049, -0.44999998807907104, -0.5559999942779541, -0.621999979019165, 2.121999979019165, -1.4019999504089355, 2.072999954223633, -3.131999969482422, -2.119999885559082, 0.34700000286102295, -1.2649999856948853, -1.3170000314712524, 2.500999927520752, -2.2260000705718994, 0.9129999876022339, -2.9570000171661377, 0.29100000858306885, -0.7250000238418579, -1.4249999523162842, -0.2029999941587448, -0.017999999225139618, -0.8489999771118164, -2.259000062942505, -3.4760000705718994, -0.296999990940094, -1.659999966621399, 0.023000000044703484, 0.0729999989271164, 0.2540000081062317, 0.5540000200271606, 0.5950000286102295, -0.6019999980926514, -1.25, 1.3940000534057617, -2.7269999980926514, 0.08299999684095383, -1.281999945640564, -0.4059999883174896, -0.6370000243186951, -0.17399999499320984, -0.10100000351667404, -0.5429999828338623, -2.4059998989105225, -3.2920000553131104, -0.6809999942779541, -1.2580000162124634, 1.0700000524520874, -3.0959999561309814, -0.2280000001192093, 0.718999981880188, 0.1379999965429306, 1.3020000457763672, 0.859000027179718, 1.3589999675750732, 0.6589999794960022, -0.9399999976158142, 0.8999999761581421, 0.3190000057220459, -2.571000099182129, 1.9329999685287476, 0.11900000274181366, 2.1080000400543213, 0.11299999803304672, 3.3359999656677246, 0.7540000081062317, -0.4650000035762787, -0.05299999937415123, -0.19300000369548798, 1.850000023841858, -1.2610000371932983, -0.656000018119812, -0.7300000190734863, -0.9380000233650208, 1.1089999675750732, 0.972000002861023, 1.652999997138977, 2.6019999980926514, 1.628000020980835, -0.3970000147819519, 0.12800000607967377, 1.1540000438690186, 0.24199999868869781, -0.5289999842643738, -0.27799999713897705, -0.8019999861717224, 0.9120000004768372, -1.38100004196167, 0.46299999952316284, 1.0740000009536743, -0.628000020980835, -0.9620000123977661, 0.7289999723434448, 1.065999984741211, 1.0670000314712524, -0.3109999895095825, 0.03099999949336052, 1.3079999685287476, 0.07699999958276749, -0.4790000021457672, -0.2029999941587448, -1.8320000171661377, -1.4989999532699585, -2.115999937057495, -2.2070000171661377, -0.15299999713897705, 0.14100000262260437, 2.134999990463257, 0.23399999737739563, 0.460999995470047, 0.6700000166893005, -0.3610000014305115, -1.0390000343322754, -0.4830000102519989, 0.13699999451637268, -0.7680000066757202, -0.5109999775886536, 3.4240000247955322, -0.8550000190734863, -0.5849999785423279, -1.5670000314712524, 0.6570000052452087, 1.1150000095367432, 1.9759999513626099, 1.7860000133514404, -0.035999998450279236, -1.0499999523162842, 2.5390000343322754, 2.234999895095825, 2.2899999618530273, 3.121000051498413, 3.931999921798706, 2.75, 3.3429999351501465, 1.840000033378601, 0.3889999985694885, 1.121999979019165, 1.6299999952316284, 1.3350000381469727, 0.3659999966621399, -0.5569999814033508, 1.0449999570846558, 0.4320000112056732, 0.20399999618530273, 0.8820000290870667, 0.4659999907016754, -0.4580000042915344, 0.04399999976158142, 1.0329999923706055, -1.0800000429153442, 0.40400001406669617]);
-  carcp.cAtomType = stampJavaTypeInfo(getClassLiteralForArray(cggl.J_classLit, 1), {4:1, 1:1}, 5, 14, [262146, 262148, 262153, 262157, 264194, 264195, 264196, 264197, 264200, 264201, 264205, 264206, 267266, 267267, 267268, 267273, 267277, 271362, 271363, 271364, 271365, 271368, 271369, 395266, 395267, 395268, 395269, 395272, 395273, 395277, 395278, 398338, 526338, 526339, 526340, 526344, 529412, 533508, 533512, 788482, 788483, 136448002, 136448003, 136448004, 136448008, 139593730, 139593731, 139593732, 139593736, 139596802, 139596803, 139596804, 143788034, 143788035, 143791106, 268697604, 270794754, 270794756, 270796802, 270796803, 270796804, 270796808, 270796812, 273940482, 273942530, 273942531, 273942532, 273942536, 273945602, 273945608, 273945612, 278136834, 278136835, 278136836, 278136840, 278136844, 278139906, 278139907, 278139908, 278144002, 278144003, 278144004, 278144008, 405014530, 405014531, 405014532, 405014536, 405017602, 405017603, 405017604, 405021698, 405021699, 405021700, 405021704, 405145602, 405145603, 405145604, 405145608, 408158210, 408160258, 408163330, 408167426, 408291330, 539232258, 539232259, 539235330, 539235331, 539239426, 539239427, 539363330, 539363331, 542377986, 542377987, 542381058, 542381059, 542509058, 542509059, 542509070, 546837506, 807667714, 807798786, 810813442, 810816514, 810820610, 139722885122, 139722885123, 142944110594, 142944110595, 142947256322, 142947259394, 147239077890, 147242223618, 277161838594, 277161838595, 277164984322, 277164984323, 277164987394, 277164987395, 277169178626, 277169181698, 277296187394, 277296187395, 280383064066, 280386209794, 280386212866, 280390404098, 280390407170, 280517412866, 280517412867, 280520558594, 280520558595, 280520561666, 284678031362, 284681177090, 284681177091, 284681180162, 284685371394, 284685374466, 284812380162, 284812380163, 284815525890, 284815528962, 284819720194, 284819727362, 284819727363, 414600792066, 414603937794, 414603937795, 414603940866, 414603940867, 414735140866, 414735140867, 414738286594, 414738286595, 414738289666, 414742480898, 414742480899, 414742483970, 414742488066, 414742488067, 414869358594, 414869358595, 414869361666, 414869361667, 414869489666, 417956366338, 417959512066, 552174094338, 552177240066, 552177240067, 552177243138, 552181434370, 552181437442, 552181441538, 552308312066, 552308315138, 552308319234, 552308319240, 552308443138, 552311457794, 555395319810, 555395319816, 555398465538, 555398465539, 555398468610, 555398468611, 555398468615, 555398468616, 555402659842, 555402659848, 555402662914, 555402667010, 555529537538, 555529537544, 555529540610, 555529540615, 555529544706, 555529668610, 555532683266, 555532686338, 555667032078, 559693432834, 559693435906, 559697630210, 559697634306, {l:2361346, m:590400, h:16}, {l:2361346, m:1376832, h:16}, {l:2361347, m:1376832, h:16}, {l:2361346, m:1377600, h:16}, {l:1312770, m:1377601, h:16}, {l:1315842, m:1377601, h:16}, {l:2361346, m:2425408, h:16}, {l:2361346, m:2426176, h:16}, {l:1312770, m:2426177, h:16}, {l:1315842, m:2426177, h:16}, {l:2361346, m:2427200, h:16}, {l:1312770, m:2427201, h:16}, {l:1315842, m:2427201, h:16}, {l:1312770, m:2427202, h:16}, {l:1315842, m:2427202, h:16}, {l:1319938, m:2427202, h:16}, {l:2361346, m:590400, h:24}, {l:2361346, m:591168, h:24}, {l:1312770, m:591169, h:24}, {l:1315842, m:591169, h:24}, {l:2361346, m:592192, h:24}, {l:1319938, m:592194, h:24}, {l:2361346, m:623168, h:24}, {l:1312770, m:623169, h:24}, {l:1315842, m:623169, h:24}, {l:2361346, m:623200, h:24}, {l:2364418, m:623200, h:24}, {l:2368514, m:623200, h:24}, {l:2361351, m:1376832, h:32}, {l:2361351, m:1377600, h:32}, {l:1312775, m:1377601, h:32}, {l:1315847, m:1377601, h:32}, {l:1312775, m:1378625, h:32}, {l:1315847, m:1378625, h:32}, {l:1315847, m:1378626, h:32}, {l:1319943, m:1378626, h:32}, {l:1315847, m:1409601, h:32}, {l:2361352, m:1443136, h:32}, {l:1312776, m:1443137, h:32}, {l:1315848, m:1443137, h:32}, {l:1312776, m:1443138, h:32}, {l:1315848, m:1443138, h:32}, {l:2361352, m:1443168, h:32}, {l:2364424, m:1443168, h:32}, {l:2368520, m:1443168, h:32}, {l:1312775, m:2426177, h:32}]);
+  carcp.cAtomType = stampJavaTypeInfo(getClassLiteralForArray(cggl.J_classLit, 1), {4:1, 1:1}, 5, 14, [524290, 524292, 524297, 524301, 589826, 589827, 589828, 589829, 589832, 589833, 589837, 589838, 688130, 688131, 688132, 688137, 688141, 819202, 819203, 819204, 819205, 819208, 819209, 1114114, 1114115, 1114116, 1114120, 1212420, 1343492, 1343496, 1638402, 1638403, 17367042, 17367043, 17367044, 17367045, 17367048, 17367049, 17367053, 17367054, 17465346, 1074266116, 1208483842, 1208483844, 1208549378, 1208549379, 1208549380, 1208549384, 1208549388, 1409810434, 1409875970, 1409875971, 1409875972, 1409875976, 1409974274, 1409974280, 1409974284, 1678311426, 1678311427, 1678311428, 1678311432, 1678311436, 1678409730, 1678409731, 1678409732, 1678540802, 1678540803, 1678540804, 1678540808, 2282291202, 2282291203, 2282389506, 2282389507, 2282520578, 2282520579, 2483617794, 2483617795, 2483716098, 2483716099, 2752675842, 3356033026, 3557359618, 3557457922, 3557588994, 34510798850, 34510798851, 34510798852, 34510798856, 34712125442, 34712125443, 34712125444, 34712125448, 34712223746, 34712223747, 34712223748, 34980560898, 34980560899, 34980659202, 35568287746, 35568287747, 35568287748, 35568287752, 35568386050, 35568386051, 35568386052, 35568517122, 35568517123, 35568517124, 35568517128, 35568812034, 35568812035, 35568910338, 35568910339, 35568910350, 35569336322, 35585064962, 35585064963, 35585064964, 35585064968, 35769548802, 35769614338, 35769712642, 35769843714, 35786391554, 2475109711874, 2475109711875, 2887426572290, 2887426572291, 2887627898882, 2887627898883, 2887627997186, 3437182386178, 3437182386179, 3437383712770, 3437383811074, 3437652148226, 3437652377602, 3437652377603, 4674132967426, 4674334294018, 4674334294019, 4674334392322, 4674602729474, 4674602827778, 4674602958850, 5086449827842, 5086449827848, 5086651154434, 5086651154435, 5086651252738, 5086651252739, 5086651252743, 5086651252744, 5086919589890, 5086919589896, 5086919688194, 5086919819266, 5636406968322, 5636407066626, 5636675502082, 5636675633154, {l:589826, m:73760, h:4}, {l:589827, m:73760, h:4}, {l:688130, m:73760, h:4}, {l:819202, m:73760, h:4}, {l:65538, m:73764, h:4}, {l:65539, m:73764, h:4}, {l:589826, m:172064, h:4}, {l:589827, m:172064, h:4}, {l:688130, m:172064, h:4}, {l:819202, m:172064, h:4}, {l:819203, m:172064, h:4}, {l:65538, m:172068, h:4}, {l:65539, m:172068, h:4}, {l:589826, m:172112, h:4}, {l:589827, m:172112, h:4}, {l:688130, m:172112, h:4}, {l:819202, m:172112, h:4}, {l:65538, m:172116, h:4}, {l:163842, m:172116, h:4}, {l:589826, m:303136, h:4}, {l:688130, m:303136, h:4}, {l:819202, m:303136, h:4}, {l:65538, m:303140, h:4}, {l:589826, m:303184, h:4}, {l:688130, m:303184, h:4}, {l:819202, m:303184, h:4}, {l:65538, m:303188, h:4}, {l:589826, m:590112, h:4}, {l:589827, m:590112, h:4}, {l:589826, m:590160, h:4}, {l:589827, m:590160, h:4}, {l:688130, m:590160, h:4}, {l:589826, m:590224, h:4}, {l:589827, m:590224, h:4}, {l:688130, m:590224, h:4}, {l:819202, m:590224, h:4}, {l:819203, m:590224, h:4}, {l:589826, m:590368, h:4}, {l:688130, m:590368, h:4}, {l:819202, m:590368, h:4}, {l:819208, m:590368, h:4}, {l:589826, m:590416, h:4}, {l:589832, m:590416, h:4}, {l:688130, m:590416, h:4}, {l:688135, m:590416, h:4}, {l:819202, m:590416, h:4}, {l:1212430, m:590416, h:4}, {l:65538, m:598052, h:4}, {l:65538, m:598100, h:4}, {l:65539, m:598100, h:4}, {l:163842, m:598100, h:4}, {l:163843, m:598100, h:4}, {l:589826, m:598304, h:4}, {l:589827, m:598304, h:4}, {l:688130, m:598304, h:4}, {l:688131, m:598304, h:4}, {l:1114114, m:598304, h:4}, {l:1212418, m:598304, h:4}, {l:589826, m:598308, h:4}, {l:589826, m:688416, h:4}, {l:589826, m:688464, h:4}, {l:589826, m:688672, h:4}, {l:589826, m:688720, h:4}, {l:688130, m:688720, h:4}, {l:589826, m:590112, h:288}, {l:589826, m:590112, h:336}, {l:589827, m:590112, h:336}, {l:589826, m:688416, h:336}, {l:589826, m:688464, h:336}, {l:688130, m:688464, h:336}, {l:589826, m:590112, h:400}, {l:589826, m:688416, h:400}, {l:589826, m:688464, h:400}, {l:688130, m:688464, h:400}, {l:589826, m:819488, h:400}, {l:589826, m:819536, h:400}, {l:688130, m:819536, h:400}, {l:589826, m:819600, h:400}, {l:688130, m:819600, h:400}, {l:819202, m:819600, h:400}, {l:589831, m:590112, h:592}, {l:589831, m:688416, h:592}, {l:589831, m:688464, h:592}, {l:688135, m:688464, h:592}, {l:589831, m:819536, h:592}, {l:688135, m:819536, h:592}, {l:688135, m:819600, h:592}, {l:819207, m:819600, h:592}, {l:589832, m:1212704, h:592}, {l:589832, m:1212752, h:592}, {l:688136, m:1212752, h:592}, {l:589832, m:1212816, h:592}, {l:688136, m:1212816, h:592}, {l:589831, m:688464, h:656}, {l:589826, m:590112, h:8480}, {l:589826, m:688416, h:8480}, {l:589826, m:688464, h:8480}, {l:688130, m:688464, h:8480}, {l:589826, m:819488, h:8480}, {l:819202, m:819600, h:8480}, {l:688135, m:1212752, h:8480}, {l:589832, m:1213008, h:8480}, {l:688136, m:1213008, h:8480}, {l:819208, m:1213008, h:8480}, {l:589826, m:590112, h:8484}, {l:589826, m:590160, h:8484}, {l:688130, m:590160, h:8484}, {l:589826, m:598304, h:8484}, {l:688130, m:598304, h:8484}, {l:819202, m:598304, h:8484}]);
+  carcp.cIncrement = stampJavaTypeInfo(getClassLiteralForArray(cggl.F_classLit, 1), {4:1, 1:1}, 5, 15, [-0.1899999976158142, 1.2699999809265137, -0.7009999752044678, 2.690999984741211, -0.22699999809265137, 0.029999999329447746, 0.10599999874830246, -0.47600001096725464, -0.44699999690055847, -0.19099999964237213, -0.3330000042915344, 0.0860000029206276, 0.24699999392032623, -0.06199999898672104, 0.01600000075995922, 0.3869999945163727, 0.23499999940395355, -0.4320000112056732, -0.902999997138977, 0.38999998569488525, 0.5809999704360962, 4.52400016784668, -0.6349999904632568, -0.2800000011920929, 0.7699999809265137, -0.05000000074505806, 1.0870000123977661, 0.19200000166893005, 0.19599999487400055, -0.5199999809265137, 0.5419999957084656, 0.3630000054836273, 0.7919999957084656, 0.5920000076293945, 0.9639999866485596, 0.3540000021457672, -0.6850000023841858, -0.3149999976158142, -0.4129999876022339, -0.5950000286102295, 0.2199999988079071, -1.4320000410079956, -2.253999948501587, 0.4399999976158142, -0.27000001072883606, -0.13300000131130219, -0.26899999380111694, 0.2669999897480011, 0.5720000267028809, -0.5680000185966492, 0.17399999499320984, -0.1850000023841858, -0.23499999940395355, -0.17000000178813934, -0.1809999942779541, -0.34200000762939453, -0.3479999899864197, -0.43700000643730164, -0.8040000200271606, -0.41200000047683716, -0.2150000035762787, -0.625, -0.8309999704360962, 0.4970000088214874, -0.4309999942779541, -1.3309999704360962, 0.5070000290870667, -0.6320000290870667, -0.5989999771118164, -0.15600000321865082, -0.3529999852180481, -0.164000004529953, -0.4410000145435333, -0.4970000088214874, -1.059999942779541, 0.11500000208616257, -0.22499999403953552, -0.15399999916553497, -0.03099999949336052, -1.5740000009536743, -1.093000054359436, -0.7379999756813049, -0.44999998807907104, -0.5559999942779541, -0.1809999942779541, 2.384000062942505, 1.75, -1.6660000085830688, -1.065999984741211, 1.3270000219345093, 0.8029999732971191, -1.5049999952316284, -2.5369999408721924, -0.17000000178813934, 0.14900000393390656, 0.5210000276565552, 2.9049999713897705, -0.25200000405311584, 0.8600000143051147, 0.3610000014305115, 0.40299999713897705, 0.004999999888241291, 1.1460000276565552, 0.9359999895095825, -0.30000001192092896, 0.20900000631809235, -0.5830000042915344, -0.024000000208616257, -0.009999999776482582, 0.6110000014305115, 0.4860000014305115, 0.8619999885559082, -0.03500000014901161, -0.5960000157356262, 1.1610000133514404, 1.6469999551773071, 0.843999981880188, 0.125, 0.1420000046491623, -0.17100000381469727, 0.44200000166893005, 0.08799999952316284, 3.065999984741211, 1.6519999504089355, -0.2029999941587448, -0.017999999225139618, 0.023000000044703484, 0.0729999989271164, 0.2540000081062317, 0.5540000200271606, 0.5950000286102295, -0.4059999883174896, -0.6370000243186951, -0.17399999499320984, -0.10100000351667404, -0.5429999828338623, -2.4059998989105225, -3.2920000553131104, -0.05299999937415123, -0.19300000369548798, 1.850000023841858, -1.2610000371932983, -0.656000018119812, -0.7300000190734863, -0.9380000233650208, 0.12800000607967377, 1.1540000438690186, 0.24199999868869781, -0.5289999842643738, -0.27799999713897705, -0.8019999861717224, 0.9120000004768372, -1.38100004196167, 0.46299999952316284, 1.0740000009536743, -0.628000020980835, -0.9620000123977661, -1.8320000171661377, -1.4989999532699585, -2.115999937057495, -2.2070000171661377, -1.3170000314712524, 2.500999927520752, -0.8489999771118164, -0.6019999980926514, -0.621999979019165, 2.121999979019165, -2.2260000705718994, 0.9129999876022339, -2.259000062942505, -1.25, 1.3940000534057617, -1.4019999504089355, 2.072999954223633, -2.9570000171661377, 0.29100000858306885, -3.4760000705718994, -2.7269999980926514, -3.131999969482422, -2.119999885559082, -0.7250000238418579, -0.296999990940094, 0.08299999684095383, 0.34700000286102295, -1.4249999523162842, -1.659999966621399, -1.281999945640564, -1.2649999856948853, 0.718999981880188, 0.1379999965429306, 1.3020000457763672, 0.859000027179718, 1.3589999675750732, 0.6589999794960022, -0.9399999976158142, 0.8999999761581421, 0.3190000057220459, -2.571000099182129, 1.1089999675750732, 0.972000002861023, 1.652999997138977, 2.6019999980926514, 0.7289999723434448, 1.065999984741211, 1.0670000314712524, -0.3109999895095825, 0.03099999949336052, -0.2029999941587448, -0.6809999942779541, -1.2580000162124634, 1.0700000524520874, -3.0959999561309814, -0.2280000001192093, 1.9329999685287476, 0.11900000274181366, 2.1080000400543213, 0.11299999803304672, 1.628000020980835, 1.3079999685287476, 3.3359999656677246, 0.7540000081062317, -0.4650000035762787, -0.3970000147819519, 0.07699999958276749, -0.4790000021457672, -0.15299999713897705, 0.14100000262260437, 2.134999990463257, 0.23399999737739563, 0.460999995470047, 0.6700000166893005, -0.3610000014305115, -1.0390000343322754, -0.4830000102519989, 0.13699999451637268, -0.7680000066757202, -0.5109999775886536, 3.4240000247955322, -0.8550000190734863, -0.5849999785423279, -1.5670000314712524, 3.3429999351501465, 1.840000033378601, 0.3889999985694885, 1.121999979019165, 1.6299999952316284, 1.3350000381469727, 0.3659999966621399, -0.5569999814033508, 0.4320000112056732, 0.20399999618530273, 0.8820000290870667, 0.4659999907016754, -0.4580000042915344, 0.40400001406669617, 0.6570000052452087, 1.1150000095367432, 1.9759999513626099, 1.7860000133514404, -0.035999998450279236, -1.0499999523162842, 1.0449999570846558, 0.04399999976158142, 1.0329999923706055, -1.0800000429153442, 2.5390000343322754, 2.234999895095825, 2.2899999618530273, 3.121000051498413, 3.931999921798706, 2.75]);
 }
 ;
 carcp.SolubilityPredictor = function SolubilityPredictor(){
@@ -28799,10 +28849,10 @@ _.getReactionCenterMapNos_0 = function getReactionCenterMapNos(){
   maxMapNo = this.getHighestMapNo_0();
   if (maxMapNo == 0)
     return null;
-  mapNo2Atom = initUnidimensionalArray(cggl.I_classLit, {46:1, 4:1, 1:1, 6:1}, 7, this.getProducts_0(), 0, 2);
+  mapNo2Atom = initUnidimensionalArray(cggl.I_classLit, {45:1, 4:1, 1:1, 6:1}, 7, this.getProducts_0(), 0, 2);
   for (i0 = 0; i0 < this.getProducts_0(); i0++) {
     product = this.getProduct_0(i0);
-    product.ensureHelperArrays_0(7);
+    product.ensureHelperArrays_0(15);
     mapNo2Atom[i0] = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, maxMapNo + 1, 15, 1);
     ju.fill_0(mapNo2Atom[i0], -1);
     for (atom = 0; atom < product.getAllAtoms_0(); atom++) {
@@ -28815,7 +28865,7 @@ _.getReactionCenterMapNos_0 = function getReactionCenterMapNos(){
   isReactionCenter = initUnidimensionalArray(cggl.Z_classLit, {15:1, 4:1, 1:1}, 5, maxMapNo + 1, 16, 1);
   for (i = 0; i < this.getReactants_0(); i++) {
     reactant = this.getReactant_0(i);
-    reactant.ensureHelperArrays_0(7);
+    reactant.ensureHelperArrays_0(15);
     for (rAtom = 0; rAtom < reactant.getAllAtoms_0(); rAtom++) {
       mapNo = reactant.getAtomMapNo_0(rAtom);
       if (mapNo != 0 && !isReactionCenter[mapNo]) {
@@ -30485,7 +30535,7 @@ _.addMolecule_1 = function addMolecule_0(mol, x_0, y_0){
 ;
 _.analyzeFragmentMembership = function analyzeFragmentMembership(){
   var fragmentNo, fragments;
-  this.mMol.ensureHelperArrays_0(7);
+  this.mMol.ensureHelperArrays_0(15);
   fragmentNo = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMol.getAllAtoms_0(), 15, 1);
   fragments = this.mMol.getFragmentNumbers_0(fragmentNo, false, true);
   fragments = this.joinCloseFragments(fragmentNo, fragments);
@@ -31216,7 +31266,7 @@ _.setValue_0 = function setValue_0(rxn){
 ;
 _.sortFragmentsByPosition = function sortFragmentsByPosition(fragmentNo, fragments){
   var atom, atom1, centerOfGravity, cog, fragment, fragment0, fragment1, fragmentCOG, fragmentDescriptor, newFragmentIndex, oldIndex;
-  fragmentDescriptor = initMultidimensionalArray(cggl.I_classLit, [{46:1, 4:1, 1:1, 6:1}, {7:1, 4:1, 1:1}], [7, 5], 15, [fragments, (this.mMode & (4 | 2)) != 0?2:1], 2);
+  fragmentDescriptor = initMultidimensionalArray(cggl.I_classLit, [{45:1, 4:1, 1:1, 6:1}, {7:1, 4:1, 1:1}], [7, 5], 15, [fragments, (this.mMode & (4 | 2)) != 0?2:1], 2);
   for (fragment0 = 0; fragment0 < fragments; fragment0++) {
     fragmentDescriptor[fragment0][0] = fragment0;
   }
@@ -31256,7 +31306,7 @@ _.sortFragmentsByPosition = function sortFragmentsByPosition(fragmentNo, fragmen
 ;
 _.syncFragments = function syncFragments(){
   var fragmentNo, fragments, m, m$array, m$index, m$max;
-  this.mMol.ensureHelperArrays_0(7);
+  this.mMol.ensureHelperArrays_0(15);
   fragmentNo = initUnidimensionalArray(cggl.I_classLit, {7:1, 4:1, 1:1}, 5, this.mMol.getAllAtoms_0(), 15, 1);
   fragments = this.mMol.getFragmentNumbers_0(fragmentNo, false, true);
   this.mFragment = this.mMol.getFragments_1(fragmentNo, fragments);
@@ -31266,7 +31316,7 @@ _.syncFragments = function syncFragments(){
   this.mFragment = this.mMol.getFragments_1(fragmentNo, fragments);
   for (m$array = this.mFragment , m$index = 0 , m$max = m$array.length; m$index < m$max; ++m$index) {
     m = m$array[m$index];
-    m.ensureHelperArrays_0(7);
+    m.ensureHelperArrays_0(15);
   }
 }
 ;
@@ -36922,7 +36972,7 @@ _.isSelectedBond_1 = function isSelectedBond_0(bond){
 ;
 _.onInitialUpdate = function onInitialUpdate_2(){
   this.mCBMatchStereo.setEnabled((this.mMol.getBondQueryFeatures_0(this.mBond) & 262144) != 0);
-  this.mMol.ensureHelperArrays_0(3);
+  this.mMol.ensureHelperArrays_0(7);
   this.setInitialStates_0();
 }
 ;
@@ -41169,7 +41219,7 @@ carsgea.ChangeAtomAction = function ChangeAtomAction(model, atomNo){
   this.theAtomNo = atomNo;
 }
 ;
-defineClass(45, 59, {23:1, 1:1}, carsgea.ChangeAtomAction);
+defineClass(46, 59, {23:1, 1:1}, carsgea.ChangeAtomAction);
 _.$init_201 = function $init_201(){
   this.theAtomNo = 6;
 }
@@ -41200,7 +41250,7 @@ _.trackHighLight = function trackHighLight_2(pt){
 }
 ;
 _.theAtomNo = 0;
-cggl.Lcom_actelion_research_share_gui_editor_actions_ChangeAtomAction_2_classLit = createForClass('com.actelion.research.share.gui.editor.actions', 'ChangeAtomAction', 45, cggl.Lcom_actelion_research_share_gui_editor_actions_AtomHighlightAction_2_classLit);
+cggl.Lcom_actelion_research_share_gui_editor_actions_ChangeAtomAction_2_classLit = createForClass('com.actelion.research.share.gui.editor.actions', 'ChangeAtomAction', 46, cggl.Lcom_actelion_research_share_gui_editor_actions_AtomHighlightAction_2_classLit);
 carsgea.$clinit_ChangeAtomPropertiesAction = function $clinit_ChangeAtomPropertiesAction(){
   carsgea.$clinit_ChangeAtomPropertiesAction = emptyMethod;
   carsgea.$clinit_AtomHighlightAction();
@@ -68762,7 +68812,7 @@ $gwt && $gwt.permProps && __gwtModuleFunction.__moduleStartupDone($gwt.permProps
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '6.0.1';
+        toReturn.version = '7.0.0';
 
         return toReturn;
     }
