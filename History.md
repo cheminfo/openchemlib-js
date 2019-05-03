@@ -1,5 +1,13 @@
 # OpenChemLib JS Changelog
 
+## 7.0.0 / 2019-05-03
+
+- Update OCL to 2019_05_03-16_18_03
+- **BREAKING**: Node.js 6 is no longer supported
+- **BREAKING**: The output of `Molecule.toSVG` has changed: bonds are now identified
+  by the bond id instead of the ids of its two atoms. For example: `myId:Bond:0-1`
+  becomes `myId:Bond:0`.
+
 ## 6.0.1 / 2019-02-08
 
 - Update OCL to 2019_02_08-04_00_25
@@ -9,7 +17,7 @@
 ## 6.0.0 / 2019-01-27
 
 - Update OCL to 2019_01_26-04_00_26
-- _BREAKING_: Editor: the `StructureEditor` constructor now takes a DOM element instead of an id.
+- **BREAKING**: Editor: the `StructureEditor` constructor now takes a DOM element instead of an id.
 
 ## 5.9.1 / 2018-12-21
 
