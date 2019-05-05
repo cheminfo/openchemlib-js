@@ -2468,43 +2468,43 @@ export declare class RingCollection {
  * All depictor options default to `false`.
  */
 export interface IDepictorOptions {
-  inflateToMaxAVBL: boolean;
+  inflateToMaxAVBL?: boolean;
 
-  inflateToHighResAVBL: boolean;
+  inflateToHighResAVBL?: boolean;
 
-  chiralTextBelowMolecule: boolean;
+  chiralTextBelowMolecule?: boolean;
 
-  chiralTextAboveMolecule: boolean;
+  chiralTextAboveMolecule?: boolean;
 
-  chiralTextOnFrameTop: boolean;
+  chiralTextOnFrameTop?: boolean;
 
-  chiralTextOnFrameBottom: boolean;
+  chiralTextOnFrameBottom?: boolean;
 
-  noTabus: boolean;
+  noTabus?: boolean;
 
-  showAtomNumber: boolean;
+  showAtomNumber?: boolean;
 
-  showBondNumber: boolean;
+  showBondNumber?: boolean;
 
-  highlightQueryFeatures: boolean;
+  highlightQueryFeatures?: boolean;
 
-  showMapping: boolean;
+  showMapping?: boolean;
 
-  suppressChiralText: boolean;
+  suppressChiralText?: boolean;
 
-  suppressCIPParity: boolean;
+  suppressCIPParity?: boolean;
 
-  suppressESR: boolean;
+  suppressESR?: boolean;
 
-  showSymmetrySimple: boolean;
+  showSymmetrySimple?: boolean;
 
-  showSymmetryDiastereotopic: boolean;
+  showSymmetryDiastereotopic?: boolean;
 
-  showSymmetryEnantiotopic: boolean;
+  showSymmetryEnantiotopic?: boolean;
 
-  noImplicitAtomLabelColors: boolean;
+  noImplicitAtomLabelColors?: boolean;
 
-  noStereoProblem: boolean;
+  noStereoProblem?: boolean;
 }
 
 export declare class Reaction {

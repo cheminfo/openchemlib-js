@@ -1,5 +1,9 @@
 # OpenChemLib JS Changelog
 
+## 7.0.1 / 2019-05-05
+
+- fix(types): make all depictor options effectively optional
+
 ## 7.0.0 / 2019-05-03
 
 - Update OCL to 2019_05_03-16_18_03
