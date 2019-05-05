@@ -1,7 +1,7 @@
 /**
  * openchemlib - Manipulate molecules
- * @version v7.0.0
- * @date 2019-05-03T18:13:35.456Z
+ * @version v7.0.1
+ * @date 2019-05-05T13:10:51.573Z
  * @link https://github.com/cheminfo/openchemlib-js
  * @license BSD-3-Clause
 */
@@ -68812,7 +68812,7 @@ $gwt && $gwt.permProps && __gwtModuleFunction.__moduleStartupDone($gwt.permProps
 
         var toReturn = $wnd["OCL"];
 
-        toReturn.version = '7.0.0';
+        toReturn.version = '7.0.1';
 
         return toReturn;
     }
