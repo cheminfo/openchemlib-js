@@ -27,6 +27,18 @@ export interface IMoleculeToSVGOptions extends IDepictorOptions {
    * stroke-width styling property of bonds.
    */
   strokeWidth?: string;
+
+  /**
+   * Automatically crop the SVG to fit around the molecule.
+   * This changes the size of the SVG.
+   */
+  autoCrop?: boolean;
+
+  /**
+   * Margin (in px) to keep around the molecule when `autoCrop` is `true`.
+   * Default: 5
+   */
+  autoCropMargin?: number;
 }
 
 export interface IHoseCodesOptions {
@@ -2529,7 +2541,7 @@ export declare class Reaction {
    * @param smiles
    */
   static fromSmiles(smiles: string): Reaction;
-  
+
   /**
    * Create a new `Reaction` based on a MDL Reaction file (V2000 or V3000).
    * @param rxn - The RXN file's contents

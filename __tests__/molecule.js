@@ -67,6 +67,15 @@ describe('Molecule', function () {
     expect(svg).toContain('stroke-width:2');
   });
 
+  it('toSVG with autoCrop', () => {
+    const mol = Molecule.fromSmiles('CCOCCO');
+    let svg = mol.toSVG(300, 150, 'myId', { autoCrop: true });
+    expect(svg).toMatchSnapshot();
+
+    svg = mol.toSVG(300, 150, 'myId', { autoCrop: true, autoCropMargin: 50 });
+    expect(svg).toMatchSnapshot();
+  });
+
   it('molfile V3', function () {
     const idcode =
       'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';

@@ -104,7 +104,9 @@ public class JSMolecule {
   	//}
   	options = options || {};
   	var factorTextSize = options.factorTextSize || 1;
-  	var svg =  this.@com.actelion.research.gwt.minimal.JSMolecule::getSVG(IIFLjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, factorTextSize, id, options);
+    var autoCrop = options.autoCrop === true;
+    var autoCropMargin = typeof options.autoCropMargin === 'undefined' ? 5 : options.autoCropMargin;
+  	var svg =  this.@com.actelion.research.gwt.minimal.JSMolecule::getSVG(IIFZILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, factorTextSize, autoCrop, autoCropMargin, id, options);
   	if (options.fontWeight) {
       svg = svg.replace(/font-family=" Helvetica" /g, 'font-family=" Helvetica" font-weight="' + options.fontWeight + '" ');
     }
@@ -114,13 +116,27 @@ public class JSMolecule {
     return svg;
   }-*/;
 
-  private String getSVG(int width, int height, float factorTextSize, String id, JavaScriptObject options) {
+  private String getSVG(int width, int height, float factorTextSize, boolean autoCrop, int autoCropMargin, String id, JavaScriptObject options) {
     int mode = Util.getDisplayMode(options);
     SVGDepictor d = new SVGDepictor(oclMolecule, mode, id);
     d.setFactorTextSize(factorTextSize);
     d.validateView(null, new Rectangle2D.Double(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
+    Rectangle2D.Double b = d.getBoundingRect();
     d.paint(null);
-    return d.toString();
+    String result = d.toString();
+    if (!autoCrop) {
+      return result;
+    } else {
+      //return result.replaceAll("viewBox", "data-test=\"" + b.x + " " + b.y + " " + b.width + " " + b.height + "\" viewBox");
+      int newWidth = (int) Math.round(b.width + autoCropMargin * 2);
+      int newHeight = (int) Math.round(b.height + autoCropMargin * 2);
+      int newX = (int) Math.round(b.x - autoCropMargin);
+      int newY = (int) Math.round(b.y - autoCropMargin);
+      return result.replaceAll(
+        "width=\"\\d+px\" height=\"\\d+px\" viewBox=\"0 0 \\d+ \\d+\"",
+        "width=\"" + newWidth + "px\" height=\"" + newHeight + "px\" viewBox=\"" + newX + " " + newY + " " + newWidth + " " + newHeight + "\""
+      );
+    }
   }
 
   public String getCanonizedIDCode(int flag) {
