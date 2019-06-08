@@ -22,6 +22,7 @@
     "build-full-pretty": "npm run build:pretty -- -m full",
     "eslint": "eslint __tests__ scripts benchmark",
     "eslint-fix": "npm run eslint -- --fix",
+    "posttest": "git checkout dist",
     "test": "npm run build && npm run test-only && npm run eslint",
     "test-only": "jest"
   },
