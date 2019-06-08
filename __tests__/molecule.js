@@ -72,7 +72,7 @@ describe('Molecule', function () {
     let svg = mol.toSVG(300, 150, 'myId', { autoCrop: true });
     expect(svg).toMatchSnapshot();
 
-    svg = mol.toSVG(300, 150, 'myId', { autoCrop: true, autoCropMargin: 50 });
+    svg = mol.toSVG(300, 150, 'myId', { autoCrop: true, autoCropMargin: 25 });
     expect(svg).toMatchSnapshot();
   });
 
