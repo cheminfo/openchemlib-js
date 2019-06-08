@@ -1450,8 +1450,8 @@ public class JSMolecule {
     return oclMolecule.isSimpleHydrogen(atom);
   }
 
-  public void removeExplicitHydrogens() {
-    oclMolecule.removeExplicitHydrogens();
+  public void removeExplicitHydrogens(boolean is3D) {
+    oclMolecule.removeExplicitHydrogens(is3D);
   }
 
   public JSMolecule[] getFragments() {

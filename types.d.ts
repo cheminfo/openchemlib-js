@@ -2305,13 +2305,15 @@ export declare class Molecule {
 
   /**
    * Removes all plain explicit hydrogens atoms from the molecule, converting them
-   * effectively to implicit ones. If an associated bond is a stereo bond
-   * indicating a specific configuration, then another bond is converted to a
-   * stereo bond to reflect the correct stereo geometry. If the removal of a
-   * hydrogen atom would change an atom's implicit valance, the atom's abnormal
-   * valence is set accordingly.
+   * effectively to implicit ones. If the molecules has 2D-coordinates (is3D==false),
+   * then this method perceives stereo configurations from up/down-bonds
+	 * to explicit hydrogens before deleting them and turns another bond into a
+   * stereo bond to indicate the proper configuration.
+	 * If the removal of a hydrogen atom would change an atom's implicit valence,
+   * the atom's abnormal valence is set accordingly.
+	 * @param is3D pass true, if atom coordinates are three dimensional
    */
-  removeExplicitHydrogens(): void;
+  removeExplicitHydrogens(is3D: boolean): void;
 
   /**
    * Separates all disconnected fragments of this Molecule into individual
