@@ -2,8 +2,6 @@
 
 /* eslint-disable no-tabs */
 
-const { EOL } = require('os');
-
 const modified = [
   'calc/ArrayUtilsCalc',
 
@@ -60,7 +58,7 @@ function getFolderName(file) {
 }
 
 function changeMolecule(molecule) {
-  molecule = molecule.replace(`import java.lang.reflect.Array;${EOL}`, '');
+  molecule = molecule.replace('import java.lang.reflect.Array;\n', '');
   const copyOf = 'protected final static Object copyOf';
   const copyOfIndex = molecule.indexOf(copyOf);
   if (copyOfIndex === -1) throw new Error('did not find copyOf method');
@@ -80,16 +78,8 @@ function removePrintf(code) {
 }
 
 function changeArrayUtils(code) {
-  code = removeSlice(
-    code,
-    `${EOL}	/**${EOL}	 * Resize an array`,
-    `return newArray;${EOL}	}`
-  );
-  code = removeSlice(
-    code,
-    `${EOL}	/**${EOL}	 * Copy an array `,
-    `return newArray;${EOL}	}`
-  );
+  code = removeSlice(code, '\n	/**\n	 * Resize an array', 'return newArray;\n	}');
+  code = removeSlice(code, '\n	/**\n	 * Copy an array ', 'return newArray;\n	}');
   return code;
 }
 

@@ -147,11 +147,14 @@ public interface CompoundTableConstants {
     String cColumnPropertyLaunchOption = "launchOption";
     String cColumnPropertyLaunchDecoration = "launchDecoration";
 	String cColumnPropertyLaunchAllowMultiple = "launchAllowMultiple";
+    String cColumnPropertyOpenExternalName = "openExternalName";
+    String cColumnPropertyOpenExternalPath = "openExternalPath";
     String cColumnPropertyReferencedColumn = "refColumn";
     String cColumnPropertyReferenceStrengthColumn = "refStrengthColumn";
     String cColumnPropertyReferenceType = "refType";
     String cColumnPropertyReferenceTypeRedundant = "redundant";	// a connection is always referenced on both records
     String cColumnPropertyReferenceTypeTopDown = "topdown";	// a connection is only referenced from top record
+    String cColumnPropertyReferenceMolecule = "refMol";	// idcode+coords to be displayed in every cell
 
     String cNativeFileHeaderStart = "<datawarrior-fileinfo>";
     String cNativeFileHeaderEnd = "</datawarrior-fileinfo>";
