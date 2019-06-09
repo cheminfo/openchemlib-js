@@ -1,6 +1,6 @@
 # OpenChemLib JS Changelog
 
-## 7.1.0 / 2019-06-08
+## 7.1.0 / 2019-06-09
 
 - Added two new options to the `toSVG` method:
   - `autoCrop`: if set to `true`, the SVG will be automatically crop to fit the bounds of the molecule.
