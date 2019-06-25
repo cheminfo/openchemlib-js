@@ -2,19 +2,20 @@
 
 export interface IMoleculeFromSmilesOptions {
   /**
-   * Disable extra coordinate computation (default: false).
+   * Disable extra coordinate computation. Default: false.
    */
   noCoordinates?: boolean;
 
   /**
-   * Disable stereo features parsing (default: false).
+   * Disable stereo features parsing. Default: false.
    */
   noStereo?: boolean;
 }
 
 export interface IMoleculeToSVGOptions extends IDepictorOptions {
   /**
-   * Default: 1
+   * Factor used to compute the size of text nodes.
+   * Default: 1.
    */
   factorTextSize?: number;
 
@@ -31,39 +32,61 @@ export interface IMoleculeToSVGOptions extends IDepictorOptions {
   /**
    * Automatically crop the SVG to fit around the molecule.
    * This changes the size of the SVG.
+   * Default: false.
    */
   autoCrop?: boolean;
 
   /**
    * Margin (in px) to keep around the molecule when `autoCrop` is `true`.
-   * Default: 5
+   * Default: 5.
    */
   autoCropMargin?: number;
 }
 
 export interface IHoseCodesOptions {
   /**
-   * Maximum number of atoms from the center (default: 5).
+   * Maximum number of atoms from the center.
+   * Default: 5.
    */
   maxSphereSize: number;
 
   /**
-   * 1: stop if Csp3-Csp3, 0: normal hose code (default: 0).
+   * Type of HOSE code.
+   * 0: normal HOSE code.
+   * 1: stop if Csp3-Csp3.
+   * Default: 0.
    */
   type: 0 | 1;
 }
 
 export interface Rectangle {
+  /**
+   * X-coordinate of the top-left corner.
+   */
   x: number;
 
+  /**
+   * Y-coordinate of the top-left corner.
+   */
   y: number;
 
+  /**
+   * Width of the shape.
+   */
   width: number;
 
+  /**
+   * Height of the shape.
+   */
   height: number;
 }
 
 export declare class Molecule {
+  /**
+   * Construct a new molecule.
+   * @param maxAtoms - Maximum number of initialized atoms. Default: 256.
+   * @param maxBonds - Maximum number of initialized bonds. Default: 256.
+   */
   constructor(maxAtoms: number, maxBonds: number);
 
   static CANONIZER_CREATE_SYMMETRY_RANK: number;
@@ -309,7 +332,7 @@ export declare class Molecule {
    * Parse the provided `idcode` and return a `Molecule`.
    * @param idcode
    * @param ensure2DCoordinates - boolean indicating if the 2D coordinates
-   * should be computed (default: `true`).
+   * should be computed. Default: true.
    */
   static fromIDCode(idcode: string, ensure2DCoordinates?: boolean): Molecule;
 
