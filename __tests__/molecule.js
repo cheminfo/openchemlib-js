@@ -64,7 +64,7 @@ describe('Molecule', function () {
       fontWeight: 'bold'
     });
     expect(svg).toContain('font-weight="bold"');
-    expect(svg).toContain('stroke-width:2');
+    expect(svg).toContain('stroke-width="2"');
   });
 
   it('toSVG with autoCrop', () => {

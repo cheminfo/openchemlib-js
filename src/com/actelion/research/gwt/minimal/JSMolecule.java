@@ -111,7 +111,7 @@ public class JSMolecule {
       svg = svg.replace(/font-family=" Helvetica" /g, 'font-family=" Helvetica" font-weight="' + options.fontWeight + '" ');
     }
     if (options.strokeWidth) {
-     svg = svg.replace(/stroke-width:1/g, 'stroke-width:' + options.strokeWidth + ' ');
+     svg = svg.replace(/stroke-width="[^"]+"/g, 'stroke-width="' + options.strokeWidth + '"');
     }
     return svg;
   }-*/;

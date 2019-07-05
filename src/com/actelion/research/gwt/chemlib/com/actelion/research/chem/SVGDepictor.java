@@ -84,7 +84,7 @@ public class SVGDepictor extends AbstractDepictor
 
     private void write(String s)
     {
-        buffer.append("\t");
+        buffer.append("  ");
         buffer.append(s);
         buffer.append("\n");
     }
@@ -92,53 +92,36 @@ public class SVGDepictor extends AbstractDepictor
     @Override
     protected void drawBlackLine(DepictorLine theLine)
     {
-        int x1 = (int) theLine.x1;
-        int x2 = (int) theLine.x2;
-        int y1 = (int) theLine.y1;
-        int y2 = (int) theLine.y2;
+        double x1 = theLine.x1;
+        double x2 = theLine.x2;
+        double y1 = theLine.y1;
+        double y2 = theLine.y2;
         String s = "<line " +
                 "x1=\"" + x1 + "\" " +
                 "y1=\"" + y1 + "\" " +
                 "x2=\"" + x2 + "\" " +
                 "y2=\"" + y2 + "\" " +
-                "style=\"stroke:" + currentColor + ";" +
-                "stroke-width:" + (int) (lineWidth) + "\"/>";
+                "stroke=\"" + currentColor + "\" " +
+                "stroke-width=\"" + lineWidth + "\" />";
         write(s);
     }
 
     @Override
     protected void drawDottedLine(DepictorLine theLine)
     {
-        int x1 = (int) theLine.x1;
-        int x2 = (int) theLine.x2;
-        int y1 = (int) theLine.y1;
-        int y2 = (int) theLine.y2;
+        double x1 = theLine.x1;
+        double x2 = theLine.x2;
+        double y1 = theLine.y1;
+        double y2 = theLine.y2;
         String s = "<line stroke-dasharray=\"3, 3\" " +
                 "x1=\"" + x1 + "\" " +
                 "y1=\"" + y1 + "\" " +
                 "x2=\"" + x2 + "\" " +
                 "y2=\"" + y2 + "\" " +
                 "stroke=\"" + currentColor + "\" " +
-                "stroke-width:" + (int) (lineWidth) + "\"/>";
+                "stroke-width:" + lineWidth + "\" />";
 
         write(s);
-    }
-
-    @Override
-    protected void drawPolygon(double[] x, double[] y, int count)
-    {
-        StringBuilder s = new StringBuilder("<polygon points=\"");
-        for (int i = 0; i < count; i++) {
-            s.append((int) x[i]);
-            s.append(",");
-            s.append((int) y[i]);
-            s.append(" ");
-        }
-        s.append("\" " +
-                "style=\"fill:" + currentColor + ";" +
-                "stroke:" + currentColor + ";" +
-                "stroke-width:1\"/>");
-        write(s.toString());
     }
 
     @Override
@@ -147,8 +130,8 @@ public class SVGDepictor extends AbstractDepictor
 
         double strWidth = getStringWidth(theString);
         String s = "<text " +
-                "x=\"" + (int) (x - strWidth / 2.0) + "\" " +
-                "y=\"" + (int) (y + textSize / 3) + "\" " +
+                "x=\"" + (x - strWidth / 2.0) + "\" " +
+                "y=\"" + (y + textSize / 3.0) + "\" " +
                 "font-family=\" " + currentFont.getName() + "\" " +
                 "font-size=\"" + currentFont.getSize() + "\" " +
                 "fill=\"" + currentColor + "\">" + theString +
@@ -157,35 +140,38 @@ public class SVGDepictor extends AbstractDepictor
     }
 
     @Override
+    protected void drawPolygon(double[] x, double[] y, int count)
+    {
+        StringBuilder s = new StringBuilder("<polygon points=\"");
+        for (int i = 0; i < count; i++) {
+            s.append(x[i]);
+            s.append(",");
+            s.append(y[i]);
+            s.append(" ");
+        }
+        s.append("\" " +
+                "fill=\"" + currentColor + "\" " +
+                "stroke=\"" + currentColor + "\" " +
+                "stroke-width=\"1\" />");
+        write(s.toString());
+    }
+
+    @Override
     protected void fillCircle(double x, double y, double d)
     {
         String s = "<circle " +
-                "cx=\"" + (int) (x+d/2) + "\" " +
-                "cy=\"" + (int) (y+d/2) + "\" " +
-                "r=\"" + (int) (d/2) + "\" " +
+                "cx=\"" + (x + d / 2.0) + "\" " +
+                "cy=\"" + (y + d / 2.0) + "\" " +
+                "r=\"" + (d / 2.0) + "\" " +
                 "fill=\"" + currentColor + "\" />";
         write(s);
     }
-
-    @Override
-    protected double getLineWidth()
-    {
-        return lineWidth;
-    }
-
+    
     @Override
     protected double getStringWidth(String theString)
     {
-        float ret =  (float)currentFont.getStringBounds(theString,graphics.getFontRenderContext()).getWidth();
+        float ret = (float)currentFont.getStringBounds(theString,graphics.getFontRenderContext()).getWidth();
         return ret;
-
-
-    }
-
-    @Override
-    protected int getTextSize()
-    {
-        return textSize;
     }
 
     @Override
@@ -195,6 +181,18 @@ public class SVGDepictor extends AbstractDepictor
             textSize = theSize;
             currentFont = new Font(FONTNAME, Font.PLAIN, theSize);
         }
+    }
+
+    @Override
+    protected int getTextSize()
+    {
+        return textSize;
+    }
+
+    @Override
+    protected double getLineWidth()
+    {
+        return lineWidth;
     }
 
     @Override
@@ -215,13 +213,12 @@ public class SVGDepictor extends AbstractDepictor
         String s = "<line " +
                 "id=\"" + getId() + ":Bond:" + bond + "\" " +
                 "class=\"event\" " +	// class to respond to the mouse event
-                "x1=\"" + (int) (x1) + "\" " +
-                "y1=\"" + (int) (y1) + "\" " +
-                "x2=\"" + (int) (x2) + "\" " +
-                "y2=\"" + (int) (y2) + "\" " +
+                "x1=\"" + x1 + "\" " +
+                "y1=\"" + y1 + "\" " +
+                "x2=\"" + x2 + "\" " +
+                "y2=\"" + y2 + "\" " +
                 "stroke-width=\"" + DEFAULT_ELEM_WIDTH + "\" " +
-                "stroke-opacity=\"0\"" +
-                "/>";
+                "stroke-opacity=\"0\" />";
         bonds.add(s);
     }
 
@@ -232,10 +229,10 @@ public class SVGDepictor extends AbstractDepictor
         String s = "<circle " +
                 "id=\"" + getId() + ":Atom:" + atom + "\" " +
                 "class=\"event\" " + // class to respond to the mouse event
-                "cx=\"" + (int) (x) + "\" " +
-                "cy=\"" + (int) (y) + "\" " +
+                "cx=\"" + x + "\" " +
+                "cy=\"" + y + "\" " +
                 "r=\"" + r + "\" " +
-                "fill-opacity=\"0\"/>";
+                "fill-opacity=\"0\" />";
         atoms.add(s);
     }
 
@@ -255,25 +252,20 @@ public class SVGDepictor extends AbstractDepictor
 
         String style = "<style>" +
                 " #" + getId() +
-                " {pointer-events:none; } " +	// Disable Mouse events on the root element so they get passed to the childs
+                " { pointer-events:none; }" +	// Disable Mouse events on the root element so they get passed to the childs
                 " #" + getId() + " .event " +
-                " { pointer-events:all;} " +	// Enable Mouse events for elements possessing the class "event"
+                " { pointer-events:all; }" +	// Enable Mouse events for elements possessing the class "event"
+                " line { stroke-linecap:round; }" +
+                " polygon { stroke-linejoin:round; }" +
                 " </style>\n";
-        String rect =
-                "<rect " +
-                        "x=\"" + 0 + "\" " +
-                        "y=\"" + 0 + "\" " +
-                        "width='" + width + "' " +
-                        "height='" + height + "' style='fill-opacity:0;stroke:red;stroke-width:3'/>\n";
-        header += "\t";
+        header += "  ";
         header += style;
-//        header += rect;
-
 
         // Append the (invisible) bond lines
         for (String b : bonds) {
             write(b);
         }
+
         // Append the (invisible) atom circles
         for (String a : atoms) {
             write(a);
@@ -286,8 +278,8 @@ public class SVGDepictor extends AbstractDepictor
     public DepictorTransformation simpleValidateView(Rectangle2D.Double viewRect, int mode)
     {
 
-        width = (int) viewRect.getWidth();
-        height = (int) viewRect.getHeight();
+        width = (int) Math.round(viewRect.getWidth());
+        height = (int) Math.round(viewRect.getHeight());
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         graphics = img.createGraphics();
 

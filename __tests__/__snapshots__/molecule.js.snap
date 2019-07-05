@@ -2,50 +2,50 @@
 
 exports[`Molecule toSVG with autoCrop 1`] = `
 "<svg id=\\"myId\\" xmlns=\\"http://www.w3.org/2000/svg\\" version=\\"1.1\\" width=\\"135px\\" height=\\"41px\\" viewBox=\\"74 55 135 41\\">
-	<style> #myId {pointer-events:none; }  #myId .event  { pointer-events:all;}  </style>
-	<text x=\\"154\\" y=\\"73\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">O</text>
-	<text x=\\"92\\" y=\\"85\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">O</text>
-	<text x=\\"82\\" y=\\"85\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">H</text>
-	<line x1=\\"201\\" y1=\\"69\\" x2=\\"181\\" y2=\\"81\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line x1=\\"181\\" y1=\\"81\\" x2=\\"166\\" y2=\\"72\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line x1=\\"153\\" y1=\\"72\\" x2=\\"139\\" y2=\\"81\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line x1=\\"139\\" y1=\\"81\\" x2=\\"118\\" y2=\\"69\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line x1=\\"118\\" y1=\\"69\\" x2=\\"104\\" y2=\\"77\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line id=\\"myId:Bond:0\\" class=\\"event\\" x1=\\"201\\" y1=\\"69\\" x2=\\"181\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<line id=\\"myId:Bond:1\\" class=\\"event\\" x1=\\"181\\" y1=\\"81\\" x2=\\"160\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<line id=\\"myId:Bond:2\\" class=\\"event\\" x1=\\"160\\" y1=\\"69\\" x2=\\"139\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<line id=\\"myId:Bond:3\\" class=\\"event\\" x1=\\"139\\" y1=\\"81\\" x2=\\"118\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<line id=\\"myId:Bond:4\\" class=\\"event\\" x1=\\"118\\" y1=\\"69\\" x2=\\"98\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:0\\" class=\\"event\\" cx=\\"201\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:1\\" class=\\"event\\" cx=\\"181\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:2\\" class=\\"event\\" cx=\\"160\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:3\\" class=\\"event\\" cx=\\"139\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:4\\" class=\\"event\\" cx=\\"118\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:5\\" class=\\"event\\" cx=\\"98\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\"/>
+  <style> #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
+  <text x=\\"154.94630484541327\\" y=\\"73.66666666666667\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">O</text>
+  <text x=\\"92.59247577293368\\" y=\\"85.66666666666667\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">O</text>
+  <text x=\\"82.48447577293368\\" y=\\"85.66666666666667\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">H</text>
+  <line x1=\\"201.96152422706632\\" y1=\\"69\\" x2=\\"181.1769145362398\\" y2=\\"81\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line x1=\\"181.1769145362398\\" y1=\\"81\\" x2=\\"166.83830484541326\\" y2=\\"72.72159983519633\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line x1=\\"153.94630484541327\\" y1=\\"72.72159983519633\\" x2=\\"139.60769515458674\\" y2=\\"81\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line x1=\\"139.60769515458674\\" y1=\\"81\\" x2=\\"118.82308546376021\\" y2=\\"69\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line x1=\\"118.82308546376021\\" y1=\\"69\\" x2=\\"104.48447577293368\\" y2=\\"77.27840016480367\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line id=\\"myId:Bond:0\\" class=\\"event\\" x1=\\"201.96152422706632\\" y1=\\"69\\" x2=\\"181.1769145362398\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:1\\" class=\\"event\\" x1=\\"181.1769145362398\\" y1=\\"81\\" x2=\\"160.39230484541326\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:2\\" class=\\"event\\" x1=\\"160.39230484541326\\" y1=\\"69\\" x2=\\"139.60769515458674\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:3\\" class=\\"event\\" x1=\\"139.60769515458674\\" y1=\\"81\\" x2=\\"118.82308546376021\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:4\\" class=\\"event\\" x1=\\"118.82308546376021\\" y1=\\"69\\" x2=\\"98.03847577293368\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:0\\" class=\\"event\\" cx=\\"201.96152422706632\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:1\\" class=\\"event\\" cx=\\"181.1769145362398\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:2\\" class=\\"event\\" cx=\\"160.39230484541326\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:3\\" class=\\"event\\" cx=\\"139.60769515458674\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:4\\" class=\\"event\\" cx=\\"118.82308546376021\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:5\\" class=\\"event\\" cx=\\"98.03847577293368\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
 </svg>"
 `;
 
 exports[`Molecule toSVG with autoCrop 2`] = `
 "<svg id=\\"myId\\" xmlns=\\"http://www.w3.org/2000/svg\\" version=\\"1.1\\" width=\\"175px\\" height=\\"81px\\" viewBox=\\"54 35 175 81\\">
-	<style> #myId {pointer-events:none; }  #myId .event  { pointer-events:all;}  </style>
-	<text x=\\"154\\" y=\\"73\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">O</text>
-	<text x=\\"92\\" y=\\"85\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">O</text>
-	<text x=\\"82\\" y=\\"85\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">H</text>
-	<line x1=\\"201\\" y1=\\"69\\" x2=\\"181\\" y2=\\"81\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line x1=\\"181\\" y1=\\"81\\" x2=\\"166\\" y2=\\"72\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line x1=\\"153\\" y1=\\"72\\" x2=\\"139\\" y2=\\"81\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line x1=\\"139\\" y1=\\"81\\" x2=\\"118\\" y2=\\"69\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line x1=\\"118\\" y1=\\"69\\" x2=\\"104\\" y2=\\"77\\" style=\\"stroke:rgb(0,0,0);stroke-width:1\\"/>
-	<line id=\\"myId:Bond:0\\" class=\\"event\\" x1=\\"201\\" y1=\\"69\\" x2=\\"181\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<line id=\\"myId:Bond:1\\" class=\\"event\\" x1=\\"181\\" y1=\\"81\\" x2=\\"160\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<line id=\\"myId:Bond:2\\" class=\\"event\\" x1=\\"160\\" y1=\\"69\\" x2=\\"139\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<line id=\\"myId:Bond:3\\" class=\\"event\\" x1=\\"139\\" y1=\\"81\\" x2=\\"118\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<line id=\\"myId:Bond:4\\" class=\\"event\\" x1=\\"118\\" y1=\\"69\\" x2=\\"98\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:0\\" class=\\"event\\" cx=\\"201\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:1\\" class=\\"event\\" cx=\\"181\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:2\\" class=\\"event\\" cx=\\"160\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:3\\" class=\\"event\\" cx=\\"139\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:4\\" class=\\"event\\" cx=\\"118\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\"/>
-	<circle id=\\"myId:Atom:5\\" class=\\"event\\" cx=\\"98\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\"/>
+  <style> #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
+  <text x=\\"154.94630484541327\\" y=\\"73.66666666666667\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">O</text>
+  <text x=\\"92.59247577293368\\" y=\\"85.66666666666667\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">O</text>
+  <text x=\\"82.48447577293368\\" y=\\"85.66666666666667\\" font-family=\\" Helvetica\\" font-size=\\"14\\" fill=\\"rgb(255,13,13)\\">H</text>
+  <line x1=\\"201.96152422706632\\" y1=\\"69\\" x2=\\"181.1769145362398\\" y2=\\"81\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line x1=\\"181.1769145362398\\" y1=\\"81\\" x2=\\"166.83830484541326\\" y2=\\"72.72159983519633\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line x1=\\"153.94630484541327\\" y1=\\"72.72159983519633\\" x2=\\"139.60769515458674\\" y2=\\"81\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line x1=\\"139.60769515458674\\" y1=\\"81\\" x2=\\"118.82308546376021\\" y2=\\"69\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line x1=\\"118.82308546376021\\" y1=\\"69\\" x2=\\"104.48447577293368\\" y2=\\"77.27840016480367\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
+  <line id=\\"myId:Bond:0\\" class=\\"event\\" x1=\\"201.96152422706632\\" y1=\\"69\\" x2=\\"181.1769145362398\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:1\\" class=\\"event\\" x1=\\"181.1769145362398\\" y1=\\"81\\" x2=\\"160.39230484541326\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:2\\" class=\\"event\\" x1=\\"160.39230484541326\\" y1=\\"69\\" x2=\\"139.60769515458674\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:3\\" class=\\"event\\" x1=\\"139.60769515458674\\" y1=\\"81\\" x2=\\"118.82308546376021\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:4\\" class=\\"event\\" x1=\\"118.82308546376021\\" y1=\\"69\\" x2=\\"98.03847577293368\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:0\\" class=\\"event\\" cx=\\"201.96152422706632\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:1\\" class=\\"event\\" cx=\\"181.1769145362398\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:2\\" class=\\"event\\" cx=\\"160.39230484541326\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:3\\" class=\\"event\\" cx=\\"139.60769515458674\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:4\\" class=\\"event\\" cx=\\"118.82308546376021\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:5\\" class=\\"event\\" cx=\\"98.03847577293368\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
 </svg>"
 `;
