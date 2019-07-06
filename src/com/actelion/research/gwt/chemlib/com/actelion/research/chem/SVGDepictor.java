@@ -36,6 +36,8 @@ package com.actelion.research.chem;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class SVGDepictor extends AbstractDepictor
@@ -82,6 +84,10 @@ public class SVGDepictor extends AbstractDepictor
         return id != null ? id : ("mol" + instanceCnt);
     }
 
+    private static double round(double number) {
+        return new BigDecimal(number).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+    }
+
     private void write(String s)
     {
         buffer.append("  ");
@@ -92,15 +98,11 @@ public class SVGDepictor extends AbstractDepictor
     @Override
     protected void drawBlackLine(DepictorLine theLine)
     {
-        double x1 = theLine.x1;
-        double x2 = theLine.x2;
-        double y1 = theLine.y1;
-        double y2 = theLine.y2;
         String s = "<line " +
-                "x1=\"" + x1 + "\" " +
-                "y1=\"" + y1 + "\" " +
-                "x2=\"" + x2 + "\" " +
-                "y2=\"" + y2 + "\" " +
+                "x1=\"" + round(theLine.x1) + "\" " +
+                "y1=\"" + round(theLine.y1) + "\" " +
+                "x2=\"" + round(theLine.x2) + "\" " +
+                "y2=\"" + round(theLine.y2) + "\" " +
                 "stroke=\"" + currentColor + "\" " +
                 "stroke-width=\"" + lineWidth + "\" />";
         write(s);
@@ -109,15 +111,11 @@ public class SVGDepictor extends AbstractDepictor
     @Override
     protected void drawDottedLine(DepictorLine theLine)
     {
-        double x1 = theLine.x1;
-        double x2 = theLine.x2;
-        double y1 = theLine.y1;
-        double y2 = theLine.y2;
         String s = "<line stroke-dasharray=\"3, 3\" " +
-                "x1=\"" + x1 + "\" " +
-                "y1=\"" + y1 + "\" " +
-                "x2=\"" + x2 + "\" " +
-                "y2=\"" + y2 + "\" " +
+                "x1=\"" + round(theLine.x1) + "\" " +
+                "y1=\"" + round(theLine.y1) + "\" " +
+                "x2=\"" + round(theLine.x2) + "\" " +
+                "y2=\"" + round(theLine.y2) + "\" " +
                 "stroke=\"" + currentColor + "\" " +
                 "stroke-width:" + lineWidth + "\" />";
 
@@ -130,8 +128,8 @@ public class SVGDepictor extends AbstractDepictor
 
         double strWidth = getStringWidth(theString);
         String s = "<text " +
-                "x=\"" + (x - strWidth / 2.0) + "\" " +
-                "y=\"" + (y + textSize / 3.0) + "\" " +
+                "x=\"" + round(x - strWidth / 2.0) + "\" " +
+                "y=\"" + round(y + textSize / 3.0) + "\" " +
                 "font-family=\" " + currentFont.getName() + "\" " +
                 "font-size=\"" + currentFont.getSize() + "\" " +
                 "fill=\"" + currentColor + "\">" + theString +
@@ -144,9 +142,9 @@ public class SVGDepictor extends AbstractDepictor
     {
         StringBuilder s = new StringBuilder("<polygon points=\"");
         for (int i = 0; i < count; i++) {
-            s.append(x[i]);
+            s.append(round(x[i]));
             s.append(",");
-            s.append(y[i]);
+            s.append(round(y[i]));
             s.append(" ");
         }
         s.append("\" " +
@@ -160,9 +158,9 @@ public class SVGDepictor extends AbstractDepictor
     protected void fillCircle(double x, double y, double d)
     {
         String s = "<circle " +
-                "cx=\"" + (x + d / 2.0) + "\" " +
-                "cy=\"" + (y + d / 2.0) + "\" " +
-                "r=\"" + (d / 2.0) + "\" " +
+                "cx=\"" + round(x + d / 2.0) + "\" " +
+                "cy=\"" + round(y + d / 2.0) + "\" " +
+                "r=\"" + round(d / 2.0) + "\" " +
                 "fill=\"" + currentColor + "\" />";
         write(s);
     }
@@ -198,7 +196,7 @@ public class SVGDepictor extends AbstractDepictor
     @Override
     protected void setLineWidth(double width)
     {
-        lineWidth = Math.max(width,1);
+        lineWidth = round(Math.max(width, 1));
     }
 
     @Override
@@ -213,10 +211,10 @@ public class SVGDepictor extends AbstractDepictor
         String s = "<line " +
                 "id=\"" + getId() + ":Bond:" + bond + "\" " +
                 "class=\"event\" " +	// class to respond to the mouse event
-                "x1=\"" + x1 + "\" " +
-                "y1=\"" + y1 + "\" " +
-                "x2=\"" + x2 + "\" " +
-                "y2=\"" + y2 + "\" " +
+                "x1=\"" + round(x1) + "\" " +
+                "y1=\"" + round(y1) + "\" " +
+                "x2=\"" + round(x2) + "\" " +
+                "y2=\"" + round(y2) + "\" " +
                 "stroke-width=\"" + DEFAULT_ELEM_WIDTH + "\" " +
                 "stroke-opacity=\"0\" />";
         bonds.add(s);
@@ -225,13 +223,12 @@ public class SVGDepictor extends AbstractDepictor
     @Override
     protected void onDrawAtom(int atom, String symbol, double x, double y)
     {
-        int r = DEFAULT_ELEM_WIDTH;
         String s = "<circle " +
                 "id=\"" + getId() + ":Atom:" + atom + "\" " +
                 "class=\"event\" " + // class to respond to the mouse event
-                "cx=\"" + x + "\" " +
-                "cy=\"" + y + "\" " +
-                "r=\"" + r + "\" " +
+                "cx=\"" + round(x) + "\" " +
+                "cy=\"" + round(y) + "\" " +
+                "r=\"" + DEFAULT_ELEM_WIDTH + "\" " +
                 "fill-opacity=\"0\" />";
         atoms.add(s);
     }
