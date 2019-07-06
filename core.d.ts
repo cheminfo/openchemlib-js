@@ -4,5 +4,7 @@ export {
   MoleculeProperties,
   DruglikenessPredictor,
   DrugScoreCalculator,
-  ToxicityPredictor
+  ToxicityPredictor,
+  IInitializeConformersOptions,
+  ConformerGenerator
 } from './types';

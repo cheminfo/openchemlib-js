@@ -16,7 +16,7 @@ public class BufferedWriter {
 
   }
 
-  public void write(String string) {
+  public void write(String string) throws IOException {
     // TODO Auto-generated method stub
 
   }
@@ -24,6 +24,10 @@ public class BufferedWriter {
   public void flush() {
     // TODO Auto-generated method stub
 
+  }
+
+  public void newLine() {
+    
   }
 
 }

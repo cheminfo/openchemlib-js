@@ -21,6 +21,8 @@ exports.modified = modified.map(getFilename);
 
 const changed = [
   ['chem/ChemistryHelper', removePrintf],
+  ['chem/conf/BondLengthSet', changeBondLengthSet],
+  ['chem/conf/TorsionDB', changeTorsionDB],
   ['chem/io/RXNFileV3Creator', removeRXNStringFormat],
   ['chem/Molecule', changeMolecule],
   ['share/gui/editor/Model', removePrintf],
@@ -48,6 +50,10 @@ const removed = [
 ];
 
 exports.removed = removed.map(getFolderName);
+
+const generated = [['chem/conf/TorsionDBData', require('./generateTorsionDBData')]];
+
+exports.generated = generated.map((file) => [getFilename(file[0]), file[1]]);
 
 function getFilename(file) {
   return `actelion/research/${file}.java`;
@@ -100,4 +106,107 @@ function removeRXNStringFormat(code) {
     'theWriter.write(String.format("M  V30 COUNTS %d %d\\n",rcnt,pcnt));',
     'theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+"\\n",rcnt,pcnt);'
   );
+}
+
+const newInit = `
+private void init(int mode) {
+  mSupportedModes |= mode;
+
+  String[] tr = TorsionDBData.gettorsionIDData();
+  String[] ar = ((mode & MODE_ANGLES) == 0) ? null : TorsionDBData.gettorsionAngleData();
+  String[] rr = ((mode & MODE_ANGLES) == 0) ? null : TorsionDBData.gettorsionRangeData();
+  String[] fr = ((mode & MODE_ANGLES) == 0) ? null : TorsionDBData.gettorsionFrequencyData();
+  String[] br = ((mode & MODE_BINS) == 0) ? null : TorsionDBData.gettorsionBinsData();
+
+  for (int trLine = 0; trLine < tr.length; trLine++) {
+    String type = tr[trLine];
+    TorsionInfo torsionInfo = mTreeMap.get(type);
+		if (torsionInfo == null) {
+			torsionInfo = new TorsionInfo(getSymmetryType(type));
+			mTreeMap.put(type, torsionInfo);
+		}
+
+		if (ar != null) {
+			String[] angle = ar[trLine].split(",");
+			torsionInfo.angle = new short[angle.length];
+			for (int i=0; i<angle.length; i++)
+				torsionInfo.angle[i] = Short.parseShort(angle[i]);
+		}
+		if (rr != null) {
+			String[] range = rr[trLine].split(",");
+			torsionInfo.range = new short[range.length][2];
+			for (int i=0; i<range.length; i++) {
+				int index = range[i].indexOf('-', 1);
+				torsionInfo.range[i][0] = Short.parseShort(range[i].substring(0, index));
+				torsionInfo.range[i][1] = Short.parseShort(range[i].substring(index+1));
+			}
+		}
+		if (fr != null) {
+			String[] frequency = fr[trLine].split(",");
+			torsionInfo.frequency = new short[frequency.length];
+			for (int i=0; i<frequency.length; i++)
+				torsionInfo.frequency[i] = Byte.parseByte(frequency[i]);
+		}
+		if (br != null) {
+			String[] binSize = br[trLine].split(",");
+			torsionInfo.binSize = new byte[binSize.length];
+			for (int i=0; i<binSize.length; i++)
+				torsionInfo.binSize[i] = Byte.parseByte(binSize[i]);
+		}
+  }
+}
+`;
+
+function changeTorsionDB(code) {
+  code = code.replace('util.TreeMap;', 'util.TreeMap;\nimport com.actelion.research.chem.conf.TorsionDBData;');
+
+  const initIndexStart = code.indexOf('private void init');
+  const initIndexEnd = code.indexOf('/**', initIndexStart);
+
+  code = code.substr(0, initIndexStart) + newInit + code.substr(initIndexEnd, code.length);
+
+  return code;
+}
+
+const newInitialize = `
+private static void initialize() {
+  if (!isInitialized) {
+    String[] bdr = TorsionDBData.getbondLengthDataData();
+    String countString = bdr[0];
+    int count = Integer.parseInt(countString);
+
+    BOND_ID = new int[count];
+    BOND_LENGTH = new float[count];
+    BOND_STDDEV = new float[count];
+    BOND_COUNT = new int[count];
+
+    for (int i=0; i<count; i++) {
+      String line = bdr[i+1];
+      String[] item = line.split("\\t");
+      if (item.length == 4) {
+        try {
+          BOND_ID[i] = Integer.parseInt(item[0]);
+          BOND_LENGTH[i] = Float.parseFloat(item[1]);
+          BOND_STDDEV[i] = Float.parseFloat(item[2]);
+          BOND_COUNT[i] = Integer.parseInt(item[3]);
+        } catch (NumberFormatException nfe) {
+          break;
+        }
+      }
+    }
+    isInitialized = true;
+  }
+}
+
+`;
+
+function changeBondLengthSet(code) {
+  code = code.replace('chem.StereoMolecule;', 'chem.StereoMolecule;\nimport com.actelion.research.chem.conf.TorsionDBData;');
+
+  const initIndexStart = code.indexOf('private static void initialize');
+  const initIndexEnd = code.indexOf('\n\tpublic float getLength', initIndexStart);
+
+  code = code.substr(0, initIndexStart) + newInitialize + code.substr(initIndexEnd, code.length);
+
+  return code;
 }

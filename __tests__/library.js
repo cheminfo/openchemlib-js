@@ -21,7 +21,8 @@ describe('Checking for the presence of main APIs', function () {
     'MoleculeProperties',
     'DruglikenessPredictor',
     'DrugScoreCalculator',
-    'ToxicityPredictor'
+    'ToxicityPredictor',
+    'ConformerGenerator'
   ];
 
   const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];
