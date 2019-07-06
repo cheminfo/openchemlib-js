@@ -1,5 +1,11 @@
 # OpenChemLib JS Changelog
 
+## 7.1.1 / 2019-07-06
+
+- Update OCL to 2019_07_04-04_00_27
+- The SVG depictor (`Molecule#toSVG`) has been improved and its visual output is
+  now more in line with the Java version.
+
 ## 7.1.0 / 2019-06-09
 
 - Added two new options to the `toSVG` method:
