@@ -60,7 +60,7 @@
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-jest": "^22.7.2",
     "fs-extra": "^8.1.0",
-    "gwt-api-exporter": "^1.2.1",
+    "gwt-api-exporter": "^2.0.0",
     "jest": "^24.8.0",
     "rimraf": "^2.6.3",
     "typedoc": "^0.14.2",
