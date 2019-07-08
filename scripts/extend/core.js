@@ -1,6 +1,14 @@
 module.exports = function extendCore(exports) {
   'use strict';
 
+  var ConformerGenerator = exports.ConformerGenerator;
+  ConformerGenerator.prototype.molecules = function* molecules() {
+    var nextConformer;
+    while ((nextConformer = this.getNextConformerAsMolecule()) !== null) {
+      yield nextConformer;
+    }
+  };
+
   var ForceFieldMMFF94 = exports.ForceFieldMMFF94;
   var defaultMinimiseOptions = {
     maxIts: 4000,

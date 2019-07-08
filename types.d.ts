@@ -3089,6 +3089,11 @@ export declare class ConformerGenerator {
    * @returns - This conformer's contribution to all conformers.
    */
   getPreviousConformerContribution(): number;
+
+  /** 
+   * Returns an iterator of molecule conformers.
+   */
+  molecules(): IterableIterator<Molecule>;
 }
 
 export interface IForceFieldMMFF94Options {
