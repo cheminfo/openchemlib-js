@@ -76,7 +76,7 @@ describe('ConformerGenerator', () => {
     expect(mol.getAtomZ(0)).not.toBe(0);
   });
 
-  it('should be an iterator', () => {
+  it('should molecules() return an iterator', () => {
     const mol = Molecule.fromSmiles('COCCON');
 
     const gen = new ConformerGenerator(1);
