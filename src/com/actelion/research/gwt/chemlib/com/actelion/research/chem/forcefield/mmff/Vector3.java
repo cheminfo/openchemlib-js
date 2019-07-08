@@ -311,8 +311,5 @@ public class Vector3 {
      * Returns a string form of this vector.
      *  @return The string form of the vector.
      */
-    public String toString() {
-        return "("+String.format("%.3f", x)+","+String.format("%.3f", y)+","
-            +String.format("%.3f", z)+")";
-    }
+    
 }

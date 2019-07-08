@@ -6,5 +6,6 @@ export {
   DrugScoreCalculator,
   ToxicityPredictor,
   IInitializeConformersOptions,
-  ConformerGenerator
+  ConformerGenerator,
+  ForceFieldMMFF94
 } from './types';

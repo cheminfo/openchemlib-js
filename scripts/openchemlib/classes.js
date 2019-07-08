@@ -23,6 +23,10 @@ const changed = [
   ['chem/ChemistryHelper', removePrintf],
   ['chem/conf/BondLengthSet', changeBondLengthSet],
   ['chem/conf/TorsionDB', changeTorsionDB],
+  ['chem/forcefield/mmff/Csv', changeCsv],
+  ['chem/forcefield/mmff/Separation', replaceHashTable],
+  ['chem/forcefield/mmff/Tables', changeTables],
+  ['chem/forcefield/mmff/Vector3', changeVector3],
   ['chem/io/RXNFileV3Creator', removeRXNStringFormat],
   ['chem/Molecule', changeMolecule],
   ['share/gui/editor/Model', removePrintf],
@@ -37,6 +41,7 @@ const removed = [
   'calc/statistics/median/ModelMedianDouble.java', // uses StringFunctions
   'chem/dnd', // ui
   'chem/FingerPrintGenerator.java',
+  'chem/forcefield/mmff/Sdf.java', // needs access to disk
   'chem/reaction/ClassificationData.java',
   'gui/dnd', // ui
   'gui/hidpi', // ui
@@ -51,7 +56,10 @@ const removed = [
 
 exports.removed = removed.map(getFolderName);
 
-const generated = [['chem/conf/TorsionDBData', require('./generateTorsionDBData')]];
+const generated = [
+  ['chem/conf/TorsionDBData', require('./generateTorsionDBData')],
+  ['chem/forcefield/mmff/CsvData', require('./generateCsvData')],
+];
 
 exports.generated = generated.map((file) => [getFilename(file[0]), file[1]]);
 
@@ -209,4 +217,52 @@ function changeBondLengthSet(code) {
   code = code.substr(0, initIndexStart) + newInitialize + code.substr(initIndexEnd, code.length);
 
   return code;
+}
+
+function changeCsv(code) {
+  code = code.replace('java.io.InputStreamReader;', 'java.io.StringReader;');
+  code = code.replace(
+    'br = new BufferedReader(new InputStreamReader(Csv.class.getResourceAsStream(path)));',
+    'br = new BufferedReader(new StringReader(path));'
+  );
+  const fnfeStart = code.indexOf('catch (FileNotFoundException e) {');
+  const fnfeEnd = code.indexOf('}', fnfeStart);
+  code = code.substr(0, fnfeStart) + code.substr(fnfeEnd + 1, code.length);
+  return code;
+}
+
+const newTables = `public static Tables newMMFF94(String tableSet) {
+  return new com.actelion.research.chem.forcefield.mmff.Tables(
+    CsvData.angleData,
+    CsvData.atomData,
+    CsvData.bciData,
+    CsvData.bndkData,
+    CsvData.bondData,
+    CsvData.covradData,
+    CsvData.dfsbData,
+    CsvData.defData,
+    CsvData.herschbachlaurieData,
+    (tableSet.equals(ForceFieldMMFF94.MMFF94S) || tableSet.equals(ForceFieldMMFF94.MMFF94SPLUS) ? CsvData.n94s_outofplaneData : CsvData.outofplaneData),
+    CsvData.pbciData,
+    CsvData.stbnData,
+    (tableSet.equals(ForceFieldMMFF94.MMFF94S) ? CsvData.n94s_torsionData : tableSet.equals(ForceFieldMMFF94.MMFF94SPLUS) ? CsvData.n94s_torsionPlusData : CsvData.torsionData),
+    CsvData.vanderwaalsData
+  );
+}`;
+
+function changeTables(code) {
+  const indexStart = code.indexOf('public static Tables');
+  const indexEnd = code.indexOf('}', indexStart);
+
+  code = code.substr(0, indexStart) + newTables + code.substr(indexEnd + 1, code.length);
+
+  return code;
+}
+
+function replaceHashTable(code) {
+  return code.replace(/Hashtable/g, 'HashMap');
+}
+
+function changeVector3(code) {
+  return removeSlice(code, 'public String toString() {', '}');
 }
