@@ -37,7 +37,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.StringReader;
 
 /**
  * Basic CSV parser. The Csv class provides very basic CSV file parsing
@@ -91,7 +91,7 @@ public final class Csv {
 
         try {
             String line;
-            br = new BufferedReader(new InputStreamReader(Csv.class.getResourceAsStream(path)));
+            br = new BufferedReader(new StringReader(path));
 
             int size = Integer.parseInt(br.readLine().trim());
             String[] format = br.readLine().trim().split(",");
@@ -117,9 +117,7 @@ public final class Csv {
             }
 
             return table;
-        } catch (FileNotFoundException e) {
-            System.out.println("Could not find file: '"+path+"'");
-        } catch (IOException e) {
+        }  catch (IOException e) {
             System.out.println("IO Exception!");
         } finally {
             try {
