@@ -75,4 +75,21 @@ describe('ConformerGenerator', () => {
     expect(conf).toBe(mol);
     expect(mol.getAtomZ(0)).not.toBe(0);
   });
+
+  it('should be an iterator', () => {
+    const mol = Molecule.fromSmiles('COCCON');
+
+    const gen = new ConformerGenerator(1);
+    gen.initializeConformers(mol);
+
+    const allConformers = [...gen.molecules()];
+    expect(allConformers).toHaveLength(43);
+
+    // All molecules should be different
+    expect(new Set(allConformers).size).toBe(43);
+
+    expect(allConformers[0].getAtomZ(0)).not.toBe(allConformers[1].getAtomZ(1));
+
+    expect(allConformers.every((conf) => conf instanceof Molecule)).toBe(true);
+  });
 });
