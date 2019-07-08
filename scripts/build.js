@@ -11,6 +11,9 @@ const yargs = require('yargs');
 
 const pack = require('../package.json');
 
+const extendMinimal = require('./extend/minimal');
+const extendCore = require('./extend/core');
+const extendFull = require('./extend/full');
 let modules = require('./modules.json');
 
 const argv = yargs
@@ -215,7 +218,8 @@ function build() {
         output: `dist/openchemlib-${mod.name}${suffix}.js`,
         exports: 'OCL',
         fake: mod.fake,
-        package: pack
+        package: pack,
+        extendApi: createExtender(mod.name),
       })
     );
   }
@@ -234,4 +238,17 @@ function handleCatch(err) {
   console.error(err);
   // eslint-disable-next-line no-process-exit
   process.exit(1);
+}
+
+function createExtender(name) {
+  const toPut = [addAndCallExtender(extendMinimal, 'extendMinimal')];
+  if (name === 'core' || name === 'full') toPut.push(addAndCallExtender(extendCore, 'extendCore'));
+  if (name === 'full') toPut.push(addAndCallExtender(extendFull, 'extendFull'));
+  return `function extendApi(exports) {
+    ${toPut.join('\n')}
+  }`;
+}
+
+function addAndCallExtender(extender, name) {
+  return `${extender.toString()}\n${name}(exports);`;
 }
