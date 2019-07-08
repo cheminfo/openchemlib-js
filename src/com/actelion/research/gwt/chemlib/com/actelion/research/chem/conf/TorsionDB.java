@@ -38,6 +38,7 @@ import com.actelion.research.chem.StereoMolecule;
 
 import java.io.*;
 import java.util.TreeMap;
+import com.actelion.research.chem.conf.TorsionDBData;
 
 public class TorsionDB {
 	public static final int MODE_ANGLES = 1;
@@ -220,87 +221,54 @@ public class TorsionDB {
 			ti.mergeTorsions(mergeSpan);
 		}
 
-	private void init(int mode) {
-		mSupportedModes |= mode;
+	
+private void init(int mode) {
+  mSupportedModes |= mode;
 
-		try {
-			BufferedReader tr = openReader(cTorsionIDFile);
-			BufferedReader ar = ((mode & MODE_ANGLES) == 0) ? null : openReader(cTorsionAngleFile);
-			BufferedReader rr = ((mode & MODE_ANGLES) == 0) ? null : openReader(cTorsionRangeFile);
-			BufferedReader fr = ((mode & MODE_ANGLES) == 0) ? null : openReader(cTorsionFrequencyFile);
-			BufferedReader br = ((mode & MODE_BINS) == 0) ? null : openReader(cTorsionBinsFile);
+  String[] tr = TorsionDBData.gettorsionIDData();
+  String[] ar = ((mode & MODE_ANGLES) == 0) ? null : TorsionDBData.gettorsionAngleData();
+  String[] rr = ((mode & MODE_ANGLES) == 0) ? null : TorsionDBData.gettorsionRangeData();
+  String[] fr = ((mode & MODE_ANGLES) == 0) ? null : TorsionDBData.gettorsionFrequencyData();
+  String[] br = ((mode & MODE_BINS) == 0) ? null : TorsionDBData.gettorsionBinsData();
 
-			String type = tr.readLine();
-			while (type != null) {
-				TorsionInfo torsionInfo = mTreeMap.get(type);
-				if (torsionInfo == null) {
-					torsionInfo = new TorsionInfo(getSymmetryType(type));
-					mTreeMap.put(type, torsionInfo);
-					}
-
-				if (ar != null) {
-					String[] angle = ar.readLine().split(",");
-					torsionInfo.angle = new short[angle.length];
-					for (int i=0; i<angle.length; i++)
-						torsionInfo.angle[i] = Short.parseShort(angle[i]);
-					}
-				if (rr != null) {
-					String[] range = rr.readLine().split(",");
-					torsionInfo.range = new short[range.length][2];
-					for (int i=0; i<range.length; i++) {
-						int index = range[i].indexOf('-', 1);
-						torsionInfo.range[i][0] = Short.parseShort(range[i].substring(0, index));
-						torsionInfo.range[i][1] = Short.parseShort(range[i].substring(index+1));
-						}
-					}
-				if (fr != null) {
-					String[] frequency = fr.readLine().split(",");
-					torsionInfo.frequency = new short[frequency.length];
-					for (int i=0; i<frequency.length; i++)
-						torsionInfo.frequency[i] = Byte.parseByte(frequency[i]);
-					}
-				if (br != null) {
-					String[] binSize = br.readLine().split(",");
-					torsionInfo.binSize = new byte[binSize.length];
-					for (int i=0; i<binSize.length; i++)
-						torsionInfo.binSize[i] = Byte.parseByte(binSize[i]);
-					}
-
-				type = tr.readLine();
-				}
-
-			tr.close();
-			if (ar != null)
-				ar.close();
-			if (rr != null)
-				rr.close();
-			if (fr != null)
-				fr.close();
-			if (br != null)
-				br.close();
-			}
-		catch (IOException e) {}
+  for (int trLine = 0; trLine < tr.length; trLine++) {
+    String type = tr[trLine];
+    TorsionInfo torsionInfo = mTreeMap.get(type);
+		if (torsionInfo == null) {
+			torsionInfo = new TorsionInfo(getSymmetryType(type));
+			mTreeMap.put(type, torsionInfo);
 		}
 
-	protected static BufferedReader openReader(String resourceName) throws IOException {
-		if (sExternalResourcePath != null)
-			return new BufferedReader(new FileReader(sExternalResourcePath+resourceName));
-
-		if (sDatabase == null) {
-			InputStream is = TorsionDB.class.getResourceAsStream(cBasePath+DATABASE_CSD+resourceName);
-			if (is != null) {
-				sDatabase = DATABASE_CSD;
-				return new BufferedReader(new InputStreamReader(is));
-				}
-
-			sDatabase = DATABASE_COD;
-			}
-
-	   	return new BufferedReader(new InputStreamReader(TorsionDB.class.getResourceAsStream(
-   				cBasePath+sDatabase+resourceName)));
+		if (ar != null) {
+			String[] angle = ar[trLine].split(",");
+			torsionInfo.angle = new short[angle.length];
+			for (int i=0; i<angle.length; i++)
+				torsionInfo.angle[i] = Short.parseShort(angle[i]);
 		}
-
-	/**
+		if (rr != null) {
+			String[] range = rr[trLine].split(",");
+			torsionInfo.range = new short[range.length][2];
+			for (int i=0; i<range.length; i++) {
+				int index = range[i].indexOf('-', 1);
+				torsionInfo.range[i][0] = Short.parseShort(range[i].substring(0, index));
+				torsionInfo.range[i][1] = Short.parseShort(range[i].substring(index+1));
+			}
+		}
+		if (fr != null) {
+			String[] frequency = fr[trLine].split(",");
+			torsionInfo.frequency = new short[frequency.length];
+			for (int i=0; i<frequency.length; i++)
+				torsionInfo.frequency[i] = Byte.parseByte(frequency[i]);
+		}
+		if (br != null) {
+			String[] binSize = br[trLine].split(",");
+			torsionInfo.binSize = new byte[binSize.length];
+			for (int i=0; i<binSize.length; i++)
+				torsionInfo.binSize[i] = Byte.parseByte(binSize[i]);
+		}
+  }
+}
+/**
 	 * Returns an array of maxima of the smoothened torsion histogram
 	 * as short values in the range: 0 <= v < 360. Every v[i]
 	 * represents a bin from v-0.5 to v+0.5.

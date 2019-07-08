@@ -35,6 +35,7 @@ package com.actelion.research.chem.conf;
 
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.chem.conf.TorsionDBData;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -78,45 +79,36 @@ public class BondLengthSet {
 			}
 		}
 
-	private static void initialize() {
-		if (!isInitialized) {
-			synchronized (BondLengthSet.class) {
-				try {
-					BufferedReader bdr = TorsionDB.openReader(cBondDataFile);
+	
+private static void initialize() {
+  if (!isInitialized) {
+    String[] bdr = TorsionDBData.getbondLengthDataData();
+    String countString = bdr[0];
+    int count = Integer.parseInt(countString);
 
-					String countString = bdr.readLine();
-					int count = (countString == null) ? 0 : Integer.parseInt(countString);
+    BOND_ID = new int[count];
+    BOND_LENGTH = new float[count];
+    BOND_STDDEV = new float[count];
+    BOND_COUNT = new int[count];
 
-					BOND_ID = new int[count];
-					BOND_LENGTH = new float[count];
-					BOND_STDDEV = new float[count];
-					BOND_COUNT = new int[count];
+    for (int i=0; i<count; i++) {
+      String line = bdr[i+1];
+      String[] item = line.split("\t");
+      if (item.length == 4) {
+        try {
+          BOND_ID[i] = Integer.parseInt(item[0]);
+          BOND_LENGTH[i] = Float.parseFloat(item[1]);
+          BOND_STDDEV[i] = Float.parseFloat(item[2]);
+          BOND_COUNT[i] = Integer.parseInt(item[3]);
+        } catch (NumberFormatException nfe) {
+          break;
+        }
+      }
+    }
+    isInitialized = true;
+  }
+}
 
-					for (int i=0; i<count; i++) {
-						String line = bdr.readLine();
-						if (line != null) {
-							String[] item = line.split("\\t");
-							if (item.length == 4) {
-								try {
-									BOND_ID[i] = Integer.parseInt(item[0]);
-									BOND_LENGTH[i] = Float.parseFloat(item[1]);
-									BOND_STDDEV[i] = Float.parseFloat(item[2]);
-									BOND_COUNT[i] = Integer.parseInt(item[3]);
-									}
-								catch (NumberFormatException nfe) {
-									break;
-									}
-								}
-							}
-						}
-
-					bdr.close();
-					isInitialized = true;
-					}
-				catch (IOException e) {}
-				}
-			}
-		}
 
 	public float getLength(int bond) {
 		return mBondLength[bond];

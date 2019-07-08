@@ -109,8 +109,18 @@ function copyOpenchemlib() {
   if (fs.existsSync(outDir)) {
     rimraf.sync(outDir);
   }
-
   fs.copySync(chemlibDir, outDir);
+
+  const openMolDir = path.resolve(config.openchemlib, 'main/java/org');
+  const outOpenMolDir = path.join(
+    __dirname,
+    '../src/com/actelion/research/gwt/chemlib/org'
+  );
+
+  if (fs.existsSync(outOpenMolDir)) {
+    rimraf.sync(outOpenMolDir);
+  }
+  fs.copySync(openMolDir, outOpenMolDir);
 
   const modified = chemlibClasses.modified;
   log(`Copying ${modified.length} modified classes`);
@@ -133,6 +143,13 @@ function copyOpenchemlib() {
   const removed = chemlibClasses.removed;
   for (const removedFile of removed) {
     fs.removeSync(path.join(outDir, removedFile));
+  }
+
+  const generated = chemlibClasses.generated;
+  for (const generatedFile of generated) {
+    fs.writeFileSync(path.join(outDir, generatedFile[0]), generatedFile[1]({
+      config
+    }));
   }
 }
 

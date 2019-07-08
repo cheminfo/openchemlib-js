@@ -3004,6 +3004,93 @@ export declare class ToxicityPredictor {
   getDetail(molecule: Molecule, riskType: number): IParameterizedString[];
 }
 
+export interface IInitializeConformersOptions {
+  /**
+   * One of the ConformerGenerator.STRATEGY_ constants.
+   * Default: `ConformerGenerator.STRATEGY_LIKELY_RANDOM`.
+   */
+  strategy?: number;
+  /**
+   * Maximum number of distinct torsion sets the strategy will try.
+   * Default: `100000`.
+   */
+  maxTorsionSets?: number;
+  /**
+   * Use 60 degree steps for every rotatable bond instead of torsion DB.
+   * Default: `false`.
+   */
+  use60degreeSteps?: boolean;
+}
+
+export declare class ConformerGenerator {
+  static STRATEGY_LIKELY_SYSTEMATIC: number;
+  static STRATEGY_PURE_RANDOM: number;
+  static STRATEGY_LIKELY_RANDOM: number;
+  static STRATEGY_ADAPTIVE_RANDOM: number;
+
+  constructor(seed: number);
+
+  /**
+   * Fills all free valences of mol with explicit hydrogens and tries to
+	 * create a reasonable conformer by starting with the most likely torsion set.
+	 * If there are collisions, then less likely torsions are tried to find
+	 * a collision free conformer. If it succeeds, mol receives the modified
+	 * atom coordinates and mol is returned. If the conformer generation fails,
+	 * then null is returned. The torsion strategy used is STRATEGY_ADAPTIVE_RANDOM.
+	 * New 3D-coordinates correctly reflect E/Z and R/S bond/atom parities.
+	 * This is a convenience method that does not require any initialization.
+   * @param mol The molecule that will receive new 3D coordinates in place.
+   * @returns - Original molecule with new 3D-coordinates or null.
+   */
+  getOneConformerAsMolecule(mol: Molecule): Molecule | null;
+
+  /**
+   * The `initializeConformers()` method needs to be called before getting individual
+	 * conformers of the same molecule by `getNextConformerAsMolecule()`.
+	 * Open valences of the passed molecule are filled with hydrogen atoms.
+	 * The passed molecule may repeatedly be used as container for a new conformer's atom
+	 * coordinates, if it is passed to getNextConformerAsMolecule().
+   * @param mol - Will be saturated with hydrogen atoms.
+   * @param options
+   * @returns - `false` if there is a structure problem.
+   */
+  initializeConformers(mol: Molecule, options?: IInitializeConformersOptions): boolean;
+
+  /**
+   * Creates the next random, likely or systematic new(!) conformer of the molecule
+	 * that was passed when calling `initializeConformers()`. A new conformer is one,
+	 * whose combination of torsion angles was not used in a previous conformer
+	 * created by this function since the last call of `initializeConformers()`.
+	 * Parameter mol may be null or recycle the original molecule to receive new 3D coordinates.
+	 * If it is null, then a fresh copy of the original molecule with new atom coordinates is returned.
+	 * Every call of this method creates a new collision-free conformer until the employed torsion set
+	 * strategy decides that it cannot generate any more suitable torsion sets.
+   * @param mol
+   */
+  getNextConformerAsMolecule(mol?: Molecule): Molecule | null;
+
+  /**
+   * @returns - Count of valid delivered conformers.
+   */
+  getConformerCount(): number;
+
+  /**
+   * Calculates the potential count of conformers by multiplying degrees of freedom
+	 * (torsions per rotatable bond & rigid fragment multiplicities).
+	 * Cannot be called before calling `initializeConformers()`.
+   */
+  getPotentialConformerCount(): number;
+
+  /**
+   * With best current knowledge about colliding torsion combinations
+	 * and based on the individual frequencies of currently active torsions
+	 * this method returns the conformers's overall contribution to the
+	 * total set of non colliding conformers.
+   * @returns - This conformer's contribution to all conformers.
+   */
+  getPreviousConformerContribution(): number;
+}
+
 // Full API
 
 export declare namespace StructureView {
