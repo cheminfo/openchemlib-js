@@ -84,6 +84,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="imoleculetosvgoptions.html#autocrop" class="tsd-kind-icon">auto<wbr>Crop</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="imoleculetosvgoptions.html#autocropmargin" class="tsd-kind-icon">auto<wbr>Crop<wbr>Margin</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="imoleculetosvgoptions.html#chiraltextabovemolecule" class="tsd-kind-icon">chiral<wbr>Text<wbr>Above<wbr>Molecule</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="imoleculetosvgoptions.html#chiraltextbelowmolecule" class="tsd-kind-icon">chiral<wbr>Text<wbr>Below<wbr>Molecule</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="imoleculetosvgoptions.html#chiraltextonframebottom" class="tsd-kind-icon">chiral<wbr>Text<wbr>OnFrame<wbr>Bottom</a></li>
@@ -113,47 +115,80 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="autocrop" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> auto<wbr>Crop</h3>
+					<div class="tsd-signature tsd-kind-icon">auto<wbr>Crop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L37">types.d.ts:37</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Automatically crop the SVG to fit around the molecule.
+								This changes the size of the SVG.
+							Default: false.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="autocropmargin" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> auto<wbr>Crop<wbr>Margin</h3>
+					<div class="tsd-signature tsd-kind-icon">auto<wbr>Crop<wbr>Margin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L43">types.d.ts:43</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Margin (in px) to keep around the molecule when <code>autoCrop</code> is <code>true</code>.
+							Default: 5.</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="chiraltextabovemolecule" class="tsd-anchor"></a>
-					<h3>chiral<wbr>Text<wbr>Above<wbr>Molecule</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> chiral<wbr>Text<wbr>Above<wbr>Molecule</h3>
 					<div class="tsd-signature tsd-kind-icon">chiral<wbr>Text<wbr>Above<wbr>Molecule<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#chiraltextabovemolecule">chiralTextAboveMolecule</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2477">types.d.ts:2477</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2514">types.d.ts:2514</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="chiraltextbelowmolecule" class="tsd-anchor"></a>
-					<h3>chiral<wbr>Text<wbr>Below<wbr>Molecule</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> chiral<wbr>Text<wbr>Below<wbr>Molecule</h3>
 					<div class="tsd-signature tsd-kind-icon">chiral<wbr>Text<wbr>Below<wbr>Molecule<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#chiraltextbelowmolecule">chiralTextBelowMolecule</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2475">types.d.ts:2475</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2512">types.d.ts:2512</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="chiraltextonframebottom" class="tsd-anchor"></a>
-					<h3>chiral<wbr>Text<wbr>OnFrame<wbr>Bottom</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> chiral<wbr>Text<wbr>OnFrame<wbr>Bottom</h3>
 					<div class="tsd-signature tsd-kind-icon">chiral<wbr>Text<wbr>OnFrame<wbr>Bottom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#chiraltextonframebottom">chiralTextOnFrameBottom</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2481">types.d.ts:2481</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2518">types.d.ts:2518</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="chiraltextonframetop" class="tsd-anchor"></a>
-					<h3>chiral<wbr>Text<wbr>OnFrame<wbr>Top</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> chiral<wbr>Text<wbr>OnFrame<wbr>Top</h3>
 					<div class="tsd-signature tsd-kind-icon">chiral<wbr>Text<wbr>OnFrame<wbr>Top<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#chiraltextonframetop">chiralTextOnFrameTop</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2479">types.d.ts:2479</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2516">types.d.ts:2516</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -163,12 +198,13 @@
 					<div class="tsd-signature tsd-kind-icon">factor<wbr>Text<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L19">types.d.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L20">types.d.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Default: 1</p>
+							<p>Factor used to compute the size of text nodes.
+							Default: 1.</p>
 						</div>
 					</div>
 				</section>
@@ -178,7 +214,7 @@
 					<div class="tsd-signature tsd-kind-icon">font<wbr>Weight<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L24">types.d.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L25">types.d.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -189,133 +225,133 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="highlightqueryfeatures" class="tsd-anchor"></a>
-					<h3>highlight<wbr>Query<wbr>Features</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> highlight<wbr>Query<wbr>Features</h3>
 					<div class="tsd-signature tsd-kind-icon">highlight<wbr>Query<wbr>Features<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#highlightqueryfeatures">highlightQueryFeatures</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2489">types.d.ts:2489</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2526">types.d.ts:2526</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="inflatetohighresavbl" class="tsd-anchor"></a>
-					<h3>inflate<wbr>ToHigh<wbr>ResAVBL</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> inflate<wbr>ToHigh<wbr>ResAVBL</h3>
 					<div class="tsd-signature tsd-kind-icon">inflate<wbr>ToHigh<wbr>ResAVBL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#inflatetohighresavbl">inflateToHighResAVBL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2473">types.d.ts:2473</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2510">types.d.ts:2510</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="inflatetomaxavbl" class="tsd-anchor"></a>
-					<h3>inflate<wbr>ToMaxAVBL</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> inflate<wbr>ToMaxAVBL</h3>
 					<div class="tsd-signature tsd-kind-icon">inflate<wbr>ToMaxAVBL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#inflatetomaxavbl">inflateToMaxAVBL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2471">types.d.ts:2471</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2508">types.d.ts:2508</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="noimplicitatomlabelcolors" class="tsd-anchor"></a>
-					<h3>no<wbr>Implicit<wbr>Atom<wbr>Label<wbr>Colors</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> no<wbr>Implicit<wbr>Atom<wbr>Label<wbr>Colors</h3>
 					<div class="tsd-signature tsd-kind-icon">no<wbr>Implicit<wbr>Atom<wbr>Label<wbr>Colors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#noimplicitatomlabelcolors">noImplicitAtomLabelColors</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2505">types.d.ts:2505</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2542">types.d.ts:2542</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="nostereoproblem" class="tsd-anchor"></a>
-					<h3>no<wbr>Stereo<wbr>Problem</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> no<wbr>Stereo<wbr>Problem</h3>
 					<div class="tsd-signature tsd-kind-icon">no<wbr>Stereo<wbr>Problem<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#nostereoproblem">noStereoProblem</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2507">types.d.ts:2507</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2544">types.d.ts:2544</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="notabus" class="tsd-anchor"></a>
-					<h3>no<wbr>Tabus</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> no<wbr>Tabus</h3>
 					<div class="tsd-signature tsd-kind-icon">no<wbr>Tabus<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#notabus">noTabus</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2483">types.d.ts:2483</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2520">types.d.ts:2520</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="showatomnumber" class="tsd-anchor"></a>
-					<h3>show<wbr>Atom<wbr>Number</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> show<wbr>Atom<wbr>Number</h3>
 					<div class="tsd-signature tsd-kind-icon">show<wbr>Atom<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#showatomnumber">showAtomNumber</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2485">types.d.ts:2485</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2522">types.d.ts:2522</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="showbondnumber" class="tsd-anchor"></a>
-					<h3>show<wbr>Bond<wbr>Number</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> show<wbr>Bond<wbr>Number</h3>
 					<div class="tsd-signature tsd-kind-icon">show<wbr>Bond<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#showbondnumber">showBondNumber</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2487">types.d.ts:2487</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2524">types.d.ts:2524</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="showmapping" class="tsd-anchor"></a>
-					<h3>show<wbr>Mapping</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> show<wbr>Mapping</h3>
 					<div class="tsd-signature tsd-kind-icon">show<wbr>Mapping<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#showmapping">showMapping</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2491">types.d.ts:2491</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2528">types.d.ts:2528</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="showsymmetrydiastereotopic" class="tsd-anchor"></a>
-					<h3>show<wbr>Symmetry<wbr>Diastereotopic</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> show<wbr>Symmetry<wbr>Diastereotopic</h3>
 					<div class="tsd-signature tsd-kind-icon">show<wbr>Symmetry<wbr>Diastereotopic<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#showsymmetrydiastereotopic">showSymmetryDiastereotopic</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2501">types.d.ts:2501</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2538">types.d.ts:2538</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="showsymmetryenantiotopic" class="tsd-anchor"></a>
-					<h3>show<wbr>Symmetry<wbr>Enantiotopic</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> show<wbr>Symmetry<wbr>Enantiotopic</h3>
 					<div class="tsd-signature tsd-kind-icon">show<wbr>Symmetry<wbr>Enantiotopic<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#showsymmetryenantiotopic">showSymmetryEnantiotopic</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2503">types.d.ts:2503</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2540">types.d.ts:2540</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="showsymmetrysimple" class="tsd-anchor"></a>
-					<h3>show<wbr>Symmetry<wbr>Simple</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> show<wbr>Symmetry<wbr>Simple</h3>
 					<div class="tsd-signature tsd-kind-icon">show<wbr>Symmetry<wbr>Simple<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#showsymmetrysimple">showSymmetrySimple</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2499">types.d.ts:2499</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2536">types.d.ts:2536</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -325,7 +361,7 @@
 					<div class="tsd-signature tsd-kind-icon">stroke<wbr>Width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L29">types.d.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L30">types.d.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -336,34 +372,34 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="suppresscipparity" class="tsd-anchor"></a>
-					<h3>suppressCIPParity</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> suppressCIPParity</h3>
 					<div class="tsd-signature tsd-kind-icon">suppressCIPParity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#suppresscipparity">suppressCIPParity</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2495">types.d.ts:2495</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2532">types.d.ts:2532</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="suppresschiraltext" class="tsd-anchor"></a>
-					<h3>suppress<wbr>Chiral<wbr>Text</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> suppress<wbr>Chiral<wbr>Text</h3>
 					<div class="tsd-signature tsd-kind-icon">suppress<wbr>Chiral<wbr>Text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#suppresschiraltext">suppressChiralText</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2493">types.d.ts:2493</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2530">types.d.ts:2530</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="suppressesr" class="tsd-anchor"></a>
-					<h3>suppressESR</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> suppressESR</h3>
 					<div class="tsd-signature tsd-kind-icon">suppressESR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="idepictoroptions.html">IDepictorOptions</a>.<a href="idepictoroptions.html#suppressesr">suppressESR</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/e548d7f/types.d.ts#L2497">types.d.ts:2497</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2534">types.d.ts:2534</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -380,7 +416,13 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
+						<a href="../classes/conformergenerator.html" class="tsd-kind-icon">Conformer<wbr>Generator</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="../classes/druglikenesspredictor.html" class="tsd-kind-icon">Druglikeness<wbr>Predictor</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/forcefieldmmff94.html" class="tsd-kind-icon">Force<wbr>FieldMMFF94</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/molecule.html" class="tsd-kind-icon">Molecule</a>
@@ -413,7 +455,16 @@
 						<a href="idepictoroptions.html" class="tsd-kind-icon">IDepictor<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="iforcefieldmmff94options.html" class="tsd-kind-icon">IForce<wbr>FieldMMFF94<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iforcefieldminimiseoptions.html" class="tsd-kind-icon">IForce<wbr>Field<wbr>Minimise<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="ihosecodesoptions.html" class="tsd-kind-icon">IHose<wbr>Codes<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iinitializeconformersoptions.html" class="tsd-kind-icon">IInitialize<wbr>Conformers<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="imoleculefromsmilesoptions.html" class="tsd-kind-icon">IMolecule<wbr>From<wbr>Smiles<wbr>Options</a>
@@ -423,6 +474,12 @@
 					<li class="current tsd-kind-interface">
 						<a href="imoleculetosvgoptions.html" class="tsd-kind-icon">IMolecule<wbr>ToSVGOptions</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="imoleculetosvgoptions.html#autocrop" class="tsd-kind-icon">auto<wbr>Crop</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="imoleculetosvgoptions.html#autocropmargin" class="tsd-kind-icon">auto<wbr>Crop<wbr>Margin</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="imoleculetosvgoptions.html#chiraltextabovemolecule" class="tsd-kind-icon">chiral<wbr>Text<wbr>Above<wbr>Molecule</a>
 							</li>

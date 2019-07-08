@@ -33,6 +33,7 @@ It contains a structure viewer and a structure editor for browser applications.
 
 - [Molecule](https://cheminfo.github.io/openchemlib-js/docs/classes/molecule.html)
 - [Reaction](https://cheminfo.github.io/openchemlib-js/docs/classes/reaction.html)
+- [RingCollection](https://cheminfo.github.io/openchemlib-js/docs/classes/ringcollection.html)
 - [SDFileParser](https://cheminfo.github.io/openchemlib-js/docs/classes/sdfileparser.html)
 - [SSSearcher](https://cheminfo.github.io/openchemlib-js/docs/classes/sssearcher.html)
 - [SSSearcherWithIndex](https://cheminfo.github.io/openchemlib-js/docs/classes/sssearcherwithindex.html)
@@ -40,9 +41,11 @@ It contains a structure viewer and a structure editor for browser applications.
 
 ### Modules present only in core and full builds
 
+- [ConformerGenerator](https://cheminfo.github.io/openchemlib-js/docs/classes/conformergenerator.html)
 - [DruglikenessPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/druglikenesspredictor.html)
 - [DrugScoreCalculator](https://cheminfo.github.io/openchemlib-js/docs/modules/drugscorecalculator.html)
-- [Molecule Properties](https://cheminfo.github.io/openchemlib-js/docs/classes/moleculeproperties.html)
+- [ForceFieldMMFF94](https://cheminfo.github.io/openchemlib-js/docs/classes/forcefieldmmff94.html)
+- [MoleculeProperties](https://cheminfo.github.io/openchemlib-js/docs/classes/moleculeproperties.html)
 - [ToxicityPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/toxicitypredictor.html)
 
 ### Modules present only in full build

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IHoseCodesOptions | OpenChemLib JS</title>
+	<title>IForceFieldMinimiseOptions | OpenChemLib JS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ihosecodesoptions.html">IHoseCodesOptions</a>
+					<a href="iforcefieldminimiseoptions.html">IForceFieldMinimiseOptions</a>
 				</li>
 			</ul>
-			<h1>Interface IHoseCodesOptions</h1>
+			<h1>Interface IForceFieldMinimiseOptions</h1>
 		</div>
 	</div>
 </header>
@@ -68,7 +68,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IHoseCodesOptions</span>
+						<span class="target">IForceFieldMinimiseOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -79,8 +79,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ihosecodesoptions.html#maxspheresize" class="tsd-kind-icon">max<wbr>Sphere<wbr>Size</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ihosecodesoptions.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iforcefieldminimiseoptions.html#functol" class="tsd-kind-icon">func<wbr>Tol</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iforcefieldminimiseoptions.html#gradtol" class="tsd-kind-icon">grad<wbr>Tol</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iforcefieldminimiseoptions.html#maxits" class="tsd-kind-icon">max<wbr>Its</a></li>
 							</ul>
 						</section>
 					</div>
@@ -89,36 +90,50 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="maxspheresize" class="tsd-anchor"></a>
-					<h3>max<wbr>Sphere<wbr>Size</h3>
-					<div class="tsd-signature tsd-kind-icon">max<wbr>Sphere<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="functol" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> func<wbr>Tol</h3>
+					<div class="tsd-signature tsd-kind-icon">func<wbr>Tol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L51">types.d.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3120">types.d.ts:3120</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Maximum number of atoms from the center.
-							Default: 5.</p>
+							<p>The energy tolerance.
+							Default: 1e-6.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span></div>
+					<a name="gradtol" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> grad<wbr>Tol</h3>
+					<div class="tsd-signature tsd-kind-icon">grad<wbr>Tol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L59">types.d.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3114">types.d.ts:3114</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Type of HOSE code.
-								0: normal HOSE code.
-								1: stop if Csp3-Csp3.
-							Default: 0.</p>
+							<p>The gradient tolerance.
+							Default: 1e-4.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="maxits" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> max<wbr>Its</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Its<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3108">types.d.ts:3108</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The maximum number of iterations to run for.
+							Default: 4000.</p>
 						</div>
 					</div>
 				</section>
@@ -176,24 +191,27 @@
 					<li class=" tsd-kind-interface">
 						<a href="iforcefieldmmff94options.html" class="tsd-kind-icon">IForce<wbr>FieldMMFF94<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="iforcefieldminimiseoptions.html" class="tsd-kind-icon">IForce<wbr>Field<wbr>Minimise<wbr>Options</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="ihosecodesoptions.html" class="tsd-kind-icon">IHose<wbr>Codes<wbr>Options</a>
+						<a href="iforcefieldminimiseoptions.html" class="tsd-kind-icon">IForce<wbr>Field<wbr>Minimise<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ihosecodesoptions.html#maxspheresize" class="tsd-kind-icon">max<wbr>Sphere<wbr>Size</a>
+								<a href="iforcefieldminimiseoptions.html#functol" class="tsd-kind-icon">func<wbr>Tol</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ihosecodesoptions.html#type" class="tsd-kind-icon">type</a>
+								<a href="iforcefieldminimiseoptions.html#gradtol" class="tsd-kind-icon">grad<wbr>Tol</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iforcefieldminimiseoptions.html#maxits" class="tsd-kind-icon">max<wbr>Its</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="ihosecodesoptions.html" class="tsd-kind-icon">IHose<wbr>Codes<wbr>Options</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="iinitializeconformersoptions.html" class="tsd-kind-icon">IInitialize<wbr>Conformers<wbr>Options</a>
 					</li>

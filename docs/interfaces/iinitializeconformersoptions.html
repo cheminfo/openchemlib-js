@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IHoseCodesOptions | OpenChemLib JS</title>
+	<title>IInitializeConformersOptions | OpenChemLib JS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ihosecodesoptions.html">IHoseCodesOptions</a>
+					<a href="iinitializeconformersoptions.html">IInitializeConformersOptions</a>
 				</li>
 			</ul>
-			<h1>Interface IHoseCodesOptions</h1>
+			<h1>Interface IInitializeConformersOptions</h1>
 		</div>
 	</div>
 </header>
@@ -68,7 +68,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IHoseCodesOptions</span>
+						<span class="target">IInitializeConformersOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -79,8 +79,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ihosecodesoptions.html#maxspheresize" class="tsd-kind-icon">max<wbr>Sphere<wbr>Size</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ihosecodesoptions.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iinitializeconformersoptions.html#maxtorsionsets" class="tsd-kind-icon">max<wbr>Torsion<wbr>Sets</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iinitializeconformersoptions.html#strategy" class="tsd-kind-icon">strategy</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iinitializeconformersoptions.html#use60degreesteps" class="tsd-kind-icon">use60degree<wbr>Steps</a></li>
 							</ul>
 						</section>
 					</div>
@@ -89,36 +90,50 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="maxspheresize" class="tsd-anchor"></a>
-					<h3>max<wbr>Sphere<wbr>Size</h3>
-					<div class="tsd-signature tsd-kind-icon">max<wbr>Sphere<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="maxtorsionsets" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> max<wbr>Torsion<wbr>Sets</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Torsion<wbr>Sets<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L51">types.d.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3017">types.d.ts:3017</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Maximum number of atoms from the center.
-							Default: 5.</p>
+							<p>Maximum number of distinct torsion sets the strategy will try.
+							Default: <code>100000</code>.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span></div>
+					<a name="strategy" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> strategy</h3>
+					<div class="tsd-signature tsd-kind-icon">strategy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L59">types.d.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3012">types.d.ts:3012</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Type of HOSE code.
-								0: normal HOSE code.
-								1: stop if Csp3-Csp3.
-							Default: 0.</p>
+							<p>One of the ConformerGenerator.STRATEGY_ constants.
+							Default: <code>ConformerGenerator.STRATEGY_LIKELY_RANDOM</code>.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="use60degreesteps" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> use60degree<wbr>Steps</h3>
+					<div class="tsd-signature tsd-kind-icon">use60degree<wbr>Steps<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3022">types.d.ts:3022</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Use 60 degree steps for every rotatable bond instead of torsion DB.
+							Default: <code>false</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -179,24 +194,27 @@
 					<li class=" tsd-kind-interface">
 						<a href="iforcefieldminimiseoptions.html" class="tsd-kind-icon">IForce<wbr>Field<wbr>Minimise<wbr>Options</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="ihosecodesoptions.html" class="tsd-kind-icon">IHose<wbr>Codes<wbr>Options</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="ihosecodesoptions.html" class="tsd-kind-icon">IHose<wbr>Codes<wbr>Options</a>
+						<a href="iinitializeconformersoptions.html" class="tsd-kind-icon">IInitialize<wbr>Conformers<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ihosecodesoptions.html#maxspheresize" class="tsd-kind-icon">max<wbr>Sphere<wbr>Size</a>
+								<a href="iinitializeconformersoptions.html#maxtorsionsets" class="tsd-kind-icon">max<wbr>Torsion<wbr>Sets</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ihosecodesoptions.html#type" class="tsd-kind-icon">type</a>
+								<a href="iinitializeconformersoptions.html#strategy" class="tsd-kind-icon">strategy</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iinitializeconformersoptions.html#use60degreesteps" class="tsd-kind-icon">use60degree<wbr>Steps</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="iinitializeconformersoptions.html" class="tsd-kind-icon">IInitialize<wbr>Conformers<wbr>Options</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="imoleculefromsmilesoptions.html" class="tsd-kind-icon">IMolecule<wbr>From<wbr>Smiles<wbr>Options</a>
 					</li>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MoleculeProperties | OpenChemLib JS</title>
+	<title>ForceFieldMMFF94 | OpenChemLib JS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="moleculeproperties.html">MoleculeProperties</a>
+					<a href="forcefieldmmff94.html">ForceFieldMMFF94</a>
 				</li>
 			</ul>
-			<h1>Class MoleculeProperties</h1>
+			<h1>Class ForceFieldMMFF94</h1>
 		</div>
 	</div>
 </header>
@@ -68,7 +68,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">MoleculeProperties</span>
+						<span class="target">ForceFieldMMFF94</span>
 					</li>
 				</ul>
 			</section>
@@ -79,22 +79,23 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moleculeproperties.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="forcefieldmmff94.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#acceptorcount" class="tsd-kind-icon">acceptor<wbr>Count</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#donorcount" class="tsd-kind-icon">donor<wbr>Count</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#logp" class="tsd-kind-icon">logP</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#logpstring" class="tsd-kind-icon">logPString</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#logs" class="tsd-kind-icon">logS</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#logsstring" class="tsd-kind-icon">logSString</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#polarsurfacearea" class="tsd-kind-icon">polar<wbr>Surface<wbr>Area</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#polarsurfaceareastring" class="tsd-kind-icon">polar<wbr>Surface<wbr>Area<wbr>String</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#rotatablebondcount" class="tsd-kind-icon">rotatable<wbr>Bond<wbr>Count</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moleculeproperties.html#stereocentercount" class="tsd-kind-icon">stereo<wbr>Center<wbr>Count</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="forcefieldmmff94.html#mmff94" class="tsd-kind-icon">MMFF94</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="forcefieldmmff94.html#mmff94s" class="tsd-kind-icon">MMFF94S</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="forcefieldmmff94.html#mmff94splus" class="tsd-kind-icon">MMFF94SPLUS</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="forcefieldmmff94.html#gettotalenergy" class="tsd-kind-icon">get<wbr>Total<wbr>Energy</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="forcefieldmmff94.html#minimise" class="tsd-kind-icon">minimise</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="forcefieldmmff94.html#size" class="tsd-kind-icon">size</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,127 +107,158 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Molecule<wbr>Properties<span class="tsd-signature-symbol">(</span>molecule<span class="tsd-signature-symbol">: </span><a href="molecule.html" class="tsd-signature-type">Molecule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moleculeproperties.html" class="tsd-signature-type">MoleculeProperties</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Force<wbr>FieldMMFF94<span class="tsd-signature-symbol">(</span>molecule<span class="tsd-signature-symbol">: </span><a href="molecule.html" class="tsd-signature-type">Molecule</a>, tablename<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"MMFF94"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"MMFF94s"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"MMFF94s+"</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/iforcefieldmmff94options.html" class="tsd-signature-type">IForceFieldMMFF94Options</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="forcefieldmmff94.html" class="tsd-signature-type">ForceFieldMMFF94</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2923">types.d.ts:2923</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3126">types.d.ts:3126</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>molecule: <a href="molecule.html" class="tsd-signature-type">Molecule</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The molecule to construct the forcefield on.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>tablename: <span class="tsd-signature-type">"MMFF94"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"MMFF94s"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"MMFF94s+"</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The string name for the Tables to be used. Can be <code>&#39;MMFF94&#39;</code>, <code>&#39;MMFF94s&#39;</code> or <code>&#39;MMFF94s+&#39;</code>.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/iforcefieldmmff94options.html" class="tsd-signature-type">IForceFieldMMFF94Options</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+										</div>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="moleculeproperties.html" class="tsd-signature-type">MoleculeProperties</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="forcefieldmmff94.html" class="tsd-signature-type">ForceFieldMMFF94</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="acceptorcount" class="tsd-anchor"></a>
-					<h3>acceptor<wbr>Count</h3>
-					<div class="tsd-signature tsd-kind-icon">acceptor<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="mmff94" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> MMFF94</h3>
+					<div class="tsd-signature tsd-kind-icon">MMFF94<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"MMFF94"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2926">types.d.ts:2926</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3124">types.d.ts:3124</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="donorcount" class="tsd-anchor"></a>
-					<h3>donor<wbr>Count</h3>
-					<div class="tsd-signature tsd-kind-icon">donor<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="mmff94s" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> MMFF94S</h3>
+					<div class="tsd-signature tsd-kind-icon">MMFF94S<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"MMFF94s"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2928">types.d.ts:2928</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3125">types.d.ts:3125</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="logp" class="tsd-anchor"></a>
-					<h3>logP</h3>
-					<div class="tsd-signature tsd-kind-icon">logP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="mmff94splus" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> MMFF94SPLUS</h3>
+					<div class="tsd-signature tsd-kind-icon">MMFF94SPLUS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"MMFF94s+"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2930">types.d.ts:2930</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3126">types.d.ts:3126</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="logpstring" class="tsd-anchor"></a>
-					<h3>logPString</h3>
-					<div class="tsd-signature tsd-kind-icon">logPString<span class="tsd-signature-symbol">:</span> <a href="../interfaces/iparameterizedstring.html" class="tsd-signature-type">IParameterizedString</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2932">types.d.ts:2932</a></li>
-						</ul>
-					</aside>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="gettotalenergy" class="tsd-anchor"></a>
+					<h3>get<wbr>Total<wbr>Energy</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Total<wbr>Energy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3145">types.d.ts:3145</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the total energy of the molecule as the sum of the energy
+									terms.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="logs" class="tsd-anchor"></a>
-					<h3>logS</h3>
-					<div class="tsd-signature tsd-kind-icon">logS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2934">types.d.ts:2934</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="minimise" class="tsd-anchor"></a>
+					<h3>minimise</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">minimise<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/iforcefieldminimiseoptions.html" class="tsd-signature-type">IForceFieldMinimiseOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3152">types.d.ts:3152</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Minimise the current molecule.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/iforcefieldminimiseoptions.html" class="tsd-signature-type">IForceFieldMinimiseOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+							<ul>
+								<li>Return code, 0 on success.</li>
+							</ul>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="logsstring" class="tsd-anchor"></a>
-					<h3>logSString</h3>
-					<div class="tsd-signature tsd-kind-icon">logSString<span class="tsd-signature-symbol">:</span> <a href="../interfaces/iparameterizedstring.html" class="tsd-signature-type">IParameterizedString</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2936">types.d.ts:2936</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="polarsurfacearea" class="tsd-anchor"></a>
-					<h3>polar<wbr>Surface<wbr>Area</h3>
-					<div class="tsd-signature tsd-kind-icon">polar<wbr>Surface<wbr>Area<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2938">types.d.ts:2938</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="polarsurfaceareastring" class="tsd-anchor"></a>
-					<h3>polar<wbr>Surface<wbr>Area<wbr>String</h3>
-					<div class="tsd-signature tsd-kind-icon">polar<wbr>Surface<wbr>Area<wbr>String<span class="tsd-signature-symbol">:</span> <a href="../interfaces/iparameterizedstring.html" class="tsd-signature-type">IParameterizedString</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2940">types.d.ts:2940</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="rotatablebondcount" class="tsd-anchor"></a>
-					<h3>rotatable<wbr>Bond<wbr>Count</h3>
-					<div class="tsd-signature tsd-kind-icon">rotatable<wbr>Bond<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2942">types.d.ts:2942</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="stereocentercount" class="tsd-anchor"></a>
-					<h3>stereo<wbr>Center<wbr>Count</h3>
-					<div class="tsd-signature tsd-kind-icon">stereo<wbr>Center<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L2944">types.d.ts:2944</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="size" class="tsd-anchor"></a>
+					<h3>size</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/16ea449/types.d.ts#L3139">types.d.ts:3139</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the total number of atoms in this force field.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -246,54 +278,42 @@
 					<li class=" tsd-kind-class">
 						<a href="druglikenesspredictor.html" class="tsd-kind-icon">Druglikeness<wbr>Predictor</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="forcefieldmmff94.html" class="tsd-kind-icon">Force<wbr>FieldMMFF94</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="molecule.html" class="tsd-kind-icon">Molecule</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="moleculeproperties.html" class="tsd-kind-icon">Molecule<wbr>Properties</a>
+						<a href="forcefieldmmff94.html" class="tsd-kind-icon">Force<wbr>FieldMMFF94</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="moleculeproperties.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="forcefieldmmff94.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#acceptorcount" class="tsd-kind-icon">acceptor<wbr>Count</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="forcefieldmmff94.html#mmff94" class="tsd-kind-icon">MMFF94</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#donorcount" class="tsd-kind-icon">donor<wbr>Count</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="forcefieldmmff94.html#mmff94s" class="tsd-kind-icon">MMFF94S</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#logp" class="tsd-kind-icon">logP</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="forcefieldmmff94.html#mmff94splus" class="tsd-kind-icon">MMFF94SPLUS</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#logpstring" class="tsd-kind-icon">logPString</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="forcefieldmmff94.html#gettotalenergy" class="tsd-kind-icon">get<wbr>Total<wbr>Energy</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#logs" class="tsd-kind-icon">logS</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="forcefieldmmff94.html#minimise" class="tsd-kind-icon">minimise</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#logsstring" class="tsd-kind-icon">logSString</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#polarsurfacearea" class="tsd-kind-icon">polar<wbr>Surface<wbr>Area</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#polarsurfaceareastring" class="tsd-kind-icon">polar<wbr>Surface<wbr>Area<wbr>String</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#rotatablebondcount" class="tsd-kind-icon">rotatable<wbr>Bond<wbr>Count</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moleculeproperties.html#stereocentercount" class="tsd-kind-icon">stereo<wbr>Center<wbr>Count</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="forcefieldmmff94.html#size" class="tsd-kind-icon">size</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="molecule.html" class="tsd-kind-icon">Molecule</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="moleculeproperties.html" class="tsd-kind-icon">Molecule<wbr>Properties</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="reaction.html" class="tsd-kind-icon">Reaction</a>
 					</li>
