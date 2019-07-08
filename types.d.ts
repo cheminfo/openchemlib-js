@@ -3096,6 +3096,62 @@ export declare class ConformerGenerator {
   molecules(): IterableIterator<Molecule>;
 }
 
+export interface IForceFieldMMFF94Options {
+  // TODO
+}
+
+export interface IForceFieldMinimiseOptions {
+  /**
+   * The maximum number of iterations to run for.
+   * Default: 4000.
+   */
+  maxIts?: number;
+
+  /**
+   * The gradient tolerance.
+   * Default: 1e-4.
+   */
+  gradTol?: number;
+
+  /**
+   * The energy tolerance.
+   * Default: 1e-6.
+   */
+  funcTol?: number;
+}
+
+export declare class ForceFieldMMFF94 {
+  static MMFF94: 'MMFF94';
+  static MMFF94S: 'MMFF94s';
+  static MMFF94SPLUS: 'MMFF94s+';
+
+  /**
+   * 
+   * @param molecule - The molecule to construct the forcefield on.
+   * @param tablename - The string name for the Tables to be used. Can be `'MMFF94'`, `'MMFF94s'` or `'MMFF94s+'`.
+   * @param options
+   */
+  constructor(molecule: Molecule, tablename: 'MMFF94' | 'MMFF94s' | 'MMFF94s+', options?: IForceFieldMMFF94Options);
+
+  /**
+   * Returns the total number of atoms in this force field.
+   */
+  size(): number;
+
+  /**
+   * Gets the total energy of the molecule as the sum of the energy
+   * terms.
+   */
+  getTotalEnergy(): number;
+
+  /**
+   * Minimise the current molecule.
+   * @param options
+   * @returns - Return code, 0 on success.
+   */
+  minimise(options?: IForceFieldMinimiseOptions): number;
+}
+
 // Full API
 
 export declare namespace StructureView {
