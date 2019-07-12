@@ -216,7 +216,7 @@ public class SVGDepictor extends AbstractDepictor
                 "x2=\"" + round(x2) + "\" " +
                 "y2=\"" + round(y2) + "\" " +
                 "stroke-width=\"" + DEFAULT_ELEM_WIDTH + "\" " +
-                "stroke-opacity=\"0\" />";
+                "opacity=\"0\" />";
         bonds.add(s);
     }
 
@@ -229,7 +229,7 @@ public class SVGDepictor extends AbstractDepictor
                 "cx=\"" + round(x) + "\" " +
                 "cy=\"" + round(y) + "\" " +
                 "r=\"" + DEFAULT_ELEM_WIDTH + "\" " +
-                "fill-opacity=\"0\" />";
+                "opacity=\"0\" />";
         atoms.add(s);
     }
 

@@ -11,17 +11,17 @@ exports[`Molecule toSVG with autoCrop 1`] = `
   <line x1=\\"153.95\\" y1=\\"72.72\\" x2=\\"139.61\\" y2=\\"81\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
   <line x1=\\"139.61\\" y1=\\"81\\" x2=\\"118.82\\" y2=\\"69\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
   <line x1=\\"118.82\\" y1=\\"69\\" x2=\\"104.48\\" y2=\\"77.28\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
-  <line id=\\"myId:Bond:0\\" class=\\"event\\" x1=\\"201.96\\" y1=\\"69\\" x2=\\"181.18\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <line id=\\"myId:Bond:1\\" class=\\"event\\" x1=\\"181.18\\" y1=\\"81\\" x2=\\"160.39\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <line id=\\"myId:Bond:2\\" class=\\"event\\" x1=\\"160.39\\" y1=\\"69\\" x2=\\"139.61\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <line id=\\"myId:Bond:3\\" class=\\"event\\" x1=\\"139.61\\" y1=\\"81\\" x2=\\"118.82\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <line id=\\"myId:Bond:4\\" class=\\"event\\" x1=\\"118.82\\" y1=\\"69\\" x2=\\"98.04\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:0\\" class=\\"event\\" cx=\\"201.96\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:1\\" class=\\"event\\" cx=\\"181.18\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:2\\" class=\\"event\\" cx=\\"160.39\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:3\\" class=\\"event\\" cx=\\"139.61\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:4\\" class=\\"event\\" cx=\\"118.82\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:5\\" class=\\"event\\" cx=\\"98.04\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:0\\" class=\\"event\\" x1=\\"201.96\\" y1=\\"69\\" x2=\\"181.18\\" y2=\\"81\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <line id=\\"myId:Bond:1\\" class=\\"event\\" x1=\\"181.18\\" y1=\\"81\\" x2=\\"160.39\\" y2=\\"69\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <line id=\\"myId:Bond:2\\" class=\\"event\\" x1=\\"160.39\\" y1=\\"69\\" x2=\\"139.61\\" y2=\\"81\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <line id=\\"myId:Bond:3\\" class=\\"event\\" x1=\\"139.61\\" y1=\\"81\\" x2=\\"118.82\\" y2=\\"69\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <line id=\\"myId:Bond:4\\" class=\\"event\\" x1=\\"118.82\\" y1=\\"69\\" x2=\\"98.04\\" y2=\\"81\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:0\\" class=\\"event\\" cx=\\"201.96\\" cy=\\"69\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:1\\" class=\\"event\\" cx=\\"181.18\\" cy=\\"81\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:2\\" class=\\"event\\" cx=\\"160.39\\" cy=\\"69\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:3\\" class=\\"event\\" cx=\\"139.61\\" cy=\\"81\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:4\\" class=\\"event\\" cx=\\"118.82\\" cy=\\"69\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:5\\" class=\\"event\\" cx=\\"98.04\\" cy=\\"81\\" r=\\"8\\" opacity=\\"0\\" />
 </svg>"
 `;
 
@@ -36,16 +36,16 @@ exports[`Molecule toSVG with autoCrop 2`] = `
   <line x1=\\"153.95\\" y1=\\"72.72\\" x2=\\"139.61\\" y2=\\"81\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
   <line x1=\\"139.61\\" y1=\\"81\\" x2=\\"118.82\\" y2=\\"69\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
   <line x1=\\"118.82\\" y1=\\"69\\" x2=\\"104.48\\" y2=\\"77.28\\" stroke=\\"rgb(0,0,0)\\" stroke-width=\\"1.44\\" />
-  <line id=\\"myId:Bond:0\\" class=\\"event\\" x1=\\"201.96\\" y1=\\"69\\" x2=\\"181.18\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <line id=\\"myId:Bond:1\\" class=\\"event\\" x1=\\"181.18\\" y1=\\"81\\" x2=\\"160.39\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <line id=\\"myId:Bond:2\\" class=\\"event\\" x1=\\"160.39\\" y1=\\"69\\" x2=\\"139.61\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <line id=\\"myId:Bond:3\\" class=\\"event\\" x1=\\"139.61\\" y1=\\"81\\" x2=\\"118.82\\" y2=\\"69\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <line id=\\"myId:Bond:4\\" class=\\"event\\" x1=\\"118.82\\" y1=\\"69\\" x2=\\"98.04\\" y2=\\"81\\" stroke-width=\\"8\\" stroke-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:0\\" class=\\"event\\" cx=\\"201.96\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:1\\" class=\\"event\\" cx=\\"181.18\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:2\\" class=\\"event\\" cx=\\"160.39\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:3\\" class=\\"event\\" cx=\\"139.61\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:4\\" class=\\"event\\" cx=\\"118.82\\" cy=\\"69\\" r=\\"8\\" fill-opacity=\\"0\\" />
-  <circle id=\\"myId:Atom:5\\" class=\\"event\\" cx=\\"98.04\\" cy=\\"81\\" r=\\"8\\" fill-opacity=\\"0\\" />
+  <line id=\\"myId:Bond:0\\" class=\\"event\\" x1=\\"201.96\\" y1=\\"69\\" x2=\\"181.18\\" y2=\\"81\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <line id=\\"myId:Bond:1\\" class=\\"event\\" x1=\\"181.18\\" y1=\\"81\\" x2=\\"160.39\\" y2=\\"69\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <line id=\\"myId:Bond:2\\" class=\\"event\\" x1=\\"160.39\\" y1=\\"69\\" x2=\\"139.61\\" y2=\\"81\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <line id=\\"myId:Bond:3\\" class=\\"event\\" x1=\\"139.61\\" y1=\\"81\\" x2=\\"118.82\\" y2=\\"69\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <line id=\\"myId:Bond:4\\" class=\\"event\\" x1=\\"118.82\\" y1=\\"69\\" x2=\\"98.04\\" y2=\\"81\\" stroke-width=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:0\\" class=\\"event\\" cx=\\"201.96\\" cy=\\"69\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:1\\" class=\\"event\\" cx=\\"181.18\\" cy=\\"81\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:2\\" class=\\"event\\" cx=\\"160.39\\" cy=\\"69\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:3\\" class=\\"event\\" cx=\\"139.61\\" cy=\\"81\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:4\\" class=\\"event\\" cx=\\"118.82\\" cy=\\"69\\" r=\\"8\\" opacity=\\"0\\" />
+  <circle id=\\"myId:Atom:5\\" class=\\"event\\" cx=\\"98.04\\" cy=\\"81\\" r=\\"8\\" opacity=\\"0\\" />
 </svg>"
 `;
