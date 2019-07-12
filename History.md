@@ -1,5 +1,14 @@
 # OpenChemLib JS Changelog
 
+## 7.2.1 / 2019-07-12
+
+- Fix: work around a bug in Chromium with SVGDepictor when SVG is printed.
+
+## 7.2.0 / 2019-07-08
+
+- Add ConformerGenerator class.
+- Add ForceFieldMMFF94 class.
+
 ## 7.1.1 / 2019-07-06
 
 - Update OCL to 2019_07_04-04_00_27
