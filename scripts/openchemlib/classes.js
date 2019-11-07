@@ -14,7 +14,7 @@ const modified = [
   'chem/prediction/IncrementTable',
   'chem/prediction/ToxicityPredictor',
 
-  'util/ConstantsDWAR'
+  'util/ConstantsDWAR',
 ];
 
 exports.modified = modified.map(getFilename);
@@ -30,7 +30,7 @@ const changed = [
   ['chem/io/RXNFileV3Creator', removeRXNStringFormat],
   ['chem/Molecule', changeMolecule],
   ['share/gui/editor/Model', removePrintf],
-  ['util/ArrayUtils', changeArrayUtils]
+  ['util/ArrayUtils', changeArrayUtils],
 ];
 
 exports.changed = changed.map((file) => {
@@ -51,7 +51,7 @@ const removed = [
   'util/datamodel/IntVec.java',
   'util/IntQueue.java', // unused, depends on ArrayUtils
   'util/Platform.java',
-  'util/StringFunctions.java' // uses RegExp things
+  'util/StringFunctions.java', // uses RegExp things
 ];
 
 exports.removed = removed.map(getFolderName);
@@ -78,10 +78,10 @@ function changeMolecule(molecule) {
   if (copyOfIndex === -1) throw new Error('did not find copyOf method');
   const closeIndex = molecule.indexOf('}', copyOfIndex);
   molecule = `${molecule.substr(0, closeIndex + 1)}*/${molecule.substr(
-    closeIndex + 1
+    closeIndex + 1,
   )}`;
   molecule = `${molecule.substr(0, copyOfIndex)}/*${molecule.substr(
-    copyOfIndex
+    copyOfIndex,
   )}`;
   molecule = molecule.replace(/\([^)]+\)copyOf/g, 'Arrays.copyOf');
   return molecule;
@@ -112,7 +112,7 @@ function removeSlice(code, start, end) {
 function removeRXNStringFormat(code) {
   return code.replace(
     'theWriter.write(String.format("M  V30 COUNTS %d %d\\n",rcnt,pcnt));',
-    'theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+"\\n",rcnt,pcnt);'
+    'theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+"\\n",rcnt,pcnt);',
   );
 }
 
@@ -166,12 +166,18 @@ private void init(int mode) {
 `;
 
 function changeTorsionDB(code) {
-  code = code.replace('util.TreeMap;', 'util.TreeMap;\nimport com.actelion.research.chem.conf.TorsionDBData;');
+  code = code.replace(
+    'util.TreeMap;',
+    'util.TreeMap;\nimport com.actelion.research.chem.conf.TorsionDBData;',
+  );
 
   const initIndexStart = code.indexOf('private void init');
   const initIndexEnd = code.indexOf('/**', initIndexStart);
 
-  code = code.substr(0, initIndexStart) + newInit + code.substr(initIndexEnd, code.length);
+  code =
+    code.substr(0, initIndexStart) +
+    newInit +
+    code.substr(initIndexEnd, code.length);
 
   return code;
 }
@@ -209,12 +215,21 @@ private static void initialize() {
 `;
 
 function changeBondLengthSet(code) {
-  code = code.replace('chem.StereoMolecule;', 'chem.StereoMolecule;\nimport com.actelion.research.chem.conf.TorsionDBData;');
+  code = code.replace(
+    'chem.StereoMolecule;',
+    'chem.StereoMolecule;\nimport com.actelion.research.chem.conf.TorsionDBData;',
+  );
 
   const initIndexStart = code.indexOf('private static void initialize');
-  const initIndexEnd = code.indexOf('\n\tpublic float getLength', initIndexStart);
+  const initIndexEnd = code.indexOf(
+    '\n\tpublic float getLength',
+    initIndexStart,
+  );
 
-  code = code.substr(0, initIndexStart) + newInitialize + code.substr(initIndexEnd, code.length);
+  code =
+    code.substr(0, initIndexStart) +
+    newInitialize +
+    code.substr(initIndexEnd, code.length);
 
   return code;
 }
@@ -223,7 +238,7 @@ function changeCsv(code) {
   code = code.replace('java.io.InputStreamReader;', 'java.io.StringReader;');
   code = code.replace(
     'br = new BufferedReader(new InputStreamReader(Csv.class.getResourceAsStream(path)));',
-    'br = new BufferedReader(new StringReader(path));'
+    'br = new BufferedReader(new StringReader(path));',
   );
   const fnfeStart = code.indexOf('catch (FileNotFoundException e) {');
   const fnfeEnd = code.indexOf('}', fnfeStart);
@@ -254,7 +269,10 @@ function changeTables(code) {
   const indexStart = code.indexOf('public static Tables');
   const indexEnd = code.indexOf('}', indexStart);
 
-  code = code.substr(0, indexStart) + newTables + code.substr(indexEnd + 1, code.length);
+  code =
+    code.substr(0, indexStart) +
+    newTables +
+    code.substr(indexEnd + 1, code.length);
 
   return code;
 }

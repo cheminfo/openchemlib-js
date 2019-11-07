@@ -4,8 +4,8 @@ const OCL = require('../minimal');
 
 const Molecule = OCL.Molecule;
 
-describe('MoleculeFormula', function () {
-  it('should compute formula', function () {
+describe('MoleculeFormula', function() {
+  it('should compute formula', function() {
     const mol = Molecule.fromSmiles('COCCON');
     const formula = mol.getMolecularFormula();
     expect(formula.absoluteWeight).toBeCloseTo(91.063);

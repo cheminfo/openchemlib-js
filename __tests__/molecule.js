@@ -10,13 +10,13 @@ describe('from and to SMILES', () => {
     (smiles) => {
       const mol = Molecule.fromSmiles(smiles);
       expect(Molecule.fromSmiles(mol.toSmiles()).getIDCode()).toBe(
-        mol.getIDCode()
+        mol.getIDCode(),
       );
-    }
+    },
   );
 
   it('should throw on syntax error', () => {
-    expect(function () {
+    expect(function() {
       Molecule.fromSmiles('ABC');
     }).toThrow(/SmilesParser: unknown element label found/);
   });
@@ -26,7 +26,7 @@ describe('from and to SMILES', () => {
     ['OCC', 'CCO'],
     ['[CH3][CH2][OH]', 'CCO'],
     ['C-C-O', 'CCO'],
-    ['C(O)C', 'CCO']
+    ['C(O)C', 'CCO'],
     // Next examples don't work rigth now. See https://github.com/Actelion/openchemlib/issues/35
     // ['OC(=O)C(Br)(Cl)N', 'NC(Cl)(Br)C(=O)O'],
     // ['ClC(Br)(N)C(=O)O', 'NC(Cl)(Br)C(=O)O'],
@@ -37,8 +37,8 @@ describe('from and to SMILES', () => {
   });
 });
 
-describe('Molecule', function () {
-  it('medley', function () {
+describe('Molecule', function() {
+  it('medley', function() {
     const idcode =
       'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
     let mol = Molecule.fromIDCode(idcode);
@@ -52,7 +52,7 @@ describe('Molecule', function () {
     expect(mol.getIDCode()).toBe(idcode);
   });
 
-  it('toSVG', function () {
+  it('toSVG', function() {
     const mol = Molecule.fromSmiles('CCOCCO');
     let svg = mol.toSVG(300, 150, 'myId');
     expect(svg).toContain('width="300px" height="150px"');
@@ -61,7 +61,7 @@ describe('Molecule', function () {
 
     svg = mol.toSVG(300, 300, 'myId', {
       strokeWidth: 2,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     });
     expect(svg).toContain('font-weight="bold"');
     expect(svg).toContain('stroke-width="2"');
@@ -76,7 +76,7 @@ describe('Molecule', function () {
     expect(svg).toMatchSnapshot();
   });
 
-  it('molfile V3', function () {
+  it('molfile V3', function() {
     const idcode =
       'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
     let mol = Molecule.fromIDCode(idcode);
@@ -93,7 +93,7 @@ describe('Molecule', function () {
   it('fromMolfileWithAtomMap', () => {
     const molfile = fs.readFileSync(
       `${__dirname}/data/molfileWithHMap.mol`,
-      'utf8'
+      'utf8',
     );
     const result = Molecule.fromMolfileWithAtomMap(molfile);
     expect(result.molecule).toBeInstanceOf(Molecule);
@@ -121,21 +121,21 @@ describe('Molecule', function () {
     let idcode = 'didH@@RYm^Fh@BHx@';
     let mol = Molecule.fromIDCode(idcode);
     expect(
-      mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS)
+      mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS),
     ).toBe(idcode);
     mol.inventCoordinates();
     expect(
-      mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS)
+      mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS),
     ).toBe(idcode);
 
     idcode = 'didH@@RYm^Fh@BHX@';
     mol = Molecule.fromIDCode(idcode);
     expect(
-      mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS)
+      mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS),
     ).toBe(idcode);
     mol.inventCoordinates();
     expect(
-      mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS)
+      mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS),
     ).toBe(idcode);
   });
 });

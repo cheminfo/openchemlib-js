@@ -1,19 +1,19 @@
 module.exports = function extendCore(exports) {
   'use strict';
 
-  var ConformerGenerator = exports.ConformerGenerator;
+  let ConformerGenerator = exports.ConformerGenerator;
   ConformerGenerator.prototype.molecules = function* molecules() {
-    var nextConformer;
+    let nextConformer;
     while ((nextConformer = this.getNextConformerAsMolecule()) !== null) {
       yield nextConformer;
     }
   };
 
-  var ForceFieldMMFF94 = exports.ForceFieldMMFF94;
-  var defaultMinimiseOptions = {
+  let ForceFieldMMFF94 = exports.ForceFieldMMFF94;
+  let defaultMinimiseOptions = {
     maxIts: 4000,
     gradTol: 1e-4,
-    funcTol: 1e-6
+    funcTol: 1e-6,
   };
   ForceFieldMMFF94.prototype.minimise = function minimise(options) {
     options = Object.assign({}, defaultMinimiseOptions, options);

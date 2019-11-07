@@ -41,7 +41,7 @@ test('aromatic ring', () => {
 test('multiple rings', () => {
   // Source: https://en.wikipedia.org/wiki/Heroin
   const mol = Molecule.fromSmiles(
-    'CC(OC1=C(O[C@@H]2[C@]34CCN(C)[C@@H]([C@@H]4C=C[C@@H]2OC(C)=O)C5)C3=C5C=C1)=O'
+    'CC(OC1=C(O[C@@H]2[C@]34CCN(C)[C@@H]([C@@H]4C=C[C@@H]2OC(C)=O)C5)C3=C5C=C1)=O',
   );
   const coll = mol.getRingSet();
   expect(coll.getSize()).toBe(5);

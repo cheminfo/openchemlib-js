@@ -5,8 +5,8 @@ const OCL = require('../core');
 const Molecule = OCL.Molecule;
 const MoleculeProperties = OCL.MoleculeProperties;
 
-describe('MoleculeProperties', function () {
-  it('should compute properties', function () {
+describe('MoleculeProperties', function() {
+  it('should compute properties', function() {
     const mol = Molecule.fromSmiles('COCCON');
     const properties = new MoleculeProperties(mol);
     expect(properties.acceptorCount).toBe(3);

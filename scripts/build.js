@@ -19,7 +19,7 @@ let modules = require('./modules.json');
 const argv = yargs
   .command(
     'copy:openchemlib',
-    'Copy the required java files from the openchemlib project.'
+    'Copy the required java files from the openchemlib project.',
   )
   .command('build', 'Compile and export')
   .command('compile', 'Execute the GWT compiler.')
@@ -28,20 +28,20 @@ const argv = yargs
   .option('v', {
     alias: 'verbose',
     default: false,
-    type: 'boolean'
+    type: 'boolean',
   })
   .option('m', {
     alias: 'module',
-    description: 'Compile only this module'
+    description: 'Compile only this module',
   })
   .option('mode', {
     description: 'Compilation mode',
     choices: ['pretty', 'min'],
-    default: 'pretty'
+    default: 'pretty',
   })
   .option('s', {
     alias: 'suffix',
-    description: 'Optional suffix to the exported filename'
+    description: 'Optional suffix to the exported filename',
   }).argv;
 
 const { mode, verbose } = argv;
@@ -52,7 +52,7 @@ if (argv.suffix) {
 }
 
 if (argv.m) {
-  for (var i = 0; i < modules.length; i++) {
+  for (let i = 0; i < modules.length; i++) {
     if (modules[i].name === argv.m) {
       modules = [modules[i]];
       break;
@@ -69,7 +69,7 @@ try {
 } catch (e) {
   // eslint-disable-next-line no-console
   console.error(
-    'config.json not found. You can copy config.default.json to start from an example.'
+    'config.json not found. You can copy config.default.json to start from an example.',
   );
   // eslint-disable-next-line no-process-exit
   process.exit(1);
@@ -78,7 +78,7 @@ try {
 const classpathList = ['src'];
 classpathList.push(
   path.resolve(config.gwt, 'gwt-dev.jar'),
-  path.resolve(config.gwt, 'gwt-user.jar')
+  path.resolve(config.gwt, 'gwt-user.jar'),
 );
 
 const sep = os.platform() === 'win32' ? ';' : ':';
@@ -103,7 +103,7 @@ function copyOpenchemlib() {
   const chemlibDir = path.resolve(config.openchemlib, 'main/java/com');
   const outDir = path.join(
     __dirname,
-    '../src/com/actelion/research/gwt/chemlib/com'
+    '../src/com/actelion/research/gwt/chemlib/com',
   );
   const modifiedDir = path.join(__dirname, './openchemlib/modified/com');
 
@@ -117,7 +117,7 @@ function copyOpenchemlib() {
   const openMolDir = path.resolve(config.openchemlib, 'main/java/org');
   const outOpenMolDir = path.join(
     __dirname,
-    '../src/com/actelion/research/gwt/chemlib/org'
+    '../src/com/actelion/research/gwt/chemlib/org',
   );
 
   if (fs.existsSync(outOpenMolDir)) {
@@ -130,7 +130,7 @@ function copyOpenchemlib() {
   for (let i = 0; i < modified.length; i++) {
     fs.copySync(
       path.join(modifiedDir, modified[i]),
-      path.join(outDir, modified[i])
+      path.join(outDir, modified[i]),
     );
   }
 
@@ -150,17 +150,20 @@ function copyOpenchemlib() {
 
   const generated = chemlibClasses.generated;
   for (const generatedFile of generated) {
-    fs.writeFileSync(path.join(outDir, generatedFile[0]), generatedFile[1]({
-      config
-    }));
+    fs.writeFileSync(
+      path.join(outDir, generatedFile[0]),
+      generatedFile[1]({
+        config,
+      }),
+    );
   }
 }
 
 function compile(mode) {
-  var min = mode === 'min';
-  for (var i = 0; i < modules.length; i++) {
+  let min = mode === 'min';
+  for (let i = 0; i < modules.length; i++) {
     log(`Compiling module ${modules[i].name}`);
-    var args = [
+    let args = [
       '-Xmx2G',
       '-cp',
       classpath,
@@ -176,10 +179,10 @@ function compile(mode) {
       '-optimize',
       min ? '9' : '0',
       '-style',
-      min ? 'OBFUSCATED' : 'PRETTY'
+      min ? 'OBFUSCATED' : 'PRETTY',
       //          verbose ? '-failOnError' : '-nofailOnError'
     ];
-    var result;
+    let result;
     try {
       result = childProcess.execFileSync('java', args, { maxBuffer: Infinity });
     } catch (e) {
@@ -187,7 +190,7 @@ function compile(mode) {
       throw e;
     } finally {
       if (verbose) {
-        var name = `compile-${modules[i].name}.log`;
+        let name = `compile-${modules[i].name}.log`;
         log(`Compilation log written to ${name}`);
         fs.writeFileSync(`./${name}`, result);
       }
@@ -196,14 +199,14 @@ function compile(mode) {
 }
 
 function build() {
-  var prom = [];
-  for (var k = 0; k < modules.length; k++) {
-    var mod = modules[k];
+  let prom = [];
+  for (let k = 0; k < modules.length; k++) {
+    let mod = modules[k];
     log(`Exporting module ${mod.name}`);
-    var warDir = path.join('war', mod.war);
-    var files = fs.readdirSync(warDir);
-    var file;
-    for (var i = 0; i < files.length; i++) {
+    let warDir = path.join('war', mod.war);
+    let files = fs.readdirSync(warDir);
+    let file;
+    for (let i = 0; i < files.length; i++) {
       if (files[i].indexOf('.cache.js') > 0) {
         file = path.join(warDir, files[i]);
         break;
@@ -220,7 +223,7 @@ function build() {
         fake: mod.fake,
         package: pack,
         extendApi: createExtender(mod.name),
-      })
+      }),
     );
   }
   return Promise.all(prom);
@@ -242,7 +245,9 @@ function handleCatch(err) {
 
 function createExtender(name) {
   const toPut = [addAndCallExtender(extendMinimal, 'extendMinimal')];
-  if (name === 'core' || name === 'full') toPut.push(addAndCallExtender(extendCore, 'extendCore'));
+  if (name === 'core' || name === 'full') {
+    toPut.push(addAndCallExtender(extendCore, 'extendCore'));
+  }
   if (name === 'full') toPut.push(addAndCallExtender(extendFull, 'extendFull'));
   return `function extendApi(exports) {
     ${toPut.join('\n')}
