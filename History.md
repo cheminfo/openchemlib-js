@@ -1,5 +1,9 @@
 # OpenChemLib JS Changelog
 
+## 7.2.2 / 2019-11-07
+
+- Update OCL to 2019_11_05-15_48_20
+
 ## 7.2.1 / 2019-07-12
 
 - Fix: work around a bug in Chromium with SVGDepictor when SVG is printed.
