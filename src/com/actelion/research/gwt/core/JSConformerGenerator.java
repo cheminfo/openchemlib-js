@@ -42,7 +42,7 @@ public class JSConformerGenerator {
 
   public JSMolecule getNextConformerAsMolecule(JSMolecule mol) {
     StereoMolecule arg = mol == null ? null : mol.getStereoMolecule();
-    StereoMolecule newMol = oclGenerator.getNextConformer(arg);
+    StereoMolecule newMol = oclGenerator.getNextConformerAsMolecule(arg);
     if (newMol == null) return null;
     if (newMol == arg) return mol;
     return new JSMolecule(newMol);

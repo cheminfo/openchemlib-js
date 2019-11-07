@@ -499,7 +499,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The sum of bond orders of explicitly connected neighbour atoms including explicit hydrogen.
-	 * The occupied valence includes bonds to atoms with set cAtomQFExcludeGroup flags.
+	 * In case of a fragment the occupied valence does not include bonds to atoms of which the cAtomQFExcludeGroup flag is set.
 	 * @param atom
 	 * @return explicitly used valence
 	 */
@@ -508,27 +508,11 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		int valence = 0;
 		for (int i=0; i<mAllConnAtoms[atom]; i++)
-			valence += mConnBondOrder[atom][i];
-
-		return valence;
-		}
-
-
-	/**
-	 * The sum of bond orders of explicitly connected neighbour atoms with the cAtomQFExcludeGroup flag set to true.
-	 * @param atom
-	 * @return occupied valence caused by exclude group atoms
-	 */
-	public int getExcludeGroupValence(int atom) {
-		ensureHelperArrays(cHelperNeighbours);
-
-		int valence = 0;
-		for (int i=0; i<mAllConnAtoms[atom]; i++)
-			if (mIsFragment && (mAtomQueryFeatures[mConnAtom[atom][i]] & cAtomQFExcludeGroup) != 0)
+			if (!mIsFragment || (mAtomQueryFeatures[mConnAtom[atom][i]] & cAtomQFExcludeGroup) == 0)
 				valence += mConnBondOrder[atom][i];
 
 		return valence;
-	}
+		}
 
 
 	/**
@@ -2319,6 +2303,18 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
+	 * @param atom
+	 * @return whether this atom is the central atom of an allene
+	 */
+	public boolean isCentralAlleneAtom(int atom) {
+		return mConnAtoms[atom] == 2
+			&& mConnBondOrder[atom][0] == 2
+			&& mConnBondOrder[atom][1] == 2
+			&& mAtomicNo[atom] <= 7;
+		}
+
+
+	/**
 	 * Checks whether this nitrogen atom is flat, because it has a double bond,
 	 * is member of an aromatic ring or is part of amide, an enamine or
 	 * in resonance with an aromatic ring. It is also checked that ortho
@@ -2653,6 +2649,11 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				if ((mAtomicNo[atom1] < 9 && getOccupiedValence(atom1) > 3)
 				 || (mAtomicNo[atom2] < 9 && getOccupiedValence(atom2) > 3))
 						continue;
+
+				// don't destroy stereo centers like sulfoxides
+				if ((mAtomicNo[atom1] >= 14 && mConnAtoms[atom1] >= 3)
+				 || (mAtomicNo[atom1] >= 14 && mConnAtoms[atom1] >= 3))
+					continue;
 
 				mAtomCharge[atom1] -= 1;
 				mAtomCharge[atom2] += 1;

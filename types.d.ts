@@ -1736,14 +1736,6 @@ export declare class Molecule {
   getOccupiedValence(atom: number): number;
 
   /**
-   * The sum of bond orders of explicitly connected neighbour atoms with the
-   * cAtomQFExcludeGroup flag set to true.
-   * @param atom
-   * @returns occupied valence caused by exclude group atoms
-   */
-  getExcludeGroupValence(atom: number): number;
-
-  /**
    * The free valence is the number of potential additional single bonded
    * neighbours to reach the atom's maximum valence. Atomic numbers that have
    * multiple possible valences, the highest value is taken. Atom charges are

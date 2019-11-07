@@ -22,18 +22,36 @@ public class testChiralDia {
         for (String id : ids) {
             System.out.println(id);
         }
-        /*
-        System.out.println("With hydrogens");
-        HydrogenHandler.addImplicitHydrogens(mol);
+
+        System.out.println("===========");
+        try {
+            parser.parse(mol, "CC(C)C(O)C");
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
         ids = DiastereotopicAtomID.getAtomIds(mol);
 
+        HydrogenHandler.addImplicitHydrogens(mol);
+        ids = DiastereotopicAtomID.getAtomIds(mol);
 
         for (String id : ids) {
             System.out.println(id);
         }
-*/
 
+        System.out.println("===========");
+        try {
+            parser.parse(mol, "CC(C)[C@@H](O)C");
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        System.out.println(mol.getIDCode());
+        HydrogenHandler.addImplicitHydrogens(mol);
+        ids = DiastereotopicAtomID.getAtomIds(mol);
+
+        for (String id : ids) {
+            System.out.println(id);
+        }
     }
 
 }
-

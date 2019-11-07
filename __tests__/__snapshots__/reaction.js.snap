@@ -4,7 +4,7 @@ exports[`Reaction class should load and create RXN files 1`] = `
 "$RXN
 
 
-OCL_RXN_V1.0:gJX@@eKU@@ gGQHDHaInfh@!gJX@@eKU@@ fHdP@@##!ROvp@[C}c@FNZz@@ !R_\`CWHc|_\`BH_Ykh@@ !ROvp@[C}c@FNZz@@ ##
+OCL_RXN_V1.0:gJX@@eKU@@ gGQHDHaInfh@!gJX@@eKU@@ fHdP@@##!ROvp@[C}c@FNZz@@ !R_\`CW?Hc|_\`BH_Ykh@@ !ROvp@[C}c@FNZz@@ ##
   2  2
 $MOL
 CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
@@ -67,7 +67,7 @@ exports[`Reaction class should load and create RXN files 2`] = `
 "$RXN V3000
 
 
-OCL_RXN_V1.0:gJX@@eKU@@ gGQHDHaInfh@!gJX@@eKU@@ fHdP@@##!ROvp@[C}c@FNZz@@ !R_\`CWHc|_\`BH_Ykh@@ !ROvp@[C}c@FNZz@@ ##
+OCL_RXN_V1.0:gJX@@eKU@@ gGQHDHaInfh@!gJX@@eKU@@ fHdP@@##!ROvp@[C}c@FNZz@@ !R_\`CW?Hc|_\`BH_Ykh@@ !ROvp@[C}c@FNZz@@ ##
  VM  V30 BEGIN REACTANT
 M  V30 BEGIN CTAB
 M  V30 COUNTS 6 5 0 0 0

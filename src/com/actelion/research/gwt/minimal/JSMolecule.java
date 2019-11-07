@@ -1201,10 +1201,6 @@ public class JSMolecule {
     return oclMolecule.getOccupiedValence(atom);
   }
 
-  public int getExcludeGroupValence(int atom) {
-    return oclMolecule.getExcludeGroupValence(atom);
-  }
-
   public int getFreeValence(int atom) {
     return oclMolecule.getFreeValence(atom);
   }
