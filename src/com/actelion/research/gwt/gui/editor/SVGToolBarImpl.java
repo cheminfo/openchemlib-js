@@ -43,6 +43,7 @@ import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.*;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -79,7 +80,7 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
 
   /**
    * Creates the HTML Element containing the toolbar
-   * 
+   *
    * @param parent Parent HTML element
    * @param width  Element with (specified via inline style)
    * @param height Element height (specified via inline style)
@@ -114,6 +115,12 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
     setupMouseHandlers();
     model.addChangeListener(this);
 
+    Timer t = new Timer() {
+      public void run() {
+        repaint();
+      }
+    };
+    t.schedule(100);
     return toolbarHolder;
   }
 
@@ -142,7 +149,7 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
 
   /**
    * Drawing function
-   * 
+   *
    * @param canvas
    */
   private void draw(Canvas canvas) {
@@ -155,7 +162,7 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
 
   /**
    * Returns the row/col of an action within the button image
-   * 
+   *
    * @param a Action to be found
    * @return Point x,y representing column and row of the action of null if action
    *         is not found within the image
@@ -203,7 +210,7 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
 
   /**
    * Draw the button when mouse is hovering it
-   * 
+   *
    * @param ctx
    */
   private void drawHover(GraphicsContext ctx) {
@@ -220,7 +227,7 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
 
   /**
    * Draw the current ESR image
-   * 
+   *
    * @param ctx
    */
   private void drawESRButtons(GraphicsContext ctx) {
@@ -309,7 +316,7 @@ class SVGToolBarImpl implements ToolBar<Element>, IChangeListener {
 
   /**
    * Find the action at row, col within the button image
-   * 
+   *
    * @param row y position
    * @param col x position
    * @return Action found or null with outside of the buttons range
