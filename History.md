@@ -1,5 +1,10 @@
 # OpenChemLib JS Changelog
 
+## 7.2.3 / 2020-01-10
+
+- Update OCL to 2020.1.0
+- Fix repaint issue in SVG Toolbar
+
 ## 7.2.2 / 2019-11-07
 
 - Update OCL to 2019_11_05-15_48_20
