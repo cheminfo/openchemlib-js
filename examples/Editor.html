@@ -131,6 +131,7 @@
       var editorCtrl = null;
 
       function changeMolecule(idc) {
+        console.log("CHANGE!")
         if (idc != idcode) {
           var svg = window.OCL.SVGRenderer.renderMolecule(idc, 400, 400);
           document.getElementById('svg').innerHTML = svg;
