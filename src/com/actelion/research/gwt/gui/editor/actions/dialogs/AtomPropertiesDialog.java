@@ -50,9 +50,11 @@ public class AtomPropertiesDialog extends TDialog implements IAtomPropertiesDial
   private int mass = 0;
   private int valence = -1;
   private int state = 0;
+  private int mapNo = 0;
 
   private TextBox atomLabel;
   private TextBox customLabel;
+  private TextBox atomMapNo;
   private TextBox atomMass;
   private TextBox atomValence;
   private ComboBox atomRadicalState;
@@ -68,6 +70,10 @@ public class AtomPropertiesDialog extends TDialog implements IAtomPropertiesDial
 
   public int getAtomicNo() {
     return atomicNo;
+  }
+
+  private int getAtomMapNo() {
+    return mapNo;
   }
 
   private int getMass() {
@@ -98,34 +104,42 @@ public class AtomPropertiesDialog extends TDialog implements IAtomPropertiesDial
     this.state = state;
   }
 
+  public void setAtomMapNo(int mapNo) {
+    this.mapNo = mapNo;
+  }
+
   @Override
   protected void buildGUI(RootPanel root) {
-    Grid grid = new Grid(6, 4);
+    Grid grid = new Grid(7, 4);
     grid.setCellPadding(0);
 
     grid.setWidget(0, 0, new Label("Atom Symbol"));
     atomLabel = new TextBox();
     grid.setWidget(0, 2, atomLabel);
 
-    grid.setWidget(1, 0, new Label("Atom Custom Label"));
+    grid.setWidget(1, 0, new Label("Atom Map #"));
+    atomMapNo = new TextBox();
+    grid.setWidget(1, 2, atomMapNo);
+
+    grid.setWidget(2, 0, new Label("Atom Custom Label"));
     customLabel = new TextBox();
-    grid.setWidget(1, 2, customLabel);
+    grid.setWidget(2, 2, customLabel);
 
-    grid.setWidget(2, 0, new Label("Atom Mass"));
+    grid.setWidget(3, 0, new Label("Atom Mass"));
     atomMass = new TextBox();
-    grid.setWidget(2, 2, atomMass);
+    grid.setWidget(3, 2, atomMass);
 
-    grid.setWidget(3, 0, new Label("Atom Valence"));
+    grid.setWidget(4, 0, new Label("Atom Valence"));
     atomValence = new TextBox();
-    grid.setWidget(3, 2, atomValence);
+    grid.setWidget(4, 2, atomValence);
 
-    grid.setWidget(4, 0, new Label("Radical State"));
+    grid.setWidget(5, 0, new Label("Radical State"));
     atomRadicalState = new ComboBox();
     atomRadicalState.addItem("None");
     atomRadicalState.addItem("One electron (duplet)");
     atomRadicalState.addItem("Two electrons (triplet)");
     atomRadicalState.addItem("Two electrons (singulet)");
-    grid.setWidget(4, 2, atomRadicalState);
+    grid.setWidget(5, 2, atomRadicalState);
 
     Grid buttons = new Grid(1, 2);
     buttons.setCellPadding(0);
@@ -135,7 +149,7 @@ public class AtomPropertiesDialog extends TDialog implements IAtomPropertiesDial
     Button ok = new Button("OK");
     buttons.setWidget(0, 1, ok);
 
-    grid.setWidget(5, 2, buttons);
+    grid.setWidget(6, 2, buttons);
     setWidget(grid);
 
     ok.addClickHandler(new ClickHandler() {
@@ -161,7 +175,11 @@ public class AtomPropertiesDialog extends TDialog implements IAtomPropertiesDial
     atomLabel.setText(symbol);
     String label = molecule.getAtomCustomLabel(theAtom);
     customLabel.setText(label);
-
+    
+    int mapNo = molecule.getAtomMapNo(theAtom);
+    if (mapNo > 0) {
+      atomMapNo.setText(Integer.toString(mapNo));
+    }
     int val = molecule.getAtomAbnormalValence(theAtom);
     if (val >= 0) {
       atomValence.setText(Integer.toString(val));
@@ -218,13 +236,22 @@ public class AtomPropertiesDialog extends TDialog implements IAtomPropertiesDial
           ok = false;
         }
       }
+      if (!ChangeAtomPropertiesAction.isEmptyString(atomMapNo.getText())) {
+        try {
+          setAtomMapNo(Integer.parseInt(atomMapNo.getText()));
+        } catch (NumberFormatException ignored) {
+          ok = false;
+        }
+      }
       if (ok) {
         int atomNo = getAtomicNo();
         int mass = getMass();
         int valence = getValence();
         int radical = getState();
+        int atomMapNo = getAtomMapNo();
         molecule.changeAtom(theAtom, atomNo, mass, valence, radical);
         molecule.setAtomCustomLabel(theAtom, customLabel.getText());
+        molecule.setAtomMapNo(theAtom, atomMapNo, false);
       }
     }
   }
