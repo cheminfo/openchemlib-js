@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>SSSearcherWithIndex | OpenChemLib JS</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for OpenChemLib JS">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -38,8 +39,8 @@
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -51,7 +52,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">OpenChemLib JS</a>
 				</li>
 				<li>
 					<a href="sssearcherwithindex.html">SSSearcherWithIndex</a>
@@ -113,13 +114,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new SSSearcher<wbr>With<wbr>Index<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sssearcherwithindex.html" class="tsd-signature-type">SSSearcherWithIndex</a></li>
+						<li class="tsd-signature tsd-kind-icon">new SSSearcher<wbr>With<wbr>Index<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sssearcherwithindex.html" class="tsd-signature-type" data-tsd-kind="Class">SSSearcherWithIndex</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2838">types.d.ts:2838</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2891">types.d.ts:2891</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -127,7 +128,7 @@
 									<p>Create a new substructure searcher with index.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="sssearcherwithindex.html" class="tsd-signature-type">SSSearcherWithIndex</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="sssearcherwithindex.html" class="tsd-signature-type" data-tsd-kind="Class">SSSearcherWithIndex</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -138,19 +139,19 @@
 					<a name="createindex" class="tsd-anchor"></a>
 					<h3>create<wbr>Index</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Index<span class="tsd-signature-symbol">(</span>molecule<span class="tsd-signature-symbol">: </span><a href="molecule.html" class="tsd-signature-type">Molecule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Index<span class="tsd-signature-symbol">(</span>molecule<span class="tsd-signature-symbol">: </span><a href="molecule.html" class="tsd-signature-type" data-tsd-kind="Class">Molecule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2886">types.d.ts:2886</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2939">types.d.ts:2939</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>molecule: <a href="molecule.html" class="tsd-signature-type">Molecule</a></h5>
+									<h5>molecule: <a href="molecule.html" class="tsd-signature-type" data-tsd-kind="Class">Molecule</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -167,7 +168,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2884">types.d.ts:2884</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2937">types.d.ts:2937</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -183,13 +184,13 @@
 					<a name="setfragment" class="tsd-anchor"></a>
 					<h3>set<wbr>Fragment</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Fragment<span class="tsd-signature-symbol">(</span>fragment<span class="tsd-signature-symbol">: </span><a href="molecule.html" class="tsd-signature-type">Molecule</a>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Fragment<span class="tsd-signature-symbol">(</span>fragment<span class="tsd-signature-symbol">: </span><a href="molecule.html" class="tsd-signature-type" data-tsd-kind="Class">Molecule</a>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2871">types.d.ts:2871</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2924">types.d.ts:2924</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -200,7 +201,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>fragment: <a href="molecule.html" class="tsd-signature-type">Molecule</a></h5>
+									<h5>fragment: <a href="molecule.html" class="tsd-signature-type" data-tsd-kind="Class">Molecule</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p><code>Molecule</code> instance to set as fragment. It has to be
 										flagged with <code>setFragment(true)</code> first.</p>
@@ -222,13 +223,13 @@
 					<a name="setmolecule" class="tsd-anchor"></a>
 					<h3>set<wbr>Molecule</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Molecule<span class="tsd-signature-symbol">(</span>molecule<span class="tsd-signature-symbol">: </span><a href="molecule.html" class="tsd-signature-type">Molecule</a>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Molecule<span class="tsd-signature-symbol">(</span>molecule<span class="tsd-signature-symbol">: </span><a href="molecule.html" class="tsd-signature-type" data-tsd-kind="Class">Molecule</a>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2879">types.d.ts:2879</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2932">types.d.ts:2932</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -239,7 +240,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>molecule: <a href="molecule.html" class="tsd-signature-type">Molecule</a></h5>
+									<h5>molecule: <a href="molecule.html" class="tsd-signature-type" data-tsd-kind="Class">Molecule</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p><code>Molecule</code> instance to set as target molecule.</p>
 									</div>
@@ -266,7 +267,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2862">types.d.ts:2862</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2915">types.d.ts:2915</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -289,7 +290,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2860">types.d.ts:2860</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2913">types.d.ts:2913</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -312,7 +313,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2858">types.d.ts:2858</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2911">types.d.ts:2911</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -335,7 +336,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2847">types.d.ts:2847</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2900">types.d.ts:2900</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -357,7 +358,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2856">types.d.ts:2856</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2909">types.d.ts:2909</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -383,7 +384,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/0340203/types.d.ts#L2854">types.d.ts:2854</a></li>
+									<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/c027e05/types.d.ts#L2907">types.d.ts:2907</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -411,8 +412,8 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
@@ -524,16 +525,16 @@
 						<a href="../interfaces/rectangle.html" class="tsd-kind-icon">Rectangle</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#atomhighlightcallback" class="tsd-kind-icon">Atom<wbr>Highlight<wbr>Callback</a>
+						<a href="../modules.html#atomhighlightcallback" class="tsd-kind-icon">Atom<wbr>Highlight<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#bondhighlightcallback" class="tsd-kind-icon">Bond<wbr>Highlight<wbr>Callback</a>
+						<a href="../modules.html#bondhighlightcallback" class="tsd-kind-icon">Bond<wbr>Highlight<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#changelistenercallback" class="tsd-kind-icon">Change<wbr>Listener<wbr>Callback</a>
+						<a href="../modules.html#changelistenercallback" class="tsd-kind-icon">Change<wbr>Listener<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="../globals.html#version" class="tsd-kind-icon">version</a>
+						<a href="../modules.html#version" class="tsd-kind-icon">version</a>
 					</li>
 				</ul>
 			</nav>
@@ -545,63 +546,21 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 		</div>
 	</div>
 </footer>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

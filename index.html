@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>OpenChemLib JS</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for OpenChemLib JS">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -38,8 +39,8 @@
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -49,12 +50,7 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
-			<h1> OpenChemLib JS</h1>
+			<h1>Project OpenChemLib JS</h1>
 		</div>
 	</div>
 </header>
@@ -65,9 +61,9 @@
 				<a href="#openchemlib-js" id="openchemlib-js" style="color: inherit; text-decoration: none;">
 					<h1>OpenChemLib JS</h1>
 				</a>
-				<p><a href="https://www.npmjs.com/package/openchemlib"><img src="https://img.shields.io/npm/v/openchemlib.svg?style=flat-square" alt="NPM version"></a>
-					<a href="https://travis-ci.org/cheminfo/openchemlib-js"><img src="https://img.shields.io/travis/cheminfo/openchemlib-js/master.svg?style=flat-square" alt="build status"></a>
-				<a href="https://www.npmjs.com/package/openchemlib"><img src="https://img.shields.io/npm/dm/openchemlib.svg?style=flat-square" alt="npm download"></a></p>
+				<p><a href="https://www.npmjs.com/package/openchemlib"><img src="https://img.shields.io/npm/v/openchemlib.svg" alt="NPM version"></a>
+					<a href="https://github.com/cheminfo/openchemlib-js/actions?query=workflow%3A%22Node.js+CI%22"><img src="https://github.com/cheminfo/openchemlib-js/workflows/Node.js%20CI/badge.svg?branch=master" alt="build status"></a>
+				<a href="https://www.npmjs.com/package/openchemlib"><img src="https://img.shields.io/npm/dm/openchemlib.svg" alt="npm download"></a></p>
 				<p>JavaScript port of the <a href="https://github.com/actelion/openchemlib">OpenChemLib</a> Java library.</p>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
@@ -86,55 +82,47 @@
 				<p>The <code>full</code> build (<code>require(&#39;openchemlib/full&#39;)</code>) build is the largest build.
 				It contains a structure viewer and a structure editor for browser applications.</p>
 				<ul>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/globals.html">TypeDoc home page</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/globals.html">TypeDoc home page</a></li>
 				</ul>
 				<a href="#modules-present-in-minimal-core-and-full-builds" id="modules-present-in-minimal-core-and-full-builds" style="color: inherit; text-decoration: none;">
 					<h3>Modules present in minimal, core and full builds</h3>
 				</a>
 				<ul>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/molecule.html">Molecule</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/reaction.html">Reaction</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/ringcollection.html">RingCollection</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/sdfileparser.html">SDFileParser</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/sssearcher.html">SSSearcher</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/sssearcherwithindex.html">SSSearcherWithIndex</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/modules/util.html">Util</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/molecule.html">Molecule</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/reaction.html">Reaction</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/ringcollection.html">RingCollection</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/sdfileparser.html">SDFileParser</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/sssearcher.html">SSSearcher</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/sssearcherwithindex.html">SSSearcherWithIndex</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/modules/util.html">Util</a></li>
 				</ul>
 				<a href="#modules-present-only-in-core-and-full-builds" id="modules-present-only-in-core-and-full-builds" style="color: inherit; text-decoration: none;">
 					<h3>Modules present only in core and full builds</h3>
 				</a>
 				<ul>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/conformergenerator.html">ConformerGenerator</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/druglikenesspredictor.html">DruglikenessPredictor</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/modules/drugscorecalculator.html">DrugScoreCalculator</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/forcefieldmmff94.html">ForceFieldMMFF94</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/moleculeproperties.html">MoleculeProperties</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/toxicitypredictor.html">ToxicityPredictor</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/conformergenerator.html">ConformerGenerator</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/druglikenesspredictor.html">DruglikenessPredictor</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/modules/drugscorecalculator.html">DrugScoreCalculator</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/forcefieldmmff94.html">ForceFieldMMFF94</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/moleculeproperties.html">MoleculeProperties</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/toxicitypredictor.html">ToxicityPredictor</a></li>
 				</ul>
 				<a href="#modules-present-only-in-full-build" id="modules-present-only-in-full-build" style="color: inherit; text-decoration: none;">
 					<h3>Modules present only in full build</h3>
 				</a>
 				<ul>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/classes/structureeditor.html">StructureEditor</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/modules/structureview.html">StructureView</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/docs/modules/svgrenderer.html">SVGRenderer</a></li>
-				</ul>
-				<a href="#online-demos" id="online-demos" style="color: inherit; text-decoration: none;">
-					<h3>Online demos</h3>
-				</a>
-				<ul>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/examples/Editor.html">Editor</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/examples/ShowStructures.html">Show structures</a></li>
-					<li><a href="https://cheminfo.github.io/openchemlib-js/examples/SVG.html">SVG</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/classes/structureeditor.html">StructureEditor</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/modules/structureview.html">StructureView</a></li>
+					<li><a href="https://cheminfo.github.io/openchemlib-js/modules/svgrenderer.html">SVGRenderer</a></li>
 				</ul>
 				<a href="#development" id="development" style="color: inherit; text-decoration: none;">
 					<h2>Development</h2>
 				</a>
 				<p>To build this project, you need :</p>
 				<ul>
-					<li>java &gt;= 1.7</li>
-					<li>GWT 2.8 (<a href="http://www.gwtproject.org/download.html">Download build here</a>)</li>
-					<li>Node.js (<a href="https://nodejs.org/en/download/current/">link</a>)</li>
+					<li>Java JDK &gt;= 8</li>
+					<li>GWT 2.9 (<a href="http://www.gwtproject.org/download.html">Download build here</a>)</li>
+					<li>Node.js (<a href="https://nodejs.org/en/download/">link</a>)</li>
 				</ul>
 				<a href="#install-dependencies" id="install-dependencies" style="color: inherit; text-decoration: none;">
 					<h3>Install dependencies</h3>
@@ -143,12 +131,11 @@
 				<a href="#configure-directories" id="configure-directories" style="color: inherit; text-decoration: none;">
 					<h3>Configure directories</h3>
 				</a>
-				<p>Copy <code>config.default.json</code> to <code>config.json</code> and put the path to the GWT classes on your computer.<br>If you want to update the java code from openchemlib, provide the path to the openchemlib source.</p>
+				<p>Copy <code>config.default.json</code> to <code>config.json</code> and put the path to the GWT classes on your computer.<br>If you want to use a custom JDK installation, set the &quot;jdk&quot; key to be the path to your JDK directory.</p>
 				<a href="#npm-scripts" id="npm-scripts" style="color: inherit; text-decoration: none;">
 					<h3>npm scripts</h3>
 				</a>
-				<p>To run one of the scripts, use <code>npm run &lt;scriptName&gt;</code>.
-				To pass an options, use <code>npm run &lt;scriptName&gt; -- --option</code>.</p>
+				<p>To run one of the scripts, use <code>npm run &lt;scriptName&gt;</code>.<br>To pass an options, use <code>npm run &lt;scriptName&gt; -- --option</code>.</p>
 				<p><strong>Options</strong>:</p>
 				<ul>
 					<li>-m [name]: only process module &quot;name&quot;</li>
@@ -179,19 +166,19 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-namespace">
 						<a href="modules/drugscorecalculator.html">Drug<wbr>Score<wbr>Calculator</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-namespace">
 						<a href="modules/svgrenderer.html">SVGRenderer</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-namespace">
 						<a href="modules/structureview.html">Structure<wbr>View</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-namespace">
 						<a href="modules/util.html">Util</a>
 					</li>
 				</ul>
@@ -265,16 +252,16 @@
 						<a href="interfaces/rectangle.html" class="tsd-kind-icon">Rectangle</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#atomhighlightcallback" class="tsd-kind-icon">Atom<wbr>Highlight<wbr>Callback</a>
+						<a href="modules.html#atomhighlightcallback" class="tsd-kind-icon">Atom<wbr>Highlight<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#bondhighlightcallback" class="tsd-kind-icon">Bond<wbr>Highlight<wbr>Callback</a>
+						<a href="modules.html#bondhighlightcallback" class="tsd-kind-icon">Bond<wbr>Highlight<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#changelistenercallback" class="tsd-kind-icon">Change<wbr>Listener<wbr>Callback</a>
+						<a href="modules.html#changelistenercallback" class="tsd-kind-icon">Change<wbr>Listener<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#version" class="tsd-kind-icon">version</a>
+						<a href="modules.html#version" class="tsd-kind-icon">version</a>
 					</li>
 				</ul>
 			</nav>
@@ -286,63 +273,21 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 		</div>
 	</div>
 </footer>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
