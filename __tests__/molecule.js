@@ -16,7 +16,7 @@ describe('from and to SMILES', () => {
   );
 
   it('should throw on syntax error', () => {
-    expect(function() {
+    expect(function () {
       Molecule.fromSmiles('ABC');
     }).toThrow(/SmilesParser: unknown element label found/);
   });
@@ -37,8 +37,8 @@ describe('from and to SMILES', () => {
   });
 });
 
-describe('Molecule', function() {
-  it('medley', function() {
+describe('Molecule', function () {
+  it('medley', function () {
     const idcode =
       'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
     let mol = Molecule.fromIDCode(idcode);
@@ -52,7 +52,7 @@ describe('Molecule', function() {
     expect(mol.getIDCode()).toBe(idcode);
   });
 
-  it('toSVG', function() {
+  it('toSVG', function () {
     const mol = Molecule.fromSmiles('CCOCCO');
     let svg = mol.toSVG(300, 150, 'myId');
     expect(svg).toContain('width="300px" height="150px"');
@@ -76,7 +76,7 @@ describe('Molecule', function() {
     expect(svg).toMatchSnapshot();
   });
 
-  it('molfile V3', function() {
+  it('molfile V3', function () {
     const idcode =
       'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
     let mol = Molecule.fromIDCode(idcode);

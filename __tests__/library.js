@@ -1,11 +1,11 @@
 'use strict';
 
 const core = require('../core');
-const minimal = require('../minimal');
-const full = require('../full');
 const pretty = require('../dist/openchemlib-full.pretty');
+const full = require('../full');
+const minimal = require('../minimal');
 
-describe('Checking for the presence of main APIs', function() {
+describe('Checking for the presence of main APIs', function () {
   const minimalAPI = [
     'Molecule',
     'RingCollection',
@@ -28,20 +28,18 @@ describe('Checking for the presence of main APIs', function() {
 
   const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];
 
-  // eslint-disable-next-line jest/expect-expect
-  it('minimal', function() {
+  it('minimal', function () {
     checkHas(minimal, minimalAPI);
     checkHasNot(minimal, [...coreAPI, ...fullAPI]);
   });
 
-  it('core', function() {
+  it('core', function () {
     expect(core).toBe(require('..'));
     checkHas(core, [...minimalAPI, ...coreAPI]);
     checkHasNot(core, fullAPI);
   });
 
-  // eslint-disable-next-line jest/expect-expect
-  it('full', function() {
+  it('full', function () {
     [full, pretty].forEach((lib) => {
       checkHas(lib, [...minimalAPI, ...coreAPI, ...fullAPI]);
     });

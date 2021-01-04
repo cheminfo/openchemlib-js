@@ -1,19 +1,19 @@
 'use strict';
 
 const childProcess = require('child_process');
-const path = require('path');
 const os = require('os');
+const path = require('path');
 
 const fs = require('fs-extra');
-const rimraf = require('rimraf');
 const exporter = require('gwt-api-exporter');
+const rimraf = require('rimraf');
 const yargs = require('yargs');
 
 const pack = require('../package.json');
 
-const extendMinimal = require('./extend/minimal');
 const extendCore = require('./extend/core');
 const extendFull = require('./extend/full');
+const extendMinimal = require('./extend/minimal');
 let modules = require('./modules.json');
 
 const argv = yargs
@@ -71,7 +71,6 @@ try {
   console.error(
     'config.json not found. You can copy config.default.json to start from an example.',
   );
-  // eslint-disable-next-line no-process-exit
   process.exit(1);
 }
 
@@ -161,6 +160,10 @@ function copyOpenchemlib() {
 
 function compile(mode) {
   let min = mode === 'min';
+  let PATH = process.env.PATH;
+  if (config.jdk) {
+    PATH = `${path.join(config.jdk, 'bin')};${PATH}`;
+  }
   for (let i = 0; i < modules.length; i++) {
     log(`Compiling module ${modules[i].name}`);
     let args = [
@@ -184,7 +187,10 @@ function compile(mode) {
     ];
     let result;
     try {
-      result = childProcess.execFileSync('java', args, { maxBuffer: Infinity });
+      result = childProcess.execFileSync('java', args, {
+        maxBuffer: Infinity,
+        env: { ...process.env, PATH },
+      });
     } catch (e) {
       result = e.stdout;
       throw e;
@@ -239,7 +245,6 @@ function log(value) {
 function handleCatch(err) {
   // eslint-disable-next-line no-console
   console.error(err);
-  // eslint-disable-next-line no-process-exit
   process.exit(1);
 }
 
