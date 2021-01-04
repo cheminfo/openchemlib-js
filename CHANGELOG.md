@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.3.0](https://www.github.com/cheminfo/openchemlib-js/compare/v7.2.3...v7.3.0) (2021-01-04)
+
+
+### Features
+
+* update OCL to version 2020.12.1 ([bb9c07d](https://www.github.com/cheminfo/openchemlib-js/commit/bb9c07dfa5e16632e6933ec3fd8eeeed0b0c59e0))
+
 ## 7.2.3 / 2020-01-10
 
 - Update OCL to 2020.1.0
