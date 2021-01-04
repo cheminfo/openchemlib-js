@@ -99,7 +99,7 @@ function run(command) {
 }
 
 function copyOpenchemlib() {
-  const chemlibDir = path.resolve(config.openchemlib, 'main/java/com');
+  const chemlibDir = path.join(__dirname, '../openchemlib/src/main/java/com');
   const outDir = path.join(
     __dirname,
     '../src/com/actelion/research/gwt/chemlib/com',
@@ -113,7 +113,7 @@ function copyOpenchemlib() {
   }
   fs.copySync(chemlibDir, outDir);
 
-  const openMolDir = path.resolve(config.openchemlib, 'main/java/org');
+  const openMolDir = path.join(__dirname, '../openchemlib/src/main/java/org');
   const outOpenMolDir = path.join(
     __dirname,
     '../src/com/actelion/research/gwt/chemlib/org',

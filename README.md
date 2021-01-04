@@ -75,7 +75,7 @@ To build this project, you need :
 ### Configure directories
 
 Copy `config.default.json` to `config.json` and put the path to the GWT classes on your computer.  
-If you want to update the java code from openchemlib, provide the path to the openchemlib source.
+If you want to use a custom JDK installation, set the "jdk" key to be the path to your JDK directory.
 
 ### npm scripts
 
