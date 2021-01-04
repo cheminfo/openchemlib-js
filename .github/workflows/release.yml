@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v2
+        id: release
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          release-type: node
+          package-name: 'openchemlib'
+      - uses: actions/checkout@v2
+        # These if statements ensure that a publication only occurs when a new release is created
+        if: ${{ steps.release.outputs.release_created }}
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '15.x'
+        if: ${{ steps.release.outputs.release_created }}
+      - name: Install GWT 2.9
+        run: |
+          wget -q https://storage.googleapis.com/gwt-releases/gwt-2.9.0.zip -O gwt.zip
+          unzip -q gwt.zip
+          mv gwt-2* gwt
+          echo '{"gwt": "./gwt"}' > config.json
+        if: ${{ steps.release.outputs.release_created }}
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14.x
+          registry-url: 'https://registry.npmjs.org'
+        if: ${{ steps.release.outputs.release_created }}
+      - run: npm ci
+        if: ${{ steps.release.outputs.release_created }}
+      - run: npm run build
+        if: ${{ steps.release.outputs.release_created }}
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_BOT_TOKEN }}
+        if: ${{ steps.release.outputs.release_created }}
