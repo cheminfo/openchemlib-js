@@ -1,6 +1,8 @@
 package com.actelion.research.chem.interactionstatistics;
 
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -15,18 +17,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class InteractionDistanceStatistics {
 	
 	private static volatile InteractionDistanceStatistics instance = new InteractionDistanceStatistics(); //eager initialization
 	private static final String BASE_PATH = "/resources/interactionstatistics/";
-	private volatile Map<Long,DistanceDependentPairPotential> pairPotentials;
+	private volatile Map<Long,SplineFunction> pairPotentials;
 	public static final double OCCURENCE_CUTOFF = 500;
 	public static final double CUTOFF_RADIUS = 6.0;
 	public static final double BIN_SIZE = 0.2;
@@ -50,7 +46,22 @@ public class InteractionDistanceStatistics {
 	public int getInteractionClasses() {
 		return pairPotentials.keySet().size();
 	}
-	
+
+	public Map<Long, SplineFunction> getPairPotentials() {
+		return pairPotentials;
+	}
+
+	public List<Integer> getAtomTypes(){
+		HashSet<Integer> hs = new HashSet<>();
+
+		for (long pair : pairPotentials.keySet()) {
+			int [] a = splitLongToInts(pair);
+			hs.add(a[0]);
+			hs.add(a[1]);
+		}
+		return new ArrayList<>(hs);
+	}
+
 	public Set<Integer> getAtomKeySet() {
 		Set<Integer> atomKeySet = new HashSet<Integer>();
 		for(long l : pairPotentials.keySet()) {
@@ -62,7 +73,8 @@ public class InteractionDistanceStatistics {
 		}
 		return atomKeySet;
 	}
-	
+
+
 	
 	private synchronized void calculatePotentials() {
 		splineCalculation();
@@ -70,10 +82,11 @@ public class InteractionDistanceStatistics {
 	
 	private InteractionDistanceStatistics() {
 		interactionStatistics = new ConcurrentHashMap<Long,int[]>();
+		initialize();
 
 	}
 	
-	public void initialize() {
+	private void initialize() {
 	try {
 		readFromFile();
 	} catch (IOException e) {
@@ -110,13 +123,13 @@ public class InteractionDistanceStatistics {
 		return new int[] {a,b};
 	}
 	
-	//private boolean isGenericAtomPair(int a, int b) {
-	//	return (isGenericAtomType(a) && isGenericAtomType(b));
-	//}
+	private boolean isGenericAtomPair(int a, int b) {
+		return (isGenericAtomType(a) && isGenericAtomType(b));
+	}
 	
-	//private boolean isGenericAtomType(int a) {
-	//	return Integer.toBinaryString(a).length()<=InteractionAtomTypeCalculator.AtomFlagCount.BASIC_ATOM_FLAG_COUNT.getCount();
-	//}
+	private boolean isGenericAtomType(int a) {
+		return Integer.toBinaryString(a).length()<=InteractionAtomTypeCalculator.AtomFlagCount.BASIC_ATOM_FLAG_COUNT.getCount();
+	}
 	
 	//private boolean isExtendedAtomType(int a) {
 	//	return Integer.toBinaryString(a).length()<=InteractionAtomTypeCalculator.AtomFlagCount.EXTENDED_ATOM_FLAG_COUNT.getCount();
@@ -133,10 +146,10 @@ public class InteractionDistanceStatistics {
 		else return atomType;
 	}
 	
-	//private boolean isGenericAtomPair(long l) {
-	//	int[] pair = splitLongToInts(l);
-	//	return isGenericAtomPair(pair[0], pair[1]);
-	//}
+	private boolean isGenericAtomPair(long l) {
+		int[] pair = splitLongToInts(l);
+		return isGenericAtomPair(pair[0], pair[1]);
+	}
 
  	
 	public void addInteraction(int atom1, int atom2, double dist) {
@@ -209,15 +222,15 @@ public class InteractionDistanceStatistics {
 
 		
 		private void splineCalculation() {
-			pairPotentials = new HashMap<Long,DistanceDependentPairPotential>();
+			pairPotentials = new HashMap<Long,SplineFunction>();
 
-			int[] referenceSum = new int[(int)(CUTOFF_RADIUS/BIN_SIZE)];
+			double[] referenceSum = new double[(int)(CUTOFF_RADIUS/BIN_SIZE)];
 
 
 			
 			
 			interactionStatistics.entrySet().stream().forEach(e -> {
-				DistanceDependentPairPotential potential = new DistanceDependentPairPotential();
+				SplineFunction potential = new SplineFunction();
 				potential.setOccurencesArray(e.getValue());
 				pairPotentials.putIfAbsent(e.getKey(), potential);
 			});
@@ -226,18 +239,22 @@ public class InteractionDistanceStatistics {
 			Map<Long, double[]> discreteFunctions = interactionStatistics.entrySet().stream()
 				    .collect(Collectors.toMap(e -> e.getKey(), e -> distanceNormalization(e.getValue()))); //check this line
 			
-			interactionStatistics.entrySet().stream().//filter(e -> isGenericAtomPair(e.getKey())).
-			forEach(statistics -> {
+			AtomicInteger runCount = new AtomicInteger(0);
+			discreteFunctions.entrySet().stream().filter(e -> isGenericAtomPair(e.getKey())).
+			forEach(statistics -> { 
+				runCount.getAndIncrement();
 				IntStream.range(0,statistics.getValue().length).forEach(i -> {
 					referenceSum[i]+=statistics.getValue()[i];
 				}
 				);
 				
 			});
-			
+			for(int i=0;i<referenceSum.length;i++) {
+				referenceSum[i]/=runCount.get();
+			}
+			//double[] refSum = distanceNormalization(referenceSum);
 
-			double[] refSum = distanceNormalization(referenceSum);
-			discreteFunctions.replaceAll((k,v)-> normalize(v,refSum));
+			discreteFunctions.replaceAll((k,v)-> normalize(v,referenceSum));
 			double[] X = new double[referenceSum.length];
 			IntStream.range(0, X.length).forEach(i-> X[i]= (i+0.5)*BIN_SIZE);
 			//System.out.println(Arrays.toString(X));
@@ -269,7 +286,7 @@ public class InteractionDistanceStatistics {
 				/*
 				 * add repulsive part for short distances
 				 */
-				/*
+				
 				int globalMinIndex = -1;
 				int firstMaxIndex = -1;
 				for(int i=1;i<Y.length-1;i++) {
@@ -294,9 +311,10 @@ public class InteractionDistanceStatistics {
 					}
 					ff = interpolator.interpolate(X, Y);
 				}
-				*/
-				DistanceDependentPairPotential potential = pairPotentials.get(l);
+				
+				SplineFunction potential = pairPotentials.get(l);
 				potential.setSplineFunction(ff);
+				potential.setDiscreteFunction(discreteFunctions.get(l));
 
 			}
 		}
@@ -324,14 +342,14 @@ public class InteractionDistanceStatistics {
 			return YNorm;
 		}
 		
-		public DistanceDependentPairPotential getFunction(long l) {
+		public SplineFunction getFunction(long l) {
 			return pairPotentials.get(l);
 		}
 		
-		public DistanceDependentPairPotential getFunction(int a, int b) {
+		public SplineFunction getFunction(int a, int b) {
 
 			
-			DistanceDependentPairPotential spline;
+			SplineFunction spline;
 
 			int a1 = a & InteractionAtomTypeCalculator.AtomPropertyMask.SPECIFIC.getMask();
 			int b1 = b & InteractionAtomTypeCalculator.AtomPropertyMask.SPECIFIC.getMask();

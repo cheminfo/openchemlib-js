@@ -150,6 +150,8 @@ export declare class Molecule {
   static cAtomQFRingSizeShift: number;
   static cAtomQFChargeBits: number;
   static cAtomQFChargeShift: number;
+  static cAtomQFRxnParityBits: number;
+  static cAtomQFRxnParityShift: number;
   static cAtomQFSimpleFeatures: number;
   static cAtomQFNarrowing: number;
   static cAtomQFAny: number;
@@ -186,6 +188,10 @@ export declare class Molecule {
   static cAtomQFNotChargePos: number;
   static cAtomQFFlatNitrogen: number;
   static cAtomQFExcludeGroup: number;
+  static cAtomQFRxnParityHint: number;
+  static cAtomQFRxnParityRetain: number;
+  static cAtomQFRxnParityInvert: number;
+  static cAtomQFRxnParityRacemize: number;
 
   static cBondTypeSingle: number;
   static cBondTypeDouble: number;
@@ -496,11 +502,14 @@ export declare class Molecule {
   addMolecule(mol: Molecule): number[];
 
   /**
-   *
-   * @param substituent
-   * @param connectionAtom
-   * @returns Atom mapping from substituent to this molecule after addition of substituent.
-   */
+	 * Adds and connects the substituent molecule to the connectionAtom of this molecule.
+	 * Substituent atoms with atomicNo=0 are not copied and considered to represent the connectionAtom.
+	 * Bonds leading to them, however, are copied and connected to the connectionAtom.
+	 * High level function for constructing a molecule.
+	 * @param substituent
+	 * @param connectionAtom
+	 * @return atom mapping from substituent to this molecule after addition of substituent
+	 */
   addSubstituent(substituent: Molecule, connectionAtom: number): number[];
 
   /**
@@ -569,6 +578,20 @@ export declare class Molecule {
    * @returns number of ESR groups
    */
   renumberESRGroups(type: number): number;
+
+  /**
+	 * Swaps two atoms' indexes/locations in the atom table.
+	 * @param atom1
+	 * @param atom2
+	 */
+  swapAtoms(atom1: number, atom2: number): void;
+
+  /**
+	 * Swaps two bonds' indexes/locations in the atom table.
+	 * @param bond1
+	 * @param bond2
+	 */  
+  swapBonds(bond1: number, bond2: number): void;
 
   /**
    * After the deletion the original order of atom and bond indexes is retained.
@@ -644,11 +667,15 @@ export declare class Molecule {
   deleteMarkedAtomsAndBonds(): number[];
 
   /**
-   * Empties the molecule to serve as container for constructing a new molecule,
-   * e.g. by multiply calling addAtom(...), addBond(...) and other high level
-   * methods.
+   * @deprecated Use clear() instead of this method.
    */
   deleteMolecule(): void;
+
+  /**
+	 * Empties the molecule to serve as container for constructing a new molecule,
+	 * e.g. by multiply calling addAtom(...), addBond(...) and other high level methods.
+	 */
+  clear(): void;
 
   removeAtomSelection(): void;
 
@@ -889,11 +916,12 @@ export declare class Molecule {
   getBondLength(bond: number): number;
 
   /**
-   * Delocalized bonds, i.e. bonds in an aromatic 6-membered ring, are returned as
-   * 1. Ligand field bonds are returned as 0.
-   * @param bond
-   * @returns for organic molecules 1, 2 or 3.
-   */
+	 * Returns the formal bond order. Delocalized rings have alternating single and double
+	 * bonds, which are returned as such. Bonds that are explicitly marked as being delocalized
+	 * are returned as 1. Dative bonds are returned as 0.
+	 * @param bond
+	 * @return formal bond order 0 (dative bonds), 1, 2, or 3
+	 */
   getBondOrder(bond: number): number;
 
   /**
@@ -1057,6 +1085,11 @@ export declare class Molecule {
    * differerently.
    */
   isFragment(): boolean;
+
+  /**
+	 * @return true if at least one z-coordinate is different from 0.0
+	 */
+  is3D(): boolean;
 
   /**
    *
@@ -1675,8 +1708,7 @@ export declare class Molecule {
    * 3. non-plain-hydrogen atoms (bond order 0, i.e. metall ligand bond)<br>
    * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
    * @param atom
-   * @returns count of category 1 & 2 & 3 neighbour atoms (excludes neighbours
-   *         connected with zero bond order)
+   * @return count of category 1 & 2 & 3 neighbour atoms
    */
   getAllConnAtomsPlusMetalBonds(atom: number): number;
 
@@ -1718,6 +1750,13 @@ export declare class Molecule {
   getNonHydrogenNeighbourCount(atom: number): number;
 
   /**
+	 * This method returns the count of atom neighbours which are marked as being an exclude group.
+	 * @param atom
+	 * @return the number of non-hydrogen neighbor atoms
+	 */
+  getExcludedNeighbourCount(atom: number): number;
+
+  /**
    * Calculates and returns the mean bond length of all bonds including or not
    * including hydrogen bonds. If there are no bonds, then the average distance
    * between unconnected atoms is returned. If we have less than 2 atoms,
@@ -1727,9 +1766,9 @@ export declare class Molecule {
   getAverageBondLength(nonHydrogenBondsOnly: boolean): number;
 
   /**
-   * The sum of bond orders of explicitly connected neighbour atoms including
-   * explicit hydrogen. The occupied valence includes bonds to atoms with set
-   * cAtomQFExcludeGroup flags.
+   * The sum of bond orders of explicitly connected neighbour atoms including explicit hydrogen.
+	 * In case of a fragment the occupied valence does not include bonds to atoms of which the cAtomQFExcludeGroup flag is set.
+	 * Atom charge and radical states are not considered.
    * @param atom
    * @returns explicitly used valence
    */
@@ -1749,7 +1788,7 @@ export declare class Molecule {
   getFreeValence(atom: number): number;
 
   /**
-   * The free valence is the number of potential additional single bonded
+   * The lowest free valence is the number of potential additional single bonded
    * neighbours to reach the atom's lowest valence above or equal its current
    * occupied valence. Atom charges are considered. Implicit hydrogens are not
    * considered. Thus, the phosphor atoms in PF2 and PF4 both have a lowest free
@@ -2147,11 +2186,22 @@ export declare class Molecule {
   setStereoBondFromBondParity(bond: number): void;
 
   /**
-   * Checks whether atom is one of the two end of an allene.
+   * If atom is one of the two ends of an allene then returns allene center atom.
    * @param atom
    * @returns allene center or -1
    */
   findAlleneCenterAtom(atom: number): number;
+
+  /**
+	 * Crawls along a chain of sp-hybridized atoms starting from atom2 (which may not be
+	 * sp-hybridized) away from its sp-hybridized neighbour atom1. Returns the first atom
+	 * that is either not sp-hybridized anymore or the last atom of the chain if that is still
+	 * sp-hybridized. Returns -1 in case of an sp-hybridized cycle.
+	 * @param atom1 sp-hybridized atom
+	 * @param atom2 neighbour atom of atom1
+	 * @return first non-sp-hybridized atom when crawling from atom2 away from atom1
+	 */
+  findAlleneEndAtom(atom1: number, atom2: number): number;
 
   /**
    * Checks whether atom is one of the two atoms of an axial chirality bond of
@@ -2236,15 +2286,18 @@ export declare class Molecule {
   isHalogene(atom: number): boolean;
 
   /**
-   * Canonizes charge distribution in single- and multifragment molecules.
-   * Neutralizes positive and an equal amount of negative charges on
-   * electronegative atoms, provided these are not on 1,2-dipolar structures, in
-   * order to ideally achieve a neutral molecule. This method does not change the
-   * overall charge of the molecule. It does not change the number of explicit
-   * atoms or bonds or their connectivity except bond orders.
-   * @param allowUnbalancedCharge
-   * @returns remaining overall molecule charge
-   */
+	 * Normalizes charge distribution in single- and multifragment molecules.
+	 * In a first step polar bonds (both atoms have opposite charge) are neutralized
+	 * by removing both atom charges and increasing the bond order, provided that atom
+	 * valences allow the change.
+	 * Neutralizes positive and an equal amount of negative charges on electronegative atoms,
+	 * provided these are not on 1,2-dipolar structures, in order to ideally achieve a neutral molecule.
+	 * This method does not change the overall charge of the molecule. It does not change the number of
+	 * explicit atoms or bonds or their connectivity except bond orders.
+	 * This method does not deprotonate acidic groups to compensate for quarternary charged nitrogen.
+	 * @param allowUnbalancedCharge throws an exception after polar bond neutralization, if overall charge is not zero
+	 * @return remaining overall molecule charge
+	 */
   canonizeCharge(allowUnbalancedCharge: boolean): number;
 
   /**

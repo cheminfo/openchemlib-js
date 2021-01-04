@@ -33,17 +33,13 @@
 
 package com.actelion.research.chem.io;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-
 import com.actelion.research.chem.MolfileParser;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.chem.reaction.ReactionEncoder;
 import com.actelion.research.io.BOMSkipper;
+
+import java.io.*;
 
 
 public class RXNFileParser
@@ -65,19 +61,29 @@ public class RXNFileParser
 
 	public Reaction getReaction(String buffer) throws Exception
 	{
+	    return getReaction(buffer, false);
+    }
+
+	public Reaction getReaction(String buffer, boolean ignoreIdCode) throws Exception
+	{
 		Reaction theReaction = new Reaction();
 		BufferedReader theReader = new BufferedReader(new StringReader(buffer));
-		parse(theReaction, theReader);
+		parse(theReaction, theReader, ignoreIdCode);
 
 		return theReaction;
 	}
 
 	public Reaction getReaction(File file) throws Exception
 	{
+        return getReaction(file, false);
+    }
+
+	public Reaction getReaction(File file, boolean ignoreIdCode) throws Exception
+	{
 		Reaction theReaction = new Reaction();
 		BufferedReader theReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
         BOMSkipper.skip(theReader);
-		parse(theReaction, theReader);
+		parse(theReaction, theReader, ignoreIdCode);
 
 		return theReaction;
 	}
@@ -85,21 +91,38 @@ public class RXNFileParser
 	public boolean parse(Reaction theReaction, String buffer)
 		throws Exception
 	{
+	    return parse(theReaction, buffer, false);
+    }
+
+	public boolean parse(Reaction theReaction, String buffer, boolean ignoreIdCode)
+		throws Exception
+	{
 		BufferedReader theReader = new BufferedReader(new StringReader(buffer));
 
-		return parse(theReaction, theReader);
+		return parse(theReaction, theReader, ignoreIdCode);
 	}
 
 	public boolean parse(Reaction theReaction, File file)
 		throws Exception
 	{
+	    return parse(theReaction, file, false);
+    }
+
+	public boolean parse(Reaction theReaction, File file, boolean ignoreIdCode)
+		throws Exception
+	{
 		BufferedReader theReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
         BOMSkipper.skip(theReader);
 
-		return parse(theReaction, theReader);
+		return parse(theReaction, theReader, ignoreIdCode);
 	}
 
-    private boolean parse(Reaction theReaction, BufferedReader theReader) throws Exception
+	public boolean parse(Reaction theReaction, BufferedReader theReader) throws Exception
+    {
+        return parse(theReaction,theReader,false);
+    }
+
+	public boolean parse(Reaction theReaction, BufferedReader theReader, boolean ignoreIdCode ) throws Exception
     {
         String theLine = theReader.readLine();
         boolean ok = false;
@@ -107,29 +130,31 @@ public class RXNFileParser
             throw new Exception("'$RXN' tag not found");
         }
         if (theLine.equals(RXN_V3_MAGIC)) {
-            ok = parseV3(theReaction,theReader);
+            ok = parseV3(theReaction,theReader,ignoreIdCode);
         } else {
-            ok = parseV2(theReaction,theReader);
+            ok = parseV2(theReaction,theReader,ignoreIdCode);
         }
         return ok;
     }
 
     // First line is already parsed
-    private boolean parseV3(Reaction theReaction, BufferedReader theReader) throws Exception
+    private boolean parseV3(Reaction theReaction, BufferedReader theReader, boolean ignoreIdCode) throws Exception
     {
-        String theLine = null;
-        for (int i = 0; i < 3; i++) {
-            theLine = theReader.readLine();
-        }
+        String name = theReader.readLine().trim();
+        if (name.length() != 0)
+        	theReaction.setName(name);
+
+        theReader.readLine(); // skip program and time stamp
 
         // preferrably decode the idcode based encoding from the comment line, if present
-        if (theLine.startsWith(RXNFileCreator.RXN_CODE_TAG)) {
-            String encoding = theLine.substring(RXNFileCreator.RXN_CODE_TAG.length());
+	    String comment = theReader.readLine();
+        if (!ignoreIdCode && comment.startsWith(RXNFileCreator.RXN_CODE_TAG)) {
+            String encoding = comment.substring(RXNFileCreator.RXN_CODE_TAG.length());
             if (ReactionEncoder.decode(encoding, true, theReaction) != null)
             	return true;
         }
 
-        theLine = theReader.readLine();
+        String theLine = theReader.readLine();
         MolfileParser molParser = new MolfileParser();
         if (theLine != null && theLine.startsWith(RXN_V3_COUNTS_LINE)) {
             String t = theLine.substring(13).trim();
@@ -178,80 +203,6 @@ public class RXNFileParser
         return false;
     }
 
-	/* This is the old approach, RXN specs were missing so we invented one
-    private boolean parseOld(Reaction theReaction, BufferedReader theReader)
-		throws Exception
-	{
-		String theLine = theReader.readLine();
-
-		if ((theLine == null) || !theLine.startsWith(RXN_MAGIC)) {
-			throw new Exception("'$RXN' tag not found");
-		}
-
-		for (int i = 0; i < 4; i++) {
-			theLine = theReader.readLine();
-		}
-		int reactantCount = Integer.parseInt(theLine.substring(0, 3).trim());
-		int productCount = Integer.parseInt(theLine.substring(3, 6).trim());
-
-		MolfileParser molParser = new MolfileParser();
-
-		for (int i = 0; i < reactantCount; i++) {
-			theLine = theReader.readLine();
-
-			if ((theLine == null) || !theLine.startsWith(MOL_MAGIC)) {
-				throw new Exception("'$MOL' tag not found");
-			}
-
-            StereoMolecule reactant = new StereoMolecule();
-			StringBuffer molfile = new StringBuffer(DEFAULT_CAPACITY);
-
-			do {
-				theLine = theReader.readLine();
-				molfile.append(theLine);
-				molfile.append("\n");
-			} while ((theLine != null) && !theLine.startsWith(END_MOL_TAG));
-
-			if (theLine == null) {
-				throw new Exception("'M  END' not found");
-			}
-
-			molParser.parse(reactant, molfile);
-
-			theReaction.addReactant(reactant);
-		}
-
-		for (int i = 0; i < productCount; i++) {
-			theLine = theReader.readLine();
-
-			if ((theLine == null) || !theLine.startsWith(MOL_MAGIC)) {
-				throw new Exception("'$MOL' tag not found");
-			}
-
-            StereoMolecule product = new StereoMolecule();
-			StringBuffer molfile = new StringBuffer(DEFAULT_CAPACITY);
-
-			do {
-				theLine = theReader.readLine();
-				molfile.append(theLine);
-				molfile.append("\n");
-			} while ((theLine != null) && !theLine.startsWith(END_MOL_TAG));
-
-			if (theLine == null) {
-				throw new Exception("'M  END' not found");
-			}
-
-			molParser.parse(product, molfile);
-
-			theReaction.addProduct(product);
-		}
-
-		theReader.close();
-
-		return true;
-
-		//return theReaction;
-	}	*/
 
     /**
      * @param theReaction
@@ -260,21 +211,23 @@ public class RXNFileParser
      * @throws Exception
      */
     // First line is already parsed
-    private boolean parseV2(Reaction theReaction, BufferedReader theReader) throws Exception
+    private boolean parseV2(Reaction theReaction, BufferedReader theReader, boolean ignoreIdCode) throws Exception
     {
-        String theLine = null;
-        for (int i = 0; i < 3; i++) {
-            theLine = theReader.readLine();
-        }
+	    String name = theReader.readLine().trim();
+	    if (name.length() != 0)
+		    theReaction.setName(name);
 
-		// preferrably decode the idcode based encoding from the comment line, if present
-		if (theLine.startsWith(RXNFileCreator.RXN_CODE_TAG)) {
-			String encoding = theLine.substring(RXNFileCreator.RXN_CODE_TAG.length());
-			if (ReactionEncoder.decode(encoding, true, theReaction) != null)
-				return true;
-		}
+	    theReader.readLine(); // skip program and time stamp
 
-		theLine = theReader.readLine();
+	    // preferrably decode the idcode based encoding from the comment line, if present
+	    String comment = theReader.readLine();
+	    if (!ignoreIdCode && comment.startsWith(RXNFileCreator.RXN_CODE_TAG)) {
+		    String encoding = comment.substring(RXNFileCreator.RXN_CODE_TAG.length());
+		    if (ReactionEncoder.decode(encoding, true, theReaction) != null)
+			    return true;
+	    }
+
+		String theLine = theReader.readLine();
 		int reactantCount = Integer.parseInt(theLine.substring(0, 3).trim());
         int productCount = Integer.parseInt(theLine.substring(3, 6).trim());
 
@@ -330,11 +283,7 @@ public class RXNFileParser
             theReaction.addProduct(product);
         }
 
-        theReader.close();
-
         return true;
-
-        //return theReaction;
     }
 
 }

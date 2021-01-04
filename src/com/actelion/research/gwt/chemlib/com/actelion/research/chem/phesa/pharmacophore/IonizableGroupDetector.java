@@ -22,8 +22,8 @@ public class IonizableGroupDetector {
 		ringCollection = mol.getRingSet();
 	}
 	
-	public ArrayList<IPharmacophorePoint> detect() {
-		ArrayList<IPharmacophorePoint> chargePoints = new ArrayList<IPharmacophorePoint>();
+	public ArrayList<ChargePoint> detect() {
+		ArrayList<ChargePoint> chargePoints = new ArrayList<ChargePoint>();
 		ArrayList<Integer> ionizableGroup;
 		//detect tetrazoles
 		for(int r=0;r<ringCollection.getSize();r++) {
@@ -46,6 +46,8 @@ public class IonizableGroupDetector {
 		for(int a=0;a<mol.getAtoms();a++) {
 			if(alreadyDetected(a)) continue;
 			if(mol.getAtomicNo(a)==8) { //oxygen
+				if(mol.getConnAtoms(a)==0)
+					continue;
 				int aa = mol.getConnAtom(a,0);
 				if(alreadyDetected(aa)) continue;
 				if(AtomFunctionAnalyzer.isAcidicOxygen(mol, a)) { //COOH,SO3H,PO3H2, N(+)-OH
@@ -103,12 +105,10 @@ public class IonizableGroupDetector {
 				}
 				}
 				else if(mol.getAtomicNo(a)==7) {
-					if(mol.isAromaticAtom(a))
-						continue;
-					if(mol.getConnAtoms(a)<=2) { //HNR2 or H2NR
-							int nDBs = 0;
+					if(!mol.isAromaticAtom(a) && mol.getConnAtoms(a)<=2) { //HNR2 or H2NR
 							boolean found=false;
 							for(int i=0;i<mol.getConnAtoms(a) && !found;i++) { //search for amidine
+								int nDBs = 0;
 								int aa = mol.getConnAtom(a, i);
 								if(alreadyDetected(aa)) continue;
 								if(mol.getAtomicNo(aa)==6) {
@@ -130,6 +130,7 @@ public class IonizableGroupDetector {
 												ChargePoint cp = new ChargePoint(mol,aa,new ArrayList<Integer>(),1);
 												chargePoints.add(cp);
 												found = true;
+
 											}
 												
 										}
@@ -162,9 +163,11 @@ public class IonizableGroupDetector {
 		}
 		return chargePoints;
 	}
-		
 
-	
+	public List<ArrayList<Integer>> getIonizableGroups() {
+		return ionizableGroups;
+	}
+
 	private boolean hasCounterChargedNeighbour(int a) {
 		for(int aa=0;aa<mol.getConnAtoms(a);aa++) {
 			if(mol.getAtomCharge(a)*mol.getAtomCharge(mol.getConnAtom(a,aa))<0)

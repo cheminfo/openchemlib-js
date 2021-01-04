@@ -1,13 +1,27 @@
 /*
- * @(#)TorsionSetStrategyRandom.java
+ * Copyright 2013-2020 Thomas Sander, openmolecules.org
  *
- * Copyright 2013 openmolecules.org, Inc. All Rights Reserved.
- * 
- * NOTICE: All information contained herein is, and remains the property
- * of openmolecules.org.  The intellectual and technical concepts contained
- * herein are proprietary to openmolecules.org.
- * Actelion Pharmaceuticals Ltd. is granted a non-exclusive, non-transferable
- * and timely unlimited usage license.
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Thomas Sander
  */
@@ -33,7 +47,7 @@ public class TorsionSetStrategyRandom extends TorsionSetStrategy {
 	 * @param preferLikelyTorsions if set then more frequent angles are picked with higher probability
 	 * @param seed
 	 */
-	public TorsionSetStrategyRandom(RotatableBond[] rotatableBond, Rigid3DFragment[] fragment, boolean preferLikelyTorsions, long seed) {
+	public TorsionSetStrategyRandom(RotatableBond[] rotatableBond, RigidFragment[] fragment, boolean preferLikelyTorsions, long seed) {
 		super(rotatableBond, fragment);
 		mPreferLikelyTorsions = preferLikelyTorsions;
 		mRandom = (seed == 0) ? new Random() : new Random(seed);
@@ -55,7 +69,7 @@ public class TorsionSetStrategyRandom extends TorsionSetStrategy {
 
 		int[] torsionIndex = new int[mRotatableBond.length];
 		int[] conformerIndex = new int[mRigidFragment.length];
-		TorsionSet ts = null;
+		TorsionSet ts;
 		int count = 0;
 
 		do {

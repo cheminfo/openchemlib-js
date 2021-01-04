@@ -106,26 +106,17 @@ public interface DescriptorConstants {
     public static final DescriptorInfo DESCRIPTOR_Flexophore =
 							new DescriptorInfo("Flexophore",
 												"Flexophore",
-												"4.4",
+												"5.0",
 												DESCRIPTOR_TYPE_MOLECULE,
 												false,
 												false,
 												false,
 												false);
-    public static final DescriptorInfo DESCRIPTOR_Flexophore_HighRes =
-        					new DescriptorInfo("FlexophoreHighResolution",
-												"FlexophoreHighRes",
-												"version",
-        										DESCRIPTOR_TYPE_MOLECULE,
-												false,
-												false,
-												false,
-											   false);
 
-    public static final DescriptorInfo DESCRIPTOR_ShapeAlign =
+	public static final DescriptorInfo DESCRIPTOR_ShapeAlign =
         					new DescriptorInfo("PharmacophoreEnhancedShapeAlignment",
         									   "PheSA",
-												"2.0",
+												"2.1",
 												DESCRIPTOR_TYPE_MOLECULE,
 												false,
 												false,
@@ -135,7 +126,7 @@ public interface DescriptorConstants {
     public static final DescriptorInfo DESCRIPTOR_ShapeAlignSingleConf =
         					new DescriptorInfo("PharmacophoreEnhancedShapeAlignmentSingleConfQuery",
         									   "PheSASingleConf",
-												"2.0",
+												"2.1",
 												DESCRIPTOR_TYPE_MOLECULE,
         									   false,
 												false,
@@ -210,6 +201,16 @@ public interface DescriptorConstants {
 												true,
 												true,
 												false);
+    
+    public static final DescriptorInfo DESCRIPTOR_PTREE =
+			new DescriptorInfo("PharmacophoreTree",
+							   "PTree",
+								"1.0",
+								DESCRIPTOR_TYPE_MOLECULE,
+								false,
+								false,
+								false,
+								false);
 
 
     public static final DescriptorInfo[] DESCRIPTOR_LIST = {
@@ -235,7 +236,6 @@ public interface DescriptorConstants {
                                                 DESCRIPTOR_TopoPPHistDist,
                                                 DESCRIPTOR_OrganicFunctionalGroups,
                                                 DESCRIPTOR_Flexophore,
-                                                DESCRIPTOR_Flexophore_HighRes,
 												DESCRIPTOR_ShapeAlign,
 												DESCRIPTOR_ReactionFP,
                                                 DESCRIPTOR_IntegerVector,

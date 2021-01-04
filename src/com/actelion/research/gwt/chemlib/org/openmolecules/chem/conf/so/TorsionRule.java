@@ -1,13 +1,27 @@
 /*
- * @(#)TorsionRule.java
+ * Copyright 2013-2020 Thomas Sander, openmolecules.org
  *
- * Copyright 2013 openmolecules.org, Inc. All Rights Reserved.
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
  *
- * NOTICE: All information contained herein is, and remains the property
- * of openmolecules.org.  The intellectual and technical concepts contained
- * herein are proprietary to openmolecules.org.
- * Actelion Pharmaceuticals Ltd. is granted a non-exclusive, non-transferable
- * and timely unlimited usage license.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Thomas Sander
  */
@@ -17,7 +31,10 @@ package org.openmolecules.chem.conf.so;
 import com.actelion.research.chem.Coordinates;
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
-import com.actelion.research.chem.conf.*;
+import com.actelion.research.chem.conf.Conformer;
+import com.actelion.research.chem.conf.TorsionDB;
+import com.actelion.research.chem.conf.TorsionDetail;
+import com.actelion.research.chem.conf.TorsionPrediction;
 
 import java.util.ArrayList;
 
@@ -68,8 +85,9 @@ public class TorsionRule extends ConformationRule {
                     if (torsion != null) {
 /*
 System.out.print("torsionID:"+torsionID+" torsions:"+torsion[0]);
-for (int i=1; i<torsion.length; i++)
-System.out.print(","+torsion[i]);
+for (int i=1; i<torsion.length; i++) System.out.print(","+torsion[i]);
+System.out.print(" atoms(parity):"+torsionAtom[0]+"("+mol.getAtomParity(torsionAtom[0])+")");
+for (int i=1; i<torsionAtom.length; i++) System.out.print(","+torsionAtom[i]+"("+mol.getAtomParity(torsionAtom[i])+")");
 System.out.println();
 */
 					    int[] atomToRotate = null;
@@ -96,72 +114,122 @@ System.out.println();
 
 		// In the CSD/COD torsion tables atom sequences cover non-H atoms only.
 		// Often this is not a problem, because in sp3 chains distance rules cause
-		// hydrogen gauche positioning. If we have an -OH or -NH2 connected to a pi-system,
+		// hydrogen gauche positioning. If we have, however, a terminal non-H-atom
+	    // with connected hydrogen atoms, then we need more guidance.
+	    // If we have an -OH or -NH2 connected to a pi-system,
 		// the hydrogen needs to be in the pi-plane. We add artificial torsion rules
 		// to rotate the hydrogen of ?=?-X-H into the pi-plane.
+	    // Otherwise we define a 60 degree torsion rule to prevent explosion of conformer
+	    // counts due to random rotation states.
 		for (int bond=0; bond<mol.getBonds(); bond++) {
 			if (mol.getBondType(bond) == Molecule.cBondTypeSingle	// does not include up/down-bonds
 			 && !mol.isRingBond(bond)) {
 				for (int i=0; i<2; i++) {
-					int heteroAtom = mol.getBondAtom(i, bond);
-					int atomicNo = mol.getAtomicNo(heteroAtom);
-					if (atomicNo > 6
-					 && mol.getConnAtoms(heteroAtom) == 1) {
-						int hCount = mol.getAllConnAtoms(heteroAtom) - 1;
-						if (hCount != 0) {	// hetero atom with hydrogen(s) and one non-H neighbor
-							int piAtom = mol.getBondAtom(1-i, bond);
-							if (mol.getAtomPi(piAtom) == 1) {
-								int piNeighbour = -1;
-								for (int j=0; j<mol.getConnAtoms(piAtom); j++)
-									if (mol.getConnBondOrder(piAtom, j) == 2)
-										piNeighbour = mol.getConnAtom(piAtom, j);
-
-								int[] torsionAtom = new int[4];
-								torsionAtom[0] = piNeighbour;
-								torsionAtom[1] = piAtom;
-								torsionAtom[2] = heteroAtom;
-								torsionAtom[3] = mol.getConnAtom(heteroAtom, 1);	// first H-neighbor
-
-								int[] atomToRotate = new int[hCount];
-								for (int j=0; j<hCount; j++)
-									atomToRotate[j] = mol.getConnAtom(heteroAtom, mol.getConnAtoms(heteroAtom) + j);
-
-								// carboxylic acid or similar are only in Z-conformation
-								int stateCount = (!mol.isAromaticAtom(piAtom) && hCount == 1) ? 1 : 2;
-
-								short[] torsion = new short[stateCount];
-								short[] frequency = new short[stateCount];
-								short[][] range = new short[stateCount][2];
-
-								if (!mol.isAromaticAtom(piAtom) && hCount == 1) {
-									torsion[0] = 0;
-
-									frequency[0] = 100;
-
-									range[0][0] = -15;
-									range[0][1] = 15;
-									}
-								else {
-									torsion[0] = 0;
-									torsion[1] = 180;
-
-									frequency[0] = 50;
-									frequency[1] = 50;
-
-									range[0][0] = -15;
-									range[0][1] = 15;
-									range[1][0] = 165;
-									range[1][1] = 195;
-									}
-
-								ruleList.add(new TorsionRule(torsion, frequency, range, torsionAtom, atomToRotate, 1));
-								}
-							}
+					int bondAtom = mol.getBondAtom(i, bond);
+					int nonHNeighbours = mol.getNonHydrogenNeighbourCount(bondAtom);
+					int hCount = mol.getAllConnAtoms(bondAtom) - nonHNeighbours;
+					if (nonHNeighbours == 1 && hCount != 0) {
+						int rearAtom = mol.getBondAtom(1-i, bond);
+						int atomicNo = mol.getAtomicNo(bondAtom);
+						if (atomicNo > 6 && mol.getAtomPi(rearAtom) == 1)
+							addHeteroPiRule(mol, bondAtom, rearAtom, hCount, ruleList);
+						else if (mol.getAtomPi(rearAtom) != 2 && mol.getAllConnAtoms(rearAtom) > 1)
+							addDegree60Rule(mol, bondAtom, rearAtom, hCount, ruleList);
+						break;
 						}
 					}
 				}
 			}
     	}
+
+    private static void addHeteroPiRule(StereoMolecule mol, int bondAtom, int piAtom, int hCount, ArrayList<ConformationRule> ruleList) {
+	    int piNeighbour = -1;
+	    for (int j=0; j<mol.getConnAtoms(piAtom); j++)
+		    if (mol.getConnBondOrder(piAtom, j) == 2)
+			    piNeighbour = mol.getConnAtom(piAtom, j);
+
+	    int[] atomToRotate = new int[hCount];
+	    int[] torsionAtom = new int[4];
+	    torsionAtom[0] = piNeighbour;
+	    torsionAtom[1] = piAtom;
+	    torsionAtom[2] = bondAtom;
+	    int hIndex = 0;
+	    for (int j=0; j<mol.getAllConnAtoms(bondAtom); j++) {
+		    int connAtom = mol.getConnAtom(bondAtom, j);
+		    if (mol.getAtomicNo(connAtom) == 1) {
+			    if (hIndex == 0)
+				    torsionAtom[3] = connAtom;    // first H-neighbor
+			    atomToRotate[hIndex++] = connAtom;
+		    }
+	    }
+
+	    // carboxylic acid or similar are only in Z-conformation
+	    int stateCount = (!mol.isAromaticAtom(piAtom) && hCount == 1) ? 1 : 2;
+
+	    short[] torsion = new short[stateCount];
+	    short[] frequency = new short[stateCount];
+	    short[][] range = new short[stateCount][2];
+
+	    if (!mol.isAromaticAtom(piAtom) && hCount == 1) {
+		    torsion[0] = 0;
+
+		    frequency[0] = 100;
+
+		    range[0][0] = -15;
+		    range[0][1] = 15;
+	    }
+	    else {
+		    torsion[0] = 0;
+		    torsion[1] = 180;
+
+		    frequency[0] = 50;
+		    frequency[1] = 50;
+
+		    range[0][0] = -15;
+		    range[0][1] = 15;
+		    range[1][0] = 165;
+		    range[1][1] = 195;
+	    }
+
+	    ruleList.add(new TorsionRule(torsion, frequency, range, torsionAtom, atomToRotate, 1));
+    }
+
+	private static void addDegree60Rule(StereoMolecule mol, int bondAtom, int rearAtom, int hCount, ArrayList<ConformationRule> ruleList) {
+		int[] atomToRotate = new int[hCount];
+		int[] torsionAtom = new int[4];
+		torsionAtom[0] = mol.getConnAtom(rearAtom, (mol.getConnAtom(rearAtom, 0) == bondAtom) ? 1 : 0);
+		torsionAtom[1] = rearAtom;
+		torsionAtom[2] = bondAtom;
+		torsionAtom[3] = mol.getConnAtom(bondAtom, (mol.getConnAtom(bondAtom, 0) == rearAtom) ? 1 : 0);
+
+		int hIndex = 0;
+		for (int i = 0; i<mol.getAllConnAtoms(bondAtom); i++) {
+			int connAtom = mol.getConnAtom(bondAtom, i);
+			if (connAtom != rearAtom)
+				atomToRotate[hIndex++] = connAtom;
+			}
+
+		short[] torsion = new short[3];
+		short[] frequency = new short[3];
+		short[][] range = new short[3][2];
+
+		torsion[0] = 60;
+		torsion[1] = 180;
+		torsion[2] = 300;
+
+		frequency[0] = 33;
+		frequency[1] = 33;
+		frequency[2] = 33;
+
+		range[0][0] = 45;
+		range[0][1] = 75;
+		range[1][0] = 165;
+		range[1][1] = 195;
+		range[2][0] = 285;
+		range[2][1] = 315;
+
+		ruleList.add(new TorsionRule(torsion, frequency, range, torsionAtom, atomToRotate, 1));
+	}
 
 	private static boolean conflictWithPlaneRules(int[] torsionAtom, ArrayList<ConformationRule> ruleList) {
 		for (ConformationRule rule:ruleList) {
@@ -234,7 +302,7 @@ System.out.println();
 	    	            if (!isFiveMemberedRing) {
 		    	    	    for (int k=0; k<mol.getConnAtoms(firstConn); k++) {
 		    	    	    	int secondConn = mol.getConnAtom(firstConn, k);
-		    	    	        if (secondConn != firstConn && mol.getConnAtoms(secondConn) != 1) {
+		    	    	        if (secondConn != firstConn && mol.getAllConnAtoms(secondConn) != 1) {
 		    	    	            rotateGroup(conformer, secondConn, mAtom[i], unit, angleCorrection / (4f*factor));
 		    	    	        	}
 		    	    	    	}
@@ -317,21 +385,6 @@ System.out.println((mAtomToRotate==null?"ring":"!ring")+" before:"+currentTorsio
         		rotateAtom(conformer, connAtom, refAtom, unit, theta);
         	}
 		}
-
-	private void rotateAtom(Conformer conformer, int atom, int refAtom, Coordinates unit, double theta) {
-        double x = unit.x;
-        double y = unit.y;
-        double z = unit.z;
-        double c = Math.cos(theta);
-        double s = Math.sin(theta);
-        double t = 1-c;
-        double mx = conformer.getX(atom) - conformer.getX(refAtom);
-        double my = conformer.getY(atom) - conformer.getY(refAtom);
-        double mz = conformer.getZ(atom) - conformer.getZ(refAtom);
-        conformer.setX(atom, conformer.getX(refAtom) + (t*x*x+c)*mx + (t*x*y+s*z)*my + (t*x*z-s*y)*mz);
-        conformer.setY(atom, conformer.getY(refAtom) + (t*x*y-s*z)*mx + (t*y*y+c)*my + (t*y*z+s*x)*mz);
-        conformer.setZ(atom, conformer.getZ(refAtom) + (t*x*z+s*y)*mx + (t*z*y-s*x)*my + (t*z*z+c)*mz);
-	    }
 
 	@Override
 	public double addStrain(Conformer conformer, double[] atomStrain) {

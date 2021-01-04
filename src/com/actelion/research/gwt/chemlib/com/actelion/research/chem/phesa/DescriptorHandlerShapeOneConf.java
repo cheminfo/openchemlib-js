@@ -23,14 +23,24 @@ public class DescriptorHandlerShapeOneConf extends DescriptorHandlerShape {
 
 	public DescriptorHandlerShapeOneConf() {
 		super(true);
+	}
+	
 
+	public DescriptorHandlerShapeOneConf(double ppWeight) {
+		super(ppWeight);
+	}
+	
+	public DescriptorHandlerShapeOneConf(int maxConfs,double ppWeight) {
+		super(true,maxConfs,ppWeight);
 	}
 	
 	@Override
 	public DescriptorHandlerShape getThreadSafeCopy() {
 
 		DescriptorHandlerShape dhs = new DescriptorHandlerShapeOneConf();
-
+		dhs.ppWeight = ppWeight;
+		dhs.flexible = flexible;
+		dhs.maxConfs = maxConfs;
 		return dhs;
 	}
 

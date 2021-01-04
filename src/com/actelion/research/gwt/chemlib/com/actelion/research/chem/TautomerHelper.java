@@ -33,25 +33,67 @@
 
 package com.actelion.research.chem;
 
+import com.actelion.research.util.IntArrayComparator;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.TreeSet;
+
 public class TautomerHelper {
-	private StereoMolecule mMol;
-	private int[] mChainAtom;
-	private int[] mChainBond;
-	private boolean[] mChainNeedsDoubleBond;
-	private boolean[] mChainNeedsDonorAtom;
+	private static final int MAX_TAUTOMERS = 100000;
+
+	private StereoMolecule mOriginalMol;
 	private boolean[] mIsTautomerBond;
+	private boolean[] mHasFreeValence;
 	private int[] mRegionPiCount;
 	private int[] mRegionDCount;
 	private int[] mRegionTCount;
 
+	private Iterator<BondOrders> mBondOrderIterator;
+	private TreeSet<BondOrders> mBondOrderSet;
+	private ArrayDeque<BondOrders> mBondOrderDeque;
+
+	/**
+	 * @param mol
+	 */
 	public TautomerHelper(StereoMolecule mol) {
-		mMol = mol;
-		mMol.ensureHelperArrays(Molecule.cHelperParities);
-		mChainAtom = new int[mMol.getAtoms()];
-		mChainBond = new int[mMol.getAtoms()];
-		mChainNeedsDoubleBond = new boolean[mMol.getAtoms()];
-		mChainNeedsDonorAtom = new boolean[mMol.getAtoms()];
-		mIsTautomerBond = new boolean[mMol.getBonds()];
+		mOriginalMol = mol;
+		mOriginalMol.ensureHelperArrays(Molecule.cHelperParities);
+
+		mIsTautomerBond = new boolean[mOriginalMol.getBonds()];
+		mHasFreeValence = new boolean[mOriginalMol.getAtoms()];
+		for (int i=0; i<mOriginalMol.getAtoms(); i++) {
+			int atomicNo = mOriginalMol.getAtomicNo(i);
+			int valence = (atomicNo < Molecule.cAtomValence.length && Molecule.cAtomValence[atomicNo] != null) ?
+					Molecule.cAtomValence[atomicNo][0] : Molecule.cDefaultAtomValence;
+			mHasFreeValence[i] = (mOriginalMol.getNonHydrogenNeighbourCount(i) < valence);
+			}
+
+		createAllTautomers();
+		}
+
+	/**
+	 * @param tautomer null or another tautomer of same molecule, which receives the new bond orders
+	 * @return
+	 */
+	public StereoMolecule getNextTautomer(StereoMolecule tautomer) {
+		if (mBondOrderIterator == null)
+			mBondOrderIterator = mBondOrderSet.iterator();
+
+		if (!mBondOrderIterator.hasNext())
+			return null;
+
+		if (tautomer == null)
+			tautomer = mOriginalMol.getCompactCopy();
+
+		mBondOrderIterator.next().copyToTautomer(tautomer);
+
+		return tautomer;
+		}
+
+	public int getTautomerCount() {
+		return mBondOrderSet.size();
 		}
 
 	/**
@@ -59,74 +101,14 @@ public class TautomerHelper {
 	 * Atoms sharing the same region share the same number.<br>
 	 * 0: not member of a tautomer region; 1 and above: region number
 	 * @param atomRegionNo int[mol.getAtoms()] filled with 0
-	 * @param keepStereoCenters
 	 * @return region count
 	 */
-	public int getAtomRegionNumbers(int[] atomRegionNo, boolean keepStereoCenters) {
-		if (!findTautomericBonds(keepStereoCenters))
+	public int getAtomRegionNumbers(int[] atomRegionNo) {
+		if (mBondOrderSet.size() == 1)
 			return 0;
 
 		int regionCount = assignRegionNumbers(atomRegionNo);
 		return regionCount;
-		}
-
-	/**
-	 * If no tautomers can be formed then the original molecule is returned.
-	 * Otherwise the original molecule is copied and normalized to create a
-	 * generic tautomer structure without touching the original molecule.
-	 * Different tautomers of the same molecule should always result in the same
-	 * generic tautomer structure. A generic tautomer contains one or more regions
-	 * indicated by bond query features cBondQFSingle & cBondQFDouble. Bond types
-	 * of all bonds of any tautomer region are cBondTypeSingle.
-	 * The highest ranking atom in every region carries a label defining the number
-	 * of double bonds and D and T atoms. The returned molecule has the fragment bit set.
-	 * Canonicalizing the returned molecule with Canonizer mode ENCODE_ATOM_CUSTOM_LABELS
-	 * produces the same idcode from any tautomer.
-	 * If keepStereoCenters is true, then stereo centers with parity 1 or 2, if they are
-	 * absolute or if they are part of an AND/OR group with more than one member,
-	 * are considered stable (non racemising) and, thus, their proton is not considered
-	 * being able to take part in a tautomeric transition.
-	 * @param keepStereoCenters if true, then defined (non-racemising) stereo centers cannot be part of tautomeric regions
-	 * @return generic tautomer with normalized tautomer regions and custom label to encode pi,D,T counts
-	 */
-	public StereoMolecule createGenericTautomer(boolean keepStereoCenters) {
-		if (!findTautomericBonds(keepStereoCenters))
-			return mMol;
-
-		StereoMolecule genericTautomer = mMol.getCompactCopy();
-		genericTautomer.setFragment(true);
-		for (int bond=0; bond<mMol.getBonds(); bond++) {
-			if (mIsTautomerBond[bond]) {
-				genericTautomer.setBondType(bond, Molecule.cBondTypeSingle);
-				genericTautomer.setBondQueryFeature(bond, Molecule.cBondQFSingle | Molecule.cBondQFDouble, true);
-			    }
-		    }
-
-		int[] atomRegionNo = new int[mMol.getAtoms()];
-		int regionCount = assignRegionNumbers(atomRegionNo);
-
-		// find highest ranking atom in every region
-		int[] maxAtom = new int[regionCount];
-		int[] maxRank = new int[regionCount];
-		int[] atomRank = new Canonizer(genericTautomer).getFinalRank();
-		for (int atom=0; atom<mMol.getAtoms(); atom++) {
-			if (atomRegionNo[atom] != 0) {
-				int regionIndex = atomRegionNo[atom]-1;
-				if (maxRank[regionIndex] < atomRank[atom]) {
-					maxRank[regionIndex] = atomRank[atom];
-					maxAtom[regionIndex] = atom;
-					}
-				}
-			}
-
-		// attach label with region counts to highest ranking atoms
-		compileRegionCounts(atomRegionNo, regionCount);
-		for (int i=0; i<regionCount; i++) {
-			String label = ""+mRegionPiCount[i]+"|"+mRegionDCount[i]+"|"+mRegionTCount[i];
-			genericTautomer.setAtomCustomLabel(maxAtom[i], label);
-			}
-
-		return genericTautomer;
 		}
 
 	/**
@@ -138,28 +120,28 @@ public class TautomerHelper {
 	 * @return number of found tautomer regions
 	 */
 	private int assignRegionNumbers(int[] atomRegionNo) {
-		int[] graphAtom = new int[mMol.getAtoms()];
-		boolean[] bondWasSeen = new boolean[mMol.getBonds()];
+		int[] graphAtom = new int[mOriginalMol.getAtoms()];
+		boolean[] bondWasSeen = new boolean[mOriginalMol.getBonds()];
 		int region = 0;
 
-		for (int bond=0; bond<mMol.getBonds(); bond++) {
+		for (int bond=0; bond<mOriginalMol.getBonds(); bond++) {
 			if (!bondWasSeen[bond] && mIsTautomerBond[bond]) {
 				region++;
-				atomRegionNo[mMol.getBondAtom(0, bond)] = region;
-				atomRegionNo[mMol.getBondAtom(1, bond)] = region;
+				atomRegionNo[mOriginalMol.getBondAtom(0, bond)] = region;
+				atomRegionNo[mOriginalMol.getBondAtom(1, bond)] = region;
 				bondWasSeen[bond] = true;
 				for (int i=0; i<2; i++) {
-					int atom = mMol.getBondAtom(i, bond);
+					int atom = mOriginalMol.getBondAtom(i, bond);
 					atomRegionNo[atom] = region;
 					int current = 0;
 					int highest = 0;
 					graphAtom[0] = atom;
 					while (current <= highest) {
-						for (int j=0; j<mMol.getConnAtoms(graphAtom[current]); j++) {
-							int connBond = mMol.getConnBond(graphAtom[current], j);
+						for (int j=0; j<mOriginalMol.getConnAtoms(graphAtom[current]); j++) {
+							int connBond = mOriginalMol.getConnBond(graphAtom[current], j);
 							if (!bondWasSeen[connBond] && mIsTautomerBond[connBond]) {
 								bondWasSeen[connBond] = true;
-								int connAtom = mMol.getConnAtom(graphAtom[current], j);
+								int connAtom = mOriginalMol.getConnAtom(graphAtom[current], j);
 								if (atomRegionNo[connAtom] == 0) {
 									atomRegionNo[connAtom] = region;
 									graphAtom[++highest] = connAtom;
@@ -184,240 +166,312 @@ public class TautomerHelper {
 		mRegionPiCount = new int[regionCount];
 		mRegionDCount = new int[regionCount];
 		mRegionTCount = new int[regionCount];
-		
-		for (int atom=0; atom<mMol.getAtoms(); atom++) {
+
+		for (int atom=0; atom<mOriginalMol.getAtoms(); atom++) {
 			if (atomRegionNo[atom] != 0) {
 				int regionIndex = atomRegionNo[atom]-1;
-				for (int i=0; i<mMol.getConnAtoms(atom); i++) {
-					int connAtom = mMol.getConnAtom(atom, i);
-					if (mMol.getAtomicNo(connAtom) == 1) {
-						if (mMol.getAtomMass(connAtom) == 2)
+				for (int i=0; i<mOriginalMol.getConnAtoms(atom); i++) {
+					int connAtom = mOriginalMol.getConnAtom(atom, i);
+					if (mOriginalMol.getAtomicNo(connAtom) == 1) {
+						if (mOriginalMol.getAtomMass(connAtom) == 2)
 							mRegionDCount[regionIndex]++;
-						if (mMol.getAtomMass(connAtom) == 3)
+						if (mOriginalMol.getAtomMass(connAtom) == 3)
 							mRegionTCount[regionIndex]++;
 						}
 					}
 				}
 			}
-		for (int bond=0; bond<mMol.getBonds(); bond++) {
+		for (int bond=0; bond<mOriginalMol.getBonds(); bond++) {
 			if (mIsTautomerBond[bond]
-			 && mMol.getBondOrder(bond) == 2) {
-				mRegionPiCount[atomRegionNo[mMol.getBondAtom(0, bond)]-1] += 2;
+			 && mOriginalMol.getBondOrder(bond) == 2) {
+				mRegionPiCount[atomRegionNo[mOriginalMol.getBondAtom(0, bond)]-1] += 2;
 				}
 			}
 		}
 
-	/**
-	 * Locates and flags all 
-	 * @return true if any tautomeric bonds could be found
-	 */
-	private boolean findTautomericBonds(boolean keepStereoCenters) {
-		boolean[] isProtectedAtom = locateProtectedAtoms(keepStereoCenters);
-		mIsTautomerBond = new boolean[mMol.getBonds()];
-
-		// Locate pi-donor fragments as central atom with 1 double bond neighbor
-		// and 1 or 2 single bond neighbor(s) with at least one hydrogen attached.
-		boolean tautomerFound = false;
-		for (int atom=0; atom<mMol.getAtoms(); atom++) {
-			if (!isProtectedAtom[atom]
-			 && isValidHeteroAtom(atom)
-			 && (mMol.getAtomPi(atom) != 0 || mMol.getAllHydrogens(atom) != 0)) {
-				for (int i=0; i<mMol.getConnAtoms(atom); i++) {
-					int connAtom = mMol.getConnAtom(atom, i);
-					int connBondOrder = mMol.getConnBondOrder(atom, i);
-					if ((mMol.getAtomPi(atom) == 0 || connBondOrder == 2)
-					 && mMol.getAtomPi(connAtom) == 1
-					 && !isProtectedAtom[connAtom]) {
-						if (findTautomerTreeDepthFirst(atom, connAtom, mMol.getConnBond(atom, i), isProtectedAtom)) {
-							tautomerFound = true;
-							if (connBondOrder == 2) {
-								// in case we have a double bond from the hetero atom, the we need to process other single bonded neighbours
-								// of the hereo atom separately in case, the first tree search finds a (vinylog) donor atom.
-								for (int j=0; j<mMol.getConnAtoms(atom); j++) {
-									if (j != i) {
-										int otherConn = mMol.getConnAtom(atom, j);
-										int otherBondOrder = mMol.getConnBondOrder(atom, i);
-										if (!isProtectedAtom[otherConn]
-										 && otherBondOrder == 1
-										 && mMol.getAtomPi(otherConn) == 1)
-											findTautomerTreeDepthFirst(atom, otherConn, mMol.getConnBond(atom, j), isProtectedAtom);
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-
-		return tautomerFound;
-		}
-
-	private boolean findTautomerTreeDepthFirst(int heteroAtom, int atom1, int bond1, boolean[] isProtectedAtom) {
-		boolean tautomerBondsFound = false;
-
-		int[] connIndex = new int[mMol.getAtoms()];
-
-		boolean[] isChainAtom = new boolean[mMol.getAtoms()];
-		isChainAtom[heteroAtom] = true;
-		isChainAtom[atom1] = true;
-
-		mChainAtom[0] = atom1;
-		mChainBond[0] = bond1;
-		mChainNeedsDoubleBond[0] = (mMol.getBondOrder(bond1) == 1);
-		mChainNeedsDonorAtom[0] = (mMol.getBondOrder(bond1) == 2);
-
-		int connAtom = -1;
-		int connBond = -1;
-
-		int current = 0;
-		int highestValid = -1;
-		boolean forward = true;
-		while (current >= 0) {
-			int currentAtom = mChainAtom[current];
-
-			if (forward)
-				connIndex[current] = mMol.getConnAtoms(currentAtom);
-			connIndex[current]--;
-
-			int desiredBondOrder = mChainNeedsDoubleBond[current] ? 2 : 1;
-			while (connIndex[current] >= 0) {
-				connAtom = mMol.getConnAtom(currentAtom, connIndex[current]);
-				connBond = mMol.getConnBond(currentAtom, connIndex[current]);
-				if (!isProtectedAtom[connAtom]
-				 && !isChainAtom[connAtom]) {	// don't allow ring closures
-					if ((mMol.isDelocalizedBond(connBond) || mMol.getBondOrder(connBond) == desiredBondOrder)
-					 && (mMol.getAtomPi(connAtom) != 0
-					  || (mChainNeedsDonorAtom[current]) && isValidDonorAtom(connAtom))) {
-						// this is a continuation of the delocalized chain or may be an endo-donor as O=C-CHR-C=C
-						break;
-						}
-					}
-				connIndex[current]--;
-				}
-	
-			if (connIndex[current] == -1) {
-				if (forward && (!mChainNeedsDonorAtom[0] || !mChainNeedsDonorAtom[current])) {
-					for (int i=current; i>highestValid; i--) {
-						mIsTautomerBond[mChainBond[i]] = true;
-
-						// find and flag exo-donor atoms as CH in NH-C(-CHR2)=C
-						if (!mChainNeedsDonorAtom[0] && mChainNeedsDoubleBond[i]) {
-							for (int j=0; j<mMol.getConnAtoms(mChainAtom[i]); j++) {
-								int donorAtom = mMol.getConnAtom(mChainAtom[i], j);
-								if (!isProtectedAtom[donorAtom]
-								 && !isChainAtom[donorAtom]
-								 && isValidDonorAtom(donorAtom))
-									mIsTautomerBond[mMol.getConnBond(mChainAtom[i], j)] = true;
-								}
-							}
-						}
-					tautomerBondsFound = true;
-					highestValid = current;
-					}
-
-				isChainAtom[mChainAtom[current]] = false;
-				current--;
-				forward = false;
-				if (highestValid > current)
-					highestValid = current;
-				continue;
-				}		
-
-			current++;
-			forward = true;
-			mChainAtom[current] = connAtom;
-			mChainBond[current] = connBond;
-			mChainNeedsDoubleBond[current] = !mChainNeedsDoubleBond[current-1] && (mMol.getAtomPi(connAtom) != 0);
-			mChainNeedsDonorAtom[current] = mChainNeedsDonorAtom[current-1] && (mMol.getAtomPi(connAtom) != 0);
-			isChainAtom[connAtom] = true;
-			}
-
-		return tautomerBondsFound;
-		}
-
-	private boolean[] locateProtectedAtoms(boolean keepStereoCenters) {
-		boolean[] isProtectedAtom = new boolean[mMol.getAtoms()];
-
-		for (int atom=0; atom<mMol.getAtoms(); atom++)
-			if (mMol.getConnAtoms(atom) > 3)
-				isProtectedAtom[atom] = true;
-
-		// protect stereo centers with defined parity
-		if (keepStereoCenters)
-			for (int atom=0; atom<mMol.getAtoms(); atom++)
-				if (isNonRacemisingStereoCenter(atom))
-					isProtectedAtom[atom] = true;
-
-		// protected delocalized 6-membered-ring without hetero-atoms in ring our first shell,
-		// that have no ortho or para substitution
-		RingCollection ringSet = mMol.getRingSet();
-		for (int r=0; r<ringSet.getSize(); r++) {
-			if (ringSet.getRingSize(r) == 6
-			 && ringSet.isDelocalized(r)) {
-				boolean heteroFound = false;
-				int oddAndEvenSubstituentMask = 0;
-				int[] ringAtom = ringSet.getRingAtoms(r);
-				for (int i=0; i<ringAtom.length && !heteroFound; i++) {
-					int atom = ringAtom[i];
-
-					int connAtoms = mMol.getConnAtoms(atom);
-					if (connAtoms > 2)
-						oddAndEvenSubstituentMask |= ((i & 1) != 0) ? 1 : 2;
-
-					for (int j=0; j<connAtoms; j++) {
-						if (mMol.getAtomicNo(mMol.getConnAtom(atom, j)) != 6) {
-							heteroFound = true;
-							break;
-							}
-						}
-					}
-
-				if (!heteroFound && oddAndEvenSubstituentMask != 3)
-					for (int atom:ringAtom)
-						isProtectedAtom[atom] = true;
-				}
-			}
-
-		return isProtectedAtom;
-		}
-
-	/**
-	 * Determines whether this atom is a non-racemizing stereo center,
-	 * i.e. it has an assigned parity and it is either absolute or has
-	 * a given relative parity towards other atom(s).
-	 * @param atom
-	 * @return
-	 */
-	private boolean isNonRacemisingStereoCenter(int atom) {
-		if (mMol.getAtomParity(atom) != Molecule.cAtomParity1
-		 && mMol.getAtomParity(atom) != Molecule.cAtomParity2)
+	private boolean hasAcidicHydrogen(StereoMolecule mol, int atom) {
+		if (mol.getAllHydrogens(atom) <= 0)
 			return false;
 
-		if (mMol.getAtomESRType(atom) == Molecule.cESRTypeAbs)
+		if (mol.isElectronegative(atom))
 			return true;
 
-		int type = mMol.getAtomESRType(atom);
-		int group = mMol.getAtomESRGroup(atom);
-		for (int i=0; i<mMol.getAtoms(); i++)
-			if (mMol.getAtomESRType(i) == type
-			 && mMol.getAtomESRGroup(i) == group)
-				return true;
+		if (mol.getAtomPi(atom) != 0)
+			return false;
 
-		return false;
+		return true;
 		}
 
-	private boolean isValidHeteroAtom(int atom) {
-		return mMol.getAtomicNo(atom) == 7
-			|| mMol.getAtomicNo(atom) == 8
-			|| mMol.getAtomicNo(atom) == 16
-			|| mMol.getAtomicNo(atom) == 34
-			|| mMol.getAtomicNo(atom) == 52;
+	/**
+	 * If no tautomers can be formed then a copy of the original molecule is returned.
+	 * Otherwise a copy of the original molecule is normalized to create a
+	 * generic tautomer structure. The original molecule is not touched.
+	 * Different tautomers of the same molecule should always result in the same
+	 * generic tautomer structure. A generic tautomer contains one or more regions
+	 * indicated by bond query features cBondQFSingle & cBondQFDouble. Bond types
+	 * of all bonds of any tautomer region are cBondTypeSingle.
+	 * The highest ranking atom in every region carries a label defining the number
+	 * of double bonds and D and T atoms. The returned molecule has the fragment bit set.
+	 * Canonicalizing the returned molecule with Canonizer mode ENCODE_ATOM_CUSTOM_LABELS
+	 * produces the same idcode from any tautomer.
+	 * If keepStereoCenters is true, then stereo centers with parity 1 or 2, if they are
+	 * absolute or if they are part of an AND/OR group with more than one member,
+	 * are considered stable (non racemising) and, thus, their proton is not considered
+	 * being able to take part in a tautomeric transition.
+	 * @return generic tautomer with normalized tautomer regions and custom label to encode pi,D,T counts
+	 */
+	public StereoMolecule createGenericTautomer() {
+		if (mBondOrderSet.size() == 1)
+			return mOriginalMol;
+
+		StereoMolecule mol = mOriginalMol.getCompactCopy();
+		mol.ensureHelperArrays(Molecule.cHelperRings);
+
+		mol.setFragment(true);
+		mol.ensureHelperArrays(Molecule.cHelperNeighbours);
+		for (int bond=0; bond<mol.getBonds(); bond++) {
+			if (mIsTautomerBond[bond]) {
+				mol.setBondType(bond, Molecule.cBondTypeSingle);
+				mol.setBondQueryFeature(bond, Molecule.cBondQFSingle | Molecule.cBondQFDouble, true);
+				}
+			}
+
+		int[] atomRegionNo = new int[mol.getAtoms()];
+		int regionCount = assignRegionNumbers(atomRegionNo);
+
+		// remove stereo information from bonds that indicate a stereo center at one of the tautomer region atoms
+		for (int atom=0; atom<mol.getAtoms(); atom++) {
+			if (atomRegionNo[atom] != 0
+			 && mOriginalMol.getNonHydrogenNeighbourCount(atom) < 4) {   // keep terternary S or P
+				mol.convertStereoBondsToSingleBonds(atom);
+				mol.setAtomConfigurationUnknown(atom,false);
+				mol.setAtomESR(atom, Molecule.cESRTypeAbs, -1);
+				}
+			}
+
+		// find highest ranking atom in every region
+		int[] maxAtom = new int[regionCount];
+		int[] maxRank = new int[regionCount];
+		int[] atomRank = new Canonizer(mol).getFinalRank();
+		for (int atom=0; atom<mol.getAtoms(); atom++) {
+			if (atomRegionNo[atom] != 0) {
+				int regionIndex = atomRegionNo[atom]-1;
+				if (maxRank[regionIndex] < atomRank[atom]) {
+					maxRank[regionIndex] = atomRank[atom];
+					maxAtom[regionIndex] = atom;
+					}
+				}
+			}
+
+		// attach label with region counts to highest ranking atoms
+		compileRegionCounts(atomRegionNo, regionCount);
+		for (int i=0; i<regionCount; i++) {
+			String label = ""+mRegionPiCount[i]+"|"+mRegionDCount[i]+"|"+mRegionTCount[i];
+			mol.setAtomCustomLabel(maxAtom[i], label);
+			}
+
+		return mol;
+		}
+
+	private void createAllTautomers() {
+		mBondOrderSet = new TreeSet<>();
+		mBondOrderDeque = new ArrayDeque<>();
+
+		addTautomerIfNew(new BondOrders(mOriginalMol));
+
+		// This serves as recycled molecule container
+		StereoMolecule tautomer = mOriginalMol.getCompactCopy();
+
+		while (!mBondOrderDeque.isEmpty()) {
+			mBondOrderDeque.poll().copyToTautomer(tautomer);
+			addAllTautomers(tautomer);
+
+			if (mBondOrderSet.size() >= MAX_TAUTOMERS) {
+				System.out.println("Tautomer count exceeds maximum: "+new Canonizer(mOriginalMol).getIDCode());
+				break;
+				}
+			}
+
+		// TODO racemize stereo centers
+		}
+
+	/**
+	 * Find all HX-Y=Z / X=Y-ZH type 3-atom sequences and recursively vinylogous sequences.
+	 */
+	private void addAllTautomers(StereoMolecule mol) {
+		ArrayList<Integer> bondList = new ArrayList<>();
+		mol.ensureHelperArrays(Molecule.cHelperNeighbours);
+		boolean [] isUsedAtom = new boolean[mol.getAtoms()];   // atom use buffer for recursive methods
+
+		for (int atom1=0; atom1<mol.getAtoms(); atom1++) {
+			if (isValidHeteroAtom(atom1)) {
+				isUsedAtom[atom1] = true;
+				for (int i=0; i<mol.getConnAtoms(atom1); i++) {
+					int atom2 = mol.getConnAtom(atom1, i);
+					int bond12 = mol.getConnBond(atom1, i);
+					int order12 = mol.getConnBondOrder(atom1, i);
+					if (mol.getAtomPi(atom2) != 0
+					 && mol.getAtomPi(atom1) < order12) {   // make sure atom1 has no other double bond
+						isUsedAtom[atom2] = true;
+						bondList.add(bond12);
+						for (int j=0; j<mol.getConnAtoms(atom2); j++) {
+							int atom3 = mol.getConnAtom(atom2, j);
+							if (!isUsedAtom[atom3]) {
+								isUsedAtom[atom3] = true;
+								int bond23 = mol.getConnBond(atom2, j);
+								int order23 = mol.getConnBondOrder(atom2, j);
+								if (mol.getAtomPi(atom2) + 2 == order12 + order23) {
+									bondList.add(bond23);
+
+									// if atom3 has other double bond we check for vinylogous donor atoms
+									if (order12 >= order23) {
+										if (mol.getAtomPi(atom3) < order23) {   // if atom3 has no other double bond
+											if (hasAcidicHydrogen(mol, atom3))
+												addVinylogousTautomers(mol, atom3, true, false, isUsedAtom, bondList);
+											}
+										else {
+											addVinylogousTautomers(mol, atom3, true, true, isUsedAtom, bondList);
+											}
+										}
+
+									if (order23 >= order12 && hasAcidicHydrogen(mol, atom1)) {
+										addVinylogousTautomers(mol, atom3, false, false, isUsedAtom, bondList);
+										}
+
+									if (isValidDonorAtom(atom3)
+									 && mol.getAtomPi(atom3) < order23) {   // make sure atom3 has no other double bond
+										if (order12<=2 && order23>=2 && hasAcidicHydrogen(mol, atom1)) {
+											addDirectTautomer(mol, bond12, bond23);
+											}
+
+										if (order12>=2 && order23<=2 && hasAcidicHydrogen(mol, atom3)) {
+											addDirectTautomer(mol, bond23, bond12);
+											}
+										}
+
+									bondList.remove(bondList.size()-1);
+									}
+								isUsedAtom[atom3] = false;
+								}
+							}
+						bondList.remove(bondList.size()-1);
+						isUsedAtom[atom2] = false;
+						}
+					}
+				isUsedAtom[atom1] = false;
+				}
+			}
 		}
 
 	private boolean isValidDonorAtom(int atom) {
-		return mMol.getAtomPi(atom) == 0
-			&& mMol.getAllHydrogens(atom) != 0
-			&& (mMol.getAtomicNo(atom) == 6 || isValidHeteroAtom(atom));
+		return mHasFreeValence[atom]
+			&& (mOriginalMol.getAtomicNo(atom) == 5
+			 || mOriginalMol.getAtomicNo(atom) == 6
+			 || mOriginalMol.getAtomicNo(atom) == 7
+			 || mOriginalMol.getAtomicNo(atom) == 8
+			 || mOriginalMol.getAtomicNo(atom) == 16);
+		}
+
+	private boolean isValidHeteroAtom(int atom) {
+		return mHasFreeValence[atom]
+			&& (mOriginalMol.getAtomicNo(atom) == 7
+			 || mOriginalMol.getAtomicNo(atom) == 8
+			 || mOriginalMol.getAtomicNo(atom) == 16);
+		}
+
+	private void addDirectTautomer(StereoMolecule mol, int bondSToD, int bondDToS) {
+		BondOrders bondOrders = new BondOrders(mol);
+		bondOrders.setBond(bondSToD, mol.getBondOrder(bondSToD) == 1 ? 2 : 3);
+		bondOrders.setBond(bondDToS, mol.getBondOrder(bondDToS) == 2 ? 1 : 2);
+		mIsTautomerBond[bondSToD] = true;
+		mIsTautomerBond[bondDToS] = true;
+		addTautomerIfNew(bondOrders);
+		}
+
+	private boolean addVinylogousTautomers(StereoMolecule mol, int atom1, boolean firstBondIsDouble, boolean thirdBondIsDouble, boolean[] isUsedAtom, ArrayList<Integer> bondList) {
+		for (int i=0; i<mol.getConnAtoms(atom1); i++) {
+			int atom2 = mol.getConnAtom(atom1, i);
+			if (!isUsedAtom[atom2]) {
+				int bond12 = mol.getConnBond(atom1, i);
+				int order12 = mol.getBondOrder(bond12);
+				if ((firstBondIsDouble && order12 >= 2)
+				 || (!firstBondIsDouble && order12 <= 2)) {
+					isUsedAtom[atom2] = true;
+					bondList.add(bond12);
+					for (int j=0; j<mol.getConnAtoms(atom2); j++) {
+						int atom3 = mol.getConnAtom(atom2, j);
+						if (!isUsedAtom[atom3]) {
+							int bond23 = mol.getConnBond(atom2, j);
+							int order23 = mol.getBondOrder(bond23);
+							if (mol.getAtomPi(atom2) + 2 == order12 + order23
+							 && ((firstBondIsDouble && order23 <= 2)
+							  || (!firstBondIsDouble && order23 >= 2))) {
+								isUsedAtom[atom3] = true;
+								bondList.add(bond23);
+								if (isValidDonorAtom(atom3) && (!firstBondIsDouble || hasAcidicHydrogen(mol, atom3))) {
+									BondOrders bondOrders = new BondOrders(mol);
+									for (int k=0; k<bondList.size(); k++) {
+										int bond = bondList.get(k);
+										boolean makeDouble = (k < 2) ? (firstBondIsDouble ^ (k & 1) == 0)
+												: (thirdBondIsDouble ^ (k & 1) == 0);
+										if (makeDouble)
+											bondOrders.setBond(bond, mol.getBondOrder(bond) == 1 ? 2 : 3);
+										else
+											bondOrders.setBond(bond, mol.getBondOrder(bond) == 2 ? 1 : 2);
+										mIsTautomerBond[bond] = true;
+										}
+									addTautomerIfNew(bondOrders);
+									}
+								else {
+									addVinylogousTautomers(mol, atom3, firstBondIsDouble, thirdBondIsDouble, isUsedAtom, bondList);
+									}
+								bondList.remove(bondList.size()-1);
+								isUsedAtom[atom3] = false;
+								}
+							}
+						}
+					bondList.remove(bondList.size()-1);
+					isUsedAtom[atom2] = false;
+					}
+				}
+			}
+		return false;
+		}
+
+	private void addTautomerIfNew(BondOrders bondOrders) {
+		if (mBondOrderSet.add(bondOrders))
+			mBondOrderDeque.add(bondOrders);
+		}
+
+	class BondOrders implements Comparable<BondOrders> {
+		private int[] encoding;
+
+		public BondOrders(StereoMolecule mol) {
+			encoding = new int[(mOriginalMol.getBonds()+15) / 16];
+			for (int i=0; i<mOriginalMol.getBonds(); i++)
+				encoding[i >> 4] |= (mol.getBondOrder(i) << (2*(i & 15)));
+			}
+
+		@Override
+		public int compareTo(BondOrders o) {
+			return new IntArrayComparator().compare(encoding, o.encoding);
+			}
+
+		public void setBond(int bond, int order) {
+			int high = bond >> 4;
+			int shift = 2 * (bond & 15);
+			encoding[high] &= ~(3 << shift);
+			encoding[high] |= (order << shift);
+			}
+
+		public void copyToTautomer(StereoMolecule tautomer) {
+			for (int i=0; i<mOriginalMol.getBonds(); i++) {
+				int bo = 3 & (encoding[i >> 4] >> (2*(i & 15)));
+				tautomer.setBondType(i, bo == 1 ? Molecule.cBondTypeSingle
+						: bo == 2 ? Molecule.cBondTypeDouble
+						: bo == 3 ? Molecule.cBondTypeTriple
+						: Molecule.cBondTypeMetalLigand);
+				}
+			}
 		}
 	}

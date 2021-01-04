@@ -107,6 +107,20 @@ public class ArrayUtils {
 		return li;
 	}
 
+	public final static List<Integer> toList(int [] arr) {
+		List<Integer> li = new ArrayList<Integer>(arr.length);
+		for (int t : arr) {
+			li.add(t);
+		}
+		return li;
+	}
+
+	public final static void toList(int [] arr, List<Integer> li) {
+		for (int t : arr) {
+			li.add(t);
+		}
+	}
+
 
 
 	public final static String[] toStringArray(List<String> list) {
@@ -338,4 +352,6 @@ public class ArrayUtils {
 			a[i]=v;
 		}
 	}
+
+
 }

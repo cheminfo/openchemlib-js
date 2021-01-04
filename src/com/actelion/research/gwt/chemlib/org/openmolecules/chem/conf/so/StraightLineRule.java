@@ -1,13 +1,27 @@
 /*
- * @(#)StraightLineRule.java
+ * Copyright 2013-2020 Thomas Sander, openmolecules.org
  *
- * Copyright 2013 openmolecules.org, Inc. All Rights Reserved.
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
  *
- * NOTICE: All information contained herein is, and remains the property
- * of openmolecules.org.  The intellectual and technical concepts contained
- * herein are proprietary to openmolecules.org.
- * Actelion Pharmaceuticals Ltd. is granted a non-exclusive, non-transferable
- * and timely unlimited usage license.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Thomas Sander
  */
@@ -91,7 +105,8 @@ public class StraightLineRule extends ConformationRule {
 				for (int i=0; i<atomList.length; i++)
 					atomHandled[atomList[i]] = true;
 
-				ruleList.add(new StraightLineRule(atomList));
+				if (atomList[0] != atomList[atomList.length-1]) // we don't add cycles
+					ruleList.add(new StraightLineRule(atomList));
 				}
 			}
 		}
@@ -105,16 +120,20 @@ public class StraightLineRule extends ConformationRule {
      */
 	private static int[] getLineFragmentAtoms(int seedAtom, StereoMolecule mol) {
 		// crawl to the end of the chain
-		int backAtom = mol.getConnAtom(seedAtom, 0);
-		while (mol.getAllConnAtoms(seedAtom) != 1 && mol.getAtomPi(seedAtom) == 2) {	// while we are not at the chain end
+		int firstAtom = seedAtom;
+		int backAtom = mol.getConnAtom(firstAtom, 0);
+		while (mol.getAllConnAtoms(firstAtom) != 1 && mol.getAtomPi(firstAtom) == 2) {	// while we are not at the chain end
 			int tempAtom = backAtom;
-			backAtom = seedAtom;
-			seedAtom = (mol.getConnAtom(seedAtom, 0) == tempAtom) ?
-					mol.getConnAtom(seedAtom, 1) : mol.getConnAtom(seedAtom, 0);
+			backAtom = firstAtom;
+			firstAtom = (mol.getConnAtom(firstAtom, 0) == tempAtom) ?
+					mol.getConnAtom(firstAtom, 1) : mol.getConnAtom(firstAtom, 0);
+
+			if (firstAtom == seedAtom)  // cycle found
+				break;
 			}
 
 		// count number of atoms in straight atom strand
-		int rearAtom = seedAtom;	// invert direction for counting
+		int rearAtom = firstAtom;	// invert direction for counting
 		int headAtom = backAtom;
 		int count = 2;
 		while (mol.getAllConnAtoms(headAtom) != 1 && mol.getAtomPi(headAtom) == 2) {
@@ -123,17 +142,23 @@ public class StraightLineRule extends ConformationRule {
 			headAtom = (mol.getConnAtom(headAtom, 0) == tempAtom) ?
 					mol.getConnAtom(headAtom, 1) : mol.getConnAtom(headAtom, 0);
 			count++;
+
+			if (headAtom == firstAtom)  // cycle found
+				break;
 			}
 
 		int[] atomList = new int[count];
-		atomList[0] = seedAtom;
+		atomList[0] = firstAtom;
 		atomList[1] = backAtom;
-		int index = 1;
-		while (mol.getAllConnAtoms(atomList[index]) != 1 && mol.getAtomPi(atomList[index]) == 2) {
-			atomList[index+1] = (mol.getConnAtom(atomList[index], 0) == atomList[index-1]) ?
-					mol.getConnAtom(atomList[index], 1) : mol.getConnAtom(atomList[index], 0);
-			index++;
-			}
+		for (int i=2; i<count; i++)
+			atomList[i] = (mol.getConnAtom(atomList[i-1], 0) == atomList[i-2]) ?
+					mol.getConnAtom(atomList[i-1], 1) : mol.getConnAtom(atomList[i-1], 0);
+//		int index = 1;
+//		while (mol.getAllConnAtoms(atomList[index]) != 1 && mol.getAtomPi(atomList[index]) == 2) {
+//			atomList[index+1] = (mol.getConnAtom(atomList[index], 0) == atomList[index-1]) ?
+//					mol.getConnAtom(atomList[index], 1) : mol.getConnAtom(atomList[index], 0);
+//			index++;
+//			}
 
 		return atomList;
 		}

@@ -27,8 +27,8 @@ public class GWTGeomFactory extends GeomFactory {
     return null;
   }
 
-  public IAtomQueryFeaturesDialog createAtomQueryFeatureDialog(StereoMolecule mol, int atom) {
-    return new AtomQueryFeaturesDialog(mol, atom);
+  public IAtomQueryFeaturesDialog createAtomQueryFeatureDialog(StereoMolecule mol, int atom, boolean includeReactionHints) {
+    return new AtomQueryFeaturesDialog(mol, atom, includeReactionHints);
   }
 
   public IBondQueryFeaturesDialog createBondFeaturesDialog(StereoMolecule mol, int bond) {

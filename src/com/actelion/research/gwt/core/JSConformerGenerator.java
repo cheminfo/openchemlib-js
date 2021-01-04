@@ -16,7 +16,7 @@ public class JSConformerGenerator {
 	public static final int STRATEGY_ADAPTIVE_RANDOM = 4;
 
   public JSConformerGenerator(int seed) {
-    oclGenerator = new ConformerGenerator(seed);
+    oclGenerator = new ConformerGenerator(seed, false);
   }
 
   public JSMolecule getOneConformerAsMolecule(JSMolecule mol) {

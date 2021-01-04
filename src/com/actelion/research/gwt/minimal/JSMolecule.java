@@ -320,6 +320,8 @@ public class JSMolecule {
   public static final int cAtomQFRingSizeShift = 22;
   public static final int cAtomQFChargeBits = 3;
   public static final int cAtomQFChargeShift = 25;
+  public static final int cAtomQFRxnParityBits	= 2;
+	public static final int cAtomQFRxnParityShift	= 30;
   public static final int cAtomQFSimpleFeatures = 0x0E3FC7FE;
   public static final int cAtomQFNarrowing = 0x0E3FC7FE;
   public static final int cAtomQFAny = 0x00000001;
@@ -356,6 +358,10 @@ public class JSMolecule {
   public static final int cAtomQFNotChargePos = 0x08000000;
   public static final int cAtomQFFlatNitrogen = 0x10000000; // currently only used in TorsionDetail
   public static final int cAtomQFExcludeGroup = 0x20000000; // these atoms must not exist in SS-matches
+  public static final int cAtomQFRxnParityHint    = 0xC0000000;  // Retain,invert,racemise configuration in reaction
+	public static final int cAtomQFRxnParityRetain  = 0x40000000;  // Retain,invert,racemise configuration in reaction
+	public static final int cAtomQFRxnParityInvert  = 0x80000000;  // Retain,invert,racemise configuration in reaction
+	public static final int cAtomQFRxnParityRacemize= 0xC0000000;  // Retain,invert,racemise configuration in reaction
   public static final int cBondTypeSingle = 0x00000001;
   public static final int cBondTypeDouble = 0x00000002;
   public static final int cBondTypeTriple = 0x00000004;
@@ -582,6 +588,14 @@ public class JSMolecule {
     return oclMolecule.renumberESRGroups(type);
   }
 
+  public void swapAtoms(int atom1, int atom2) {
+    oclMolecule.swapAtoms(atom1, atom2);
+  }
+
+  public void swapBonds(int bond1, int bond2) {
+    oclMolecule.swapBonds(bond1, bond2);
+  }
+
   public void deleteAtom(int atom) {
     oclMolecule.deleteAtom(atom);
   }
@@ -627,7 +641,11 @@ public class JSMolecule {
   }
 
   public void deleteMolecule() {
-    oclMolecule.deleteMolecule();
+    oclMolecule.clear();
+  }
+
+  public void clear() {
+    oclMolecule.clear();
   }
 
   public void removeAtomSelection() {
@@ -868,6 +886,10 @@ public class JSMolecule {
 
   public boolean isFragment() {
     return oclMolecule.isFragment();
+  }
+
+  public boolean is3D() {
+    return oclMolecule.is3D();
   }
 
   public boolean isNaturalAbundance(int atom) {
@@ -1193,6 +1215,10 @@ public class JSMolecule {
     return oclMolecule.getNonHydrogenNeighbourCount(atom);
   }
 
+  public int getExcludedNeighbourCount(int atom) {
+    return oclMolecule.getExcludedNeighbourCount(atom);
+  }
+
   public double getAverageBondLength(boolean nonHydrogenBondsOnly) {
     return oclMolecule.getAverageBondLength(nonHydrogenBondsOnly);
   }
@@ -1376,6 +1402,10 @@ public class JSMolecule {
 
   public int findAlleneCenterAtom(int atom) {
     return oclMolecule.findAlleneCenterAtom(atom);
+  }
+
+  public int findAlleneEndAtom(int atom1, int atom2) {
+    return oclMolecule.findAlleneEndAtom(atom1, atom2);
   }
 
   public int findBINAPChiralityBond(int atom) {

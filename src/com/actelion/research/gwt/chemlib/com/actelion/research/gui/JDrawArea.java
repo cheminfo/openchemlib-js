@@ -35,6 +35,7 @@ package com.actelion.research.gui;
 
 import com.actelion.research.chem.*;
 import com.actelion.research.chem.coords.CoordinateInventor;
+import com.actelion.research.chem.name.StructureNameResolver;
 import com.actelion.research.chem.reaction.*;
 import com.actelion.research.gui.clipboard.IClipboardHandler;
 import com.actelion.research.gui.dnd.MoleculeDropAdapter;
@@ -57,9 +58,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeMap;
 
-public class JDrawArea extends JPanel
-	implements ActionListener, KeyListener, MouseListener, MouseMotionListener
-{
+public class JDrawArea extends JPanel implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
 	static final long serialVersionUID = 0x20061019;
 
 	public static final int MODE_MULTIPLE_FRAGMENTS = 1;
@@ -74,6 +73,10 @@ public class JDrawArea extends JPanel
 	private static final int KEY_IS_SUBSTITUENT = 2;
 	private static final int KEY_IS_VALID_START = 3;
 	private static final int KEY_IS_INVALID = 4;
+
+	private static final String ITEM_COPY = "Copy Structure";
+	private static final String ITEM_PASTE= "Paste Structure";
+	private static final String ITEM_PASTE_WITH_NAME = ITEM_PASTE+" or Name";
 
 	private static final float FRAGMENT_MAX_CLICK_DISTANCE = 24.0f;
 	private static final float FRAGMENT_GROUPING_DISTANCE = 1.4f;	// in average bond lengths
@@ -526,7 +529,7 @@ public class JDrawArea extends JPanel
 		}
 		storeState();
 		boolean isFragment = mMol.isFragment();
-		mMol.deleteMolecule();
+		mMol.clear();
 		mMol.setFragment(isFragment);
 		if (mUndoMol.getAllAtoms() != 0) {
 			fireMoleculeChanged();
@@ -559,9 +562,9 @@ public class JDrawArea extends JPanel
 	public void actionPerformed(ActionEvent e)
 	{
 		String command = e.getActionCommand();
-		if (command.equals("Copy")) {
+		if (command.equals(ITEM_COPY)) {
 			copy();
-		} else if (command.equals("Paste")) {
+		} else if (command.startsWith(ITEM_PASTE)) {
 			paste();
 		} else if (command.startsWith("atomColor")) {
 			int index = command.indexOf(':');
@@ -1055,12 +1058,17 @@ public class JDrawArea extends JPanel
 			char ch = e.getKeyChar();
 			if (ch == 'q' && mMol.isFragment()) {
 				showBondQFDialog(mCurrentHiliteBond);
+			} else if (ch == 'v') { // ChemDraw uses the same key
+				if (mMol.addRingToBond(mCurrentHiliteBond, 3, false)) {
+					fireMoleculeChanged();
+					update(UPDATE_CHECK_COORDS);
+				}
 			} else if (ch >= '4' && ch <= '7') {
 				if (mMol.addRingToBond(mCurrentHiliteBond, ch - '0', false)) {
 					fireMoleculeChanged();
 					update(UPDATE_CHECK_COORDS);
 				}
-			} else if (ch == 'b') {
+			} else if (ch == 'a' || ch == 'b') {    // ChemDraw uses 'a', we use 'b' since a long time
 				if (mMol.addRingToBond(mCurrentHiliteBond, 6, true)) {
 					fireMoleculeChanged();
 					update(UPDATE_CHECK_COORDS);
@@ -1241,12 +1249,13 @@ public class JDrawArea extends JPanel
 		if (e.isPopupTrigger()) {
 			JPopupMenu popup = null;
 			if (mClipboardHandler != null) {
-				JMenuItem menuItem1 = new JMenuItem("Copy");
+				JMenuItem menuItem1 = new JMenuItem(ITEM_COPY);
 				menuItem1.addActionListener(this);
 				if (mMol.getAllAtoms() == 0) {
 					menuItem1.setEnabled(false);
 				}
-				JMenuItem menuItem2 = new JMenuItem("Paste");
+				String itemText = (StructureNameResolver.getInstance() == null) ? ITEM_PASTE : ITEM_PASTE_WITH_NAME;
+				JMenuItem menuItem2 = new JMenuItem(itemText);
 				menuItem2.addActionListener(this);
 				if (popup == null) {
 					popup = new JPopupMenu();
@@ -1418,10 +1427,11 @@ public class JDrawArea extends JPanel
 				c = c.getParent();
 			}
 			storeState();
+			boolean showReactionHints = ((mMode & MODE_REACTION) != 0);
 			if (c instanceof Dialog)
-				new JAtomQueryFeatureDialog((Dialog) c, mMol, atom);
+				new JAtomQueryFeatureDialog((Dialog) c, mMol, atom, showReactionHints);
 			else
-				new JAtomQueryFeatureDialog((Frame) c, mMol, atom);
+				new JAtomQueryFeatureDialog((Frame) c, mMol, atom, showReactionHints);
 			fireMoleculeChanged();
 			update(UPDATE_REDRAW);
 		}
@@ -2771,7 +2781,7 @@ public class JDrawArea extends JPanel
 
 	public void setFragments(StereoMolecule[] fragment)
 	{
-		mMol.deleteMolecule();
+		mMol.clear();
 		mFragment = fragment;
 		for (int i = 0; i < fragment.length; i++) {
 			mMol.addMolecule(mFragment[i]);
@@ -2825,7 +2835,7 @@ public class JDrawArea extends JPanel
 
 	public void setReaction(Reaction rxn)
 	{
-		mMol.deleteMolecule();
+		mMol.clear();
 		mFragment = new StereoMolecule[rxn.getMolecules()];
 		mReactantCount = rxn.getReactants();
 		for (int i = 0; i < rxn.getMolecules(); i++) {
@@ -2867,7 +2877,7 @@ public class JDrawArea extends JPanel
 
 	public void setMarkushStructure(MarkushStructure markush)
 	{
-		mMol.deleteMolecule();
+		mMol.clear();
 		mFragment = new StereoMolecule[markush.getCoreCount() + markush.getRGroupCount()];
 		mReactantCount = markush.getCoreCount();
 		boolean isFragment = false;

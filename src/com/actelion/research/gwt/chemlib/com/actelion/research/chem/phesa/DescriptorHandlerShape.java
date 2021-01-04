@@ -4,14 +4,18 @@ import com.actelion.research.chem.Canonizer;
 import com.actelion.research.chem.IDCodeParserWithoutCoordinateInvention;
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.chem.alignment3d.PheSAAlignmentOptimizer;
 import com.actelion.research.chem.conf.Conformer;
 import com.actelion.research.chem.conf.ConformerSet;
 import com.actelion.research.chem.conf.ConformerSetGenerator;
 import com.actelion.research.chem.descriptor.DescriptorConstants;
 import com.actelion.research.chem.descriptor.DescriptorHandler;
 import com.actelion.research.chem.descriptor.DescriptorInfo;
+import com.actelion.research.chem.phesaflex.FlexibleShapeAlignment;
+
 import org.openmolecules.chem.conf.gen.ConformerGenerator;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 
@@ -35,8 +39,7 @@ import java.util.ArrayList;
 public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,StereoMolecule> {
 
 		
-	private static final long SEED = 123456789;
-	
+
 	private static final int CONFORMATIONS = 50;
 
 
@@ -47,10 +50,17 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 
 	private  boolean singleBaseConformation; // take conformation of base molecule as is and don't generate conformers
 	
-	private double[][] transforms;// = ShapeAlignment.initialTransform(2);
 	
 	private StereoMolecule[] previousAlignment;// = new StereoMolecule[2];
+	
+	private double[] previousPhesaResult;
 
+	protected int maxConfs;
+	
+	protected double ppWeight;
+	
+	protected boolean flexible;
+	
 	// Maximum number of tries to generate conformers with the torsion rule based conformer generator from Thomas Sander
 	
 	
@@ -59,39 +69,64 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 	private ConformerSetGenerator conformerGenerator;
 	
 	public DescriptorHandlerShape() {
-		this(false);
+		this(false,CONFORMATIONS,0.5);
 	}
 	
 	public DescriptorHandlerShape(boolean useSingleBaseConformation) {
+		this(useSingleBaseConformation,CONFORMATIONS,0.5);
+	}
+	
+	public DescriptorHandlerShape(boolean useSingleBaseConformation, double ppWeight) {
+		this(useSingleBaseConformation,CONFORMATIONS,ppWeight);
+	}
+	
+	public DescriptorHandlerShape(int maxConfs,double ppWeight) {
+		this(false,maxConfs,ppWeight);
+	}
+
+	/**
+	 *
+	 * @param ppWeight similarity weight for the pharmacophore in total similarity.
+	 */
+	public DescriptorHandlerShape(double ppWeight) {
+		this(false,CONFORMATIONS,ppWeight);
+	}
+	
+	public DescriptorHandlerShape(boolean useSingleBaseConformation,int maxConfs, double ppWeight) {
+		flexible = false;
 		singleBaseConformation = useSingleBaseConformation;
+		this.maxConfs = maxConfs;
+		this.ppWeight = ppWeight;
 		init();
 
 	}
+		
 	
 	public PheSAMolecule createDescriptor(ConformerSet fullSet) {
 		try {
-			ConformerSet confSet = fullSet.getSubset(CONFORMATIONS);
-		
-		init();
-		
-		ArrayList<MolecularVolume> molecularVolumes = new ArrayList<MolecularVolume>(); 
-		
-		StereoMolecule mol = confSet.first().toMolecule();
-		MolecularVolume refMolVol = new MolecularVolume(mol);
-		MolecularVolume molVol;
-		
-		for(Conformer conformer : confSet) {
+			ConformerSet confSet = fullSet.getSubset(maxConfs);
 
-            if(conformer==null) {
+			init();
+			
+			ArrayList<MolecularVolume> molecularVolumes = new ArrayList<MolecularVolume>(); 
+			
+			StereoMolecule mol = confSet.first().toMolecule();
+			MolecularVolume refMolVol = new MolecularVolume(mol);
+			MolecularVolume molVol;
+			
+			for(Conformer conformer : confSet) {
+	            if(conformer==null) {
+	
+	                break;
+	
+	            } else {
+					molVol = new MolecularVolume(refMolVol,conformer);
+					PheSAAlignment.preProcess(conformer, molVol);
+					molecularVolumes.add(molVol);
+	            }
+	        }
+			 mol = confSet.first().toMolecule();
 
-                break;
-
-            } else {
-				molVol = new MolecularVolume(refMolVol,conformer);
-				PheSAAlignment.preProcess(conformer, molVol);
-				molecularVolumes.add(molVol);
-            }
-        }
         return new PheSAMolecule(mol,molecularVolumes);
 		}
 		catch(Exception e) {
@@ -101,9 +136,8 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 
 	
 	public void init() {
-		transforms = PheSAAlignment.initialTransform(2);
 		previousAlignment = new StereoMolecule[2];
-		conformerGenerator = new ConformerSetGenerator(CONFORMATIONS,ConformerGenerator.STRATEGY_LIKELY_RANDOM,false,SEED);
+		conformerGenerator = new ConformerSetGenerator();
 		
 	}
 	
@@ -116,6 +150,7 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 	
 	public PheSAMolecule createDescriptor(StereoMolecule mol) {
 		StereoMolecule shapeMolecule = new StereoMolecule(mol);
+		shapeMolecule.ensureHelperArrays(StereoMolecule.cHelperCIP);
 		boolean has3Dcoordinates = false;
 		for (int atom=1; atom<mol.getAllAtoms(); atom++) {
 			if (Math.abs(mol.getAtomZ(atom) - mol.getAtomZ(0)) > 0.1) {
@@ -124,8 +159,8 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 				}
 			}
 		shapeMolecule.stripSmallFragments();
-		new Canonizer(shapeMolecule);
-		shapeMolecule.ensureHelperArrays(StereoMolecule.cHelperCIP);
+		Canonizer can = new Canonizer(shapeMolecule);
+		shapeMolecule = can.getCanMolecule(true);
 
 		ConformerSet confSet = new ConformerSet();
 		if (!singleBaseConformation) {
@@ -137,8 +172,9 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 		}
 			
 		else {
-			if(shapeMolecule.getAllAtoms()-shapeMolecule.getAtoms()>0) {
-				ConformerGenerator.addHydrogenAtoms(shapeMolecule);
+			if(shapeMolecule.getAllAtoms()-shapeMolecule.getAtoms()==0) {
+				System.err.println("missing hydrogens in 3D structure");
+				return FAILED_OBJECT;
 			}
 			confSet.add(new Conformer(shapeMolecule)); //take input conformation
 			
@@ -153,27 +189,43 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 	 */
 	
 	public float getSimilarity(PheSAMolecule query, PheSAMolecule base) {
-		StereoMolecule[] bestPair = {query.getMolecule(),base.getMolecule()};
-		double similarity = PheSAAlignmentOptimizer.align(query,base,bestPair);
+ 		StereoMolecule[] bestPair = {query.getMolecule(),base.getMolecule()};
+		double[] result = PheSAAlignmentOptimizer.align(query,base,bestPair,ppWeight,true);
 		this.setPreviousAlignment(bestPair);
-		return (float)similarity;
+		this.setPreviousPheSAResult(result);
+		if(flexible) {
+			FlexibleShapeAlignment fsa = new FlexibleShapeAlignment(bestPair[0],bestPair[1]);
+			result = fsa.align();
+			this.setPreviousPheSAResult(result);
+		}
+		
+		return (float)result[0];
 	}
 
 
-	
+
 	public StereoMolecule[] getPreviousAlignment() {
 		return this.previousAlignment;
+	}
+
+	/***
+	 * additional output:
+	 * element 0: total similarity (identical to getSimilarity(...))
+	 * element 1: pharmacophore similarity
+	 * element 2: contribution to similarity that originates from additional volumes (incl/excl)
+	 * @return
+	 */
+	public double[] getPreviousPheSAResult() {
+		return this.previousPhesaResult;
 	}
 	
 	public void setPreviousAlignment(StereoMolecule[] previousAlignment) {
 		this.previousAlignment = previousAlignment;
 	}
 	
-	
-
-	
-
-	
+	public void setPreviousPheSAResult(double[] previousPhesaResult) {
+		this.previousPhesaResult = previousPhesaResult;
+	}
 
 	
 	public String getVersion() {
@@ -220,9 +272,9 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 		}
 			
 		shapeString.append("   ");
-		StereoMolecule mol = shapeMol.getConformer(shapeMol.getVolumes().get(0));
+		//StereoMolecule mol = shapeMol.getConformer(shapeMol.getVolumes().get(0));
+		StereoMolecule mol = new StereoMolecule(shapeMol.getMolecule());
 		Canonizer can = new Canonizer(mol, Canonizer.COORDS_ARE_3D);
-		mol = can.getCanMolecule(true);
 		String idcoords = can.getEncodedCoordinates(true);
 		String idcode = can.getIDCode();
 		shapeString.append(idcode);
@@ -279,6 +331,9 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 	public DescriptorHandlerShape getThreadSafeCopy() {
 
 		DescriptorHandlerShape dhs = new DescriptorHandlerShape();
+		dhs.ppWeight = ppWeight;
+		dhs.flexible = flexible;
+		dhs.maxConfs = maxConfs;
 
 		return dhs;
 	}
@@ -291,5 +346,21 @@ public class DescriptorHandlerShape implements DescriptorHandler<PheSAMolecule,S
 
 		return INSTANCE;
 	}
+	
+	public void setMaxConfs(int maxConfs) {
+		this.maxConfs = maxConfs;
+		init();
+	}
+	
+	public void setFlexible(boolean flexible) {
+		this.flexible = flexible;
+	}
 
+	public boolean isFlexible() {
+		return flexible;
+	}
+
+	public double getPpWeight() {
+		return ppWeight;
+	}
 }

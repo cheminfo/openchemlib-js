@@ -1,5 +1,6 @@
 package com.actelion.research.chem.interactionstatistics;
 import com.actelion.research.chem.Molecule;
+import com.actelion.research.chem.Molecule3D;
 import com.actelion.research.chem.PeriodicTable;
 import com.actelion.research.chem.StereoMolecule;
 
@@ -8,7 +9,7 @@ public class InteractionAtomTypeCalculator {
 	
 	
 	
-	private enum FunctionalGroup {NITRO("NO2",1),ESTER("COOR",2),CARBOXYL("COO",3),
+	public enum FunctionalGroup {NITRO("NO2",1),ESTER("COOR",2),CARBOXYL("COO",3),
 			SULFONAMIDE("HNSO2R",4),SULFONATE("SO3",5), PHOSPHONATE("PO3",6),SULFOXIDE("SO",7),
 			SULFONE("SO2",8),AMIDE("HNCO",9),AMIDINE("N=C-N",10),GUANIDINE("N-C(-N)=N",11),N_SP2_TAUT("N=C-N(Ar)",12),
 			SP2_AMINE("C=CNX2",13),ENOL("C=COH",14);
@@ -24,7 +25,15 @@ public class InteractionAtomTypeCalculator {
 			public String getString() {return s;}
 			
 			public int getId() {return id;}
-	
+
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("FunctionalGroup{");
+			sb.append("s='").append(s).append('\'');
+			sb.append(", id=").append(id);
+			sb.append('}');
+			return sb.toString();
+		}
 	}
 	
 
@@ -257,9 +266,10 @@ public class InteractionAtomTypeCalculator {
 	/**
 	* get connected atoms of specified element that are bonded to the atom of interest with the specific bond order
 	* -1 for any bond order
-	* @param at
-	* @param neighbourAtomicNo
-	* @param bondOrder
+	* @param mol
+	* @param a
+	* @param aaAtomicNo
+	* @param aaBondOrder
 	* @return
 	*/
 	private static int getNeighbours(StereoMolecule mol,int a, int aaAtomicNo, int aaBondOrder) { 
@@ -311,6 +321,23 @@ public class InteractionAtomTypeCalculator {
 		return type;	
 	}
 	
+	public static int getAtomType(FunctionalGroup fg, int atomicNo, boolean isAromatic, int hybridization,
+			boolean isStabilized) {
+		int type = 0;
+		if(fg!=null) {
+			type+=fg.id<<AtomPropertyShift.FUNCTIONAL_GROUP_SHIFT.getShift();
+		}
+		type+=hybridization << AtomPropertyShift.HYBRID_SHIFT.getShift();
+		if(isStabilized)
+				type += AtomPropertyMask.STABILIZED.getMask();
+		if(isAromatic)
+			type += AtomPropertyMask.AROM.getMask();
+		
+		type+= atomicNo;
+		
+		return type;
+	}
+	
 	public static String getString(int atomType) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(PeriodicTable.symbol(atomType & AtomPropertyMask.ATOMIC_NO.getMask()));
@@ -336,7 +363,46 @@ public class InteractionAtomTypeCalculator {
 		
 	}
 
-		
+	public static int getAtomicNumber(int atomType){
+		return atomType & AtomPropertyMask.ATOMIC_NO.getMask();
+	}
 
+	public static boolean isCarbonInteraction(int atomType){
+		int atNo = getAtomicNumber(atomType);
+		return (atNo==6)?true:false;
+	}
+
+	public static boolean isAromatic(int atomType){
+		return ((atomType & AtomPropertyMask.AROM.getMask()) > 0) ? true : false;
+	}
+
+
+	public static void setInteractionTypes(Molecule3D mol) {
+		for (int i = 0; i < mol.getAtoms(); i++) {
+			int atomType = getAtomType(mol, i);
+			mol.setInteractionAtomType(i, atomType);
+		}
+	}
+	
+	public static int getGenericDonor() {//represents a hydroxyl group
+		return getAtomType(null, 8, false, 3,
+			false);
+	}
+	
+	public static int getGenericAcceptor() {//represents a hydroxyl group
+		return getAtomType(null, 8, false, 3,
+			false);
+	}
+	
+	public static int getGenericPosCharge() {//represents sp3 primary amine
+		return getAtomType(null, 7, false, 3,
+			false);
+	}
+	
+	public static int getGenericNegCharge() {//represents a carboxylate oxygen
+		return getAtomType(FunctionalGroup.CARBOXYL, 8, false, 2,
+			false);
+	}
+	
 }
 	

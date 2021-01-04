@@ -137,6 +137,12 @@ public class ChargePoint implements IPharmacophorePoint {
 	@Override
 	public void updateAtomIndeces(int[] map) {
 		chargeAtom = map[chargeAtom];
+
+		for(int i=0;i<neighbours.size();i++) {
+			int neighbour = map[neighbours.get(i)];
+			neighbours.set(i, neighbour);
+		}
+
 		
 	}
 
@@ -169,6 +175,22 @@ public class ChargePoint implements IPharmacophorePoint {
 			return IPharmacophorePoint.Functionality.NEG_CHARGE.getIndex();
 		else
 			return IPharmacophorePoint.Functionality.POS_CHARGE.getIndex();
+	}
+
+	public int getChargeAtom() {
+		return chargeAtom;
+	}
+
+	public void setChargeAtom(int chargeAtom) {
+		this.chargeAtom = chargeAtom;
+	}
+
+	public List<Integer> getNeighbours() {
+		return neighbours;
+	}
+
+	public void setNeighbours(List<Integer> neighbours) {
+		this.neighbours = neighbours;
 	}
 
 }

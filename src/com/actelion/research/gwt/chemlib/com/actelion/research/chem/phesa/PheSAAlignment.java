@@ -2,6 +2,7 @@ package com.actelion.research.chem.phesa;
 import com.actelion.research.chem.Coordinates;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.conf.Conformer;
+import com.actelion.research.chem.optimization.OptimizerLBFGS;
 import com.actelion.research.chem.phesa.pharmacophore.PPGaussian;
 import com.actelion.research.calc.Matrix;
 import com.actelion.research.calc.SingularValueDecomposition;
@@ -22,18 +23,29 @@ public class PheSAAlignment {
 
 	private MolecularVolume refMolGauss;
 	private MolecularVolume molGauss;
+	private double ppWeight;
 	public enum axis {X,Y,Z};
 
 
 	
 	
 	
-	public PheSAAlignment(StereoMolecule refMol, StereoMolecule mol) {
+	public PheSAAlignment(StereoMolecule refMol, StereoMolecule mol,double ppWeight) {
+		this.ppWeight = ppWeight;
 		this.refMolGauss = new MolecularVolume(refMol);
 		this.molGauss = new MolecularVolume(mol);
 	}
 	
+	public PheSAAlignment(StereoMolecule refMol, StereoMolecule mol) {
+		this(refMol,mol,0.5);
+	}
+	
 	public PheSAAlignment(MolecularVolume refMolGauss, MolecularVolume molGauss) {
+		this(refMolGauss,molGauss,0.5);
+	}
+	
+	public PheSAAlignment(MolecularVolume refMolGauss, MolecularVolume molGauss,double ppWeight) {
+		this.ppWeight = ppWeight;
 		this.refMolGauss= refMolGauss;
 		this.molGauss = molGauss;
 	}
@@ -76,7 +88,7 @@ public class PheSAAlignment {
 
 
 	
-	public static Matrix createCanonicalOrientation(Conformer conf,MolecularVolume molGauss) {
+	public static Matrix createCanonicalOrientation(Conformer conf, MolecularVolume molGauss) {
 		Matrix m = PheSAAlignment.getCovarianceMatrix(molGauss);
 		SingularValueDecomposition svd = new SingularValueDecomposition(m.getArray(),null,null);
 		Matrix u = new Matrix(svd.getU());
@@ -86,7 +98,7 @@ public class PheSAAlignment {
 			u.set(1,1,-u.get(1, 1));
 			u.set(2,1,-u.get(2, 1));
 		}
-		rotateMol(conf,u);
+		PheSAAlignment.rotateMol(conf,u);
 		molGauss.update(conf);
 		Matrix rotMat = u;
 		
@@ -133,7 +145,8 @@ public class PheSAAlignment {
 				}
 			}
 		}
-		
+		for(VolumeGaussian vg : molGauss.getVolumeGaussians())
+			vg.rotateShift(rotMat);
 		return rotMat;
 	}
 	
@@ -179,6 +192,21 @@ public class PheSAAlignment {
 			value = ag.getVolume()*ag.getCenter().y*ag.getCenter().z;
 			massMatrix.addToElement(1,2,value);
 			value = ag.getVolume()*ag.getCenter().z*ag.getCenter().z;
+			massMatrix.addToElement(2,2,value);	
+		}
+		for (VolumeGaussian vg : molGauss.getVolumeGaussians()){
+			volume += vg.getRole()*vg.getVolume();
+			double value = vg.getRole()*vg.getVolume()*vg.getCenter().x*vg.getCenter().x;
+			massMatrix.addToElement(0,0,value);
+			value = vg.getRole()*vg.getVolume()*vg.getCenter().x*vg.getCenter().y;
+			massMatrix.addToElement(0,1,value);
+			value = vg.getRole()*vg.getVolume()*vg.getCenter().x*vg.getCenter().z;
+			massMatrix.addToElement(0,2,value);
+			value = vg.getRole()*vg.getVolume()*vg.getCenter().y*vg.getCenter().y;
+			massMatrix.addToElement(1,1,value);
+			value = vg.getRole()*vg.getVolume()*vg.getCenter().y*vg.getCenter().z;
+			massMatrix.addToElement(1,2,value);
+			value = vg.getRole()*vg.getVolume()*vg.getCenter().z*vg.getCenter().z;
 			massMatrix.addToElement(2,2,value);	
 		}
 		massMatrix.set(0,0,massMatrix.get(0,0)/volume);
@@ -291,14 +319,18 @@ public class PheSAAlignment {
 	 * calculate the Overlap of the two molecular volumes as a function a transform vector that is applied to the query molecule
 	 * overlap Volume of two molecular Volumes  formulated as a summed overlap of atomic Gaussians
 	 * taken from Grant, Gallardo, Pickup, Journal of Computational Chemistry, 17, 1653-1666, 1996
+	 * returns a double[2]: the first double is the total overlap, whereas the second value is the specific 
+	 * contribution of additional volume gaussians (inclusion, exclusion)
 	 * @param transform
 	 * @return
 	 */
 	
 
-	public double getTotalAtomOverlap(double[] transform){
+	public double[] getTotalAtomOverlap(double[] transform){
+		double[] result = new double[2];
 		Quaternion quat = new Quaternion(transform[0],transform[1],transform[2],transform[3]);
 		double Vtot = 0.0;
+		double Vvol = 0.0;
 		double[][] rotMatrix = quat.getRotMatrix().getArray();
 		ArrayList<AtomicGaussian> atomicGaussians = molGauss.getAtomicGaussians();
 		Coordinates[] fitCenterModCoords = new Coordinates[atomicGaussians.size()];
@@ -315,40 +347,28 @@ public class PheSAAlignment {
 			}
 		}
 		
-		for(ExclusionGaussian refEx:refMolGauss.getExclusionGaussians()){
+		for(VolumeGaussian refVol:refMolGauss.getVolumeGaussians()){
 			int index = 0;
 			for(AtomicGaussian fitAt:molGauss.getAtomicGaussians()){
-				Vtot -= refEx.getVolumeOverlap(fitAt, fitCenterModCoords[index],Gaussian3D.DIST_CUTOFF);
+				double overlap = refVol.getRole()*refVol.getVolumeOverlap(fitAt, fitCenterModCoords[index],Gaussian3D.DIST_CUTOFF);
+				Vtot += overlap;
+				Vvol += overlap;
 				index+=1;	
 			}
 		}
 		if(Vtot<0)
 			Vtot = 0.0;
-		
-		return Vtot;
+		result[0] = Vtot;
+		result[1] = Vvol;
+		return result;
 
 	}
-	
-	public double getTotalAtomOverlap(){
-		double Vtot = 0.0;
-		for(AtomicGaussian refAt:refMolGauss.getAtomicGaussians()){
-			for(AtomicGaussian fitAt:molGauss.getAtomicGaussians()) {
-					Vtot+=refAt.getVolumeOverlap(fitAt,Gaussian3D.DIST_CUTOFF);
-			}
-						
-			}				
-		
-		return Vtot;
 
-	}
 	
-	
-	
-	
+		
 	public double getTotalPPOverlap(double[] transform){
 		Quaternion quat = new Quaternion(transform[0],transform[1],transform[2],transform[3]);
 		double Vtot = 0.0;
-		double correctionFactor = refMolGauss.getPPGaussians().size()/refMolGauss.getPPGaussians().stream().mapToDouble(g -> g.getWeight()).sum();
 		double[][] rotMatrix = quat.getRotMatrix().getArray();
 		ArrayList<PPGaussian> ppGaussians = molGauss.getPPGaussians();
 		Coordinates[] fitCenterModCoords = new Coordinates[ppGaussians.size()];
@@ -362,7 +382,7 @@ public class PheSAAlignment {
 		for(PPGaussian refPP:refMolGauss.getPPGaussians()){
 			int index = 0;
 			for(PPGaussian fitPP:molGauss.getPPGaussians()){
-				Vtot+=refPP.getSimilarity(fitPP, fitDirectionalityMod[index])* refPP.getVolumeOverlap(fitPP, fitCenterModCoords[index],10.0)*correctionFactor;
+				Vtot+=refPP.getWeight()*refPP.getSimilarity(fitPP, fitDirectionalityMod[index])* refPP.getVolumeOverlap(fitPP, fitCenterModCoords[index],10.0);
 				index+=1;
 			
 		}
@@ -385,7 +405,22 @@ public class PheSAAlignment {
 			for(AtomicGaussian at:molGauss.getAtomicGaussians()){
 				for(AtomicGaussian at2:molGauss.getAtomicGaussians()){
 					Vtot += at.getVolumeOverlap(at2);
-	
+				}
+				for(VolumeGaussian vg : molGauss.getVolumeGaussians()) {
+					if(vg.getRole()!=VolumeGaussian.INCLUSION)
+						continue;
+					Vtot += vg.getRole()*at.getVolumeOverlap(vg);
+				}
+			}
+			
+			for(VolumeGaussian vg:molGauss.getVolumeGaussians()){
+				if(vg.getRole()!=VolumeGaussian.INCLUSION)
+					continue;
+				for(VolumeGaussian vg2 : molGauss.getVolumeGaussians()) {
+					//only consider self-overlap of inclusion spheres
+					if(vg2.getRole()!=VolumeGaussian.INCLUSION)
+						continue;
+					Vtot += vg2.getVolumeOverlap(vg);
 				}
 			}
 	
@@ -395,11 +430,10 @@ public class PheSAAlignment {
 
 
 	public double getSelfPPOverlap(MolecularVolume molGauss){
-		double correctionFactor = molGauss.getPPGaussians().size()/molGauss.getPPGaussians().stream().mapToDouble(g -> g.getWeight()).sum();
 		double Vtot = 0.0;
 		for(PPGaussian pp:molGauss.getPPGaussians()){
 			for(PPGaussian pp2:molGauss.getPPGaussians()){
-				Vtot+=pp.getSimilarity(pp2)* pp.getVolumeOverlap(pp2)*correctionFactor;
+				Vtot+=pp.getWeight()*pp.getSimilarity(pp2)* pp.getVolumeOverlap(pp2);
 			}
 		}
 		return Vtot;
@@ -440,12 +474,7 @@ public class PheSAAlignment {
 		for (int i=0;i<nrOfAtoms;i++) {
 			Coordinates coords = conf.getCoordinates(i);
 			double[][] m = rotor.getRotMatrix().getArray();
-			double x0 = coords.x;
-			double y0 = coords.y;
-			double z0 = coords.z;
-			coords.x = x0*m[0][0]+y0*m[0][1]+z0*m[0][2];
-			coords.y = x0*m[1][0]+y0*m[1][1]+z0*m[1][2];
-			coords.z = x0*m[2][0]+y0*m[2][1]+z0*m[2][2];
+			coords.rotate(m);
 			
 			coords.scale(normFactor);
 			coords.add(transl[0],transl[1],transl[2]);
@@ -463,13 +492,7 @@ public class PheSAAlignment {
 		for (int i=0;i<nrOfAtoms;i++) {
 			Coordinates coords = mol.getCoordinates(i);
 			double[][] m = rotor.getRotMatrix().getArray();
-			double x0 = coords.x;
-			double y0 = coords.y;
-			double z0 = coords.z;
-			coords.x = x0*m[0][0]+y0*m[0][1]+z0*m[0][2];
-			coords.y = x0*m[1][0]+y0*m[1][1]+z0*m[1][2];
-			coords.z = x0*m[2][0]+y0*m[2][1]+z0*m[2][2];
-			
+			coords.rotate(m);	
 			coords.scale(normFactor);
 			coords.add(transl[0],transl[1],transl[2]);
 
@@ -481,25 +504,12 @@ public class PheSAAlignment {
 		int nrOfAtoms = mol.getAllAtoms();
 		for (int i=0;i<nrOfAtoms;i++) {
 			Coordinates coords = mol.getCoordinates(i);
-			double x0 = coords.x;
-			double y0 = coords.y;
-			double z0 = coords.z;
-			coords.x = x0*m[0][0]+y0*m[0][1]+z0*m[0][2];
-			coords.y = x0*m[1][0]+y0*m[1][1]+z0*m[1][2];
-			coords.z = x0*m[2][0]+y0*m[2][1]+z0*m[2][2];
+			coords.rotate(m);
 		}
 		
 	}
 	
-	public static void rotateCoords(Coordinates coords,double[][] m) {
-		double x0 = coords.x;
-		double y0 = coords.y;
-		double z0 = coords.z;
-		coords.x = x0*m[0][0]+y0*m[0][1]+z0*m[0][2];
-		coords.y = x0*m[1][0]+y0*m[1][1]+z0*m[1][2];
-		coords.z = x0*m[2][0]+y0*m[2][1]+z0*m[2][2];
-		
-	}
+
 	
 	public static void translateMol(StereoMolecule mol,double[] translate) {
 		int nrOfAtoms = mol.getAllAtoms();
@@ -548,13 +558,13 @@ public class PheSAAlignment {
 		double s = Math.sin(theta);
 		double t = 1-c;
 		r[0][0] = c+x*x*t;
-		r[0][1] = x*y*t-z*s;
-		r[0][2] = x*z*t+y*s;
-		r[1][0] = x*y*t+z*s;
+		r[1][0] = x*y*t-z*s;
+		r[2][0] = x*z*t+y*s;
+		r[0][1] = x*y*t+z*s;
 		r[1][1] = c+y*y*t;
-		r[1][2] = y*z*t-x*s;
-		r[2][0] = z*x*t-y*s;
-		r[2][1] = z*y*t+x*s;
+		r[2][1] = y*z*t-x*s;
+		r[0][2] = z*x*t-y*s;
+		r[1][2] = z*y*t+x*s;
 		r[2][2] = c+z*z*t;
 
 	}
@@ -570,11 +580,15 @@ public class PheSAAlignment {
 		double Obb = getSelfAtomOverlapFit();
 		double ppOaa = getSelfPPOverlapRef();
 		double ppObb = getSelfPPOverlapFit();
-		EvaluableOverlap eval = new EvaluableOverlap(this, new double[7]);
+		EvaluableOverlap eval = new EvaluableOverlap(this, new double[7],ppWeight);
 		OptimizerLBFGS opt = new OptimizerLBFGS(200,0.001);
 		double maxSimilarity = 0.0;
-		double ppScaling = 1.0;
-		for(double [] transform:transforms) { //iterate over all initial alignments (necessary since optimizer just finds next local minimum, so we need different initial guesses
+		double maxPPSimilarity = 0.0;
+		double maxVolSimilarity = 0.0;
+		double maxShapeSimilarity = 0.0;
+		for(double [] transform:transforms) { 
+			double ppSimilarity = 0.0;//iterate over all initial alignments (necessary since optimizer just finds next local minimum, so we need different initial guesses
+			double volSimilarity = 0.0;
 			eval.setState(transform);
 			double[] bestTransform;
 			if(optimize)
@@ -583,25 +597,34 @@ public class PheSAAlignment {
 				bestTransform = transform;
 			double atomOverlap = 0.0;
 			double ppOverlap = 0.0;
-			float similarity = 0.0f;
+			double similarity = 0.0;
 			ppOverlap = getTotalPPOverlap(bestTransform);
-			float ppSimilarity = 0.0f;
 			if(getRefMolGauss().getPPGaussians().size()==0 && getMolGauss().getPPGaussians().size()==0 )
-				ppSimilarity = 1.0f;
-			else ppSimilarity=(float)(ppOverlap/(ppOaa+ppObb-ppOverlap));
+				ppSimilarity = 1.0;
+			else ppSimilarity=(ppOverlap/(ppOaa+ppObb-ppOverlap));
+			double correctionFactor = refMolGauss.getPPGaussians().size()/refMolGauss.getPPGaussians().stream().mapToDouble(g -> g.getWeight()).sum();
+			ppSimilarity*=correctionFactor;
 			if(ppSimilarity>1.0) //can happen because of weights
 				ppSimilarity = 1.0f;
-			atomOverlap = getTotalAtomOverlap(bestTransform);
-			float atomSimilarity = (float)(atomOverlap/(Oaa+Obb-atomOverlap));
-
-			similarity = (1.0f/(1+(float)ppScaling))* (atomSimilarity + (float)ppScaling*ppSimilarity) ;
-
+			double[] result = getTotalAtomOverlap(bestTransform);
+			atomOverlap = result[0];
+			double additionalVolOverlap = result[1];
+			double atomSimilarity = atomOverlap/(Oaa+Obb-atomOverlap);
+			if(atomSimilarity>1.0) //can happen because of weights
+				atomSimilarity = 1.0f;
+			volSimilarity = (additionalVolOverlap/atomOverlap);
+			similarity = (1.0-ppWeight)*atomSimilarity + ppWeight*ppSimilarity;
 			if (similarity>maxSimilarity) {
 				maxSimilarity = similarity;
+				maxVolSimilarity = volSimilarity;
+				maxShapeSimilarity = atomSimilarity;
+				maxPPSimilarity = ppSimilarity;
 				alignment = bestTransform;
 			}
 		}
-			return DoubleStream.concat(Arrays.stream(new double[] {maxSimilarity}), Arrays.stream(alignment)).toArray();
+			if(maxSimilarity>1.0) // can happen because of manually placed inclusion spheres
+				maxSimilarity = 1.0;
+			return DoubleStream.concat(Arrays.stream(new double[] {maxSimilarity,maxPPSimilarity,maxShapeSimilarity,maxVolSimilarity}), Arrays.stream(alignment)).toArray();
 		}
 		
 		
@@ -614,6 +637,8 @@ public class PheSAAlignment {
 		}
 
 	}
+	
+
 	
 	
 	
@@ -642,12 +667,31 @@ public class PheSAAlignment {
 
 	}
 	
-	public double getShapeSimilarityWithoutOptimization() {
-		double Oaa = getSelfAtomOverlapRef();
-		double Obb = getSelfAtomOverlapFit();
-		double Oab = getTotalAtomOverlap();
-		return (Oab)/(Oaa+Obb-Oab);
+	public static class PheSAResult {
+		private StereoMolecule refMol;
+		private StereoMolecule fitMol;
+		private double sim;
+		
+		public PheSAResult(StereoMolecule refMol, StereoMolecule fitMol, double sim) {
+			this.refMol = refMol;
+			this.fitMol = fitMol;
+			this.sim = sim;
+		}
+		
+		public StereoMolecule getRefMol() {
+			return refMol;
+		}
+		
+		public StereoMolecule getFitMol() {
+			return fitMol;
+		}
+		
+		public double getSim() {
+			return sim;
+		}
 	}
+	
+
 	
 }
 

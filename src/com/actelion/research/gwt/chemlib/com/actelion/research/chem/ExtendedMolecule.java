@@ -404,7 +404,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
 	 * @param atom
-	 * @return count of category 1 & 2 & 3 neighbour atoms (excludes neighbours connected with zero bond order)
+	 * @return count of category 1 & 2 & 3 neighbour atoms
 	 */
 	public int getAllConnAtomsPlusMetalBonds(int atom) {
 		return mConnAtom[atom].length;
@@ -461,6 +461,20 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
+	 * This method returns the count of atom neighbours which are marked as being an exclude group.
+	 * @param atom
+	 * @return the number of non-hydrogen neighbor atoms
+	 */
+	public int getExcludedNeighbourCount(int atom) {
+		int count = 0;
+		for (int i=0; i<mConnAtoms[atom]; i++)
+			if ((mAtomQueryFeatures[i] & Molecule.cAtomQFExcludeGroup) != 0)
+				count++;
+		return count;
+		}
+
+
+	/**
 	 * Calculates and returns the mean bond length of all bonds including or not
 	 * including hydrogen bonds.
 	 * If there are no bonds, then the average distance between unconnected atoms is
@@ -500,6 +514,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	/**
 	 * The sum of bond orders of explicitly connected neighbour atoms including explicit hydrogen.
 	 * In case of a fragment the occupied valence does not include bonds to atoms of which the cAtomQFExcludeGroup flag is set.
+	 * Atom charge and radical states are not considered.
 	 * @param atom
 	 * @return explicitly used valence
 	 */
@@ -533,7 +548,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * The free valence is the number of potential additional single bonded
+	 * The lowest free valence is the number of potential additional single bonded
 	 * neighbours to reach the atom's lowest valence above or equal its current
 	 * occupied valence. Atom charges are considered. Implicit hydrogens are not considered.
 	 * Thus, the phosphor atoms in PF2 and PF4 both have a lowest free valence of 1.
@@ -545,7 +560,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 */
 	public int getLowestFreeValence(int atom) {
 		int occupiedValence = getOccupiedValence(atom);
-		occupiedValence += getElectronValenceCorrection(atom, occupiedValence);
+		int correction = getElectronValenceCorrection(atom, occupiedValence);
 
 		int valence = getAtomAbnormalValence(atom);
 		if (valence == -1) {
@@ -555,13 +570,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			}
 			else {
 				int i= 0;
-				while (occupiedValence > valenceList[i] && i<valenceList.length-1)
+				while ((occupiedValence > valenceList[i] + correction) && (i<valenceList.length-1))
 					i++;
 				valence = valenceList[i];
 				}
 			}
 
-		return valence - occupiedValence;
+		return valence + correction - occupiedValence;
 		}
 
 
@@ -1065,7 +1080,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int[] atomMap = compressMolTable();
 		mValidHelperArrays = cHelperNone;
 
-		try { canonizeCharge(true); } catch (Exception e) {}
+		try { canonizeCharge(true, true); } catch (Exception e) {}
 
 		return atomMap;
 		}
@@ -1132,7 +1147,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		ensureHelperArrays(cHelperNeighbours);
 
 		if (substituent != null) {
-			substituent.deleteMolecule();
+			substituent.clear();
 			substituent.mIsFragment = false;
 			}
 
@@ -1149,8 +1164,10 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		int current = 1;
 		int highest = 1;
 	 	while (current <= highest) {
-			int connAtoms = getAllConnAtomsPlusMetalBonds(graphAtom[current]);
-			for (int i=0; i<connAtoms; i++) {
+//			int connAtoms = getAllConnAtomsPlusMetalBonds(graphAtom[current]);
+//		    for (int i=0; i<connAtoms; i++) {     the default for graph methods is to neglect dative bonds; TLS 27 May 2020
+// If dative bonds must be considered on a certain context, the we need to introduce a flag e.g. as in getFragmentAtoms()
+			for (int i=0; i<mAllConnAtoms[graphAtom[current]]; i++) {
 				int candidate = mConnAtom[graphAtom[current]][i];
 				if (candidate == coreAtom) {
 					if (current != 1)
@@ -1680,6 +1697,15 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @param atom
 	 */
 	public void convertStereoBondsToSingleBonds(int atom) {
+		if (mPi[atom] == 2 && mConnAtoms[atom] == 2 && mConnBondOrder[atom][0] == 2) {
+			for (int i=0; i<2; i++) {
+				int alleneEnd = findAlleneEndAtom(atom, mConnAtom[atom][i]);
+				if (alleneEnd != -1)
+					convertStereoBondsToSingleBonds(alleneEnd);
+				}
+			return;
+			}
+
 		for (int i=0; i<mAllConnAtoms[atom]; i++) {
 			int connBond = mConnBond[atom][i];
 			if (isStereoBond(connBond, atom))
@@ -1689,6 +1715,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	public void setStereoBondFromAtomParity(int atom) {
+		convertStereoBondsToSingleBonds(atom);
+
 			// set an optimal bond to up/down to reflect the atom parity
 		if (getAtomParity(atom) == Molecule.cAtomParityNone
 		 || getAtomParity(atom) == Molecule.cAtomParityUnknown)
@@ -2214,7 +2242,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * Checks whether atom is one of the two end of an allene.
+	 * If atom is one of the two ends of an allene then returns allene center atom.
 	 * @param atom
 	 * @return allene center or -1
 	 */
@@ -2241,13 +2269,32 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		}
 
 	/**
-	 * Checks whether atom is one of the two atoms of an axial chirality bond of BINAP type.
-	 * Condition: non-aromatic single bond connecting two aromatic rings with 6 or more members
-	 * that together bear at least three ortho substituents. A stereo bond indicating the
-	 * chirality is not(!!!) a condition.
-	 * @param atom to check, whether it is part of a bond, which has BINAP type of axial chirality
-	 * @return opposite atom of axial chirality bond or -1 if axial chirality conditions are not met
+	 * Crawls along a chain of sp-hybridized atoms starting from atom2 (which may not be
+	 * sp-hybridized) away from its sp-hybridized neighbour atom1. Returns the first atom
+	 * that is either not sp-hybridized anymore or the last atom of the chain if that is still
+	 * sp-hybridized. Returns -1 in case of an sp-hybridized cycle.
+	 * @param atom1 sp-hybridized atom
+	 * @param atom2 neighbour atom of atom1
+	 * @return first non-sp-hybridized atom when crawling from atom2 away from atom1
 	 */
+	public int findAlleneEndAtom(int atom1, int atom2) {
+		int startAtom = atom1;
+		while (mConnAtoms[atom2] == 2 && mPi[atom2] == 2 && atom2 != startAtom) {
+			int temp = atom2;
+			atom2 = (mConnAtom[atom2][0] == atom1) ? mConnAtom[atom2][1] : mConnAtom[atom2][0];
+			atom1 = temp;
+			}
+		return (atom2 == startAtom) ? -1 : atom2;
+		}
+
+		/**
+		 * Checks whether atom is one of the two atoms of an axial chirality bond of BINAP type.
+		 * Condition: non-aromatic single bond connecting two aromatic rings with 6 or more members
+		 * that together bear at least three ortho substituents. A stereo bond indicating the
+		 * chirality is not(!!!) a condition.
+		 * @param atom to check, whether it is part of a bond, which has BINAP type of axial chirality
+		 * @return opposite atom of axial chirality bond or -1 if axial chirality conditions are not met
+		 */
 	private int findBINAPOppositeAtom(int atom) {
 		if (mConnAtoms[atom] == 3 && isAromaticAtom(atom) && getAtomRingSize(atom) >= 6)
 			for (int i = 0; i< mConnAtoms[atom]; i++)
@@ -2307,7 +2354,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return whether this atom is the central atom of an allene
 	 */
 	public boolean isCentralAlleneAtom(int atom) {
-		return mConnAtoms[atom] == 2
+		return mPi[atom] == 2
+			&& mConnAtoms[atom] == 2
 			&& mConnBondOrder[atom][0] == 2
 			&& mConnBondOrder[atom][1] == 2
 			&& mAtomicNo[atom] <= 7;
@@ -2345,13 +2393,15 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 					if (isAromaticAtom(connAtom)) {
 						if (getAtomRingSize(connAtom) >= 5) {
 							int orthoSubstituentCount = 0;
-							for (int j = 0; j< mConnAtoms[connAtom]; j++) {
+							for (int j=0; j<mConnAtoms[connAtom]; j++) {
+								// to be more exact, one might not count ortho-oxygen in case of 5-membered rings
 								int ortho = mConnAtom[connAtom][j];
-								if (ortho != atom && mConnAtoms[ortho] >= 3)
+								if (ortho != atom && getNonHydrogenNeighbourCount(ortho) >= 3)
 									orthoSubstituentCount++;
 								}
-							if (orthoSubstituentCount == 2
-							 || (orthoSubstituentCount == 1 && mConnAtoms[atom] == 3))
+							int nitrogenNeighbourCount = getNonHydrogenNeighbourCount(atom);
+							if ((orthoSubstituentCount == 2 && nitrogenNeighbourCount >= 2)
+							 || (orthoSubstituentCount == 1 && nitrogenNeighbourCount == 3))
 								continue;  // the nitrogen is rotated out of PI-plane
 							}
 						return true;
@@ -2359,8 +2409,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 					// vinyloge amides, etc.
 					for (int j = 0; j< mConnAtoms[connAtom]; j++) {
-						if ((mConnBondOrder[connAtom][j] == 2 || isAromaticBond(mConnBond[connAtom][j]))
-						 && isStabilizedAtom(mConnAtom[connAtom][j]))
+						if ((mConnBondOrder[connAtom][j] == 2 || isAromaticBond(mConnBond[connAtom][j])))
 							return true;
 						}
 					}
@@ -2451,7 +2500,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			for (int atom2=0; atom2<atom1; atom2++) {
 				double xdif = mCoordinates[atom2].x - mCoordinates[atom1].x;
 				double ydif = mCoordinates[atom2].y - mCoordinates[atom1].y;
-				if ((xdif*xdif + ydif*ydif) < minDistanceSquare)
+				double zdif = mCoordinates[atom2].z - mCoordinates[atom1].z;
+				if ((xdif*xdif + ydif*ydif + zdif*zdif) < minDistanceSquare)
 					throw new Exception("The distance between two atoms is too close.");
 				}
 			}
@@ -2474,15 +2524,21 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 */
 	public boolean normalizeAmbiguousBonds() {
 		ensureHelperArrays(cHelperNeighbours);
+
+		// Molecules from Marvin Sketch, if generated from SMILES, may contain delocalized bonds
+		// using the Daylight aromaticity model, e.g. with aromatic carbonyl carbons in case of pyridinone.
+		// Before generating idcodes, we need to convert to cumulated double bonds and use our own
+		// aromaticity model to locate delocalized bonds.
+		normalizeExplicitlyDelocalizedBonds();
+
 		boolean found = false;
-		
 		for (int atom=0; atom<mAtoms; atom++) {
 			if (mAtomicNo[atom] == 7
 			 && mAtomCharge[atom] == 0) {
 				int valence = getOccupiedValence(atom);
 				if (valence == 4) {
 					// normalize -N(=O)-OH to -N(+)(=O)-O(-)
-					for (int i = 0; i< mConnAtoms[atom]; i++) {
+					for (int i=0; i<mConnAtoms[atom]; i++) {
 						int connAtom = mConnAtom[atom][i];
 						if (mConnBondOrder[atom][i] == 1
 						 && mAtomicNo[connAtom] == 8
@@ -2497,7 +2553,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 					}
 				else if (valence == 5) {
 					// normalize -N(=O)2 to -N(+)(=O)-O(-), -N#N to -N(+)=N(-),
-					for (int i = 0; i< mConnAtoms[atom]; i++) {
+					for (int i=0; i<mConnAtoms[atom]; i++) {
 						int connAtom = mConnAtom[atom][i];
 						int connBond = mConnBond[atom][i];
 						if (mConnBondOrder[atom][i] == 2
@@ -2552,6 +2608,19 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			mValidHelperArrays = cHelperNone;
 
 		return found;
+		}
+
+	/**
+	 * Checks, converts any explicitly delocalized bonds with cBondTypeDelocalized into alternating
+	 * single and double bonds.
+	 * @return
+	 */
+	private boolean normalizeExplicitlyDelocalizedBonds() {
+		for (int bond=0; bond<mBonds; bond++)
+			if (mBondType[bond] == cBondTypeDelocalized)
+				return new AromaticityResolver(this).locateDelocalizedDoubleBonds(null);
+
+		return false;
 		}
 
 	/**
@@ -2615,15 +2684,41 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		}
 
 	/**
-	 * Canonizes charge distribution in single- and multifragment molecules.
+	 * Normalizes charge distribution in single- and multifragment molecules.
+	 * In a first step polar bonds (both atoms have opposite charge) are neutralized
+	 * by removing both atom charges and increasing the bond order, provided that atom
+	 * valences allow the change.
 	 * Neutralizes positive and an equal amount of negative charges on electronegative atoms,
 	 * provided these are not on 1,2-dipolar structures, in order to ideally achieve a neutral molecule.
 	 * This method does not change the overall charge of the molecule. It does not change the number of
 	 * explicit atoms or bonds or their connectivity except bond orders.
+	 * This method does not deprotonate acidic groups to compensate for quarternary charged nitrogen.
+	 * @param allowUnbalancedCharge throws an exception after polar bond neutralization, if overall charge is not zero
 	 * @return remaining overall molecule charge
 	 */
 	public int canonizeCharge(boolean allowUnbalancedCharge) throws Exception {
+		return canonizeCharge(allowUnbalancedCharge, false);
+		}
+
+	/**
+	 * Normalizes charge distribution in single- and multifragment molecules.
+	 * In a first step polar bonds (both atoms have opposite charge) are neutralized
+	 * by removing both atom charges and increasing the bond order, provided that atom
+	 * valences allow the change.
+	 * Neutralizes positive and an equal amount of negative charges on electronegative atoms,
+	 * provided these are not on 1,2-dipolar structures, in order to ideally achieve a neutral molecule.
+	 * This method may change the overall charge of the molecule if doNeutralize==true.
+	 * It does not change the number of explicit atoms or bonds or their connectivity except bond orders.
+	 * This method does not deprotonate acidic groups to compensate for quarternary charged nitrogen.
+	 * @param allowUnbalancedCharge throws an exception after polar bond neutralization, if overall charge is not zero
+	 * @param doNeutralize if true, then tries to neutralize the molecule if overall charges are not zero
+	 * @return remaining overall molecule charge
+	 */
+	public int canonizeCharge(boolean allowUnbalancedCharge, boolean doNeutralize) throws Exception {
 		ensureHelperArrays(cHelperNeighbours);
+
+		if (doNeutralize)
+			allowUnbalancedCharge = true;
 
 		for (int bond=0; bond<mAllBonds; bond++) {
 			int bondOrder = getBondOrder(bond);
@@ -2650,10 +2745,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				 || (mAtomicNo[atom2] < 9 && getOccupiedValence(atom2) > 3))
 						continue;
 
-				// don't destroy stereo centers like sulfoxides
-				if ((mAtomicNo[atom1] >= 14 && mConnAtoms[atom1] >= 3)
-				 || (mAtomicNo[atom1] >= 14 && mConnAtoms[atom1] >= 3))
-					continue;
+				int oldBondType = mBondType[bond];
 
 				mAtomCharge[atom1] -= 1;
 				mAtomCharge[atom2] += 1;
@@ -2661,6 +2753,17 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 					mBondType[bond] = cBondTypeDouble;
 				else
 					mBondType[bond] = cBondTypeTriple;
+
+				if (oldBondType == cBondTypeDown
+				 || oldBondType == cBondTypeUp) {   // retain stereo information
+					int stereoCenter = mBondAtom[0][bond];
+					int newStereoBond = preferredTHStereoBond(stereoCenter);
+					if (mBondAtom[0][newStereoBond] != stereoCenter) {
+						mBondAtom[1][newStereoBond] = mBondAtom[0][newStereoBond];
+						mBondAtom[1][newStereoBond] = stereoCenter;
+						}
+					}
+
 				mValidHelperArrays = cHelperNone;
 				}
 			}
@@ -2682,14 +2785,16 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		ensureHelperArrays(cHelperNeighbours);
 		int overallChargeChange = 0;
+		int positiveChargeForRemoval = doNeutralize ?
+					overallCharge + negativeAdjustableCharge : negativeAdjustableCharge;
 		for (int atom=0; atom<mAllAtoms; atom++) {
 			if (mAtomCharge[atom] > 0) {
 				if (!hasNegativeNeighbour(atom) && isElectronegative(atom)) {
 					int chargeReduction = Math.min(getImplicitHydrogens(atom), mAtomCharge[atom]);
-					if (chargeReduction != 0 && negativeAdjustableCharge >= chargeReduction) {
+					if (chargeReduction != 0 && positiveChargeForRemoval >= chargeReduction) {
 						overallCharge -= chargeReduction;
 						overallChargeChange -= chargeReduction;
-						negativeAdjustableCharge -= chargeReduction;
+						positiveChargeForRemoval -= chargeReduction;
 						mAtomCharge[atom] -= chargeReduction;
 						mValidHelperArrays &= cHelperNeighbours;
 						}
@@ -2697,24 +2802,25 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				}
 			}
 
-		if (overallChargeChange < 0) {
+		int negativeChargeForRemoval = doNeutralize ? overallCharge : overallChargeChange;
+		if (negativeChargeForRemoval < 0) {
 			int[] negativeAtom = new int[negativeAtomCount];
 			negativeAtomCount = 0;
 			for (int atom=0; atom<mAllAtoms; atom++) {
 				if (mAtomCharge[atom] < 0 && !hasPositiveNeighbour(atom)) {
 					// Ideally priorities for negative atom protonation should
 					// be done based on atom priorities from Canonizer.
-					negativeAtom[negativeAtomCount++] = (mAtomicNo[atom] << 16)
+					negativeAtom[negativeAtomCount++] = (mAtomicNo[atom] << 22)
 													  + atom;
 					}
 				}
 			java.util.Arrays.sort(negativeAtom);
-			for (int i=negativeAtom.length-1; (overallCharge < 0) && (i>=negativeAtom.length-negativeAtomCount); i--) {
-				int atom = negativeAtom[i] & 0x0000FFFF;
+			for (int i=negativeAtom.length-1; (negativeChargeForRemoval < 0) && (i>=negativeAtom.length-negativeAtomCount); i--) {
+				int atom = negativeAtom[i] & 0x003FFFFF;
 				if (isElectronegative(atom)) {
-					int chargeReduction = Math.min(-overallChargeChange, -mAtomCharge[atom]);
+					int chargeReduction = Math.min(-negativeChargeForRemoval, -mAtomCharge[atom]);
 					overallCharge += chargeReduction;
-					overallChargeChange += chargeReduction;
+					negativeChargeForRemoval += chargeReduction;
 					mAtomCharge[atom] += chargeReduction;
 					mValidHelperArrays &= cHelperNeighbours;
 					}
@@ -3166,8 +3272,9 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return
 	 */
 	public boolean isSimpleHydrogen(int atom) {
-		return mAtomicNo[atom] == 1 && mAtomMass[atom] == 0 && mAtomCharge[atom] == 0 && mAtomMapNo[atom] == 0
+		return mAtomicNo[atom] == 1 && mAtomMass[atom] == 0 && mAtomCharge[atom] == 0 // && mAtomMapNo[atom] == 0
 			&& (mAtomCustomLabel == null || mAtomCustomLabel[atom] == null);
+		// Since a mapNo is not part of an idcode, a mapped but otherwise simple H must be considered simple; TLS 29Aug2020
 		}
 
 	/**
@@ -3426,4 +3533,35 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	private void writeObject(ObjectOutputStream stream) throws IOException {}
 	private void readObject(ObjectInputStream stream) throws IOException {}
+
+
+
+	public final static Coordinates getCenterGravity(ExtendedMolecule mol) {
+
+		int n = mol.getAllAtoms();
+
+		int [] indices = new int [n];
+
+		for (int i = 0; i < indices.length; i++) {
+			indices[i]=i;
+		}
+
+		return getCenterGravity(mol, indices);
 	}
+
+	public final static Coordinates getCenterGravity(ExtendedMolecule mol, int[] indices) {
+
+		Coordinates c = new Coordinates();
+		for (int i = 0; i < indices.length; i++) {
+			c.x += mol.getAtomX(indices[i]);
+			c.y += mol.getAtomY(indices[i]);
+			c.z += mol.getAtomZ(indices[i]);
+		}
+		c.x /= indices.length;
+		c.y /= indices.length;
+		c.z /= indices.length;
+
+		return c;
+	}
+
+}

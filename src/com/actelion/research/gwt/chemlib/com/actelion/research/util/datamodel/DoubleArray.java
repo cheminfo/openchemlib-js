@@ -43,7 +43,7 @@ import java.util.Arrays;
  * 26 Jun 2010 MvK: Start implementation
  */
 public class DoubleArray implements INumericalDataColumn {
-	
+
 	private static final int START_CAPACITY = 32;
 	
 	private static final int MAX_DELTA_CAPACITY = (int)Math.pow(2, 20);
@@ -72,11 +72,28 @@ public class DoubleArray implements INumericalDataColumn {
 		size = a.length;
 	}
 
+	public DoubleArray(int [] a) {
+		init(a.length);
+		System.arraycopy(a,0, data, 0, a.length);
+		size = a.length;
+	}
+
+	public DoubleArray(IntArray ia) {
+		init(ia.length());
+		for (int i = 0; i < ia.length(); i++) {
+			add(ia.get(i));
+		}
+	}
+
 
 
 	private void init(int capacity){
+		if(capacity<1){
+			throw new RuntimeException("Capacity (" + capacity + ") to low!");
+		}
+
 		data = new double[capacity];
-		delta_capacity = capacity/2;
+		delta_capacity = Math.max(1, capacity/2);
 		size = 0;
 	}
 
@@ -112,7 +129,39 @@ public class DoubleArray implements INumericalDataColumn {
 		
 		return index;
 	}
-	
+
+	public int add(double [] d){
+
+		int index = size-1;
+
+		for (int i = 0; i < d.length; i++) {
+			index = add(d[i]);
+		}
+
+		return index;
+	}
+
+	public int add(float [] d){
+
+		int index = size-1;
+
+		for (int i = 0; i < d.length; i++) {
+			index = add(d[i]);
+		}
+
+		return index;
+	}
+	public int add(DoubleArray d){
+
+		int index = size-1;
+
+		for (int i = 0; i < d.size; i++) {
+			index = add(d.get(i));
+		}
+
+		return index;
+	}
+
 	public double avr(){
 		
 		double avr = 0;
@@ -205,5 +254,22 @@ public class DoubleArray implements INumericalDataColumn {
 	@Override
 	public double getValueAt(int i) {
 		return data[i];
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("DoubleArray{");
+		sb.append("data=");
+		for (int i = 0; i < size; i++) {
+			sb.append(data[i]);
+			if(i<size-1){
+				sb.append(",");
+			}
+		}
+
+		sb.append(", size=").append(size);
+		sb.append(", delta_capacity=").append(delta_capacity);
+		sb.append('}');
+		return sb.toString();
 	}
 }

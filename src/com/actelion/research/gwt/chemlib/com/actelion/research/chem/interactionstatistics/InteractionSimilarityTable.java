@@ -70,7 +70,7 @@ public class InteractionSimilarityTable {
 		public double optimalDist;
 		public double optimalStrength;
 		
-		public InteractionDescriptor(DistanceDependentPairPotential plf) {
+		public InteractionDescriptor(SplineFunction plf) {
 			if(plf==null) return;
 			N = plf.getTotalOccurences();
 			try {
@@ -120,9 +120,6 @@ public class InteractionSimilarityTable {
 	private InteractionSimilarityTable() {
 		keyToId = new HashMap<Integer,Integer>();
 		stats = InteractionDistanceStatistics.getInstance();
-		stats.initialize();
-
-		
 		
 		//Prepare the proteinLigandIDs table
 		atomKeys = stats.getAtomKeySet();
@@ -138,7 +135,7 @@ public class InteractionSimilarityTable {
 		
 		for (int i : atomKeys) {
 			for (int j : atomKeys) {
-				DistanceDependentPairPotential plf = stats.getFunction(i, j);
+				SplineFunction plf = stats.getFunction(i, j);
 				iDsToDescriptor[keyToId.get(i)][keyToId.get(j)] = new InteractionDescriptor(plf);
 			}			
 		}
@@ -186,19 +183,11 @@ public class InteractionSimilarityTable {
 	
 	/**
 	 * D(LigandType_1, LigandType_2) = Sum( d( F(ProteinType_i, LigandType_1), F(ProteinType_i, LigandType_2)), i) 
-	 * @param l1
-	 * @param l2
+	 * @param type1
+	 * @param type2
 	 * @return
 	 */
-	
-
-	
-	
-	
-	public double getEquivalence(int type1, int type2) {
-		
-		
-//		return getDistance(type1, type2);
+	public double getDissimilarity(int type1, int type2) {
 		int a = keyToId.get(InteractionDistanceStatistics.getInstance().getKey(type1));
 		int b = keyToId.get(InteractionDistanceStatistics.getInstance().getKey(type2));
 
@@ -211,15 +200,15 @@ public class InteractionSimilarityTable {
 	}
 	/**
 	 * Compare similarity values of 2 types (across all lines)
-	 * @param type1
-	 * @param maxAvg
+	 * @param type
+	 * @param maxDist
 	 * @return
 	 */
 	public List<Integer> getEquivalentTypes(int type, double maxDist) {
 		type = InteractionDistanceStatistics.getInstance().getKey(type);
 		List<Integer> res = new ArrayList<Integer>();
 		for (int type2 : atomKeys) {			
-			if(getEquivalence(type, type2)<maxDist) {
+			if(getDissimilarity(type, type2)<maxDist) {
 				res.add(type2);
 			}
 		}

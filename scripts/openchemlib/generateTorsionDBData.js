@@ -23,11 +23,11 @@ const end = `
 }
 `;
 
-function generateTorsionDBData({ config }) {
+function generateTorsionDBData() {
   const torsionDBData = [start];
   for (const file of files) {
     const contents = fs.readFileSync(
-      path.join(config.openchemlib, folder, `${file}.txt`),
+      path.join(__dirname, '../../openchemlib/src', folder, `${file}.txt`),
       'utf8',
     );
     const lines = contents.split('\n').filter((l) => l.length > 0);

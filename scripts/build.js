@@ -149,12 +149,7 @@ function copyOpenchemlib() {
 
   const generated = chemlibClasses.generated;
   for (const generatedFile of generated) {
-    fs.writeFileSync(
-      path.join(outDir, generatedFile[0]),
-      generatedFile[1]({
-        config,
-      }),
-    );
+    fs.writeFileSync(path.join(outDir, generatedFile[0]), generatedFile[1]());
   }
 }
 

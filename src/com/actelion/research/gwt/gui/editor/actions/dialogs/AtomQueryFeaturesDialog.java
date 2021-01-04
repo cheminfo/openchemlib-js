@@ -58,11 +58,14 @@ public class AtomQueryFeaturesDialog extends TDialog implements IAtomQueryFeatur
   private TextBox mTFAtomList;
   private Label mLabelAtomList;
   private Button cancel, ok;
+  private boolean includeReactionHints;
 
-  public AtomQueryFeaturesDialog(StereoMolecule mol, int atom) {
+  public AtomQueryFeaturesDialog(StereoMolecule mol, int atom, boolean includeReactionHints) {
     super(null, (mol.isSelectedAtom(atom)) ? "Multiple Atom Properties" : "Atom Properties");
     mMol = mol;
     mAtom = atom;
+    // TODO: add reaction hints UI
+    this.includeReactionHints = includeReactionHints;
   }
 
   protected void buildGUI(RootPanel root) {

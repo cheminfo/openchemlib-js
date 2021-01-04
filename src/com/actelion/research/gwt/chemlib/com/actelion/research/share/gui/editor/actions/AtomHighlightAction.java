@@ -329,7 +329,8 @@ public abstract class AtomHighlightAction extends DrawAction
         GeomFactory factory = model.getGeomFactory();
         StereoMolecule mol = model.getMolecule();
         if (mol != null) {
-            IAtomQueryFeaturesDialog dlg = factory.createAtomQueryFeatureDialog(/*new AtomQueryFeaturesDialog*/mol, atom);
+            boolean showReactionHints = (model.getMode() & Model.MODE_REACTION) != 0;
+            IAtomQueryFeaturesDialog dlg = factory.createAtomQueryFeatureDialog(mol, atom, showReactionHints);
             dlg.setResultHandler(new Consumer<DialogResult>()
             {
                 @Override
@@ -341,7 +342,6 @@ public abstract class AtomHighlightAction extends DrawAction
                     }
                 }
             });
-
             return dlg.doModalAt(lastHightlightPoint.getX(), lastHightlightPoint.getY()) == DialogResult.IDOK;
         }
         return false;

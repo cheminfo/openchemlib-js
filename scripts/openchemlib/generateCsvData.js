@@ -34,11 +34,11 @@ const end = `
 }
 `;
 
-function generateCsvData({ config }) {
+function generateCsvData() {
   const csvData = [start];
   for (const file of files) {
     const contents = fs.readFileSync(
-      path.join(config.openchemlib, folder, `${file}.csv`),
+      path.join(__dirname, '../../openchemlib/src', folder, `${file}.csv`),
       'utf8',
     );
     csvData.push(

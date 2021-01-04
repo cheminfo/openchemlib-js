@@ -21,14 +21,15 @@ exports.modified = modified.map(getFilename);
 
 const changed = [
   ['chem/ChemistryHelper', removePrintf],
+  ['chem/Molecule3D', removeCloneInfos],
   ['chem/conf/BondLengthSet', changeBondLengthSet],
+  ['@org/openmolecules/chem/conf/gen/RigidFragmentCache', removeCacheIO],
   ['chem/conf/TorsionDB', changeTorsionDB],
   ['chem/forcefield/mmff/Csv', changeCsv],
   ['chem/forcefield/mmff/Separation', replaceHashTable],
   ['chem/forcefield/mmff/Tables', changeTables],
   ['chem/forcefield/mmff/Vector3', changeVector3],
   ['chem/io/RXNFileV3Creator', removeRXNStringFormat],
-  ['chem/Molecule', changeMolecule],
   ['share/gui/editor/Model', removePrintf],
   ['util/ArrayUtils', changeArrayUtils],
 ];
@@ -38,15 +39,33 @@ exports.changed = changed.map((file) => {
 });
 
 const removed = [
-  'calc/statistics/median/ModelMedianDouble.java', // uses StringFunctions
+  'calc/statistics',
+  'chem/descriptor/flexophore',
+  'chem/descriptor/DescriptorHandlerFlexophore.java',
+  'chem/descriptor/DescriptorHandlerFunctionalGroups.java',
+  'chem/descriptor/DescriptorHandlerStandardFactory.java',
+  'chem/descriptor/DescriptorHandlerStandard2DFactory.java',
   'chem/dnd', // ui
   'chem/FingerPrintGenerator.java',
   'chem/forcefield/mmff/Sdf.java', // needs access to disk
+  'chem/mcs/MatchList.java',
+  'chem/mcs/MatchListContainer.java',
+  'chem/properties/complexity/ExhaustiveFragmentsStatistics.java',
+  'chem/properties/complexity/MolecularComplexityCalculator.java',
+  'chem/properties/fractaldimension',
   'chem/reaction/ClassificationData.java',
-  'gui/dnd', // ui
-  'gui/hidpi', // ui
+  'chem/reaction/FunctionalGroupClassifier.java',
+  'chem/StructureSearch.java',
+  'jfx',
+  'gui/dnd',
+  'gui/hidpi',
+  'gui/CompoundCollectionPane.java',
+  'gui/JChemistryView.java',
+  'gui/JEditableChemistryView.java',
+  'gui/JEditableStructureView.java',
+  'gui/JStructureView.java',
+  'gui/ScrollPaneAutoScrollerWhenDragging.java',
   'share/gui/editor/chem/DrawingObject.java',
-  // 'util/ArrayUtils.java', // uses reflection
   'util/CursorHelper.java',
   'util/datamodel/IntVec.java',
   'util/IntQueue.java', // unused, depends on ArrayUtils
@@ -64,31 +83,30 @@ const generated = [
 exports.generated = generated.map((file) => [getFilename(file[0]), file[1]]);
 
 function getFilename(file) {
-  return `actelion/research/${file}.java`;
+  if (file.startsWith('@org/')) {
+    return `../org/${file.replace('@org/', '')}.java`;
+  } else {
+    return `actelion/research/${file}.java`;
+  }
 }
 
 function getFolderName(file) {
-  return `actelion/research/${file}`;
-}
-
-function changeMolecule(molecule) {
-  molecule = molecule.replace('import java.lang.reflect.Array;\n', '');
-  const copyOf = 'protected final static Object copyOf';
-  const copyOfIndex = molecule.indexOf(copyOf);
-  if (copyOfIndex === -1) throw new Error('did not find copyOf method');
-  const closeIndex = molecule.indexOf('}', copyOfIndex);
-  molecule = `${molecule.substr(0, closeIndex + 1)}*/${molecule.substr(
-    closeIndex + 1,
-  )}`;
-  molecule = `${molecule.substr(0, copyOfIndex)}/*${molecule.substr(
-    copyOfIndex,
-  )}`;
-  molecule = molecule.replace(/\([^)]+\)copyOf/g, 'Arrays.copyOf');
-  return molecule;
+  if (file.startsWith('@org/')) {
+    return `../org/${file.replace('@org/', '')}`;
+  } else {
+    return `actelion/research/${file}`;
+  }
 }
 
 function removePrintf(code) {
   return code.replace(/System\.out\.printf/g, '// System.out.print');
+}
+
+function removeCloneInfos(code) {
+  return code.replace(
+    'infos[a] = m.infos[i].clone();',
+    '// infos[a] = m.infos[i].clone();',
+  );
 }
 
 function changeArrayUtils(code) {
@@ -231,6 +249,42 @@ function changeBondLengthSet(code) {
     newInitialize +
     code.substr(initIndexEnd, code.length);
 
+  return code;
+}
+
+function removeCacheIO(code) {
+  code = removeSlice(
+    code,
+    'public synchronized void loadDefaultCache() {',
+    '\n		}',
+  );
+  code = removeSlice(
+    code,
+    'public static RigidFragmentCache createCache',
+    'return cache;\n	}',
+  );
+  code = removeSlice(code, 'public boolean serializeCache', 'return false;\n	}');
+  code = removeSlice(
+    code,
+    'public boolean writeTabDelimitedTable',
+    'return false;\n	}',
+  );
+  code = removeSlice(
+    code,
+    'public void loadCache(String cacheFileName)',
+    '\n	}',
+  );
+  code = removeSlice(
+    code,
+    'public static RigidFragmentCache createInstance',
+    'return cache;\n	}',
+  );
+  code = removeSlice(code, 'private static long addFragmentsToCacheSMP', '\n	}');
+  code = removeSlice(
+    code,
+    'private static void consumeMoleculesToCacheFragments',
+    '\n	}',
+  );
   return code;
 }
 

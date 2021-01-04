@@ -36,7 +36,7 @@ package com.actelion.research.chem;
 public class AromaticityResolver {
 	ExtendedMolecule	mMol;
 	private boolean		mAllHydrogensAreExplicit;
-	private boolean[]	mIsDelocalizedBond;
+	private boolean[]	mIsDelocalizedAtom,mIsDelocalizedBond;
     private int         mAromaticAtoms,mAromaticBonds,mPiElectronsAdded;
 
     /**
@@ -100,13 +100,13 @@ public class AromaticityResolver {
 
 		mPiElectronsAdded = 0;
 
-		boolean[] isAromaticAtom = new boolean[mMol.getAtoms()];
+		mIsDelocalizedAtom = new boolean[mMol.getAtoms()];
 		for (int bond=0; bond<mMol.getBonds(); bond++) {
 			if (mIsDelocalizedBond[bond]) {
 				mAromaticBonds++;
 				for (int i=0; i<2; i++) {
-					if (!isAromaticAtom[mMol.getBondAtom(i, bond)]) {
-						isAromaticAtom[mMol.getBondAtom(i, bond)] = true;
+					if (!mIsDelocalizedAtom[mMol.getBondAtom(i, bond)]) {
+						mIsDelocalizedAtom[mMol.getBondAtom(i, bond)] = true;
 						mAromaticAtoms++;
 						}
 					}
@@ -118,7 +118,9 @@ public class AromaticityResolver {
 
 		mAllHydrogensAreExplicit = allHydrogensAreExplicit;
 
-        if (mMol.isFragment())	
+		protectFullValenceAtoms(mayChangeAtomCharges);
+
+        if (mMol.isFragment())
         	promoteDelocalizedChains();
 
 		// create small-ring set without aromaticity information
@@ -318,8 +320,22 @@ public class AromaticityResolver {
 		}
 
 
+	private void protectFullValenceAtoms(boolean mayChangeAtomCharges) {
+		for (int atom=0; atom<mMol.getAtoms(); atom++)
+			if (mIsDelocalizedAtom[atom]
+			 && mMol.getLowestFreeValence(atom) == 0
+			 && (!mayChangeAtomCharges
+			  || !mMol.isElectronegative(atom)
+			  || mMol.getAtomCharge(atom) > 0))
+				protectAtom(atom);
+		}
+
+
 	private void protectAtom(int atom) {
-        mAromaticAtoms--;
+		if (mIsDelocalizedAtom[atom]) {
+			mIsDelocalizedAtom[atom] = false;
+			mAromaticAtoms--;
+			}
 		for (int i=0; i<mMol.getConnAtoms(atom); i++) {
 			int connBond = mMol.getConnBond(atom, i);
             if (mIsDelocalizedBond[connBond]) {
@@ -656,28 +672,34 @@ public class AromaticityResolver {
 	private boolean checkAtomTypePi1(int atom, boolean correctCharge) {
 		int atomicNo = mMol.getAtomicNo(atom);
 		if ((atomicNo >=5 && atomicNo <= 8)
-				|| atomicNo == 15 || atomicNo == 16 || atomicNo == 33 || atomicNo == 34) {	// P,S,As,Se
-			int freeValence = mMol.getFreeValence(atom);
-			if (freeValence == 1 || freeValence == 2)	// we allow one more free valence, because the atom may have a missing charge
+		 || atomicNo == 15 || atomicNo == 16 || atomicNo == 33 || atomicNo == 34 || atomicNo == 52) {	// P,S,As,Se,Te
+
+// Old logic seems fishy to me; TLS 10Dec2020
+//			int freeValence = mMol.getFreeValence(atom);
+//			if (freeValence == 1 || freeValence == 2)	// we allow one more free valence, because the atom may have a missing charge
+//  			return true;
+
+			int freeValence = mMol.getLowestFreeValence(atom);
+			if (freeValence != 0)
 				return true;
 
 			if (mMol.getAtomCharge(atom) == 0) {
-				if ((atomicNo == 15 || atomicNo == 33) && freeValence == 3) {
+				if ((atomicNo == 15 || atomicNo == 33) /* && freeValence == 3 */) {
 					if (correctCharge)
 						mMol.setAtomCharge(atom, 1);
 					return true;
 					}
-				if ((atomicNo == 16 || atomicNo == 34) && freeValence == 4) {
+				if ((atomicNo == 16 || atomicNo == 34 || atomicNo == 52) /* && freeValence == 4 */) {
 					if (correctCharge)
 						mMol.setAtomCharge(atom, 1);
 					return true;
 					}
-				if (atomicNo == 5 && freeValence == 0) {
+				if (atomicNo == 5 /* && freeValence == 0 */) {
 					if (correctCharge)
 						mMol.setAtomCharge(atom, -1);
 					return true;
 					}
-				if ((atomicNo == 7 || atomicNo == 8) && freeValence == 0) {
+				if ((atomicNo == 7 || atomicNo == 8) /* && freeValence == 0 */) {
 					if (correctCharge)
 						mMol.setAtomCharge(atom, 1);
 					return true;
@@ -709,7 +731,7 @@ public class AromaticityResolver {
 			if (mMol.getConnAtoms(atom) == 3)
 				return 8;
 			}
-		else if (mMol.getAtomicNo(atom) == 16 || mMol.getAtomicNo(atom) == 34) {
+		else if (mMol.getAtomicNo(atom) == 16 || mMol.getAtomicNo(atom) == 34 || mMol.getAtomicNo(atom) == 52) {
 			if (mMol.getConnAtoms(atom) == 2)
 				return 12;
 			}

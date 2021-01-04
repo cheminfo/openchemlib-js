@@ -56,17 +56,19 @@ public interface CompoundTableConstants {
 
     String cReactionPartReaction = "reaction";  // this may only be used, if a molecule type descriptor is calculated from all merged reaction molecules
     String cReactionPartReactants = "reactants";
-//    String cReactionPartPseudoCatalysts = "catalysts";
     String cReactionPartProducts = "products";
     String cReactionPartDelimiter = " of ";
 
     int cTextExclusionTypeContains = 1;
     int cTextExclusionTypeStartsWith = 2;
-    int cTextExclusionTypeEquals = 3;
-    int cTextExclusionTypeRegEx = 4;
+    int cTextExclusionTypeEndsWith = 3;
+    int cTextExclusionTypeEquals = 4;
+    int cTextExclusionTypeRegEx = 5;
 
     int cMaxTextCategoryCount = 65536;
     int cMaxDateOrDoubleCategoryCount = 16384;
+
+    boolean cAllowLogModeForNegativeOrZeroValues = true;
 
     // summary mode for displaying values.
     int cSummaryModeNormal = 0;
@@ -89,7 +91,7 @@ public interface CompoundTableConstants {
     int cStructureHiliteModeFilter = 0;
     int cStructureHiliteModeCurrentRow = 1;
     int cStructureHiliteModeNone = 2;
-    String[] cStructureHiliteModeText = { "Most Recent Filter", "Current Row Similarity", "No Highlighting" };
+    String[] cStructureHiliteModeText = { "Most Recent Filter", "Similarity To Reference Row", "No Highlighting" };
     String[] cStructureHiliteModeCode = { "hiliteFilter", "hiliteCurrent", "hiliteNone" };
 
     // highlight mode for part-of-reaction highlighting depending on current record similarity
@@ -117,7 +119,8 @@ public interface CompoundTableConstants {
     String cColumnPropertyRelatedCatalystColumn = "catalystColumn";    // one could think of coupling solvent, condition, etc as well
     String[] cColumnRelationTypes = {cColumnPropertyRelatedIdentifierColumn, cColumnPropertyRelatedCatalystColumn};
 
-    String cColumnPropertyGroupName = "groupName";
+    String cColumnPropertyDisplayGroup = "displayGroup";  // columns within same display group can be easily shown and hidden together
+    String cColumnPropertyGroupName = "groupName";  // cell entries in same column group relate to each other in entry order
     String cColumnPropertyUseThumbNail = "useThumbNail";
     String cColumnPropertyImagePath = "imagePath";
     String cColumnPropertyIsFragment = "isFragment";    // specifies for structure & reaction columns, whether the fragment bit is set, when editing a new object
@@ -141,6 +144,8 @@ public interface CompoundTableConstants {
     String cColumnPropertyLookupCount = "lookupCount";
     String cColumnPropertyLookupName = "lookupName";
     String cColumnPropertyLookupURL = "lookupURL";
+    String cColumnPropertyLookupFilter = "lookupFilter";
+    String cColumnPropertyLookupFilterRemoveMinus = "lookupFilterRemoveMinus";
     String cColumnPropertyLookupEncode = "lookupEncode";
     String cColumnPropertyLookupDetailURL = "lookupDetailURL";
     String cColumnPropertyLaunchCount = "launchCount";
@@ -194,6 +199,9 @@ public interface CompoundTableConstants {
 
     String cDataDependentPropertiesStart = "<data dependent properties type=\"";
     String cDataDependentPropertiesEnd = "</data dependent properties>";
+
+    String cViewNameStart = "<view name=\"";    // used as part of data dependent properties
+    String cViewNameEnd = "</view>";
 
     String cExtensionNameFileExplanation = "explanation";
     String cExtensionNameMacroList = "macroList";
