@@ -1,3 +1,4 @@
 extends: cheminfo
 rules:
+  import/no-unresolved: off
   jest/prefer-strict-equal: off
