@@ -27,10 +27,9 @@ describe('from and to SMILES', () => {
     ['[CH3][CH2][OH]', 'CCO'],
     ['C-C-O', 'CCO'],
     ['C(O)C', 'CCO'],
-    // Next examples don't work rigth now. See https://github.com/Actelion/openchemlib/issues/35
-    // ['OC(=O)C(Br)(Cl)N', 'NC(Cl)(Br)C(=O)O'],
-    // ['ClC(Br)(N)C(=O)O', 'NC(Cl)(Br)C(=O)O'],
-    // ['O=C(O)C(N)(Br)Cl', 'NC(Cl)(Br)C(=O)O']
+    ['OC(=O)C(Br)(Cl)N', 'NC(C(O)=O)(Cl)Br'],
+    ['ClC(Br)(N)C(=O)O', 'NC(C(O)=O)(Cl)Br'],
+    ['O=C(O)C(N)(Br)Cl', 'NC(C(O)=O)(Cl)Br'],
   ])('toIsomericSmiles: %s', (input, output) => {
     const mol = Molecule.fromSmiles(input);
     expect(mol.toIsomericSmiles()).toBe(output);
