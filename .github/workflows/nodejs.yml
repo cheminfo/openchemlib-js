@@ -42,4 +42,4 @@ jobs:
       - name: Build OCL
         run: npm run build
       - name: Run tests
-        run: npm run test
+        run: npm run test-only
