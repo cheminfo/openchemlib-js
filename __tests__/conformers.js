@@ -43,26 +43,6 @@ describe('ConformerGenerator', () => {
     expect(conf2Molfile).not.toBe(conf1Molfile);
   });
 
-  it('should be random if initialized with 0', () => {
-    const mol = Molecule.fromSmiles('COCCON');
-
-    const gen1 = new ConformerGenerator(0);
-    expect(gen1.getConformerCount()).toBe(0);
-    gen1.initializeConformers(mol);
-    expect(gen1.getConformerCount()).toBe(0);
-    const conf1 = gen1.getNextConformerAsMolecule().toMolfile();
-    expect(gen1.getConformerCount()).toBe(1);
-
-    const gen2 = new ConformerGenerator(0);
-    expect(gen2.getConformerCount()).toBe(0);
-    gen2.initializeConformers(mol);
-    expect(gen2.getConformerCount()).toBe(0);
-    const conf2 = gen2.getNextConformerAsMolecule().toMolfile();
-    expect(gen2.getConformerCount()).toBe(1);
-
-    expect(conf2).not.toBe(conf1);
-  });
-
   it('should use and return the passed molecule', () => {
     const mol = Molecule.fromSmiles('COCCON');
 
