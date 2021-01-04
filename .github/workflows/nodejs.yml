@@ -29,7 +29,7 @@ jobs:
           java-version: '15.x'
       - name: Install GWT 2.9
         run: |
-          wget https://storage.googleapis.com/gwt-releases/gwt-2.9.0.zip -O gwt.zip
+          wget -q https://storage.googleapis.com/gwt-releases/gwt-2.9.0.zip -O gwt.zip
           unzip -q gwt.zip
           mv gwt-2* gwt
           echo '{"gwt": "./gwt"}' > config.json
