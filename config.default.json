@@ -1,4 +1,5 @@
 {
-  "gwt": "/usr/local/gwt/2.8.2",
+  "jdk": null,
+  "gwt": "/usr/local/gwt/2.9.0",
   "openchemlib": "/usr/local/git/openchemlib/src"
 }

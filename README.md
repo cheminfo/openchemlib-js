@@ -1,7 +1,7 @@
 # OpenChemLib JS
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
+[![build status][ci-image]][ci-url]
 [![npm download][download-image]][download-url]
 
 JavaScript port of the [OpenChemLib](https://github.com/actelion/openchemlib) Java library.
@@ -64,9 +64,9 @@ It contains a structure viewer and a structure editor for browser applications.
 
 To build this project, you need :
 
-- java >= 1.7
-- GWT 2.8 ([Download build here](http://www.gwtproject.org/download.html))
-- Node.js ([link](https://nodejs.org/en/download/current/))
+- Java JDK >= 8
+- GWT 2.9 ([Download build here](http://www.gwtproject.org/download.html))
+- Node.js ([link](https://nodejs.org/en/download/))
 
 ### Install dependencies
 
@@ -107,9 +107,9 @@ Copy the required java files from the openchemlib project.
 
 [BSD-3-Clause](./LICENSE)
 
-[npm-image]: https://img.shields.io/npm/v/openchemlib.svg?style=flat-square
+[npm-image]: https://img.shields.io/npm/v/openchemlib.svg
 [npm-url]: https://www.npmjs.com/package/openchemlib
-[travis-image]: https://img.shields.io/travis/cheminfo/openchemlib-js/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/cheminfo/openchemlib-js
-[download-image]: https://img.shields.io/npm/dm/openchemlib.svg?style=flat-square
+[ci-image]: https://github.com/cheminfo/openchemlib-js/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-url]: https://github.com/cheminfo/openchemlib-js/actions?query=workflow%3A%22Node.js+CI%22
+[download-image]: https://img.shields.io/npm/dm/openchemlib.svg
 [download-url]: https://www.npmjs.com/package/openchemlib
