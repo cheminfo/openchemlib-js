@@ -1,4 +1,4 @@
-# OpenChemLib JS Changelog
+# Changelog
 
 ## 7.2.3 / 2020-01-10
 
