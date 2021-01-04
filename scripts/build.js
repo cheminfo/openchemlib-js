@@ -201,6 +201,7 @@ function compile(mode) {
 
 function build() {
   let prom = [];
+  fs.ensureDirSync('dist');
   for (let k = 0; k < modules.length; k++) {
     let mod = modules[k];
     log(`Exporting module ${mod.name}`);
