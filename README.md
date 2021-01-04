@@ -54,12 +54,6 @@ It contains a structure viewer and a structure editor for browser applications.
 - [StructureView](https://cheminfo.github.io/openchemlib-js/docs/modules/structureview.html)
 - [SVGRenderer](https://cheminfo.github.io/openchemlib-js/docs/modules/svgrenderer.html)
 
-### Online demos
-
-- [Editor](https://cheminfo.github.io/openchemlib-js/examples/Editor.html)
-- [Show structures](https://cheminfo.github.io/openchemlib-js/examples/ShowStructures.html)
-- [SVG](https://cheminfo.github.io/openchemlib-js/examples/SVG.html)
-
 ## Development
 
 To build this project, you need :
