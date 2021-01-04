@@ -27,32 +27,32 @@ if bundle size matters and prediction functionalities are not needed.
 The `full` build (`require('openchemlib/full')`) build is the largest build.
 It contains a structure viewer and a structure editor for browser applications.
 
-- [TypeDoc home page](https://cheminfo.github.io/openchemlib-js/docs/globals.html)
+- [TypeDoc home page](https://cheminfo.github.io/openchemlib-js/globals.html)
 
 ### Modules present in minimal, core and full builds
 
-- [Molecule](https://cheminfo.github.io/openchemlib-js/docs/classes/molecule.html)
-- [Reaction](https://cheminfo.github.io/openchemlib-js/docs/classes/reaction.html)
-- [RingCollection](https://cheminfo.github.io/openchemlib-js/docs/classes/ringcollection.html)
-- [SDFileParser](https://cheminfo.github.io/openchemlib-js/docs/classes/sdfileparser.html)
-- [SSSearcher](https://cheminfo.github.io/openchemlib-js/docs/classes/sssearcher.html)
-- [SSSearcherWithIndex](https://cheminfo.github.io/openchemlib-js/docs/classes/sssearcherwithindex.html)
-- [Util](https://cheminfo.github.io/openchemlib-js/docs/modules/util.html)
+- [Molecule](https://cheminfo.github.io/openchemlib-js/classes/molecule.html)
+- [Reaction](https://cheminfo.github.io/openchemlib-js/classes/reaction.html)
+- [RingCollection](https://cheminfo.github.io/openchemlib-js/classes/ringcollection.html)
+- [SDFileParser](https://cheminfo.github.io/openchemlib-js/classes/sdfileparser.html)
+- [SSSearcher](https://cheminfo.github.io/openchemlib-js/classes/sssearcher.html)
+- [SSSearcherWithIndex](https://cheminfo.github.io/openchemlib-js/classes/sssearcherwithindex.html)
+- [Util](https://cheminfo.github.io/openchemlib-js/modules/util.html)
 
 ### Modules present only in core and full builds
 
-- [ConformerGenerator](https://cheminfo.github.io/openchemlib-js/docs/classes/conformergenerator.html)
-- [DruglikenessPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/druglikenesspredictor.html)
-- [DrugScoreCalculator](https://cheminfo.github.io/openchemlib-js/docs/modules/drugscorecalculator.html)
-- [ForceFieldMMFF94](https://cheminfo.github.io/openchemlib-js/docs/classes/forcefieldmmff94.html)
-- [MoleculeProperties](https://cheminfo.github.io/openchemlib-js/docs/classes/moleculeproperties.html)
-- [ToxicityPredictor](https://cheminfo.github.io/openchemlib-js/docs/classes/toxicitypredictor.html)
+- [ConformerGenerator](https://cheminfo.github.io/openchemlib-js/classes/conformergenerator.html)
+- [DruglikenessPredictor](https://cheminfo.github.io/openchemlib-js/classes/druglikenesspredictor.html)
+- [DrugScoreCalculator](https://cheminfo.github.io/openchemlib-js/modules/drugscorecalculator.html)
+- [ForceFieldMMFF94](https://cheminfo.github.io/openchemlib-js/classes/forcefieldmmff94.html)
+- [MoleculeProperties](https://cheminfo.github.io/openchemlib-js/classes/moleculeproperties.html)
+- [ToxicityPredictor](https://cheminfo.github.io/openchemlib-js/classes/toxicitypredictor.html)
 
 ### Modules present only in full build
 
-- [StructureEditor](https://cheminfo.github.io/openchemlib-js/docs/classes/structureeditor.html)
-- [StructureView](https://cheminfo.github.io/openchemlib-js/docs/modules/structureview.html)
-- [SVGRenderer](https://cheminfo.github.io/openchemlib-js/docs/modules/svgrenderer.html)
+- [StructureEditor](https://cheminfo.github.io/openchemlib-js/classes/structureeditor.html)
+- [StructureView](https://cheminfo.github.io/openchemlib-js/modules/structureview.html)
+- [SVGRenderer](https://cheminfo.github.io/openchemlib-js/modules/svgrenderer.html)
 
 ## Development
 
