@@ -9,3 +9,4 @@ war/**
 *.log
 /gwt/
 gwt.zip
+/dist/
