@@ -26,6 +26,11 @@ public class JSToxicityPredictor {
     predictor = new ToxicityPredictor();
   }
 
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
+
   public int assessRisk(JSMolecule molecule, int riskType) {
     return predictor.assessRisk(molecule.getStereoMolecule(), riskType, services.getThreadMaster());
   }

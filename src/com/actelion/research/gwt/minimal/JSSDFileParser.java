@@ -15,6 +15,11 @@ public class JSSDFileParser {
     parser = new SDFileParser(new StringReader(sdf), fields);
   }
 
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
+
   public boolean next() {
     return parser.next();
   }

@@ -99,6 +99,11 @@ public class StructureEditor implements IChangeListener {
     this(Document.get().getElementById(id), useSVG, scale);
   }
 
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
+
   public StructureEditor(Element container, boolean useSVG, int scale) {
     this.scale = scale;
     this.container = container;

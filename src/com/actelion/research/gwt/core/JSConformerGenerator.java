@@ -24,6 +24,11 @@ public class JSConformerGenerator {
     return result == null ? null : mol;
   }
 
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
+
   public native boolean initializeConformers(JSMolecule mol, JavaScriptObject options)
   /*-{
     if (options === undefined) options = {};

@@ -11,6 +11,11 @@ public class JSSSSearcher {
   public JSSSSearcher() {
   }
 
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
+
   public void setMol(JSMolecule fragment, JSMolecule molecule) {
     setMolecule(molecule);
     setFragment(fragment);

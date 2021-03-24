@@ -25,6 +25,11 @@ public class JSRingCollection {
     coll = input;
   }
 
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
+
   public int getAtomRingSize(int atom) {
     return coll.getAtomRingSize(atom);
   }

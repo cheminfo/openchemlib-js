@@ -13,6 +13,11 @@ public class JSSSSearcherWithIndex {
   public JSSSSearcherWithIndex() {
   }
 
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
+
   public static String[] getKeyIDCode() {
     return com.actelion.research.chem.SSSearcherWithIndex.cKeyIDCode;
   }

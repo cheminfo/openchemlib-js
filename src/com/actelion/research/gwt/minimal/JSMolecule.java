@@ -77,6 +77,11 @@ public class JSMolecule {
   	}
   	return mol;
   }-*/;
+  
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
 
   public String toSmiles() {
     return new SmilesCreator().generateSmiles(oclMolecule);

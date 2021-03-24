@@ -363,6 +363,11 @@ export declare class Molecule {
 
   static isAtomicNoElectropositive(atomicNo: number): boolean;
 
+  /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
+
   toSmiles(): string;
 
   toIsomericSmiles(): string;
@@ -2506,6 +2511,11 @@ export declare class RingCollection {
 
   private constructor();
 
+  /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
+
   getAtomRingSize(atom: number): number;
 
   getBondRingSize(bond: number): number;
@@ -2617,6 +2627,11 @@ export declare class Reaction {
    * @param rxn - The RXN file's contents
    */
   static fromRxn(rxn: string): Reaction;
+  
+  /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
 
   /**
    * Serialize the `Reaction` to a reaction SMILES string.
@@ -2809,6 +2824,11 @@ export declare class SDFileParser {
   constructor(sdf: string, fields: string[]);
 
   /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
+
+  /**
    * Move to the next Molfile. Returns `true` if there is one, `false` otherwise.
    * @example
    * ```js
@@ -2860,6 +2880,11 @@ export declare class SSSearcher {
   constructor();
 
   /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
+
+  /**
    * Set the `fragment` to search.
    * @param fragment - `Molecule` instance to set as fragment. It has to be
    * flagged with `setFragment(true)` first.
@@ -2893,6 +2918,11 @@ export declare class SSSearcherWithIndex {
    * Create a new substructure searcher with index.
    */
   constructor();
+
+  /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
 
   /**
    * Returns an array of the 512 idcodes that are used for computing indexes.
@@ -2995,6 +3025,11 @@ export declare class DruglikenessPredictor {
   static DRUGLIKENESS_UNKNOWN: number;
 
   /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
+
+  /**
    * Returns the calculated drug likeness as a double.
    * @param molecule
    */
@@ -3032,6 +3067,11 @@ export declare class ToxicityPredictor {
   static TYPE_REPRODUCTIVE_EFFECTIVE: number;
 
   static RISK_NAMES: string[];
+
+  /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
 
   /**
    * Returns the calculated risk as an integer.
@@ -3074,6 +3114,11 @@ export declare class ConformerGenerator {
   static STRATEGY_ADAPTIVE_RANDOM: number;
 
   constructor(seed: number);
+
+  /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
 
   /**
    * Fills all free valences of mol with explicit hydrogens and tries to
@@ -3179,6 +3224,11 @@ export declare class ForceFieldMMFF94 {
   constructor(molecule: Molecule, tablename: 'MMFF94' | 'MMFF94s' | 'MMFF94s+', options?: IForceFieldMMFF94Options);
 
   /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
+
+  /**
    * Returns the total number of atoms in this force field.
    */
   size(): number;
@@ -3243,6 +3293,11 @@ export declare class StructureEditor {
    * @param scale
    */
   static createSVGEditor(id: string, scale: number): StructureEditor;
+
+  /**
+   * Returns the OCL object.
+   */
+  getOCL(): any;
 
   getMolecule(): Molecule;
 

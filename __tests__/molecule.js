@@ -137,4 +137,10 @@ describe('Molecule', function () {
       mol.getCanonizedIDCode(Molecule.CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS),
     ).toBe(idcode);
   });
+
+  it('should have a method that returns the OCL object', () => {
+    const molecule = Molecule.fromSmiles('C');
+    const OCL = molecule.getOCL();
+    expect(OCL.Molecule).toStrictEqual(Molecule);
+  });
 });

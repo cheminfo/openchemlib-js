@@ -16,6 +16,11 @@ public class JSDruglikenessPredictor {
     predictor = new DruglikenessPredictor();
   }
 
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
+
   public double assessDruglikeness(JSMolecule molecule) {
     return predictor.assessDruglikeness(molecule.getStereoMolecule(), services.getThreadMaster());
   }

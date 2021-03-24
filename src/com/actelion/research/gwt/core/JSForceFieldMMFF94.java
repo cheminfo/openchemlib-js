@@ -25,6 +25,11 @@ public class JSForceFieldMMFF94 {
     oclMmff = new ForceFieldMMFF94(molecule.getStereoMolecule(), tablename, new HashMap<String, Object>());
   }
 
+  public native Object getOCL()
+  /*-{
+    return $wnd.OCL;
+  }-*/;
+
   public int size() {
     return oclMmff.size();
   }
