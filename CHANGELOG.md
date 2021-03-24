@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.0](https://www.github.com/cheminfo/openchemlib-js/compare/v7.3.0...v7.4.0) (2021-03-24)
+
+
+### Features
+
+* expose a "getOCL" method on public classes ([1879045](https://www.github.com/cheminfo/openchemlib-js/commit/18790459fada2a05e493f3392a41ef2d87101748))
+
 ## [7.3.0](https://www.github.com/cheminfo/openchemlib-js/compare/v7.2.3...v7.3.0) (2021-01-04)
 
 
