@@ -1,6 +1,6 @@
 'use strict';
 
-/* eslint-disable no-tabs,import/order */
+/* eslint-disable no-tabs */
 
 const modified = [
   'calc/ArrayUtilsCalc',

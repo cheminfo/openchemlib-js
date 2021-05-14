@@ -9,18 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
+          distribution: 'zulu'
           java-version: '15.x'
       - name: Install GWT 2.9
-        run: |
-          wget -q https://storage.googleapis.com/gwt-releases/gwt-2.9.0.zip -O gwt.zip
-          unzip -q gwt.zip
-          mv gwt-2* gwt
-          echo '{"gwt": "./gwt"}' > config.json
+        run: ./scripts/get-gwt.sh
       - uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Install dependencies
         run: npm ci
       - name: Build project
