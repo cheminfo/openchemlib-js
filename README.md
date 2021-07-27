@@ -3,6 +3,8 @@
 [![NPM version][npm-image]][npm-url]
 [![build status][ci-image]][ci-url]
 [![npm download][download-image]][download-url]
+[![DOI](https://www.zenodo.org/badge/23346814.svg)](https://www.zenodo.org/badge/latestdoi/23346814)
+
 
 JavaScript port of the [OpenChemLib](https://github.com/actelion/openchemlib) Java library.
 
