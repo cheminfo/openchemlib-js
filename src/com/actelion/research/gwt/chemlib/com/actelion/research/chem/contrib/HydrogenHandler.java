@@ -225,23 +225,42 @@ public class HydrogenHandler {
 			}
 			break;
 		case 3:
-			// CH3 and the like
+			// CH3, NH3 and the like
 		{
 			int iNew;
-			double dx = (x - molecule.getAtomX(molecule.getConnAtom(iAtom, 0)))*H_BOND_RATIO;
-			double dy = (y - molecule.getAtomY(molecule.getConnAtom(iAtom, 0)))*H_BOND_RATIO;
-			// backwards
-			iNew = molecule.addAtom((float)(x + dx),(float)(y + dy));
-			molecule.setAtomicNo(iNew, atomicNo);
-			molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
-			// to the left
-			iNew = molecule.addAtom((float)(x - dy),(float)(y + dx));
-			molecule.setAtomicNo(iNew, atomicNo);
-			molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
-			// to the right
-			iNew = molecule.addAtom((float)(x + dy),(float)(y - dx));
-			molecule.setAtomicNo(iNew, atomicNo);
-			molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
+			double dx;
+			double dy;
+			if (molecule.getConnAtom(iAtom, 0)>0) {
+				dx = (x - molecule.getAtomX(molecule.getConnAtom(iAtom, 0)))*H_BOND_RATIO;
+				dy = (y - molecule.getAtomY(molecule.getConnAtom(iAtom, 0)))*H_BOND_RATIO;
+				// backwards
+				iNew = molecule.addAtom((float)(x + dx),(float)(y + dy));
+				molecule.setAtomicNo(iNew, atomicNo);
+				molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
+				// to the left
+				iNew = molecule.addAtom((float)(x - dy),(float)(y + dx));
+				molecule.setAtomicNo(iNew, atomicNo);
+				molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
+				// to the right
+				iNew = molecule.addAtom((float)(x + dy),(float)(y - dx));
+				molecule.setAtomicNo(iNew, atomicNo);
+				molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);	
+			} else {
+				dx = molecule.getAverageBondLength(true);
+				dy = molecule.getAverageBondLength(true);
+				// backwards
+				iNew = molecule.addAtom((float)(x + dx),(float)(y + dy));
+				molecule.setAtomicNo(iNew, atomicNo);
+				molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
+				// to the left
+				iNew = molecule.addAtom((float)(x - dy*cos60),(float)(y + dx*sin60));
+				molecule.setAtomicNo(iNew, atomicNo);
+				molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
+				// to the right
+				iNew = molecule.addAtom((float)(x - dy*cos60),(float)(y - dx*sin60));
+				molecule.setAtomicNo(iNew, atomicNo);
+				molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
+			}
 		}
 			break;
 		default:
