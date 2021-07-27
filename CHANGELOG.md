@@ -1,5 +1,13 @@
 # Changelog
 
+### [7.4.1](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.0...v7.4.1) (2021-07-27)
+
+
+### Bug Fixes
+
+* addImplicitHydrogens for NH3 ([9e9c353](https://www.github.com/cheminfo/openchemlib-js/commit/9e9c3539a479cc761dcdc69c19f63665ba810f99))
+* publish projet on Zenodo ([e94ebb7](https://www.github.com/cheminfo/openchemlib-js/commit/e94ebb7a1036e54c8250aef1d9ae32ce413fd6e3))
+
 ## [7.4.0](https://www.github.com/cheminfo/openchemlib-js/compare/v7.3.0...v7.4.0) (2021-03-24)
 
 
