@@ -248,15 +248,15 @@ public class HydrogenHandler {
 			} else {
 				dx = molecule.getAverageBondLength(true);
 				dy = molecule.getAverageBondLength(true);
-				// backwards
+				// forward
 				iNew = molecule.addAtom((float)(x + dx),(float)(y + dy));
 				molecule.setAtomicNo(iNew, atomicNo);
 				molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
-				// to the left
+				// backwards top
 				iNew = molecule.addAtom((float)(x - dy*cos60),(float)(y + dx*sin60));
 				molecule.setAtomicNo(iNew, atomicNo);
 				molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
-				// to the right
+				// backwards bottom
 				iNew = molecule.addAtom((float)(x - dy*cos60),(float)(y - dx*sin60));
 				molecule.setAtomicNo(iNew, atomicNo);
 				molecule.addBond(iAtom, iNew, Molecule.cBondTypeSingle);
