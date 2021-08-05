@@ -15,4 +15,10 @@ describe('addImplicitHydroens', () => {
     molecule.addImplicitHydrogens();
     expect(molecule.getAllAtoms()).toBe(4);
   });
+  it('Cl', () => {
+    const molecule = Molecule.fromSmiles('Cl');
+    expect(molecule.getAllAtoms()).toBe(1);
+    molecule.addImplicitHydrogens();
+    expect(molecule.getAllAtoms()).toBe(2);
+  });
 });
