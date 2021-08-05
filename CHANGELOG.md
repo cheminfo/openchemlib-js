@@ -1,5 +1,12 @@
 # Changelog
 
+### [7.4.2](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.1...v7.4.2) (2021-08-05)
+
+
+### Bug Fixes
+
+* addImplicitHydrogens on 'Cl' ([f2cf71f](https://www.github.com/cheminfo/openchemlib-js/commit/f2cf71f3bb040a37b2bb2ec186c171df156631fb))
+
 ### [7.4.1](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.0...v7.4.1) (2021-07-27)
 
 
