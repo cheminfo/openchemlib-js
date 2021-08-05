@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IParameterizedString | OpenChemLib JS</title>
+	<title>IInitializeConformersOptions | OpenChemLib JS</title>
 	<meta name="description" content="Documentation for OpenChemLib JS">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">OpenChemLib JS</a>
 				</li>
 				<li>
-					<a href="iparameterizedstring.html">IParameterizedString</a>
+					<a href="IInitializeConformersOptions.html">IInitializeConformersOptions</a>
 				</li>
 			</ul>
-			<h1>Interface IParameterizedString</h1>
+			<h1>Interface IInitializeConformersOptions</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IParameterizedString</span>
+						<span class="target">IInitializeConformersOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -80,8 +80,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iparameterizedstring.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iparameterizedstring.html#value" class="tsd-kind-icon">value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="IInitializeConformersOptions.html#maxTorsionSets" class="tsd-kind-icon">max<wbr>Torsion<wbr>Sets</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="IInitializeConformersOptions.html#strategy" class="tsd-kind-icon">strategy</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="IInitializeConformersOptions.html#use60degreeSteps" class="tsd-kind-icon">use60degree<wbr>Steps</a></li>
 							</ul>
 						</section>
 					</div>
@@ -90,24 +91,52 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="maxTorsionSets" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> max<wbr>Torsion<wbr>Sets</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Torsion<wbr>Sets<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/f46a0ec/types.d.ts#L2993">types.d.ts:2993</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/d77a9a7/types.d.ts#L3102">types.d.ts:3102</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Maximum number of distinct torsion sets the strategy will try.
+							Default: <code>100000</code>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="value" class="tsd-anchor"></a>
-					<h3>value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="strategy" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> strategy</h3>
+					<div class="tsd-signature tsd-kind-icon">strategy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/f46a0ec/types.d.ts#L2995">types.d.ts:2995</a></li>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/d77a9a7/types.d.ts#L3097">types.d.ts:3097</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>One of the ConformerGenerator.STRATEGY_ constants.
+							Default: <code>ConformerGenerator.STRATEGY_LIKELY_RANDOM</code>.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="use60degreeSteps" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> use60degree<wbr>Steps</h3>
+					<div class="tsd-signature tsd-kind-icon">use60degree<wbr>Steps<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cheminfo/openchemlib-js/blob/d77a9a7/types.d.ts#L3107">types.d.ts:3107</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Use 60 degree steps for every rotatable bond instead of torsion DB.
+							Default: <code>false</code>.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -122,91 +151,94 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
-						<a href="../classes/conformergenerator.html" class="tsd-kind-icon">Conformer<wbr>Generator</a>
+						<a href="../classes/ConformerGenerator.html" class="tsd-kind-icon">Conformer<wbr>Generator</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/druglikenesspredictor.html" class="tsd-kind-icon">Druglikeness<wbr>Predictor</a>
+						<a href="../classes/DruglikenessPredictor.html" class="tsd-kind-icon">Druglikeness<wbr>Predictor</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/forcefieldmmff94.html" class="tsd-kind-icon">Force<wbr>FieldMMFF94</a>
+						<a href="../classes/ForceFieldMMFF94.html" class="tsd-kind-icon">Force<wbr>FieldMMFF94</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/molecule.html" class="tsd-kind-icon">Molecule</a>
+						<a href="../classes/Molecule.html" class="tsd-kind-icon">Molecule</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/moleculeproperties.html" class="tsd-kind-icon">Molecule<wbr>Properties</a>
+						<a href="../classes/MoleculeProperties.html" class="tsd-kind-icon">Molecule<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/reaction.html" class="tsd-kind-icon">Reaction</a>
+						<a href="../classes/Reaction.html" class="tsd-kind-icon">Reaction</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/ringcollection.html" class="tsd-kind-icon">Ring<wbr>Collection</a>
+						<a href="../classes/RingCollection.html" class="tsd-kind-icon">Ring<wbr>Collection</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/sdfileparser.html" class="tsd-kind-icon">SDFile<wbr>Parser</a>
+						<a href="../classes/SDFileParser.html" class="tsd-kind-icon">SDFile<wbr>Parser</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/sssearcher.html" class="tsd-kind-icon">SSSearcher</a>
+						<a href="../classes/SSSearcher.html" class="tsd-kind-icon">SSSearcher</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/sssearcherwithindex.html" class="tsd-kind-icon">SSSearcher<wbr>With<wbr>Index</a>
+						<a href="../classes/SSSearcherWithIndex.html" class="tsd-kind-icon">SSSearcher<wbr>With<wbr>Index</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/structureeditor.html" class="tsd-kind-icon">Structure<wbr>Editor</a>
+						<a href="../classes/StructureEditor.html" class="tsd-kind-icon">Structure<wbr>Editor</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/toxicitypredictor.html" class="tsd-kind-icon">Toxicity<wbr>Predictor</a>
+						<a href="../classes/ToxicityPredictor.html" class="tsd-kind-icon">Toxicity<wbr>Predictor</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="idepictoroptions.html" class="tsd-kind-icon">IDepictor<wbr>Options</a>
+						<a href="IDepictorOptions.html" class="tsd-kind-icon">IDepictor<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="iforcefieldmmff94options.html" class="tsd-kind-icon">IForce<wbr>FieldMMFF94<wbr>Options</a>
+						<a href="IForceFieldMMFF94Options.html" class="tsd-kind-icon">IForce<wbr>FieldMMFF94<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="iforcefieldminimiseoptions.html" class="tsd-kind-icon">IForce<wbr>Field<wbr>Minimise<wbr>Options</a>
+						<a href="IForceFieldMinimiseOptions.html" class="tsd-kind-icon">IForce<wbr>Field<wbr>Minimise<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="ihosecodesoptions.html" class="tsd-kind-icon">IHose<wbr>Codes<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="iinitializeconformersoptions.html" class="tsd-kind-icon">IInitialize<wbr>Conformers<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="imoleculefromsmilesoptions.html" class="tsd-kind-icon">IMolecule<wbr>From<wbr>Smiles<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="imoleculetosvgoptions.html" class="tsd-kind-icon">IMolecule<wbr>ToSVGOptions</a>
+						<a href="IHoseCodesOptions.html" class="tsd-kind-icon">IHose<wbr>Codes<wbr>Options</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="iparameterizedstring.html" class="tsd-kind-icon">IParameterized<wbr>String</a>
+						<a href="IInitializeConformersOptions.html" class="tsd-kind-icon">IInitialize<wbr>Conformers<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iparameterizedstring.html#type" class="tsd-kind-icon">type</a>
+								<a href="IInitializeConformersOptions.html#maxTorsionSets" class="tsd-kind-icon">max<wbr>Torsion<wbr>Sets</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iparameterizedstring.html#value" class="tsd-kind-icon">value</a>
+								<a href="IInitializeConformersOptions.html#strategy" class="tsd-kind-icon">strategy</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="IInitializeConformersOptions.html#use60degreeSteps" class="tsd-kind-icon">use60degree<wbr>Steps</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-interface">
-						<a href="molecularformula.html" class="tsd-kind-icon">Molecular<wbr>Formula</a>
+						<a href="IMoleculeFromSmilesOptions.html" class="tsd-kind-icon">IMolecule<wbr>From<wbr>Smiles<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="rectangle.html" class="tsd-kind-icon">Rectangle</a>
+						<a href="IMoleculeToSVGOptions.html" class="tsd-kind-icon">IMolecule<wbr>ToSVGOptions</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="IParameterizedString.html" class="tsd-kind-icon">IParameterized<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="MolecularFormula.html" class="tsd-kind-icon">Molecular<wbr>Formula</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="Rectangle.html" class="tsd-kind-icon">Rectangle</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#atomhighlightcallback" class="tsd-kind-icon">Atom<wbr>Highlight<wbr>Callback</a>
+						<a href="../modules.html#AtomHighlightCallback" class="tsd-kind-icon">Atom<wbr>Highlight<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#bondhighlightcallback" class="tsd-kind-icon">Bond<wbr>Highlight<wbr>Callback</a>
+						<a href="../modules.html#BondHighlightCallback" class="tsd-kind-icon">Bond<wbr>Highlight<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#changelistenercallback" class="tsd-kind-icon">Change<wbr>Listener<wbr>Callback</a>
+						<a href="../modules.html#ChangeListenerCallback" class="tsd-kind-icon">Change<wbr>Listener<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../modules.html#version" class="tsd-kind-icon">version</a>
