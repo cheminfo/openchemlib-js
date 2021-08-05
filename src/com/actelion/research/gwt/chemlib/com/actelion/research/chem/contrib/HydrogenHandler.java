@@ -33,21 +33,8 @@ public class HydrogenHandler {
 			double dx, dy;
 			int iNew;
 			if (nNeighbours == 0) {
-				double distMin = Double.MAX_VALUE;
-				int iMin = -1;
-				for (int atm = 0; atm < molecule.getAllAtoms(); atm++) {
-					if (atm == iAtom)
-						continue;
-					double deltaX = x - molecule.getAtomX(atm);
-					double deltaY = y - molecule.getAtomY(atm);
-					double currDist = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
-					if (distMin > currDist) {
-						distMin = currDist;
-						iMin = atm;
-					}
-				}
-				dx = x - molecule.getAtomX(iMin);
-				dy = y - molecule.getAtomY(iMin);
+				dx = molecule.getAverageBondLength(true);
+				dy = 0;
 			} else {
 				dx = x - molecule.getAtomX(molecule.getConnAtom(iAtom, 0));
 				dy = y - molecule.getAtomY(molecule.getConnAtom(iAtom, 0));
