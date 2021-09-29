@@ -19,6 +19,59 @@ export default class Molecule {
   static cAtomRadicalStateD = 0x000020;
   static cAtomRadicalStateT = 0x000030;
 
+  static cAtomFlagsColor = 0x0001c0;
+  static cAtomColorNone = 0x000000;
+  static cAtomColorBlue = 0x000040;
+  static cAtomColorRed = 0x000080;
+  static cAtomColorGreen = 0x0000c0;
+  static cAtomColorMagenta = 0x000100;
+  static cAtomColorOrange = 0x000140;
+  static cAtomColorDarkGreen = 0x000180;
+  static cAtomColorDarkRed = 0x0001c0;
+  static cAtomFlagSelected = 0x000200;
+
+  static cAtomFlagsHelper = 0x0003fc0f;
+  static cAtomFlagsHelper2 = 0x00007c08;
+  static cAtomFlagsHelper3 = 0x08038007;
+
+  static cAtomFlagsRingBonds = 0x000c00;
+  static cAtomFlags2RingBonds = 0x000400;
+  static cAtomFlags3RingBonds = 0x000800;
+  static cAtomFlags4RingBonds = 0x000c00;
+  static cAtomFlagAromatic = 0x001000;
+  static cAtomFlagAllylic = 0x002000;
+  static cAtomFlagStabilized = 0x004000;
+
+  static cAtomFlagsCIPParity = 0x018000;
+  static cAtomFlagsCIPParityShift = 15;
+  static cAtomCIPParityNone = 0x000000;
+  static cAtomCIPParityRorM = 0x000001;
+  static cAtomCIPParitySorP = 0x000002;
+  static cAtomCIPParityProblem = 0x000003;
+
+  static cAtomFlagStereoProblem = 0x020000;
+  static cAtomFlagMarked = 0x040000;
+
+  // MDL's enhanced stereochemical representation (ESR group and type may be assigned
+  // to TH and allene stereo centers as well as to BINAP kind of stereo bonds)
+  static cESRTypeAbs = 0;
+  static cESRTypeAnd = 1;
+  static cESRTypeOr = 2;
+  static cESRMaxGroups = 32;
+  static cESRGroupBits = 5;
+
+  static cAtomFlagsESR = 0x03f80000;
+  static cAtomFlagsESRType = 0x00180000;
+  static cAtomFlagsESRTypeShift = 19;
+  static cAtomFlagsESRGroup = 0x03e00000;
+  static cAtomFlagsESRGroupShift = 21;
+
+  static cAtomFlagConfigurationUnknown = 0x04000000;
+  static cAtomFlagIsStereoCenter = 0x08000000;
+
+  static cAtomFlagsValence = 0xf0000000;
+  static cAtomFlagsValenceShift = 28;
+
   static cBondTypeSingle = 0x00000001;
   static cBondTypeDouble = 0x00000002;
   static cBondTypeTriple = 0x00000004;
@@ -29,6 +82,13 @@ export default class Molecule {
   static cBondTypeDelocalized = 0x00000040;
   static cBondTypeDeleted = 0x00000080;
   static cBondTypeIncreaseOrder = 0x0000007f;
+
+  static cBondTypeMaskSimple = 0x00000067; // masks
+  static cBondTypeMaskStereo = 0x00000018;
+
+  static cBondFlagsHelper2 = 0x000003c0;
+  static cBondFlagsHelper3 = 0x0000003f;
+
   static cESRTypeAbs = 0;
   static cESRTypeAnd = 1;
   static cESRTypeOr = 2;
@@ -62,9 +122,6 @@ export default class Molecule {
   static cBondFlagFGHilited = 0x00040000;
 
   static cBondParityUnknownOrNone = 0x1000000;
-
-  static cAtomFlagsValence = 0xf0000000;
-  static cAtomFlagsValenceShift = 28;
 
   static cAtomQFNoOfBits = 30;
   static cAtomQFAromStateBits = 2;
@@ -196,6 +253,32 @@ export default class Molecule {
   static cHelperRings = this.cHelperRingsSimple | this.cHelperBitRings;
   static cHelperParities = this.cHelperRings | this.cHelperBitParities;
   static cHelperCIP = this.cHelperParities | this.cHelperBitCIP;
+
+  static cDefaultAtomValence = 6;
+  // prettier-ignore
+  static  cAtomValence = [null,
+			[1], [0], [1], [2], [3], [4], [3], [2], [1], [0],			// H to Ne
+			[1], [2], [3], [4], [3, 5], [2, 4, 6], [1, 3, 5, 7], [0],	// Na to Ar
+			[1], [2], null, null, null, null, null, null, null, null,	// K to Ni
+			null, null, [2, 3], [2, 4], [3, 5], [2, 4, 6], [1, 3, 5, 7], [0, 2], // Cu to Kr
+			[1], [2], null, null, null, null, null, null, null, null,	// Rb to Pd
+			null, null, [1, 2, 3], [2, 4], [3, 5], [2, 4, 6], [1, 3, 5, 7], // Ag to I
+			[0, 2, 4, 6], [1], [2],										// Xe to Ba
+			null, null, null, null, null, null, null, null, null, null, // La to Dy
+			null, null, null, null, null, null, null, null, null, null, // Ho to Os
+			null, null, null, null, null, null, null, null, null, null, // Ir to Rn
+			null, null, null, null, null, null, null, null, null, null, // Fr to Cm
+			null, null, null, null, null, null, null, null, null, null, // Bk to Sg
+			null, null, null, null, null, null, null, null, null, null, // Bh to Lv
+			null, null, null, null, null, null, null, null, null, null, // Ts to 126
+			null, null, null, null, null, null, null, null, null, null,	// 127 to R5
+			null, null, null, null, null, null, null, null, null, null, // R6 to R15
+			null, null, null, null, null, null, null, null, null, null,	// R16 to 156
+			null, null, null, null, null, null, null, null, null, null, // D to 166
+			null, null, null, null,										// 167 to 170
+			[2], [2], [2], [2], [3], [2], [2], [2], [2], [2],			// Ala to Ile
+			[2], [2], [2], [2], [2], [2], [2], [2], [2], [2],			// Leu to Val
+	];
 
   static getDefaultAverageBondLength() {
     return 24;
@@ -329,6 +412,10 @@ export default class Molecule {
     }
   }
 
+  getBondAtom(no, bond) {
+    return this.mBondAtom[no][bond];
+  }
+
   setAtomX(atom, x) {
     this.mCoordinates[atom].x = x;
     this.mValidHelperArrays &= Molecule.cHelperRings;
@@ -458,6 +545,14 @@ export default class Molecule {
 
   removeQueryFeatures() {
     throw new Error('missing');
+  }
+
+  getAtomAbnormalValence(atom) {
+    return (
+      ((this.mAtomFlags[atom] & Molecule.cAtomFlagsValence) >>>
+        Molecule.cAtomFlagsValenceShift) -
+      1
+    );
   }
 }
 
