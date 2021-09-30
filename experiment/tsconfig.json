@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "target": "ESNext"
+  },
+  "include": ["./*.js"]
+}

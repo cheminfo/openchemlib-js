@@ -1,10 +1,10 @@
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
-import Molecule from './Molecule.mjs';
-import StereoMolecule from './StereoMolecule.mjs';
-import Canonizer from './Canonizer.mjs';
-import AromaticityResolver from './AromaticityResolver.mjs';
+import Molecule from './Molecule.js';
+import StereoMolecule from './StereoMolecule.js';
+import Canonizer from './Canonizer.js';
+import AromaticityResolver from './AromaticityResolver.js';
 
 export default class IDCodeParserWithoutCoordinateInvention {
   mMol = null;
@@ -616,8 +616,8 @@ export default class IDCodeParserWithoutCoordinateInvention {
       coordinates == null &&
       !this.mNeglectSpaceDelimitedCoordinates &&
       idcode.length > this.mIDCodeBufferIndex + 1 &&
-      (idcode[mIDCodeBufferIndex + 1] == ' ' ||
-        idcode[mIDCodeBufferIndex + 1] == '\t')
+      (idcode[this.mIDCodeBufferIndex + 1] == ' ' ||
+        idcode[this.mIDCodeBufferIndex + 1] == '\t')
     ) {
       coordinates = idcode;
       coordsStart = this.mIDCodeBufferIndex + 2;

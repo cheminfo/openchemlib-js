@@ -1,4 +1,4 @@
-import Coordinates from './Coordinates.mjs';
+import Coordinates from './Coordinates.js';
 
 export default class Molecule {
   static cMaxAtomicNo = 190;
@@ -88,12 +88,6 @@ export default class Molecule {
 
   static cBondFlagsHelper2 = 0x000003c0;
   static cBondFlagsHelper3 = 0x0000003f;
-
-  static cESRTypeAbs = 0;
-  static cESRTypeAnd = 1;
-  static cESRTypeOr = 2;
-  static cESRMaxGroups = 32;
-  static cESRGroupBits = 5;
 
   static cBondFlagsParity = 0x00000003;
   static cBondParityNone = 0x00000000;
@@ -227,17 +221,6 @@ export default class Molecule {
   static cBondQFAromatic = 0x00080000;
   static cBondQFNotAromatic = 0x00100000;
 
-  static cBondTypeSingle = 0x00000001;
-  static cBondTypeDouble = 0x00000002;
-  static cBondTypeTriple = 0x00000004;
-  static cBondTypeDown = 0x00000009;
-  static cBondTypeUp = 0x00000011;
-  static cBondTypeCross = 0x0000001a;
-  static cBondTypeMetalLigand = 0x00000020;
-  static cBondTypeDelocalized = 0x00000040;
-  static cBondTypeDeleted = 0x00000080;
-  static cBondTypeIncreaseOrder = 0x0000007f;
-
   static cHelperNone = 0x0000;
   static cHelperBitNeighbours = 0x0001;
   static cHelperBitRingsSimple = 0x0002; // small rings only, no aromaticity, no allylic nor stabilized flags
@@ -358,7 +341,7 @@ export default class Molecule {
   }
 
   addAtom(atomicNo) {
-    if (this.mAllAtoms >= this.mMaxAtoms) this.setMaxAtoms(mMaxAtoms * 2);
+    if (this.mAllAtoms >= this.mMaxAtoms) this.setMaxAtoms(this.mMaxAtoms * 2);
 
     this.mAtomicNo[this.mAllAtoms] = 0; // default
     this.setAtomicNo(this.mAllAtoms, atomicNo); // sets atomicNo and mass
@@ -382,7 +365,7 @@ export default class Molecule {
     this.mAtomCharge = copyOfInt(this.mAtomCharge, v);
     this.mAtomMapNo = copyOfInt(this.mAtomMapNo, v);
     let orig = this.mCoordinates.length;
-    this.mCoordinates = mCoordinates.slice(0, v);
+    this.mCoordinates = this.mCoordinates.slice(0, v);
     for (let i = orig; i < v; i++) {
       this.mCoordinates.push(new Coordinates());
     }
@@ -459,12 +442,12 @@ export default class Molecule {
     return this.mAllBonds++;
   }
 
-  setMaxBonds() {
-    this.mBondAtom[0] = copyOfInt(mBondAtom[0], v);
-    this.mBondAtom[1] = copyOfInt(mBondAtom[1], v);
-    this.mBondType = copyOfInt(mBondType, v);
-    this.mBondFlags = copyOfInt(mBondFlags, v);
-    this.mBondQueryFeatures = copyOfInt(mBondQueryFeatures, v);
+  setMaxBonds(v) {
+    this.mBondAtom[0] = copyOfInt(this.mBondAtom[0], v);
+    this.mBondAtom[1] = copyOfInt(this.mBondAtom[1], v);
+    this.mBondType = copyOfInt(this.mBondType, v);
+    this.mBondFlags = copyOfInt(this.mBondFlags, v);
+    this.mBondQueryFeatures = copyOfInt(this.mBondQueryFeatures, v);
     this.mMaxBonds = v;
   }
 
@@ -552,6 +535,129 @@ export default class Molecule {
       ((this.mAtomFlags[atom] & Molecule.cAtomFlagsValence) >>>
         Molecule.cAtomFlagsValenceShift) -
       1
+    );
+  }
+
+  getMaxAtoms() {
+    return this.mMaxAtoms;
+  }
+
+  getAtomicNo(atom) {
+    return this.mAtomicNo[atom];
+  }
+
+  getAtomCharge(atom) {
+    return this.mAtomCharge[atom];
+  }
+
+  getMaxValence(atom) {
+    let valence = this.getMaxValenceUncharged(atom);
+    return valence + this.getElectronValenceCorrection(atom, valence);
+  }
+
+  getMaxValenceUncharged(atom) {
+    let valence = this.getAtomAbnormalValence(atom);
+
+    if (valence == -1) valence = this.getDefaultMaxValenceUncharged(atom);
+
+    return valence;
+  }
+
+  getElectronValenceCorrection(atom, occupiedValence) {
+    if (this.mAtomicNo[atom] >= 171 && this.mAtomicNo[atom] <= 190) return 0;
+
+    let correction = 0;
+
+    if (
+      (this.mAtomFlags[atom] & Molecule.cAtomRadicalState) ==
+      Molecule.cAtomRadicalStateD
+    )
+      correction -= 1;
+    if (
+      (this.mAtomFlags[atom] & Molecule.cAtomRadicalState) ==
+        Molecule.cAtomRadicalStateS ||
+      (this.mAtomFlags[atom] & Molecule.cAtomRadicalState) ==
+        Molecule.cAtomRadicalStateT
+    )
+      correction -= 2;
+
+    let charge = this.mAtomCharge[atom];
+    if (charge == 0 && this.mIsFragment) {
+      if (
+        (this.mAtomQueryFeatures[atom] & Molecule.cAtomQFCharge) ==
+        Molecule.cAtomQFNotCharge0 + Molecule.cAtomQFNotChargePos
+      )
+        charge = -1;
+      if (
+        (this.mAtomQueryFeatures[atom] & Molecule.cAtomQFCharge) ==
+        Molecule.cAtomQFNotCharge0 + Molecule.cAtomQFNotChargeNeg
+      )
+        charge = 1;
+    }
+    if (
+      this.mAtomicNo[atom] == 7 || // N
+      this.mAtomicNo[atom] == 8 || // O
+      this.mAtomicNo[atom] == 9
+    )
+      // F
+      correction += charge;
+    else if (
+      this.mAtomicNo[atom] == 6 || // C
+      this.mAtomicNo[atom] == 14 || // Si
+      this.mAtomicNo[atom] == 32
+    )
+      // Ge
+      correction -= Math.abs(charge);
+    else if (
+      this.mAtomicNo[atom] == 15 || // P
+      this.mAtomicNo[atom] == 33
+    ) {
+      // As
+      if (occupiedValence - correction - charge <= 3) correction += charge;
+      else correction -= charge;
+    } else if (
+      this.mAtomicNo[atom] == 16 || // S
+      this.mAtomicNo[atom] == 34 || // Se
+      this.mAtomicNo[atom] == 52
+    ) {
+      // Te
+      if (occupiedValence - correction - charge <= 4) correction += charge;
+      else correction -= Math.abs(charge);
+    } else if (
+      this.mAtomicNo[atom] == 17 || // Cl
+      this.mAtomicNo[atom] == 35 || // Br
+      this.mAtomicNo[atom] == 53
+    ) {
+      // I
+      if (occupiedValence - correction - charge <= 5) correction += charge;
+      else correction -= Math.abs(charge);
+    } else {
+      // B, Al, other metals
+      correction -= charge;
+    }
+
+    return correction;
+  }
+
+  getDefaultMaxValenceUncharged(atom) {
+    let valenceList =
+      this.mAtomicNo[atom] < Molecule.cAtomValence.length
+        ? Molecule.cAtomValence[this.mAtomicNo[atom]]
+        : null;
+    return valenceList == null
+      ? Molecule.cDefaultAtomValence
+      : valenceList[valenceList.length - 1];
+  }
+
+  isMetalAtom(atom) {
+    let atomicNo = this.mAtomicNo[atom];
+    return (
+      (atomicNo >= 3 && atomicNo <= 4) ||
+      (atomicNo >= 11 && atomicNo <= 13) ||
+      (atomicNo >= 19 && atomicNo <= 31) ||
+      (atomicNo >= 37 && atomicNo <= 51) ||
+      (atomicNo >= 55 && atomicNo <= 84) ||
+      (atomicNo >= 87 && atomicNo <= 103)
     );
   }
 }

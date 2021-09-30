@@ -1,5 +1,5 @@
-import Molecule from './Molecule.mjs';
-import RingCollection from './RingCollection.mjs';
+import Molecule from './Molecule.js';
+import RingCollection from './RingCollection.js';
 
 export default class ExtendedMolecule extends Molecule {
   static FISCHER_PROJECTION_LIMIT = Math.PI / 36;
@@ -181,8 +181,8 @@ export default class ExtendedMolecule extends Molecule {
       return;
     }
 
-    let isHydrogenBond = new Array(mAllBonds).fill(false);
-    for (let bond = 0; bond < thsi.mAllBonds; bond++) {
+    let isHydrogenBond = new Array(this.mAllBonds).fill(false);
+    for (let bond = 0; bond < this.mAllBonds; bond++) {
       // mark all bonds to hydrogen
       let atom1 = this.mBondAtom[0][bond];
       let atom2 = this.mBondAtom[1][bond];
@@ -333,7 +333,7 @@ export default class ExtendedMolecule extends Molecule {
     }
 
     if (metalBondFound) {
-      let allConnAtoms = new Int32Array(mAllAtoms);
+      let allConnAtoms = new Int32Array(this.mAllAtoms);
       for (let atom = 0; atom < this.mAllAtoms; atom++)
         allConnAtoms[atom] = this.mAllConnAtoms[atom];
 
@@ -645,5 +645,48 @@ export default class ExtendedMolecule extends Molecule {
           this.mBondType[ringBond[i]] = Molecule.cBondTypeDouble;
       }
     }
+  }
+
+  getConnAtom(atom, i) {
+    return this.mConnAtom[atom][i];
+  }
+
+  getConnAtoms(atom) {
+    return this.mConnAtoms[atom];
+  }
+
+  getConnBond(atom, i) {
+    return this.mConnBond[atom][i];
+  }
+
+  getFreeValence(atom) {
+    return this.getMaxValence(atom) - this.getOccupiedValence(atom);
+  }
+
+  isNitrogenFamily(atom) {
+    let atomicNo = this.mAtomicNo[atom];
+    return (
+      atomicNo == 7 || // N
+      atomicNo == 15 || // P
+      atomicNo == 33
+    ); // As
+  }
+
+  isChalcogene(atom) {
+    let atomicNo = this.mAtomicNo[atom];
+    return (
+      atomicNo == 8 || // O
+      atomicNo == 16 || // S
+      atomicNo == 34 || // Se
+      atomicNo == 52
+    ); // Te
+  }
+
+  getExplicitHydrogens(atom) {
+    return this.mAllConnAtoms[atom] - this.mConnAtoms[atom];
+  }
+
+  getAllConnAtoms(atom) {
+    return this.mAllConnAtoms[atom];
   }
 }

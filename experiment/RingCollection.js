@@ -1,4 +1,4 @@
-import ExtendedMolecule from './ExtendedMolecule.mjs';
+import ExtendedMolecule from './ExtendedMolecule.js';
 
 export default class RingCollection {
   static MAX_SMALL_RING_SIZE = 7;
@@ -36,7 +36,7 @@ export default class RingCollection {
     this.mRingBondSet = [];
     this.mAtomRingSize = new Int32Array(this.mMol.getAtoms());
     this.mBondRingSize = new Int32Array(this.mMol.getBonds());
-    this.mMol.ensureHelperArrays(ExtendedMolecule.cHelperRings);
+    this.mMol.ensureHelperArrays(ExtendedMolecule.cHelperNeighbours);
 
     let isConfirmedChainAtom = new Array(this.mMol.getAtoms()).fill(false);
     let isConfirmedChainBond = new Array(this.mMol.getBonds()).fill(false);
@@ -136,5 +136,166 @@ export default class RingCollection {
         }
       }
     }
+  }
+
+  addSmallRingsToSet(closureBond, isConfirmedChainAtom) {
+    let graphAtom = new Int32Array(this.mMaxSmallRingSize);
+    let connIndex = new Int32Array(this.mMaxSmallRingSize);
+    let isUsed = new Array(this.mMol.getAtoms()).fill(false);
+
+    let atom1 = this.mMol.getBondAtom(0, closureBond);
+    let atom2 = this.mMol.getBondAtom(1, closureBond);
+
+    graphAtom[0] = atom1;
+    graphAtom[1] = atom2;
+    connIndex[1] = -1;
+    isUsed[atom2] = true;
+    let current = 1;
+
+    while (current >= 1) {
+      connIndex[current]++;
+      if (connIndex[current] == this.mMol.getConnAtoms(graphAtom[current])) {
+        isUsed[graphAtom[current]] = false;
+        current--;
+        continue;
+      }
+
+      let candidate = this.mMol.getConnAtom(
+        graphAtom[current],
+        connIndex[current],
+      );
+      if (isUsed[candidate] || isConfirmedChainAtom[candidate]) continue;
+
+      if (candidate == atom1 && current > 1) {
+        this.addRingIfNew(graphAtom, current + 1);
+
+        // if we have already such many rings, we only collect the smallest ring to avoid a combinatorial explosion
+        if (this.mRingAtomSet.length >= RingCollection.MAX_SMALL_RING_COUNT)
+          return;
+
+        continue;
+      }
+
+      if (current + 1 < this.mMaxSmallRingSize) {
+        current++;
+        graphAtom[current] = candidate;
+        isUsed[candidate] = true;
+        connIndex[current] = -1;
+      }
+    }
+  }
+
+  addRingIfNew(ringAtom, ringSize) {
+    let lowAtom = this.mMol.getMaxAtoms();
+    let lowIndex = 0;
+    for (let i = 0; i < ringSize; i++) {
+      if (lowAtom > ringAtom[i]) {
+        lowAtom = ringAtom[i];
+        lowIndex = i;
+      }
+    }
+
+    let sortedRing = new Int32Array(ringSize);
+    let leftIndex = lowIndex > 0 ? lowIndex - 1 : ringSize - 1;
+    let rightIndex = lowIndex < ringSize - 1 ? lowIndex + 1 : 0;
+    let inverse = ringAtom[leftIndex] < ringAtom[rightIndex];
+    for (let i = 0; i < ringSize; i++) {
+      sortedRing[i] = ringAtom[lowIndex];
+      if (inverse) {
+        if (--lowIndex < 0) lowIndex = ringSize - 1;
+      } else {
+        if (++lowIndex == ringSize) lowIndex = 0;
+      }
+    }
+
+    for (let i = 0; i < this.mRingAtomSet.length; i++) {
+      let ringOfSet = this.mRingAtomSet[i];
+      if (ringOfSet.length != ringSize) continue;
+      let equal = true;
+      for (let j = 0; j < ringSize; j++) {
+        if (ringOfSet[j] != sortedRing[j]) {
+          equal = false;
+          break;
+        }
+      }
+      if (equal) return;
+    }
+
+    this.mRingAtomSet.push(sortedRing);
+    let ringBond = this.getRingBonds(sortedRing);
+    this.mRingBondSet.push(ringBond);
+
+    this.updateRingSizes(sortedRing, ringBond);
+  }
+
+  updateRingSizes(ringAtom, ringBond) {
+    let ringSize = ringAtom.length;
+    for (let i = 0; i < ringSize; i++)
+      if (
+        this.mAtomRingSize[ringAtom[i]] == 0 ||
+        this.mAtomRingSize[ringAtom[i]] > ringSize
+      )
+        this.mAtomRingSize[ringAtom[i]] = ringSize;
+
+    for (let i = 0; i < ringSize; i++)
+      if (
+        this.mBondRingSize[ringBond[i]] == 0 ||
+        this.mBondRingSize[ringBond[i]] > ringSize
+      )
+        this.mBondRingSize[ringBond[i]] = ringSize;
+  }
+
+  getRingBonds(ringAtom) {
+    let ringAtoms = ringAtom.length;
+    let ringBond = new Int32Array(ringAtoms);
+    for (let i = 0; i < ringAtoms; i++) {
+      let atom = i == ringAtoms - 1 ? ringAtom[0] : ringAtom[i + 1];
+      for (let j = 0; j < this.mMol.getConnAtoms(ringAtom[i]); j++) {
+        if (this.mMol.getConnAtom(ringAtom[i], j) == atom) {
+          ringBond[i] = this.mMol.getConnBond(ringAtom[i], j);
+          break;
+        }
+      }
+    }
+    return ringBond;
+  }
+
+  getSize() {
+    return this.mRingAtomSet.length;
+  }
+
+  getRingSize(ringNo) {
+    return this.mRingBondSet[ringNo].length;
+  }
+
+  getRingAtoms(ringNo) {
+    return this.mRingAtomSet[ringNo];
+  }
+
+  qualifiesAsAmideTypeBond(bond) {
+    for (let i = 0; i < 2; i++) {
+      let atom1 = this.mMol.getBondAtom(i, bond);
+      if (
+        this.mMol.getAtomicNo(atom1) == 7 &&
+        this.mMol.getConnAtoms(atom1) == 2
+      ) {
+        let atom2 = this.mMol.getBondAtom(1 - i, bond);
+        if (this.mMol.getAtomicNo(atom2) == 6) {
+          for (let j = 0; j < this.mMol.getConnAtoms(atom2); j++) {
+            let connAtom = this.mMol.getConnAtom(atom2, j);
+            let connBond = this.mMol.getConnBond(atom2, j);
+            if (
+              (this.mMol.getAtomicNo(connAtom) == 8 ||
+                this.mMol.getAtomicNo(connAtom) == 16) &&
+              this.mMol.getBondOrder(connBond) == 2 &&
+              this.mMol.getConnAtoms(connAtom) == 1
+            )
+              return true;
+          }
+        }
+      }
+    }
+
+    return false;
   }
 }

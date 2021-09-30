@@ -1,4 +1,4 @@
-import IDCodeParserWithoutCoordinateInvention from './IDCodeParserWithoutCoordinateInvention.mjs';
+import IDCodeParserWithoutCoordinateInvention from './IDCodeParserWithoutCoordinateInvention.js';
 
 export default class IDCodeParser extends IDCodeParserWithoutCoordinateInvention {
   mEnsure2DCoordinates = false;
