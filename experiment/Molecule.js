@@ -660,6 +660,10 @@ export default class Molecule {
       (atomicNo >= 87 && atomicNo <= 103)
     );
   }
+
+  getAllAtoms() {
+    return this.mAllAtoms;
+  }
 }
 
 function copyOfInt(original, newLength) {

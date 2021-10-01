@@ -2,12 +2,13 @@ import { readFile } from 'fs/promises';
 import IDCodeParser from './IDCodeParser.js';
 import OCL from '../dist/openchemlib-full.js';
 
+const parser = new IDCodeParser(false);
 function parseNew(idcode) {
-  return new IDCodeParser(false).getCompactMolecule(idcode);
+  return parser.getCompactMolecule(idcode);
 }
 
 function parseOld(idcode) {
-  OCL.Molecule.fromIDCode(idcode, false);
+  return OCL.Molecule.fromIDCode(idcode, false);
 }
 
 const what = process.argv[2];
@@ -28,8 +29,12 @@ const idcodes = lines.map((line) => line.split('\t')[0]);
 
 console.log(`time to parse ${idcodes.length} idcodes`);
 
+let total = 0;
 console.time('time');
 for (const idcode of idcodes) {
-  func(idcode);
+  if (idcode.length === 0) continue;
+  const result = func(idcode);
+  total += result.getAllAtoms();
 }
 console.timeEnd('time');
+console.log(total + ' atoms');

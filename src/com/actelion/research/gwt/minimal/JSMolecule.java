@@ -68,10 +68,7 @@ public class JSMolecule {
   		coordinates = true;
   	}
   	if (typeof coordinates === 'boolean') {
-  		mol = @com.actelion.research.gwt.minimal.JSMolecule::fromIDCode(Ljava/lang/String;Z)(idcode, false);
-  		if (coordinates === true) {
-  			mol.@com.actelion.research.gwt.minimal.JSMolecule::inventCoordinates()();
-  		}
+  		mol = @com.actelion.research.gwt.minimal.JSMolecule::fromIDCode(Ljava/lang/String;Z)(idcode, coordinates);
   	} else if(typeof coordinates === 'string') {
   		mol = @com.actelion.research.gwt.minimal.JSMolecule::fromIDCode(Ljava/lang/String;Ljava/lang/String;)(idcode, coordinates);
   	}
