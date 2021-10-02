@@ -1,5 +1,12 @@
 # Changelog
 
+### [7.4.3](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.2...v7.4.3) (2021-10-02)
+
+
+### Bug Fixes
+
+* **fromIDCode:** pass coordinates option to the IDCodeParser ([0b8775e](https://www.github.com/cheminfo/openchemlib-js/commit/0b8775e656251e2ba172d991ce616b209875177e))
+
 ### [7.4.2](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.1...v7.4.2) (2021-08-05)
 
 
