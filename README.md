@@ -29,7 +29,7 @@ if bundle size matters and prediction functionalities are not needed.
 The `full` build (`require('openchemlib/full')`) build is the largest build.
 It contains a structure viewer and a structure editor for browser applications.
 
-- [TypeDoc home page](https://cheminfo.github.io/openchemlib-js/globals.html)
+- [TypeDoc home page](https://cheminfo.github.io/openchemlib-js/index.html)
 
 ### Modules present in minimal, core and full builds
 
