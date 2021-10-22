@@ -5,7 +5,6 @@
 [![npm download][download-image]][download-url]
 [![DOI](https://www.zenodo.org/badge/23346814.svg)](https://www.zenodo.org/badge/latestdoi/23346814)
 
-
 JavaScript port of the [OpenChemLib](https://github.com/actelion/openchemlib) Java library.
 
 ## Installation
@@ -105,7 +104,7 @@ Copy the required java files from the openchemlib project.
 
 [npm-image]: https://img.shields.io/npm/v/openchemlib.svg
 [npm-url]: https://www.npmjs.com/package/openchemlib
-[ci-image]: https://github.com/cheminfo/openchemlib-js/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-image]: https://github.com/cheminfo/openchemlib-js/workflows/Node.js%20CI/badge.svg?branch=main
 [ci-url]: https://github.com/cheminfo/openchemlib-js/actions?query=workflow%3A%22Node.js+CI%22
 [download-image]: https://img.shields.io/npm/dm/openchemlib.svg
 [download-url]: https://www.npmjs.com/package/openchemlib
