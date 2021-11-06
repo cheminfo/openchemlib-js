@@ -12,16 +12,16 @@ const molfile = mol.toMolfile();
 const suite = new Benchmark.Suite();
 
 suite
-  .add('old', function () {
+  .add('old', () => {
     OCLNew.Molecule.fromMolfile(molfile);
   })
-  .add('new', function () {
+  .add('new', () => {
     OCLOld.Molecule.fromMolfile(molfile);
   })
-  .on('cycle', function (event) {
+  .on('cycle', (event) => {
     console.log(String(event.target));
   })
-  .on('complete', function () {
+  .on('complete', () => {
     console.log(`Fastest is ${this.filter('fastest').map('name')}`);
   })
   .run();

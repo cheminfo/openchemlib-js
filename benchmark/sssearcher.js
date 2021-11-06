@@ -22,16 +22,16 @@ searcherOld.setFragment(benzeneFragmentOld);
 const suite = new Benchmark.Suite();
 
 suite
-  .add('old', function () {
+  .add('old', () => {
     searcherOld.isFragmentInMolecule();
   })
-  .add('new', function () {
+  .add('new', () => {
     searcherNew.isFragmentInMolecule();
   })
-  .on('cycle', function (event) {
+  .on('cycle', (event) => {
     console.log(String(event.target));
   })
-  .on('complete', function () {
+  .on('complete', () => {
     console.log(`Fastest is ${this.filter('fastest').map('name')}`);
   })
   .run();

@@ -5,7 +5,7 @@ const pretty = require('../dist/openchemlib-full.pretty');
 const full = require('../full');
 const minimal = require('../minimal');
 
-describe('Checking for the presence of main APIs', function () {
+describe('Checking for the presence of main APIs', () => {
   const minimalAPI = [
     'Molecule',
     'RingCollection',
@@ -28,18 +28,18 @@ describe('Checking for the presence of main APIs', function () {
 
   const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];
 
-  it('minimal', function () {
+  it('minimal', () => {
     checkHas(minimal, minimalAPI);
     checkHasNot(minimal, [...coreAPI, ...fullAPI]);
   });
 
-  it('core', function () {
+  it('core', () => {
     expect(core).toBe(require('..'));
     checkHas(core, [...minimalAPI, ...coreAPI]);
     checkHasNot(core, fullAPI);
   });
 
-  it('full', function () {
+  it('full', () => {
     [full, pretty].forEach((lib) => {
       checkHas(lib, [...minimalAPI, ...coreAPI, ...fullAPI]);
     });
