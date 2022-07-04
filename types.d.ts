@@ -2557,15 +2557,34 @@ export declare class RingCollection {
   qualifiesAsAmideTypeBond(bond: number): boolean;
 }
 
+/**
+ * Class allowing to acccess advanced options of getIDCode
+ * @example
+ * ```js
+ * let molecule = OCL.Molecule.fromSmiles('C[C@H](Cl)CC');
+ * molecule = OCL.Molecule.fromSmiles('CC=C(O)CC');
+ *
+ * console.log(molecule.getIDCode());
+ * console.log(OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NORMAL));
+ * console.log(OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NOSTEREO));
+ * console.log(OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.BACKBONE));
+ * console.log(OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.TAUTOMER));
+ * console.log(OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NOSTEREO_TAUTOMER));
+ * ```
+ */
 export declare class CanonizerUtil {
-  static NORMAL: number;
-  static NOSTEREO: number;
-  static BACKBONE: number;
-  static TAUTOMER: number;
-  static NOSTEREO_TAUTOMER: number;
+  static NORMAL: 0;
+  static NOSTEREO: 1;
+  static BACKBONE: 2;
+  static TAUTOMER: 3;
+  static NOSTEREO_TAUTOMER: 4;
 
   private constructor();
 
+  /**
+   * @param mol
+   * @param type NORMAL, NOSTEREO, BACKBONE, TAUTOMER, NOSTEREO_TAUTOMER
+   */
   static getIDCode(mol: Molecule, type: number): string;
 }
 
