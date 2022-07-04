@@ -32,10 +32,10 @@ It contains a structure viewer and a structure editor for browser applications.
 
 ### Modules present in minimal, core and full builds
 
+- [CanonizerUtil](https://cheminfo.github.io/openchemlib-js/classes/CanonizerUtil.html)
 - [Molecule](https://cheminfo.github.io/openchemlib-js/classes/Molecule.html)
 - [Reaction](https://cheminfo.github.io/openchemlib-js/classes/Reaction.html)
 - [RingCollection](https://cheminfo.github.io/openchemlib-js/classes/RingCollection.html)
-- [CanonizerUtil](https://cheminfo.github.io/openchemlib-js/classes/CanonizerUtil.html)
 - [SDFileParser](https://cheminfo.github.io/openchemlib-js/classes/SDFileParser.html)
 - [SSSearcher](https://cheminfo.github.io/openchemlib-js/classes/SSSearcher.html)
 - [SSSearcherWithIndex](https://cheminfo.github.io/openchemlib-js/classes/SSSearcherWithIndex.html)

@@ -8,23 +8,23 @@ const minimal = require('../minimal');
 describe('Checking for the presence of main APIs', () => {
   const minimalAPI = [
     'Molecule',
+    'Reaction',
     'RingCollection',
     'SDFileParser',
     'SSSearcher',
-    'CanonizerUtil',
     'SSSearcherWithIndex',
-    'Reaction',
     'Util',
     'version',
   ];
 
   const coreAPI = [
-    'MoleculeProperties',
+    'CanonizerUtil',
+    'ConformerGenerator',
     'DruglikenessPredictor',
     'DrugScoreCalculator',
-    'ToxicityPredictor',
-    'ConformerGenerator',
     'ForceFieldMMFF94',
+    'MoleculeProperties',
+    'ToxicityPredictor',
   ];
 
   const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];

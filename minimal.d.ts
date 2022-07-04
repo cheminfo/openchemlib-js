@@ -1,10 +1,10 @@
 export {
+  CanonizerUtil,
   IMoleculeFromSmilesOptions,
   IMoleculeToSVGOptions,
   IHoseCodesOptions,
   Molecule,
   MolecularFormula,
-  CanonizerUtil,
   RingCollection,
   IDepictorOptions,
   Reaction,
