@@ -310,7 +310,7 @@ export declare class Molecule {
    */
   static fromSmiles(
     smiles: string,
-    options?: IMoleculeFromSmilesOptions
+    options?: IMoleculeFromSmilesOptions,
   ): Molecule;
 
   /**
@@ -323,9 +323,10 @@ export declare class Molecule {
    * Parse the provided `molfile` and return an object with `Molecule` and map.
    * @param molfile - MDL Molfile string in V2000 or V3000.
    */
-  static fromMolfileWithAtomMap(
-    molfile: string
-  ): { molecule: Molecule; map: number[] };
+  static fromMolfileWithAtomMap(molfile: string): {
+    molecule: Molecule;
+    map: number[];
+  };
 
   /**
    * Parse the provided `idcode` and return a `Molecule`.
@@ -394,7 +395,7 @@ export declare class Molecule {
     width: number,
     height: number,
     id?: string,
-    options?: IMoleculeToSVGOptions
+    options?: IMoleculeToSVGOptions,
   ): string;
 
   getCanonizedIDCode(flag: number): string;
@@ -474,7 +475,7 @@ export declare class Molecule {
     mass: number,
     abnormalValence: number,
     radical: number,
-    customLabel: string
+    customLabel: string,
   ): boolean;
 
   addOrChangeBond(atm1: number, atm2: number, type: number): number;
@@ -490,7 +491,7 @@ export declare class Molecule {
     atomicNo: number,
     mass: number,
     abnormalValence: number,
-    radical: number
+    radical: number,
   ): boolean;
 
   changeAtomCharge(atom: number, positive: boolean): boolean;
@@ -507,14 +508,14 @@ export declare class Molecule {
   addMolecule(mol: Molecule): number[];
 
   /**
-	 * Adds and connects the substituent molecule to the connectionAtom of this molecule.
-	 * Substituent atoms with atomicNo=0 are not copied and considered to represent the connectionAtom.
-	 * Bonds leading to them, however, are copied and connected to the connectionAtom.
-	 * High level function for constructing a molecule.
-	 * @param substituent
-	 * @param connectionAtom
-	 * @return atom mapping from substituent to this molecule after addition of substituent
-	 */
+   * Adds and connects the substituent molecule to the connectionAtom of this molecule.
+   * Substituent atoms with atomicNo=0 are not copied and considered to represent the connectionAtom.
+   * Bonds leading to them, however, are copied and connected to the connectionAtom.
+   * High level function for constructing a molecule.
+   * @param substituent
+   * @param connectionAtom
+   * @return atom mapping from substituent to this molecule after addition of substituent
+   */
   addSubstituent(substituent: Molecule, connectionAtom: number): number[];
 
   /**
@@ -540,7 +541,7 @@ export declare class Molecule {
     destMol: Molecule,
     sourceAtom: number,
     esrGroupOffsetAND: number,
-    esrGroupOffsetOR: number
+    esrGroupOffsetOR: number,
   ): number;
 
   /**
@@ -556,7 +557,7 @@ export declare class Molecule {
     destMol: Molecule,
     sourceBond: number,
     esrGroupOffsetAND: number,
-    esrGroupOffsetOR: number
+    esrGroupOffsetOR: number,
   ): number;
 
   /**
@@ -585,17 +586,17 @@ export declare class Molecule {
   renumberESRGroups(type: number): number;
 
   /**
-	 * Swaps two atoms' indexes/locations in the atom table.
-	 * @param atom1
-	 * @param atom2
-	 */
+   * Swaps two atoms' indexes/locations in the atom table.
+   * @param atom1
+   * @param atom2
+   */
   swapAtoms(atom1: number, atom2: number): void;
 
   /**
-	 * Swaps two bonds' indexes/locations in the atom table.
-	 * @param bond1
-	 * @param bond2
-	 */  
+   * Swaps two bonds' indexes/locations in the atom table.
+   * @param bond1
+   * @param bond2
+   */
   swapBonds(bond1: number, bond2: number): void;
 
   /**
@@ -677,9 +678,9 @@ export declare class Molecule {
   deleteMolecule(): void;
 
   /**
-	 * Empties the molecule to serve as container for constructing a new molecule,
-	 * e.g. by multiply calling addAtom(...), addBond(...) and other high level methods.
-	 */
+   * Empties the molecule to serve as container for constructing a new molecule,
+   * e.g. by multiply calling addAtom(...), addBond(...) and other high level methods.
+   */
   clear(): void;
 
   removeAtomSelection(): void;
@@ -921,12 +922,12 @@ export declare class Molecule {
   getBondLength(bond: number): number;
 
   /**
-	 * Returns the formal bond order. Delocalized rings have alternating single and double
-	 * bonds, which are returned as such. Bonds that are explicitly marked as being delocalized
-	 * are returned as 1. Dative bonds are returned as 0.
-	 * @param bond
-	 * @return formal bond order 0 (dative bonds), 1, 2, or 3
-	 */
+   * Returns the formal bond order. Delocalized rings have alternating single and double
+   * bonds, which are returned as such. Bonds that are explicitly marked as being delocalized
+   * are returned as 1. Dative bonds are returned as 0.
+   * @param bond
+   * @return formal bond order 0 (dative bonds), 1, 2, or 3
+   */
   getBondOrder(bond: number): number;
 
   /**
@@ -1092,8 +1093,8 @@ export declare class Molecule {
   isFragment(): boolean;
 
   /**
-	 * @return true if at least one z-coordinate is different from 0.0
-	 */
+   * @return true if at least one z-coordinate is different from 0.0
+   */
   is3D(): boolean;
 
   /**
@@ -1572,7 +1573,7 @@ export declare class Molecule {
     destMol: Molecule,
     includeAtom: boolean[],
     recognizeDelocalizedBonds: boolean,
-    atomMap: number[]
+    atomMap: number[],
   ): void;
 
   /**
@@ -1594,7 +1595,7 @@ export declare class Molecule {
     destMol: Molecule,
     includeBond: boolean[],
     recognizeDelocalizedBonds: boolean,
-    atomMap: number[]
+    atomMap: number[],
   ): number[];
 
   /**
@@ -1755,10 +1756,10 @@ export declare class Molecule {
   getNonHydrogenNeighbourCount(atom: number): number;
 
   /**
-	 * This method returns the count of atom neighbours which are marked as being an exclude group.
-	 * @param atom
-	 * @return the number of non-hydrogen neighbor atoms
-	 */
+   * This method returns the count of atom neighbours which are marked as being an exclude group.
+   * @param atom
+   * @return the number of non-hydrogen neighbor atoms
+   */
   getExcludedNeighbourCount(atom: number): number;
 
   /**
@@ -1772,8 +1773,8 @@ export declare class Molecule {
 
   /**
    * The sum of bond orders of explicitly connected neighbour atoms including explicit hydrogen.
-	 * In case of a fragment the occupied valence does not include bonds to atoms of which the cAtomQFExcludeGroup flag is set.
-	 * Atom charge and radical states are not considered.
+   * In case of a fragment the occupied valence does not include bonds to atoms of which the cAtomQFExcludeGroup flag is set.
+   * Atom charge and radical states are not considered.
    * @param atom
    * @returns explicitly used valence
    */
@@ -1816,7 +1817,7 @@ export declare class Molecule {
    */
   getImplicitHigherValence(
     atom: number,
-    neglectExplicitHydrogen: boolean
+    neglectExplicitHydrogen: boolean,
   ): number;
 
   /**
@@ -1848,7 +1849,7 @@ export declare class Molecule {
     atom1: number,
     atom2: number,
     maxLength: number,
-    neglectBond: boolean[]
+    neglectBond: boolean[],
   ): number;
 
   /**
@@ -1860,7 +1861,7 @@ export declare class Molecule {
   getPathBonds(
     pathAtom: number[],
     pathBond: number[],
-    pathLength: number
+    pathLength: number,
   ): void;
 
   /**
@@ -1909,7 +1910,7 @@ export declare class Molecule {
   getFragmentNumbers(
     fragmentNo: number[],
     markedAtomsOnly: boolean,
-    considerMetalBonds: boolean
+    considerMetalBonds: boolean,
   ): number;
 
   /**
@@ -1935,7 +1936,7 @@ export declare class Molecule {
     startAtom: number,
     aromaticOnly: boolean,
     isMemberAtom: boolean[],
-    isMemberBond: boolean[]
+    isMemberBond: boolean[],
   ): void;
 
   /**
@@ -1962,7 +1963,7 @@ export declare class Molecule {
     firstAtom: number,
     isMemberAtom: boolean[],
     substituent: Molecule,
-    atomMap: number[]
+    atomMap: number[],
   ): number;
 
   /**
@@ -2179,7 +2180,7 @@ export declare class Molecule {
     atom: number,
     sortedConnMap: number[],
     angle: number[],
-    direction: number[]
+    direction: number[],
   ): number;
 
   /**
@@ -2198,14 +2199,14 @@ export declare class Molecule {
   findAlleneCenterAtom(atom: number): number;
 
   /**
-	 * Crawls along a chain of sp-hybridized atoms starting from atom2 (which may not be
-	 * sp-hybridized) away from its sp-hybridized neighbour atom1. Returns the first atom
-	 * that is either not sp-hybridized anymore or the last atom of the chain if that is still
-	 * sp-hybridized. Returns -1 in case of an sp-hybridized cycle.
-	 * @param atom1 sp-hybridized atom
-	 * @param atom2 neighbour atom of atom1
-	 * @return first non-sp-hybridized atom when crawling from atom2 away from atom1
-	 */
+   * Crawls along a chain of sp-hybridized atoms starting from atom2 (which may not be
+   * sp-hybridized) away from its sp-hybridized neighbour atom1. Returns the first atom
+   * that is either not sp-hybridized anymore or the last atom of the chain if that is still
+   * sp-hybridized. Returns -1 in case of an sp-hybridized cycle.
+   * @param atom1 sp-hybridized atom
+   * @param atom2 neighbour atom of atom1
+   * @return first non-sp-hybridized atom when crawling from atom2 away from atom1
+   */
   findAlleneEndAtom(atom1: number, atom2: number): number;
 
   /**
@@ -2291,18 +2292,18 @@ export declare class Molecule {
   isHalogene(atom: number): boolean;
 
   /**
-	 * Normalizes charge distribution in single- and multifragment molecules.
-	 * In a first step polar bonds (both atoms have opposite charge) are neutralized
-	 * by removing both atom charges and increasing the bond order, provided that atom
-	 * valences allow the change.
-	 * Neutralizes positive and an equal amount of negative charges on electronegative atoms,
-	 * provided these are not on 1,2-dipolar structures, in order to ideally achieve a neutral molecule.
-	 * This method does not change the overall charge of the molecule. It does not change the number of
-	 * explicit atoms or bonds or their connectivity except bond orders.
-	 * This method does not deprotonate acidic groups to compensate for quarternary charged nitrogen.
-	 * @param allowUnbalancedCharge throws an exception after polar bond neutralization, if overall charge is not zero
-	 * @return remaining overall molecule charge
-	 */
+   * Normalizes charge distribution in single- and multifragment molecules.
+   * In a first step polar bonds (both atoms have opposite charge) are neutralized
+   * by removing both atom charges and increasing the bond order, provided that atom
+   * valences allow the change.
+   * Neutralizes positive and an equal amount of negative charges on electronegative atoms,
+   * provided these are not on 1,2-dipolar structures, in order to ideally achieve a neutral molecule.
+   * This method does not change the overall charge of the molecule. It does not change the number of
+   * explicit atoms or bonds or their connectivity except bond orders.
+   * This method does not deprotonate acidic groups to compensate for quarternary charged nitrogen.
+   * @param allowUnbalancedCharge throws an exception after polar bond neutralization, if overall charge is not zero
+   * @return remaining overall molecule charge
+   */
   canonizeCharge(allowUnbalancedCharge: boolean): number;
 
   /**
@@ -2380,11 +2381,11 @@ export declare class Molecule {
    * Removes all plain explicit hydrogens atoms from the molecule, converting them
    * effectively to implicit ones. If the molecules has 2D-coordinates (is3D==false),
    * then this method perceives stereo configurations from up/down-bonds
-	 * to explicit hydrogens before deleting them and turns another bond into a
+   * to explicit hydrogens before deleting them and turns another bond into a
    * stereo bond to indicate the proper configuration.
-	 * If the removal of a hydrogen atom would change an atom's implicit valence,
+   * If the removal of a hydrogen atom would change an atom's implicit valence,
    * the atom's abnormal valence is set accordingly.
-	 * @param is3D pass true, if atom coordinates are three dimensional
+   * @param is3D pass true, if atom coordinates are three dimensional
    */
   removeExplicitHydrogens(is3D: boolean): void;
 
@@ -2550,10 +2551,22 @@ export declare class RingCollection {
     isAromatic: boolean[],
     isDelocalized: boolean[],
     heteroPosition: number[],
-    includeTautomericBonds: boolean
+    includeTautomericBonds: boolean,
   ): void;
 
   qualifiesAsAmideTypeBond(bond: number): boolean;
+}
+
+export declare class CanonizerUtil {
+  static NORMAL: number;
+  static NOSTEREO: number;
+  static BACKBONE: number;
+  static TAUTOMER: number;
+  static NOSTEREO_TAUTOMER: number;
+
+  private constructor();
+
+  static getIDCode(mol: Molecule, type: number): string;
 }
 
 /**
@@ -2627,7 +2640,7 @@ export declare class Reaction {
    * @param rxn - The RXN file's contents
    */
   static fromRxn(rxn: string): Reaction;
-  
+
   /**
    * Returns the OCL object.
    */
@@ -2978,7 +2991,7 @@ export declare namespace Util {
    */
   export function getHoseCodesFromDiastereotopicID(
     diastereotopicID: string,
-    options?: IHoseCodesOptions
+    options?: IHoseCodesOptions,
   ): string[];
 }
 
@@ -3049,7 +3062,7 @@ export declare namespace DrugScoreCalculator {
     mSolubility: number,
     mMolweight: number,
     mDruglikeness: number,
-    toxRisks: number[]
+    toxRisks: number[],
   ): number;
 }
 
@@ -3122,13 +3135,13 @@ export declare class ConformerGenerator {
 
   /**
    * Fills all free valences of mol with explicit hydrogens and tries to
-	 * create a reasonable conformer by starting with the most likely torsion set.
-	 * If there are collisions, then less likely torsions are tried to find
-	 * a collision free conformer. If it succeeds, mol receives the modified
-	 * atom coordinates and mol is returned. If the conformer generation fails,
-	 * then null is returned. The torsion strategy used is STRATEGY_ADAPTIVE_RANDOM.
-	 * New 3D-coordinates correctly reflect E/Z and R/S bond/atom parities.
-	 * This is a convenience method that does not require any initialization.
+   * create a reasonable conformer by starting with the most likely torsion set.
+   * If there are collisions, then less likely torsions are tried to find
+   * a collision free conformer. If it succeeds, mol receives the modified
+   * atom coordinates and mol is returned. If the conformer generation fails,
+   * then null is returned. The torsion strategy used is STRATEGY_ADAPTIVE_RANDOM.
+   * New 3D-coordinates correctly reflect E/Z and R/S bond/atom parities.
+   * This is a convenience method that does not require any initialization.
    * @param mol The molecule that will receive new 3D coordinates in place.
    * @returns - Original molecule with new 3D-coordinates or null.
    */
@@ -3136,25 +3149,28 @@ export declare class ConformerGenerator {
 
   /**
    * The `initializeConformers()` method needs to be called before getting individual
-	 * conformers of the same molecule by `getNextConformerAsMolecule()`.
-	 * Open valences of the passed molecule are filled with hydrogen atoms.
-	 * The passed molecule may repeatedly be used as container for a new conformer's atom
-	 * coordinates, if it is passed to getNextConformerAsMolecule().
+   * conformers of the same molecule by `getNextConformerAsMolecule()`.
+   * Open valences of the passed molecule are filled with hydrogen atoms.
+   * The passed molecule may repeatedly be used as container for a new conformer's atom
+   * coordinates, if it is passed to getNextConformerAsMolecule().
    * @param mol - Will be saturated with hydrogen atoms.
    * @param options
    * @returns - `false` if there is a structure problem.
    */
-  initializeConformers(mol: Molecule, options?: IInitializeConformersOptions): boolean;
+  initializeConformers(
+    mol: Molecule,
+    options?: IInitializeConformersOptions,
+  ): boolean;
 
   /**
    * Creates the next random, likely or systematic new(!) conformer of the molecule
-	 * that was passed when calling `initializeConformers()`. A new conformer is one,
-	 * whose combination of torsion angles was not used in a previous conformer
-	 * created by this function since the last call of `initializeConformers()`.
-	 * Parameter mol may be null or recycle the original molecule to receive new 3D coordinates.
-	 * If it is null, then a fresh copy of the original molecule with new atom coordinates is returned.
-	 * Every call of this method creates a new collision-free conformer until the employed torsion set
-	 * strategy decides that it cannot generate any more suitable torsion sets.
+   * that was passed when calling `initializeConformers()`. A new conformer is one,
+   * whose combination of torsion angles was not used in a previous conformer
+   * created by this function since the last call of `initializeConformers()`.
+   * Parameter mol may be null or recycle the original molecule to receive new 3D coordinates.
+   * If it is null, then a fresh copy of the original molecule with new atom coordinates is returned.
+   * Every call of this method creates a new collision-free conformer until the employed torsion set
+   * strategy decides that it cannot generate any more suitable torsion sets.
    * @param mol
    */
   getNextConformerAsMolecule(mol?: Molecule): Molecule | null;
@@ -3166,21 +3182,21 @@ export declare class ConformerGenerator {
 
   /**
    * Calculates the potential count of conformers by multiplying degrees of freedom
-	 * (torsions per rotatable bond & rigid fragment multiplicities).
-	 * Cannot be called before calling `initializeConformers()`.
+   * (torsions per rotatable bond & rigid fragment multiplicities).
+   * Cannot be called before calling `initializeConformers()`.
    */
   getPotentialConformerCount(): number;
 
   /**
    * With best current knowledge about colliding torsion combinations
-	 * and based on the individual frequencies of currently active torsions
-	 * this method returns the conformers's overall contribution to the
-	 * total set of non colliding conformers.
+   * and based on the individual frequencies of currently active torsions
+   * this method returns the conformers's overall contribution to the
+   * total set of non colliding conformers.
    * @returns - This conformer's contribution to all conformers.
    */
   getPreviousConformerContribution(): number;
 
-  /** 
+  /**
    * Returns an iterator of molecule conformers.
    */
   molecules(): IterableIterator<Molecule>;
@@ -3216,12 +3232,16 @@ export declare class ForceFieldMMFF94 {
   static MMFF94SPLUS: 'MMFF94s+';
 
   /**
-   * 
+   *
    * @param molecule - The molecule to construct the forcefield on.
    * @param tablename - The string name for the Tables to be used. Can be `'MMFF94'`, `'MMFF94s'` or `'MMFF94s+'`.
    * @param options
    */
-  constructor(molecule: Molecule, tablename: 'MMFF94' | 'MMFF94s' | 'MMFF94s+', options?: IForceFieldMMFF94Options);
+  constructor(
+    molecule: Molecule,
+    tablename: 'MMFF94' | 'MMFF94s' | 'MMFF94s+',
+    options?: IForceFieldMMFF94Options,
+  );
 
   /**
    * Returns the OCL object.
@@ -3260,13 +3280,13 @@ export declare namespace StructureView {
     id: string,
     idcode: string,
     coordinates: string,
-    options?: IDepictorOptions
+    options?: IDepictorOptions,
   ): void;
 
   export function drawMolecule(
     el: HTMLCanvasElement,
     mol: Molecule,
-    options?: IDepictorOptions
+    options?: IDepictorOptions,
   ): void;
 
   export function drawStructureWithText(
@@ -3274,7 +3294,7 @@ export declare namespace StructureView {
     idcode: string,
     coordinates: string,
     options?: IDepictorOptions,
-    atomText?: string[]
+    atomText?: string[],
   ): void;
 }
 
@@ -3383,13 +3403,13 @@ export type BondHighlightCallback = (bond: number, selected: boolean) => any;
 
 export type ChangeListenerCallback = (
   idcode: string,
-  molecule: Molecule
+  molecule: Molecule,
 ) => any;
 
 export declare namespace SVGRenderer {
   export function renderMolecule(
     idCode: string,
     width: number,
-    height: number
+    height: number,
   ): string;
 }

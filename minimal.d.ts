@@ -4,6 +4,7 @@ export {
   IHoseCodesOptions,
   Molecule,
   MolecularFormula,
+  CanonizerUtil,
   RingCollection,
   IDepictorOptions,
   Reaction,
@@ -11,5 +12,5 @@ export {
   SSSearcher,
   SSSearcherWithIndex,
   Util,
-  version
+  version,
 } from './types';
