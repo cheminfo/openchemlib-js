@@ -1,5 +1,6 @@
 export * from './minimal';
 export {
+  CanonizerUtil,
   IParameterizedString,
   MoleculeProperties,
   DruglikenessPredictor,
@@ -7,5 +8,5 @@ export {
   ToxicityPredictor,
   IInitializeConformersOptions,
   ConformerGenerator,
-  ForceFieldMMFF94
+  ForceFieldMMFF94,
 } from './types';

@@ -32,7 +32,6 @@ It contains a structure viewer and a structure editor for browser applications.
 
 ### Modules present in minimal, core and full builds
 
-- [CanonizerUtil](https://cheminfo.github.io/openchemlib-js/classes/CanonizerUtil.html)
 - [Molecule](https://cheminfo.github.io/openchemlib-js/classes/Molecule.html)
 - [Reaction](https://cheminfo.github.io/openchemlib-js/classes/Reaction.html)
 - [RingCollection](https://cheminfo.github.io/openchemlib-js/classes/RingCollection.html)
@@ -43,6 +42,7 @@ It contains a structure viewer and a structure editor for browser applications.
 
 ### Modules present only in core and full builds
 
+- [CanonizerUtil](https://cheminfo.github.io/openchemlib-js/classes/CanonizerUtil.html)
 - [ConformerGenerator](https://cheminfo.github.io/openchemlib-js/classes/ConformerGenerator.html)
 - [DruglikenessPredictor](https://cheminfo.github.io/openchemlib-js/classes/DruglikenessPredictor.html)
 - [DrugScoreCalculator](https://cheminfo.github.io/openchemlib-js/modules/DrugScoreCalculator.html)

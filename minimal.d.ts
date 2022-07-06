@@ -1,5 +1,4 @@
 export {
-  CanonizerUtil,
   IMoleculeFromSmilesOptions,
   IMoleculeToSVGOptions,
   IHoseCodesOptions,
