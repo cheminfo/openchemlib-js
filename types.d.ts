@@ -332,7 +332,7 @@ export declare class Molecule {
    * @param idcode
    * @param coordinates
    */
-  static fromIDCode(idcode: string, coordinates: string): Molecule;
+  static fromIDCode(idcode: string, coordinates?: string): Molecule;
 
   /**
    * Parse the provided `idcode` and return a `Molecule`.
