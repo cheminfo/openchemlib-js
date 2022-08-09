@@ -11,5 +11,5 @@ export {
   SSSearcher,
   SSSearcherWithIndex,
   Util,
-  version
+  version,
 } from './types';

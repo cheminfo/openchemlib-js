@@ -17,6 +17,7 @@
     "export": "node scripts/build.js export",
     "build": "npm run build:min && npm run build-full-pretty",
     "build-core": "npm run build:min -- -m core",
+    "build-debug": "npm run build:pretty -- -m full --verbose",
     "build-minimal": "npm run build:min -- -m minimal",
     "build-full-pretty": "npm run build:pretty -- -m full",
     "eslint": "eslint __tests__ scripts benchmark",
