@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.5.0](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.3...v7.5.0) (2022-08-09)
+
+
+### Features
+
+* expose CanonizerUtil ([#131](https://www.github.com/cheminfo/openchemlib-js/issues/131)) ([ef7a873](https://www.github.com/cheminfo/openchemlib-js/commit/ef7a87332e58272092276c4dbdcf6eca73b4c167))
+
+
+### Bug Fixes
+
+* README link to documentation ([77dfc46](https://www.github.com/cheminfo/openchemlib-js/commit/77dfc46130dab7a3ad3e85b2527986b78cde6cd8))
+* **types:** coordinates can be omitted from `fromIDCode` ([636a73b](https://www.github.com/cheminfo/openchemlib-js/commit/636a73b129d637b538983ad4a9a6058a918b7660))
+
 ### [7.4.3](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.2...v7.4.3) (2021-10-02)
 
 
