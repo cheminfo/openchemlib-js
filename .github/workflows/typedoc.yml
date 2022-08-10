@@ -9,16 +9,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Build documentation
         uses: zakodium/typedoc-action@v2
         with:
           entry: 'types.d.ts'
           name: OpenChemLib JS
       - name: Deploy to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
-          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: docs
-          CLEAN: true
+          token: ${{ secrets.BOT_TOKEN }}
+          branch: gh-pages
+          folder: docs
+          clean: true
