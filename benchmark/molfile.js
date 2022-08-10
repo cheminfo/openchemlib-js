@@ -2,8 +2,8 @@
 
 const Benchmark = require('benchmark');
 
-const OCLNew = require('../dist/openchemlib-core');
-const OCLOld = require('../distold/openchemlib-core');
+const OCLNew = require('../dist/openchemlib-full.pretty');
+const OCLOld = require('../distold/openchemlib-full.pretty');
 
 const idcode = 'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
 const mol = OCLNew.Molecule.fromIDCode(idcode);
@@ -21,7 +21,7 @@ suite
   .on('cycle', (event) => {
     console.log(String(event.target));
   })
-  .on('complete', () => {
+  .on('complete', function onComplete() {
     console.log(`Fastest is ${this.filter('fastest').map('name')}`);
   })
   .run();

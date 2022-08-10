@@ -2,8 +2,8 @@
 
 const Benchmark = require('benchmark');
 
-const OCLNew = require('../dist/openchemlib-core');
-const OCLOld = require('../distold/openchemlib-core');
+const OCLNew = require('../dist/openchemlib-full.pretty');
+const OCLOld = require('../distold/openchemlib-full.pretty');
 
 let benzeneFragmentNew = OCLNew.Molecule.fromSmiles('c1ccccc1');
 benzeneFragmentNew.setFragment(true);
@@ -31,7 +31,7 @@ suite
   .on('cycle', (event) => {
     console.log(String(event.target));
   })
-  .on('complete', () => {
+  .on('complete', function onComplete() {
     console.log(`Fastest is ${this.filter('fastest').map('name')}`);
   })
   .run();
