@@ -33,8 +33,10 @@
 
 package com.actelion.research.chem;
 
+import com.actelion.research.gui.generic.GenericPolygon;
+import com.actelion.research.gui.generic.GenericRectangle;
+
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -138,13 +140,13 @@ public class SVGDepictor extends AbstractDepictor
     }
 
     @Override
-    protected void drawPolygon(double[] x, double[] y, int count)
+    protected void drawPolygon(GenericPolygon p)
     {
         StringBuilder s = new StringBuilder("<polygon points=\"");
-        for (int i = 0; i < count; i++) {
-            s.append(round(x[i]));
+        for (int i = 0; i < p.getSize(); i++) {
+            s.append(Math.round(p.getX(i)));
             s.append(",");
-            s.append(round(y[i]));
+            s.append(Math.round(p.getY(i)));
             s.append(" ");
         }
         s.append("\" " +
@@ -200,9 +202,9 @@ public class SVGDepictor extends AbstractDepictor
     }
 
     @Override
-    protected void setColor(Color theColor)
+    protected void setRGB(int rgb)
     {
-        currentColor = makeColor(theColor.getRed(), theColor.getGreen(), theColor.getBlue());
+        currentColor = makeColor((rgb & 0x00FF0000) >> 16, (rgb & 0x0000FF00) >> 8, rgb & 0x000000FF);
     }
 
     @Override
@@ -272,9 +274,8 @@ public class SVGDepictor extends AbstractDepictor
     }
 
     @Override
-    public DepictorTransformation simpleValidateView(Rectangle2D.Double viewRect, int mode)
+    public DepictorTransformation simpleValidateView(GenericRectangle viewRect, int mode)
     {
-
         width = (int) Math.round(viewRect.getWidth());
         height = (int) Math.round(viewRect.getHeight());
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);

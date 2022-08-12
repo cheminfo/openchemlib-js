@@ -37,6 +37,7 @@ import com.actelion.research.chem.IDCodeParser;
 import com.actelion.research.chem.MolfileV3Creator;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
+import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gwt.gui.viewer.Console;
 import com.actelion.research.gwt.gui.viewer.GraphicsContext;
 import com.actelion.research.gwt.gui.viewer.Log;
@@ -199,7 +200,7 @@ class DrawArea implements IChangeListener {
     depictor.setDisplayMode(displayMode);
 
     if (model.needsLayout()) {
-      depictor.updateCoords(null, new java.awt.geom.Rectangle2D.Double(0, 0, (float) w, (float) h),
+      depictor.updateCoords(null, new GenericRectangle(0, 0, (double) w, (double) h),
           AbstractDepictor.cModeInflateToMaxAVBL);
     }
     model.needsLayout(false);

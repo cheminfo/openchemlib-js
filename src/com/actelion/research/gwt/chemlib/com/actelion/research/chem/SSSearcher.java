@@ -1,35 +1,36 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
 
 package com.actelion.research.chem;
 
@@ -53,8 +54,8 @@ public class SSSearcher {
 	index creation). Example: key C=C-N-C=C, query pyrol, molecule indole, key would match
 	pyrol but not indol!!!
   - match modes used for the actual atom by atom check must be more or equally restrictive
-	than the match mode used for index creation. Otherwise index keys may filter out
-	molecules which would be considered a match with the less strict matching consitions
+	than the match mode used for index creation. Otherwise, index keys may filter out
+	molecules which would be considered a match with the less strict matching conditions
 	of the atom by atom check.
 */
 
@@ -62,11 +63,12 @@ public class SSSearcher {
 	public static final int cIndexMatchMode = cMatchDBondToDelocalized;
 	public static final int cDefaultMatchMode = cMatchAromDBondToDelocalized;
 
-	public final static int cCountModeExistance		= 1;
-	public final static int cCountModeFirstMatch	= 2;
-	public final static int cCountModeSeparated		= 3;
-	public final static int cCountModeOverlapping	= 4;
-	public final static int cCountModeRigorous		= 5;
+	public final static int cCountModeExistance		= 1;    // check only, don't create matchList
+	public final static int cCountModeFirstMatch	= 2;    // create matchList with just one match
+	public final static int cCountModeSeparated		= 3;    // create list of all non-overlapping matches / not optimized for maximum match count
+	public final static int cCountModeOverlapping	= 4;    // create list not containing multiple matches sharing exactly the same atoms
+	public final static int cCountModeRigorous		= 5;    // create list of all possible matches neglecting any symmetries
+	public final static int cCountModeUnique		= 6;    // create list of all distinguishable matches considering symmetries
 
 	// default behaviour for unusual atom masses and atom charges is that
 	// - if no atom charge/mass is specified in the query then all charges/masses match
@@ -83,8 +85,10 @@ public class SSSearcher {
 
 	private int[] mMoleculeAtomType;	// atom features required to match
 	private int[] mFragmentAtomType;
-	private int[] mMoleculeAtomFeatures;	// flags defining given/required atom features
-	private int[] mFragmentAtomFeatures;
+	private long[] mMoleculeAtomFeatures;	// flags defining given/required atom features
+	private long[] mFragmentAtomFeatures;
+	private long[] mMoleculeRingFeatures;	// flags defining given/required atom ring size features
+	private long[] mFragmentRingFeatures;
 	private int[] mMoleculeBondFeatures;	// flags defining given/required bond features
 	private int[] mFragmentBondFeatures;
 
@@ -100,6 +104,7 @@ public class SSSearcher {
 	private int[] mMatchTable;
 	private int[] mExcludeGroupNo;
 	private int[] mExcludeGroupGraphIndex;
+	private int[] mFragmentAtomContextRank;
 
 	// depending on the fragment count mode this may contain atom lists
 	// of all till now located matching sub-fragments
@@ -111,6 +116,8 @@ public class SSSearcher {
 	private boolean mFragmentFeaturesValid;
 	private int mRequiredHelperLevel;
 	private int mExcludeGroupCount;
+
+	private volatile boolean mStop;
 
 	/**
 	 * Instantiates a SSSearcher object for running sub-structure searches
@@ -171,6 +178,12 @@ public class SSSearcher {
 		mMolecule.ensureHelperArrays(Molecule.cHelperNeighbours);
 		}
 
+	/**
+	 * Asks the substructure search to stop without completing as soon as possible.
+	 */
+	public void stop() {
+		mStop = true;
+		}
 
 	/**
 	 * Defines the fragment to be used in isFragmentInMolecule(...)
@@ -189,7 +202,7 @@ public class SSSearcher {
 
 		mRequiredHelperLevel = Molecule.cHelperRings;
 		for (int atom=0; atom<mFragment.getAtoms(); atom++)
-			if ((mFragment.getAtomQueryFeatures(atom) & Molecule.cAtomQFMatchStereo) != 0)
+			if ((mFragment.getAtomQueryFeatures(atom) & (Molecule.cAtomQFStereoState | Molecule.cAtomQFMatchStereo)) != 0)
 				mRequiredHelperLevel = Molecule.cHelperParities;
 		for (int bond=0; bond<mFragment.getBonds(); bond++)
 			if ((mFragment.getBondQueryFeatures(bond) & Molecule.cBondQFMatchStereo) != 0)
@@ -211,6 +224,8 @@ public class SSSearcher {
 		mExcludeGroupCount = 0;
 		mExcludeGroupNo = null;
 
+		mFragmentAtomContextRank = null;
+
 		if (mFragmentExcludeAtoms != 0) {
 			if (mFragmentExcludeAtoms != 0)
 				for (int bond = 0; bond < mFragment.getBonds(); bond++)
@@ -226,6 +241,22 @@ public class SSSearcher {
 			}
 		}
 
+
+	/**
+	 * If countMode is cCountModeUnique, then matches are considered distinct, if<br>
+	 * - either the list of matching molecule atoms to the query fragment is a different one<br>
+	 * - or if the mutual combination of fragment and molecule atom's symmetry rank is different
+	 *   (when the list of matched molecule atoms is the same)<br>
+	 * For certain situations fragment atoms must be considered different, even if their symmetry rank
+	 * is equal, e.g. in the context of a reaction where equivalent reactant atoms end up in different
+	 * product environments. This method allows to specify an additional criterion for the uniqueness
+	 * comparison to be considered. In case of reactions, these might be the symmetry ranks of the
+	 * products atoms mapped to the reactant atoms.
+	 * Note: The current implementation only uses the 8 least significant bits of the context rank.
+	 */
+	public void setFragmentSymmetryConstraints(int[] fragmentContextRank) {
+		mFragmentAtomContextRank = fragmentContextRank;
+		}
 
 	/**
 	 * Build a graph of the query fragment(s) including ring closures as redundant nodes.
@@ -417,12 +448,13 @@ System.out.println();
 	 * are counted and listed only once. If count mode is different from cCountModeExistance,
 	 * then an atom mapping from fragment to molecule is collected and can be retrieved with getMatchList().
 	 * If the query fragment does not contain atoms other than exclude group atoms, then no match is returned.
-	 * @param countMode one of cCountModeExistance, cCountModeFirstMatch, cCountModeOverlapping, cCountModeRigorous
+	 * @param countMode one of cCountModeExistance, cCountModeFirstMatch, cCountModeSeparated, cCountModeOverlapping, cCountModeUnique, cCountModeRigorous
 	 * @param matchMode cDefaultMatchMode or combination of cMatchAtomCharge, cMatchAtomMass, cMatchDBondToDelocalized, cMatchAromDBondToDelocalized
 	 * @param atomExcluded defines atoms of molecule to be excluded from sub-structure matching
 	 * @return count of sub-structure matches of fragment in molecule
 	 */
 	public int findFragmentInMolecule(int countMode, int matchMode, final boolean[] atomExcluded) {
+		mStop = false;
 		mMatchList = new ArrayList<int[]>();
 		mSortedMatchSet.clear();
 
@@ -445,6 +477,9 @@ for (int j=0; j<moleculeAtoms; j++)
 System.out.println();
 */
 
+		if (countMode == cCountModeUnique)
+			mRequiredHelperLevel = Molecule.cHelperSymmetrySimple;
+
 		setupAtomAndBondFeatures(matchMode);
 
 		// atom usage mask in mMolecule
@@ -464,7 +499,7 @@ System.out.println();
 		// - otherwise the current connAtom index of the parent atom in the matching graph
 
 		int current = 0;
-		while (true) {
+		while (!mStop) {
 /*
 System.out.print("  index:"); for (int i=0; i<mFragmentGraphSize; i++) System.out.print(" "+(index[i]==-1?"-":""+index[i])); System.out.println();
 System.out.print("		"); for (int i=0; i<current; i++) System.out.print("  "); System.out.println(" ^");
@@ -560,53 +595,50 @@ System.out.println();
 
 
 	private void addMatchIfQualifies(int countMode) {
-		int[] match = copyOf(mMatchTable, mMatchTable.length);
-
 		if (countMode == cCountModeFirstMatch
 		 || countMode == cCountModeRigorous) {
 			// count every match (even permutations of same atoms)
-			mMatchList.add(match);
-			return;
+			mMatchList.add(copyOf(mMatchTable, mMatchTable.length));
 			}
-
-		if (mFragmentExcludeAtoms != 0	// store matches as indication that we have found something
-		 || countMode == cCountModeOverlapping
-		 || countMode == cCountModeSeparated) {
-			match = getSortedMatch(match);
-			if (countMode == cCountModeOverlapping) {
-				if (!mSortedMatchSet.contains(match)) {
-					mSortedMatchSet.add(match);
+		else if (countMode == cCountModeOverlapping) {
+			int[] sortedMatch = getSortedMatch(copyOf(mMatchTable, mMatchTable.length));
+			if (!mSortedMatchSet.contains(sortedMatch)) {
+				mSortedMatchSet.add(sortedMatch);
+				mMatchList.add(copyOf(mMatchTable, mMatchTable.length));
+				}
+			}
+		else if (countMode == cCountModeSeparated) {
+			int[] sortedMatch = getSortedMatch(copyOf(mMatchTable, mMatchTable.length));
+			if (!mSortedMatchSet.contains(sortedMatch)) {
+				boolean found = false;
+				for (int[] existing:mSortedMatchSet) {
+					int existingIndex = 0;
+					for (int atom:sortedMatch) {
+						while (existingIndex < existing.length && existing[existingIndex] < atom)
+							existingIndex++;
+						if (existingIndex < existing.length) {
+							if (atom == existing[existingIndex]) {
+								found = true;
+								break;
+								}
+							}
+						}
+					if (found)
+						break;
+					}
+				if (!found) {
+					mSortedMatchSet.add(sortedMatch);
 					mMatchList.add(copyOf(mMatchTable, mMatchTable.length));
 					}
 				}
-			else if (countMode == cCountModeSeparated) {
-				if (!mSortedMatchSet.contains(match)) {
-					boolean found = false;
-					for (int[] existing:mSortedMatchSet) {
-						int existingIndex = 0;
-						for (int atom:match) {
-							while (existingIndex < existing.length && existing[existingIndex] < atom)
-								existingIndex++;
-							if (existingIndex < existing.length) {
-								if (atom == existing[existingIndex]) {
-									found = true;
-									break;
-									}
-								}
-							}
-						if (found)
-							break;
-						}
-					if (!found) {
-						mSortedMatchSet.add(match);
-						mMatchList.add(copyOf(mMatchTable, mMatchTable.length));
-						}
-					}
-				}
-			return;
 			}
-
-		return;
+		else if (countMode == cCountModeUnique) {
+			int[] sortedMatch = getSortedSymmetryMatch(copyOf(mMatchTable, mMatchTable.length));
+			if (!mSortedMatchSet.contains(sortedMatch)) {
+				mSortedMatchSet.add(sortedMatch);
+				mMatchList.add(copyOf(mMatchTable, mMatchTable.length));
+				}
+			}
 		}
 
 
@@ -632,6 +664,30 @@ System.out.println();
 		return match;
 		}
 
+	/**
+	 * @return sorted match atoms without excluded atoms
+	 */
+	private int[] getSortedSymmetryMatch(int[] match) {
+		int count = 0;
+		for (int atom:match)
+			if (atom == -1)
+				count++;
+
+		int[] symmetryMatch = new int[match.length - count];
+		int index = 0;
+		for (int i=0; i<match.length; i++) {
+			if (match[i] != -1) {
+				symmetryMatch[index] = (mFragment.getSymmetryRank(i) << 16) | mMolecule.getSymmetryRank(match[i]);
+				if (mFragmentAtomContextRank != null)
+					symmetryMatch[index] |= mFragmentAtomContextRank[i] << 24;
+				index++;
+				}
+			}
+
+		Arrays.sort(symmetryMatch);
+		return symmetryMatch;
+		}
+
 	public boolean areAtomsSimilar(int moleculeAtom, int fragmentAtom) {
 		int moleculeConnAtoms = mMolecule.getConnAtoms(moleculeAtom);
 		int fragmentConnAtoms = mFragmentConnAtoms[fragmentAtom];
@@ -639,8 +695,8 @@ System.out.println();
 		if (fragmentConnAtoms > moleculeConnAtoms)
 			return false;
 
-		int moleculeQF = mMolecule.getAtomQueryFeatures(moleculeAtom);
-		int fragmentQF = mFragment.getAtomQueryFeatures(fragmentAtom);
+		long moleculeQF = mMolecule.getAtomQueryFeatures(moleculeAtom);
+		long fragmentQF = mFragment.getAtomQueryFeatures(fragmentAtom);
 
 		int[] fragmentList = mFragment.getAtomList(fragmentAtom);
 		int[] moleculeList = mMolecule.getAtomList(moleculeAtom);
@@ -710,30 +766,46 @@ System.out.println();
 		if ((mMoleculeAtomFeatures[moleculeAtom] & ~mFragmentAtomFeatures[fragmentAtom]) != 0)
 			return false;
 
+		// all ring sizes found for fragment atom must all exist for molecule atom
+		if ((mFragmentRingFeatures[fragmentAtom] & ~mMoleculeRingFeatures[moleculeAtom]) != 0)
+			return false;
+
+		long fragmentRingQF = fragmentQF & Molecule.cAtomQFNewRingSize;
+		if (mMolecule.isFragment()) {
+			// For a fragment in fragment search, the query fragment must not be more restrictive than the target.
+			// Thus, if we have molecule ring features and no restriction on the query or more allowed features
+			// on the query then don't consider the atom a match.
+			long moleculeRingQF = fragmentQF & Molecule.cAtomQFNewRingSize;
+			if (moleculeRingQF != 0 && (fragmentRingQF == 0 || (fragmentRingQF & ~moleculeRingQF) != 0))
+				return false;
+			}
+		else {
+			// at least one of the ring sizes defined in ring query features must match one of the ring sizes found in molecule atom
+			if (fragmentRingQF != 0 && (fragmentRingQF & mMoleculeRingFeatures[moleculeAtom]) == 0)
+				return false;
+			}
+
 		if (mFragment.getAtomCharge(fragmentAtom) != 0
 		 && mFragment.getAtomCharge(fragmentAtom) != mMolecule.getAtomCharge(moleculeAtom))
 			return false;
 		if (mFragment.getAtomMass(fragmentAtom) != 0
 		 && mFragment.getAtomMass(fragmentAtom) != mMolecule.getAtomMass(moleculeAtom))
 			return false;
-		int ringSize = (mFragment.getAtomQueryFeatures(fragmentAtom) & Molecule.cAtomQFRingSize) >> Molecule.cAtomQFRingSizeShift;
-		if (ringSize != 0) {
-			if (mMolecule.isFragment()
-			 && ringSize == (mMolecule.getAtomQueryFeatures(fragmentAtom) & Molecule.cAtomQFRingSize) >> Molecule.cAtomQFRingSizeShift)
-				return true;
+		if (mFragment.getAtomRadical(fragmentAtom) != 0
+		 && mFragment.getAtomRadical(fragmentAtom) != mMolecule.getAtomRadical(moleculeAtom))
+			return false;
 
-			boolean found = false;
-			RingCollection ringSet = mMolecule.getRingSet();
-			for (int i=0; i<ringSet.getSize(); i++) {
-				if (ringSet.getRingSize(i) == ringSize) {
-					if (ringSet.isAtomMember(i, moleculeAtom)) {
-						found = true;
-						break;
-						}
-					}
+		int smallestRingSize = (int)((mFragment.getAtomQueryFeatures(fragmentAtom) & Molecule.cAtomQFSmallRingSize) >> Molecule.cAtomQFSmallRingSizeShift);
+		if (smallestRingSize != 0) {
+			if (!mMolecule.isFragment()) {
+				if (mMolecule.getAtomRingSize(moleculeAtom) != smallestRingSize)
+					return false;
 				}
-			if (!found)
-				return false;
+			else {
+				int targetRingSize = (int)((mMolecule.getAtomQueryFeatures(moleculeAtom) & Molecule.cAtomQFSmallRingSize) >> Molecule.cAtomQFSmallRingSizeShift);
+				if (smallestRingSize != targetRingSize)
+					return false;
+				}
 			}
 
 		return true;
@@ -759,23 +831,32 @@ System.out.println();
 				int fragmentParity = mFragment.getAtomParity(fragmentAtom);
 				int moleculeParity = mMolecule.getAtomParity(moleculeAtom);
 
-					// always consider as match if fragment atom is no stereo center
+				// always consider as match if fragment atom is no stereo center
 				if (fragmentParity == Molecule.cAtomParityNone)
 			   		continue;
 
-				// consider as match if assymetric fragment atom matches on non-stereo-center
-				if (moleculeParity == Molecule.cAtomParityNone)
-			   		continue;
-
-				// unknown molecule centers need to match everything because
-				// parities from idcodes don't include them, i.e. depending
-				// on the source of the parities, unknown centers may look as
-				// no centers. Both must retrieve the same results.
+				// unknown fragment centers match everything
 				if (fragmentParity == Molecule.cAtomParityUnknown)
 			   		continue;
 
-				if (moleculeParity == Molecule.cAtomParityUnknown)
-			   		continue;
+				// Here the fragment center is clearly specified as either 1 or 2.
+				// Thus, unknown molecule centers should not be considered a match.
+				// A molecule may not have a stereo center here for symmetry reasons,
+				// but match 100% anyway. In this case we interpret: the user wants a
+				// stereo center. Therefore, we don't consider no stereo centers a match.
+				// Into the bargain: parities within idcodes don't include 'unknown',
+				// because the information is implicit: if a stereo center within an idcode
+				// has no 1 or 2 parity, then it is automatically treated to be unknown.
+				// If idcodes are parsed with given or created coordinates, then implicit
+				// unknowns are converted to explicit ones. However, if idcodes are intentionally
+				// parsed without giving coordinates, then an unknown stereo center looks
+				// like a no-stereo-center, because parities were taken from the idcode and
+				// never calculated by ensureHelperArrays().
+				if (moleculeParity == Molecule.cAtomParityNone
+				 || moleculeParity == Molecule.cAtomParityUnknown)
+			   		return false;
+
+				// From here both, fragment and molecule, have a defined parity: 1 or 2.
 
 				if (mFragment.getAtomESRType(fragmentAtom) == Molecule.cESRTypeAnd) {
 					esrGroupAtomCount++;
@@ -1282,11 +1363,11 @@ System.out.println();
 		int nTotalMoleculeAtoms = mMolecule.getAtoms();
 
 		mMoleculeAtomType = new int[nTotalMoleculeAtoms];
-		mMoleculeAtomFeatures = new int[nTotalMoleculeAtoms];
+		mMoleculeAtomFeatures = new long[nTotalMoleculeAtoms];
 
 		for (int atom=0; atom<nTotalMoleculeAtoms; atom++) {
 			mMoleculeAtomFeatures[atom] = ((getAtomQueryDefaults(mMolecule, atom)
-					| mMolecule.getAtomQueryFeatures(atom))
+				| mMolecule.getAtomQueryFeatures(atom))
 					& Molecule.cAtomQFSimpleFeatures)
 					^ Molecule.cAtomQFNarrowing;
 
@@ -1297,6 +1378,31 @@ System.out.println();
 
 			if ((matchMode & cMatchAtomMass) != 0)
 				mMoleculeAtomType[atom] += mMolecule.getAtomMass(atom) << 16;
+			}
+
+		mMoleculeRingFeatures = new long[nTotalMoleculeAtoms];
+		RingCollection ringSet = mMolecule.getRingSet();
+		for (int i=0; i<ringSet.getSize(); i++) {
+			int ringSize = ringSet.getRingSize(i);
+			for (int atom:ringSet.getRingAtoms(i)) {
+				if (ringSize == 3)
+					mMoleculeRingFeatures[atom] |= Molecule.cAtomQFRingSize3;
+				else if (ringSize == 4)
+					mMoleculeRingFeatures[atom] |= Molecule.cAtomQFRingSize4;
+				else if (ringSize == 5)
+					mMoleculeRingFeatures[atom] |= Molecule.cAtomQFRingSize5;
+				else if (ringSize == 6)
+					mMoleculeRingFeatures[atom] |= Molecule.cAtomQFRingSize6;
+				else if (ringSize == 7)
+					mMoleculeRingFeatures[atom] |= Molecule.cAtomQFRingSize7;
+				}
+			}
+		for (int atom=0; atom<nTotalMoleculeAtoms; atom++) {
+			int ringSize = mMolecule.getAtomRingSize(atom);
+			if (ringSize == 0)
+				mMoleculeRingFeatures[atom] |= Molecule.cAtomQFRingSize0;
+			else if (ringSize > 7)
+				mMoleculeRingFeatures[atom] |= Molecule.cAtomQFRingSizeLarge;
 			}
 
 		int nTotalMoleculeBonds = mMolecule.getBonds();
@@ -1312,7 +1418,7 @@ System.out.println();
 			}
 
 	private void setupFragmentFeatures(int matchMode) {
-		int[] atomFeaturesWithoutExcludeAtoms = null;
+		long[] atomFeaturesWithoutExcludeAtoms = null;
 		int[] bondFeaturesWithoutExcludeAtoms = null;
 		int[] atomTypeWithoutExcludeAtoms = null;
 
@@ -1362,12 +1468,12 @@ System.out.println();
 	private void setupFragmentFeatures(StereoMolecule fragment, int matchMode) {
 		int nTotalFragmentAtoms = fragment.getAtoms();
 
-		mFragmentAtomFeatures = new int[fragment.getAtoms()];
+		mFragmentAtomFeatures = new long[fragment.getAtoms()];
 		mFragmentAtomType = new int[fragment.getAtoms()];
 
 		for (int atom=0; atom<nTotalFragmentAtoms; atom++) {
 			mFragmentAtomFeatures[atom] = ((getAtomQueryDefaults(fragment, atom)
-					| fragment.getAtomQueryFeatures(atom))
+				| mFragment.getAtomQueryFeatures(atom))
 					& Molecule.cAtomQFSimpleFeatures)
 					^ Molecule.cAtomQFNarrowing;
 			mFragmentAtomType[atom] = fragment.getAtomicNo(atom);
@@ -1378,6 +1484,29 @@ System.out.println();
 			if ((matchMode & cMatchAtomMass) != 0)
 				mFragmentAtomType[atom] += fragment.getAtomMass(atom) << 16;
 			}
+
+		mFragmentRingFeatures = new long[fragment.getAtoms()];
+		RingCollection ringSet = fragment.getRingSet();
+		for (int i=0; i<ringSet.getSize(); i++) {
+			int ringSize = ringSet.getRingSize(i);
+			for (int atom:ringSet.getRingAtoms(i)) {
+				if (ringSize == 3)
+					mFragmentRingFeatures[atom] |= Molecule.cAtomQFRingSize3;
+				else if (ringSize == 4)
+					mFragmentRingFeatures[atom] |= Molecule.cAtomQFRingSize4;
+				else if (ringSize == 5)
+					mFragmentRingFeatures[atom] |= Molecule.cAtomQFRingSize5;
+				else if (ringSize == 6)
+					mFragmentRingFeatures[atom] |= Molecule.cAtomQFRingSize6;
+				else if (ringSize == 7)
+					mFragmentRingFeatures[atom] |= Molecule.cAtomQFRingSize7;
+				}
+			}
+// Cannot require that, because if a molecule atom is also part of a small ring,
+// then the large ring membership is not known anymore
+//		for (int atom=0; atom<nTotalFragmentAtoms; atom++)
+//			if (fragment.getAtomRingSize(atom) > 7)
+//				mFragmentRingFeatures[atom] |= Molecule.cAtomQFRingSizeLarge;
 
 		int nTotalFragmentBonds = fragment.getBonds();
 
@@ -1408,14 +1537,19 @@ System.out.println();
 	 * @param atom the atom of which to generate feature flags
 	 * @return atom features independent of query features
 	 */
-	private int getAtomQueryDefaults(StereoMolecule mol, int atom) {
-		int queryDefaults = 0;
+	private long getAtomQueryDefaults(StereoMolecule mol, int atom) {
+		long queryDefaults = 0;
 
 		if (!mol.isFragment()) {
 			if (mol.isAromaticAtom(atom))
 				queryDefaults |= Molecule.cAtomQFAromatic;
 			else
 				queryDefaults |= Molecule.cAtomQFNotAromatic;
+
+			if (mol.isAtomStereoCenter(atom))
+				queryDefaults |= Molecule.cAtomQFIsStereo;
+			else
+				queryDefaults |= Molecule.cAtomQFIsNotStereo;
 
 			int ringBonds = mol.getAtomRingBondCount(atom);
 			if (ringBonds == 0)
@@ -1478,6 +1612,25 @@ System.out.println();
 				break;
 				}
 
+			int zValue = mol.getAtomZValue(atom);
+			switch (zValue) {
+				case 0:
+					queryDefaults |= (Molecule.cAtomQFZValue & ~Molecule.cAtomQFZValueNot0);
+					break;
+				case 1:
+					queryDefaults |= (Molecule.cAtomQFZValue & ~Molecule.cAtomQFZValueNot1);
+					break;
+				case 2:
+					queryDefaults |= (Molecule.cAtomQFZValue & ~Molecule.cAtomQFZValueNot2);
+					break;
+				case 3:
+					queryDefaults |= (Molecule.cAtomQFZValue & ~Molecule.cAtomQFZValueNot3);
+					break;
+				default:
+					queryDefaults |= (Molecule.cAtomQFZValue & ~Molecule.cAtomQFZValueNot4);
+					break;
+				}
+
 			int piElectrons = mol.getAtomPi(atom);
 			switch (piElectrons) {
 			case 0:
@@ -1533,13 +1686,31 @@ System.out.println();
 				queryDefaults |= (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot4Neighbours);
 				break;
 				}
-			}
 
-		int piElectrons = mol.getAtomPi(atom);
-		if (piElectrons > 0)
-			queryDefaults |= Molecule.cAtomQFNot0PiElectrons;
-		if (piElectrons > 1)
-			queryDefaults |= Molecule.cAtomQFNot1PiElectron;
+			int zValue = mol.getAtomZValue(atom);
+			switch (zValue) {
+				case 0:
+					break;
+				case 1:
+					queryDefaults |= (Molecule.cAtomQFZValueNot0);
+					break;
+				case 2:
+					queryDefaults |= (Molecule.cAtomQFZValueNot0 | Molecule.cAtomQFZValueNot1);
+					break;
+				case 3:
+					queryDefaults |= (Molecule.cAtomQFZValueNot0 | Molecule.cAtomQFZValueNot1 | Molecule.cAtomQFZValueNot2);
+					break;
+				default:
+					queryDefaults |= (Molecule.cAtomQFZValue & ~Molecule.cAtomQFZValueNot4);
+					break;
+				}
+
+			int piElectrons = mol.getAtomPi(atom);
+			if (piElectrons > 0)
+				queryDefaults |= Molecule.cAtomQFNot0PiElectrons;
+			if (piElectrons > 1)
+				queryDefaults |= Molecule.cAtomQFNot1PiElectron;
+			}
 
 		return queryDefaults;
 		}

@@ -113,16 +113,13 @@ function copyOpenchemlib() {
   }
   fs.copySync(chemlibDir, outDir);
 
-  const openMolDir = path.join(__dirname, '../openchemlib/src/main/java/org');
-  const outOpenMolDir = path.join(
-    __dirname,
-    '../src/com/actelion/research/gwt/chemlib/org',
-  );
+  copyAdditionalDir('org');
+  copyAdditionalDir('info');
 
-  if (fs.existsSync(outOpenMolDir)) {
-    rimraf.sync(outOpenMolDir);
+  const removed = chemlibClasses.removed;
+  for (const removedFile of removed) {
+    fs.rmSync(path.join(outDir, removedFile), { recursive: true });
   }
-  fs.copySync(openMolDir, outOpenMolDir);
 
   const modified = chemlibClasses.modified;
   log(`Copying ${modified.length} modified classes`);
@@ -134,23 +131,32 @@ function copyOpenchemlib() {
   }
 
   const changed = chemlibClasses.changed;
-  for (let i = 0; i < changed.length; i++) {
-    const file = changed[i][0];
-    const callback = changed[i][1];
-    const data = fs.readFileSync(path.join(outDir, file), 'utf8');
-    const result = callback(data);
-    fs.writeFileSync(path.join(outDir, file), result);
-  }
-
-  const removed = chemlibClasses.removed;
-  for (const removedFile of removed) {
-    fs.removeSync(path.join(outDir, removedFile));
+  for (const [file, transformers] of changed) {
+    let data = fs.readFileSync(path.join(outDir, file), 'utf8');
+    for (const transformer of transformers) {
+      data = transformer(data);
+    }
+    fs.writeFileSync(path.join(outDir, file), data);
   }
 
   const generated = chemlibClasses.generated;
   for (const generatedFile of generated) {
     fs.writeFileSync(path.join(outDir, generatedFile[0]), generatedFile[1]());
   }
+}
+
+function copyAdditionalDir(name) {
+  const sourceDir = path.join(__dirname, '../openchemlib/src/main/java', name);
+  const destDir = path.join(
+    __dirname,
+    '../src/com/actelion/research/gwt/chemlib',
+    name,
+  );
+
+  if (fs.existsSync(destDir)) {
+    rimraf.sync(destDir);
+  }
+  fs.copySync(sourceDir, destDir);
 }
 
 function compile(mode) {

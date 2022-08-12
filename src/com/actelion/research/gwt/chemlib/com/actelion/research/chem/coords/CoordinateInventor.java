@@ -1,35 +1,36 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
 
 package com.actelion.research.chem.coords;
 
@@ -43,6 +44,7 @@ public class CoordinateInventor {
 	public static final int MODE_KEEP_MARKED_ATOM_COORDS = 4;
 	public static final int MODE_PREFER_MARKED_ATOM_COORDS = 8;
 	protected static final int MODE_CONSIDER_MARKED_ATOMS = MODE_KEEP_MARKED_ATOM_COORDS | MODE_PREFER_MARKED_ATOM_COORDS;
+	public static final int MODE_DEFAULT = MODE_REMOVE_HYDROGEN;
 
 	private static final byte FLIP_AS_LAST_RESORT = 1;
 	private static final byte FLIP_POSSIBLE = 2;
@@ -60,6 +62,7 @@ public class CoordinateInventor {
 	private boolean[]	mAtomHandled;
 	private boolean[]	mBondHandled;
 	private boolean[]	mAtomIsPartOfCustomTemplate;
+	private boolean     mAbsoluteOrientationTemplateFound;  // we just use the first matching template, which is set to define absolute orientation
 	private int[]		mUnPairedCharge;
 	private int			mMode;
 	private List<InventorFragment> mFragmentList;
@@ -79,7 +82,7 @@ public class CoordinateInventor {
 	 * polycyclic structures from these templates (adamantanes, cubane, etc.).
 	 */
 	public CoordinateInventor () {
-		this(MODE_REMOVE_HYDROGEN);
+		this(MODE_DEFAULT);
 		}
 
 
@@ -106,12 +109,13 @@ public class CoordinateInventor {
 
 
 	/**
-	 * By providing a custom template list containing substructures with predefined atom
-	 * coordinates, any occurence of any of these substructures will receive the
-	 * relative atom coordinates of the provided template, unless the substructure
-	 * shares more than one atom with a previously found substructure or the substructure
-	 * shares more than one atom with the non marked atoms and mode is
-	 * MODE_????_MARKED_ATOM_COORDS.
+	 * A custom template list contains substructures with predefined atom coordinates.
+	 * When such a list is provided, and if a molecules contains one of the list's substructures,
+	 * then the matching atoms will receive the relative atom coordinates of the provided template,
+	 * unless the substructure shares two or more atoms with another earlier found template or
+	 * if mode is MODE_????_MARKED_ATOM_COORDS and the substructure match contains two or more
+	 * non-marked (and therefore untouchable) atoms. If a template substructure contains an E- or Z-
+	 * double bound, then the query feature 'match EZ-parity' should be set.
 	 * @param templateList
 	 */
 	public void setCustomTemplateList(List<InventorTemplate> templateList) {
@@ -168,7 +172,15 @@ public class CoordinateInventor {
 
 		mFFP = ffp;
 
-		mFragmentList = new ArrayList<InventorFragment>();
+		mFragmentList = new ArrayList<InventorFragment>() {
+			@Override
+			public boolean add(InventorFragment f) {
+				for (InventorFragment ff:this)
+					if (ff.equals(f))
+						return false;
+				return super.add(f);
+				}
+			};
 		mAtomHandled = new boolean[mMol.getAllAtoms()];
 		mBondHandled = new boolean[mMol.getAllBonds()];
 
@@ -176,8 +188,9 @@ public class CoordinateInventor {
 		for (int atom=0; atom<mMol.getAllAtoms(); atom++)
 			mUnPairedCharge[atom] = mMol.getAtomCharge(atom);
 
-		if ((mMode & MODE_CONSIDER_MARKED_ATOMS) != 0)
+		if ((mMode & MODE_CONSIDER_MARKED_ATOMS) != 0) {
 			locateMarkedFragments();
+			}
 
 		if (mCustomTemplateList != null)
 			mAtomIsPartOfCustomTemplate = locateTemplateFragments(mCustomTemplateList, 512);
@@ -202,9 +215,8 @@ public class CoordinateInventor {
 		joinMetalBondedFragments();
 		joinChargedFragments();
 
-		// using one-by-one rotate and approximate strategy rather than the bounding box based arrangeAllFragments()
+		// using one-by-one rotate and approximate strategy
 		joinRemainingFragments();
-//		arrangeAllFragments();
 
 		for (int i=0; i<mFragmentList.size(); i++) {
 			InventorFragment f = mFragmentList.get(i);
@@ -217,6 +229,9 @@ public class CoordinateInventor {
 
 		if (paritiesPresent)
 			mMol.setStereoBondsFromParity();
+
+		if (mAbsoluteOrientationTemplateFound)
+			mMol.removeAtomMarkers();
 		}
 
 
@@ -243,13 +258,14 @@ public class CoordinateInventor {
 
 		for (InventorTemplate template: templateList) {
 			ArrayList<int[]> matchList = null;
+			StereoMolecule templateMol = template.getFragment();
 			if (useFFP) {
-				searcherWithIndex.setFragment(template.getFragment(), template.getFFP());
+				searcherWithIndex.setFragment(templateMol, template.getFFP());
 				if (searcherWithIndex.findFragmentInMolecule(SSSearcher.cCountModeOverlapping, SSSearcher.cDefaultMatchMode) != 0)
 					matchList = searcherWithIndex.getMatchList();
 				}
 			else {
-				searcher.setFragment(template.getFragment());
+				searcher.setFragment(templateMol);
 				if (searcher.findFragmentInMolecule(SSSearcher.cCountModeOverlapping, SSSearcher.cDefaultMatchMode) != 0)
 					matchList = searcher.getMatchList();
 				}
@@ -261,10 +277,22 @@ public class CoordinateInventor {
 						if (atomIsPartOfTemplate[atom])
 							templateAtomCount++;
 					if (templateAtomCount <= 1) {
-						InventorFragment fragment = new InventorFragment(mMol, match.length, mMode);
+						// we just use the first matching template that is supposed to keep its absolute orientation
+						boolean definesAbsoluteOrientation = template.keepAbsoluteOrientation();
+						if (mAbsoluteOrientationTemplateFound)
+							definesAbsoluteOrientation = false;
+						else
+							mAbsoluteOrientationTemplateFound = true;
+
+						InventorFragment fragment = new InventorFragment(mMol, match.length, definesAbsoluteOrientation);
 
 						for (int i=0; i<match.length; i++) {
 							int atom = match[i];
+
+							// translate templates, which need to retain absolute coordinates, into atom markers
+							if (definesAbsoluteOrientation)
+								mMol.setAtomMarker(atom, true);
+
 							fragment.mPriority[i] = priority;
 							fragment.mGlobalAtom[i] = atom;
 							fragment.mAtomX[i] = template.getNormalizedAtomX(i);
@@ -272,6 +300,9 @@ public class CoordinateInventor {
 							atomIsPartOfTemplate[atom] = true;
 							mAtomHandled[atom] = true;
 							}
+
+						for (int b=0; b<templateMol.getBonds(); b++)
+							mBondHandled[mMol.getBond(match[templateMol.getBondAtom(0, b)], match[templateMol.getBondAtom(1, b)])] = true;
 
 						mFragmentList.add(fragment);
 						}
@@ -330,7 +361,7 @@ public class CoordinateInventor {
 
 		InventorFragment[] fragment = new InventorFragment[coreFragmentCount];
 		for (int f=0; f<coreFragmentCount; f++)
-			fragment[f] = new InventorFragment(mMol, fragmentAtomCount[f], mMode);
+			fragment[f] = new InventorFragment(mMol, fragmentAtomCount[f], true);
 
 		int[] atomIndex = new int[coreFragmentCount];
 		for (int atom=0; atom<mMol.getAllAtoms(); atom++) {
@@ -364,9 +395,9 @@ public class CoordinateInventor {
 
 	private void locateInitialFragments() {
 		// take every atom with more than 4 neighbours including first neighbour shell
-		for (int atom=0; atom<mMol.getAllAtoms(); atom++) {
+		for (int atom=0; atom<mMol.getAtoms(); atom++) {
 			if (mMol.getAllConnAtoms(atom) > 4) {
-				InventorFragment f = new InventorFragment(mMol, 1+mMol.getAllConnAtoms(atom), mMode);
+				InventorFragment f = new InventorFragment(mMol, 1+mMol.getAllConnAtoms(atom), false);
 
 				f.mAtomX[mMol.getAllConnAtoms(atom)] = 0.0;
 				f.mAtomY[mMol.getAllConnAtoms(atom)] = 0.0;
@@ -429,7 +460,7 @@ public class CoordinateInventor {
 			}
 
 			// take every large ring that has ring bonds that are not member of a fragment added already
-		for (int bond=0; bond<mMol.getAllBonds(); bond++) {
+		for (int bond=0; bond<mMol.getBonds(); bond++) {
 			if (mMol.isRingBond(bond) && !mBondHandled[bond]) {
 				InventorChain theRing = getSmallestRingFromBond(bond);
 				int[] ringAtom = theRing.getRingAtoms();
@@ -450,7 +481,7 @@ public class CoordinateInventor {
 				int atom2 = mMol.getBondAtom(1, bond);
 				int members = mMol.getAllConnAtoms(atom1) + mMol.getAllConnAtoms(atom2);
 				if (members > 2) {
-					InventorFragment f = new InventorFragment(mMol, members, mMode);
+					InventorFragment f = new InventorFragment(mMol, members, false);
 					int count = 0;
 					for (int i=0; i<mMol.getAllConnAtoms(atom1); i++) {
 						int connAtom = mMol.getConnAtom(atom1, i);
@@ -471,7 +502,7 @@ public class CoordinateInventor {
 							}
 						}
 					for (int i=0; i<members; i++) {
-						f.mAtomX[i] = (double)i;
+						f.mAtomX[i] = i;
 						f.mAtomY[i] = 0.0;
 						f.mPriority[i] = 1;
 						}
@@ -516,9 +547,9 @@ public class CoordinateInventor {
 						int members = mMol.getAllConnAtoms(alleneAtom[0])
 									+ mMol.getAllConnAtoms(alleneAtom[last])
 									+ last - 1;
-						InventorFragment f = new InventorFragment(mMol, members, mMode);
+						InventorFragment f = new InventorFragment(mMol, members, false);
 						for (int j=0; j<=last; j++) {
-							f.mAtomX[j] = (double)j;
+							f.mAtomX[j] = j;
 							f.mAtomY[j] = 0.0;
 							f.mPriority[j] = 64;
 							f.mGlobalAtom[j] = alleneAtom[j];
@@ -573,7 +604,7 @@ public class CoordinateInventor {
 
 				if (primaryConns == 2) {
 //					mAtomHandled[atom] = true;	don't break zig-zag of chains that are handled later
-					InventorFragment f = new InventorFragment(mMol, 3, mMode);
+					InventorFragment f = new InventorFragment(mMol, 3, false);
 					for (int i=0; i<2; i++) {
 						mAtomHandled[primaryConnAtom[i]] = true;
 						mBondHandled[primaryConnBond[i]] = true;
@@ -607,7 +638,7 @@ public class CoordinateInventor {
 						}
 
 //					mAtomHandled[atom] = true;	don't break zig-zag of chains that are handled later
-					InventorFragment f = new InventorFragment(mMol, 4, mMode);
+					InventorFragment f = new InventorFragment(mMol, 4, false);
 					for (int i=0; i<3; i++) {
 						mAtomHandled[primaryConnAtom[i]] = true;
 						mBondHandled[primaryConnBond[i]] = true;
@@ -708,7 +739,7 @@ public class CoordinateInventor {
 			if (longestChain == null)
 				break;
 
-			InventorFragment f = new InventorFragment(mMol, longestChain.getChainLength(), mMode);
+			InventorFragment f = new InventorFragment(mMol, longestChain.getChainLength(), false);
 			for (int i=0; i<longestChain.getChainLength(); i++) {
 				mAtomHandled[longestChain.mAtom[i]] = true;
 				if (i < longestChain.getChainLength() - 1)
@@ -726,7 +757,7 @@ public class CoordinateInventor {
 	private void locateSingleAtoms() {
 		for (int atom=0; atom<mMol.getAllAtoms(); atom++) {
 			if (!mAtomHandled[atom] && mMol.getAllConnAtoms(atom) == 0) {
-				InventorFragment f = new InventorFragment(mMol, 1, mMode);
+				InventorFragment f = new InventorFragment(mMol, 1, false);
 				mAtomHandled[atom] = true;
 				f.mGlobalAtom[0] = atom;
 				f.mAtomX[0] = 0.0;
@@ -740,7 +771,7 @@ public class CoordinateInventor {
 
 	private void addRingFragment(int[] ringAtom, int[] ringBond) {
 		int ringSize = ringAtom.length;
-		InventorFragment f = new InventorFragment(mMol, ringSize, mMode);
+		InventorFragment f = new InventorFragment(mMol, ringSize, false);
 		f.mAtomX[0] = 0.0;
 		f.mAtomY[0] = 0.0;
 		for (int i=0; i<ringSize; i++) {
@@ -1109,13 +1140,18 @@ public class CoordinateInventor {
 				}
 			}
 
-		// if the bond is also a member of a small ring and if more than this one bond are shared
-		// then the first and the last shared bond are E and the ones between Z.
+		// If the bond is also a member of a small ring
 		if (mMol.isSmallRingBond(ringBond[index])) {
 			int sharedRing1 = mMol.getRingSet().getSharedRing(ringBond[lowerIndex], ringBond[index]);
 			int sharedRing2 = mMol.getRingSet().getSharedRing(ringBond[higherIndex], ringBond[index]);
+
+			// If more than one bond is shared by the large and the small ring,
+			// then the first and the last shared bond are E and the ones between Z.
 			if (sharedRing1 != -1 || sharedRing2 != -1)
 				return sharedRing1 == sharedRing2 ? Molecule.cBondParityZor2 : Molecule.cBondParityEor1;
+
+			// If only this one bond is shared, then we have a Z-configuration
+			return Molecule.cBondParityZor2;
 			}
 
 		return Molecule.cBondParityNone;
@@ -1175,9 +1211,7 @@ public class CoordinateInventor {
 		int current = 1;
 		int highest = 1;
 		while (current <= highest) {
-//			if (graphLevel[graphAtom[current]] > RingCollection.MAX_LARGE_RING_SIZE)
-//				return null;		// disabled ring size limit;  TLS 20130613
-			for (int i=0; i<mMol.getAllConnAtoms(graphAtom[current]); i++) {
+			for (int i=0; i<mMol.getConnAtoms(graphAtom[current]); i++) {
 				int candidate = mMol.getConnAtom(graphAtom[current], i);
 				if ((current > 1) && candidate == atom1) {
 					InventorChain theRing = new InventorChain(graphLevel[graphAtom[current]]);
@@ -1214,9 +1248,7 @@ public class CoordinateInventor {
 		int current = 1;
 		int highest = 1;
 		while (current <= highest) {
-//			if (graphLevel[graphAtom[current]] > RingCollection.MAX_LARGE_RING_SIZE)
-//				return 0;		// disabled ring size limit;  TLS 20130613
-			for (int i=0; i<mMol.getAllConnAtoms(graphAtom[current]); i++) {
+			for (int i=0; i<mMol.getConnAtoms(graphAtom[current]); i++) {
 				int candidate = mMol.getConnAtom(graphAtom[current], i);
 				if (candidate == atom3)
 					return 1 + graphLevel[graphAtom[current]];
@@ -1462,7 +1494,7 @@ public class CoordinateInventor {
 
 	private InventorFragment getMergedFragment(InventorFragment f1, InventorFragment f2, int commonAtoms) {
 			// merges all atoms of two fragments into a new one retaining original coordinates
-		InventorFragment f = new InventorFragment(mMol, f1.mGlobalAtom.length + f2.mGlobalAtom.length - commonAtoms, mMode);
+		InventorFragment f = new InventorFragment(mMol, f1.mGlobalAtom.length + f2.mGlobalAtom.length - commonAtoms, f1.mKeepMarkedAtoms | f2.mKeepMarkedAtoms);
 		int count = 0;
 		for (int i = 0; i<f1.mGlobalAtom.length; i++) {
 			f.mGlobalAtom[count] = f1.mGlobalAtom[i];
@@ -1707,7 +1739,7 @@ public class CoordinateInventor {
 			InventorFragment f = mFragmentList.get(fragmentNo);
 			ArrayList<int[]> collisionList = f.getCollisionList();
 			double minCollisionPanalty = f.getCollisionPanalty();
-			InventorFragment minCollisionFragment = new InventorFragment(f, mMode);
+			InventorFragment minCollisionFragment = new InventorFragment(f);
 
 			int lastBond = -1;
 			for (int flip=0; flip<TOTAL_FLIPS && collisionList.size()!=0; flip++) {
@@ -1750,7 +1782,7 @@ public class CoordinateInventor {
 						collisionList = f.getCollisionList();
 						if (minCollisionPanalty > f.getCollisionPanalty()) {
 							minCollisionPanalty = f.getCollisionPanalty();
-							minCollisionFragment = new InventorFragment(f, mMode);
+							minCollisionFragment = new InventorFragment(f);
 							}
 						}
 					}
@@ -1878,9 +1910,15 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 
 
 	private int[] calculateAtomSymmetries() {
+		int atomBits = Canonizer.getNeededBits(mMol.getAtoms());
+		int maxConnAtoms = 2;
+		for (int atom=0; atom<mMol.getAtoms(); atom++)
+			maxConnAtoms = Math.max(maxConnAtoms, mMol.getAllConnAtoms(atom));
+		int baseValueSize = (62 + 2 * atomBits + maxConnAtoms * (atomBits+1)) / 63;
+
 		CanonizerBaseValue[] baseValue = new CanonizerBaseValue[mMol.getAllAtoms()];
 		for (int atom=0; atom<mMol.getAllAtoms(); atom++) {
-			baseValue[atom] = new CanonizerBaseValue(2);
+			baseValue[atom] = new CanonizerBaseValue(baseValueSize);
 			baseValue[atom].init(atom);
 			}
 
@@ -1902,7 +1940,7 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 		int newNoOfRanks = consolidateRanks(baseValue, symRank);
 		do {
 			oldNoOfRanks = newNoOfRanks;
-			calcNextBaseValues(baseValue, symRank);
+			calcNextBaseValues(baseValue, symRank, atomBits, maxConnAtoms);
 			newNoOfRanks = consolidateRanks(baseValue, symRank);
 			} while (oldNoOfRanks != newNoOfRanks);
 
@@ -1910,8 +1948,8 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 		}
 
 
-	private void calcNextBaseValues(CanonizerBaseValue[] baseValue, int[] symRank) {
-		int	connRank[] = new int[ExtendedMolecule.cMaxConnAtoms];
+	private void calcNextBaseValues(CanonizerBaseValue[] baseValue, int[] symRank, int atomBits, int maxConnAtoms) {
+		int	connRank[] = new int[maxConnAtoms];
 		for (int atom=0; atom<mMol.getAllAtoms(); atom++) {
 								// generate sorted list of ranks of neighbours
 			for (int i=0; i<mMol.getAllConnAtoms(atom); i++) {
@@ -1925,12 +1963,12 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 				connRank[j] = rank;
 				}
 
-			int neighbours = Math.min(6, mMol.getAllConnAtoms(atom));
+			int neighbours = mMol.getAllConnAtoms(atom);
 			baseValue[atom].init(atom);
-			baseValue[atom].add(Canonizer.ATOM_BITS, symRank[atom]);
-			baseValue[atom].add((6 - neighbours)*(Canonizer.ATOM_BITS + 1), 0);
+			baseValue[atom].add(atomBits, symRank[atom]);
+			baseValue[atom].add((maxConnAtoms - neighbours)*(atomBits + 1), 0);
 			for (int i=0; i<neighbours; i++)
-				baseValue[atom].add(Canonizer.ATOM_BITS + 1, connRank[i]);
+				baseValue[atom].add(atomBits + 1, connRank[i]);
 			}
 		}
 
@@ -2166,51 +2204,6 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 			}
 		return false;
 		}*/
-
-	private void arrangeAllFragments() {
-		while (mFragmentList.size() > 1) {
-			double[] largeFragmentSize = new double[2];
-			InventorFragment[] largeFragment = new InventorFragment[2];
-
-				// find largest two Fragments (in terms of display size)
-			InventorFragment f0 = mFragmentList.get(0);
-			InventorFragment f1 = mFragmentList.get(1);
-			double s0 = f0.getWidth() + f0.getHeight();
-			double s1 = f1.getWidth() + f1.getHeight();
-			if (s0 > s1) {
-				largeFragment[0] = f0;
-				largeFragmentSize[0] = s0;
-				largeFragment[1] = f1;
-				largeFragmentSize[1] = s1;
-				}
-			else {
-				largeFragment[0] = f1;
-				largeFragmentSize[0] = s1;
-				largeFragment[1] = f0;
-				largeFragmentSize[1] = s0;
-				}
-
-			for (int i=2; i<mFragmentList.size(); i++) {
-				InventorFragment fn = mFragmentList.get(i);
-				double sn = fn.getWidth() + fn.getHeight();
-				if (largeFragmentSize[0] < sn) {
-					largeFragment[1] = largeFragment[0];
-					largeFragment[0] = fn;
-					largeFragmentSize[1] = largeFragmentSize[0];
-					largeFragmentSize[0] = sn;
-					}
-				else if (largeFragmentSize[1] < sn) {
-					largeFragment[1] = fn;
-					largeFragmentSize[1] = sn;
-					}
-				}
-
-			largeFragment[0].arrangeWith(largeFragment[1]);
-			InventorFragment mergedFragment = getMergedFragment(largeFragment[0], largeFragment[1], 0);
-			updateFragmentList(largeFragment[0], largeFragment[1], mergedFragment);
-
-			}
-		}
 
 	private void updateFragmentList(InventorFragment fOld1, InventorFragment fOld2, InventorFragment fJoined) {
 		int index = Math.min(mFragmentList.indexOf(fOld1), mFragmentList.indexOf(fOld2));

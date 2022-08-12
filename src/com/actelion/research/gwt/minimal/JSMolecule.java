@@ -8,6 +8,7 @@ import java.util.Vector;
 import com.actelion.research.chem.*;
 import com.actelion.research.chem.contrib.*;
 import com.actelion.research.chem.coords.CoordinateInventor;
+import com.actelion.research.gui.generic.GenericRectangle;
 import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
@@ -104,6 +105,9 @@ public class JSMolecule {
   	//if (!$doc.createElement) {
   	//	throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
   	//}
+    if (!width || !height) {
+      throw new Error('Molecule#toSVG requires width and height to be specified');
+    }
   	options = options || {};
   	var factorTextSize = options.factorTextSize || 1;
     var autoCrop = options.autoCrop === true;
@@ -122,8 +126,8 @@ public class JSMolecule {
     int mode = Util.getDisplayMode(options);
     SVGDepictor d = new SVGDepictor(oclMolecule, mode, id);
     d.setFactorTextSize(factorTextSize);
-    d.validateView(null, new Rectangle2D.Double(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
-    Rectangle2D.Double b = d.getBoundingRect();
+    d.validateView(null, new GenericRectangle(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
+    GenericRectangle b = d.getBoundingRect();
     d.paint(null);
     String result = d.toString();
     if (!autoCrop) {
@@ -532,16 +536,16 @@ public class JSMolecule {
     return oclMolecule.addOrChangeBond(atm1, atm2, type);
   }
 
-  public boolean addRing(double x, double y, int ringSize, boolean aromatic) {
-    return oclMolecule.addRing(x, y, ringSize, aromatic);
+  public boolean addRing(double x, double y, int ringSize, boolean aromatic, double bondLength) {
+    return oclMolecule.addRing(x, y, ringSize, aromatic, bondLength);
   }
 
-  public boolean addRingToAtom(int atom, int ringSize, boolean aromatic) {
-    return oclMolecule.addRingToAtom(atom, ringSize, aromatic);
+  public boolean addRingToAtom(int atom, int ringSize, boolean aromatic, double bondLength) {
+    return oclMolecule.addRingToAtom(atom, ringSize, aromatic, bondLength);
   }
 
-  public boolean addRingToBond(int bond, int ringSize, boolean aromatic) {
-    return oclMolecule.addRingToBond(bond, ringSize, aromatic);
+  public boolean addRingToBond(int bond, int ringSize, boolean aromatic, double bondLength) {
+    return oclMolecule.addRingToBond(bond, ringSize, aromatic, bondLength);
   }
 
   public boolean changeAtom(int atom, int atomicNo, int mass, int abnormalValence, int radical) {
@@ -742,9 +746,9 @@ public class JSMolecule {
     return oclMolecule.getAtomParity(atom);
   }
 
-  public int getAtomQueryFeatures(int atom) {
-    return oclMolecule.getAtomQueryFeatures(atom);
-  }
+  // public int getAtomQueryFeatures(int atom) {
+  //   return oclMolecule.getAtomQueryFeatures(atom);
+  // }
 
   public int getAtomRadical(int atom) {
     return oclMolecule.getAtomRadical(atom);
@@ -982,9 +986,9 @@ public class JSMolecule {
     oclMolecule.setAtomParity(atom, parity, isPseudo);
   }
 
-  public void setAtomQueryFeature(int atom, int feature, boolean value) {
-    oclMolecule.setAtomQueryFeature(atom, feature, value);
-  }
+  // public void setAtomQueryFeature(int atom, int feature, boolean value) {
+  //   oclMolecule.setAtomQueryFeature(atom, feature, value);
+  // }
 
   public void setAtomRadical(int atom, int radical) {
     oclMolecule.setAtomRadical(atom, radical);

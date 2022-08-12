@@ -1,49 +1,40 @@
 /*
-
-Copyright (c) 2015-2016, cheminfo
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-    * Neither the name of {{ project }} nor the names of its contributors
-      may be used to endorse or promote products derived from this software
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Copyright (c) 1997 - 2016
+* Actelion Pharmaceuticals Ltd.
+* Gewerbestrasse 16
+* CH-4123 Allschwil, Switzerland
+*
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+* 3. Neither the name of the the copyright holder nor the
+*    names of its contributors may be used to endorse or promote products
+*    derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
-
-
-
-
-
-/*
-    This is a special version which excludes the refs to AbstractDrawingObject
- */
 package com.actelion.research.chem;
 
-import com.actelion.research.chem.AbstractDepictor;
-import com.actelion.research.chem.Molecule;
-
-import java.awt.geom.*;
+import com.actelion.research.gui.generic.GenericPoint;
+import com.actelion.research.gui.generic.GenericRectangle;
 
 public class DepictorTransformation {
     private double mOffsetX,mOffsetY,mScaling;
@@ -64,8 +55,8 @@ public class DepictorTransformation {
         mOffsetY = offsetY;
         }
 
-    public DepictorTransformation(Rectangle2D.Double bounds,
-                                  Rectangle2D.Double view,
+    public DepictorTransformation(GenericRectangle bounds,
+                                  GenericRectangle view,
                                   double averageBondLength,
                                   int mode) {
             // calculates transformation needed to transfer bounds into view considering mode.
@@ -77,8 +68,8 @@ public class DepictorTransformation {
                 // check if bounds fit in view. If not then center and reduce if needed
                 if (!view.contains(bounds)) {
                     if ((bounds.width > view.width) || (bounds.height > view.height)) {
-                    	double hScaling = view.width / bounds.width;
-                    	double vScaling = view.height / bounds.height;
+                        double hScaling = view.width / bounds.width;
+                        double vScaling = view.height / bounds.height;
                         mScaling = Math.min(hScaling, vScaling);
                         }
 
@@ -99,16 +90,16 @@ public class DepictorTransformation {
                 }
             else {
                 // inflate to maximum bond length or maximum that fits
-            	double hScaling = view.width / bounds.width;
-            	double vScaling = view.height / bounds.height;
+                double hScaling = view.width / bounds.width;
+                double vScaling = view.height / bounds.height;
 
-            	double maxAVBL = mode & AbstractDepictor.cModeMaxBondLength;
+                double maxAVBL = mode & AbstractDepictor.cModeMaxBondLength;
             	if (maxAVBL == 0)
             		maxAVBL = AbstractDepictor.cOptAvBondLen;
             	else if ((mode & AbstractDepictor.cModeInflateToHighResAVBL) != 0)
             		maxAVBL /= 256;
 
-            	double bScaling = maxAVBL / averageBondLength;
+                double bScaling = maxAVBL / averageBondLength;
 
                 mScaling = Math.min(bScaling, Math.min(hScaling, vScaling));
 
@@ -117,7 +108,7 @@ public class DepictorTransformation {
                 }
             }
         else if ((mode & AbstractDepictor.cModeInflateToMaxAVBL) != 0) {
-        	double maxAVBL = ((mode & AbstractDepictor.cModeMaxBondLength) != 0) ?
+            double maxAVBL = ((mode & AbstractDepictor.cModeMaxBondLength) != 0) ?
                                mode & AbstractDepictor.cModeMaxBondLength : AbstractDepictor.cOptAvBondLen;
             mScaling = maxAVBL / averageBondLength;
             }
@@ -169,12 +160,12 @@ public class DepictorTransformation {
         t.mOffsetY = t.mOffsetY * mScaling + mOffsetY;
         }
 
-    public void applyTo(Point2D.Double p) {
+    public void applyTo(GenericPoint p) {
         p.x = p.x * mScaling + mOffsetX;
         p.y = p.y * mScaling + mOffsetY;
         }
 
-    public void applyTo(Rectangle2D.Double r) {
+    public void applyTo(GenericRectangle r) {
         r.x = r.x * mScaling + mOffsetX;
         r.y = r.y * mScaling + mOffsetY;
         r.width *= mScaling;
@@ -186,10 +177,10 @@ public class DepictorTransformation {
         m.translateCoords(mOffsetX, mOffsetY);
         }
 
-//    public void applyTo(AbstractDrawingObject o) {
-//        o.scale(mScaling);
-//        o.move(mOffsetX, mOffsetY);
-//        }
+    public void applyTo(AbstractDrawingObject o) {
+        o.scale(mScaling);
+        o.move(mOffsetX, mOffsetY);
+        }
 
     public DepictorTransformation getInverseTransformation() {
         DepictorTransformation t = new DepictorTransformation();

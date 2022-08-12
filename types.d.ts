@@ -480,11 +480,27 @@ export declare class Molecule {
 
   addOrChangeBond(atm1: number, atm2: number, type: number): number;
 
-  addRing(x: number, y: number, ringSize: number, aromatic: boolean): boolean;
+  addRing(
+    x: number,
+    y: number,
+    ringSize: number,
+    aromatic: boolean,
+    bondLength: number,
+  ): boolean;
 
-  addRingToAtom(atom: number, ringSize: number, aromatic: boolean): boolean;
+  addRingToAtom(
+    atom: number,
+    ringSize: number,
+    aromatic: boolean,
+    bondLength: number,
+  ): boolean;
 
-  addRingToBond(bond: number, ringSize: number, aromatic: boolean): boolean;
+  addRingToBond(
+    bond: number,
+    ringSize: number,
+    aromatic: boolean,
+    bondLength: number,
+  ): boolean;
 
   changeAtom(
     atom: number,
@@ -843,7 +859,7 @@ export declare class Molecule {
    * <i>getAtomQueryFeatures() & cAtomQFHydrogen</i>
    * @param atom
    */
-  getAtomQueryFeatures(atom: number): number;
+  // getAtomQueryFeatures(atom: number): number;
 
   /**
    * Gets an atom's radical state as singulet,dublet,triplet or none
@@ -1276,7 +1292,7 @@ export declare class Molecule {
    * @param feature - one of cAtomQF...
    * @param value - if true, the feature is set, otherwise it is removed
    */
-  setAtomQueryFeature(atom: number, feature: number, value: boolean): void;
+  // setAtomQueryFeature(atom: number, feature: number, value: boolean): void;
 
   /**
    * Sets an atom's radical state as singulet,dublet,triplet or none
@@ -2593,42 +2609,29 @@ export declare class CanonizerUtil {
  */
 export interface IDepictorOptions {
   inflateToMaxAVBL?: boolean;
-
   inflateToHighResAVBL?: boolean;
-
   chiralTextBelowMolecule?: boolean;
-
   chiralTextAboveMolecule?: boolean;
-
   chiralTextOnFrameTop?: boolean;
-
   chiralTextOnFrameBottom?: boolean;
 
   noTabus?: boolean;
-
   showAtomNumber?: boolean;
-
   showBondNumber?: boolean;
-
   highlightQueryFeatures?: boolean;
-
   showMapping?: boolean;
-
   suppressChiralText?: boolean;
-
   suppressCIPParity?: boolean;
-
   suppressESR?: boolean;
 
+  showSymmetryAny?: boolean;
   showSymmetrySimple?: boolean;
-
-  showSymmetryDiastereotopic?: boolean;
-
-  showSymmetryEnantiotopic?: boolean;
-
+  showSymmetryStereoHeterotopicity?: boolean;
   noImplicitAtomLabelColors?: boolean;
-
   noStereoProblem?: boolean;
+  noColorOnESRAndCIP?: boolean;
+  noImplicitHydrogen?: boolean;
+  drawBondsInGray?: boolean;
 }
 
 export declare class Reaction {

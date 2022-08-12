@@ -1,17 +1,33 @@
 /*
- * Copyright 2017 Idorsia Pharmaceuticals Ltd., Hegenheimermattweg 91, CH-4123 Allschwil, Switzerland
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
  *
- * This file is part of DataWarrior.
- * 
- * DataWarrior is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version.
- * 
- * DataWarrior is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with DataWarrior.
- * If not, see http://www.gnu.org/licenses/.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Thomas Sander
  */
@@ -40,7 +56,8 @@ public class Mutator {
 											   | Mutation.MUTATION_CLOSE_RING_AND_AROMATIZE
 											   | Mutation.MUTATION_TOGGLE_AMID_SULFONAMID
 											   | Mutation.MUTATION_MIGRATE
-											   | Mutation.MUTATION_SWAP_SUBSTITUENT;
+											   | Mutation.MUTATION_SWAP_SUBSTITUENT
+											   | Mutation.MUTATION_INVERT_PARITY;
 
 	public static final int MUTATION_ANY = MUTATION_GROW
 										 | MUTATION_SHRINK
@@ -262,6 +279,8 @@ public class Mutator {
 			addProbabilitiesForMigrate(mutationList);
         if ((mutationType & Mutation.MUTATION_SWAP_SUBSTITUENT) != 0)
             addProbabilitiesForSwapSubstituent(mutationList, substituentList);
+		if ((mutationType & Mutation.MUTATION_INVERT_PARITY) != 0)
+			addProbabilitiesForInvertParity(mutationList);
 
         if (cProbabilityFactor != 1)
         	tweakProbabilities(mutationList);
@@ -1071,6 +1090,15 @@ public class Mutator {
             }
         }
 
+	private void addProbabilitiesForInvertParity(ArrayList<Mutation> mutationList) {
+		for (int atom=0; atom<mMol.getAtoms(); atom++)
+			if (mIsPrimaryAtom[atom] && mMol.isAtomStereoCenter(atom))
+				mutationList.add(new Mutation(Mutation.MUTATION_INVERT_PARITY, atom, -1, -1, -1, 1.0));
+		for (int bond=0; bond<mMol.getBonds(); bond++)
+			if ((mIsPrimaryAtom[mMol.getBondAtom(0, bond)] || mIsPrimaryAtom[mMol.getBondAtom(1, bond)])
+			 && mMol.getBondParity(bond) != Molecule.cBondParityNone)
+				mutationList.add(new Mutation(Mutation.MUTATION_INVERT_PARITY, -1, bond, -1, -1, 1.0));
+		}
 
     private ArrayList<MutatorSubstituent> createSubstituentList() {
 		ArrayList<MutatorSubstituent> substituentList = new ArrayList<MutatorSubstituent>();
@@ -1216,6 +1244,14 @@ public class Mutator {
                 mol.addBond(atomMap[atom1], atomMap[atom2], Molecule.cBondTypeSingle);
                 }
             break;
+		case Mutation.MUTATION_INVERT_PARITY:
+			if (mutation.mWhere1 != -1)
+				mol.setAtomParity(mutation.mWhere1, mol.getAtomParity(mutation.mWhere1) != Molecule.cAtomParity1 ?
+						Molecule.cAtomParity1 : Molecule.cAtomParity2, false);
+			if (mutation.mWhere2 != -1)
+				mol.setBondParity(mutation.mWhere2, mol.getBondParity(mutation.mWhere2) != Molecule.cBondParityEor1 ?
+						Molecule.cBondParityEor1 : Molecule.cBondParityZor2, false);
+			break;
 			}
 
 		repairCharges(mol);
@@ -1501,20 +1537,20 @@ public class Mutator {
 		}
 
 	private void repairStereoChemistry(StereoMolecule mol) {
+		for (int bond=0; bond<mol.getAllBonds(); bond++)
+			if (mol.isStereoBond(bond))
+				mol.setBondType(bond, Molecule.cBondTypeSingle);
+
         for (int atom=0; atom<mol.getAtoms(); atom++) {
-            switch (mol.getAtomParity(atom)) {
-            case Molecule.cAtomParityUnknown:
-                int parity = (mRandom.nextDouble() < 0.5) ? Molecule.cAtomParity1 : Molecule.cAtomParity2;
-                boolean isPseudo = mol.isAtomParityPseudo(atom);
-                mol.setAtomParity(atom, parity, isPseudo);
-            case Molecule.cAtomParity1:
-            case Molecule.cAtomParity2:
+        	int parity = mol.getAtomParity(atom);
+        	if (parity == Molecule.cAtomParityUnknown) {
+		        parity = (mRandom.nextDouble()<0.5) ? Molecule.cAtomParity1 : Molecule.cAtomParity2;
+		        boolean isPseudo = mol.isAtomParityPseudo(atom);
+		        mol.setAtomParity(atom, parity, isPseudo);
+		        mol.setAtomESR(atom, Molecule.cESRTypeAbs, 0);
+	            }
+        	if (parity != Molecule.cAtomParityNone)
                 mol.setStereoBondFromAtomParity(atom);
-                break;
-            case Molecule.cAtomParityNone:
-                mol.convertStereoBondsToSingleBonds(atom);
-                break;
-                }
             }
         for (int bond=0; bond<mol.getBonds(); bond++) {
         	if (mol.isBINAPChiralityBond(bond)) {
@@ -1526,10 +1562,6 @@ public class Mutator {
 	            case Molecule.cBondParityEor1:
 	            case Molecule.cBondParityZor2:
 	                mol.setStereoBondFromBondParity(bond);
-	                break;
-	            case Molecule.cBondParityNone:
-	                mol.convertStereoBondsToSingleBonds(mol.getBondAtom(0, bond));
-	                mol.convertStereoBondsToSingleBonds(mol.getBondAtom(1, bond));
 	                break;
 	                }
         		}

@@ -5,14 +5,15 @@
 const modified = [
   'calc/ArrayUtilsCalc',
 
-  'chem/AbstractDrawingObject',
-  'chem/DepictorTransformation',
-
   'chem/io/DWARFileParser',
+  'chem/io/Mol2FileParser',
+  'chem/io/ODEFileParser',
 
   'chem/prediction/DruglikenessPredictor',
   'chem/prediction/IncrementTable',
   'chem/prediction/ToxicityPredictor',
+
+  'gui/hidpi/HiDPIHelper',
 
   'util/ConstantsDWAR',
 ];
@@ -20,56 +21,183 @@ const modified = [
 exports.modified = modified.map(getFilename);
 
 const changed = [
-  ['chem/ChemistryHelper', removePrintf],
-  ['chem/Molecule3D', removeCloneInfos],
-  ['chem/conf/BondLengthSet', changeBondLengthSet],
   ['@org/openmolecules/chem/conf/gen/RigidFragmentCache', removeCacheIO],
+  ['chem/ChemistryHelper', removePrintf],
+  ['chem/Coordinates', removeToStringSpaceDelimited],
+  ['chem/coords/InventorFragment', changeInventorFragment],
+  ['chem/conf/BondLengthSet', changeBondLengthSet],
   ['chem/conf/TorsionDB', changeTorsionDB],
   ['chem/forcefield/mmff/Csv', changeCsv],
   ['chem/forcefield/mmff/Separation', replaceHashTable],
   ['chem/forcefield/mmff/Tables', changeTables],
   ['chem/forcefield/mmff/Vector3', changeVector3],
-  ['chem/io/RXNFileV3Creator', removeRXNStringFormat],
+  ['chem/io/CompoundFileHelper', fixCompoundFileHelper],
+  ['chem/io/RXNFileCreator', changeLineSeparator],
+  ['chem/io/RXNFileV3Creator', changeLineSeparator, removeRXNStringFormat],
+  ['chem/Molecule', changeMolecule],
+  ['chem/MolfileCreator', changeLineSeparator],
+  ['chem/MolfileV3Creator', changeLineSeparator],
+  ['chem/Molecule3D', removeCloneInfos],
+  ['chem/TextDrawingObject', changeTextDrawingObject],
   ['share/gui/editor/Model', removePrintf],
   ['util/ArrayUtils', changeArrayUtils],
 ];
 
-exports.changed = changed.map((file) => {
-  return [getFilename(file[0]), file[1]];
+exports.changed = changed.map(([path, ...transformers]) => {
+  return [getFilename(path), transformers];
 });
 
 const removed = [
+  '@org/machinelearning',
+  'calc/BoxCox.java',
+  'calc/classification',
+  'calc/combinatorics',
+  'calc/distance',
+  'calc/filter',
+  'calc/graph',
+  'calc/histogram',
+  'calc/BinarySOM.java',
+  'calc/LUDecomposition.java',
+  'calc/Matrix.java',
+  'calc/MatrixFunctions.java',
+  'calc/MatrixTests.java',
+  'calc/regression',
+  'calc/ScaleClasses.java',
+  'calc/SelfOrganizedMap.java',
+  'calc/SimilarityMulticore.java',
+  'calc/SOMController.java',
   'calc/statistics',
-  'chem/descriptor/flexophore',
+  'calc/VectorSOM.java',
+  'chem/alignment3d',
+  'chem/AtomTypeList.java',
+  'chem/chemicalspaces',
+  'chem/Clusterer.java',
+  'chem/combinatorialspace',
+  'chem/conf/BondRotationHelper.java',
+  'chem/conf/ConformerSetGenerator.java',
+  'chem/conf/MolecularFlexibilityCalculator.java',
+  'chem/conf/SymmetryCorrectedRMSDCalculator.java',
+  'chem/conf/torsionstrain',
+  'chem/contrib/DiastereoIDTest.java',
+  'chem/descriptor/DescriptorHandlerBinarySkelSpheres.java',
   'chem/descriptor/DescriptorHandlerFlexophore.java',
   'chem/descriptor/DescriptorHandlerFunctionalGroups.java',
+  'chem/descriptor/DescriptorHandlerHashedCFp.java',
+  'chem/descriptor/DescriptorHandlerLongPFP512.java',
+  'chem/descriptor/DescriptorHandlerPFP512.java',
   'chem/descriptor/DescriptorHandlerStandardFactory.java',
   'chem/descriptor/DescriptorHandlerStandard2DFactory.java',
+  'chem/descriptor/FingerPrintGenerator.java',
+  'chem/descriptor/flexophore',
+  'chem/descriptor/pharmacophoregraph',
+  'chem/descriptor/pharmacophoretree',
   'chem/dnd', // ui
-  'chem/FingerPrintGenerator.java',
+  'chem/docking',
+  'chem/ExtendedDepictor.java',
+  'chem/ExtendedMoleculeFunctions.java',
   'chem/forcefield/mmff/Sdf.java', // needs access to disk
-  'chem/mcs/MatchList.java',
-  'chem/mcs/MatchListContainer.java',
-  'chem/properties/complexity/ExhaustiveFragmentsStatistics.java',
-  'chem/properties/complexity/MolecularComplexityCalculator.java',
+  'chem/hyperspace',
+  'chem/interactionstatistics',
+  'chem/io/AbstractParser.java',
+  'chem/io/CompoundFileFilter.java',
+  'chem/io/DWARFileCreator.java',
+  'chem/io/NativeMDLReactionReader.java',
+  'chem/io/pdb',
+  'chem/mcs',
+  'chem/mmp',
+  'chem/Molecule3DFunctions.java',
+  'chem/optimization/MCHelper.java',
+  'chem/PeriodicTable.java',
+  'chem/phesa',
+  'chem/phesaflex',
+  'chem/potentialenergy',
+  'chem/prediction/FastMolecularComplexityCalculator.java',
+  'chem/prediction/IncrementTableWithIndex.java',
+  'chem/prediction/MolecularPropertyHelper.java',
+  'chem/properties/complexity',
   'chem/properties/fractaldimension',
   'chem/reaction/ClassificationData.java',
+  'chem/reaction/CommonSubGraphHelper.java',
   'chem/reaction/FunctionalGroupClassifier.java',
+  'chem/reaction/mapping',
+  'chem/reaction/MCSReactionMapper.java',
+  'chem/reaction/ReactionClassifier.java',
+  'chem/reaction/ReactionSearch.java',
+  'chem/RingHelper.java',
+  'chem/shredder/Fragment.java',
   'chem/StructureSearch.java',
   'jfx',
-  'gui/dnd',
-  'gui/hidpi',
+  'gui/clipboard',
   'gui/CompoundCollectionPane.java',
+  'gui/dnd',
+  'gui/dock',
+  'gui/editor/CustomAtomDialogBuilder.java',
+  'gui/editor/FXEditorArea.java',
+  'gui/editor/FXEditorDialog.java',
+  'gui/editor/FXEditorPane.java',
+  'gui/editor/FXEditorToolbar.java',
+  'gui/editor/GenericEditorArea.java',
+  'gui/editor/GenericEditorToolbar.java',
+  'gui/editor/SwingEditorArea.java',
+  'gui/editor/SwingEditorDialog.java',
+  'gui/editor/SwingEditorPanel.java',
+  'gui/editor/SwingEditorToolbar.java',
+  'gui/FileHelper.java',
+  'gui/fx',
+  'gui/HeaderPaintHelper.java',
+  'gui/hidpi',
+  'gui/JAtomLabelDialog.java',
+  'gui/JAtomQueryFeatureDialog.java',
+  'gui/JBondQueryFeatureDialog.java',
   'gui/JChemistryView.java',
+  'gui/JDrawArea.java',
+  'gui/JDrawDialog.java',
+  'gui/JDrawPanel.java',
+  'gui/JDrawToolbar.java',
   'gui/JEditableChemistryView.java',
   'gui/JEditableStructureView.java',
+  'gui/JImagePanel.java',
+  'gui/JImagePanelFixedSize.java',
+  'gui/JMessageBar.java',
+  'gui/JMultiPanelTitle.java',
+  'gui/JMultiPanelView.java',
+  'gui/JPopupButton.java',
+  'gui/JProgressDialog.java',
+  'gui/JProgressPanel.java',
+  'gui/JPruningBar.java',
+  'gui/JScrollableMenu.java',
   'gui/JStructureView.java',
+  'gui/JTextDrawingObjectDialog.java',
+  'gui/LookAndFeelHelper.java',
+  'gui/MultiPanelDragListener.java',
+  'gui/PopupItemProvider.java',
   'gui/ScrollPaneAutoScrollerWhenDragging.java',
+  'gui/swing',
+  'gui/table',
+  'gui/VerticalFlowLayout.java',
+  'gui/wmf',
+  'io/StringReadChannel.java',
   'share/gui/editor/chem/DrawingObject.java',
-  'util/CursorHelper.java',
-  'util/datamodel/IntVec.java',
+  'util/Base64.java',
+  'util/BinaryEncoder.java',
+  'util/BrowserControl.java',
+  'util/CommandLineParser.java',
+  'util/concurrent',
+  'util/convert/String2DoubleArray.java',
+  'util/datamodel',
+  'util/Formatter.java',
+  'util/graph',
+  'util/IO.java',
   'util/IntQueue.java', // unused, depends on ArrayUtils
+  'util/LittleEndianDataInputStream.java',
+  'util/LittleEndianDataOutputStream.java',
+  'util/MatrixSparse.java',
+  'util/Pipeline.java',
+  'util/Pipeline2FileWriter.java',
   'util/Platform.java',
+  'util/Prefs.java',
+  'util/SizeOf.java',
+  'util/Sketch.java',
   'util/StringFunctions.java', // uses RegExp things
 ];
 
@@ -98,14 +226,37 @@ function getFolderName(file) {
   }
 }
 
+function methodRegExp(methodName, options = {}) {
+  const { indent = '\t' } = options;
+  return new RegExp(`public.*? ${methodName}\\(.*\n(.*\n)*?${indent}}`, 'g');
+}
+
 function removePrintf(code) {
   return code.replace(/System\.out\.printf/g, '// System.out.print');
+}
+
+function removeToStringSpaceDelimited(code) {
+  return code.replaceAll(methodRegExp('toStringSpaceDelimited'), '');
+}
+
+function changeInventorFragment(code) {
+  return code.replace(
+    'mGlobalAtom.clone();',
+    'Arrays.copyOf(mGlobalAtom, mGlobalAtom.length);',
+  );
 }
 
 function removeCloneInfos(code) {
   return code.replace(
     'infos[a] = m.infos[i].clone();',
     '// infos[a] = m.infos[i].clone();',
+  );
+}
+
+function changeTextDrawingObject(code) {
+  return code.replace(
+    'detail.append(String.format(" size=\\"%.4f\\"", new Double(mSize)));',
+    'detail.append(" size=\\""+mSize+"\\"");',
   );
 }
 
@@ -129,9 +280,19 @@ function removeSlice(code, start, end) {
 
 function removeRXNStringFormat(code) {
   return code.replace(
-    'theWriter.write(String.format("M  V30 COUNTS %d %d\\n",rcnt,pcnt));',
-    'theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+"\\n",rcnt,pcnt);',
+    'theWriter.write(String.format("M  V30 COUNTS %d %d"+NL,rcnt,pcnt));',
+    'theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+NL,rcnt,pcnt);',
   );
+}
+
+function changeMolecule(code) {
+  code = code.replace('stream.writeLong(mAtomQueryFeatures[atom]);', '');
+  code = code.replace('mAtomQueryFeatures[atom] = stream.readLong();', '');
+  return code;
+}
+
+function changeLineSeparator(code) {
+  return code.replaceAll('System.lineSeparator()', '"\\n"');
 }
 
 const newInit = `
@@ -337,4 +498,15 @@ function replaceHashTable(code) {
 
 function changeVector3(code) {
   return removeSlice(code, 'public String toString() {', '}');
+}
+
+function fixCompoundFileHelper(code) {
+  code = code.replaceAll(methodRegExp('saveRXNFile', { indent: '\t\t' }), '');
+  code = code.replaceAll('File.separatorChar', '10');
+  code = code.replaceAll(
+    methodRegExp('createFileFilter', { indent: '\t\t' }),
+    '',
+  );
+  code = code.replaceAll('file.getName()', '""');
+  return code;
 }
