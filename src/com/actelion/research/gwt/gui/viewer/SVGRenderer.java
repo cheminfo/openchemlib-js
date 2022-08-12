@@ -33,9 +33,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.viewer;
 
 import com.actelion.research.chem.*;
-import jsinterop.annotations.*;
+import com.actelion.research.gui.generic.GenericRectangle;
 
-import java.awt.geom.Rectangle2D;
+import jsinterop.annotations.*;
 
 /**
  * Created by rufenec on 20/03/15.
@@ -57,7 +57,7 @@ public class SVGRenderer {
                 String c = can.getEncodedCoordinates();
                 p.parse(mol, n, c);
                 SVGDepictor depictor = new SVGDepictor(mol, null);
-                depictor.validateView(null, new Rectangle2D.Double(0, 0, width, height),
+                depictor.validateView(null, new GenericRectangle(0, 0, width, height),
                         AbstractDepictor.cModeInflateToMaxAVBL);
                 depictor.paint(null);
                 return depictor.toString();

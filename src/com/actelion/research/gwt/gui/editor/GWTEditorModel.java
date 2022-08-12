@@ -36,6 +36,7 @@ import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.coords.CoordinateInventor;
 import com.actelion.research.chem.reaction.Reaction;
+import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.share.gui.editor.Model;
 import com.actelion.research.share.gui.editor.chem.AbstractExtendedDepictor;
@@ -100,7 +101,7 @@ public class GWTEditorModel extends Model {
     Dimension dim = getDisplaySize();
     GWTDepictor depictor = new GWTDepictor(mol);
     depictor.updateCoords((Graphics) null,
-        new java.awt.geom.Rectangle2D.Double(0, 0, (float) dim.getWidth(), (float) dim.getHeight()),
+        new GenericRectangle(0, 0, (double) dim.getWidth(), (double) dim.getHeight()),
         GWTDepictor.cModeInflateToMaxAVBL);
     setValue(mol, true);
   }

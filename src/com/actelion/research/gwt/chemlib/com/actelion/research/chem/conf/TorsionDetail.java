@@ -1,35 +1,36 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
 
 package com.actelion.research.chem.conf;
 
@@ -163,13 +164,17 @@ public class TorsionDetail {
 	 * @return true if a valid torsion identifier could be determined
 	 */
 	public boolean classify(StereoMolecule mol, int bond) {
-		mFragment.deleteMolecule();
+		mFragment.clear();
 		mID = null;
 
         mol.ensureHelperArrays(Molecule.cHelperSymmetrySimple);
 
         if (mol.getBondOrder(bond) != 1
          || mol.isAromaticBond(bond))
+        	return false;
+
+        if (mol.getAtomicNo(mol.getBondAtom(0, bond)) == 1
+         || mol.getAtomicNo(mol.getBondAtom(1, bond)) == 1)
         	return false;
 
         boolean isSmallRingBond = mol.isSmallRingBond(bond);
@@ -213,7 +218,7 @@ public class TorsionDetail {
         	}
 
         for (int i=0; i<2; i++) {
-	        for (int j = 0; j<mol.getConnAtoms(mCentralAtom[i]); j++) {
+	        for (int j=0; j<mol.getConnAtoms(mCentralAtom[i]); j++) {
 		        int connAtom = mol.getConnAtom(mCentralAtom[i], j);
 		        if (mol.getAtomicNo(connAtom) != 1)
 			        atomMask[connAtom] = true;
@@ -234,27 +239,20 @@ public class TorsionDetail {
 	            mFragment.setBondQueryFeature(bondInFragment, Molecule.cBondQFRing, true);
 	
 	            // flag terminal bonds that share the same ring with the central bond
-	    		int[] atomMember = new int[2];
 	            RingCollection ringSet = mol.getRingSet();
 	            for (int ringNo=0; ringNo<ringSet.getSize(); ringNo++) {
 	            	if (ringSet.isBondMember(ringNo, bond)) {
 	                    for (int i=0; i<2; i++) {
-	                    	atomMember[i] = -1;
 	                    	for (int j=0; j<mol.getConnAtoms(mCentralAtom[i]); j++) {
 	                    		int connAtom = mol.getConnAtom(mCentralAtom[i], j);
 	            	            if (connAtom != mRearAtom[i]) {
-	                            	if (ringSet.isAtomMember(ringNo, connAtom)) {
-	                            		atomMember[i] = connAtom;
+	                            	if (ringSet.isAtomMember(ringNo, connAtom) && mol.getAtomicNo(connAtom) != 1) {
+			                            mFragment.setBondQueryFeature(mFragment.getBond(mToFragmentAtom[mCentralAtom[i]],
+							                            mToFragmentAtom[connAtom]), Molecule.cBondQFRing, true);
 	                            		break;
 	                            		}
 	            	            	}
 	                    		}
-	                    	}
-	                    if (atomMember[0] != -1 && atomMember[1] != -1) {
-	                        for (int i=0; i<2; i++)
-			                    mFragment.setBondQueryFeature(mFragment.getBond(mToFragmentAtom[mCentralAtom[i]],
-			                    												mToFragmentAtom[atomMember[i]]),
-			                    							  Molecule.cBondQFRing, true);
 	                    	}
 	            		}
 	            	}
@@ -275,7 +273,7 @@ public class TorsionDetail {
 	            		}
 	            	else if (mol.getAtomicNo(connAtom) == 6
 	            		  && !mol.isAromaticAtom(mCentralAtom[i])) {	// if not encoded on central atom
-	                    int feature = mol.isAromaticAtom(connAtom) ? Molecule.cAtomQFAromatic
+	                    long feature = mol.isAromaticAtom(connAtom) ? Molecule.cAtomQFAromatic
 	                                                           		: Molecule.cAtomQFNotAromatic;
 	                    mFragment.setAtomQueryFeature(mToFragmentAtom[connAtom], feature, true);
 	                    }
@@ -299,12 +297,12 @@ public class TorsionDetail {
 		            		hasZ = (mol.getZNeighbour(mCentralAtom[1-i], connBond) != -1);
 		            	if (hasZ) {
 		            		// there is no query feature 'has-Z-neighbor', thus use 'has3neighbors'
-		                    int feature = (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot3Neighbours);
+		                    long feature = (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot3Neighbours);
 		                    mFragment.setAtomQueryFeature(mToFragmentAtom[connAtom], feature, true);
 		            		}
 		            	else if (mol.isAromaticBond(connBond)) {
 		            		// we show that there is no ortho substituent with 'has2neighbors'
-		                    int feature = (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot2Neighbours);
+				            long feature = (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot2Neighbours);
 		                    mFragment.setAtomQueryFeature(mToFragmentAtom[connAtom], feature, true);
 		            		}
 		            	}
@@ -312,7 +310,7 @@ public class TorsionDetail {
 		            // account for gauche-pentane situations
 		            if (mol.getConnBondOrder(mCentralAtom[i], j) == 1) {
 		            	if (mol.getNonHydrogenNeighbourCount(connAtom) == 4) {
-		                    int feature = (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot4Neighbours);
+				            long feature = (Molecule.cAtomQFNeighbours & ~Molecule.cAtomQFNot4Neighbours);
 		                    mFragment.setAtomQueryFeature(mToFragmentAtom[connAtom], feature, true);
 			            	}
 		            	else if (mol.getAtomicNo(connAtom) == 6) {
@@ -504,13 +502,10 @@ public class TorsionDetail {
      * @return
      */
     private boolean isFlatAtom(int atom) {
-        if ((mFragment.getAtomPi(atom) == 1 && mFragment.getAtomicNo(atom) < 10)
-          || mFragment.isAromaticAtom(atom)
-          || mFragment.isFlatNitrogen(atom))
-        	return true;
-
-        return false;
-    	}
+	    return (mFragment.getAtomPi(atom) == 1 && mFragment.getAtomicNo(atom)<10)
+			    || mFragment.isAromaticAtom(atom)
+			    || mFragment.isFlatNitrogen(atom);
+        }
 
     /**
      * Determines the symmetry of one end of the 4-atom sequence,

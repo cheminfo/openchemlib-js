@@ -101,13 +101,14 @@ public class MolfileV3Creator
      */
     public MolfileV3Creator(StereoMolecule mol, boolean allowScaling, double scalingFactor, StringBuilder builder) {
 		mol.ensureHelperArrays(Molecule.cHelperParities);
+		final String nl = "\n";
 
 		mMolfile = (builder == null) ? new StringBuilder() : builder;
 
 		String name = (mol.getName() != null) ? mol.getName() : "";
-		mMolfile.append(name + "\n");
-		mMolfile.append("Actelion Java MolfileCreator 2.0\n\n");
-		mMolfile.append("  0  0  0  0  0  0              0 V3000\n");
+		mMolfile.append(name + nl);
+		mMolfile.append("Actelion Java MolfileCreator 2.0"+nl+nl);
+		mMolfile.append("  0  0  0  0  0  0              0 V3000"+nl);
 
 		mScalingFactor = 1.0;
 
@@ -120,7 +121,7 @@ public class MolfileV3Creator
 			}
 
 		writeBody(mol, hasCoordinates);
-		mMolfile.append("M  END\n");
+		mMolfile.append("M  END"+nl);
 		}
 
 	private static boolean hasCoordinates(StereoMolecule mol) {
@@ -167,7 +168,7 @@ public class MolfileV3Creator
 						minDistance = distance;
 					}
 				}
-			scalingFactor = 2.0 * TARGET_AVBL / minDistance;
+			scalingFactor = 2.0 * TARGET_AVBL / Math.max(TARGET_AVBL / 2, minDistance);
 			}
 
 		return scalingFactor;
@@ -203,9 +204,10 @@ public class MolfileV3Creator
     	}
 
     private void writeBody(StereoMolecule mol, boolean hasCoordinates) {
-        mMolfile.append("M  V30 BEGIN CTAB\n");
-        mMolfile.append("M  V30 COUNTS " + mol.getAllAtoms() + " " + mol.getAllBonds() + " 0 0 0\n");
-        mMolfile.append("M  V30 BEGIN ATOM\n");
+		final String nl = "\n";
+        mMolfile.append("M  V30 BEGIN CTAB"+nl);
+        mMolfile.append("M  V30 COUNTS " + mol.getAllAtoms() + " " + mol.getAllBonds() + " 0 0 0"+nl);
+        mMolfile.append("M  V30 BEGIN ATOM"+nl);
 
         for (int atom=0; atom<mol.getAllAtoms(); atom++) {
             mMolfile.append("M  V30 " + (atom + 1));
@@ -294,7 +296,7 @@ public class MolfileV3Creator
                 mMolfile.append(" VAL=" + ((valence == 0) ? "-1" : valence));
             	}
 
-            int hydrogenFlags = Molecule.cAtomQFHydrogen & mol.getAtomQueryFeatures(atom);
+	        long hydrogenFlags = Molecule.cAtomQFHydrogen & mol.getAtomQueryFeatures(atom);
             if (hydrogenFlags == (Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen)) {
                 mMolfile.append(" HCOUNT=2"); // at least 2 hydrogens
             	}
@@ -308,7 +310,7 @@ public class MolfileV3Creator
                 mMolfile.append(" HCOUNT=1"); // use at least 1 hydrogens as closest match for exactly one
             	}
 
-            int substitution = mol.getAtomQueryFeatures(atom) & (Molecule.cAtomQFMoreNeighbours | Molecule.cAtomQFNoMoreNeighbours);
+            long substitution = mol.getAtomQueryFeatures(atom) & (Molecule.cAtomQFMoreNeighbours | Molecule.cAtomQFNoMoreNeighbours);
             if (substitution != 0) {
                 if ((substitution & Molecule.cAtomQFMoreNeighbours) != 0) {
                     mMolfile.append(" SUBST=" + (mol.getAllConnAtoms(atom) + 1));
@@ -318,32 +320,25 @@ public class MolfileV3Creator
                 	}
             	}
 
-            int ringFeatures = mol.getAtomQueryFeatures(atom) & Molecule.cAtomQFRingState;
+	        long ringFeatures = mol.getAtomQueryFeatures(atom) & Molecule.cAtomQFRingState;
             if (ringFeatures != 0) {
-                switch(ringFeatures) {
-                    case Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds:
-                        mMolfile.append(" RBCNT=-1");
-                        break;
-                    case Molecule.cAtomQFNotChain:
-                        mMolfile.append(" RBCNT=2"); // any ring atom; there is no MDL equivalent
-                        break;
-                    case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds:
-                        mMolfile.append(" RBCNT=2");
-                        break;
-                    case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot4RingBonds:
-                        mMolfile.append(" RBCNT=3");
-                        break;
-                    case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds:
-                        mMolfile.append(" RBCNT=4");
-                        break;
-                	}
+                if (ringFeatures == (Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds))
+                    mMolfile.append(" RBCNT=-1");
+	            else if (ringFeatures == Molecule.cAtomQFNotChain)
+                    mMolfile.append(" RBCNT=2"); // any ring atom; there is no MDL equivalent
+                else if (ringFeatures == (Molecule.cAtomQFNotChain | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds))
+                    mMolfile.append(" RBCNT=2");
+	            else if (ringFeatures == (Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot4RingBonds))
+                    mMolfile.append(" RBCNT=3");
+	            else if (ringFeatures == (Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds))
+                    mMolfile.append(" RBCNT=4");
             	}
 
-            mMolfile.append("\n");
+            mMolfile.append(nl);
         	}
 
-        mMolfile.append("M  V30 END ATOM\n");
-        mMolfile.append("M  V30 BEGIN BOND\n");
+        mMolfile.append("M  V30 END ATOM"+nl);
+        mMolfile.append("M  V30 BEGIN BOND"+nl);
 
         for (int bond=0; bond<mol.getAllBonds(); bond++) {
             mMolfile.append("M  V30 " + (bond + 1));
@@ -423,10 +418,10 @@ public class MolfileV3Creator
                 mMolfile.append(" TOPO=" + topology);
             	}
 
-            mMolfile.append("\n");
+            mMolfile.append(nl);
         	}
 
-        mMolfile.append("M  V30 END BOND\n");
+        mMolfile.append("M  V30 END BOND"+nl);
 
         boolean paritiesFound = false;
         int absAtomsCount = 0;
@@ -471,7 +466,7 @@ public class MolfileV3Creator
         	}
 
         if(paritiesFound) {
-            mMolfile.append("M  V30 BEGIN COLLECTION\n");
+            mMolfile.append("M  V30 BEGIN COLLECTION"+nl);
             if(absAtomsCount != 0) {
                 mMolfile.append("M  V30 MDLV30/STEABS ATOMS=(" + absAtomsCount);
                 for(int atom = 0;atom < mol.getAtoms();atom++) {
@@ -481,7 +476,7 @@ public class MolfileV3Creator
                         mMolfile.append(" " + (atom + 1));
                     	}
                 	}
-                mMolfile.append(")\n");
+                mMolfile.append(")"+nl);
             	}
             if(absBondsCount != 0) {
                 mMolfile.append("M  V30 MDLV30/STEABS BONDS=(" + absBondsCount);
@@ -493,7 +488,7 @@ public class MolfileV3Creator
                         mMolfile.append(" " + (bond + 1));
                     	}
                 	}
-                mMolfile.append(")\n");
+                mMolfile.append(")"+nl);
             	}
             for(int group = 0;group < Molecule.cESRMaxGroups;group++) {
                 if(orAtomsCount[group] != 0) {
@@ -506,7 +501,7 @@ public class MolfileV3Creator
                             mMolfile.append(" " + (atom + 1));
                         	}
                     	}
-                    mMolfile.append(")\n");
+                    mMolfile.append(")"+nl);
                 	}
                 if(andAtomsCount[group] != 0) {
                     mMolfile.append("M  V30 MDLV30/STERAC" + (group + 1) + " ATOMS=(" + andAtomsCount[group]);
@@ -518,7 +513,7 @@ public class MolfileV3Creator
                             mMolfile.append(" " + (atom + 1));
                         	}
                     	}
-                    mMolfile.append(")\n");
+                    mMolfile.append(")"+nl);
                 	}
                 if(orBondsCount[group] != 0) {
                     mMolfile.append("M  V30 MDLV30/STEREL" + (group + 1) + " BONDS=(" + orBondsCount[group]);
@@ -531,7 +526,7 @@ public class MolfileV3Creator
                             mMolfile.append(" " + (bond + 1));
                         	}
                     	}
-                    mMolfile.append(")\n");
+                    mMolfile.append(")"+nl);
                 	}
                 if(andBondsCount[group] != 0) {
                     mMolfile.append("M  V30 MDLV30/STERAC" + (group + 1) + " BONDS=(" + andBondsCount[group]);
@@ -544,13 +539,13 @@ public class MolfileV3Creator
                             mMolfile.append(" " + (bond + 1));
                         	}
                     	}
-                    mMolfile.append(")\n");
+                    mMolfile.append(")"+nl);
                 	}
             	}
-            mMolfile.append("M  V30 END COLLECTION\n");
+            mMolfile.append("M  V30 END COLLECTION"+nl);
         	}
 
-        mMolfile.append("M  V30 END CTAB\n");
+        mMolfile.append("M  V30 END CTAB"+nl);
     	}
 
     /**

@@ -1,35 +1,36 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
 
 package com.actelion.research.chem.reaction;
 
@@ -53,9 +54,9 @@ public class Reaction implements java.io.Serializable {
 	private boolean mIsFragment;	// if there are molecules, then there fragment status takes precedence over this flag
 
 	public Reaction() {
-		mReactant = new ArrayList<StereoMolecule>();
-		mProduct = new ArrayList<StereoMolecule>();
-		mCatalyst = new ArrayList<StereoMolecule>();
+		mReactant = new ArrayList<>();
+		mProduct = new ArrayList<>();
+		mCatalyst = new ArrayList<>();
 		mMaxMapNo = -1;
 		mIsFragment = false;
 		}
@@ -75,6 +76,13 @@ public class Reaction implements java.io.Serializable {
 
 	public void removeCatalysts() {
 		mCatalyst.clear();
+		}
+
+	public void removeAtomMapping(boolean keepManualMapping) {
+		for (StereoMolecule mol:mReactant)
+			mol.removeAtomMapping(keepManualMapping);
+		for (StereoMolecule mol:mProduct)
+			mol.removeAtomMapping(keepManualMapping);
 		}
 
 	public void removeDrawingObjects() {
@@ -122,7 +130,7 @@ public class Reaction implements java.io.Serializable {
 	 * @return fragment status of molecules or reaction
 	 */
 	public boolean isFragment() {
-		return getMolecules() == 0 ? mIsFragment : determineFragment();
+		return mIsFragment || determineFragment();
 		}
 
 	/**
@@ -153,7 +161,7 @@ public class Reaction implements java.io.Serializable {
 		mDrawingObjectList = new DrawingObjectList(rxn.getDrawingObjects());
 		if (rxn.mName != null)
 			mName = rxn.mName;
-		mIsFragment = rxn.mIsFragment;
+		mIsFragment = rxn.isFragment();
 		}
 
 	public Reaction(StereoMolecule[] mol, int reactantCount) {
@@ -300,18 +308,91 @@ public class Reaction implements java.io.Serializable {
 		}
 
 	/**
-	 * Checks, whether all non-hydrogen atoms are mapped and whether every reactant atom has exactly one assigned product atom.
+	 * Checks, whether some(!) non-hydrogen and non-exclude-group atoms are mapped,
+	 * and whether every mapped reactant atom has exactly one assigned product atom.
+	 * @return
+	 */
+	public boolean isMapped() {
+		int maxMapNo = getHighestMapNo();
+		boolean[] isUsed = new boolean[maxMapNo+1];
+
+		int mapNoCount = 0;
+		for (StereoMolecule reactant:mReactant) {
+			for (int atom=0; atom<reactant.getAtoms(); atom++) {
+				int mapNo = reactant.getAtomMapNo(atom);
+				if (mapNo != 0) {
+					mapNoCount++;
+					if (reactant.isFragment() && (reactant.getAtomQueryFeatures(atom) & Molecule.cAtomQFExcludeGroup) != 0)
+						return false;
+
+					if (isUsed[mapNo])
+						return false;
+
+					isUsed[mapNo] = true;
+					}
+				}
+			}
+
+		if (mapNoCount == 0)
+			return false;
+
+		for (StereoMolecule product:mProduct) {
+			for (int atom=0; atom<product.getAtoms(); atom++) {
+				int mapNo = product.getAtomMapNo(atom);
+				if (mapNo != 0) {
+					mapNoCount--;
+					if (product.isFragment() && (product.getAtomQueryFeatures(atom) & Molecule.cAtomQFExcludeGroup) != 0)
+						return false;
+
+					if (!isUsed[mapNo])
+						return false;
+
+					isUsed[mapNo] = false;
+					}
+				}
+			}
+
+		if (mapNoCount != 0)
+			return false;
+
+		return true;
+		}
+
+	/**
+	 * Checks, whether all non-hydrogen and non-exclude-group atoms are mapped,
+	 * whether every mapped reactant atom has exactly one assigned product atom,
+	 * and whether every exclude group atom is not mapped.
 	 * @return
 	 */
 	public boolean isPerfectlyMapped() {
 		int atoms = 0;
 		for (StereoMolecule reactant:mReactant) {
 			reactant.ensureHelperArrays(Molecule.cHelperNeighbours);
-			atoms += reactant.getAtoms();
+			if (reactant.isFragment()) {
+				for (int atom = 0; atom<reactant.getAtoms(); atom++) {
+					if ((reactant.getAtomQueryFeatures(atom) & Molecule.cAtomQFExcludeGroup) == 0)
+						atoms++;
+					else if (reactant.getAtomMapNo(atom) != 0)
+						return false;
+					}
+				}
+			else {
+				atoms += reactant.getAtoms();
+				}
 			}
 		for (StereoMolecule product:mProduct) {
 			product.ensureHelperArrays(Molecule.cHelperNeighbours);
-			atoms -= product.getAtoms();
+			if (product.isFragment()) {
+				for (int atom = 0; atom<product.getAtoms(); atom++) {
+					if ((product.getAtomQueryFeatures(atom) & Molecule.cAtomQFExcludeGroup) == 0)
+						atoms--;
+					else if (product.getAtomMapNo(atom) != 0)
+						return false;
+					}
+				}
+			else {
+				atoms -= product.getAtoms();
+				}
 			}
 		if (atoms != 0)
 			return false;	// reactant atom count is different from product atom count
@@ -322,20 +403,24 @@ public class Reaction implements java.io.Serializable {
 
 		for (StereoMolecule reactant:mReactant) {
 			for (int atom=0; atom<reactant.getAtoms(); atom++) {
-				int mapNo = reactant.getAtomMapNo(atom);
-				if (isUsed[mapNo])
-					return false;
-				isUsed[mapNo] = true;
+				if (!reactant.isFragment() || (reactant.getAtomQueryFeatures(atom) & Molecule.cAtomQFExcludeGroup) == 0) {
+					int mapNo = reactant.getAtomMapNo(atom);
+					if (isUsed[mapNo])
+						return false;
+					isUsed[mapNo] = true;
+					}
 				}
 			}
 
 		for (StereoMolecule product:mProduct) {
 			product.ensureHelperArrays(Molecule.cHelperNeighbours);
 			for (int atom=0; atom<product.getAtoms(); atom++) {
-				int mapNo = product.getAtomMapNo(atom);
-				if (mapNo >= maxMapNo || !isUsed[mapNo])
-					return false;
-				isUsed[mapNo] = false;
+				if (!product.isFragment() || (product.getAtomQueryFeatures(atom) & Molecule.cAtomQFExcludeGroup) == 0) {
+					int mapNo = product.getAtomMapNo(atom);
+					if (mapNo >= maxMapNo || !isUsed[mapNo])
+						return false;
+					isUsed[mapNo] = false;
+					}
 				}
 			}
 
@@ -364,47 +449,52 @@ public class Reaction implements java.io.Serializable {
 	 * @throws Exception
 	 */
 	public void validateMapping() throws Exception {
-		StereoMolecule reactant, product;
+		StereoMolecule reactant,product;
+		int maxMapNo = getHighestMapNo();
 
-		for (int i = 0; i < mReactant.size(); i++) {
+		boolean[] mapNoInReactant = new boolean[maxMapNo+1];
+		for (int i=0; i<mReactant.size(); i++) {
 			reactant = mReactant.get(i);
-			for (int j = 0; j < reactant.getAllAtoms(); j++) {
+			for (int j=0; j<reactant.getAllAtoms(); j++) {
 				int mapNo = reactant.getAtomMapNo(j);
 				if (mapNo != 0) {
-					int found = 0;
-					for (int k = 0; k < mProduct.size(); k++) {
-						product = mProduct.get(k);
-						for (int l = 0; l < product.getAllAtoms(); l++)
-							if (product.getAtomMapNo(l) == mapNo)
-								found++;
-						}
-
-					if (found == 0)
-						reactant.setAtomMapNo(j, 0, false);
-					else if (found > 1)
-						throw new Exception("Duplicate mapping no in products");
+					if (mapNoInReactant[mapNo])
+						throw new Exception("Duplicate mapping no in reactants");
+					mapNoInReactant[mapNo] = true;
 					}
 				}
 			}
 
-		for (int i = 0; i < mProduct.size(); i++) {
+		boolean[] mapNoInProduct = new boolean[maxMapNo+1];
+		for (int i=0; i<mProduct.size(); i++) {
 			product = mProduct.get(i);
-			for (int j = 0; j < product.getAllAtoms(); j++) {
+			for (int j=0; j<product.getAllAtoms(); j++) {
 				int mapNo = product.getAtomMapNo(j);
 				if (mapNo != 0) {
-					int found = 0;
-					for (int k = 0; k < mReactant.size(); k++) {
-						reactant = mReactant.get(k);
-						for (int l = 0; l < reactant.getAllAtoms(); l++)
-							if (reactant.getAtomMapNo(l) == mapNo)
-								found++;
-						}
-
-					if (found == 0)
-						product.setAtomMapNo(j, 0, false);
-					else if (found > 1)
-						throw new Exception("Duplicate mapping no in reactants");
+					if (mapNoInProduct[mapNo])
+						throw new Exception("Duplicate mapping no in products");
+					mapNoInProduct[mapNo] = true;
 					}
+				}
+			}
+
+		int[] newMapNo = new int[maxMapNo+1];
+		int mapNo = 0;
+		for (int i=1; i<=maxMapNo; i++)
+			if (mapNoInReactant[i] && mapNoInProduct[i])
+				newMapNo[i] = ++mapNo;
+
+		if (mapNo != maxMapNo) {
+			for (int i=0; i<mReactant.size(); i++) {
+				reactant = mReactant.get(i);
+				for (int j=0; j<reactant.getAllAtoms(); j++)
+					reactant.setAtomMapNo(j, newMapNo[reactant.getAtomMapNo(j)], reactant.isAutoMappedAtom(j));
+				}
+
+			for (int i=0; i<mProduct.size(); i++) {
+				product = mProduct.get(i);
+				for (int j=0; j<product.getAllAtoms(); j++)
+					product.setAtomMapNo(j, newMapNo[product.getAtomMapNo(j)], product.isAutoMappedAtom(j));
 				}
 			}
 		}

@@ -34,6 +34,8 @@ package com.actelion.research.chem;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -319,10 +321,9 @@ public final class Coordinates implements Serializable, Comparable<Coordinates> 
 		return "[" + df.format(x) + ", " + df.format(y) + ", " + df.format(z) + "]";
 	}
 
-	public final String toStringSpaceDelimited() {
-		DecimalFormat df = new DecimalFormat("0.00");
-		return df.format(x) + " " + df.format(y) + " " + df.format(z);
-	}
+	
+
+	
 
 	@Override
 	public final boolean equals(Object o) {

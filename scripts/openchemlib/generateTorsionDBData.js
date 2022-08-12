@@ -30,10 +30,18 @@ function generateTorsionDBData() {
       path.join(__dirname, '../../openchemlib/src', folder, `${file}.txt`),
       'utf8',
     );
-    const lines = contents.split('\n').filter((l) => l.length > 0);
-    const linesArray = lines.map((line) => JSON.stringify(line)).join(', ');
+    const lines = contents
+      .split('\n')
+      .filter((l) => l.length > 0)
+      .join('\n');
     torsionDBData.push(
-      `\npublic static final String[] get${file}Data() { String[] result = { ${linesArray} }; return result; }\n`,
+      `
+public static final String[] get${file}Data() {
+  String data = ${JSON.stringify(lines)};
+  String[] result = data.split("\\n");
+  return result;
+}
+`,
     );
   }
   torsionDBData.push(end);

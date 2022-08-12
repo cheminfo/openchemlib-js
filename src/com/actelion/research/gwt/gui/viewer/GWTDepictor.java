@@ -35,6 +35,7 @@ package com.actelion.research.gwt.gui.viewer;
 import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.gui.generic.GenericPolygon;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.canvas.dom.client.TextMetrics;
@@ -108,13 +109,13 @@ public class GWTDepictor extends AbstractDepictor {
     }
 
     @Override
-    protected void drawPolygon(double[] px, double[] py, int count) {
+    protected void drawPolygon(GenericPolygon p) {
         ctx.setStrokeStyle(currentColor);
         ctx.setFillStyle(currentColor);
         ctx.beginPath();
-        ctx.moveTo(px[0], py[0]);
-        for (int i = 1; i < count; i++) {
-            ctx.lineTo(px[i], py[i]);
+        ctx.moveTo(p.getX(0), p.getY(0));
+        for (int i = 1; i < p.getSize(); i++) {
+            ctx.lineTo(p.getX(i), p.getY(i));
         }
         ctx.closePath();
         ctx.fill();
@@ -168,8 +169,8 @@ public class GWTDepictor extends AbstractDepictor {
     }
 
     @Override
-    protected void setColor(Color theColor) {
-        currentColor = CssColor.make(theColor.getRed(), theColor.getGreen(), theColor.getBlue());
+    protected void setRGB(int rgb) {
+        currentColor = CssColor.make((rgb&0xff), (rgb&0xff00)>>8, (rgb&0xff0000)>>16);
     }
 
 }

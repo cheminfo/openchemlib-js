@@ -39,16 +39,18 @@
 
 package com.actelion.research.chem.io;
 
-import java.io.*;
-
-import com.actelion.research.chem.ChemistryHelper;
 import com.actelion.research.chem.MolfileV3Creator;
 import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.chem.reaction.ReactionEncoder;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+
 public class RXNFileV3Creator
 {
 	public static final String RXN_CODE_TAG = RXNFileCreator.RXN_CODE_TAG;
+    private static final String NL = "\n";
 
     private StringBuffer rxnbuffer = null;
 
@@ -61,33 +63,33 @@ public class RXNFileV3Creator
         Reaction rxn = new Reaction(r);
         try {
             StringWriter theWriter = new StringWriter();
-            theWriter.write("$RXN V3000\n");
+            theWriter.write("$RXN V3000"+NL);
             theWriter.write(programName != null ? programName : "");
-            theWriter.write("\n\n");
+            theWriter.write(NL+NL);
 			theWriter.write(RXN_CODE_TAG+ReactionEncoder.encode(r, true,
                     ReactionEncoder.INCLUDE_MAPPING | ReactionEncoder.INCLUDE_COORDS | ReactionEncoder.INCLUDE_CATALYSTS));
-			theWriter.write("\n");
+			theWriter.write(NL);
             int rcnt = rxn.getReactants();
             int pcnt = rxn.getProducts();
-            theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+"\n",rcnt,pcnt);
+            theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+NL,rcnt,pcnt);
 
 			double scalingFactor = getScalingFactor(rxn);
 
             if (rcnt > 0) {
-                theWriter.write("M  V30 BEGIN REACTANT\n");
+                theWriter.write("M  V30 BEGIN REACTANT"+NL);
                 for (int i=0; i<rxn.getReactants(); i++) {
                 theWriter.write(MolfileV3Creator.writeCTAB(rxn.getReactant(i), scalingFactor));
                 }
-                theWriter.write("M  V30 END REACTANT\n");
+                theWriter.write("M  V30 END REACTANT"+NL);
             }
             if (pcnt > 0) {
-                theWriter.write("M  V30 BEGIN PRODUCT\n");
+                theWriter.write("M  V30 BEGIN PRODUCT"+NL);
                 for (int i=0; i<rxn.getProducts(); i++) {
                     theWriter.write(MolfileV3Creator.writeCTAB(rxn.getProduct(i), scalingFactor));
                 }
-                theWriter.write("M  V30 END PRODUCT\n");
+                theWriter.write("M  V30 END PRODUCT"+NL);
             }
-            theWriter.write("M  END\n");
+            theWriter.write("M  END"+NL);
             rxnbuffer = theWriter.getBuffer();
             theWriter.close();
         } catch (Exception e) {
@@ -104,7 +106,7 @@ public class RXNFileV3Creator
         }
 
         if (bondCount != 0)
-            return avbl / bondCount;
+            return bondCount / avbl;
 
         return 1.0;
     }

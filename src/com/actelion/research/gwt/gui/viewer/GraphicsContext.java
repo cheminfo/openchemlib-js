@@ -32,6 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.actelion.research.gwt.gui.viewer;
 
+import com.actelion.research.gui.generic.GenericPoint;
 import com.actelion.research.share.gui.editor.geom.IDrawContext;
 import com.actelion.research.share.gui.editor.geom.IPolygon;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -103,7 +104,7 @@ public class GraphicsContext implements IDrawContext<Context2d> {
     @Override
     public void drawPolygon(IPolygon polygon) {
         ctx.beginPath();
-        java.awt.geom.Point2D pt = polygon.get(0);
+        GenericPoint pt = polygon.get(0);
         ctx.moveTo(pt.getX(), pt.getY());
         for (int i = 1; i < polygon.size(); i++) {
             pt = polygon.get(i);

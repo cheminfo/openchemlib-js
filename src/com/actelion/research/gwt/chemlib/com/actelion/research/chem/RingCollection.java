@@ -1,35 +1,36 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
 
 package com.actelion.research.chem;
 
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 
 public class RingCollection {
 	public static final int MAX_SMALL_RING_SIZE = 7;
-	private static final int MAX_SMALL_RING_COUNT = 1024; // to prevent explosions with highly connected metal grids, etc.
+	public static final int MAX_SMALL_RING_COUNT = 1024; // to prevent explosions with highly connected metal grids, etc.
 
 	private static final int MODE_SMALL_RINGS = 1;
 	private static final int MODE_LARGE_RINGS = 2;
@@ -50,6 +51,7 @@ public class RingCollection {
 	public static final int MODE_SMALL_AND_LARGE_RINGS_AND_AROMATICITY = MODE_SMALL_RINGS
 																	   | MODE_LARGE_RINGS
 																	   | MODE_AROMATICITY;
+	public static final int MODE_INCLUDE_TAUTOMERIC_BONDS = 8;
 
 	private ExtendedMolecule mMol;
 	private ArrayList<int[]> mRingAtomSet;
@@ -171,7 +173,7 @@ public class RingCollection {
 			mIsAromatic = new boolean[mRingAtomSet.size()];
 			mIsDelocalized = new boolean[mRingAtomSet.size()];
 			mHeteroPosition = new int[mRingAtomSet.size()];
-			determineAromaticity(mIsAromatic, mIsDelocalized, mHeteroPosition, false);
+			determineAromaticity(mIsAromatic, mIsDelocalized, mHeteroPosition, (mode & MODE_INCLUDE_TAUTOMERIC_BONDS) != 0);
 			}
 
 		// find large rings by examining every potential ring bond
@@ -564,8 +566,13 @@ public class RingCollection {
 										 boolean includeTautomericBonds) {
 			// returns true if it can successfully determine and set the ring's aromaticity
 		int ringAtom[] = mRingAtomSet.get(ringNo);
+		for (int atom:ringAtom)
+			if (!qualifiesAsAromatic(mMol.getAtomicNo(atom)))
+				return true;
+
 		int ringBond[] = mRingBondSet.get(ringNo);
 		int ringBonds = ringBond.length;
+
 		int bondSequence = 0;
 		int aromaticButNotDelocalizedSequence = 0;
 		boolean unhandledAnnelatedRingFound = false;
@@ -724,7 +731,7 @@ public class RingCollection {
 	public boolean qualifiesAsAmideTypeBond(int bond) {
 		for (int i=0; i<2; i++) {
 			int atom1 = mMol.getBondAtom(i, bond);
-			if (mMol.getAtomicNo(atom1) == 7
+			if ((mMol.getAtomicNo(atom1) == 7)
 			 && mMol.getConnAtoms(atom1) == 2) {
 				int atom2 = mMol.getBondAtom(1-i, bond);
 				if (mMol.getAtomicNo(atom2) == 6) {
@@ -741,5 +748,17 @@ public class RingCollection {
 			}
 
 		return false;
+		}
+
+
+	public static boolean qualifiesAsAromatic(int atomicNo) {
+		return atomicNo == 5
+			|| atomicNo == 6
+			|| atomicNo == 7
+			|| atomicNo == 8
+			|| atomicNo == 15   // P
+			|| atomicNo == 16   // S
+			|| atomicNo == 33   // As
+			|| atomicNo == 34;   // Se
 		}
 	}

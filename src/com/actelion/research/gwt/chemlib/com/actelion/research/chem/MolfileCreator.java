@@ -1,35 +1,36 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
 
 package com.actelion.research.chem;
 
@@ -91,6 +92,7 @@ public class MolfileCreator {
      */
     public MolfileCreator(ExtendedMolecule mol, boolean allowScaling, double scalingFactor, StringBuilder builder) {
 		mDoubleFormat = new DecimalFormat("0.0000", new DecimalFormatSymbols(Locale.ENGLISH)); //English local ('.' for the dot)
+        final String nl = "\n";
 
         mol.ensureHelperArrays(Molecule.cHelperParities);
 
@@ -125,14 +127,14 @@ public class MolfileCreator {
         mBuilder = (builder == null) ? new StringBuilder() : builder;
 
         String name = (mol.getName() != null) ? mol.getName() : "";
-        mBuilder.append(name+"\n");
-        mBuilder.append("Actelion Java MolfileCreator 1.0\n\n");
+        mBuilder.append(name+nl);
+        mBuilder.append("Actelion Java MolfileCreator 1.0"+nl+nl);
 
         appendThreeDigitInt(mol.getAllAtoms());
         appendThreeDigitInt(mol.getAllBonds());
         mBuilder.append("  0  0");
         appendThreeDigitInt((!isRacemic) ? 1 : 0);
-        mBuilder.append("  0  0  0  0  0999 V2000\n");
+        mBuilder.append("  0  0  0  0  0999 V2000"+nl);
 
         boolean hasCoordinates = (mol.getAllAtoms() == 1);
         for(int atom=1; atom<mol.getAllAtoms(); atom++) {
@@ -197,7 +199,7 @@ public class MolfileCreator {
 
             mBuilder.append(" 0  0  0");	// massDif, charge, parity
 
-            int hydrogenFlags = Molecule.cAtomQFHydrogen & mol.getAtomQueryFeatures(atom);
+            long hydrogenFlags = Molecule.cAtomQFHydrogen & mol.getAtomQueryFeatures(atom);
             if (hydrogenFlags == 0)
                 mBuilder.append("  0");
             else if (hydrogenFlags == (Molecule.cAtomQFNot0Hydrogen | Molecule.cAtomQFNot1Hydrogen))
@@ -221,7 +223,7 @@ public class MolfileCreator {
 
             mBuilder.append("  0  0  0");
             appendThreeDigitInt(mol.getAtomMapNo(atom));
-            mBuilder.append("  0  0\n");
+            mBuilder.append("  0  0"+nl);
             }
 
         for (int bond=0; bond<mol.getAllBonds(); bond++) {
@@ -270,7 +272,7 @@ public class MolfileCreator {
             appendThreeDigitInt(stereo);
             mBuilder.append("  0");
             appendThreeDigitInt(topology);
-            mBuilder.append("  0\n");
+            mBuilder.append("  0"+nl);
             }
 
         int no = 0;
@@ -299,7 +301,7 @@ public class MolfileCreator {
                     no--;
                     if (++count == 8 || no == 0) {
                         count = 0;
-                        mBuilder.append("\n");
+                        mBuilder.append(nl);
                         }
                     }
                 }
@@ -325,7 +327,7 @@ public class MolfileCreator {
                     no--;
                     if (++count == 8 || no == 0) {
                         count = 0;
-                        mBuilder.append("\n");
+                        mBuilder.append(nl);
                         }
                     }
                 }
@@ -360,7 +362,7 @@ public class MolfileCreator {
                     no--;
                     if (++count == 8 || no == 0) {
                         count = 0;
-                        mBuilder.append("\n");
+                        mBuilder.append(nl);
                         }
                     }
                 }
@@ -375,7 +377,7 @@ public class MolfileCreator {
             if (no != 0) {
                 int count = 0;
                 for (int atom=0; atom<mol.getAllAtoms(); atom++) {
-                    int ringFeatures = mol.getAtomQueryFeatures(atom) & Molecule.cAtomQFRingState;
+                    long ringFeatures = mol.getAtomQueryFeatures(atom) & Molecule.cAtomQFRingState;
                     if (ringFeatures != 0) {
                         if (count == 0) {
                             mBuilder.append("M  RBC");
@@ -383,27 +385,20 @@ public class MolfileCreator {
                             }
                         mBuilder.append(" ");
                         appendThreeDigitInt(atom + 1);
-                        switch (ringFeatures) {
-                            case Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds:
+                        if (ringFeatures == (Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds))
                                 mBuilder.append("  -1");
-                                break;
-                            case Molecule.cAtomQFNotChain:
+                        else if (ringFeatures == Molecule.cAtomQFNotChain)
                                 mBuilder.append("   1");	// any ring atom; there is no MDL equivalent
-                                break;
-                            case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds:
+                        else if (ringFeatures == (Molecule.cAtomQFNotChain | Molecule.cAtomQFNot3RingBonds | Molecule.cAtomQFNot4RingBonds))
                                 mBuilder.append("   2");
-                                break;
-                            case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot4RingBonds:
+                        else if (ringFeatures == (Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot4RingBonds))
                                 mBuilder.append("   3");
-                                break;
-                            case Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds:
+                        else if (ringFeatures == (Molecule.cAtomQFNotChain | Molecule.cAtomQFNot2RingBonds | Molecule.cAtomQFNot3RingBonds))
                                 mBuilder.append("   4");
-                                break;
-                            }
                         no--;
                         if (++count == 8 || no == 0) {
                             count = 0;
-                            mBuilder.append("\n");
+                            mBuilder.append(nl);
                             }
                         }
                     }
@@ -433,7 +428,7 @@ public class MolfileCreator {
                             break;
                             }
                         }
-                    mBuilder.append("\n");
+                    mBuilder.append(nl);
                     }
                 }
 
@@ -445,7 +440,7 @@ public class MolfileCreator {
             if (no != 0) {
                 int count = 0;
                 for (int atom=0; atom<mol.getAllAtoms(); atom++) {
-                    int substitution = mol.getAtomQueryFeatures(atom) & (Molecule.cAtomQFMoreNeighbours | Molecule.cAtomQFNoMoreNeighbours);
+                    long substitution = mol.getAtomQueryFeatures(atom) & (Molecule.cAtomQFMoreNeighbours | Molecule.cAtomQFNoMoreNeighbours);
                     if (substitution != 0) {
                         if (count == 0) {
                             mBuilder.append("M  SUB");
@@ -460,14 +455,14 @@ public class MolfileCreator {
                         no--;
                         if (++count == 8 || no == 0) {
                             count = 0;
-                            mBuilder.append("\n");
+                            mBuilder.append(nl);
                             }
                         }
                     }
                 }
             }
 
-        mBuilder.append("M  END\n");
+        mBuilder.append("M  END"+nl);
         }
 
 

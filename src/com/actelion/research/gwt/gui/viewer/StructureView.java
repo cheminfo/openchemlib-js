@@ -35,6 +35,7 @@ package com.actelion.research.gwt.gui.viewer;
 import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.IDCodeParser;
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gwt.minimal.JSMolecule;
 import com.actelion.research.gwt.minimal.Util;
 import com.google.gwt.canvas.client.Canvas;
@@ -52,7 +53,6 @@ import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.ui.Image;
 import jsinterop.annotations.*;
 
-import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -233,7 +233,7 @@ class StructureElement {
         AbstractDepictor depictor = new GWTDepictor(mol, displayMode);
         if (atomText != null)
             depictor.setAtomText(atomText);
-        depictor.validateView(null, new Rectangle2D.Double(0, 0, (float) width, (float) height),
+        depictor.validateView(null, new GenericRectangle(0, 0, (double) width, (double) height),
                 AbstractDepictor.cModeInflateToMaxAVBL);
         ctx.clearRect(0, 0, width, height);
         depictor.paint(ctx);

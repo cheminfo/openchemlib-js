@@ -1,35 +1,36 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
 
 package com.actelion.research.chem;
 
@@ -204,13 +205,9 @@ public class StereoMolecule extends ExtendedMolecule {
 			rankBits = cHelperBitSymmetrySimple;
 		    rankMode = Canonizer.CREATE_SYMMETRY_RANK;
 		    }
-		else if ((required & cHelperBitSymmetryDiastereotopic) != 0) {
-			rankBits = cHelperBitSymmetryDiastereotopic;
-            rankMode = Canonizer.CREATE_SYMMETRY_RANK | Canonizer.CONSIDER_DIASTEREOTOPICITY;
-		    }
-		else if ((required & cHelperBitSymmetryEnantiotopic) != 0) {
-			rankBits = cHelperBitSymmetryEnantiotopic;
-            rankMode = Canonizer.CREATE_SYMMETRY_RANK | Canonizer.CONSIDER_ENANTIOTOPICITY;
+		else if ((required & cHelperBitSymmetryStereoHeterotopicity) != 0) {
+			rankBits = cHelperBitSymmetryStereoHeterotopicity;
+            rankMode = Canonizer.CREATE_SYMMETRY_RANK| Canonizer.CONSIDER_STEREOHETEROTOPICITY;
 		    }
 
 		if ((required & cHelperBitIncludeNitrogenParities) != 0) {
@@ -409,7 +406,7 @@ public class StereoMolecule extends ExtendedMolecule {
         return scCount;
         }
 
-	public int[][] getERSGroupMemberCounts() {
+	public int[][] getESRGroupMemberCounts() {
 		ensureHelperArrays(cHelperParities);
 
 		int[] maxESRGroup = new int[3];
@@ -532,10 +529,10 @@ public class StereoMolecule extends ExtendedMolecule {
               || getAtomESRType(atom) == cESRTypeOr)
              && (!isAtomStereoCenter(atom)
               || getAtomParity(atom) == cAtomParityUnknown))
-                throw new Exception("Members of ESR groups must only be stereo centers with known configuration.");
+                throw new Exception(VALIDATION_ERROR_ESR_CENTER_UNKNOWN);
 
             if ((mAtomFlags[atom] & cAtomFlagStereoProblem) != 0)
-				throw new Exception("Over- or under-specified stereofeature or more than one racemic type bond");
+				throw new Exception(VALIDATION_ERROR_OVER_UNDER_SPECIFIED);
 
 			if ((getAtomParity(atom) == Molecule.cAtomParity1
 			  || getAtomParity(atom) == Molecule.cAtomParity2)
@@ -548,7 +545,7 @@ public class StereoMolecule extends ExtendedMolecule {
 						for (int j=0; j<i; j++)
 							if (!isStereoBond(getConnBond(atom, j), atom))
 								if (bondsAreParallel(angle[i], angle[j]))
-									throw new Exception("Ambiguous configuration at stereo center because of 2 parallel bonds");
+									throw new Exception(VALIDATION_ERROR_AMBIGUOUS_CONFIGURATION);
 				}
 			}
 		}

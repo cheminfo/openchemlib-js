@@ -30,7 +30,7 @@ describe('ConformerGenerator', () => {
 
     const conf1 = gen.getNextConformerAsMolecule();
     expect(gen.getConformerCount()).toBe(1);
-    expect(gen.getPreviousConformerContribution()).toBeCloseTo(0.155, 2);
+    expect(gen.getPreviousConformerContribution()).toBeCloseTo(0.17, 2);
     const conf1Molfile = conf1.toMolfile();
     expect(conf1Molfile).toMatchSnapshot();
 
@@ -63,10 +63,10 @@ describe('ConformerGenerator', () => {
     gen.initializeConformers(mol);
 
     const allConformers = [...gen.molecules()];
-    expect(allConformers).toHaveLength(42);
+    expect(allConformers).toHaveLength(26);
 
     // All molecules should be different
-    expect(new Set(allConformers).size).toBe(42);
+    expect(new Set(allConformers).size).toBe(26);
 
     expect(allConformers[0].getAtomZ(0)).not.toBe(allConformers[1].getAtomZ(1));
 

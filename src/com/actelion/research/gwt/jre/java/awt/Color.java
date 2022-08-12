@@ -84,6 +84,10 @@ public class Color {
     return (rgbValue >> 24) & 0xff;
   }
 
+  public int getRGB() {
+    return rgbValue;
+  }
+
   private static float[] RGBtoHSV(float r, float g, float b, float[] hsbvals) {
     float hue = 0, saturation = 0, brightness = 0;
     if (hsbvals == null) {

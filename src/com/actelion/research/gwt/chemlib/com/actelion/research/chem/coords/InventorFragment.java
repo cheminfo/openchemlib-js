@@ -1,8 +1,43 @@
+/*
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
+
 package com.actelion.research.chem.coords;
 
 import com.actelion.research.chem.StereoMolecule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class InventorFragment {
 	private static final double cCollisionLimitBondRotation = 0.8;
@@ -16,9 +51,9 @@ public class InventorFragment {
 	protected int[] mPriority;
 	protected double[] mAtomX;
 	protected double[] mAtomY;
+	protected boolean mKeepMarkedAtoms;
 
 	private StereoMolecule mMol;
-	private int mMode;
 	private boolean	mMinMaxAvail;
 	private double mMinX;
 	private double mMinY;
@@ -26,19 +61,20 @@ public class InventorFragment {
 	private double mMaxY;
 	private double mCollisionPanalty;
 	private int[][] mFlipList;
+	private int[] mSortedAtom;
 
-	protected InventorFragment(StereoMolecule mol, int atoms, int mode) {
+	protected InventorFragment(StereoMolecule mol, int atoms, boolean keepMarkedAtoms) {
 		mMol = mol;
-		mMode = mode;
+		mKeepMarkedAtoms = keepMarkedAtoms;
 		mGlobalAtom = new int[atoms];
 		mPriority = new int[atoms];
 		mAtomX = new double[atoms];
 		mAtomY = new double[atoms];
 	}
 
-	protected InventorFragment(InventorFragment f, int mode) {
+	protected InventorFragment(InventorFragment f) {
 		mMol = f.mMol;
-		mMode = mode;
+		mKeepMarkedAtoms = f.mKeepMarkedAtoms;
 		mGlobalAtom = new int[f.size()];
 		mPriority = new int[f.size()];
 		mAtomX = new double[f.size()];
@@ -64,6 +100,28 @@ public class InventorFragment {
 	protected int size() {
 		return mGlobalAtom.length;
 	}
+
+	protected boolean equals(InventorFragment f) {
+		if (f.size() != size())
+			return false;
+
+		int[] sorted = getSortedAtoms();
+		int[] sortedF = f.getSortedAtoms();
+		for (int i=0; i<sorted.length; i++)
+			if (sorted[i] != sortedF[i])
+				return false;
+
+		return true;
+		}
+
+	private int[] getSortedAtoms() {
+		if (mSortedAtom == null) {
+			mSortedAtom = Arrays.copyOf(mGlobalAtom, mGlobalAtom.length);
+			Arrays.sort(mSortedAtom);
+			}
+
+		return mSortedAtom;
+		}
 
 	protected double getAtomX(int index) {
 		return mAtomX[index];
@@ -167,11 +225,12 @@ public class InventorFragment {
 			boolean flipOtherSide = (highest+1 > mGlobalAtom.length/2);
 
 			// if we retain core atoms and the smaller side contains core atoms, then flip the larger side
-			if ((mMode & CoordinateInventor.MODE_CONSIDER_MARKED_ATOMS) != 0) {
+			if (mKeepMarkedAtoms) {
 				boolean coreOnSide = false;
 				boolean coreOffSide = false;
 				for (int i = 0; i< mGlobalAtom.length; i++) {
-					if (mMol.isMarkedAtom(mGlobalAtom[i])) {
+					int atom = mGlobalAtom[i];
+					if (mMol.isMarkedAtom(atom) && atom != atom1 && atom != atom2) {
 						if (isOnSide[mGlobalAtom[i]])
 							coreOnSide = true;
 						else

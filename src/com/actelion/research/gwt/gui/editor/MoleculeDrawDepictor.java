@@ -36,6 +36,7 @@ import com.actelion.research.chem.AbstractDepictor;
 import com.actelion.research.chem.DepictorTransformation;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
+import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gwt.gui.viewer.GWTDepictor;
 import com.actelion.research.share.gui.DrawConfig;
 import com.actelion.research.share.gui.editor.chem.AbstractExtendedDepictor;
@@ -46,7 +47,6 @@ import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 public class MoleculeDrawDepictor extends AbstractExtendedDepictor<Context2d, CssColor>
     implements IDepictor<Context2d> {
@@ -155,12 +155,12 @@ public class MoleculeDrawDepictor extends AbstractExtendedDepictor<Context2d, Cs
   }
 
   @Override
-  public DepictorTransformation updateCoords(IDrawContext<Context2d> g, Rectangle2D.Double rc, int mode) {
+  public DepictorTransformation updateCoords(IDrawContext<Context2d> g, GenericRectangle rc, int mode) {
     return super.updateCoords(g != null ? g.getNative() : null, rc, mode);
   }
 
   @Override
-  public DepictorTransformation simpleValidateView(Rectangle2D.Double viewRect, int mode) {
+  public DepictorTransformation simpleValidateView(GenericRectangle viewRect, int mode) {
     return validateView(null, viewRect, mode);
   }
 

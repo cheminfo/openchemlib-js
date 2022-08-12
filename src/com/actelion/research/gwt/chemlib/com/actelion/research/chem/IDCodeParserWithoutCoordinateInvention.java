@@ -183,7 +183,7 @@ public class IDCodeParserWithoutCoordinateInvention {
 	 */
 	public void parse(StereoMolecule mol, byte[] idcode, byte[] coordinates) {
 		if (idcode == null || idcode.length == 0) {
-			mol.deleteMolecule();
+			mol.clear();
 			return;
 			}
 
@@ -466,7 +466,7 @@ public class IDCodeParserWithoutCoordinateInvention {
 				no = decodeBits(abits);
 				for (int i=0; i<no; i++) {
 					int atom = decodeBits(abits);
-					int ringState = decodeBits(Molecule.cAtomQFRingStateBits) << Molecule.cAtomQFRingStateShift;
+					long ringState = (long)decodeBits(Molecule.cAtomQFRingStateBits) << Molecule.cAtomQFRingStateShift;
 					mMol.setAtomQueryFeature(atom, ringState, true);
 					}
 				break;
@@ -474,7 +474,7 @@ public class IDCodeParserWithoutCoordinateInvention {
 				no = decodeBits(abits);
 				for (int i=0; i<no; i++) {
 					int atom = decodeBits(abits);
-					int aromState = decodeBits(Molecule.cAtomQFAromStateBits) << Molecule.cAtomQFAromStateShift;
+					long aromState = (long)decodeBits(Molecule.cAtomQFAromStateBits) << Molecule.cAtomQFAromStateShift;
 					mMol.setAtomQueryFeature(atom, aromState, true);
 					}
 				break;
@@ -489,7 +489,7 @@ public class IDCodeParserWithoutCoordinateInvention {
 				no = decodeBits(abits);
 				for (int i=0; i<no; i++) {
 					int atom = decodeBits(abits);
-					int hydrogen = decodeBits(Molecule.cAtomQFHydrogenBits) << Molecule.cAtomQFHydrogenShift;
+					long hydrogen = (long)decodeBits(Molecule.cAtomQFHydrogenBits) << Molecule.cAtomQFHydrogenShift;
 					mMol.setAtomQueryFeature(atom, hydrogen, true);
 					}
 				break;
@@ -541,7 +541,7 @@ public class IDCodeParserWithoutCoordinateInvention {
 				no = decodeBits(abits);
 				for (int i=0; i<no; i++) {
 					int atom = decodeBits(abits);
-					int piElectrons = decodeBits(Molecule.cAtomQFPiElectronBits) << Molecule.cAtomQFPiElectronShift;
+					long piElectrons = (long)decodeBits(Molecule.cAtomQFPiElectronBits) << Molecule.cAtomQFPiElectronShift;
 					mMol.setAtomQueryFeature(atom, piElectrons, true);
 					}
 				break;
@@ -549,18 +549,19 @@ public class IDCodeParserWithoutCoordinateInvention {
 				no = decodeBits(abits);
 				for (int i=0; i<no; i++) {
 					int atom = decodeBits(abits);
-					int neighbours = decodeBits(Molecule.cAtomQFNeighbourBits) << Molecule.cAtomQFNeighbourShift;
+					long neighbours = (long)decodeBits(Molecule.cAtomQFNeighbourBits) << Molecule.cAtomQFNeighbourShift;
 					mMol.setAtomQueryFeature(atom, neighbours, true);
 					}
 				break;
-			case 15: //  datatype 'start second feature set'
-				offset = 16;
+			case 15: //  datatype 'start next feature set'
+			case 31:
+				offset += 16;
 				break;
-			case 16: //  datatype 'AtomQFRingSize'
+			case 16: //  datatype 'AtomQFSmallRingSize'
 				no = decodeBits(abits);
 				for (int i=0; i<no; i++) {
 					int atom = decodeBits(abits);
-					int ringSize = decodeBits(Molecule.cAtomQFRingSizeBits) << Molecule.cAtomQFRingSizeShift;
+					long ringSize = (long)decodeBits(Molecule.cAtomQFSmallRingSizeBits) << Molecule.cAtomQFSmallRingSizeShift;
 					mMol.setAtomQueryFeature(atom, ringSize, true);
 					}
 				break;
@@ -587,7 +588,7 @@ public class IDCodeParserWithoutCoordinateInvention {
 				no = decodeBits(abits);
 				for (int i=0; i<no; i++) {
 					int atom = decodeBits(abits);
-					int charge = decodeBits(Molecule.cAtomQFChargeBits) << Molecule.cAtomQFChargeShift;
+					long charge = (long)decodeBits(Molecule.cAtomQFChargeBits) << Molecule.cAtomQFChargeShift;
 					mMol.setAtomQueryFeature(atom, charge, true);
 					}
 				break;
@@ -655,8 +656,24 @@ public class IDCodeParserWithoutCoordinateInvention {
 				no = decodeBits(abits);
 				for (int i=0; i<no; i++) {
 					int atom = decodeBits(abits);
-					int hint = decodeBits(Molecule.cAtomQFRxnParityBits) << Molecule.cAtomQFRxnParityShift;
+					long hint = decodeBits(Molecule.cAtomQFRxnParityBits) << Molecule.cAtomQFRxnParityShift;
 					mMol.setAtomQueryFeature(atom, hint, true);
+					}
+				break;
+			case 30: //  datatype 'AtomQFNewRingSize'
+				no = decodeBits(abits);
+				for (int i=0; i<no; i++) {
+					int atom = decodeBits(abits);
+					long ringSize = (long)decodeBits(Molecule.cAtomQFNewRingSizeBits) << Molecule.cAtomQFNewRingSizeShift;
+					mMol.setAtomQueryFeature(atom, ringSize, true);
+					}
+				break;
+			case 32: //  datatype 'AtomQFNewRingSize'
+				no = decodeBits(abits);
+				for (int i=0; i<no; i++) {
+					int atom = decodeBits(abits);
+					long stereoState = (long)decodeBits(Molecule.cAtomQFStereoStateBits) << Molecule.cAtomQFStereoStateShift;
+					mMol.setAtomQueryFeature(atom, stereoState, true);
 					}
 				break;
 				}
@@ -1417,14 +1434,15 @@ public class IDCodeParserWithoutCoordinateInvention {
 						System.out.println();
 						break;
 					case 15: //  datatype 'start second feature set'
-						offset = 16;
-						System.out.println("<start second feature set>");
+					case 31:
+						offset += 16;
+						System.out.println("<start next feature set>");
 						break;
-					case 16: //  datatype 'AtomQFRingSize'
+					case 16: //  datatype 'AtomQFSmallRingSize'
 						no = decodeBits(abits);
-						System.out.print("AtomQFRingSize:");
+						System.out.print("AtomQFSmallRingSize:");
 						for (int i = 0; i < no; i++)
-							System.out.print(" " + decodeBits(abits) + ":" + decodeBits(Molecule.cAtomQFRingSizeBits));
+							System.out.print(" " + decodeBits(abits) + ":" + decodeBits(Molecule.cAtomQFSmallRingSizeBits));
 						System.out.println();
 						break;
 					case 17: //  datatype 'AtomAbnormalValence'
@@ -1522,6 +1540,20 @@ public class IDCodeParserWithoutCoordinateInvention {
 						System.out.print("ReactionParityHint:");
 						for (int i = 0; i < no; i++)
 							System.out.print(" " + decodeBits(abits) + ":" + decodeBits(Molecule.cAtomQFRxnParityBits));
+						System.out.println();
+						break;
+					case 30: //  datatype 'AtomQFNewRingSize'
+						no = decodeBits(abits);
+						System.out.print("AtomQFNewRingSize:");
+						for (int i = 0; i < no; i++)
+							System.out.print(" " + decodeBits(abits) + ":" + decodeBits(Molecule.cAtomQFNewRingSizeBits));
+						System.out.println();
+						break;
+					case 32: //  datatype 'AtomQFStereoStateBits'
+						no = decodeBits(abits);
+						System.out.print("AtomQFStereoState:");
+						for (int i = 0; i < no; i++)
+							System.out.print(" " + decodeBits(abits) + ":" + decodeBits(Molecule.cAtomQFStereoStateBits));
 						System.out.println();
 						break;
 				}

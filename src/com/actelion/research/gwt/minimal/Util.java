@@ -49,11 +49,14 @@ public class Util {
   	if (options.suppressCIPParity) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeSuppressCIPParity;
   	if (options.suppressESR) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeSuppressESR;
   
+  	if (options.showSymmetryAny) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeShowSymmetryAny;
   	if (options.showSymmetrySimple) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeShowSymmetrySimple;
-  	if (options.showSymmetryDiastereotopic) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeShowSymmetryDiastereotopic;
-  	if (options.showSymmetryEnantiotopic) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeShowSymmetryEnantiotopic;
+  	if (options.showSymmetryStereoHeterotopicity) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeShowSymmetryStereoHeterotopicity;
   	if (options.noImplicitAtomLabelColors) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoImplicitAtomLabelColors;
   	if (options.noStereoProblem) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoStereoProblem;
+  	if (options.noColorOnESRAndCIP) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoColorOnESRAndCIP;
+  	if (options.noImplicitHydrogen) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoImplicitHydrogen;
+  	if (options.drawBondsInGray) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeDrawBondsInGray;
   
   	return displayMode;
   }-*/;
