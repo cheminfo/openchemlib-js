@@ -5,46 +5,60 @@ const pretty = require('../dist/openchemlib-full.pretty');
 const full = require('../full');
 const minimal = require('../minimal');
 
-describe('Checking for the presence of main APIs', () => {
-  const minimalAPI = [
-    'Molecule',
-    'Reaction',
-    'RingCollection',
-    'SDFileParser',
-    'SSSearcher',
-    'SSSearcherWithIndex',
-    'Util',
-    'version',
-  ];
+const minimalAPI = [
+  'Molecule',
+  'Reaction',
+  'RingCollection',
+  'SDFileParser',
+  'SSSearcher',
+  'SSSearcherWithIndex',
+  'Util',
+  'version',
+];
 
-  const coreAPI = [
-    'CanonizerUtil',
-    'ConformerGenerator',
-    'DruglikenessPredictor',
-    'DrugScoreCalculator',
-    'ForceFieldMMFF94',
-    'MoleculeProperties',
-    'ToxicityPredictor',
-  ];
+const coreAPI = [
+  'CanonizerUtil',
+  'ConformerGenerator',
+  'DruglikenessPredictor',
+  'DrugScoreCalculator',
+  'ForceFieldMMFF94',
+  'MoleculeProperties',
+  'ToxicityPredictor',
+];
 
-  const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];
+const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];
 
-  it('minimal', () => {
-    checkHas(minimal, minimalAPI);
-    checkHasNot(minimal, [...coreAPI, ...fullAPI]);
+const allAPI = [...minimalAPI, ...coreAPI, ...fullAPI];
+
+test('minimal', () => {
+  checkHas(minimal, minimalAPI);
+  checkHasNot(minimal, [...coreAPI, ...fullAPI]);
+});
+
+test('core', () => {
+  expect(core).toBe(require('..'));
+  checkHas(core, [...minimalAPI, ...coreAPI]);
+  checkHasNot(core, fullAPI);
+});
+
+test('full', () => {
+  [full, pretty].forEach((lib) => {
+    checkHas(lib, allAPI);
   });
+});
 
-  it('core', () => {
-    expect(core).toBe(require('..'));
-    checkHas(core, [...minimalAPI, ...coreAPI]);
-    checkHasNot(core, fullAPI);
-  });
-
-  it('full', () => {
-    [full, pretty].forEach((lib) => {
-      checkHas(lib, [...minimalAPI, ...coreAPI, ...fullAPI]);
+allAPI.forEach((key) => {
+  const api = full[key];
+  if (typeof api === 'function') {
+    test(`static properties of ${key}`, () => {
+      expect(getFilteredKeys(api)).toMatchSnapshot();
     });
-  });
+    if (typeof api.prototype === 'object') {
+      test(`prototype properties of ${key}`, () => {
+        expect(getFilteredKeys(api.prototype)).toMatchSnapshot();
+      });
+    }
+  }
 });
 
 function checkHas(obj, properties) {
@@ -55,4 +69,13 @@ function checkHasNot(obj, properties) {
   properties.forEach((prop) => {
     expect(obj).not.toHaveProperty(prop);
   });
+}
+
+function getFilteredKeys(obj) {
+  return Object.keys(obj)
+    .filter((key) => {
+      // Filter out GWT-specific properties.
+      return key.length > 2;
+    })
+    .sort();
 }
