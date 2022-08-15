@@ -1,11 +1,23 @@
 # OpenChemLib JS
 
-[![NPM version][npm-image]][npm-url]
-[![build status][ci-image]][ci-url]
-[![npm download][download-image]][download-url]
-[![DOI](https://www.zenodo.org/badge/23346814.svg)](https://www.zenodo.org/badge/latestdoi/23346814)
-
 JavaScript port of the [OpenChemLib](https://github.com/actelion/openchemlib) Java library.
+
+<h3 align="center">
+
+  <a href="https://www.zakodium.com">
+    <img src="https://www.zakodium.com/brand/zakodium-logo-white.svg" width="50" alt="Zakodium logo" />
+  </a>
+
+  <p>
+    Maintained by <a href="https://www.zakodium.com">Zakodium</a>
+  </p>
+  
+  [![NPM version][npm-image]][npm-url]
+  [![build status][ci-image]][ci-url]
+  [![npm download][download-image]][download-url]
+  [![DOI](https://www.zenodo.org/badge/23346814.svg)](https://www.zenodo.org/badge/latestdoi/23346814)
+
+</h3>
 
 ## Installation
 
