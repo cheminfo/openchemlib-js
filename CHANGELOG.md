@@ -2,64 +2,74 @@
 
 ## [8.0.0](https://github.com/cheminfo/openchemlib-js/compare/v7.5.0...v8.0.0) (2022-08-15)
 
-
 ### ⚠ BREAKING CHANGES
 
-* update OpenChemLib to v2022.8.1
+This release updates OpenChemLib to the latest version 2022.8.1. There were a lot
+of changes since the last update and some of them are breaking. Here's a list of
+the changes we were able to identify (but there may be more):
+
+- The `setAtomQueryFeature` and `getAtomQueryFeatures` methods were removed from
+  the `Molecule` class because they now return a `long` in Java.
+- The `addRing`, `addRingToAtom` and `addRingToBond` methods of the `Molecule`
+  class now take one additional parameter, called `bondLength`.
+- The `showSymmetryDiastereotopic` and `showSymmetryEnantiotopic` depictor options
+  were removed.
+- The value of computed 3D coordinates may change.
+- Generated conformers may be different (in quantity and their coordinates).
+- It is no longer possible to change ring size in the atom query features dialog
+  of the editor.
+
+We also removed support for Node.js 12. It's still possible that the library works
+on this version, but it is no longer tested in CI.
 
 ### Features
 
-* update GWT to version 2.10 ([9eed1ef](https://github.com/cheminfo/openchemlib-js/commit/9eed1ef95255ae58232b267241f59feaacd517a7))
-* update OpenChemLib to v2022.8.1 ([1ac3899](https://github.com/cheminfo/openchemlib-js/commit/1ac3899eb27b92692fe99d726a762cea4c5a7923))
+- update GWT to version 2.10 ([9eed1ef](https://github.com/cheminfo/openchemlib-js/commit/9eed1ef95255ae58232b267241f59feaacd517a7))
+- update OpenChemLib to v2022.8.1 ([1ac3899](https://github.com/cheminfo/openchemlib-js/commit/1ac3899eb27b92692fe99d726a762cea4c5a7923))
+- Added the following new depictor options (all boolean): `showSymmetryStereoHeterotopicity`,
+  `showSymmetryAny`, `noColorOnESRAndCIP`, `noImplicitHydrogen`, and `drawBondsInGray`.
 
 ## [7.5.0](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.3...v7.5.0) (2022-08-09)
 
-
 ### Features
 
-* expose CanonizerUtil ([#131](https://www.github.com/cheminfo/openchemlib-js/issues/131)) ([ef7a873](https://www.github.com/cheminfo/openchemlib-js/commit/ef7a87332e58272092276c4dbdcf6eca73b4c167))
-
+- expose CanonizerUtil ([#131](https://www.github.com/cheminfo/openchemlib-js/issues/131)) ([ef7a873](https://www.github.com/cheminfo/openchemlib-js/commit/ef7a87332e58272092276c4dbdcf6eca73b4c167))
 
 ### Bug Fixes
 
-* README link to documentation ([77dfc46](https://www.github.com/cheminfo/openchemlib-js/commit/77dfc46130dab7a3ad3e85b2527986b78cde6cd8))
-* **types:** coordinates can be omitted from `fromIDCode` ([636a73b](https://www.github.com/cheminfo/openchemlib-js/commit/636a73b129d637b538983ad4a9a6058a918b7660))
+- README link to documentation ([77dfc46](https://www.github.com/cheminfo/openchemlib-js/commit/77dfc46130dab7a3ad3e85b2527986b78cde6cd8))
+- **types:** coordinates can be omitted from `fromIDCode` ([636a73b](https://www.github.com/cheminfo/openchemlib-js/commit/636a73b129d637b538983ad4a9a6058a918b7660))
 
 ### [7.4.3](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.2...v7.4.3) (2021-10-02)
 
-
 ### Bug Fixes
 
-* **fromIDCode:** pass coordinates option to the IDCodeParser ([0b8775e](https://www.github.com/cheminfo/openchemlib-js/commit/0b8775e656251e2ba172d991ce616b209875177e))
+- **fromIDCode:** pass coordinates option to the IDCodeParser ([0b8775e](https://www.github.com/cheminfo/openchemlib-js/commit/0b8775e656251e2ba172d991ce616b209875177e))
 
 ### [7.4.2](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.1...v7.4.2) (2021-08-05)
 
-
 ### Bug Fixes
 
-* addImplicitHydrogens on 'Cl' ([f2cf71f](https://www.github.com/cheminfo/openchemlib-js/commit/f2cf71f3bb040a37b2bb2ec186c171df156631fb))
+- addImplicitHydrogens on 'Cl' ([f2cf71f](https://www.github.com/cheminfo/openchemlib-js/commit/f2cf71f3bb040a37b2bb2ec186c171df156631fb))
 
 ### [7.4.1](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.0...v7.4.1) (2021-07-27)
 
-
 ### Bug Fixes
 
-* addImplicitHydrogens for NH3 ([9e9c353](https://www.github.com/cheminfo/openchemlib-js/commit/9e9c3539a479cc761dcdc69c19f63665ba810f99))
-* publish projet on Zenodo ([e94ebb7](https://www.github.com/cheminfo/openchemlib-js/commit/e94ebb7a1036e54c8250aef1d9ae32ce413fd6e3))
+- addImplicitHydrogens for NH3 ([9e9c353](https://www.github.com/cheminfo/openchemlib-js/commit/9e9c3539a479cc761dcdc69c19f63665ba810f99))
+- publish projet on Zenodo ([e94ebb7](https://www.github.com/cheminfo/openchemlib-js/commit/e94ebb7a1036e54c8250aef1d9ae32ce413fd6e3))
 
 ## [7.4.0](https://www.github.com/cheminfo/openchemlib-js/compare/v7.3.0...v7.4.0) (2021-03-24)
 
-
 ### Features
 
-* expose a "getOCL" method on public classes ([1879045](https://www.github.com/cheminfo/openchemlib-js/commit/18790459fada2a05e493f3392a41ef2d87101748))
+- expose a "getOCL" method on public classes ([1879045](https://www.github.com/cheminfo/openchemlib-js/commit/18790459fada2a05e493f3392a41ef2d87101748))
 
 ## [7.3.0](https://www.github.com/cheminfo/openchemlib-js/compare/v7.2.3...v7.3.0) (2021-01-04)
 
-
 ### Features
 
-* update OCL to version 2020.12.1 ([bb9c07d](https://www.github.com/cheminfo/openchemlib-js/commit/bb9c07dfa5e16632e6933ec3fd8eeeed0b0c59e0))
+- update OCL to version 2020.12.1 ([bb9c07d](https://www.github.com/cheminfo/openchemlib-js/commit/bb9c07dfa5e16632e6933ec3fd8eeeed0b0c59e0))
 
 ## 7.2.3 / 2020-01-10
 
