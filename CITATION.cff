@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: 'openchemlib-js: library to manipulate chemical structures'
+abstract: 'Javascript library that allows to manipulate chemical structures and predict various properties. It also allows to make substructure search directdly in the browser'
+repository-artifact: http://cheminfo.github.io/openchemlib-js/
+repository-code: https://github.com/cheminfo/openchemlib-js
+authors:
+  - family-names: 'Zasso'
+    given-names: 'Michaël'
+    affiliation: 'Zakodium Sàrl, Switzerland'
+    orcid: 'https://orcid.org/0000-0001-5295-2159'
+  - family-names: 'Patiny'
+    given-names: 'Luc'
+    affiliation: 'Zakodium Sàrl, Switzerland'
+    orcid: 'https://orcid.org/0000-0002-4943-2643'
+  - family-names: 'Sander'
+    given-names: 'Thomas'
+    orcid: 'https://orcid.org/0000-0003-4019-1959'
+  - family-names: 'Rufener'
+    given-names: 'Christian'
+license: MIT
+keywords:
+  - openchemlib
+  - Chemical structure manipulation
+  - Chemical structure editor
+doi: 10.5281/zenodo.5139988
