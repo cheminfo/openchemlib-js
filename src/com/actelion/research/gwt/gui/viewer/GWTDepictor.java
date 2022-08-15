@@ -170,7 +170,7 @@ public class GWTDepictor extends AbstractDepictor {
 
     @Override
     protected void setRGB(int rgb) {
-        currentColor = CssColor.make((rgb&0xff), (rgb&0xff00)>>8, (rgb&0xff0000)>>16);
+        currentColor = CssColor.make((rgb&0xff0000)>>16, (rgb&0xff00)>>8, (rgb&0xff));
     }
 
 }
