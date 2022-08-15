@@ -1,5 +1,17 @@
 # Changelog
 
+## [8.0.0](https://github.com/cheminfo/openchemlib-js/compare/v7.5.0...v8.0.0) (2022-08-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* update OpenChemLib to v2022.8.1
+
+### Features
+
+* update GWT to version 2.10 ([9eed1ef](https://github.com/cheminfo/openchemlib-js/commit/9eed1ef95255ae58232b267241f59feaacd517a7))
+* update OpenChemLib to v2022.8.1 ([1ac3899](https://github.com/cheminfo/openchemlib-js/commit/1ac3899eb27b92692fe99d726a762cea4c5a7923))
+
 ## [7.5.0](https://www.github.com/cheminfo/openchemlib-js/compare/v7.4.3...v7.5.0) (2022-08-09)
 
 
