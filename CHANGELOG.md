@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.0.1](https://github.com/cheminfo/openchemlib-js/compare/v8.0.0...v8.0.1) (2022-08-15)
+
+
+### Bug Fixes
+
+* inverted red/blue colors in editor ([d8d25a3](https://github.com/cheminfo/openchemlib-js/commit/d8d25a36034baa52673cc589d9e684be423001ca))
+
 ## [8.0.0](https://github.com/cheminfo/openchemlib-js/compare/v7.5.0...v8.0.0) (2022-08-15)
 
 ### ⚠ BREAKING CHANGES
