@@ -38,9 +38,13 @@ const changed = [
   ['chem/MolfileCreator', changeLineSeparator],
   ['chem/MolfileV3Creator', changeLineSeparator],
   ['chem/Molecule3D', removeCloneInfos],
+  ['chem/TautomerHelper', changeTautomerHelper],
   ['chem/TextDrawingObject', changeTextDrawingObject],
+  ['gui/editor/GenericEditorArea', changeGenericEditorArea],
+  ['gui/editor/CustomAtomDialogBuilder', changeCustomAtomDialogBuilder],
   ['share/gui/editor/Model', removePrintf],
   ['util/ArrayUtils', changeArrayUtils],
+  ['util/datamodel/IntVec', changeIntVec],
 ];
 
 exports.changed = changed.map(([path, ...transformers]) => {
@@ -93,8 +97,6 @@ const removed = [
   'chem/descriptor/pharmacophoretree',
   'chem/dnd', // ui
   'chem/docking',
-  'chem/ExtendedDepictor.java',
-  'chem/ExtendedMoleculeFunctions.java',
   'chem/forcefield/mmff/Sdf.java', // needs access to disk
   'chem/hyperspace',
   'chem/interactionstatistics',
@@ -103,11 +105,9 @@ const removed = [
   'chem/io/DWARFileCreator.java',
   'chem/io/NativeMDLReactionReader.java',
   'chem/io/pdb',
-  'chem/mcs',
   'chem/mmp',
   'chem/Molecule3DFunctions.java',
   'chem/optimization/MCHelper.java',
-  'chem/PeriodicTable.java',
   'chem/phesa',
   'chem/phesaflex',
   'chem/potentialenergy',
@@ -117,32 +117,30 @@ const removed = [
   'chem/properties/complexity',
   'chem/properties/fractaldimension',
   'chem/reaction/ClassificationData.java',
-  'chem/reaction/CommonSubGraphHelper.java',
   'chem/reaction/FunctionalGroupClassifier.java',
   'chem/reaction/mapping',
-  'chem/reaction/MCSReactionMapper.java',
   'chem/reaction/ReactionClassifier.java',
   'chem/reaction/ReactionSearch.java',
   'chem/RingHelper.java',
   'chem/shredder/Fragment.java',
   'chem/StructureSearch.java',
   'jfx',
-  'gui/clipboard',
+  'gui/clipboard/ClipboardHandler.java',
+  'gui/clipboard/external',
+  'gui/clipboard/ImageClipboardHandler.java',
+  'gui/clipboard/NativeClipboardAccessor.java',
+  'gui/clipboard/TextClipboardHandler.java',
   'gui/CompoundCollectionPane.java',
   'gui/dnd',
   'gui/dock',
-  'gui/editor/CustomAtomDialogBuilder.java',
   'gui/editor/FXEditorArea.java',
   'gui/editor/FXEditorDialog.java',
   'gui/editor/FXEditorPane.java',
   'gui/editor/FXEditorToolbar.java',
-  'gui/editor/GenericEditorArea.java',
-  'gui/editor/GenericEditorToolbar.java',
   'gui/editor/SwingEditorArea.java',
   'gui/editor/SwingEditorDialog.java',
   'gui/editor/SwingEditorPanel.java',
   'gui/editor/SwingEditorToolbar.java',
-  'gui/FileHelper.java',
   'gui/fx',
   'gui/HeaderPaintHelper.java',
   'gui/hidpi',
@@ -168,11 +166,9 @@ const removed = [
   'gui/JScrollableMenu.java',
   'gui/JStructureView.java',
   'gui/JTextDrawingObjectDialog.java',
-  'gui/LookAndFeelHelper.java',
   'gui/MultiPanelDragListener.java',
   'gui/PopupItemProvider.java',
   'gui/ScrollPaneAutoScrollerWhenDragging.java',
-  'gui/swing',
   'gui/table',
   'gui/VerticalFlowLayout.java',
   'gui/wmf',
@@ -184,7 +180,6 @@ const removed = [
   'util/CommandLineParser.java',
   'util/concurrent',
   'util/convert/String2DoubleArray.java',
-  'util/datamodel',
   'util/Formatter.java',
   'util/graph',
   'util/IO.java',
@@ -213,6 +208,9 @@ exports.generated = generated.map((file) => [getFilename(file[0]), file[1]]);
 function getFilename(file) {
   if (file.startsWith('@org/')) {
     return `../org/${file.replace('@org/', '')}.java`;
+  }
+  if (file.startsWith('@gwt/')) {
+    return `../../${file.replace('@gwt/', '')}.java`;
   } else {
     return `actelion/research/${file}.java`;
   }
@@ -228,7 +226,10 @@ function getFolderName(file) {
 
 function methodRegExp(methodName, options = {}) {
   const { indent = '\t' } = options;
-  return new RegExp(`public.*? ${methodName}\\(.*\n(.*\n)*?${indent}}`, 'g');
+  return new RegExp(
+    `(?:public|private|protected).*? ${methodName}\\(.*\n(?:.*\n)*?${indent}}`,
+    'g',
+  );
 }
 
 function removePrintf(code) {
@@ -253,6 +254,22 @@ function removeCloneInfos(code) {
   );
 }
 
+function changeTautomerHelper(code) {
+  code = code.replace(
+    'import java.util',
+    'import java.util.Arrays;\nimport java.util',
+  );
+  code = code.replace(
+    'mRegionDCount.clone();',
+    'Arrays.copyOf(mRegionDCount, mRegionDCount.length);',
+  );
+  code = code.replace(
+    'mRegionTCount.clone();',
+    'Arrays.copyOf(mRegionTCount, mRegionTCount.length);',
+  );
+  return code;
+}
+
 function changeTextDrawingObject(code) {
   return code.replace(
     'detail.append(String.format(" size=\\"%.4f\\"", new Double(mSize)));',
@@ -260,9 +277,36 @@ function changeTextDrawingObject(code) {
   );
 }
 
+function changeGenericEditorArea(code) {
+  // TODO: find replacements
+  code = code.replaceAll(
+    methodRegExp('showWarningMessage'),
+    'private void showWarningMessage(String msg) {}',
+  );
+  code = code.replaceAll(
+    methodRegExp('openReaction'),
+    'private void openReaction() {}',
+  );
+  code = code.replaceAll('System.getProperty("development") != null', 'false');
+  return code;
+}
+
+function changeCustomAtomDialogBuilder(code) {
+  code = code.replace('e.getSource() instanceof JTextField', 'false');
+  return code;
+}
+
 function changeArrayUtils(code) {
   code = removeSlice(code, '\n	/**\n	 * Resize an array', 'return newArray;\n	}');
   code = removeSlice(code, '\n	/**\n	 * Copy an array ', 'return newArray;\n	}');
+  return code;
+}
+
+function changeIntVec(code) {
+  const options = { indent: '    ' };
+  code = code.replace(methodRegExp('convert', options), '');
+  code = code.replace(methodRegExp('read', options), '');
+  code = code.replace(methodRegExp('readBitStringDense', options), '');
   return code;
 }
 

@@ -328,6 +328,7 @@ private void init(int mode) {
 	private TorsionInfo getTorsionInfo(String torsionID) {
 		if (torsionID == null)
 			return null;
+
 		TorsionInfo ti = mTreeMap.get(torsionID);
 		if (ti != null)
 			return ti;
