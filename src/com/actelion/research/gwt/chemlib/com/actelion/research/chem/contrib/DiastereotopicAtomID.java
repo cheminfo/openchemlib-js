@@ -5,7 +5,8 @@ import com.actelion.research.chem.*;
 
 public class DiastereotopicAtomID {
 
-	private static int xAtomicNumber = Molecule.getAtomicNoFromLabel("X");
+	// Molecule.getAtomicNoFromLabel cannot be used for atom "X".
+	private static int xAtomicNumber = 153;
 
 	public static String[] getAtomIds(StereoMolecule molecule) {
 		addMissingChirality(molecule);
