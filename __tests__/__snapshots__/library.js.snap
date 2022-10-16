@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`prototype properties of CanonizerUtil 1`] = `Array []`;
+exports[`prototype properties of CanonizerUtil 1`] = `[]`;
 
 exports[`prototype properties of ConformerGenerator 1`] = `
-Array [
+[
   "getConformerCount",
   "getNextConformerAsMolecule",
   "getOCL",
@@ -15,10 +15,10 @@ Array [
 ]
 `;
 
-exports[`prototype properties of DrugScoreCalculator 1`] = `Array []`;
+exports[`prototype properties of DrugScoreCalculator 1`] = `[]`;
 
 exports[`prototype properties of DruglikenessPredictor 1`] = `
-Array [
+[
   "assessDruglikeness",
   "getDetail",
   "getDruglikenessString",
@@ -27,7 +27,7 @@ Array [
 `;
 
 exports[`prototype properties of ForceFieldMMFF94 1`] = `
-Array [
+[
   "_minimise",
   "getOCL",
   "getTotalEnergy",
@@ -37,7 +37,7 @@ Array [
 `;
 
 exports[`prototype properties of Molecule 1`] = `
-Array [
+[
   "addAtom",
   "addBond",
   "addFragment",
@@ -304,10 +304,10 @@ Array [
 ]
 `;
 
-exports[`prototype properties of MoleculeProperties 1`] = `Array []`;
+exports[`prototype properties of MoleculeProperties 1`] = `[]`;
 
 exports[`prototype properties of SDFileParser 1`] = `
-Array [
+[
   "getField",
   "getFieldData",
   "getFieldNames",
@@ -320,7 +320,7 @@ Array [
 `;
 
 exports[`prototype properties of SSSearcher 1`] = `
-Array [
+[
   "getOCL",
   "isFragmentInMolecule",
   "setFragment",
@@ -330,7 +330,7 @@ Array [
 `;
 
 exports[`prototype properties of SSSearcherWithIndex 1`] = `
-Array [
+[
   "createIndex",
   "getOCL",
   "isFragmentInMolecule",
@@ -339,10 +339,10 @@ Array [
 ]
 `;
 
-exports[`prototype properties of SVGRenderer 1`] = `Array []`;
+exports[`prototype properties of SVGRenderer 1`] = `[]`;
 
 exports[`prototype properties of StructureEditor 1`] = `
-Array [
+[
   "getIDCode",
   "getMolFile",
   "getMolFileV3",
@@ -364,20 +364,20 @@ Array [
 ]
 `;
 
-exports[`prototype properties of StructureView 1`] = `Array []`;
+exports[`prototype properties of StructureView 1`] = `[]`;
 
 exports[`prototype properties of ToxicityPredictor 1`] = `
-Array [
+[
   "assessRisk",
   "getDetail",
   "getOCL",
 ]
 `;
 
-exports[`prototype properties of Util 1`] = `Array []`;
+exports[`prototype properties of Util 1`] = `[]`;
 
 exports[`static properties of CanonizerUtil 1`] = `
-Array [
+[
   "BACKBONE",
   "NORMAL",
   "NOSTEREO",
@@ -388,7 +388,7 @@ Array [
 `;
 
 exports[`static properties of ConformerGenerator 1`] = `
-Array [
+[
   "STRATEGY_ADAPTIVE_RANDOM",
   "STRATEGY_LIKELY_RANDOM",
   "STRATEGY_LIKELY_SYSTEMATIC",
@@ -397,19 +397,19 @@ Array [
 `;
 
 exports[`static properties of DrugScoreCalculator 1`] = `
-Array [
+[
   "calculate",
 ]
 `;
 
 exports[`static properties of DruglikenessPredictor 1`] = `
-Array [
+[
   "DRUGLIKENESS_UNKNOWN",
 ]
 `;
 
 exports[`static properties of ForceFieldMMFF94 1`] = `
-Array [
+[
   "MMFF94",
   "MMFF94S",
   "MMFF94SPLUS",
@@ -417,7 +417,7 @@ Array [
 `;
 
 exports[`static properties of Molecule 1`] = `
-Array [
+[
   "CANONIZER_ASSIGN_PARITIES_TO_TETRAHEDRAL_N",
   "CANONIZER_CONSIDER_DIASTEREOTOPICITY",
   "CANONIZER_CONSIDER_ENANTIOTOPICITY",
@@ -619,14 +619,14 @@ Array [
 ]
 `;
 
-exports[`static properties of MoleculeProperties 1`] = `Array []`;
+exports[`static properties of MoleculeProperties 1`] = `[]`;
 
-exports[`static properties of SDFileParser 1`] = `Array []`;
+exports[`static properties of SDFileParser 1`] = `[]`;
 
-exports[`static properties of SSSearcher 1`] = `Array []`;
+exports[`static properties of SSSearcher 1`] = `[]`;
 
 exports[`static properties of SSSearcherWithIndex 1`] = `
-Array [
+[
   "bitCount",
   "getHexStringFromIndex",
   "getIndexFromHexString",
@@ -637,13 +637,13 @@ Array [
 `;
 
 exports[`static properties of SVGRenderer 1`] = `
-Array [
+[
   "renderMolecule",
 ]
 `;
 
 exports[`static properties of StructureEditor 1`] = `
-Array [
+[
   "addPasteHandler",
   "createEditor",
   "createSVGEditor",
@@ -652,7 +652,7 @@ Array [
 `;
 
 exports[`static properties of StructureView 1`] = `
-Array [
+[
   "drawMolecule",
   "drawStructure",
   "drawStructureWithText",
@@ -663,7 +663,7 @@ Array [
 `;
 
 exports[`static properties of ToxicityPredictor 1`] = `
-Array [
+[
   "RISK_HIGH",
   "RISK_LOW",
   "RISK_NAMES",
@@ -677,7 +677,7 @@ Array [
 `;
 
 exports[`static properties of Util 1`] = `
-Array [
+[
   "getHoseCodesFromDiastereotopicID",
 ]
 `;
