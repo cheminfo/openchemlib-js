@@ -24,6 +24,7 @@ const coreAPI = [
   'ForceFieldMMFF94',
   'MoleculeProperties',
   'ToxicityPredictor',
+  'Transformer',
 ];
 
 const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];
