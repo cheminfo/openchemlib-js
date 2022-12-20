@@ -61,6 +61,7 @@ It contains a structure viewer and a structure editor for browser applications.
 - [ForceFieldMMFF94](https://cheminfo.github.io/openchemlib-js/classes/ForceFieldMMFF94.html)
 - [MoleculeProperties](https://cheminfo.github.io/openchemlib-js/classes/MoleculeProperties.html)
 - [ToxicityPredictor](https://cheminfo.github.io/openchemlib-js/classes/ToxicityPredictor.html)
+- [Transformer](https://cheminfo.github.io/openchemlib-js/classes/Transformer.html)
 
 ### Modules present only in full build
 

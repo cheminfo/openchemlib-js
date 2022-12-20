@@ -2634,6 +2634,12 @@ export interface IDepictorOptions {
   drawBondsInGray?: boolean;
 }
 
+export declare class Transformer {
+  constructor(reactant: Molecule, product: Molecule, name: string);
+  setMolecule(molecule: Molecule, countMode: number): number;
+  applyTransformation(molecule: Molecule, matchNo: number): void;
+}
+
 export declare class Reaction {
   private constructor();
 
