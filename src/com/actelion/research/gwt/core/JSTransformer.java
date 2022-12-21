@@ -1,8 +1,10 @@
 package com.actelion.research.gwt.core;
 
+
 import com.actelion.research.chem.reaction.Transformer;
 import com.actelion.research.gwt.minimal.JSMolecule;
-import static com.actelion.research.chem.SSSearcher.cDefaultMatchMode;
+import static com.actelion.research.chem.SSSearcher.cCountModeOverlapping;
+import jsinterop.annotations.*;
 
 @JsType(name = "Transformer")
 public class JSTransformer {
@@ -14,7 +16,7 @@ public class JSTransformer {
 
 
   public int setMolecule(JSMolecule molecule, int countMode) {
-    return transformer.setMolecule(molecule.getStereoMolecule(), cDefaultMatchMode);
+    return transformer.setMolecule(molecule.getStereoMolecule(), cCountModeOverlapping);
   }
 
   public void applyTransformation(JSMolecule molecule, int matchNo) {

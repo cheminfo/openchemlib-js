@@ -41,6 +41,10 @@ public class JSReaction {
     return $wnd.OCL;
   }-*/;
 
+  public Reaction getReaction() {
+    return oclReaction;
+  }
+
   public String toSmiles() {
     return IsomericSmilesCreator.createReactionSmiles(oclReaction);
   }

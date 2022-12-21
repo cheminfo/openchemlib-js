@@ -2634,12 +2634,6 @@ export interface IDepictorOptions {
   drawBondsInGray?: boolean;
 }
 
-export declare class Transformer {
-  constructor(reactant: Molecule, product: Molecule, name: string);
-  setMolecule(molecule: Molecule, countMode: number): number;
-  applyTransformation(molecule: Molecule, matchNo: number): void;
-}
-
 export declare class Reaction {
   private constructor();
 
@@ -2855,6 +2849,11 @@ export declare class Reaction {
   getMergedCopy(): Reaction;
 }
 
+export declare class ReactionEncoder {
+  static encode(reaction: Reaction): string;
+  static decode(reaction: string): Reaction;
+}
+
 export declare class SDFileParser {
   /**
    * Creates a new parser.
@@ -3008,6 +3007,12 @@ export declare class SSSearcherWithIndex {
   isFragmentInMolecule(): boolean;
 
   createIndex(molecule: Molecule): number[];
+}
+
+export declare class Transformer {
+  constructor(reactant: Molecule, product: Molecule, name: string);
+  setMolecule(molecule: Molecule, countMode: number): number;
+  applyTransformation(molecule: Molecule, matchNo: number): void;
 }
 
 export declare namespace Util {

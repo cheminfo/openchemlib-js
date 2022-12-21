@@ -8,6 +8,7 @@ export {
   IInitializeConformersOptions,
   IParameterizedString,
   MoleculeProperties,
+  ReactionEncoder,
   Transformer,
   ToxicityPredictor,
 } from './types';
