@@ -23,6 +23,7 @@ const coreAPI = [
   'DrugScoreCalculator',
   'ForceFieldMMFF94',
   'MoleculeProperties',
+  'ReactionEncoder',
   'ToxicityPredictor',
   'Transformer',
 ];

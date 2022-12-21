@@ -306,6 +306,8 @@ exports[`prototype properties of Molecule 1`] = `
 
 exports[`prototype properties of MoleculeProperties 1`] = `[]`;
 
+exports[`prototype properties of ReactionEncoder 1`] = `[]`;
+
 exports[`prototype properties of SDFileParser 1`] = `
 [
   "getField",
@@ -371,6 +373,13 @@ exports[`prototype properties of ToxicityPredictor 1`] = `
   "assessRisk",
   "getDetail",
   "getOCL",
+]
+`;
+
+exports[`prototype properties of Transformer 1`] = `
+[
+  "applyTransformation",
+  "setMolecule",
 ]
 `;
 
@@ -621,6 +630,13 @@ exports[`static properties of Molecule 1`] = `
 
 exports[`static properties of MoleculeProperties 1`] = `[]`;
 
+exports[`static properties of ReactionEncoder 1`] = `
+[
+  "decode",
+  "encode",
+]
+`;
+
 exports[`static properties of SDFileParser 1`] = `[]`;
 
 exports[`static properties of SSSearcher 1`] = `[]`;
@@ -675,6 +691,8 @@ exports[`static properties of ToxicityPredictor 1`] = `
   "TYPE_TUMORIGENIC",
 ]
 `;
+
+exports[`static properties of Transformer 1`] = `[]`;
 
 exports[`static properties of Util 1`] = `
 [
