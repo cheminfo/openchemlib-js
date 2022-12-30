@@ -580,7 +580,7 @@ public class RingCollection {
 				boolean isHeteroAromatic = false;
 				for (int atom:mRingAtomSet.get(ring)) {
 					mAtomRingFeatures[atom] |= FEATURES_AROMATIC;
-					if (Molecule.isAtomicNoElectronegative(mMol.getAtomicNo(atom)))
+					if (qualifiesAsHeteroAtom(atom))
 						isHeteroAromatic = true;
 					}
 				for (int bond:mRingBondSet.get(ring))
@@ -601,6 +601,21 @@ public class RingCollection {
 					}
 				}
 			}
+		}
+
+	private boolean qualifiesAsHeteroAtom(int atom) {
+		if (mMol.isFragment()) {
+			if ((mMol.getAtomQueryFeatures(atom) & Molecule.cAtomQFAny) != 0)
+				return false;
+			int[] atomList = mMol.getAtomList(atom);
+			if (atomList != null) {
+				for (int atomicNo : atomList)
+					if (!Molecule.isAtomicNoElectronegative(atomicNo))
+						return false;
+				return true;
+				}
+			}
+		return Molecule.isAtomicNoElectronegative(mMol.getAtomicNo(atom));
 		}
 
 	private int[] getRingBonds(int[] ringAtom) {
@@ -679,7 +694,7 @@ public class RingCollection {
 			// returns true if it can successfully determine and set the ring's aromaticity
 		int ringAtom[] = mRingAtomSet.get(ringNo);
 		for (int atom:ringAtom)
-			if (!qualifiesAsAromatic(mMol.getAtomicNo(atom)))
+			if (!qualifiesAsAromaticAtom(atom))
 				return true;
 
 		int ringBond[] = mRingBondSet.get(ringNo);
@@ -862,8 +877,31 @@ public class RingCollection {
 		return false;
 		}
 
+	private boolean qualifiesAsAromaticAtom(int atom) {
+		// If we have a list or wildcard atom, then the atomicNo is meaningless...
+		if (mMol.isFragment()) {
+			// We consider wildcard atoms as being compatible with aromaticity
+			if ((mMol.getAtomQueryFeatures(atom) & Molecule.cAtomQFAny) != 0) {
+				// in theory, we must return false, if all atomicNos, which qualify for aromaticity,
+				// are part of the exclude list. In reality that is rather unlikely...
+				return true;
+				}
+			else {
+				int[] list = mMol.getAtomList(atom);
+				if (list != null) {
+					for (int atomicNo:list)
+						if (qualifiesAsAromaticAtomicNo(atomicNo))
+							return true;
 
-	public static boolean qualifiesAsAromatic(int atomicNo) {
+					return false;
+					}
+				}
+			}
+
+		return qualifiesAsAromaticAtomicNo(mMol.getAtomicNo(atom));
+		}
+
+	public static boolean qualifiesAsAromaticAtomicNo(int atomicNo) {
 		return atomicNo == 5
 			|| atomicNo == 6
 			|| atomicNo == 7

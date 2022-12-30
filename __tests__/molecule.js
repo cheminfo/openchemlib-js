@@ -105,7 +105,7 @@ describe('Molecule', () => {
     let mol = Molecule.fromSmiles('CC(Cl)CC');
     expect(mol.getChiralText()).toBe('unknown chirality');
     mol.addMissingChirality();
-    expect(mol.getChiralText()).toBe('racemate');
+    expect(mol.getChiralText()).toBe('both enantiomers');
 
     mol = Molecule.fromSmiles('CC(Cl)CC');
     mol.addMissingChirality(Molecule.cESRTypeOr);

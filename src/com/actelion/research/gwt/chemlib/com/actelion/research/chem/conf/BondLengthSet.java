@@ -39,11 +39,12 @@ import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.conf.TorsionDBData;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class BondLengthSet {
 	private static final String cBondDataFile = "bondLengthData.txt";
-	private static String cCustomBondDataFile = null;
+	private static String sCustomBondDataFile = null;
 
 	private static boolean isInitialized = false;
 	private static int[] BOND_ID,BOND_COUNT;
@@ -84,8 +85,8 @@ public class BondLengthSet {
 	/**
 	 * @param filePathAndName null (for default) or valid path & name to a custom bond length data file
 	 */
-	public void setCustomDataFile(String filePathAndName) {
-		cCustomBondDataFile = filePathAndName;
+	public static void setCustomDataFile(String filePathAndName) {
+		sCustomBondDataFile = filePathAndName;
 		isInitialized = false;
 		}
 

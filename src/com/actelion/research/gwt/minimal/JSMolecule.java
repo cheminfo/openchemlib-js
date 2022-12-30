@@ -1,6 +1,5 @@
 package com.actelion.research.gwt.minimal;
 
-import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
@@ -16,7 +15,7 @@ import jsinterop.annotations.*;
 public class JSMolecule {
 
   private static Services services = Services.getInstance();
-  private static Rectangle2D.Double rectangle = new Rectangle2D.Double();
+  private static GenericRectangle rectangle = new GenericRectangle();
 
   private StereoMolecule oclMolecule;
 
@@ -113,8 +112,9 @@ public class JSMolecule {
     var autoCrop = options.autoCrop === true;
     var autoCropMargin = typeof options.autoCropMargin === 'undefined' ? 5 : options.autoCropMargin;
   	var svg =  this.@com.actelion.research.gwt.minimal.JSMolecule::getSVG(IIFZILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, factorTextSize, autoCrop, autoCropMargin, id, options);
+    svg = svg.replace('<style>', '<style> text {font-family: sans-serif;}');
   	if (options.fontWeight) {
-      svg = svg.replace(/font-family=" Helvetica" /g, 'font-family=" Helvetica" font-weight="' + options.fontWeight + '" ');
+      svg = svg.replace(/font-size=/g, 'font-weight="' + options.fontWeight + '" font-size=');
     }
     if (options.strokeWidth) {
      svg = svg.replace(/stroke-width="[^"]+"/g, 'stroke-width="' + options.strokeWidth + '"');
@@ -225,7 +225,7 @@ public class JSMolecule {
   }
 
   public JavaScriptObject getBounds() {
-    Rectangle2D.Double r = oclMolecule.getBounds(rectangle);
+    GenericRectangle r = oclMolecule.getBounds(rectangle);
     if (r == null)
       return null;
     return getBounds(r.x, r.y, r.width, r.height);
@@ -1483,7 +1483,7 @@ public class JSMolecule {
   }
 
   public void removeExplicitHydrogens(boolean is3D) {
-    oclMolecule.removeExplicitHydrogens(is3D);
+    oclMolecule.removeExplicitHydrogens(true, is3D);
   }
 
   public JSMolecule[] getFragments() {
