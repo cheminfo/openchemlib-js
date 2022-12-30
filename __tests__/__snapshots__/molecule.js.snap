@@ -2,10 +2,10 @@
 
 exports[`Molecule toSVG with autoCrop 1`] = `
 "<svg id="myId" xmlns="http://www.w3.org/2000/svg" version="1.1" width="135px" height="41px" viewBox="74 55 135 41">
-  <style> #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
-  <text x="154.95" y="73.67" font-family=" Helvetica" font-size="14" fill="rgb(255,13,13)">O</text>
-  <text x="92.59" y="85.67" font-family=" Helvetica" font-size="14" fill="rgb(255,13,13)">O</text>
-  <text x="82.48" y="85.67" font-family=" Helvetica" font-size="14" fill="rgb(255,13,13)">H</text>
+  <style> text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
+  <text x="154.95" y="73.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
+  <text x="92.59" y="85.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
+  <text x="82.48" y="85.67" stroke="none" font-size="14" fill="rgb(255,13,13)">H</text>
   <line x1="201.96" y1="69" x2="181.18" y2="81" stroke="rgb(0,0,0)" stroke-width="1.44" />
   <line x1="181.18" y1="81" x2="166.84" y2="72.72" stroke="rgb(0,0,0)" stroke-width="1.44" />
   <line x1="153.95" y1="72.72" x2="139.61" y2="81" stroke="rgb(0,0,0)" stroke-width="1.44" />
@@ -27,10 +27,10 @@ exports[`Molecule toSVG with autoCrop 1`] = `
 
 exports[`Molecule toSVG with autoCrop 2`] = `
 "<svg id="myId" xmlns="http://www.w3.org/2000/svg" version="1.1" width="175px" height="81px" viewBox="54 35 175 81">
-  <style> #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
-  <text x="154.95" y="73.67" font-family=" Helvetica" font-size="14" fill="rgb(255,13,13)">O</text>
-  <text x="92.59" y="85.67" font-family=" Helvetica" font-size="14" fill="rgb(255,13,13)">O</text>
-  <text x="82.48" y="85.67" font-family=" Helvetica" font-size="14" fill="rgb(255,13,13)">H</text>
+  <style> text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
+  <text x="154.95" y="73.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
+  <text x="92.59" y="85.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
+  <text x="82.48" y="85.67" stroke="none" font-size="14" fill="rgb(255,13,13)">H</text>
   <line x1="201.96" y1="69" x2="181.18" y2="81" stroke="rgb(0,0,0)" stroke-width="1.44" />
   <line x1="181.18" y1="81" x2="166.84" y2="72.72" stroke="rgb(0,0,0)" stroke-width="1.44" />
   <line x1="153.95" y1="72.72" x2="139.61" y2="81" stroke="rgb(0,0,0)" stroke-width="1.44" />

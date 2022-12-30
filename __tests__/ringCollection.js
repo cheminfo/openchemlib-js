@@ -45,7 +45,7 @@ test('multiple rings', () => {
   );
   const coll = mol.getRingSet();
   expect(coll.getSize()).toBe(5);
-  const sizes = [6, 5, 6, 6, 6];
+  const sizes = [6, 6, 5, 6, 6];
   const aromatic = [true, false, false, false, false];
   const delocalized = [true, false, false, false, false];
   for (let i = 0; i < 5; i++) {
@@ -54,9 +54,9 @@ test('multiple rings', () => {
     expect(coll.isDelocalized(i)).toBe(delocalized[i]);
   }
   expect(coll.isAtomMember(0, 4)).toBe(true);
-  expect(coll.isAtomMember(1, 4)).toBe(true);
+  expect(coll.isAtomMember(2, 4)).toBe(true);
   expect(coll.isAtomMember(0, 3)).toBe(true);
-  expect(coll.isAtomMember(1, 3)).toBe(false);
+  expect(coll.isAtomMember(2, 3)).toBe(false);
   expect(coll.getSharedRing(23, 25)).toBe(0);
-  expect(coll.getSharedRing(23, 24)).toBe(1);
+  expect(coll.getSharedRing(23, 24)).toBe(2);
 });

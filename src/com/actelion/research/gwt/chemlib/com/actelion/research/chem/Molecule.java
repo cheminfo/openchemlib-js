@@ -33,7 +33,8 @@
 
 package com.actelion.research.chem;
 
-import java.awt.geom.Rectangle2D;
+import com.actelion.research.gui.generic.GenericRectangle;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -49,7 +50,8 @@ public class Molecule implements Serializable {
 	// be changed as well.
 	// In addition to the above requirement, the class name should not be obfuscated at all!
 
-	static final long serialVersionUID = 0x20220517;	// after extending atom query features from int to long
+//	static final long serialVersionUID = 0x20220517;	// after extending atom query features from int to long
+	static final long serialVersionUID = 0x20221130;	// after introducing quadruple and quintuple bonds
 
 	public static final int cMaxAtomicNo = 190;
 
@@ -148,7 +150,7 @@ public class Molecule implements Serializable {
 	public static final long cAtomQFSimpleFeatures	= 0x00007F800E3FC7FEL;
 	public static final long cAtomQFNarrowing		= 0x00007FFF0FFFFFFEL;
 	public static final long cAtomQFAny				= 0x00000001;
-	public static final long cAtomQFAromState		= 0x00000006;
+	public static final long cAtomQFAromState		= 0x0000400000000006L;
 	public static final long cAtomQFAromatic		= 0x00000002;
 	public static final long cAtomQFNotAromatic		= 0x00000004;
 	public static final long cAtomQFRingState		= 0x00000078;
@@ -207,16 +209,18 @@ public class Molecule implements Serializable {
 	public static final int cBondTypeSingle			= 0x00000001;
 	public static final int cBondTypeDouble			= 0x00000002;
 	public static final int cBondTypeTriple			= 0x00000004;
-	public static final int cBondTypeDown			= 0x00000009;
-	public static final int cBondTypeUp				= 0x00000011;
-	public static final int cBondTypeCross			= 0x0000001A;
+	public static final int cBondTypeQuadruple		= 0x00000008;
+	public static final int cBondTypeQuintuple		= 0x00000010;
 	public static final int cBondTypeMetalLigand	= 0x00000020;
 	public static final int cBondTypeDelocalized	= 0x00000040;
-	public static final int cBondTypeDeleted		= 0x00000080;
-	public static final int cBondTypeIncreaseOrder  = 0x0000007F;
+	public static final int cBondTypeDown			= 0x00000081;
+	public static final int cBondTypeUp				= 0x00000101;
+	public static final int cBondTypeCross			= 0x00000182;
+	public static final int cBondTypeDeleted		= 0x00000200;
+	public static final int cBondTypeIncreaseOrder  = 0x000001FF;
 
-	public static final int cBondTypeMaskSimple	= 0x00000067;	// masks
-	public static final int cBondTypeMaskStereo	= 0x00000018;
+	public static final int cBondTypeMaskSimple 	= 0x0000007F;	// masks
+	public static final int cBondTypeMaskStereo	    = 0x00000180;
 
 	protected static final int cBondFlagsHelper2	= 0x000002C0;
 	protected static final int cBondFlagsHelper3	= 0x0000003F;
@@ -252,42 +256,47 @@ public class Molecule implements Serializable {
 	// The setBondParity() method clears this flag. The Canonizer considers
 	// this flag when calculating EZ-parities.
 
-	public static final int cBondQFNoOfBits			= 21;
+	public static final int cBondQFNoOfBits			= 23;
 	public static final int cBondQFBondTypesBits	= 5;
 	public static final int cBondQFBondTypesShift	= 0;
+	public static final int cBondQFRareBondTypesBits = 2;
+	public static final int cBondQFRareBondTypesShift = 5;
 	public static final int cBondQFRingStateBits	= 2;
-	public static final int cBondQFRingStateShift	= 5;
+	public static final int cBondQFRingStateShift	= 7;
 	public static final int cBondQFBridgeBits		= 8;
-	public static final int cBondQFBridgeShift		= 7;
+	public static final int cBondQFBridgeShift		= 9;
 	public static final int cBondQFBridgeMinBits	= 4;
-	public static final int cBondQFBridgeMinShift   = 7;
+	public static final int cBondQFBridgeMinShift   = 9;
 	public static final int cBondQFBridgeSpanBits   = 4;
-	public static final int cBondQFBridgeSpanShift  = 11;
+	public static final int cBondQFBridgeSpanShift  = 13;
 	public static final int cBondQFRingSizeBits		= 3;
-	public static final int cBondQFRingSizeShift	= 15;
+	public static final int cBondQFRingSizeShift	= 17;
 	public static final int cBondQFAromStateBits	= 2;
-	public static final int cBondQFAromStateShift	= 19;
-	public static final int cBondQFAllFeatures		= 0x003FFFFF;
-	public static final int cBondQFSimpleFeatures	= 0x0018007F;
-	public static final int cBondQFNarrowing		= 0x00180060;
-	public static final int cBondQFBondTypes		= 0x0000001F;   // using OR logic for all 5 bond types
+	public static final int cBondQFAromStateShift	= 21;
+	public static final int cBondQFAllFeatures		= 0x00FFFFFF;
+	public static final int cBondQFSimpleFeatures	= 0x006001FF;
+	public static final int cBondQFNarrowing		= 0x00600180;
+	public static final int cBondQFBondTypes		= 0x0000001F;   // original 5 bond types for idcode
+	public static final int cBondQFRareBondTypes    = 0x00000060;   // using OR logic for all 7 bond types
 	public static final int cBondQFSingle           = 0x00000001;
 	public static final int cBondQFDouble           = 0x00000002;
 	public static final int cBondQFTriple           = 0x00000004;
 	public static final int cBondQFDelocalized      = 0x00000008;
 	public static final int cBondQFMetalLigand      = 0x00000010;
-	public static final int cBondQFRingState		= 0x00000060;
-	public static final int cBondQFNotRing			= 0x00000020;
-	public static final int cBondQFRing				= 0x00000040;
-	public static final int cBondQFBridge			= 0x00007F80;
-	public static final int cBondQFBridgeMin		= 0x00000780;
-	public static final int cBondQFBridgeSpan		= 0x00007800;
-	public static final int cBondQFRingSize			= 0x00038000;
-	public static final int cBondQFMatchStereo		= 0x00040000;
-	public static final int cBondQFAromState		= 0x00180000;
-	public static final int cBondQFAromatic			= 0x00080000;
-	public static final int cBondQFNotAromatic		= 0x00100000;
-	public static final int cBondQFMatchFormalOrder = 0x00200000; // matches the formal bond order considering also cBondQFBondTypes in query
+	public static final int cBondQFQuadruple        = 0x00000020;
+	public static final int cBondQFQuintuple        = 0x00000040;
+	public static final int cBondQFRingState		= 0x00000180;
+	public static final int cBondQFNotRing			= 0x00000080;
+	public static final int cBondQFRing				= 0x00000100;
+	public static final int cBondQFBridge			= 0x0001FE00;
+	public static final int cBondQFBridgeMin		= 0x00001E00;
+	public static final int cBondQFBridgeSpan		= 0x0001E000;
+	public static final int cBondQFRingSize			= 0x000E0000;
+	public static final int cBondQFMatchStereo		= 0x00100000;
+	public static final int cBondQFAromState		= 0x00600000;
+	public static final int cBondQFAromatic			= 0x00200000;
+	public static final int cBondQFNotAromatic		= 0x00400000;
+	public static final int cBondQFMatchFormalOrder = 0x00800000; // matches the formal bond order considering also cBondQFBondTypes in query
 
 	public static final int cHelperNone				= 0x0000;
 	public static final int cHelperBitNeighbours	= 0x0001;
@@ -327,10 +336,16 @@ public class Molecule implements Serializable {
 	public static final int cMoleculeColorDefault = 0;
 	public static final int cMoleculeColorNeutral = 1;
 
-	public static final int cPseudoAtomsHydrogenIsotops = 1;
-	public static final int cPseudoAtomsRGroups = 2;
-	public static final int cPseudoAtomsAminoAcids = 4;
-	public static final int cPseudoAtomAttachmentPoint = 8;
+	public static final int cPseudoAtomsHydrogenIsotops = 1;    // D and T
+	public static final int cPseudoAtomsRGroups = 2;            // R1 to R16
+	public static final int cPseudoAtomsAGroups = 4;            // A1,A2,A3
+	public static final int cPseudoAtomR = 8;                   // R
+	public static final int cPseudoAtomA = 16;                  // A
+	public static final int cPseudoAtomX = 32;                  // X
+	public static final int cPseudoAtomsAminoAcids = 64;        // all 20 amino acid 3-letter codes
+	public static final int cPseudoAtomPolymer = 128;           // Pol
+	public static final int cPseudoAtomAttachmentPoint = 256;   // ?
+	public static final int cPseudoAtomsAll = 511;              // all of above
 
 	public static final int cDefaultAllowedPseudoAtoms = cPseudoAtomsHydrogenIsotops
 													   | cPseudoAtomsAminoAcids
@@ -493,10 +508,31 @@ public class Molecule implements Serializable {
 				if (atomLabel.equalsIgnoreCase(cAtomLabel[i]))
 					return i;
 
+		if ((allowedPseudoAtomGroups & cPseudoAtomsAGroups) != 0)
+			for (int i=146; i<=148; i++)
+				if (atomLabel.equalsIgnoreCase(cAtomLabel[i]))
+					return i;
+
 		if ((allowedPseudoAtomGroups & cPseudoAtomsHydrogenIsotops) != 0)
 			for (int i=151; i<=152; i++)
 				if (atomLabel.equalsIgnoreCase(cAtomLabel[i]))
 					return i;
+
+		if ((allowedPseudoAtomGroups & cPseudoAtomX) != 0)
+			if (atomLabel.equalsIgnoreCase(cAtomLabel[153]))
+				return 153;
+
+		if ((allowedPseudoAtomGroups & cPseudoAtomR) != 0)
+			if (atomLabel.equalsIgnoreCase(cAtomLabel[154]))
+				return 154;
+
+		if ((allowedPseudoAtomGroups & cPseudoAtomA) != 0)
+			if (atomLabel.equalsIgnoreCase(cAtomLabel[145]))
+				return 145;
+
+		if ((allowedPseudoAtomGroups & cPseudoAtomPolymer) != 0)
+			if (atomLabel.equalsIgnoreCase(cAtomLabel[159]))
+				return 159;
 
 		if ((allowedPseudoAtomGroups & cPseudoAtomsAminoAcids) != 0)
 			for (int i=171; i<=190; i++)
@@ -520,6 +556,14 @@ public class Molecule implements Serializable {
 			: (atomicNo >= 171 && atomicNo <= 190) ? cAminoAcidValences : cDefaultAtomValences;
 		}
 
+	/**
+	 * Calculates the angle of the line leading from (x1,y1) to (x2,y2).
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return -Pi to Pi
+	 */
 	public static double getAngle(double x1, double y1, double x2, double y2) {
 		double angle;
 		double xdiff = x2 - x1;
@@ -541,6 +585,12 @@ public class Molecule implements Serializable {
 		}
 
 
+	/**
+	 * Calculates the difference of two angles as angle1-angle2
+	 * @param angle1
+	 * @param angle2
+	 * @return -Pi to Pi
+	 */
 	public static double getAngleDif(double angle1, double angle2) {
 		double angleDif = angle1 - angle2;
 		while (angleDif < -Math.PI)
@@ -556,7 +606,9 @@ public class Molecule implements Serializable {
 		return (simpleType == cBondTypeSingle
 			 || simpleType == cBondTypeDelocalized) ? 1
 			  : simpleType == cBondTypeDouble ? 2
-			  : simpleType == cBondTypeTriple ? 3 : 0; // dative bonds
+			  : simpleType == cBondTypeTriple ? 3
+			  : simpleType == cBondTypeQuadruple ? 4
+			  : simpleType == cBondTypeQuintuple ? 5 : 0; // dative bonds
 		}
 
 
@@ -564,7 +616,9 @@ public class Molecule implements Serializable {
 		return bondOrder == 0 ? Molecule.cBondTypeMetalLigand
 			 : bondOrder == 1 ? Molecule.cBondTypeSingle
 			 : bondOrder == 2 ? (useCrossBond ? Molecule.cBondTypeCross : Molecule.cBondTypeDouble)
-							  : Molecule.cBondTypeTriple;
+			 : bondOrder == 3 ? Molecule.cBondTypeTriple
+			 : bondOrder == 4 ? Molecule.cBondTypeQuadruple
+							  : Molecule.cBondTypeQuintuple;
 		}
 
 
@@ -2161,7 +2215,24 @@ public class Molecule implements Serializable {
 		return mCoordinates[atom].z;
 		}
 
-	public Rectangle2D.Double getBounds(Rectangle2D.Double r) {
+//	@Deprecated
+//	public Rectangle2D.Double getBounds(Rectangle2D.Double r) {
+//		if (mAllAtoms == 0)
+//			return null;
+//
+//		GenericRectangle b = getBounds((GenericRectangle)null);
+//		if (r != null) {
+//			r.x = b.x;
+//			r.y = b.y;
+//			r.width = b.width;
+//			r.height = b.height;
+//			return r;
+//			}
+//
+//		return new Rectangle2D.Double(b.x, b.y, b.width, b.height):
+//		}
+
+	public GenericRectangle getBounds(GenericRectangle r) {
 		if (mAllAtoms == 0)
 			return null;
 
@@ -2182,7 +2253,7 @@ public class Molecule implements Serializable {
 			}
 
 		if (r == null) {
-			r = new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1);
+			r = new GenericRectangle(x1, y1, x2 - x1, y2 - y1);
 			}
 		else {
 			r.x = x1;
@@ -2445,7 +2516,7 @@ public class Molecule implements Serializable {
 	 * bonds, which are returned as such. Bonds that are explicitly marked as being delocalized
 	 * are returned as 1. Dative bonds are returned as 0.
 	 * @param bond
-	 * @return formal bond order 0 (dative bonds), 1, 2, or 3
+	 * @return formal bond order 0 (dative bonds), 1, 2, 3, 4, or 5
 	 */
 	public int getBondOrder(int bond) {
 		switch (mBondType[bond] & cBondTypeMaskSimple) {
@@ -2453,6 +2524,8 @@ public class Molecule implements Serializable {
 		case cBondTypeDelocalized: return 1;
 		case cBondTypeDouble: return 2;
 		case cBondTypeTriple: return 3;
+		case cBondTypeQuadruple: return 4;
+		case cBondTypeQuintuple: return 5;
 		default: return 0;	// dative bonds, ligand field bonds
 			}
 		}
@@ -3666,7 +3739,8 @@ public class Molecule implements Serializable {
 
 
 	private int getMaximumBondOrder(int bond) {
-		int maxBondOrder = 3;
+		int maxBondOrder = (isTransitionMetalAtom(mBondAtom[0][bond])
+						 || isTransitionMetalAtom(mBondAtom[1][bond])) ? 5 : 3;
 		for (int i=0; i<2; i++) {
 			int atom = mBondAtom[i][bond];
 			int max = getBondOrder(bond) + getMaxValence(atom) - getOccupiedValence(atom);
@@ -3682,8 +3756,20 @@ public class Molecule implements Serializable {
 		boolean hasMetal = isMetalAtom(mBondAtom[0][bond]) || isMetalAtom(mBondAtom[1][bond]);
 		int startBond = hasMetal ? cBondTypeMetalLigand : cBondTypeSingle;
 
-		if (mBondType[bond] == cBondTypeTriple) {
+		if (mBondType[bond] == cBondTypeQuintuple) {
 			mBondType[bond] = startBond;
+			mValidHelperArrays = cHelperNone;
+			return true;
+			}
+
+		if (mBondType[bond] == cBondTypeQuadruple) {
+			mBondType[bond] = (maxBondOrder > 4) ? cBondTypeQuintuple : startBond;
+			mValidHelperArrays = cHelperNone;
+			return true;
+			}
+
+		if (mBondType[bond] == cBondTypeTriple) {
+			mBondType[bond] = (maxBondOrder > 3) ? cBondTypeQuadruple : startBond;
 			mValidHelperArrays = cHelperNone;
 			return true;
 			}
@@ -3696,7 +3782,7 @@ public class Molecule implements Serializable {
 			}
 
 		if (mBondType[bond] == cBondTypeCross) {
-			if (maxBondOrder == 3)
+			if (maxBondOrder > 2)
 				mBondType[bond] = cBondTypeTriple;
 			else
 				mBondType[bond] = startBond;
@@ -3744,6 +3830,10 @@ public class Molecule implements Serializable {
 			return maxBondOrder >= 2;
 		case cBondTypeTriple:
 			return maxBondOrder >= 3;
+		case cBondTypeQuadruple:
+			return maxBondOrder >= 4;
+		case cBondTypeQuintuple:
+			return maxBondOrder >= 5;
 		case cBondTypeMetalLigand:
 			return true;
 		default:
@@ -3966,7 +4056,7 @@ public class Molecule implements Serializable {
 
 	/**
 	 * @param atom
-	 * @return whether atom is any metal atom
+	 * @return whether atom is a metal atom
 	 */
 	public boolean isMetalAtom(int atom) {
 		if (mIsFragment) {
@@ -3983,6 +4073,25 @@ public class Molecule implements Serializable {
 		}
 
 
+	/**
+	 * @param atom
+	 * @return whether atom is a transition metal atom
+	 */
+	public boolean isTransitionMetalAtom(int atom) {
+		if (mIsFragment) {
+			if ((mAtomQueryFeatures[atom] & cAtomQFAny) != 0)
+				return false;
+
+			if (mAtomList != null && mAtomList[atom] != null)
+				for (int atomicNo:mAtomList[atom])
+					if (!isAtomicNoMetal(atomicNo))
+						return false;
+			}
+
+		return isAtomicNoTransitionMetal(mAtomicNo[atom]);
+		}
+
+
 	public static boolean isAtomicNoMetal(int atomicNo) {
 		return (atomicNo >=  3 && atomicNo <=  4)
 			|| (atomicNo >= 11 && atomicNo <= 13)
@@ -3990,6 +4099,16 @@ public class Molecule implements Serializable {
 			|| (atomicNo >= 37 && atomicNo <= 51)
 			|| (atomicNo >= 55 && atomicNo <= 84)
 			|| (atomicNo >= 87 && atomicNo <= 103);
+		}
+
+
+	public static boolean isAtomicNoTransitionMetal(int atomicNo) {
+		return (atomicNo >= 21 && atomicNo <= 30)
+			|| (atomicNo >= 39 && atomicNo <= 48)
+			|| atomicNo == 57
+			|| (atomicNo >= 72 && atomicNo <= 80)
+			|| atomicNo ==  89
+			|| (atomicNo >= 104 && atomicNo <= 112);
 		}
 
 
