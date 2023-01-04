@@ -60,6 +60,8 @@ It contains a structure viewer and a structure editor for browser applications.
 - [DrugScoreCalculator](https://cheminfo.github.io/openchemlib-js/modules/DrugScoreCalculator.html)
 - [ForceFieldMMFF94](https://cheminfo.github.io/openchemlib-js/classes/ForceFieldMMFF94.html)
 - [MoleculeProperties](https://cheminfo.github.io/openchemlib-js/classes/MoleculeProperties.html)
+- [ReactionEncoder](https://cheminfo.github.io/openchemlib-js/classes/ReactionEncoder.html)
+- [Reactor](https://cheminfo.github.io/openchemlib-js/classes/Reactor.html)
 - [ToxicityPredictor](https://cheminfo.github.io/openchemlib-js/classes/ToxicityPredictor.html)
 - [Transformer](https://cheminfo.github.io/openchemlib-js/classes/Transformer.html)
 

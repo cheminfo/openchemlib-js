@@ -308,6 +308,13 @@ exports[`prototype properties of MoleculeProperties 1`] = `[]`;
 
 exports[`prototype properties of ReactionEncoder 1`] = `[]`;
 
+exports[`prototype properties of Reactor 1`] = `
+[
+  "getProducts",
+  "setReactant",
+]
+`;
+
 exports[`prototype properties of SDFileParser 1`] = `
 [
   "getField",
@@ -636,6 +643,8 @@ exports[`static properties of ReactionEncoder 1`] = `
   "encode",
 ]
 `;
+
+exports[`static properties of Reactor 1`] = `[]`;
 
 exports[`static properties of SDFileParser 1`] = `[]`;
 

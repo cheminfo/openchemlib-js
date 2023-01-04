@@ -9,6 +9,7 @@ export {
   IParameterizedString,
   MoleculeProperties,
   ReactionEncoder,
+  Reactor,
   Transformer,
   ToxicityPredictor,
 } from './types';
