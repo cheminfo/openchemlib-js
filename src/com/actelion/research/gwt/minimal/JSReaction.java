@@ -41,6 +41,7 @@ public class JSReaction {
     return $wnd.OCL;
   }-*/;
 
+  @JsIgnore
   public Reaction getReaction() {
     return oclReaction;
   }
