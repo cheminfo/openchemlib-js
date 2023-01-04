@@ -1,5 +1,16 @@
 # Changelog
 
+## [8.1.0](https://github.com/cheminfo/openchemlib-js/compare/v8.0.1...v8.1.0) (2023-01-04)
+
+
+### Features
+
+* expose ReactionEncoder to encode / decode a reaction as a string ([0d645c3](https://github.com/cheminfo/openchemlib-js/commit/0d645c3a67f1386ca4b946af34bb35053eed2c20))
+* expose Reactor ([5eb1c26](https://github.com/cheminfo/openchemlib-js/commit/5eb1c26cb9d17c3ecb3da610e063e0d5879162d8))
+* expose Transformer ([e88d2b4](https://github.com/cheminfo/openchemlib-js/commit/e88d2b41f9c7db1e5fc983cfe78c9b60904232ee))
+* update OCL to v2022.10.2 ([64b7d9a](https://github.com/cheminfo/openchemlib-js/commit/64b7d9a1a6cd261dbd64d24682ed2f3c9e3b88cd))
+* update OCL to v2022.12.4 ([#146](https://github.com/cheminfo/openchemlib-js/issues/146)) ([8511629](https://github.com/cheminfo/openchemlib-js/commit/8511629bf3acbfbe48e8773134b7f9687de93465))
+
 ## [8.0.1](https://github.com/cheminfo/openchemlib-js/compare/v8.0.0...v8.0.1) (2022-08-15)
 
 
