@@ -24,6 +24,7 @@ const coreAPI = [
   'ForceFieldMMFF94',
   'MoleculeProperties',
   'ReactionEncoder',
+  'Reactor',
   'ToxicityPredictor',
   'Transformer',
 ];

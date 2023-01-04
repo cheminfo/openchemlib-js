@@ -2854,6 +2854,12 @@ export declare class ReactionEncoder {
   static decode(reaction: string): Reaction;
 }
 
+export declare class Reactor {
+  constructor(reaction: Reaction);
+  setReactant(no: number, reactant: Molecule): boolean;
+  getProducts(): Molecule[][];
+}
+
 export declare class SDFileParser {
   /**
    * Creates a new parser.
