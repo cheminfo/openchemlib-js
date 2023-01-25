@@ -101,4 +101,16 @@ describe('diastereotopicIDs', () => {
     let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(6);
   });
+
+  it('CC(Cl)CC', () => {
+    let molecule = Molecule.fromSmiles('CC(Cl)CC');
+    let diaIDs = Array.from(molecule.getDiastereotopicAtomIDs());
+    expect(diaIDs).toStrictEqual([
+      'gJPHADIMuTe@XbhOtbIpj`',
+      'gJPHADILuTe@XdhOtbQpj`',
+      'gJPHADILuTe@X`hOtbCpfuP',
+      'gJPHADILuTe@XbhOtbIpj`',
+      'gJPHADILuTe@XahOtbEpj`',
+    ]);
+  });
 });
