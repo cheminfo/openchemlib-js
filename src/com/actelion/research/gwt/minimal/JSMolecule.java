@@ -650,8 +650,8 @@ public class JSMolecule {
   public static final String[] VALIDATION_ERRORS_STEREO = {VALIDATION_ERROR_ESR_CENTER_UNKNOWN,
       VALIDATION_ERROR_OVER_UNDER_SPECIFIED, VALIDATION_ERROR_AMBIGUOUS_CONFIGURATION};
 
-  public static int getAtomicNoFromLabel(String atomLabel) {
-    return StereoMolecule.getAtomicNoFromLabel(atomLabel);
+  public static int getAtomicNoFromLabel(String atomLabel, int allowedPseudoAtomGroups) {
+    return StereoMolecule.getAtomicNoFromLabel(atomLabel, allowedPseudoAtomGroups);
   }
 
   public static double getAngle(double x1, double y1, double x2, double y2) {

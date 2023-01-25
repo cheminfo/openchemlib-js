@@ -403,7 +403,10 @@ export declare class Molecule {
    */
   static fromIDCode(idcode: string, ensure2DCoordinates?: boolean): Molecule;
 
-  static getAtomicNoFromLabel(atomLabel: string): number;
+  static getAtomicNoFromLabel(
+    atomLabel: string,
+    allowedPseudoAtomGroups?: number,
+  ): number;
 
   static getAngle(x1: number, y1: number, x2: number, y2: number): number;
 
