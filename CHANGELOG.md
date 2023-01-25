@@ -1,5 +1,18 @@
 # Changelog
 
+## [8.2.0](https://github.com/cheminfo/openchemlib-js/compare/v8.1.0...v8.2.0) (2023-01-25)
+
+
+### Features
+
+* add new CANONIZER static options ([bd2eca1](https://github.com/cheminfo/openchemlib-js/commit/bd2eca1356c995ba51d0ac46f23305038610d943))
+
+
+### Bug Fixes
+
+* add getAtomicNoFromLabel second argument ([8aa1268](https://github.com/cheminfo/openchemlib-js/commit/8aa12680634498b65e18f5172c7e16540ec4e463))
+* correct and expose all static parameters of JSMolecule ([81d7361](https://github.com/cheminfo/openchemlib-js/commit/81d7361d6792c01ee3a9f36d01dd9bc41ab020ae))
+
 ## [8.1.0](https://github.com/cheminfo/openchemlib-js/compare/v8.0.1...v8.1.0) (2023-01-04)
 
 
