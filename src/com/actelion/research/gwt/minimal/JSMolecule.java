@@ -273,6 +273,7 @@ public class JSMolecule {
     return oclMolecule;
   }
 
+  // coming form Canonizer.java
   public static final int CANONIZER_CREATE_SYMMETRY_RANK = 1;
   public static final int CANONIZER_CONSIDER_DIASTEREOTOPICITY = 2;
   public static final int CANONIZER_CONSIDER_ENANTIOTOPICITY = 4;
@@ -288,7 +289,7 @@ public class JSMolecule {
   public static final int CANONIZER_ENCODE_ATOM_CUSTOM_LABELS_WITHOUT_RANKING = 1024;
   public static final int CANONIZER_NEGLECT_ANY_STEREO_INFORMATION = 2048;
 
-
+  // coming from Molecule.java
   public static final int cMaxAtomicNo = 190;
   public static final int cAtomParityNone = 0x000000;
   public static final int cAtomParity1 = 0x000001;
@@ -318,7 +319,7 @@ public class JSMolecule {
   public static final int cESRTypeOr = 2;
   public static final int cESRMaxGroups = 32;
   public static final int cESRGroupBits = 5;
-  public static final int cAtomQFNoOfBits = 30;
+  public static final int cAtomQFNoOfBits = 46;
   public static final int cAtomQFAromStateBits = 2;
   public static final int cAtomQFAromStateShift = 1;
   public static final int cAtomQFRingStateBits = 4;
@@ -329,67 +330,100 @@ public class JSMolecule {
   public static final int cAtomQFPiElectronShift = 14;
   public static final int cAtomQFNeighbourBits = 5;
   public static final int cAtomQFNeighbourShift = 17;
-  public static final int cAtomQFRingSizeBits = 3;
-  public static final int cAtomQFRingSizeShift = 22;
+  public static final int cAtomQFSmallRingSizeBits = 3;
+  public static final int cAtomQFSmallRingSizeShift = 22;
   public static final int cAtomQFChargeBits = 3;
   public static final int cAtomQFChargeShift = 25;
   public static final int cAtomQFRxnParityBits = 2;
   public static final int cAtomQFRxnParityShift = 30;
-  public static final int cAtomQFSimpleFeatures = 0x0E3FC7FE;
-  public static final int cAtomQFNarrowing = 0x0E3FC7FE;
-  public static final int cAtomQFAny = 0x00000001;
-  public static final int cAtomQFAromState = 0x00000006;
-  public static final int cAtomQFAromatic = 0x00000002;
-  public static final int cAtomQFNotAromatic = 0x00000004;
-  public static final int cAtomQFRingState = 0x00000078;
-  public static final int cAtomQFNotChain = 0x00000008;
-  public static final int cAtomQFNot2RingBonds = 0x00000010;
-  public static final int cAtomQFNot3RingBonds = 0x00000020;
-  public static final int cAtomQFNot4RingBonds = 0x00000040;
-  public static final int cAtomQFHydrogen = 0x00000780;
-  public static final int cAtomQFNot0Hydrogen = 0x00000080;
-  public static final int cAtomQFNot1Hydrogen = 0x00000100;
-  public static final int cAtomQFNot2Hydrogen = 0x00000200;
-  public static final int cAtomQFNot3Hydrogen = 0x00000400;
-  public static final int cAtomQFNoMoreNeighbours = 0x00000800;
-  public static final int cAtomQFMoreNeighbours = 0x00001000;
-  public static final int cAtomQFMatchStereo = 0x00002000;
-  public static final int cAtomQFPiElectrons = 0x0001C000;
-  public static final int cAtomQFNot0PiElectrons = 0x00004000;
-  public static final int cAtomQFNot1PiElectron = 0x00008000;
-  public static final int cAtomQFNot2PiElectrons = 0x00010000;
-  public static final int cAtomQFNeighbours = 0x003E0000; // these QF refer to non-H neighbours
-  public static final int cAtomQFNot0Neighbours = 0x00020000;
-  public static final int cAtomQFNot1Neighbour = 0x00040000;
-  public static final int cAtomQFNot2Neighbours = 0x00080000;
-  public static final int cAtomQFNot3Neighbours = 0x00100000;
-  public static final int cAtomQFNot4Neighbours = 0x00200000; // this is not 4 or more neighbours
-  public static final int cAtomQFRingSize = 0x01C00000;
-  public static final int cAtomQFCharge = 0x0E000000;
-  public static final int cAtomQFNotChargeNeg = 0x02000000;
-  public static final int cAtomQFNotCharge0 = 0x04000000;
-  public static final int cAtomQFNotChargePos = 0x08000000;
-  public static final int cAtomQFFlatNitrogen = 0x10000000; // currently only used in TorsionDetail
-  public static final int cAtomQFExcludeGroup = 0x20000000; // these atoms must not exist in
-                                                            // SS-matches
-  public static final int cAtomQFRxnParityHint = 0xC0000000; // Retain,invert,racemise configuration
-                                                             // in reaction
-  public static final int cAtomQFRxnParityRetain = 0x40000000; // Retain,invert,racemise
-                                                               // configuration in reaction
-  public static final int cAtomQFRxnParityInvert = 0x80000000; // Retain,invert,racemise
-                                                               // configuration in reaction
-  public static final int cAtomQFRxnParityRacemize = 0xC0000000; // Retain,invert,racemise
-                                                                 // configuration in reaction
+  public static final int cAtomQFNewRingSizeBits = 7;
+  public static final int cAtomQFNewRingSizeShift = 32;
+  public static final int cAtomQFENeighbourBits = 5;
+  public static final int cAtomQFENeighbourShift = 39;
+  public static final int cAtomQFStereoStateBits = 2;
+  public static final int cAtomQFStereoStateShift = 44;
+  public static final long cAtomQFSimpleFeatures = 0x00007F800E3FC7FEL;
+  public static final long cAtomQFNarrowing = 0x00007FFF0FFFFFFEL;
+  public static final long cAtomQFAny = 0x00000001;
+  public static final long cAtomQFAromState = 0x0000400000000006L;
+  public static final long cAtomQFAromatic = 0x00000002;
+  public static final long cAtomQFNotAromatic = 0x00000004;
+  public static final long cAtomQFRingState = 0x00000078;
+  public static final long cAtomQFNotChain = 0x00000008;
+  public static final long cAtomQFNot2RingBonds = 0x00000010;
+  public static final long cAtomQFNot3RingBonds = 0x00000020;
+  public static final long cAtomQFNot4RingBonds = 0x00000040;
+  public static final long cAtomQFHydrogen = 0x00000780;
+  public static final long cAtomQFNot0Hydrogen = 0x00000080;
+  public static final long cAtomQFNot1Hydrogen = 0x00000100;
+  public static final long cAtomQFNot2Hydrogen = 0x00000200;
+  public static final long cAtomQFNot3Hydrogen = 0x00000400;
+  public static final long cAtomQFNoMoreNeighbours = 0x00000800;
+  public static final long cAtomQFMoreNeighbours = 0x00001000;
+  public static final long cAtomQFMatchStereo = 0x00002000;
+  public static final long cAtomQFPiElectrons = 0x0001C000;
+  public static final long cAtomQFNot0PiElectrons = 0x00004000;
+  public static final long cAtomQFNot1PiElectron = 0x00008000;
+  public static final long cAtomQFNot2PiElectrons = 0x00010000;
+  public static final long cAtomQFNeighbours = 0x003E0000; // these QF refer to non-H neighbours
+  public static final long cAtomQFNot0Neighbours = 0x00020000;
+  public static final long cAtomQFNot1Neighbour = 0x00040000;
+  public static final long cAtomQFNot2Neighbours = 0x00080000;
+  public static final long cAtomQFNot3Neighbours = 0x00100000;
+  public static final long cAtomQFNot4Neighbours = 0x00200000; // this is not 4-or-more neighbours
+  public static final long cAtomQFSmallRingSize = 0x01C00000; // legacy: used to just define the
+                                                              // smallest ring an atom is member of
+  public static final long cAtomQFCharge = 0x0E000000;
+  public static final long cAtomQFNotChargeNeg = 0x02000000;
+  public static final long cAtomQFNotCharge0 = 0x04000000;
+  public static final long cAtomQFNotChargePos = 0x08000000;
+  public static final long cAtomQFFlatNitrogen = 0x0000000010000000L; // Currently, only used in
+                                                                      // TorsionDetail
+  public static final long cAtomQFExcludeGroup = 0x0000000020000000L; // These atoms must not exist
+                                                                      // in SS-matches
+  public static final long cAtomQFRxnParityHint = 0x00000000C0000000L; // Retain,invert,racemise
+                                                                       // configuration in reaction
+  public static final long cAtomQFRxnParityRetain = 0x0000000040000000L;
+  public static final long cAtomQFRxnParityInvert = 0x0000000080000000L;
+  public static final long cAtomQFRxnParityRacemize = 0x00000000C0000000L;
+  public static final long cAtomQFNewRingSize = 0x0000007F00000000L;
+  public static final long cAtomQFRingSize0 = 0x0000000100000000L;
+  public static final long cAtomQFRingSize3 = 0x0000000200000000L;
+  public static final long cAtomQFRingSize4 = 0x0000000400000000L;
+  public static final long cAtomQFRingSize5 = 0x0000000800000000L;
+  public static final long cAtomQFRingSize6 = 0x0000001000000000L;
+  public static final long cAtomQFRingSize7 = 0x0000002000000000L;
+  public static final long cAtomQFRingSizeLarge = 0x0000004000000000L;
+  public static final long cAtomQFENeighbours = 0x00000F8000000000L;
+  public static final long cAtomQFNot0ENeighbours = 0x0000008000000000L;
+  public static final long cAtomQFNot1ENeighbour = 0x0000010000000000L;
+  public static final long cAtomQFNot2ENeighbours = 0x0000020000000000L;
+  public static final long cAtomQFNot3ENeighbours = 0x0000040000000000L;
+  public static final long cAtomQFNot4ENeighbours = 0x0000080000000000L;
+  public static final long cAtomQFStereoState = 0x0000300000000000L;
+  public static final long cAtomQFIsStereo = 0x0000100000000000L;
+  public static final long cAtomQFIsNotStereo = 0x0000200000000000L;
+  public static final long cAtomQFHeteroAromatic = 0x0000400000000000L;
+
   public static final int cBondTypeSingle = 0x00000001;
   public static final int cBondTypeDouble = 0x00000002;
   public static final int cBondTypeTriple = 0x00000004;
-  public static final int cBondTypeDown = 0x00000009;
-  public static final int cBondTypeUp = 0x00000011;
-  public static final int cBondTypeCross = 0x0000001A;
+  public static final int cBondTypeQuadruple = 0x00000008;
+  public static final int cBondTypeQuintuple = 0x00000010;
   public static final int cBondTypeMetalLigand = 0x00000020;
   public static final int cBondTypeDelocalized = 0x00000040;
-  public static final int cBondTypeDeleted = 0x00000080;
-  public static final int cBondTypeIncreaseOrder = 0x0000007F;
+  public static final int cBondTypeDown = 0x00000081;
+  public static final int cBondTypeUp = 0x00000101;
+  public static final int cBondTypeCross = 0x00000182;
+  public static final int cBondTypeDeleted = 0x00000200;
+  public static final int cBondTypeIncreaseOrder = 0x000001FF;
+
+  public static final int cBondTypeMaskSimple = 0x0000007F; // masks
+  public static final int cBondTypeMaskStereo = 0x00000180;
+
+  protected static final int cBondFlagsHelper2 = 0x000002C0;
+  protected static final int cBondFlagsHelper3 = 0x0000003F;
+
   public static final int cBondParityNone = 0x00000000;
   public static final int cBondParityEor1 = 0x00000001;
   public static final int cBondParityZor2 = 0x00000002;
@@ -398,59 +432,74 @@ public class JSMolecule {
   public static final int cBondCIPParityEorP = 0x00000001;
   public static final int cBondCIPParityZorM = 0x00000002;
   public static final int cBondCIPParityProblem = 0x00000003;
-  public static final int cBondQFNoOfBits = 21;
+  public static final int cBondQFNoOfBits = 23;
   public static final int cBondQFBondTypesBits = 5;
   public static final int cBondQFBondTypesShift = 0;
+  public static final int cBondQFRareBondTypesBits = 2;
+  public static final int cBondQFRareBondTypesShift = 5;
   public static final int cBondQFRingStateBits = 2;
-  public static final int cBondQFRingStateShift = 5;
+  public static final int cBondQFRingStateShift = 7;
   public static final int cBondQFBridgeBits = 8;
-  public static final int cBondQFBridgeShift = 7;
+  public static final int cBondQFBridgeShift = 9;
   public static final int cBondQFBridgeMinBits = 4;
-  public static final int cBondQFBridgeMinShift = 7;
+  public static final int cBondQFBridgeMinShift = 9;
   public static final int cBondQFBridgeSpanBits = 4;
-  public static final int cBondQFBridgeSpanShift = 11;
+  public static final int cBondQFBridgeSpanShift = 13;
   public static final int cBondQFRingSizeBits = 3;
-  public static final int cBondQFRingSizeShift = 15;
+  public static final int cBondQFRingSizeShift = 17;
   public static final int cBondQFAromStateBits = 2;
-  public static final int cBondQFAromStateShift = 19;
-  public static final int cBondQFAllFeatures = 0x001FFFFF;
-  public static final int cBondQFSimpleFeatures = 0x0018007F;
-  public static final int cBondQFNarrowing = 0x00180060;
-  public static final int cBondQFBondTypes = 0x0000001F;
+  public static final int cBondQFAromStateShift = 21;
+  public static final int cBondQFAllFeatures = 0x00FFFFFF;
+  public static final int cBondQFSimpleFeatures = 0x006001FF;
+  public static final int cBondQFNarrowing = 0x00600180;
+  public static final int cBondQFBondTypes = 0x0000001F; // original 5 bond types for idcode
+  public static final int cBondQFRareBondTypes = 0x00000060; // using OR logic for all 7 bond types
   public static final int cBondQFSingle = 0x00000001;
   public static final int cBondQFDouble = 0x00000002;
   public static final int cBondQFTriple = 0x00000004;
   public static final int cBondQFDelocalized = 0x00000008;
   public static final int cBondQFMetalLigand = 0x00000010;
-  public static final int cBondQFRingState = 0x00000060;
-  public static final int cBondQFNotRing = 0x00000020;
-  public static final int cBondQFRing = 0x00000040;
-  public static final int cBondQFBridge = 0x00007F80;
-  public static final int cBondQFBridgeMin = 0x00000780;
-  public static final int cBondQFBridgeSpan = 0x00007800;
-  public static final int cBondQFRingSize = 0x00038000;
-  public static final int cBondQFMatchStereo = 0x00040000;
-  public static final int cBondQFAromState = 0x00180000;
-  public static final int cBondQFAromatic = 0x00080000;
-  public static final int cBondQFNotAromatic = 0x00100000;
+  public static final int cBondQFQuadruple = 0x00000020;
+  public static final int cBondQFQuintuple = 0x00000040;
+  public static final int cBondQFRingState = 0x00000180;
+  public static final int cBondQFNotRing = 0x00000080;
+  public static final int cBondQFRing = 0x00000100;
+  public static final int cBondQFBridge = 0x0001FE00;
+  public static final int cBondQFBridgeMin = 0x00001E00;
+  public static final int cBondQFBridgeSpan = 0x0001E000;
+  public static final int cBondQFRingSize = 0x000E0000;
+  public static final int cBondQFMatchStereo = 0x00100000;
+  public static final int cBondQFAromState = 0x00600000;
+  public static final int cBondQFAromatic = 0x00200000;
+  public static final int cBondQFNotAromatic = 0x00400000;
+  public static final int cBondQFMatchFormalOrder = 0x00800000; // matches the formal bond order
+                                                                // considering also cBondQFBondTypes
+                                                                // in query
+
   public static final int cHelperNone = 0x0000;
   public static final int cHelperBitNeighbours = 0x0001;
-  public static final int cHelperBitRings = 0x0002;
-  public static final int cHelperBitParities = 0x0004;
-  public static final int cHelperBitCIP = 0x0008;
-  public static final int cHelperBitSymmetrySimple = 0x0010;
-  public static final int cHelperBitSymmetryDiastereotopic = 0x0020;
-  public static final int cHelperBitSymmetryEnantiotopic = 0x0040;
+  public static final int cHelperBitRingsSimple = 0x0002; // small rings only, no aromaticity, no
+                                                          // allylic nor stabilized flags
+  public static final int cHelperBitRings = 0x0004;
+  public static final int cHelperBitParities = 0x0008;
+  public static final int cHelperBitCIP = 0x0010;
+
+  public static final int cHelperBitSymmetrySimple = 0x0020;
+  public static final int cHelperBitSymmetryStereoHeterotopicity = 0x0040;
   public static final int cHelperBitIncludeNitrogenParities = 0x0080;
-  public static final int cHelperBitsStereo = 0x00FC;
+
+  public static final int cHelperBitsStereo = 0x00F8;
+
   public static final int cHelperNeighbours = cHelperBitNeighbours;
-  public static final int cHelperRings = cHelperNeighbours | cHelperBitRings;
+  public static final int cHelperRingsSimple = cHelperNeighbours | cHelperBitRingsSimple;
+  public static final int cHelperRings = cHelperRingsSimple | cHelperBitRings;
   public static final int cHelperParities = cHelperRings | cHelperBitParities;
   public static final int cHelperCIP = cHelperParities | cHelperBitCIP;
+
   public static final int cHelperSymmetrySimple = cHelperCIP | cHelperBitSymmetrySimple;
-  public static final int cHelperSymmetryDiastereotopic =
-      cHelperCIP | cHelperBitSymmetryDiastereotopic;
-  public static final int cHelperSymmetryEnantiotopic = cHelperCIP | cHelperBitSymmetryEnantiotopic;
+  public static final int cHelperSymmetryStereoHeterotopicity =
+      cHelperCIP | cHelperBitSymmetryStereoHeterotopicity;
+
   public static final int cChiralityIsomerCountMask = 0x00FFFF;
   public static final int cChiralityUnknown = 0x000000;
   public static final int cChiralityNotChiral = 0x010000;
@@ -461,23 +510,42 @@ public class JSMolecule {
   public static final int cChiralityEpimers = 0x060000;
   public static final int cChiralityDiastereomers = 0x070000; // this has added the number of
                                                               // diastereomers
+
+  public static final double cDefaultAVBL = 24.0;
+
   public static final int cMoleculeColorDefault = 0;
   public static final int cMoleculeColorNeutral = 1;
-  public static final String cAtomLabel[] = {"?", "H", "He", "Li", "Be", "B", "C", "N", "O", "F",
+
+  public static final int cPseudoAtomsHydrogenIsotops = 1; // D and T
+  public static final int cPseudoAtomsRGroups = 2; // R1 to R16
+  public static final int cPseudoAtomsAGroups = 4; // A1,A2,A3
+  public static final int cPseudoAtomR = 8; // R
+  public static final int cPseudoAtomA = 16; // A
+  public static final int cPseudoAtomX = 32; // X
+  public static final int cPseudoAtomsAminoAcids = 64; // all 20 amino acid 3-letter codes
+  public static final int cPseudoAtomPolymer = 128; // Pol
+  public static final int cPseudoAtomAttachmentPoint = 256; // ?
+  public static final int cPseudoAtomsAll = 511; // all of above
+
+  public static final int cDefaultAllowedPseudoAtoms =
+      cPseudoAtomsHydrogenIsotops | cPseudoAtomsAminoAcids | cPseudoAtomAttachmentPoint;
+
+  public static final String[] cAtomLabel = {"?", "H", "He", "Li", "Be", "B", "C", "N", "O", "F",
       "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn",
       "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb",
       "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La",
       "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf",
       "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra",
-      "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "??",
-      "??", "??", "??", "??", "??", "??", "??", "??", "??", "??", "??", "??", "??", "??", "??",
+      "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf",
+      "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og", "??",
       "??", "??", "??", "??", "??", "??", "??", "??", "??", "R4", "R5", "R6", "R7", "R8", "R9",
       "R10", "R11", // R4 to R16 do not belong to the MDL set
       "R12", "R13", "R14", "R15", "R16", "R1", "R2", "R3", "A", "A1", "A2", "A3", "??", "??", "D",
       "T", "X", "R", "H2", "H+", "Nnn", "HYD", "Pol", "??", "??", "??", "??", "??", "??", "??",
       "??", "??", "??", "??", "Ala", "Arg", "Asn", "Asp", "Cys", "Gln", "Glu", "Gly", "His", "Ile",
       "Leu", "Lys", "Met", "Phe", "Pro", "Ser", "Thr", "Trp", "Tyr", "Val"};
-  public static final short cRoundedMass[] = {0, 1, 4, 7, 9, 11, 12, // H ,He ,Li ,Be ,B ,C ,
+
+  public static final short[] cRoundedMass = {0, 1, 4, 7, 9, 11, 12, // H ,He ,Li ,Be ,B ,C ,
       14, 16, 19, 20, 23, 24, // N , O ,F ,Ne ,Na ,Mg ,
       27, 28, 31, 32, 35, 40, // Al ,Si ,P ,S ,Cl ,Ar ,
       39, 40, 45, 48, 51, 52, // K ,Ca ,Sc ,Ti ,V ,Cr ,
@@ -490,13 +558,13 @@ public class JSMolecule {
       0, 152, 153, 158, 159, 164, // Pm ,Sm ,Eu ,Gd ,Tb ,Dy ,
       165, 166, 169, 174, 175, 180, // Ho ,Er ,Tm ,Yb ,Lu ,Hf ,
       181, 184, 187, 192, 193, 195, // Ta ,W , Re ,Os ,Ir ,Pt ,
-      197, 202, 205, 208, 209, 0, // Au ,Hg ,Tl ,Pb ,Bi ,Po ,
-      0, 0, 0, 0, 0, 232, // At ,Rn ,Fr ,Ra ,Ac ,Th ,
-      0, 238, 0, 0, 0, 0, // Pa ,U , Np ,Pu ,Am ,Cm ,
-      0, 0, 0, 0, 0, 0, // Bk ,Cf ,Es ,Fm ,Md ,No ,
-      0, 0, 0, 0, 0, 0, // Lr ,?? ,?? ,?? ,?? ,?? ,
-      0, 0, 0, 0, 0, 0, // ?? ,?? ,?? ,?? ,?? ,?? ,
-      0, 0, 0, 0, 0, 0, // ?? ,?? ,?? ,?? ,?? ,?? ,
+      197, 202, 205, 208, 209, 209, // Au ,Hg ,Tl ,Pb ,Bi ,Po ,
+      210, 222, 223, 226, 227, 232, // At ,Rn ,Fr ,Ra ,Ac ,Th ,
+      231, 238, 237, 244, 243, 247, // Pa ,U , Np ,Pu ,Am ,Cm ,
+      247, 251, 252, 257, 258, 259, // Bk ,Cf ,Es ,Fm ,Md ,No ,
+      262, 267, 268, 271, 270, 277, // Lr ,Rf ,Db ,Sg ,Bh ,Hs ,
+      276, 281, 281, 283, 285, 289, // Mt ,Ds ,Rg ,Cn ,Nh ,Fl ,
+      289, 293, 294, 294, 0, 0, // Mc ,Lv ,Ts ,Og ,?? ,?? ,
       0, 0, 0, 0, 0, 0, // ?? ,?? ,?? ,?? ,?? ,?? ,
       0, 0, 0, 0, 0, 0, // ?? ,?? ,R4 ,R5 ,R6 ,R7 ,
       0, 0, 0, 0, 0, 0, // R8 ,R9 ,R10,R11,R12,R13,
@@ -509,10 +577,70 @@ public class JSMolecule {
       103, 128, 129, 57, 137, 113, // Cys,Gln,Glu,Gly,His,Ile,
       113, 128, 131, 147, 97, 87, // Leu,Lys,Met,Phe,Pro,Ser,
       101, 186, 163, 99}; // Thr,Trp,Tyr,Val,
+
   public static final int cDefaultAtomValence = 6;
+  public static final byte[][] cAtomValence =
+      {null, {1}, {0}, {1}, {2}, {3}, {4}, {3}, {2}, {1}, {0}, // H to Ne
+          {1}, {2}, {3}, {4}, {3, 5}, {2, 4, 6}, {1, 3, 5, 7}, {0}, // Na to Ar
+          {1}, {2}, null, null, null, null, null, null, null, null, // K to Ni
+          null, null, {2, 3}, {2, 4}, {3, 5}, {2, 4, 6}, {1, 3, 5, 7}, {0, 2}, // Cu to Kr
+          {1}, {2}, null, null, null, null, null, null, null, null, // Rb to Pd
+          null, null, {1, 2, 3}, {2, 4}, {3, 5}, {2, 4, 6}, {1, 3, 5, 7}, // Ag to I
+          {0, 2, 4, 6}, {1}, {2}, // Xe to Ba
+          null, null, null, null, null, null, null, null, null, null, // La to Dy
+          null, null, null, null, null, null, null, null, null, null, // Ho to Os
+          null, null, null, null, null, null, null, null, null, null, // Ir to Rn
+          null, null, null, null, null, null, null, null, null, null, // Fr to Cm
+          null, null, null, null, null, null, null, null, null, null, // Bk to Sg
+          null, null, null, null, null, null, null, null, null, null, // Bh to Lv
+          null, null, null, null, null, null, null, null, null, null, // Ts to 126
+          null, null, null, null, null, null, null, null, null, null, // 127 to R5
+          null, null, null, null, null, null, null, null, null, null, // R6 to R15
+          null, null, null, null, null, null, null, null, null, null, // R16 to 156
+          null, null, null, null, null, null, null, null, null, null, // D to 166
+          null, null, null, null, // 167 to 170
+          {2}, {2}, {2}, {2}, {3}, {2}, {2}, {2}, {2}, {2}, // Ala to Ile
+          {2}, {2}, {2}, {2}, {2}, {2}, {2}, {2}, {2}, {2}, // Leu to Val
+      };
+
+  // Taken from
+  // http://www.cabrillo.edu/~aromero/Common%20Files/Periodic%20Table%20(Common%20Ionic%20Charges).pdf
+  public static final byte[][] cCommonOxidationState = {null, {1}, null, {1}, {2}, null, null, // H,
+                                                                                               // He,
+                                                                                               // Li,
+                                                                                               // Be,
+                                                                                               // B,
+                                                                                               // C,
+      {-3}, {-2}, {-1}, null, {1}, {2}, // N, O, F, Ne, Na, Mg,
+      {3}, null, {-3}, {-2}, {-1}, null, // Al, Si, P, S, Cl, Ar,
+      {1}, {2}, {3}, {2, 3, 4}, {2, 3, 4, 5}, {2, 3, 6}, // K, Ca, Sc, Ti, V, Cr,
+      {2, 3, 4, 7}, {2, 3}, {2, 3}, {2, 3}, {1, 2}, {2}, // Mn, Fe, Co, Ni, Cu, Zn,
+      {3}, {2, 4}, {-3, 3, 5}, {-2}, {-1}, null, // Ga, Ge, As, Se, Br, Kr,
+      {1}, {2}, {3}, {4}, {3, 5}, {6}, // Rb, Sr, Y, Zr, Nb, Mo,
+      {4, 6, 7}, {3}, {3}, {2, 4}, {1}, {2}, // Tc, Ru, Rh, Pd, Ag, Cd,
+      {3}, {2, 4}, {-3, 3, 5}, {-2, 4, 6}, {-1}, null, // In, Sn, Sb, Te, I, Xe,
+      {1}, {2}, {3}, {3, 4}, {3}, {3}, // Cs, Ba, La ,Ce, Pr, Nd,
+      {3}, {2, 3}, {2, 3}, {3}, {3}, {3}, // Pm, Sm, Eu, Gd, Tb, Dy,
+      {3}, {3}, {3}, {2, 3}, {3}, {4}, // Ho, Er, Tm, Yb, Lu, Hf,
+      {5}, {6}, {4, 6, 7}, {3, 4}, {3, 4}, {2, 4}, // Ta, W, Re, Os, Ir, Pt,
+      {1, 3}, {1, 2}, {1, 3}, {2, 4}, {3, 5}, {-2, 2, 4}, // Au, Hg, Tl, Pb, Bi, Po,
+      {-1, 1}, null, {1}, {2}, {3}, {4}, // At, Rn, Fr, Ra, Ac, Th,
+      {4, 5}, {3, 4, 5, 6}, {3, 4, 5, 6}, {3, 4, 5, 6}, {3, 4, 5, 6}, // Pa, U, Np, Pu, Am,
+      {3}, {3, 4}, {3}, {3}, {3}, {2, 3}, // Cm, Bk, Cf, Es, Fm, Md,
+      {2, 3}, {3} // No, Lr
+  };
+
+  // coming from ExtendedMolecule.java
   public static final float FISCHER_PROJECTION_LIMIT = (float) Math.PI / 36;
+  public static final float FISCHER_PROJECTION_RING_LIMIT = 24;
+
   public static final float STEREO_ANGLE_LIMIT = (float) Math.PI / 36; // 5 degrees
+
   public static final int cMaxConnAtoms = 16; // ExtendedMolecule is not restricted anymore
+                                              // However, this is a suggestion for editors and other
+                                              // classes
+
+  // coming from StereoMolecule.java
   public static final String VALIDATION_ERROR_ESR_CENTER_UNKNOWN =
       "Members of ESR groups must only be stereo centers with known configuration.";
   public static final String VALIDATION_ERROR_OVER_UNDER_SPECIFIED =

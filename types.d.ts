@@ -89,6 +89,8 @@ export declare class Molecule {
    */
   constructor(maxAtoms: number, maxBonds: number);
 
+  // based on JSMolecule.java you can do a regexp ".*static.* (int|long|double)(.*) = .*;" and replace with "$2: number;"
+
   static CANONIZER_CREATE_SYMMETRY_RANK: number;
   static CANONIZER_CONSIDER_DIASTEREOTOPICITY: number;
   static CANONIZER_CONSIDER_ENANTIOTOPICITY: number;
@@ -104,20 +106,17 @@ export declare class Molecule {
   static CANONIZER_NEGLECT_ANY_STEREO_INFORMATION: number;
 
   static cMaxAtomicNo: number;
-
   static cAtomParityNone: number;
   static cAtomParity1: number;
   static cAtomParity2: number;
   static cAtomParityUnknown: number;
   static cAtomParityIsPseudo: number;
-
   static cAtomRadicalState: number;
   static cAtomRadicalStateShift: number;
   static cAtomRadicalStateNone: number;
   static cAtomRadicalStateS: number;
   static cAtomRadicalStateD: number;
   static cAtomRadicalStateT: number;
-
   static cAtomColorNone: number;
   static cAtomColorBlue: number;
   static cAtomColorRed: number;
@@ -126,18 +125,15 @@ export declare class Molecule {
   static cAtomColorOrange: number;
   static cAtomColorDarkGreen: number;
   static cAtomColorDarkRed: number;
-
   static cAtomCIPParityNone: number;
   static cAtomCIPParityRorM: number;
   static cAtomCIPParitySorP: number;
   static cAtomCIPParityProblem: number;
-
   static cESRTypeAbs: number;
   static cESRTypeAnd: number;
   static cESRTypeOr: number;
   static cESRMaxGroups: number;
   static cESRGroupBits: number;
-
   static cAtomQFNoOfBits: number;
   static cAtomQFAromStateBits: number;
   static cAtomQFAromStateShift: number;
@@ -149,12 +145,18 @@ export declare class Molecule {
   static cAtomQFPiElectronShift: number;
   static cAtomQFNeighbourBits: number;
   static cAtomQFNeighbourShift: number;
-  static cAtomQFRingSizeBits: number;
-  static cAtomQFRingSizeShift: number;
+  static cAtomQFSmallRingSizeBits: number;
+  static cAtomQFSmallRingSizeShift: number;
   static cAtomQFChargeBits: number;
   static cAtomQFChargeShift: number;
   static cAtomQFRxnParityBits: number;
   static cAtomQFRxnParityShift: number;
+  static cAtomQFNewRingSizeBits: number;
+  static cAtomQFNewRingSizeShift: number;
+  static cAtomQFENeighbourBits: number;
+  static cAtomQFENeighbourShift: number;
+  static cAtomQFStereoStateBits: number;
+  static cAtomQFStereoStateShift: number;
   static cAtomQFSimpleFeatures: number;
   static cAtomQFNarrowing: number;
   static cAtomQFAny: number;
@@ -184,42 +186,72 @@ export declare class Molecule {
   static cAtomQFNot2Neighbours: number;
   static cAtomQFNot3Neighbours: number;
   static cAtomQFNot4Neighbours: number;
-  static cAtomQFRingSize: number;
+  static cAtomQFSmallRingSize: number;
+
   static cAtomQFCharge: number;
   static cAtomQFNotChargeNeg: number;
   static cAtomQFNotCharge0: number;
   static cAtomQFNotChargePos: number;
   static cAtomQFFlatNitrogen: number;
+
   static cAtomQFExcludeGroup: number;
+
   static cAtomQFRxnParityHint: number;
+
   static cAtomQFRxnParityRetain: number;
   static cAtomQFRxnParityInvert: number;
   static cAtomQFRxnParityRacemize: number;
+  static cAtomQFNewRingSize: number;
+  static cAtomQFRingSize0: number;
+  static cAtomQFRingSize3: number;
+  static cAtomQFRingSize4: number;
+  static cAtomQFRingSize5: number;
+  static cAtomQFRingSize6: number;
+  static cAtomQFRingSize7: number;
+  static cAtomQFRingSizeLarge: number;
+  static cAtomQFENeighbours: number;
+  static cAtomQFNot0ENeighbours: number;
+  static cAtomQFNot1ENeighbour: number;
+  static cAtomQFNot2ENeighbours: number;
+  static cAtomQFNot3ENeighbours: number;
+  static cAtomQFNot4ENeighbours: number;
+  static cAtomQFStereoState: number;
+  static cAtomQFIsStereo: number;
+  static cAtomQFIsNotStereo: number;
+  static cAtomQFHeteroAromatic: number;
 
   static cBondTypeSingle: number;
   static cBondTypeDouble: number;
   static cBondTypeTriple: number;
+  static cBondTypeQuadruple: number;
+  static cBondTypeQuintuple: number;
+  static cBondTypeMetalLigand: number;
+  static cBondTypeDelocalized: number;
   static cBondTypeDown: number;
   static cBondTypeUp: number;
   static cBondTypeCross: number;
-  static cBondTypeMetalLigand: number;
-  static cBondTypeDelocalized: number;
   static cBondTypeDeleted: number;
   static cBondTypeIncreaseOrder: number;
+
+  static cBondTypeMaskSimple: number;
+  static cBondTypeMaskStereo: number;
+
+  static cBondFlagsHelper2: number;
+  static cBondFlagsHelper3: number;
 
   static cBondParityNone: number;
   static cBondParityEor1: number;
   static cBondParityZor2: number;
   static cBondParityUnknown: number;
-
   static cBondCIPParityNone: number;
   static cBondCIPParityEorP: number;
   static cBondCIPParityZorM: number;
   static cBondCIPParityProblem: number;
-
   static cBondQFNoOfBits: number;
   static cBondQFBondTypesBits: number;
   static cBondQFBondTypesShift: number;
+  static cBondQFRareBondTypesBits: number;
+  static cBondQFRareBondTypesShift: number;
   static cBondQFRingStateBits: number;
   static cBondQFRingStateShift: number;
   static cBondQFBridgeBits: number;
@@ -236,11 +268,14 @@ export declare class Molecule {
   static cBondQFSimpleFeatures: number;
   static cBondQFNarrowing: number;
   static cBondQFBondTypes: number;
+  static cBondQFRareBondTypes: number;
   static cBondQFSingle: number;
   static cBondQFDouble: number;
   static cBondQFTriple: number;
   static cBondQFDelocalized: number;
   static cBondQFMetalLigand: number;
+  static cBondQFQuadruple: number;
+  static cBondQFQuintuple: number;
   static cBondQFRingState: number;
   static cBondQFNotRing: number;
   static cBondQFRing: number;
@@ -252,24 +287,30 @@ export declare class Molecule {
   static cBondQFAromState: number;
   static cBondQFAromatic: number;
   static cBondQFNotAromatic: number;
+  static cBondQFMatchFormalOrder: number;
 
   static cHelperNone: number;
   static cHelperBitNeighbours: number;
+  static cHelperBitRingsSimple: number;
+
   static cHelperBitRings: number;
   static cHelperBitParities: number;
   static cHelperBitCIP: number;
+
   static cHelperBitSymmetrySimple: number;
-  static cHelperBitSymmetryDiastereotopic: number;
-  static cHelperBitSymmetryEnantiotopic: number;
+  static cHelperBitSymmetryStereoHeterotopicity: number;
   static cHelperBitIncludeNitrogenParities: number;
+
   static cHelperBitsStereo: number;
+
   static cHelperNeighbours: number;
+  static cHelperRingsSimple: number;
   static cHelperRings: number;
   static cHelperParities: number;
   static cHelperCIP: number;
+
   static cHelperSymmetrySimple: number;
-  static cHelperSymmetryDiastereotopic: number;
-  static cHelperSymmetryEnantiotopic: number;
+  static cHelperSymmetryStereoHeterotopicity: number;
 
   static cChiralityIsomerCountMask: number;
   static cChiralityUnknown: number;
@@ -281,17 +322,33 @@ export declare class Molecule {
   static cChiralityEpimers: number;
   static cChiralityDiastereomers: number;
 
+  static cDefaultAVBL: number;
+
   static cMoleculeColorDefault: number;
   static cMoleculeColorNeutral: number;
+
+  static cPseudoAtomsHydrogenIsotops: number;
+  static cPseudoAtomsRGroups: number;
+  static cPseudoAtomsAGroups: number;
+  static cPseudoAtomR: number;
+  static cPseudoAtomA: number;
+  static cPseudoAtomX: number;
+  static cPseudoAtomsAminoAcids: number;
+  static cPseudoAtomPolymer: number;
+  static cPseudoAtomAttachmentPoint: number;
+  static cPseudoAtomsAll: number;
+  static cDefaultAllowedPseudoAtoms: number;
 
   static cAtomLabel: string[];
 
   static cRoundedMass: number[];
 
   static cDefaultAtomValence: number;
+  static cAtomValence: number[][];
+  static cCommonOxidationState: number[][];
 
   static FISCHER_PROJECTION_LIMIT: number;
-
+  static FISCHER_PROJECTION_RING_LIMIT: number;
   static STEREO_ANGLE_LIMIT: number;
 
   static cMaxConnAtoms: number;
