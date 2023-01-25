@@ -99,6 +99,9 @@ export declare class Molecule {
   static CANONIZER_COORDS_ARE_3D: number;
   static CANONIZER_CREATE_PSEUDO_STEREO_GROUPS: number;
   static CANONIZER_DISTINGUISH_RACEMIC_OR_GROUPS: number;
+  static CANONIZER_TIE_BREAK_FREE_VALENCE_ATOMS: number;
+  static CANONIZER_ENCODE_ATOM_CUSTOM_LABELS_WITHOUT_RANKING: number;
+  static CANONIZER_NEGLECT_ANY_STEREO_INFORMATION: number;
 
   static cMaxAtomicNo: number;
 
