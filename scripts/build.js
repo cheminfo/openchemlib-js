@@ -1,12 +1,11 @@
 'use strict';
 
 const childProcess = require('child_process');
+const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const fs = require('fs-extra');
 const exporter = require('gwt-api-exporter');
-const rimraf = require('rimraf');
 const yargs = require('yargs');
 
 const pack = require('../package.json');
@@ -108,10 +107,8 @@ function copyOpenchemlib() {
 
   const chemlibClasses = require('./openchemlib/classes');
 
-  if (fs.existsSync(outDir)) {
-    rimraf.sync(outDir);
-  }
-  fs.copySync(chemlibDir, outDir);
+  fs.rmSync(outDir, { recursive: true, force: true });
+  fs.cpSync(chemlibDir, outDir, { recursive: true });
 
   copyAdditionalDir('org');
   copyAdditionalDir('info');
@@ -124,9 +121,10 @@ function copyOpenchemlib() {
   const modified = chemlibClasses.modified;
   log(`Copying ${modified.length} modified classes`);
   for (let i = 0; i < modified.length; i++) {
-    fs.copySync(
+    fs.cpSync(
       path.join(modifiedDir, modified[i]),
       path.join(outDir, modified[i]),
+      { recursive: true },
     );
   }
 
@@ -153,10 +151,8 @@ function copyAdditionalDir(name) {
     name,
   );
 
-  if (fs.existsSync(destDir)) {
-    rimraf.sync(destDir);
-  }
-  fs.copySync(sourceDir, destDir);
+  fs.rmSync(destDir, { recursive: true, force: true });
+  fs.cpSync(sourceDir, destDir, { recursive: true });
 }
 
 function compile(mode) {
@@ -207,7 +203,7 @@ function compile(mode) {
 
 function build() {
   let prom = [];
-  fs.ensureDirSync('dist');
+  fs.mkdirSync('dist', { recursive: true });
   for (let k = 0; k < modules.length; k++) {
     let mod = modules[k];
     log(`Exporting module ${mod.name}`);

@@ -1,6 +1,7 @@
 extends: cheminfo
 env:
   node: true
+  jest: true
 parserOptions:
   sourceType: script
 rules:
