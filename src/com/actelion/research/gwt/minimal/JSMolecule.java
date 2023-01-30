@@ -1667,11 +1667,13 @@ public class JSMolecule {
   }
 
   public String getIDCode() {
-    return oclMolecule.getIDCode();
+    oclMolecule.ensureHelperArrays(StereoMolecule.cHelperParities);
+    return new Canonizer(oclMolecule).getIDCode();
   }
 
   public String getIDCoordinates() {
-    return oclMolecule.getIDCoordinates();
+    oclMolecule.ensureHelperArrays(StereoMolecule.cHelperParities);
+    return new Canonizer(oclMolecule).getEncodedCoordinates();
   }
 
   public int getStereoCenterCount() {
