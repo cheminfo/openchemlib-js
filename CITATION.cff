@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-title: 'openchemlib-js: library to manipulate chemical structures'
-abstract: 'Javascript library that allows to manipulate chemical structures and predict various properties. It also allows to make substructure search directdly in the browser'
+title: 'openchemlib-js: library to manipulate chemical structures and reactions in the browser'
+abstract: 'Javascript library that allows to manipulate chemical structures, reactions and predict various properties. It also allows to make substructure search directly in the browser'
 repository-artifact: http://cheminfo.github.io/openchemlib-js/
 repository-code: https://github.com/cheminfo/openchemlib-js
 authors:
