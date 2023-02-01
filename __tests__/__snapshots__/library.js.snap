@@ -350,6 +350,15 @@ exports[`prototype properties of SSSearcherWithIndex 1`] = `
 
 exports[`prototype properties of SVGRenderer 1`] = `[]`;
 
+exports[`prototype properties of SmilesParser 1`] = `
+[
+  "getSmartsWarning",
+  "parseMolecule",
+  "parseReaction",
+  "setRandomSeed",
+]
+`;
+
 exports[`prototype properties of StructureEditor 1`] = `
 [
   "getIDCode",
@@ -718,6 +727,8 @@ exports[`static properties of SVGRenderer 1`] = `
   "renderMolecule",
 ]
 `;
+
+exports[`static properties of SmilesParser 1`] = `[]`;
 
 exports[`static properties of StructureEditor 1`] = `
 [

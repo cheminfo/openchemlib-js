@@ -2,12 +2,14 @@
 
 export interface IMoleculeFromSmilesOptions {
   /**
-   * Disable extra coordinate computation. Default: false.
+   * Disable coordinate invention.
+   * @default `false`
    */
   noCoordinates?: boolean;
 
   /**
-   * Disable stereo features parsing. Default: false.
+   * Disable stereo features parsing.
+   * @default `false`
    */
   noStereo?: boolean;
 }
@@ -2571,6 +2573,77 @@ export declare class Molecule {
    * @param b
    */
   setAssignParitiesToNitrogen(b: boolean): void;
+}
+
+export interface ISmilesParserOptions {
+  /**
+   * Enable SMARTS parsing with `'smarts'` or `'guess'`.
+   * @default `'smiles'`
+   */
+  smartsMode?: 'smiles' | 'smarts' | 'guess';
+
+  createSmartsWarnings?: boolean;
+
+  skipCoordinateTemplates?: boolean;
+
+  makeHydrogenExplicit?: boolean;
+
+  /**
+   * Disable parsing of CACTVS syntax.
+   */
+  noCactvs?: boolean;
+}
+
+export interface ISmilesParserParseMoleculeOptions {
+  /**
+   * Molecule to parse into.
+   */
+  molecule?: Molecule;
+
+  /**
+   * Disable coordinate invention.
+   * @default `false`
+   */
+  noCoordinates?: boolean;
+
+  /**
+   * Disable stereo features parsing.
+   * @default `false`
+   */
+  noStereo?: boolean;
+}
+
+export declare class SmilesParser {
+  /**
+   * Create a SMILES parser.
+   */
+  constructor(options?: ISmilesParserOptions);
+
+  /**
+   * Set the random seed used to invent coordinates.
+   * @param seed
+   */
+  setRandomSeed(seed: number): void;
+
+  /**
+   * Parse a SMILES string and return a molecule.
+   */
+  parseMolecule(
+    smiles: string,
+    options?: ISmilesParserParseMoleculeOptions,
+  ): Molecule;
+
+  /**
+   * Parse a SMILES string and return a reaction.
+   */
+  parseReaction(smiles: string): Reaction;
+
+  /**
+   * If createSmartsWarnings in the constructor was passed as true, then this method
+   * returns a list of all SMARTS features, which could not be interpreted in the most recently
+   * parsed SMILES/SMARTS pattern.
+   */
+  getSmartsWarning(): string;
 }
 
 export interface MolecularFormula {
