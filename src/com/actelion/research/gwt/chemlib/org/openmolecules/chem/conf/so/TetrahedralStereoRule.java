@@ -36,12 +36,20 @@ import com.actelion.research.chem.conf.Conformer;
 import java.util.ArrayList;
 
 public class TetrahedralStereoRule extends ConformationRule {
-	private int[] mRotatableAtom;
-	private Coordinates mAxisOfRotation;
+	private int[] mRotatableAtom,mStaticNeighbour,mRotatableNeighbour;
 
-	public TetrahedralStereoRule(StereoMolecule mol, int[] atom) {
-		super(atom);
-		mRotatableAtom = getRotatableAtoms(mol, atom[4]);
+	/**
+	 * Expects neighbourAtom[5] as list of 3 or 4 neighbour atoms of the stereo center.
+	 * The list must be sorted by atom index. In case of 3 neighbours neighbourAtom[3] is -1.
+	 * neighbourAtom[4] contains the stereo center. If desired parity==cAtomParity1, then
+	 * neighbourAtom[0] && neighbourAtom[1] have swapped positions.
+	 * @param mol
+	 * @param neighbourAtom
+	 * @param neighbourBond
+	 */
+	public TetrahedralStereoRule(StereoMolecule mol, int[] neighbourAtom, int[] neighbourBond) {
+		super(neighbourAtom);
+		calculateRotatableAtoms(mol, neighbourAtom, neighbourBond);
 		}
 
     public static void calculateRules(ArrayList<ConformationRule> ruleList, StereoMolecule mol) {
@@ -51,28 +59,38 @@ public class TetrahedralStereoRule extends ConformationRule {
 				if ((parity == Molecule.cAtomParity1 || parity == Molecule.cAtomParity2)
 				 && !mol.isCentralAlleneAtom(atom)) {
 					int[] atomList = new int[5];
+					int[] bondList = new int[4];
 					for (int i=0; i<mol.getAllConnAtoms(atom); i++) {
 						int connAtom = mol.getConnAtom(atom, i);
+						int connBond = mol.getConnBond(atom, i);
 						int index = 0;
 						while (index < i && connAtom > atomList[index])
 							index++;
-						for (int j=i-1; j>=index; j--)
-							atomList[j+1] = atomList[j];
+						for (int j=i-1; j>=index; j--) {
+							atomList[j + 1] = atomList[j];
+							bondList[j + 1] = bondList[j];
+							}
 						atomList[index] = connAtom;
+						bondList[index] = connBond;
 						}
 
-					if (mol.getAllConnAtoms(atom) == 3)
+					if (mol.getAllConnAtoms(atom) == 3) {
 						atomList[3] = -1;
+						bondList[3] = -1;
+						}
 
 					atomList[4] = atom;
 
 					if (parity == Molecule.cAtomParity1) {
-						int temp = atomList[2];
-						atomList[2] = atomList[1];
-						atomList[1] = temp;
+						int temp = atomList[1];
+						atomList[1] = atomList[0];
+						atomList[0] = temp;
+						temp = bondList[1];
+						bondList[1] = bondList[0];
+						bondList[0] = temp;
 						}
 
-					ruleList.add(new TetrahedralStereoRule(mol, atomList));
+					ruleList.add(new TetrahedralStereoRule(mol, atomList, bondList));
 					}
 				}
 			}
@@ -81,71 +99,41 @@ public class TetrahedralStereoRule extends ConformationRule {
 	@Override
 	public boolean apply(Conformer conformer, double cycleFactor) {
 		double[] n = getPlaneVector(conformer);
-		boolean invert = (mAtom[3] == -1 && isOnSameSide(conformer, n, mAtom[0], mAtom[4]))
-					  || (mAtom[3] != -1 && isOnSameSide(conformer, n, mAtom[0], mAtom[3]));
-
+		// We invert if 3rd substituent is on wrong side (3 substituents)
+		// or if 3rd and 4th substituent are on wrong side (4 substituents)
+		boolean invert = (mAtom[3] == -1 && !isOnSameSide(conformer, n, mAtom[4], mAtom[2]))
+					  || (mAtom[3] != -1 && !isOnSameSide(conformer, n, mAtom[4], mAtom[2])
+										 && isOnSameSide(conformer, n, mAtom[4], mAtom[3]));
 		if (!invert)
 			return false;
 
+		Coordinates rotationAxis = calculateRotationAxis(conformer);
 		for (int atom:mRotatableAtom)
-			rotateAtom(conformer, atom, mAtom[1], mAxisOfRotation, Math.PI);
+			rotateAtom(conformer, atom, mAtom[4], rotationAxis, Math.PI);
 
 		return true;
-
-
-
-
-		/* invert stereocenter by moving atom[3] and/or atom[4] through plane of other atoms
-		double d = n[0]*conformer.getX(mAtom[0])
-				 + n[1]*conformer.getY(mAtom[0])
-				 + n[2]*conformer.getZ(mAtom[0]);	// distance of Hesse equation of plane
-
-		double distance3 = (mAtom[3] == -1) ? 0.0
-						 : n[0]*conformer.getX(mAtom[3])
-						 + n[1]*conformer.getY(mAtom[3])
-						 + n[2]*conformer.getZ(mAtom[3]) - d;
-
-		double distance4 = n[0]*conformer.getX(mAtom[4])
-						 + n[1]*conformer.getY(mAtom[4])
-						 + n[2]*conformer.getZ(mAtom[4]) - d;
-
-		if (mAtom[3] == -1 || conformer.getMolecule().getConnAtoms(mAtom[3]) == 1 || !invertAtom4) {
-			// keep atoms 0,1,2 in plane and move atom3 and/or atom4 through plane
-			if (invertAtom3)
-				conformer.getCoordinates(mAtom[3]).add(-2.0*distance3*n[0],
-													  -2.0*distance3*n[1],
-													  -2.0*distance3*n[2]);
-			if (invertAtom4)
-				conformer.getCoordinates(mAtom[4]).add(-2.0*distance4*n[0],
-													  -2.0*distance4*n[1],
-													  -2.0*distance4*n[2]);
-			}
-		else {	// for neighbors and central atom needs to be inverted: keep center of gravity
-			for (int i=0; i<3; i++)
-				conformer.getCoordinates(mAtom[i]).add(0.5*distance4*n[0],
-													  0.5*distance4*n[1],
-													  0.5*distance4*n[2]);
-			if (invertAtom3)
-				conformer.getCoordinates(mAtom[3]).add(0.5*distance4*n[0] - 2.0*distance3*n[0],
-													  0.5*distance4*n[1] - 2.0*distance3*n[1],
-													  0.5*distance4*n[2] - 2.0*distance3*n[2]);
-			conformer.getCoordinates(mAtom[4]).add(-1.5*distance4*n[0],
-												  -1.5*distance4*n[1],
-												  -1.5*distance4*n[2]);
-			}
-
-		return true;*/
 		}
 
 	@Override
 	public double addStrain(Conformer conformer, double[] atomStrain) {
 		double totalStrain = 0;
 		double[] n = getPlaneVector(conformer);
-		if ((mAtom[3] == -1 && isOnSameSide(conformer, n, mAtom[0], mAtom[4]))
-		 || (mAtom[3] != -1 && isOnSameSide(conformer, n, mAtom[0], mAtom[3]))) {
+		// We add a penalty for 3rd and 4th (if existing) substituent that is on the wrong side
+		int wrongCount = 0;
+		if (mAtom[3] == -1) {
+			if (!isOnSameSide(conformer, n, mAtom[4], mAtom[2]))
+				wrongCount++;
+			}
+		else {
+			if (!isOnSameSide(conformer, n, mAtom[4], mAtom[2]))
+				wrongCount++;
+			if (isOnSameSide(conformer, n, mAtom[4], mAtom[3]))
+				wrongCount++;
+			}
+		if (wrongCount != 0) {
 			for (int i=0; i<mAtom.length; i++) {
 				if (mAtom[i] != -1) {
-					double panalty = 0.25; // arbitrary value 0.5 * 0.5;
+					double panalty = 0.25 * wrongCount; // arbitrary value 0.5 * 0.5;
 					atomStrain[mAtom[i]] += panalty;
 					totalStrain += panalty;
 					}
@@ -155,7 +143,7 @@ public class TetrahedralStereoRule extends ConformationRule {
 		}
 
 	/**
-	 * Returns whether atom1 is on the same side of the plane defined by atom0 and n
+	 * Returns whether atom1 is on the side of the plane defined by atom0 and n
 	 * @param conformer
 	 * @param n vector of the plane a0,a1,a2
 	 * @param atom0	atom on plane
@@ -174,16 +162,16 @@ public class TetrahedralStereoRule extends ConformationRule {
 		}
 
 	/**
-	 * Calculates the vector of plane (a0->a1, a0->a2)
+	 * Calculates the vector of plane (a4->a1, a4->a2)
 	 * @param conformer
 	 * @return
 	 */
 	private double[] getPlaneVector(Conformer conformer) {
 		double[][] coords = new double[2][3];
 		for (int i=0; i<2; i++) {
-			coords[i][0] = conformer.getX(mAtom[i+1]) - conformer.getX(mAtom[0]);
-			coords[i][1] = conformer.getY(mAtom[i+1]) - conformer.getY(mAtom[0]);
-			coords[i][2] = conformer.getZ(mAtom[i+1]) - conformer.getZ(mAtom[0]);
+			coords[i][0] = conformer.getX(mAtom[i]) - conformer.getX(mAtom[4]);
+			coords[i][1] = conformer.getY(mAtom[i]) - conformer.getY(mAtom[4]);
+			coords[i][2] = conformer.getZ(mAtom[i]) - conformer.getZ(mAtom[4]);
 			}
 
 		// calculate the vector of the plane (vector product of coords[0] and coords[1])
@@ -194,74 +182,146 @@ public class TetrahedralStereoRule extends ConformationRule {
 		return v;
 		}
 
-	private int[] getRotatableAtoms(StereoMolecule mol, int atom) {
-		int neighbours = mol.getAllConnAtoms(atom);
-		boolean[][] isMemberAtom = new boolean[neighbours][mol.getAllAtoms()];
-		int[] substituentSize = new int[neighbours];
+	private void calculateRotatableAtoms(StereoMolecule mol, int[] neighbourAtom, int[] neighbourBond) {
+		int stereoCenter = neighbourAtom[4];
+		int neighbours = (neighbourAtom[3] == -1) ? 3 : 4;
 
-		// find sizes of the 3 or 4 substituents (if not in a ring)
+
+		int[] fragmentNo = new int[mol.getAllAtoms()];
+		boolean[] neglectBond = new boolean[mol.getAllBonds()];
 		for (int i=0; i<neighbours; i++)
-			if (!mol.isRingBond(mol.getConnBond(atom, i)))
-				substituentSize[i] = mol.getSubstituent(atom, mol.getConnAtom(atom, i), isMemberAtom[i], null, null);
+			neglectBond[neighbourBond[i]] = true;
+		int fragmentCount = mol.getFragmentNumbers(fragmentNo, neglectBond, false);
 
-		int rotatableAtomCount = 0;
-		boolean[] isRotatableAtom = null;
-		for (int s=2; s<neighbours; s++) {
-			int smallestIndex = -1;
-			int smallestSize = Integer.MAX_VALUE;
-			for (int i=0; i<neighbours; i++) {
-				if (smallestSize > substituentSize[i] && substituentSize[i] != 0) {
-					smallestSize = substituentSize[i];
-					smallestIndex = i;
-					}
-				}
-			if (smallestIndex != -1) {
-				rotatableAtomCount += substituentSize[smallestIndex];
-				substituentSize[smallestIndex] = 0; // mark to not find it again
-				if (isRotatableAtom == null)
-					isRotatableAtom = isMemberAtom[smallestIndex];
-				else
-					for (int a=0; a<mol.getAllAtoms(); a++)
-						isRotatableAtom[a] |= isMemberAtom[smallestIndex][a];
-				}
-			else {
-				if (isRotatableAtom == null)
-					isRotatableAtom = new boolean[mol.getAllAtoms()];
-				for (int i=mol.getAllConnAtoms(atom)-1; i>=0; i--) {
-					int connAtom = mol.getConnAtom(atom, i);
-					if (!isRotatableAtom[connAtom]) {
-						isRotatableAtom[connAtom] = true;
-						rotatableAtomCount++;
-						break;
-						}
-					}
+		int[] fragmentSize = new int[fragmentCount];
+		for (int f:fragmentNo)
+			fragmentSize[f]++;
+
+		int neighbourFragmentCount = 0;
+		boolean[] isNeighbourFragment = new boolean[fragmentCount];
+		for (int i=0; i<neighbours; i++) {
+			int f = fragmentNo[neighbourAtom[i]];
+			if (!isNeighbourFragment[f]) {
+				isNeighbourFragment[f] = true;
+				neighbourFragmentCount++;
 				}
 			}
 
+		int[] neighbourFragmentNo = new int[neighbourFragmentCount];
+		int[] neighbourFragmentSize = new int[neighbourFragmentCount];
+		int[] neighbourFragmentBondCount = new int[neighbourFragmentCount];
 		int index = 0;
-		int[] rotatableAtom = new int[rotatableAtomCount];
+		for (int f=0; f<fragmentCount; f++) {
+			if (isNeighbourFragment[f]) {
+				neighbourFragmentNo[index] = f;
+				neighbourFragmentSize[index] = fragmentSize[f];
+				for (int i=0; i<neighbours; i++)
+					if (f == fragmentNo[neighbourAtom[i]])
+						neighbourFragmentBondCount[index]++;
+				index++;
+			}
+		}
 
+		boolean[] isRotatableAtom = new boolean[mol.getAllAtoms()];
+		int rotatableAtomCount = 0;
+
+		// Now we know about every fragment that touches the stereo center:
+		// - number of bonds connecting to stereo center
+		// - number of fragment atoms
+		// - the fragment number
+		if (neighbourFragmentCount == neighbours) { // no rings: we need to rotate neighbours-2 substituents (== fragments)
+			int lastSmallestFragmentIndex = -1;
+			for (int i=0; i<neighbours-2; i++) {
+				int smallestFragmentIndex = -1;
+				int smallestFragmentSize = Integer.MAX_VALUE;
+				for (int j=0; j<neighbourFragmentNo.length; j++) {
+					if (j != lastSmallestFragmentIndex && neighbourFragmentSize[j] < smallestFragmentSize) {
+						smallestFragmentIndex = j;
+						smallestFragmentSize = neighbourFragmentSize[j];
+					}
+				}
+				for (int a=0; a<mol.getAllAtoms(); a++) {
+					if (fragmentNo[a] == neighbourFragmentNo[smallestFragmentIndex]) {
+						isRotatableAtom[a] = true;
+						rotatableAtomCount++;
+						}
+					}
+				lastSmallestFragmentIndex = smallestFragmentIndex;
+			}
+		}
+		else {  // If we have one ring (two bonds share the same fragment), we can rotate the ring (if four neighbours) or the rest
+			for (int i=0; i<neighbourFragmentNo.length; i++) {
+				if (neighbourFragmentBondCount[i] == 1 && neighbours == 3) {
+					for (int a=0; a<mol.getAllAtoms(); a++) {
+						if (fragmentNo[a] == neighbourFragmentNo[i]) {
+							isRotatableAtom[a] = true;
+							rotatableAtomCount++;
+						}
+					}
+					break;
+				}
+				if (neighbourFragmentBondCount[i] == 2 && neighbours == 4) {
+					boolean isSmallerFragment = 2*neighbourFragmentSize[i] < mol.getAllAtoms();
+					for (int a=0; a<mol.getAllAtoms(); a++) {
+						if (a != neighbourAtom[4]) {
+							if ((fragmentNo[a] == neighbourFragmentNo[i]) == isSmallerFragment) {
+								isRotatableAtom[a] = true;
+								rotatableAtomCount++;
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
+
+		if (rotatableAtomCount == 0) {
+			for (int i=0; i<neighbourFragmentNo.length; i++) {
+				if (neighbourFragmentBondCount[i] == 1) {
+					for (int a=0; a<mol.getAllAtoms(); a++) {
+						if (fragmentNo[a] == neighbourFragmentNo[i]) {
+							isRotatableAtom[a] = true;
+							rotatableAtomCount++;
+						}
+					}
+					break;
+				}
+			}
+			// TODO we have a 3+ neighbour bond fragment and to proportionally rotate the closer part of it and not just one atom
+			int remainingNeighboursToRotate = neighbours - 2 - (rotatableAtomCount == 0 ? 0 : 1);
+			for (int i=0; i<remainingNeighboursToRotate; i++) {
+				isRotatableAtom[neighbourAtom[i]] = true;
+				rotatableAtomCount++;
+			}
+		}
+
+		index = 0;
+		mRotatableAtom = new int[rotatableAtomCount];
 		for (int i=0; i<isRotatableAtom.length; i++)
 			if (isRotatableAtom[i])
-				rotatableAtom[index++] = i;
+				mRotatableAtom[index++] = i;
 
-		mAxisOfRotation = new Coordinates();
-		Coordinates b = new Coordinates();
-		for (int i=0; i<mol.getAllConnAtoms(atom); i++) {
-			int connAtom = mol.getConnAtom(atom, i);
-			if (!isRotatableAtom[connAtom])
-				mAxisOfRotation.add(mol.getCoordinates(connAtom));
-			else if (neighbours == 4)
-				b.add(mol.getCoordinates(connAtom));
+		int staticIndex = 0;
+		int rotatableIndex = 0;
+		mStaticNeighbour = new int[2];
+		mRotatableNeighbour = new int[neighbourAtom[3] == -1 ? 1 : 2];
+		for (int i=0; i<neighbours; i++)
+			if (isRotatableAtom[neighbourAtom[i]])
+				mRotatableNeighbour[rotatableIndex++] = neighbourAtom[i];
+			else
+				mStaticNeighbour[staticIndex++] = neighbourAtom[i];
 		}
-		mAxisOfRotation.scale(0.5);
-		if (neighbours == 4)
-			b.scale(0.5);
-		else
-			b.add(mol.getCoordinates(atom));
-		mAxisOfRotation.sub(b).unit();
 
-		return rotatableAtom;
+	private Coordinates calculateRotationAxis(Conformer conformer) {
+		Coordinates axis = new Coordinates();
+
+		for (int atom:mStaticNeighbour)
+			axis.add(conformer.getCoordinates(atom));
+
+		axis.scale(0.5);
+		axis.sub(conformer.getCoordinates(mAtom[4])).unit();
+
+		return axis;
 		}
 
 	@Override
@@ -273,6 +333,9 @@ public class TetrahedralStereoRule extends ConformationRule {
 	public String toString() {
 		StringBuilder sb = new StringBuilder("stereo rule:");
 		super.addAtomList(sb);
+		sb.append(" rotatable:");
+		for (int rn:mRotatableNeighbour)
+			sb.append(rn+" ");
 		return sb.toString();
 		}
 	}
