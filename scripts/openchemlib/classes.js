@@ -21,6 +21,10 @@ const modified = [
 exports.modified = modified.map(getFilename);
 
 const changed = [
+  [
+    '@org/openmolecules/chem/conf/gen/ConformerSetDiagnostics',
+    changeConformerSetDiagnostics,
+  ],
   ['@org/openmolecules/chem/conf/gen/RigidFragmentCache', removeCacheIO],
   ['chem/ChemistryHelper', removePrintf],
   ['chem/Coordinates', removeToStringSpaceDelimited],
@@ -454,6 +458,11 @@ function changeBondLengthSet(code) {
     newInitialize +
     code.substr(initIndexEnd, code.length);
 
+  return code;
+}
+
+function changeConformerSetDiagnostics(code) {
+  code = code.replace(methodRegExp('writeEliminationRuleFile'), '');
   return code;
 }
 
