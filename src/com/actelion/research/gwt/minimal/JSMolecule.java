@@ -41,9 +41,9 @@ public class JSMolecule {
       throws Exception
   /*-{
   	options = options || {};
-  	var coordinates = !options.noCoordinates;
-  	var stereo = !options.noStereo;
-  	return @com.actelion.research.gwt.minimal.JSMolecule::fromSmiles(Ljava/lang/String;ZZ)(smiles, coordinates, stereo);
+  	var createCoordinates = !options.noCoordinates;
+  	var readStereoFeatures = !options.noStereo;
+  	return @com.actelion.research.gwt.minimal.JSMolecule::fromSmiles(Ljava/lang/String;ZZ)(smiles, createCoordinates, readStereoFeatures);
   }-*/;
 
   public static JSMolecule fromMolfile(String molfile) throws Exception {
@@ -248,13 +248,11 @@ public class JSMolecule {
   }
 
   @JsIgnore
-  public static JSMolecule fromSmiles(String smiles, boolean ensure2DCoordinates,
-      boolean readStereoFeatures) throws Exception {
+  public static JSMolecule fromSmiles(String smiles, boolean createCoordinates,
+  boolean readStereoFeatures) throws Exception {
+    SmilesParser parser = new SmilesParser();
     JSMolecule mol = new JSMolecule();
-    new SmilesParser().parse(mol.oclMolecule, smiles.getBytes(), false, readStereoFeatures);
-    if (ensure2DCoordinates) {
-      mol.inventCoordinates();
-    }
+    parser.parse(mol.oclMolecule, smiles.getBytes(), createCoordinates, readStereoFeatures);
     return mol;
   }
 

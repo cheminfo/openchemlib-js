@@ -10,6 +10,7 @@ const minimalAPI = [
   'Reaction',
   'RingCollection',
   'SDFileParser',
+  'SmilesParser',
   'SSSearcher',
   'SSSearcherWithIndex',
   'Util',
