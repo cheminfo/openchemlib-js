@@ -1,5 +1,15 @@
 # Changelog
 
+## [8.3.0](https://github.com/cheminfo/openchemlib-js/compare/v8.2.0...v8.3.0) (2023-04-05)
+
+
+### Features
+
+* implement SmilesParser to allow SMARTS features ([#156](https://github.com/cheminfo/openchemlib-js/issues/156)) ([2ca12ed](https://github.com/cheminfo/openchemlib-js/commit/2ca12ed4183de911ec3ce3a4619db2cdeec77be9))
+* update OCL to v2023.1.2 ([e134d00](https://github.com/cheminfo/openchemlib-js/commit/e134d000c5dbef79413e39cff2b209148e894349))
+* update OCL to v2023.2.1 ([#160](https://github.com/cheminfo/openchemlib-js/issues/160)) ([9d2dd13](https://github.com/cheminfo/openchemlib-js/commit/9d2dd1357fe47db44d67b109632bd0404d31d07f))
+* update OCL to v2023.4.0 ([a886ff4](https://github.com/cheminfo/openchemlib-js/commit/a886ff407d6d124f9d0dc8cb30856da9cc5fccda))
+
 ## [8.2.0](https://github.com/cheminfo/openchemlib-js/compare/v8.1.0...v8.2.0) (2023-01-25)
 
 
