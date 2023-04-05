@@ -25,6 +25,15 @@ const changed = [
     '@org/openmolecules/chem/conf/gen/ConformerSetDiagnostics',
     changeConformerSetDiagnostics,
   ],
+  ['@org/openmolecules/chem/conf/gen/BaseConformer', changeBaseConformer],
+  [
+    '@org/openmolecules/chem/conf/gen/ConformerGenerator',
+    changeConformerGenerator,
+  ],
+  [
+    '@org/openmolecules/chem/conf/so/SelfOrganizedConformer',
+    changeSelfOrganizedConformer,
+  ],
   ['@org/openmolecules/chem/conf/gen/RigidFragmentCache', removeCacheIO],
   ['chem/ChemistryHelper', removePrintf],
   ['chem/Coordinates', removeToStringSpaceDelimited],
@@ -244,30 +253,54 @@ function removeToStringSpaceDelimited(code) {
   return code.replaceAll(methodRegExp('toStringSpaceDelimited'), '');
 }
 
+function replaceChecked(code, from, to) {
+  if (code.indexOf(from) === -1) {
+    throw new Error(`Cannot find ${from} in code`);
+  }
+  return code.replace(from, to);
+}
+
+function removeSlice(code, start, end) {
+  const startIdx = code.indexOf(start);
+  if (startIdx === -1) {
+    throw new Error(`did not find index for: ${start}`);
+  }
+  const endIdx = code.indexOf(end, startIdx + start.length);
+  if (endIdx === -1) {
+    throw new Error(`did not find index for: ${end}`);
+  }
+  return code.substr(0, startIdx) + code.substr(endIdx + end.length);
+}
+
 function changeInventorFragment(code) {
-  return code.replace(
+  return replaceChecked(
+    code,
     'mGlobalAtom.clone();',
     'Arrays.copyOf(mGlobalAtom, mGlobalAtom.length);',
   );
 }
 
 function removeCloneInfos(code) {
-  return code.replace(
+  return replaceChecked(
+    code,
     'infos[a] = m.infos[i].clone();',
     '// infos[a] = m.infos[i].clone();',
   );
 }
 
 function changeTautomerHelper(code) {
-  code = code.replace(
+  code = replaceChecked(
+    code,
     'import java.util',
     'import java.util.Arrays;\nimport java.util',
   );
-  code = code.replace(
+  code = replaceChecked(
+    code,
     'mRegionDCount.clone();',
     'Arrays.copyOf(mRegionDCount, mRegionDCount.length);',
   );
-  code = code.replace(
+  code = replaceChecked(
+    code,
     'mRegionTCount.clone();',
     'Arrays.copyOf(mRegionTCount, mRegionTCount.length);',
   );
@@ -275,7 +308,8 @@ function changeTautomerHelper(code) {
 }
 
 function changeTextDrawingObject(code) {
-  return code.replace(
+  return replaceChecked(
+    code,
     'detail.append(String.format(" size=\\"%.4f\\"", new Double(mSize)));',
     'detail.append(" size=\\""+mSize+"\\"");',
   );
@@ -296,7 +330,7 @@ function changeGenericEditorArea(code) {
 }
 
 function changeCustomAtomDialogBuilder(code) {
-  code = code.replace('e.getSource() instanceof JTextField', 'false');
+  code = replaceChecked(code, 'e.getSource() instanceof JTextField', 'false');
   return code;
 }
 
@@ -314,28 +348,25 @@ function changeIntVec(code) {
   return code;
 }
 
-function removeSlice(code, start, end) {
-  const startIdx = code.indexOf(start);
-  if (startIdx === -1) {
-    throw new Error(`did not find index for: ${start}`);
-  }
-  const endIdx = code.indexOf(end, startIdx + start.length);
-  if (endIdx === -1) {
-    throw new Error(`did not find index for: ${end}`);
-  }
-  return code.substr(0, startIdx) + code.substr(endIdx + end.length);
-}
-
 function removeRXNStringFormat(code) {
-  return code.replace(
+  return replaceChecked(
+    code,
     'theWriter.write(String.format("M  V30 COUNTS %d %d"+NL,rcnt,pcnt));',
     'theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+NL,rcnt,pcnt);',
   );
 }
 
 function changeMolecule(code) {
-  code = code.replace('stream.writeLong(mAtomQueryFeatures[atom]);', '');
-  code = code.replace('mAtomQueryFeatures[atom] = stream.readLong();', '');
+  code = replaceChecked(
+    code,
+    'stream.writeLong(mAtomQueryFeatures[atom]);',
+    '',
+  );
+  code = replaceChecked(
+    code,
+    'mAtomQueryFeatures[atom] = stream.readLong();',
+    '',
+  );
   return code;
 }
 
@@ -393,7 +424,8 @@ private void init(int mode) {
 `;
 
 function changeTorsionDB(code) {
-  code = code.replace(
+  code = replaceChecked(
+    code,
     'util.TreeMap;',
     'util.TreeMap;\nimport com.actelion.research.chem.conf.TorsionDBData;',
   );
@@ -442,7 +474,8 @@ private static void initialize() {
 `;
 
 function changeBondLengthSet(code) {
-  code = code.replace(
+  code = replaceChecked(
+    code,
     'chem.StereoMolecule;',
     'chem.StereoMolecule;\nimport com.actelion.research.chem.conf.TorsionDBData;',
   );
@@ -463,6 +496,58 @@ function changeBondLengthSet(code) {
 
 function changeConformerSetDiagnostics(code) {
   code = code.replace(methodRegExp('writeEliminationRuleFile'), '');
+  return code;
+}
+
+function changeBaseConformer(code) {
+  code = replaceChecked(
+    code,
+    'import java.util.ArrayList;',
+    'import java.util.Arrays;\nimport java.util.ArrayList;',
+  );
+  code = replaceChecked(
+    code,
+    'mTorsion[bondIndex] = rotatableBond[bondIndex].getDefaultTorsions().clone();',
+    'short[] torsions = rotatableBond[bondIndex].getDefaultTorsions();\n			mTorsion[bondIndex] = Arrays.copyOf(torsions, torsions.length);',
+  );
+  code = replaceChecked(
+    code,
+    'mFrequency[bondIndex] = rotatableBond[bondIndex].getDefaultFrequencies().clone();',
+    'short[] frequencies = rotatableBond[bondIndex].getDefaultFrequencies();\n			mFrequency[bondIndex] = Arrays.copyOf(frequencies, frequencies.length);',
+  );
+  code = replaceChecked(
+    code,
+    '\n			mTorsion[bondIndex] = rotatableBond[bondIndex].getDefaultTorsions().clone();',
+    '',
+  );
+  return code;
+}
+
+function changeConformerGenerator(code) {
+  code = replaceChecked(
+    code,
+    'fragmentPermutation.clone()',
+    'Arrays.copyOf(fragmentPermutation, fragmentPermutation.length)',
+  );
+  return code;
+}
+
+function changeSelfOrganizedConformer(code) {
+  code = replaceChecked(
+    code,
+    'import java.util.ArrayList;',
+    'import java.util.Arrays;\nimport java.util.ArrayList;',
+  );
+  code = replaceChecked(
+    code,
+    'conformer.mAtomStrain.clone()',
+    'Arrays.copyOf(conformer.mAtomStrain, conformer.mAtomStrain.length)',
+  );
+  code = replaceChecked(
+    code,
+    'conformer.mRuleStrain.clone()',
+    'Arrays.copyOf(conformer.mRuleStrain, conformer.mRuleStrain.length)',
+  );
   return code;
 }
 
@@ -503,8 +588,13 @@ function removeCacheIO(code) {
 }
 
 function changeCsv(code) {
-  code = code.replace('java.io.InputStreamReader;', 'java.io.StringReader;');
-  code = code.replace(
+  code = replaceChecked(
+    code,
+    'java.io.InputStreamReader;',
+    'java.io.StringReader;',
+  );
+  code = replaceChecked(
+    code,
     'br = new BufferedReader(new InputStreamReader(Csv.class.getResourceAsStream(path)));',
     'br = new BufferedReader(new StringReader(path));',
   );
