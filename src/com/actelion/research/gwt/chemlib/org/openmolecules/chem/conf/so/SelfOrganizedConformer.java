@@ -30,24 +30,42 @@ package org.openmolecules.chem.conf.so;
 
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.conf.Conformer;
-import com.actelion.research.chem.conf.TorsionDescriptor;
-import com.actelion.research.chem.conf.TorsionDescriptorHelper;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 
 public class SelfOrganizedConformer extends Conformer {
-	private static final double	MAX_ATOM_STRAIN = 0.01;
+	private static final double	STRAIN_FOR_LIKELIHOOD_FACTOR_10 = 1.36;   // we try to match kcal/mol with strain
 
-	// adjust such that a molecule strain of atom count times MAX_AVERARAGE_ATOM_STRAIN reduces frequency by factor 100
-	private static final double	MAX_AVERARAGE_ATOM_STRAIN = 0.001;
-
-	private double	    mMaxAtomStrain,mTotalStrain;
+	private double	    mTotalStrain,mLikelihood;
 	private double[]	mAtomStrain,mRuleStrain;
 	private boolean 	mIsUsed;
-	private TorsionDescriptor mTorsionDescriptor;
 
 	public SelfOrganizedConformer(StereoMolecule mol) {
 		super(mol);
+		mTotalStrain = Double.NaN;
+		}
+
+	public SelfOrganizedConformer(SelfOrganizedConformer conformer) {
+		super(conformer);
+		copyStrainFrom(conformer);
+	}
+
+	/**
+	 * Copies the conformer's atom coordinates, torsion and strains values to this Conformer.
+	 * @param conformer other conformer of the molecule passed in the Constructor
+	 */
+	public void copyFrom(SelfOrganizedConformer conformer) {
+		super.copyFrom(conformer);
+		copyStrainFrom(conformer);
+		}
+
+	private void copyStrainFrom(SelfOrganizedConformer conformer) {
+		mTotalStrain = conformer.mTotalStrain;
+		mLikelihood = conformer.mLikelihood;
+		mIsUsed = conformer.mIsUsed;
+		mAtomStrain = conformer.mAtomStrain == null ? null : Arrays.copyOf(conformer.mAtomStrain, conformer.mAtomStrain.length);
+		mRuleStrain = conformer.mRuleStrain == null ? null : Arrays.copyOf(conformer.mRuleStrain, conformer.mRuleStrain.length);
 		}
 
 	/**
@@ -71,75 +89,41 @@ public class SelfOrganizedConformer extends Conformer {
 			if (rule.isEnabled())
 				mRuleStrain[rule.getRuleType()] += rule.addStrain(this, mAtomStrain);
 
-		mMaxAtomStrain = 0f;
 		mTotalStrain = 0f;
-		for (int atom=0; atom<getMolecule().getAllAtoms(); atom++) {
+		for (int atom=0; atom<getMolecule().getAllAtoms(); atom++)
 			mTotalStrain += mAtomStrain[atom];
-			if (mMaxAtomStrain < mAtomStrain[atom])
-				mMaxAtomStrain = mAtomStrain[atom];
-			}
+
+		mLikelihood = -1.0;
 		}
 
 	public double getAtomStrain(int atom) {
-		return mAtomStrain[atom];
-		}
-
-	public double getRuleStrain(int rule) {
-		return mRuleStrain[rule];
-		}
-
-	public double getHighestAtomStrain() {
-		return mMaxAtomStrain;
+		return mAtomStrain == null ? Double.NaN : mAtomStrain[atom];
 		}
 
 	public double getTotalStrain() {
 		return mTotalStrain;
 		}
 
-	/**
-	 * Tries to estimate the relative likelyhood of this conformer from atom strains
-	 * considering an unstrained conformer to have a likelyhood of 1.0.
-	 * @return conformer likelyhood
-	 */
-	public double getLikelyhood() {
-		return Math.pow(100, -mTotalStrain / (SelfOrganizedConformer.MAX_AVERARAGE_ATOM_STRAIN*getMolecule().getAllAtoms()));
+	public double getRuleStrain(int rule) {
+		return mRuleStrain == null ? Double.NaN : mRuleStrain[rule];
 		}
 
 	/**
-	 * @param ruleList may be null, if isAcceptable() was called earlier and neither ruleList not conformer were changes since
-	 * @return
+	 * Tries to estimate the relative likelihood of this conformer from atom strains
+	 * considering an unstrained conformer to have a likelihood of 1.0.
+	 * @return conformer likelihood
 	 */
-	protected boolean isAcceptable(ArrayList<ConformationRule> ruleList) {
-		if (ruleList != null)
-			calculateStrain(ruleList);
-		return (mMaxAtomStrain < MAX_ATOM_STRAIN
-			 && mTotalStrain < MAX_AVERARAGE_ATOM_STRAIN * getMolecule().getAllAtoms());
+	public double getLikelihood() {
+		if (mLikelihood == -1)
+			mLikelihood = Math.pow(10, -mTotalStrain / STRAIN_FOR_LIKELIHOOD_FACTOR_10);
+
+		return mLikelihood;
 		}
 
 	public void invalidateStrain() {
+		mTotalStrain = Double.MAX_VALUE;
 		mAtomStrain = null;
 		mRuleStrain = null;
-		}
-
-	/**
-	 * Calculates the torsion descriptor for the current coordinates.
-	 * Use calculateRotatableBondsForDescriptor() once and pass it
-	 * for every new conformer to this method.
-	 * @param rotatableBond set of rotatable bonds to be considered
-	 */
-	public void calculateDescriptor(int[] rotatableBond) {
-		mTorsionDescriptor = new TorsionDescriptorHelper(getMolecule(), rotatableBond).getTorsionDescriptor(this);
-		}
-
-	/**
-	 * Returns true, if none of the torsion angles between both conformers
-	 * are more different than TorsionDescriptor.TORSION_EQUIVALENCE_TOLERANCE;
-	 * Calling this method requires that calculateDescriptor() has been called earlier.
-	 * @param conformer
-	 * @return true if all torsions are similar
-	 */
-	public boolean equals(SelfOrganizedConformer conformer) {
-		return mTorsionDescriptor.equals(conformer.mTorsionDescriptor);
 		}
 
 	public boolean isUsed() {

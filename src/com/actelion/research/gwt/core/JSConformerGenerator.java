@@ -60,8 +60,4 @@ public class JSConformerGenerator {
   public int getPotentialConformerCount() {
     return oclGenerator.getPotentialConformerCount();
   }
-
-  public double getPreviousConformerContribution() {
-    return oclGenerator.getPreviousConformerContribution();
-  }
 }

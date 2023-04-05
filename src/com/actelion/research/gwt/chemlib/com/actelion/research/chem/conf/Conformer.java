@@ -45,6 +45,7 @@ public class Conformer implements Comparable<Conformer> {
 	private String mName;
 	private short[] mBondTorsion;
 	private double mEnergy;
+	private double mLikelihood;
 	private TorsionDescriptor mTorsionDescriptor;
 
 	/**
@@ -89,6 +90,8 @@ public class Conformer implements Comparable<Conformer> {
 
 		if (c.mBondTorsion != null)
 			mBondTorsion = Arrays.copyOf(c.mBondTorsion, c.mBondTorsion.length);
+
+		mName = (c.mName == null || c.mName.endsWith(" (copy)")) ? c.mName : c.mName.concat(" (copy)");
 
 		mEnergy = Double.NaN;
 	}
@@ -241,13 +244,12 @@ public class Conformer implements Comparable<Conformer> {
 	 * @param bond
 	 * @return -1 or previously set torsion angle in the range 0 ... 359
 	 */
-	public int getBondTorsion(int bond) {
+	public short getBondTorsion(int bond) {
 		return mBondTorsion == null ? -1 : mBondTorsion[bond];
 	}
 
 	/**
 	 * Sets the current bond torsion to be retrieved later.
-	 *
 	 * @param bond
 	 * @param torsion in degrees
 	 */
@@ -256,6 +258,12 @@ public class Conformer implements Comparable<Conformer> {
 			mBondTorsion = new short[mMol.getAllBonds()];
 			Arrays.fill(mBondTorsion, (short)-1);
 			}
+
+		while (torsion < 0)
+			torsion += 360;
+		while (torsion >= 360)
+			torsion -= 360;
+
 		mBondTorsion[bond] = torsion;
 	}
 
@@ -287,30 +295,18 @@ public class Conformer implements Comparable<Conformer> {
 	}
 
 	/**
-	 * Copies the conformer's atom coordinates to this Conformer.
+	 * Copies the conformer's atom coordinates and torsion values to this Conformer.
 	 *
 	 * @param conformer other conformer of the molecule passed in the Constructor
 	 */
 	public void copyFrom(Conformer conformer) {
 		for (int atom = 0; atom < conformer.getSize(); atom++)
 			mCoordinates[atom].set(conformer.mCoordinates[atom]);
-		if (conformer.mName != null)
-			mName = createNameCopy(conformer.mName);
-	}
 
-	private String createNameCopy(String originalName) {
-		int index = originalName.lastIndexOf(' ');
-		if (index != -1) {
-			if (originalName.substring(index + 1).equals("copy"))
-				return originalName.concat(" 2");
-
-			try {
-				int no = Integer.parseInt(originalName.substring(index + 1));
-				return originalName.substring(0, index + 1).concat(Integer.toString(no + 1));
-			} catch (NumberFormatException nfe) {
-			}
-		}
-		return originalName.concat(" copy");
+		if (conformer.mBondTorsion == null)
+			mBondTorsion = null;
+		else
+			mBondTorsion = Arrays.copyOf(conformer.mBondTorsion, conformer.mBondTorsion.length);
 	}
 
 	/**
@@ -348,6 +344,15 @@ public class Conformer implements Comparable<Conformer> {
 		mEnergy = energy;
 	}
 
+	public double getLikelihood() {
+		return mLikelihood;
+	}
+
+	public void setLikelihood(double likelihood) {
+		mLikelihood = likelihood;
+	}
+
+
 	public String getName() {
 		return mName == null ? mMol.getName() : mName;
 	}
@@ -356,15 +361,31 @@ public class Conformer implements Comparable<Conformer> {
 		mName = name;
 	}
 
-	public boolean equals(Conformer c) {
-		ensureDescriptors(c);
-		return mTorsionDescriptor.equals(c.mTorsionDescriptor);
+	/**
+	 * Returns true, if none of the torsion angles between both conformers
+	 * are more different than TorsionDescriptor.TORSION_EQUIVALENCE_TOLERANCE;
+	 * Calling this method requires that calculateDescriptor() has been called earlier.
+	 * @param conformer
+	 * @return true if all torsions are similar
+	 */
+	public boolean equals(Conformer conformer) {
+		ensureDescriptors(conformer);
+		return mTorsionDescriptor.equals(conformer.mTorsionDescriptor);
 	}
 
 	@Override
-	public int compareTo(Conformer c) {
-		ensureDescriptors(c);
-		return mTorsionDescriptor.compareTo(c.mTorsionDescriptor);
+	public int compareTo(Conformer conformer) {
+		ensureDescriptors(conformer);
+		return mTorsionDescriptor.compareTo(conformer.mTorsionDescriptor);
+	}
+
+	/**
+	 * Calculates the torsion descriptor for the current coordinates using the passed set of rotatable bonds.
+	 * You may use TorsionDescriptorHelper.findRotatableBonds() once and pass it for every new conformer to this method.
+	 * @param rotatableBond set of rotatable bonds to be considered
+	 */
+	public void calculateDescriptor(int[] rotatableBond) {
+		mTorsionDescriptor = new TorsionDescriptorHelper(getMolecule(), rotatableBond).getTorsionDescriptor(this);
 	}
 
 	private void ensureDescriptors(Conformer c) {

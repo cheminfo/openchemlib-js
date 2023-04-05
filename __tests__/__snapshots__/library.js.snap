@@ -9,7 +9,6 @@ exports[`prototype properties of ConformerGenerator 1`] = `
   "getOCL",
   "getOneConformerAsMolecule",
   "getPotentialConformerCount",
-  "getPreviousConformerContribution",
   "initializeConformers",
   "molecules",
 ]

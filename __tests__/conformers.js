@@ -24,13 +24,11 @@ describe('ConformerGenerator', () => {
     const gen = new ConformerGenerator(1);
     expect(gen.getPotentialConformerCount()).toBe(1);
     expect(gen.getConformerCount()).toBe(0);
-    expect(gen.getPreviousConformerContribution()).toBe(1);
     gen.initializeConformers(mol);
     expect(gen.getPotentialConformerCount()).toBeGreaterThan(1);
 
     const conf1 = gen.getNextConformerAsMolecule();
     expect(gen.getConformerCount()).toBe(1);
-    expect(gen.getPreviousConformerContribution()).toBeCloseTo(0.17, 2);
     const conf1Molfile = conf1.toMolfile();
     expect(conf1Molfile).toMatchSnapshot();
 
