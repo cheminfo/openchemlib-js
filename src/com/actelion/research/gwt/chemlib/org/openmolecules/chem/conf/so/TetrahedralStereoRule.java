@@ -109,7 +109,7 @@ public class TetrahedralStereoRule extends ConformationRule {
 
 		Coordinates rotationAxis = calculateRotationAxis(conformer);
 		for (int atom:mRotatableAtom)
-			rotateAtom(conformer, atom, mAtom[4], rotationAxis, Math.PI);
+			rotateAtom(conformer, atom, conformer.getCoordinates(mAtom[4]), rotationAxis, Math.PI);
 
 		return true;
 		}
@@ -133,8 +133,9 @@ public class TetrahedralStereoRule extends ConformationRule {
 		if (wrongCount != 0) {
 			for (int i=0; i<mAtom.length; i++) {
 				if (mAtom[i] != -1) {
-					double panalty = 0.25 * wrongCount; // arbitrary value 0.5 * 0.5;
-					atomStrain[mAtom[i]] += panalty;
+					double panalty = 0.68 * wrongCount; // arbitrary value: likelyhood factor 10 per two atoms;
+					if (atomStrain != null)
+						atomStrain[mAtom[i]] += panalty;
 					totalStrain += panalty;
 					}
 				}
@@ -234,7 +235,7 @@ public class TetrahedralStereoRule extends ConformationRule {
 			for (int i=0; i<neighbours-2; i++) {
 				int smallestFragmentIndex = -1;
 				int smallestFragmentSize = Integer.MAX_VALUE;
-				for (int j=0; j<neighbourFragmentNo.length; j++) {
+				for (int j=0; j<neighbourFragmentCount; j++) {
 					if (j != lastSmallestFragmentIndex && neighbourFragmentSize[j] < smallestFragmentSize) {
 						smallestFragmentIndex = j;
 						smallestFragmentSize = neighbourFragmentSize[j];
@@ -252,10 +253,13 @@ public class TetrahedralStereoRule extends ConformationRule {
 		else {  // If we have one ring (two bonds share the same fragment), we can rotate the ring (if four neighbours) or the rest
 			for (int i=0; i<neighbourFragmentNo.length; i++) {
 				if (neighbourFragmentBondCount[i] == 1 && neighbours == 3) {
+					boolean isSmallerFragment = 2*neighbourFragmentSize[i] < mol.getAllAtoms();
 					for (int a=0; a<mol.getAllAtoms(); a++) {
-						if (fragmentNo[a] == neighbourFragmentNo[i]) {
-							isRotatableAtom[a] = true;
-							rotatableAtomCount++;
+						if (a != stereoCenter) {
+							if ((fragmentNo[a] == neighbourFragmentNo[i]) == isSmallerFragment) {
+								isRotatableAtom[a] = true;
+								rotatableAtomCount++;
+							}
 						}
 					}
 					break;
@@ -263,7 +267,7 @@ public class TetrahedralStereoRule extends ConformationRule {
 				if (neighbourFragmentBondCount[i] == 2 && neighbours == 4) {
 					boolean isSmallerFragment = 2*neighbourFragmentSize[i] < mol.getAllAtoms();
 					for (int a=0; a<mol.getAllAtoms(); a++) {
-						if (a != neighbourAtom[4]) {
+						if (a != stereoCenter) {
 							if ((fragmentNo[a] == neighbourFragmentNo[i]) == isSmallerFragment) {
 								isRotatableAtom[a] = true;
 								rotatableAtomCount++;
@@ -290,8 +294,13 @@ public class TetrahedralStereoRule extends ConformationRule {
 			// TODO we have a 3+ neighbour bond fragment and to proportionally rotate the closer part of it and not just one atom
 			int remainingNeighboursToRotate = neighbours - 2 - (rotatableAtomCount == 0 ? 0 : 1);
 			for (int i=0; i<remainingNeighboursToRotate; i++) {
-				isRotatableAtom[neighbourAtom[i]] = true;
-				rotatableAtomCount++;
+				for (int j=0; j<neighbours; j++) {
+					if (!isRotatableAtom[neighbourAtom[j]]) {
+						isRotatableAtom[neighbourAtom[j]] = true;
+						rotatableAtomCount++;
+						break;
+					}
+				}
 			}
 		}
 

@@ -3363,15 +3363,6 @@ export declare class ConformerGenerator {
   getPotentialConformerCount(): number;
 
   /**
-   * With best current knowledge about colliding torsion combinations
-   * and based on the individual frequencies of currently active torsions
-   * this method returns the conformers's overall contribution to the
-   * total set of non colliding conformers.
-   * @returns - This conformer's contribution to all conformers.
-   */
-  getPreviousConformerContribution(): number;
-
-  /**
    * Returns an iterator of molecule conformers.
    */
   molecules(): IterableIterator<Molecule>;

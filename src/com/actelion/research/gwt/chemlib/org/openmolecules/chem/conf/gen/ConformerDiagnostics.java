@@ -6,9 +6,10 @@ import com.actelion.research.chem.conf.Conformer;
 import java.util.ArrayList;
 
 public class ConformerDiagnostics {
-	private String mIDCode,mCoords;
-	private double mCollisionIntensity;
-	private int[] mTorsion,mTorsionIndex,mConformerIndex,mCollisionAtoms;
+	private String mIDCode,mCoords,mName;
+	private BaseConformer mBaseConformer;
+	private double mCollisionIntensity,mLikelihood;
+	private int[] mTorsionIndex,mConformerIndex,mCollisionAtoms,mFixedTorsion;
 	private ArrayList<String> mEliminationRules;
 	private StringBuilder mCollisionLog;
 	private boolean mSuccess;
@@ -20,13 +21,23 @@ public class ConformerDiagnostics {
 		mEliminationRules = new ArrayList<>();
 	}
 
-	protected void setConformer(Conformer c) {
+	protected void setConformer(BaseConformer bc, Conformer c) {
 		Canonizer can = new Canonizer(c.toMolecule(null));
 		mIDCode = can.getIDCode();
 		mCoords = can.getEncodedCoordinates();
+		mBaseConformer = bc;
+		mName = c.getName();
+		mFixedTorsion = new int[bc.getRotatableBonds().length];
+		mLikelihood = c.getLikelihood();
+		for (int i=0; i<mFixedTorsion.length; i++)
+			mFixedTorsion[i] = c.getBondTorsion(bc.getRotatableBonds()[i].getBond());
 	}
 
-	protected void setCollisionIntensity(double v) {
+	protected BaseConformer getBaseConformer() {
+		return mBaseConformer;
+	}
+
+	protected void setCollisionStrain(double v) {
 		mCollisionIntensity = v;
 	}
 
@@ -44,7 +55,7 @@ public class ConformerDiagnostics {
 
 	protected void writeCollisionLog(String log) {
 		if (mCollisionLog.length() != 0)
-			mCollisionLog.append("\n");
+			mCollisionLog.append("<NL>");
 		mCollisionLog.append(log);
 	}
 
@@ -56,12 +67,20 @@ public class ConformerDiagnostics {
 		return mCoords;
 	}
 
+	public String getName() {
+		return mName;
+	}
+
 	public boolean isSuccess() {
 		return mSuccess;
 	}
 
 	public double getCollisionIntensity() {
 		return mCollisionIntensity;
+	}
+
+	public double getLikelihood() {
+		return mLikelihood;
 	}
 
 	public int[] getCollisionAtoms() {
@@ -74,6 +93,10 @@ public class ConformerDiagnostics {
 
 	public int[] getTorsionIndexes() {
 		return mTorsionIndex;
+	}
+
+	public int[] getFixedTorsions() {
+		return mFixedTorsion;
 	}
 
 	public String getCollisionLog() {

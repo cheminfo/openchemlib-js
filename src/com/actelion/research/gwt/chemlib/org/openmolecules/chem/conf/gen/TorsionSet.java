@@ -28,61 +28,39 @@
 
 package org.openmolecules.chem.conf.gen;
 
+import com.actelion.research.chem.conf.Conformer;
+
 import java.util.Arrays;
 
 public class TorsionSet implements Comparable<TorsionSet> {
 	private long[] mEncodedBits;
-	private double mLikelihood;
+	private double mContribution;
 	private int[] mTorsionIndex, mConformerIndex;
 	private double mCollisionIntensitySum;
 	private double[][] mCollisionIntensityMatrix;
 	private boolean mIsUsed;
-
-//	private int[] bitshift;
-//	private int[] longIndex;
+	private Conformer mConformer;
 
 	/**
 	 * Creates a new conformer description from torsion and conformer indexes.
 	 *
 	 * @param torsionIndex   torsion angle index for all rotatable bonds
 	 * @param conformerIndex conformer index for every rigid fragment
-	 * @param bitShift       bit position of torsion and conformer indexes
-	 * @param longIndex      index on long array for shifted torsion and conformer indexes
-	 * @param likelihood     all individual index likelyhoods multiplied
+	 * @param encoder
 	 */
-	public TorsionSet(int[] torsionIndex, int[] conformerIndex, int[] bitShift, int[] longIndex, double likelihood) {
+	public TorsionSet(int[] torsionIndex, int[] conformerIndex, TorsionSetEncoder encoder) {
 		mTorsionIndex = torsionIndex;
 		mConformerIndex = conformerIndex;
-		mLikelihood = likelihood;
-		mEncodedBits = new long[1 + longIndex[longIndex.length - 1]];
-
-//		this.bitshift = bitShift;
-//		this.longIndex = longIndex;
-
-		int i = 0;
-		for (int index : torsionIndex) {
-			mEncodedBits[longIndex[i]] += (index << bitShift[i]);
-			i++;
-		}
-		for (int index : conformerIndex) {
-			mEncodedBits[longIndex[i]] += (index << bitShift[i]);
-			i++;
-		}
+		mEncodedBits = encoder.encode(torsionIndex, conformerIndex);
 	}
 
 	/**
 	 * Deep-Copy constructor not including collision intensities
 	 * @param ref
 	 */
-	public TorsionSet( TorsionSet ref ) {
-//		this( Arrays.copyOf(ref.getTorsionIndexes(),ref.getTorsionIndexes().length) ,
-//				Arrays.copyOf( ref.getConformerIndexes() , ref.getConformerIndexes().length  ) ,
-//				Arrays.copyOf( ref.getBitshift() , ref.getBitshift().length ),
-//				Arrays.copyOf( ref.getLongIndex() , ref.getLongIndex().length ) ,
-//				ref.getLikelihood());
+	public TorsionSet(TorsionSet ref) {
 		mTorsionIndex = Arrays.copyOf(ref.mTorsionIndex, ref.mTorsionIndex.length);
 		mConformerIndex = Arrays.copyOf(ref.mConformerIndex, ref.mConformerIndex.length);
-		mLikelihood = ref.mLikelihood;
 		mEncodedBits = Arrays.copyOf(ref.mEncodedBits, ref.mEncodedBits.length);
 	}
 
@@ -94,24 +72,33 @@ public class TorsionSet implements Comparable<TorsionSet> {
 		return mConformerIndex;
 	}
 
-	public double getLikelihood() {
-		return mLikelihood;
-	}
-
 //	public int[] getBitshift() {return this.bitshift;}
 //	public int[] getLongIndex() {return this.longIndex;}
 
-	public double getCollisionIntensitySum() {
+	public double getCollisionStrainSum() {
 		return mCollisionIntensitySum;
 	}
 
-	public double[][] getCollisionIntensityMatrix() {
+	public double[][] getCollisionStrainMatrix() {
 		return mCollisionIntensityMatrix;
 	}
 
-	public void setCollisionIntensity(double sum, double[][] matrix) {
+	public void setCollisionStrain(double sum, double[][] matrix) {
 		mCollisionIntensitySum = sum;
 		mCollisionIntensityMatrix = matrix;
+		if (mConformer != null)
+			mConformer.setLikelihood(mContribution * Math.pow(10, -sum / TorsionSetStrategy.COLLISION_STRAIN_FOR_FACTOR_10));
+	}
+
+	/**
+	 * @return product from all rigid fragment fractions and torsion fractions
+	 */
+	public double getContribution() {
+		return mContribution;
+	}
+
+	public void setContribution(double contribution) {
+		mContribution = contribution;
 	}
 
 	public boolean isUsed() {
@@ -120,6 +107,15 @@ public class TorsionSet implements Comparable<TorsionSet> {
 
 	public void setUsed() {
 		mIsUsed = true;
+	}
+
+	public Conformer getConformer() {
+		return mConformer;
+	}
+
+	public void setConformer(Conformer c) {
+		mConformer = c;
+		mConformer.setLikelihood(mContribution * Math.pow(10, -mCollisionIntensitySum / TorsionSetStrategy.COLLISION_STRAIN_FOR_FACTOR_10));
 	}
 
 	/**
@@ -140,8 +136,8 @@ public class TorsionSet implements Comparable<TorsionSet> {
 		return true;
 	}
 
-	public boolean matches(TorsionSetEliminationRule er, double tolerance) {
-		return (mCollisionIntensitySum > tolerance) && matches(er.getMask(), er.getData());
+	public double getCollisionStrainIfMatches(TorsionSetEliminationRule er) {
+		return matches(er.getMask(), er.getData()) ? mCollisionIntensitySum : 0.0;
 	}
 
 	/**
