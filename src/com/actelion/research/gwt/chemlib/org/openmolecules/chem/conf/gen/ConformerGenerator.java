@@ -290,11 +290,12 @@ public class ConformerGenerator {
 
 	/**
 	 * If the conformer generation must be stopped from outside, for instance because of user
-	 * intervention or because of a defined timeout, the provide a ThreadMaster with this method.
+	 * intervention or because of a defined timeout, then provide a ThreadMaster with this method.
 	 * @param tm
 	 */
 	public void setThreadMaster(ThreadMaster tm) {
 		mThreadMaster = tm;
+		mRigidFragmentProvider.setThreadMaster(tm);
 	}
 
 	/**
@@ -338,6 +339,7 @@ public class ConformerGenerator {
 			ConformationSelfOrganizer sampler = new ConformationSelfOrganizer(mol, true);
 			Conformer conformer = sampler.generateOneConformer(mRandomSeed);
 			separateDisconnectedFragments(conformer);
+			conformer.setName("SO#1");
 			return conformer;
 			}
 		}
@@ -508,7 +510,6 @@ public class ConformerGenerator {
 			SelfOrganizedConformer conformer = mSelfOrganizer.getNextConformer();
 			if (conformer != null) {
 				separateDisconnectedFragments(conformer);
-				mAllConformerCount++;
 				mReturnedConformerCount++;
 				conformer.setName("SO#"+(++mAllConformerCount));
 				return conformer;
@@ -552,7 +553,8 @@ public class ConformerGenerator {
 				if (mTorsionSet != null || mReturnedConformerCount != 0)
 					continue;
 
-				if (mUseSelfOrganizerIfAllFails) {
+				if (mTorsionSet == null && mUseSelfOrganizerIfAllFails) {
+					// We couldn't create torsion strategy based conformers: switch to self organizer!
 					mSelfOrganizer = new ConformationSelfOrganizer(mMolecule, true);
 					mSelfOrganizer.setThreadMaster(mThreadMaster);
 					mSelfOrganizer.initializeConformers(mRandomSeed, -1);
@@ -571,17 +573,29 @@ public class ConformerGenerator {
 				mIsFinished = true;	// we are finished with conformers
 				}
 
-			separateDisconnectedFragments(mTorsionSet.getConformer());
-			mTorsionSet.setUsed();
-			mReturnedConformerCount++;
+			if (mTorsionSet != null) {
+				separateDisconnectedFragments(mTorsionSet.getConformer());
+				mTorsionSet.setUsed();
+				mReturnedConformerCount++;
 
-			if(torsionSetHolder != null)
-				torsionSetHolder[0] = new TorsionSet(mTorsionSet);
+				if(torsionSetHolder != null)
+					torsionSetHolder[0] = new TorsionSet(mTorsionSet);
 
-			if (mIsDiagnosticsMode)
-				mDiagnostics.get(mTorsionSet).setSuccess(true);
+				if (mIsDiagnosticsMode)
+					mDiagnostics.get(mTorsionSet).setSuccess(true);
 
-			return mTorsionSet.getConformer();
+				return mTorsionSet.getConformer();
+				}
+// This poses the danger to produce highly strained unrealistic conformers, e.g. for impossible compounds...
+//			else if (mReturnedConformerCount == 0) {
+//				// We couldn't create torsion strategy based conformers: try creating one conformer with self organizer!
+//				ConformationSelfOrganizer sampler = new ConformationSelfOrganizer(mMolecule, true);
+//				Conformer conformer = sampler.generateOneConformer(mRandomSeed);
+//				separateDisconnectedFragments(conformer);
+//				mReturnedConformerCount++;
+//				conformer.setName("SO#1");
+//				return conformer;
+//				}
 			}
 
 		return null;

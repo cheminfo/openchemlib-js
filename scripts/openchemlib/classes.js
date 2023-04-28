@@ -515,11 +515,6 @@ function changeBaseConformer(code) {
     'mFrequency[bondIndex] = rotatableBond[bondIndex].getDefaultFrequencies().clone();',
     'short[] frequencies = rotatableBond[bondIndex].getDefaultFrequencies();\n			mFrequency[bondIndex] = Arrays.copyOf(frequencies, frequencies.length);',
   );
-  code = replaceChecked(
-    code,
-    '\n			mTorsion[bondIndex] = rotatableBond[bondIndex].getDefaultTorsions().clone();',
-    '',
-  );
   return code;
 }
 
