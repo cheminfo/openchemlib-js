@@ -1,5 +1,17 @@
 # Changelog
 
+## [8.4.0](https://github.com/cheminfo/openchemlib-js/compare/v8.3.0...v8.4.0) (2023-08-11)
+
+
+### Features
+
+* add data-atom-map-no props in the circle of the svg ([#170](https://github.com/cheminfo/openchemlib-js/issues/170)) ([ea29871](https://github.com/cheminfo/openchemlib-js/commit/ea29871b5598419f2671ce1a095714387272d842))
+
+
+### Bug Fixes
+
+* CanonizerUtil with NOSTEREO yielded to a wrong result ([#165](https://github.com/cheminfo/openchemlib-js/issues/165)) ([817ec97](https://github.com/cheminfo/openchemlib-js/commit/817ec9789a604660641966936c3806dd00fc0d46))
+
 ## [8.3.0](https://github.com/cheminfo/openchemlib-js/compare/v8.2.0...v8.3.0) (2023-04-05)
 
 
