@@ -223,6 +223,7 @@ public class SVGDepictor extends AbstractDepictor<Void> {
         String s = "<circle " +
                 "id=\"" + getId() + ":Atom:" + atom + "\" " +
                 "class=\"event\" " + // class to respond to the mouse event
+                "data-atom-map-no=\"" + this.getMolecule().getAtomMapNo(atom) + "\" " +
                 "cx=\"" + round(x) + "\" " +
                 "cy=\"" + round(y) + "\" " +
                 "r=\"" + DEFAULT_ELEM_WIDTH + "\" " +
