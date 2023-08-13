@@ -153,6 +153,13 @@ public class JSMolecule {
     return canonizer.getIDCode();
   }
 
+
+
+  public int[] getFinalRanks(int flag) {
+    Canonizer canonizer = new Canonizer(oclMolecule, flag);
+    return canonizer.getFinalRank();
+  }
+
   public native JavaScriptObject getIDCodeAndCoordinates()
   /*-{
   	return {
@@ -249,7 +256,7 @@ public class JSMolecule {
 
   @JsIgnore
   public static JSMolecule fromSmiles(String smiles, boolean createCoordinates,
-  boolean readStereoFeatures) throws Exception {
+      boolean readStereoFeatures) throws Exception {
     SmilesParser parser = new SmilesParser();
     JSMolecule mol = new JSMolecule();
     parser.parse(mol.oclMolecule, smiles.getBytes(), createCoordinates, readStereoFeatures);
