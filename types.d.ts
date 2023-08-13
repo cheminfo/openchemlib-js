@@ -463,7 +463,16 @@ export declare class Molecule {
     options?: IMoleculeToSVGOptions,
   ): string;
 
+  /**
+   * Get an ID code for the molecule
+   * @param flag
+   */
   getCanonizedIDCode(flag: number): string;
+
+  /**
+   * Returns the canonic numbering of the atoms.
+   */
+  getFinalRanks(flag: number): number[];
 
   /**
    * Returns an object with both the ID code and coordinates of the molecule.

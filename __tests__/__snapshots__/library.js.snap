@@ -142,6 +142,7 @@ exports[`prototype properties of Molecule 1`] = `
   "getElectronValenceCorrection",
   "getExcludedNeighbourCount",
   "getExplicitHydrogens",
+  "getFinalRanks",
   "getFisherProjectionParity",
   "getFragmentAtoms",
   "getFragmentNumbers",
