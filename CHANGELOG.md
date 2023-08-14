@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.5.0](https://github.com/cheminfo/openchemlib-js/compare/v8.4.0...v8.5.0) (2023-08-14)
+
+
+### Features
+
+* add getFinalRanks ([#171](https://github.com/cheminfo/openchemlib-js/issues/171)) ([9f9974d](https://github.com/cheminfo/openchemlib-js/commit/9f9974d186765642cdc93dbd206f3b6e5ea29b52))
+
 ## [8.4.0](https://github.com/cheminfo/openchemlib-js/compare/v8.3.0...v8.4.0) (2023-08-11)
 
 
