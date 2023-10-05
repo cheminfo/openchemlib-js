@@ -66,6 +66,22 @@ describe('Molecule', () => {
     expect(svg).toContain('stroke-width="2"');
   });
 
+  it('toSVG wrong coordinates (all 0)', () => {
+    const mol = Molecule.fromSmiles('CCOCCO');
+    for (let i = 0; i < mol.getAllAtoms(); i++) {
+      mol.setAtomX(i, 0);
+      mol.setAtomY(i, 0);
+      mol.setAtomZ(i, 0);
+    }
+    let svg = mol.toSVG(300, 150, 'myId');
+    for (let i = 0; i < mol.getAllAtoms(); i++) {
+      expect(mol.getAtomX(i)).toBe(0);
+      expect(mol.getAtomY(i)).toBe(0);
+      expect(mol.getAtomZ(i)).toBe(0);
+    }
+    expect(svg).toContain('width="300px" height="150px"');
+  });
+
   it('toSVG with autoCrop', () => {
     const mol = Molecule.fromSmiles('CCOCCO');
     let svg = mol.toSVG(300, 150, 'myId', { autoCrop: true });
