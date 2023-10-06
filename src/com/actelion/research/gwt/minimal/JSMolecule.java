@@ -125,8 +125,23 @@ public class JSMolecule {
 
   private String getSVG(int width, int height, float factorTextSize, boolean autoCrop,
       int autoCropMargin, String id, JavaScriptObject options) {
+
+    boolean degenerated = true;
+    for (int i = 0; i < oclMolecule.getAllAtoms() - 1; i++) {
+      if ((oclMolecule.getAtomX(i) != oclMolecule.getAtomX(i + 1))
+          || (oclMolecule.getAtomY(i) != oclMolecule.getAtomY(i + 1))) {
+        degenerated = false;
+        break;
+      }
+    }
+
+    StereoMolecule mol = degenerated ? oclMolecule.getCompactCopy() : oclMolecule;
+    if (degenerated) {
+      new CoordinateInventor(0).invent(mol);
+    }
+
     int mode = Util.getDisplayMode(options);
-    SVGDepictor d = new SVGDepictor(oclMolecule, mode, id);
+    SVGDepictor d = new SVGDepictor(mol, mode, id);
     d.setFactorTextSize(factorTextSize);
     d.validateView(null, new GenericRectangle(0, 0, width, height),
         AbstractDepictor.cModeInflateToMaxAVBL);
