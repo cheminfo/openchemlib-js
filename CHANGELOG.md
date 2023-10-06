@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.6.0](https://github.com/cheminfo/openchemlib-js/compare/v8.5.0...v8.6.0) (2023-10-06)
+
+
+### Features
+
+* when generating SVG check that coordinates are not all 0 ([#174](https://github.com/cheminfo/openchemlib-js/issues/174)) ([eded253](https://github.com/cheminfo/openchemlib-js/commit/eded25358626cadbeaa4c1796675e6fa525e0b28))
+
 ## [8.5.0](https://github.com/cheminfo/openchemlib-js/compare/v8.4.0...v8.5.0) (2023-08-14)
 
 
