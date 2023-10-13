@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.7.0](https://github.com/cheminfo/openchemlib-js/compare/v8.6.0...v8.7.0) (2023-10-13)
+
+
+### Features
+
+* improve exports for ESM and add shorthand export for the full.pretty build ([688aedd](https://github.com/cheminfo/openchemlib-js/commit/688aedd65c761ec28ef37a12c92c091f7591d371))
+
 ## [8.6.0](https://github.com/cheminfo/openchemlib-js/compare/v8.5.0...v8.6.0) (2023-10-06)
 
 
