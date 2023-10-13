@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./dist/openchemlib-minimal');
+module.exports = require('./dist/openchemlib-minimal.js');
