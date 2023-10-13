@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./dist/openchemlib-core');
+module.exports = require('./dist/openchemlib-core.js');

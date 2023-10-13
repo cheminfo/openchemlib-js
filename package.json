@@ -28,6 +28,23 @@
     "test-only": "jest"
   },
   "main": "./core.js",
+  "exports": {
+    ".": "./core.js",
+    "./minimal": "./minimal.js",
+    "./minimal.js": "./minimal.js",
+    "./core": "./core.js",
+    "./core.js": "./core.js",
+    "./full": "./full.js",
+    "./full.js": "./full.js",
+    "./full.pretty": {
+      "types": "./full.d.ts",
+      "default": "./full.pretty.js"
+    },
+    "./full.pretty.js": {
+      "types": "./full.d.ts",
+      "default": "./full.pretty.js"
+    }
+  },
   "files": [
     "dist",
     "types.d.ts",
@@ -36,7 +53,8 @@
     "core.js",
     "core.d.ts",
     "full.js",
-    "full.d.ts"
+    "full.d.ts",
+    "full.pretty.js"
   ],
   "repository": {
     "type": "git",
