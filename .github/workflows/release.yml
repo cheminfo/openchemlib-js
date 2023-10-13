@@ -15,7 +15,7 @@ jobs:
           token: ${{ secrets.BOT_TOKEN }}
           release-type: node
           package-name: 'openchemlib'
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         # These if statements ensure that a publication only occurs when a new release is created
         if: ${{ steps.release.outputs.release_created }}
       - uses: actions/setup-java@v3
@@ -28,7 +28,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 20.x
           registry-url: 'https://registry.npmjs.org'
         if: ${{ steps.release.outputs.release_created }}
       - run: npm ci
