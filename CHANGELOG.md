@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.7.1](https://github.com/cheminfo/openchemlib-js/compare/v8.7.0...v8.7.1) (2023-10-16)
+
+
+### Bug Fixes
+
+* make named imports work from ESM ([#178](https://github.com/cheminfo/openchemlib-js/issues/178)) ([46a0237](https://github.com/cheminfo/openchemlib-js/commit/46a0237bbd3824d2834d986d9fc484bf82791dcb))
+
 ## [8.7.0](https://github.com/cheminfo/openchemlib-js/compare/v8.6.0...v8.7.0) (2023-10-13)
 
 
