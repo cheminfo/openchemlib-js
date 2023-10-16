@@ -3,7 +3,7 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
 
-const { Molecule } = require('../../dist/openchemlib-full.pretty');
+const { Molecule } = require('../../full.pretty');
 
 const molfile = readFileSync(join(__dirname, 'molfile.txt'), 'utf8');
 const molecule = Molecule.fromMolfile(molfile);

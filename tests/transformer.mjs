@@ -1,13 +1,12 @@
-import OCL from '../dist/openchemlib-full.pretty.js';
-const { Molecule, Transformer } = OCL;
+import { Molecule, Transformer } from '../full.pretty.js';
 
-const reagent = OCL.Molecule.fromSmiles('CCO');
+const reagent = Molecule.fromSmiles('CCO');
 
 reagent.setFragment(true);
 for (let i = 0; i < 3; i++) {
   reagent.setAtomMapNo(i, i);
 }
-const product = OCL.Molecule.fromSmiles('C=C.O');
+const product = Molecule.fromSmiles('C=C.O');
 product.setFragment(true);
 for (let i = 0; i < 3; i++) {
   product.setAtomMapNo(i, i);

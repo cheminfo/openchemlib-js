@@ -2,8 +2,8 @@
 
 const Benchmark = require('benchmark');
 
-const OCLNew = require('../dist/openchemlib-full.pretty');
 const OCLOld = require('../distold/openchemlib-full.pretty');
+const OCLNew = require('../full.pretty');
 
 const idcode = 'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
 const mol = OCLNew.Molecule.fromIDCode(idcode);
