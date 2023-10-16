@@ -1,11 +1,12 @@
 'use strict';
 
 const core = require('../core');
-const pretty = require('../dist/openchemlib-full.pretty');
 const full = require('../full');
+const pretty = require('../full.pretty');
 const minimal = require('../minimal');
 
 const minimalAPI = [
+  'default',
   'Molecule',
   'Reaction',
   'RingCollection',

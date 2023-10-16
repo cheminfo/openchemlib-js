@@ -1,6 +1,6 @@
 'use strict';
 
-const { Molecule, version } = require('../dist/openchemlib-full');
+const { Molecule, version } = require('../full');
 
 async function doAll() {
   console.log('OCL version', version);

@@ -201,12 +201,12 @@ function compile(mode) {
   }
 }
 
-function build() {
+async function build() {
   let prom = [];
   fs.mkdirSync('dist', { recursive: true });
-  for (let k = 0; k < modules.length; k++) {
-    let mod = modules[k];
-    log(`Exporting module ${mod.name}`);
+  log('Exporting modules');
+  for (const mod of modules) {
+    log(`Exporting module ${mod.name}${suffix}`);
     let warDir = path.join('war', mod.war);
     let files = fs.readdirSync(warDir);
     let file;
@@ -230,7 +230,27 @@ function build() {
       }),
     );
   }
-  return Promise.all(prom);
+  await Promise.all(prom);
+
+  log('Creating ESM-compatible entry points');
+  for (const mod of modules) {
+    log(`Creating ESM-compatible entry point for module ${mod.name}${suffix}`);
+    const moduleInstance = require(`../dist/openchemlib-${mod.name}${suffix}.js`);
+    const moduleExports = Object.keys(moduleInstance).map(
+      (moduleExport) => `exports.${moduleExport} = OCL.${moduleExport};`,
+    );
+    const facade = `'use strict';
+
+const OCL = require('./dist/openchemlib-${mod.name}${suffix}.js');
+
+exports.default = OCL;
+${moduleExports.join('\n')}
+`;
+    fs.writeFileSync(
+      path.join(__dirname, `../${mod.name}${suffix}.js`),
+      facade,
+    );
+  }
 }
 
 function log(value) {

@@ -2,8 +2,8 @@
 
 const Benchmark = require('benchmark');
 
-const OCLNew = require('../dist/openchemlib-full.pretty');
 const OCLOld = require('../distold/openchemlib-full.pretty');
+const OCLNew = require('../full.pretty');
 
 let benzeneFragmentNew = OCLNew.Molecule.fromSmiles('c1ccccc1');
 benzeneFragmentNew.setFragment(true);
