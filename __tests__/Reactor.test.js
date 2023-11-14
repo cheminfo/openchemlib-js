@@ -9,6 +9,20 @@ const { Reactor, Molecule, Reaction, ReactionEncoder } = require('../core');
 // Currently we generate RXN files using ChemDraw
 
 describe('Reactor class', () => {
+  it('impossible water loss', () => {
+    const reaction = ReactionEncoder.decode(
+      'eMHAIhH!eF@HhP#QF Qd#!R_vq?DqtJ_@ !R@Fp]Agp',
+    );
+
+    const reactor = new Reactor(reaction);
+
+    const match = reactor.setReactant(0, Molecule.fromSmiles('C=C(O)C(C)(C)C'));
+    expect(match).toStrictEqual(true);
+
+    const products = reactor.getProducts();
+    expect(products).toHaveLength(0);
+  });
+
   it('deshydratation', () => {
     const reaction = ReactionEncoder.decode(
       'eMHAIhH!eF@HhP#QF Qd#!R_vq?DqtJ_@ !R@Fp]Agp',

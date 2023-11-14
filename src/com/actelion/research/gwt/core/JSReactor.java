@@ -23,6 +23,10 @@ public class JSReactor {
   public JSMolecule[][] getProducts() {
     StereoMolecule[][] products = reactor.getProducts();
 
+    if (products == null || products.length == 0) {
+      return new JSMolecule[0][0];
+    }
+
     JSMolecule[][] jsProducts = new JSMolecule[products.length][products[0].length];
 
     for (int i = 0; i < products.length; i++) {
