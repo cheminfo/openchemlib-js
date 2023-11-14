@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.7.2](https://github.com/cheminfo/openchemlib-js/compare/v8.7.1...v8.7.2) (2023-11-14)
+
+
+### Bug Fixes
+
+* deal correctly with non matching reactions ([#181](https://github.com/cheminfo/openchemlib-js/issues/181)) ([74e337e](https://github.com/cheminfo/openchemlib-js/commit/74e337e3f8ed9722d27296b0be52ce651b3a1d89))
+
 ## [8.7.1](https://github.com/cheminfo/openchemlib-js/compare/v8.7.0...v8.7.1) (2023-10-16)
 
 
