@@ -43,7 +43,7 @@ public class CoordinateInventor {
 	public static final int MODE_REMOVE_HYDROGEN = 2;
 	public static final int MODE_KEEP_MARKED_ATOM_COORDS = 4;
 	public static final int MODE_PREFER_MARKED_ATOM_COORDS = 8;
-	protected static final int MODE_CONSIDER_MARKED_ATOMS = MODE_KEEP_MARKED_ATOM_COORDS | MODE_PREFER_MARKED_ATOM_COORDS;
+	private static final int MODE_CONSIDER_MARKED_ATOMS = MODE_KEEP_MARKED_ATOM_COORDS | MODE_PREFER_MARKED_ATOM_COORDS;
 	public static final int MODE_DEFAULT = MODE_REMOVE_HYDROGEN;
 
 	private static final byte FLIP_AS_LAST_RESORT = 1;
@@ -126,7 +126,10 @@ public class CoordinateInventor {
 
 	/**
 	 * Creates new atom 2D-coordinates for a molecule or a part of a molecule.
-	 * Coordinates will correctly reflect E/Z double bond parities, unless the double bond is in a small ring.
+	 * Typically, the molecule has defined TH- and EZ-parities (even if unknown or none), which were not
+	 * calculated, but taken from a SMILES or from an IDCode. In these cases setParitiesValid() should have
+	 * been called to indicate that a parity calculation is not needed and even would destroy given parities.
+	 * New coordinates will correctly reflect E/Z double bond parities, unless the double bond is in a small ring.
 	 * If atom parities are available, this call is typically followed by calling mol.setStereoBondsFromParity();
 	 * Unneeded explicit hydrogens are removed, if mode includes MODE_REMOVE_HYDROGEN.
 	 * The relative orientation of all marked atoms is retained, if mode includes MODE_KEEP_MARKED_ATOM_COORDS.
@@ -1830,7 +1833,7 @@ f.mAtomY[i] = mMol.getAtomY(f.mAtom[i]) / avbl;
 		int current = 0;
 		int highest = 0;
 		while (current <= highest) {
-			for (int i=0; i<mMol.getAllConnAtomsPlusMetalBonds(graphAtom[current]); i++) {
+			for (int i=0; i<mMol.getAllConnAtoms(graphAtom[current]); i++) {
 				int candidate = mMol.getConnAtom(graphAtom[current], i);
 				int theBond = mMol.getConnBond(graphAtom[current], i);
 

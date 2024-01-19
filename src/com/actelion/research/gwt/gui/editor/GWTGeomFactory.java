@@ -1,11 +1,11 @@
 package com.actelion.research.gwt.gui.editor;
 
-import com.actelion.research.chem.ChemistryHelper;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.AtomPropertiesDialog;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.AtomQueryFeaturesDialog;
 import com.actelion.research.gwt.gui.editor.actions.dialogs.BondQueryFeaturesDialog;
+import com.actelion.research.share.gui.ChemistryGeometryHelper;
 import com.actelion.research.share.gui.DrawConfig;
 import com.actelion.research.share.gui.editor.chem.IArrow;
 import com.actelion.research.share.gui.editor.dialogs.IAtomPropertiesDialog;
@@ -41,7 +41,7 @@ public class GWTGeomFactory extends GeomFactory {
 
   @Override
   public GenericRectangle getBoundingRect(StereoMolecule m) {
-    return ChemistryHelper.getBoundingRect(m);
+    return ChemistryGeometryHelper.getBoundingRect(m);
   }
 
   public IKeyCode getDeleteKey() {

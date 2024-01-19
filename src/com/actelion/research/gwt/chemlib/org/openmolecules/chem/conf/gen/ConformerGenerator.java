@@ -29,9 +29,7 @@
 package org.openmolecules.chem.conf.gen;
 
 import com.actelion.research.calc.ThreadMaster;
-import com.actelion.research.chem.Coordinates;
-import com.actelion.research.chem.Molecule;
-import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.chem.*;
 import com.actelion.research.chem.conf.Conformer;
 import com.actelion.research.chem.conf.TorsionDB;
 import com.actelion.research.chem.conf.VDWRadii;
@@ -57,7 +55,15 @@ import java.util.TreeMap;
  * <li>A dedicated (systematic, biased or random) torsion set strategy delivers collision-free torsion sets, i.e. conformers.
  * <br><br>
  * For generating conformers in multiple threads, every thread needs its own ConformerGenerator instance.
- * If they use a RigidFragmentCache, then the cache is shared among all ConformerGenerators.
+ * If they use a RigidFragmentCache, then the cache is shared among all ConformerGenerators.<br>
+ * Important: Input molecules should contain absolute stereo centers. If they contain undefined or ESR type '&' or 'or'
+ * stereo centers, then a ConformerGenerator randomly takes one of the possible stereo isomers and generates conformers
+ * for that. If you want conformers for all possible stereo isomers of a molecules with non-absolute stereo centers,
+ * you should use a StereoIsomerEnumerator to produce all possible stereo isomers and then produce conformers for every
+ * one of them. If half of a set of stereo isomers consists of the enantiomers of the other half, then it is advisable
+ * to generate conformes for one half only and to generate the second half by just mirroring the first halfs coordinates.
+ * To do that use option skipEnantiomers==true create a mirrored set of conformers, if isSkippingEnantiomers() of the
+ * StereoIsomerEnumerator returns true.
  */
 public class ConformerGenerator {
 	public static final int STRATEGY_LIKELY_SYSTEMATIC = 1;
@@ -93,7 +99,8 @@ public class ConformerGenerator {
 	private ConformerSetDiagnostics mDiagnostics;
 
 	/**
-	 * Adds explicit hydrogen atoms where they are implicit by filling valences
+	 * Assuming that the given molecule has 2D-coordinates, this method
+	 * converts all implicit hydrogen atoms into explicit ones by filling valences
 	 * and adapting for atom charges. New hydrogen atoms receive new 2D-coordinates
 	 * by equally locating them between those two neighbors with the widest angle between
 	 * their bonds. Any stereo configurations deducible from 2D-coordinates are retained.

@@ -291,6 +291,7 @@ export declare class Molecule {
   static cBondQFNotAromatic: number;
   static cBondQFMatchFormalOrder: number;
 
+  static cHelperAll: number;
   static cHelperNone: number;
   static cHelperBitNeighbours: number;
   static cHelperBitRingsSimple: number;

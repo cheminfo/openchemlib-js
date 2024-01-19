@@ -33,6 +33,8 @@
 
 package com.actelion.research.chem.descriptor;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * DescriptorEncoder encodes int[] based descriptors
  * into byte arrays that may be used to instantiate Strings
@@ -44,10 +46,10 @@ public class DescriptorEncoder {
     private static final int PAIR_BITS = 4;
 
     // CODE Strings must contain highest ASCII character at the end; unused characters: " ' \ `
-    private static final byte[] sCode = "0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".getBytes();
-    private static final byte[] sCodeMultipleMin = "!#$%&()*+,-./".getBytes();
-    private static final byte[] sCodeMultipleMax = ":;<=>?[]^{|}~".getBytes();
-    private static int[]  sDecode,sDecodeMultiple;
+    private static final byte[] sCode = "0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".getBytes(StandardCharsets.UTF_8);
+    private static final byte[] sCodeMultipleMin = "!#$%&()*+,-./".getBytes(StandardCharsets.UTF_8);
+    private static final byte[] sCodeMultipleMax = ":;<=>?[]^{|}~".getBytes(StandardCharsets.UTF_8);
+    private static volatile int[] sDecode,sDecodeMultiple;
 
     private byte[]  mBytes;
     private int     mByteIndex,mAvailableBits,mTempData,mByteMask;
@@ -55,19 +57,21 @@ public class DescriptorEncoder {
 
     public DescriptorEncoder() {
     	if (sDecode == null) {
-    		synchronized(this) {
-		        int len = 1 << BITS;
-		        assert len <= sCode.length : "Error in encoding, not enough characters.";
-		
-		        sDecode = new int[sCode[sCode.length-1]+1];
-		        for (int i=0; i<sCode.length; i++)
-		            sDecode[sCode[i]] = i;
-		        sDecodeMultiple = new int[Math.max(sCodeMultipleMin[sCodeMultipleMin.length-1],
-		                                           sCodeMultipleMax[sCodeMultipleMax.length-1])+1];
-		        for (int i=0; i<sCodeMultipleMin.length; i++)
-		            sDecodeMultiple[sCodeMultipleMin[i]] = -i-2;
-		        for (int i=0; i<sCodeMultipleMax.length; i++)
-		            sDecodeMultiple[sCodeMultipleMax[i]] = i+2;
+    		synchronized(this.getClass()) {
+				if (sDecode == null) {
+			        int len = 1 << BITS;
+			        assert len <= sCode.length : "Error in encoding, not enough characters.";
+
+			        sDecode = new int[sCode[sCode.length-1]+1];
+			        for (int i=0; i<sCode.length; i++)
+			            sDecode[sCode[i]] = i;
+			        sDecodeMultiple = new int[Math.max(sCodeMultipleMin[sCodeMultipleMin.length-1],
+			                                           sCodeMultipleMax[sCodeMultipleMax.length-1])+1];
+			        for (int i=0; i<sCodeMultipleMin.length; i++)
+			            sDecodeMultiple[sCodeMultipleMin[i]] = -i-2;
+			        for (int i=0; i<sCodeMultipleMax.length; i++)
+			            sDecodeMultiple[sCodeMultipleMax[i]] = i+2;
+					}
     			}
     		}
         }
@@ -168,7 +172,7 @@ public class DescriptorEncoder {
      * @return int[] binary fingerprint
      */
 	public int[] decode(String s) {
-		return decode(s.getBytes());
+		return decode(s.getBytes(StandardCharsets.UTF_8));
 		}
 
     /**
@@ -194,7 +198,7 @@ public class DescriptorEncoder {
 	 * @return int[] binary fingerprint
 	 */
 	public long[] decodeLong(String s) {
-		return decodeLong(s.getBytes());
+		return decodeLong(s.getBytes(StandardCharsets.UTF_8));
 		}
 
 	/**
@@ -236,7 +240,7 @@ public class DescriptorEncoder {
      * @return byte[] array with every byte representing a count value
      */
     public byte[] decodeCounts(String s) {
-        return decodeCounts(s.getBytes());
+        return decodeCounts(s.getBytes(StandardCharsets.UTF_8));
         }
 
     /**
@@ -299,7 +303,7 @@ public class DescriptorEncoder {
      * @return int[] decoded int array
      */
     public int[] decodeIntArray(String s) {
-    	return s == null ? null : decodeIntArray(s.getBytes());
+    	return s == null ? null : decodeIntArray(s.getBytes(StandardCharsets.UTF_8));
     	}
 
     /**
@@ -393,7 +397,7 @@ public class DescriptorEncoder {
      * @return
      */
     public int[][] decodePairs(String s) {
-    	return decodePairs(s.getBytes());
+    	return decodePairs(s.getBytes(StandardCharsets.UTF_8));
     	}
 
 	private int getNeededBits(int no) {
