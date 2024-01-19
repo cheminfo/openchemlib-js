@@ -496,6 +496,7 @@ public class JSMolecule {
                                                                 // considering also cBondQFBondTypes
                                                                 // in query
 
+  public static final int cHelperAll = 0x00FF;
   public static final int cHelperNone = 0x0000;
   public static final int cHelperBitNeighbours = 0x0001;
   public static final int cHelperBitRingsSimple = 0x0002; // small rings only, no aromaticity, no

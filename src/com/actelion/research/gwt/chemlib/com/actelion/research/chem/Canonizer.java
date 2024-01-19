@@ -2424,6 +2424,10 @@ System.out.println("noOfRanks:"+canRank);
 		}
 
 
+	/**
+	 * @param includeExplicitHydrogen
+	 * @return canonical copy of this molecule
+	 */
 	public StereoMolecule getCanMolecule(boolean includeExplicitHydrogen) {
 		generateGraph();
 
@@ -2467,7 +2471,7 @@ System.out.println("noOfRanks:"+canRank);
 			}
 
 		mMol.copyMoleculeProperties(mol);
-		mMol.invalidateHelperArrays(Molecule.cHelperBitParities);
+		mol.invalidateHelperArrays(Molecule.cHelperBitParities);
 
 		return mol;
 		}
@@ -3961,7 +3965,7 @@ System.out.println();
 		  || mTHParity[atom] == Molecule.cAtomParity2)) {
 			boolean invertedOrder = false;
 
-			if (mMol.getAtomPi(atom) == 2) {	// allene
+			if (mMol.getAtomPi(atom) == 2 && mMol.getConnAtoms(atom) == 2) {	// allene
 				try {
 					for (int i=0; i<2; i++) {
 						int alleneAtom = mMol.getConnAtom(atom,i);
@@ -4132,7 +4136,7 @@ System.out.println();
 							delocalizedBondCount++;
 							delocalizedMeanAtomicNo += mMol.getAtomicNo(candidate);
 							}
-						else {
+						else if (candidate != rootAtom) {   // treat double bond at rootAtom stereo center as single bond
 							// add pseudo atoms for double and triple bonds
 							for (int j=1; j<mMol.getConnBondOrder(currentAtom, i); j++) {
 								highest++;

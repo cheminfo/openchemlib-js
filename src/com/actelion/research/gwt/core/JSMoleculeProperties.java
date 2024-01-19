@@ -1,6 +1,6 @@
 package com.actelion.research.gwt.core;
 
-import com.actelion.research.chem.PropertyCalculator;
+import com.actelion.research.chem.prediction.PropertyCalculator;
 import com.actelion.research.gwt.minimal.JSMolecule;
 import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;

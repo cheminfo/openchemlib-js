@@ -650,6 +650,7 @@ exports[`static properties of Molecule 1`] = `
   "cESRTypeAbs",
   "cESRTypeAnd",
   "cESRTypeOr",
+  "cHelperAll",
   "cHelperBitCIP",
   "cHelperBitIncludeNitrogenParities",
   "cHelperBitNeighbours",

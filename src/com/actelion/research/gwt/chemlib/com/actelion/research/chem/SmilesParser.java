@@ -39,6 +39,7 @@ import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.util.ArrayUtils;
 import com.actelion.research.util.SortedList;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeMap;
@@ -117,7 +118,7 @@ public class SmilesParser {
 		}
 
 	public StereoMolecule parseMolecule(String smiles) {
-		return smiles == null ? null : parseMolecule(smiles.getBytes());
+		return smiles == null ? null : parseMolecule(smiles.getBytes(StandardCharsets.UTF_8));
 		}
 
 	/**
@@ -138,13 +139,37 @@ public class SmilesParser {
 		return mol;
 		}
 
+	public static boolean isReactionSmiles(byte[] smiles) {
+		int count = 0;
+		int index = -1;
+
+		while (count < 3) {
+			index = ArrayUtils.indexOf(smiles, (byte)'>', index + 1);
+			while (index>0 && smiles[index - 1] == (byte)'-')
+				index = ArrayUtils.indexOf(smiles, (byte)'>', index + 1);
+
+			if (index == -1)
+				break;
+
+			count++;
+			}
+
+		return count == 2;
+		}
+
 	public Reaction parseReaction(String smiles) throws Exception {
-		return smiles == null ? null : parseReaction(smiles.getBytes());
-	}
+		return smiles == null ? null : parseReaction(smiles.getBytes(StandardCharsets.UTF_8));
+		}
 
 	public Reaction parseReaction(byte[] smiles) throws Exception {
 		int index1 = ArrayUtils.indexOf(smiles, (byte)'>');
+		while (index1 > 0 && smiles[index1-1] == (byte)'-')
+			index1 = ArrayUtils.indexOf(smiles, (byte)'>', index1+1);
+
 		int index2 = (index1 == -1) ? -1 : ArrayUtils.indexOf(smiles, (byte)'>', index1+1);
+		while (index2 > 0 && smiles[index2-1] == (byte)'-')
+			index2 = ArrayUtils.indexOf(smiles, (byte)'>', index2+1);
+
 		if (index2 == -1)
 			throw new Exception("Missing one or both separators ('>').");
 		if (ArrayUtils.indexOf(smiles, (byte)'>', index2+1) != -1)
@@ -222,7 +247,7 @@ public class SmilesParser {
 	 * @throws Exception
 	 */
 	public void parse(StereoMolecule mol, String smiles) throws Exception {
-		parse(mol, smiles.getBytes(), true, true);
+		parse(mol, smiles.getBytes(StandardCharsets.UTF_8), true, true);
 		}
 
 	public void parse(StereoMolecule mol, byte[] smiles) throws Exception {
@@ -269,6 +294,7 @@ public class SmilesParser {
 		int bondQueryFeatures = 0;
 		SortedList<Integer> atomList = new SortedList<>();
 		SmilesRange range = new SmilesRange(smiles);
+		AtomInfo atomInfo = new AtomInfo();
 
 		while (smiles[position] <= 32)
 			position++;
@@ -298,17 +324,6 @@ public class SmilesParser {
 					else if (theChar == '?') {
 						atomicNo = 0;
 						}
-					else if (theChar == '#') {
-						int number = 0;
-						while (position < endIndex
-						 && Character.isDigit(smiles[position])) {
-							number = 10 * number + smiles[position] - '0';
-							position++;
-							}
-						if (number < 1 || number >= Molecule.cAtomLabel.length)
-							throw new Exception("SmilesParser: Atomic number out of range.");
-						atomicNo = number;
-						}
 					else {
 						boolean isNot = (theChar == '!');
 						if (isNot) {
@@ -326,54 +341,42 @@ public class SmilesParser {
 								position--;
 							}
 						else {
-							int labelLength = Character.isLowerCase(smiles[position]) ? 2 : 1;
-							atomicNo = Molecule.getAtomicNoFromLabel(new String(smiles, position-1, labelLength));
-							if (atomicNo == -1) {
-								atomicNo = 6;
-								atomQueryFeatures |= Molecule.cAtomQFAny;
-								position--;
-								}
-							else {
-								position += labelLength - 1;
-								explicitHydrogens = HYDROGEN_IMPLICIT_ZERO;
+							getGetInBracketAtomInfo(smiles, position-1, endIndex, atomInfo);
+							atomicNo =  atomInfo.atomicNo;
+							position += atomInfo.labelLength - 1;
+							explicitHydrogens = HYDROGEN_IMPLICIT_ZERO;
 
-								// If we have a comma after the first atom label, then we need to parse a list.
-								// In this case we also have to set aromaticity query features from upper and lower case symbols.
-								if (allowSmarts && (smiles[position] == ',' || isNot)) {
-									boolean upperCaseFound = false;
-									boolean lowerCaseFound = false;
-									int start = position - labelLength;
-									for (int p=start; p<smiles.length; p++) {
-										if (!Character.isLetter((char)smiles[p])) {
-											int no = Molecule.getAtomicNoFromLabel(new String(smiles, start, p - start));
-											if (no != 0) {
-												atomList.add(no);
-												if (Character.isUpperCase((char)smiles[start]))
-													upperCaseFound = true;
-												else
-													lowerCaseFound = true;
-												}
-											start = p+1;
-											if (smiles[p] != ',')
-												break;
-											if (smiles[p+1] == '!') {
-												if (!isNot)
-													throw new Exception("SmilesParser: inconsistent '!' in atom list.");
-												p++;
-												start++;
-												}
-											}
+							// If we have a comma after the first atom label, then we need to parse a list.
+							// In this case we also have to set aromaticity query features from upper and lower case symbols.
+							if (allowSmarts && (smiles[position] == ',' || isNot)) {
+								boolean mayBeAromatic = atomInfo.mayBeAromatic;
+								boolean mayBeAliphatic = atomInfo.mayBeAliphatic;
+								int start = position - atomInfo.labelLength;
+								while (start < endIndex) {
+									getGetInBracketAtomInfo(smiles, start, endIndex, atomInfo);
+									atomList.add(atomInfo.atomicNo);
+									mayBeAromatic |= atomInfo.mayBeAromatic;
+									mayBeAliphatic |= atomInfo.mayBeAliphatic;
+									start += atomInfo.labelLength;
+									if (smiles[start] != ',')
+										break;
+									start++;
+									if (smiles[start] == '!') {
+										if (!isNot)
+											throw new Exception("SmilesParser: inconsistent '!' in atom list.");
+										start++;
 										}
-									if (atomList.size() > 1) {
-										explicitHydrogens = HYDROGEN_ANY;   // don't use implicit zero with atom lists
-										if (!upperCaseFound)
-											atomQueryFeatures |= Molecule.cAtomQFAromatic;
-										else if (!lowerCaseFound)
-											atomQueryFeatures |= Molecule.cAtomQFNotAromatic;
-										}
-
-									position = start-1;
 									}
+
+								if (atomList.size() > 1) {
+									explicitHydrogens = HYDROGEN_ANY;   // don't use implicit zero with atom lists
+									if (!mayBeAliphatic)
+										atomQueryFeatures |= Molecule.cAtomQFAromatic;
+									else if (!mayBeAromatic)
+										atomQueryFeatures |= Molecule.cAtomQFNotAromatic;
+									}
+
+								position = start;
 								}
 							}
 						}
@@ -1116,22 +1119,6 @@ public class SmilesParser {
 		}
 
 
-	private int parseAtomList(byte[] smiles, int start, SortedList<Integer> atomList) {
-		atomList.removeAll();
-		for (int p=start; p<smiles.length; p++) {
-			if (!Character.isLetter((char)smiles[p])) {
-				int atomicNo = Molecule.getAtomicNoFromLabel(new String(smiles, start, p - start));
-				if (atomicNo != 0)
-					atomList.add(atomicNo);
-				start = p+1;
-				if (smiles[p] != ',')
-					break;
-				}
-			}
-
-		return start-1;
-		}
-
 	private boolean isBondSymbol(char theChar) {
 		return theChar == '-'
 			|| theChar == '='
@@ -1144,6 +1131,36 @@ public class SmilesParser {
 			|| theChar == '~'
 			|| theChar == '!'
 			|| theChar == '@';
+		}
+
+	private void getGetInBracketAtomInfo(byte[] smiles, int position, int endIndex, AtomInfo info) throws Exception {
+		info.mayBeAromatic = true;
+		info.mayBeAliphatic = true;
+		if (smiles[position] == '#') {
+			position++;
+			info.atomicNo = 0;
+			info.labelLength = 1;
+			while (position < endIndex
+			 && Character.isDigit(smiles[position])) {
+				info.atomicNo = 10 * info.atomicNo + smiles[position] - '0';
+				info.labelLength++;
+				position++;
+				}
+			if (info.atomicNo == 0 || info.atomicNo >= Molecule.cAtomLabel.length)
+				throw new Exception("SmilesParser: Atomic number out of range.");
+			}
+		else if (smiles[position] >= 'A' && smiles[position] <= 'Z') {
+			info.labelLength = (smiles[position+1] >= 'a' && smiles[position+1] <= 'z') ? 2 : 1;
+			info.atomicNo = Molecule.getAtomicNoFromLabel(new String(smiles, position, info.labelLength, StandardCharsets.UTF_8));
+			info.mayBeAromatic = false;
+			}
+		else if (smiles[position] >= 'a' && smiles[position] <= 'z') {
+			info.labelLength = (smiles[position+1] >= 'a' && smiles[position+1] <= 'z') ? 2 : 1;
+			info.atomicNo = Molecule.getAtomicNoFromLabel(new String(smiles, position, info.labelLength, StandardCharsets.UTF_8));
+			info.mayBeAliphatic = false;
+			}
+		else
+			throw new Exception("SmilesParser: Unexpected character within brackets:'"+((char)smiles[position])+"'");
 		}
 
 	private int bondSymbolToQueryFeature(char symbol) {
@@ -1661,6 +1678,11 @@ public class SmilesParser {
 				mMol.setBondType(bond, Molecule.cBondTypeSingle);
 
 		return paritiesFound;
+		}
+
+	private class AtomInfo {
+		boolean mayBeAromatic,mayBeAliphatic;
+		int atomicNo,labelLength;
 		}
 
 	private class ParityNeighbour {

@@ -37,6 +37,7 @@ package com.actelion.research.chem;
 import com.actelion.research.chem.descriptor.DescriptorHelper;
 
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 public class StructureSearchSpecification implements Serializable {
     static final long serialVersionUID = 0x20120402;
@@ -51,7 +52,8 @@ public class StructureSearchSpecification implements Serializable {
 	public static final int TYPE_TAUTOMER_NO_STEREO	= 0x000006;
 	public static final int TYPE_BACKBONE_NO_STEREO	= 0x000007;
 
-	public static final int MODE_LARGEST_FRAGMENT_ONLY		= 0x000100;
+	public static final int MODE_LARGEST_FRAGMENT_ONLY	= 0x000100;
+	public static final int MODE_SINGLE_MATCH_ONLY = 0x000200;
 
 	private int mSearchType;
 	private byte[][] mIDCode;
@@ -177,14 +179,34 @@ public class StructureSearchSpecification implements Serializable {
 		return (mSearchType & MODE_LARGEST_FRAGMENT_ONLY) != 0;
 		}
 
+	public boolean isSingleMatchOnly() {
+		return (mSearchType & MODE_SINGLE_MATCH_ONLY) != 0;
+	}
+
 	public void removeDescriptors() {
 		mDescriptor = null;
 		}
 
+	/**
+	 *
+	 * @param b
+	 */
 	public void setLargestFragmentOnly(boolean b) {
 		mSearchType &= ~MODE_LARGEST_FRAGMENT_ONLY;
 		if (b)
 			mSearchType |= MODE_LARGEST_FRAGMENT_ONLY;
+		}
+
+	/**
+	 * In case of a substructure search, as default a molecule is considered a match if the query
+	 * structure is found once or multiple times. To consider only single matches a match, call this
+	 * method with argument true.
+	 * @param b
+	 */
+	public void setSingleMatchOnly(boolean b) {
+		mSearchType &= ~MODE_SINGLE_MATCH_ONLY;
+		if (b)
+			mSearchType |= MODE_SINGLE_MATCH_ONLY;
 		}
 
 	public String getDescriptorShortName() {
@@ -233,7 +255,7 @@ public class StructureSearchSpecification implements Serializable {
 						  + (((mSearchType & MODE_LARGEST_FRAGMENT_ONLY) != 0) ? "/largestFragmentOnly":"");
 
 		return "type:"+typeString
-			 + (mIDCode==null?" idcodes:null":mIDCode.length==1?" idcode:"+(mIDCode[0]==null?"null":new String(mIDCode[0])):" idcodeCount:"+mIDCode.length)
+			 + (mIDCode==null?" idcodes:null":mIDCode.length==1?" idcode:"+(mIDCode[0]==null?"null":new String(mIDCode[0], StandardCharsets.UTF_8)):" idcodeCount:"+mIDCode.length)
 			 + (mDescriptor==null?" descriptors:null":" descriptorCount:"+mDescriptor.length);
 		}
 	}
