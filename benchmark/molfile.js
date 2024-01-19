@@ -22,6 +22,6 @@ suite
     console.log(String(event.target));
   })
   .on('complete', function onComplete() {
-    console.log(`Fastest is ${this.filter('fastest').map('name')}`);
+    console.log(`Fastest is ${suite.filter('fastest').map('name')}`);
   })
   .run();
