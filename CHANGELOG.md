@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.8.1](https://github.com/cheminfo/openchemlib-js/compare/v8.8.0...v8.8.1) (2024-02-01)
+
+
+### Bug Fixes
+
+* only add data-atom-map-no when defined ([#190](https://github.com/cheminfo/openchemlib-js/issues/190)) ([567b9d7](https://github.com/cheminfo/openchemlib-js/commit/567b9d765da1ef77bafeee61b49d685cf0f35055))
+
 ## [8.8.0](https://github.com/cheminfo/openchemlib-js/compare/v8.7.2...v8.8.0) (2024-01-19)
 
 
