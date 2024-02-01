@@ -16,12 +16,12 @@ exports[`Molecule toSVG with autoCrop 1`] = `
   <line id="myId:Bond:2" class="event" x1="160.39" y1="69" x2="139.61" y2="81" stroke-width="8" opacity="0" />
   <line id="myId:Bond:3" class="event" x1="139.61" y1="81" x2="118.82" y2="69" stroke-width="8" opacity="0" />
   <line id="myId:Bond:4" class="event" x1="118.82" y1="69" x2="98.04" y2="81" stroke-width="8" opacity="0" />
-  <circle id="myId:Atom:0" class="event" data-atom-map-no="0" cx="201.96" cy="69" r="8" opacity="0" />
-  <circle id="myId:Atom:1" class="event" data-atom-map-no="0" cx="181.18" cy="81" r="8" opacity="0" />
-  <circle id="myId:Atom:2" class="event" data-atom-map-no="0" cx="160.39" cy="69" r="8" opacity="0" />
-  <circle id="myId:Atom:3" class="event" data-atom-map-no="0" cx="139.61" cy="81" r="8" opacity="0" />
-  <circle id="myId:Atom:4" class="event" data-atom-map-no="0" cx="118.82" cy="69" r="8" opacity="0" />
-  <circle id="myId:Atom:5" class="event" data-atom-map-no="0" cx="98.04" cy="81" r="8" opacity="0" />
+  <circle id="myId:Atom:0" class="event" cx="201.96" cy="69" r="8" opacity="0" />
+  <circle id="myId:Atom:1" class="event" cx="181.18" cy="81" r="8" opacity="0" />
+  <circle id="myId:Atom:2" class="event" cx="160.39" cy="69" r="8" opacity="0" />
+  <circle id="myId:Atom:3" class="event" cx="139.61" cy="81" r="8" opacity="0" />
+  <circle id="myId:Atom:4" class="event" cx="118.82" cy="69" r="8" opacity="0" />
+  <circle id="myId:Atom:5" class="event" cx="98.04" cy="81" r="8" opacity="0" />
 </svg>"
 `;
 
@@ -41,11 +41,11 @@ exports[`Molecule toSVG with autoCrop 2`] = `
   <line id="myId:Bond:2" class="event" x1="160.39" y1="69" x2="139.61" y2="81" stroke-width="8" opacity="0" />
   <line id="myId:Bond:3" class="event" x1="139.61" y1="81" x2="118.82" y2="69" stroke-width="8" opacity="0" />
   <line id="myId:Bond:4" class="event" x1="118.82" y1="69" x2="98.04" y2="81" stroke-width="8" opacity="0" />
-  <circle id="myId:Atom:0" class="event" data-atom-map-no="0" cx="201.96" cy="69" r="8" opacity="0" />
-  <circle id="myId:Atom:1" class="event" data-atom-map-no="0" cx="181.18" cy="81" r="8" opacity="0" />
-  <circle id="myId:Atom:2" class="event" data-atom-map-no="0" cx="160.39" cy="69" r="8" opacity="0" />
-  <circle id="myId:Atom:3" class="event" data-atom-map-no="0" cx="139.61" cy="81" r="8" opacity="0" />
-  <circle id="myId:Atom:4" class="event" data-atom-map-no="0" cx="118.82" cy="69" r="8" opacity="0" />
-  <circle id="myId:Atom:5" class="event" data-atom-map-no="0" cx="98.04" cy="81" r="8" opacity="0" />
+  <circle id="myId:Atom:0" class="event" cx="201.96" cy="69" r="8" opacity="0" />
+  <circle id="myId:Atom:1" class="event" cx="181.18" cy="81" r="8" opacity="0" />
+  <circle id="myId:Atom:2" class="event" cx="160.39" cy="69" r="8" opacity="0" />
+  <circle id="myId:Atom:3" class="event" cx="139.61" cy="81" r="8" opacity="0" />
+  <circle id="myId:Atom:4" class="event" cx="118.82" cy="69" r="8" opacity="0" />
+  <circle id="myId:Atom:5" class="event" cx="98.04" cy="81" r="8" opacity="0" />
 </svg>"
 `;

@@ -220,10 +220,11 @@ public class SVGDepictor extends AbstractDepictor<Void> {
 
     @Override
     protected void onDrawAtom(int atom, String symbol, double x, double y) {
+        int atomMapNo = this.getMolecule().getAtomMapNo(atom);	
         String s = "<circle " +
                 "id=\"" + getId() + ":Atom:" + atom + "\" " +
                 "class=\"event\" " + // class to respond to the mouse event
-                "data-atom-map-no=\"" + this.getMolecule().getAtomMapNo(atom) + "\" " +
+                (atomMapNo == 0 ? "" : "data-atom-map-no=\"" + atomMapNo + "\" ") +	
                 "cx=\"" + round(x) + "\" " +
                 "cy=\"" + round(y) + "\" " +
                 "r=\"" + DEFAULT_ELEM_WIDTH + "\" " +
