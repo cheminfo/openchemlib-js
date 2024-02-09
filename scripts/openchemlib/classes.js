@@ -12,6 +12,7 @@ const modified = [
   'chem/prediction/ToxicityPredictor',
 
   'gui/hidpi/HiDPIHelper',
+  'gui/hidpi/HiDPIIcon',
 
   'util/ConstantsDWAR',
 ];
@@ -215,6 +216,7 @@ exports.removed = removed.map(getFolderName);
 const generated = [
   ['chem/conf/TorsionDBData', require('./generateTorsionDBData')],
   ['chem/forcefield/mmff/CsvData', require('./generateCsvData')],
+  ['@gwt/gui/generic/ImageData', require('./generateImageData')],
 ];
 
 exports.generated = generated.map((file) => [getFilename(file[0]), file[1]]);

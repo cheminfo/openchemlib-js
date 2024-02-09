@@ -309,6 +309,10 @@ public final class Character implements Comparable<Character>, Serializable {
     return codePoint >= MIN_CODE_POINT && codePoint <= MAX_CODE_POINT;
   }
 
+  public static native boolean isWhitespace(char c)/*-{
+    return String.fromCodePoint(c).trim() === '';
+  }-*/; 
+
   public static int offsetByCodePoints(char[] a, int start, int count, int index, int codePointOffset) {
     return offsetByCodePoints(new CharSequenceAdapter(a, start, count), index, codePointOffset);
   }

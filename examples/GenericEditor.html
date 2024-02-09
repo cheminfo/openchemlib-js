@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <script src="../dist/openchemlib-full.pretty.js"></script>
+    <script type="module" src="generic-editor.js"></script>
+  </head>
+  <body style="font-family: sans-serif">
+    <div
+      style="display: flex; flex-direction: row; gap: 1em; margin-bottom: 1em"
+    >
+      <button id="loadMolecule">Load molecule</button>
+      <button id="loadFragment">Load fragment</button>
+      <button id="loadReaction">Load reaction</button>
+    </div>
+    <div style="background-color: aquamarine; padding: 10px">
+      <div id="editor" style="width: 800px; height: 600px"></div>
+    </div>
+    <div
+      style="
+        margin-top: 1em;
+        display: grid;
+        grid-template-columns: repeat(2, fit-content(100%));
+        gap: 1em;
+      "
+    >
+      <div>Change count</div>
+      <div id="changeCount"></div>
+      <div>ID Code</div>
+      <div id="idcode"></div>
+      <div>Molfile</div>
+      <div id="molfile"></div>
+    </div>
+  </body>
+</html>

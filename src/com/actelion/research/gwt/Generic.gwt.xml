@@ -1,0 +1,12 @@
+<module rename-to="oclGeneric">
+  <source path="gui/generic"/>
+  <entry-point class="com.actelion.research.gwt.gui.generic.Generic" />
+
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name="com.actelion.research.gwt.jre.Jre" />
+  <inherits name="com.actelion.research.gwt.chemlib.ChemLib" />
+  <inherits name="com.actelion.research.gwt.Core" />
+
+  <set-configuration-property name="user.agent.runtimeWarning" value="false"/>
+  <set-property name="user.agent" value="safari" />
+</module>

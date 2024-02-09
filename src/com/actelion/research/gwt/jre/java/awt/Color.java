@@ -159,4 +159,23 @@ public class Color {
     return f;
   }
 
+  public float[] getRGBColorComponents(float[] compArray) {
+    float[] f;
+    if (compArray == null) {
+      f = new float[3];
+    } else {
+      f = compArray;
+    }
+    if (realRGBValues == null) {
+      f[0] = ((float) getRed()) / 255f;
+      f[1] = ((float) getGreen()) / 255f;
+      f[2] = ((float) getBlue()) / 255f;
+    } else {
+      f[0] = realRGBValues[0];
+      f[1] = realRGBValues[1];
+      f[2] = realRGBValues[2];
+    }
+    return f;
+  }
+
 }

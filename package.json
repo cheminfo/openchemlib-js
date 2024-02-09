@@ -73,6 +73,7 @@
     "benchmark": "^2.1.4",
     "eslint": "^8.56.0",
     "eslint-config-cheminfo": "^9.1.1",
+    "fast-png": "^6.2.0",
     "gwt-api-exporter": "^2.0.0",
     "jest": "^29.7.0",
     "openchemlib-utils": "^5.8.0",
