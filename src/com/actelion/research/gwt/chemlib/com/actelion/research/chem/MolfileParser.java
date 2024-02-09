@@ -47,6 +47,7 @@ package com.actelion.research.chem;
 import com.actelion.research.io.BOMSkipper;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.TreeMap;
 
 public class MolfileParser

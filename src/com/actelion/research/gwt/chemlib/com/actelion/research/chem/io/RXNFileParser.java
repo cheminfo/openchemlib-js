@@ -40,6 +40,7 @@ import com.actelion.research.chem.reaction.ReactionEncoder;
 import com.actelion.research.io.BOMSkipper;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 
 public class RXNFileParser

@@ -43,9 +43,12 @@ const changed = [
   ['chem/forcefield/mmff/Vector3', changeVector3],
   ['chem/io/CompoundFileHelper', fixCompoundFileHelper],
   ['chem/io/RXNFileCreator', changeLineSeparator],
+  ['chem/io/RXNFileParser', replaceStandardCharsets(2)],
   ['chem/io/RXNFileV3Creator', changeLineSeparator, removeRXNStringFormat],
+  ['chem/io/SDFileParser', replaceStandardCharsets(2)],
   ['chem/Molecule', changeMolecule],
   ['chem/MolfileCreator', changeLineSeparator],
+  ['chem/MolfileParser', replaceStandardCharsets(1)],
   ['chem/MolfileV3Creator', changeLineSeparator],
   ['chem/Molecule3D', removeCloneInfos],
   ['chem/TautomerHelper', changeTautomerHelper],
@@ -251,11 +254,14 @@ function removeToStringSpaceDelimited(code) {
   return code.replaceAll(methodRegExp('toStringSpaceDelimited'), '');
 }
 
-function replaceChecked(code, from, to) {
-  if (code.indexOf(from) === -1) {
-    throw new Error(`Cannot find ${from} in code`);
+function replaceChecked(code, from, to, times = 1) {
+  for (let i = 0; i < times; i++) {
+    if (code.indexOf(from) === -1) {
+      throw new Error(`Cannot find ${from} in code (iteration: ${i}}`);
+    }
+    code = code.replace(from, to);
   }
-  return code.replace(from, to);
+  return code;
 }
 
 function removeSlice(code, start, end) {
@@ -588,13 +594,20 @@ function changeCsv(code) {
   );
   code = replaceChecked(
     code,
-    'br = new BufferedReader(new InputStreamReader(Csv.class.getResourceAsStream(path)));',
+    'br = new BufferedReader(new InputStreamReader(Csv.class.getResourceAsStream(path), StandardCharsets.UTF_8));',
     'br = new BufferedReader(new StringReader(path));',
   );
   const fnfeStart = code.indexOf('catch (FileNotFoundException e) {');
   const fnfeEnd = code.indexOf('}', fnfeStart);
   code = code.substr(0, fnfeStart) + code.substr(fnfeEnd + 1, code.length);
   return code;
+}
+
+function replaceStandardCharsets(times) {
+  return (code) => {
+    code = replaceChecked(code, 'StandardCharsets.UTF_8', '"UTF-8"', times);
+    return code;
+  };
 }
 
 const newTables = `public static Tables newMMFF94(String tableSet) {
