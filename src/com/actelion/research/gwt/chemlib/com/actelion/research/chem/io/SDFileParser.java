@@ -39,6 +39,7 @@ import com.actelion.research.chem.UniqueStringList;
 import com.actelion.research.io.BOMSkipper;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class SDFileParser extends CompoundFileParser {
     private static final int DEFAULT_RECORDS_TO_INSPECT = 10240;

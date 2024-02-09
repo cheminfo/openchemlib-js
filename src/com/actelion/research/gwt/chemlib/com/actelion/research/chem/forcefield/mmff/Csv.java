@@ -38,6 +38,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Basic CSV parser. The Csv class provides very basic CSV file parsing

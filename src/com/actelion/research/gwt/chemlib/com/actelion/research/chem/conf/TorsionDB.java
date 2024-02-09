@@ -38,6 +38,7 @@ import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.TreeMap;
 import com.actelion.research.chem.conf.TorsionDBData;
 
