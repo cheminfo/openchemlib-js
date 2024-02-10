@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html>
   <head>
@@ -44,7 +44,12 @@
         <td>
           <div
             id="editor"
-            style="width:400px;height:400px;border:solid;border-width:2px;"
+            style="
+              width: 400px;
+              height: 400px;
+              border: solid;
+              border-width: 2px;
+            "
             view-only="false"
             show-idcode="false"
             is-fragment="true"
@@ -53,7 +58,12 @@
         <td>
           <div
             id="editor2"
-            style="width:400px;height:400px;border:solid;border-width:2px;"
+            style="
+              width: 400px;
+              height: 400px;
+              border: solid;
+              border-width: 2px;
+            "
             view-only="false"
             show-idcode="false"
             is-fragment="true"
@@ -86,10 +96,10 @@
       editorCtrl2 = window.OCL.StructureEditor.createEditor('editor2');
     </script>
     <script>
-      (function() {
+      (function () {
         var old = console.log;
         var logger = document.getElementById('log');
-        console.log = function(message) {
+        console.log = function (message) {
           if (typeof message == 'object') {
             logger.innerHTML +=
               (JSON && JSON.stringify ? JSON.stringify(message) : message) +

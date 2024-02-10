@@ -7,13 +7,13 @@
   </head>
 
   <body>
-    <h1 style="text-align:center;color:darkblue">
+    <h1 style="text-align: center; color: darkblue">
       Display of Static Structures
     </h1>
 
-    <h2 style="text-align:center;">Structure Rendering Example (SVG)</h2>
+    <h2 style="text-align: center">Structure Rendering Example (SVG)</h2>
 
-    <div class="input-group" style="position: relative;">
+    <div class="input-group" style="position: relative">
       <table border="1" width="100%">
         <tbody>
           <tr>
@@ -27,10 +27,10 @@
             <td>42</td>
             <td>C6H7N</td>
             <td>93.1286</td>
-            <td style="text-align:center;">
+            <td style="text-align: center">
               <div
                 id="idcode"
-                style="width:100px;margin:auto"
+                style="width: 100px; margin: auto"
                 data-idcode="gOx@@drm\@@@@"
               ></div>
             </td>
@@ -45,7 +45,7 @@
       var el = document.getElementById('idcode');
       var btn = document.getElementById('ok');
 
-      btn.onclick = function() {
+      btn.onclick = function () {
         const mol = OCL.Molecule.fromIDCode(el.getAttribute('data-idcode'));
         el.innerHTML =
           mol.toSVG(200, 100) +

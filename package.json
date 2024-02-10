@@ -24,7 +24,9 @@
     "build-full-pretty": "npm run build:pretty -- -m full",
     "eslint": "eslint __tests__ scripts benchmark",
     "eslint-fix": "npm run eslint -- --fix",
-    "test": "npm run build && npm run test-only && npm run eslint",
+    "prettier": "prettier --check __tests__ benchmark examples scripts tests",
+    "prettier-write": "prettier --write __tests__ benchmark examples scripts tests",
+    "test": "npm run build && npm run test-only && npm run eslint && npm run prettier",
     "test-only": "jest"
   },
   "main": "./core.js",

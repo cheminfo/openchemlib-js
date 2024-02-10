@@ -156,22 +156,22 @@ describe('Molecule', () => {
 
   it('getFinalRanks', () => {
     const molecule = Molecule.fromSmiles('CCC');
-    molecule.setAtomicNo(0, 8)
+    molecule.setAtomicNo(0, 8);
     const atoms = [];
     const ranks = [...molecule.getFinalRanks()];
     for (let i = 0; i < molecule.getAllAtoms(); i++) {
       atoms.push(molecule.getAtomLabel(i), ranks[i]);
     }
-    expect(atoms).toStrictEqual(['O', 3, 'C', 2, 'C', 1])
+    expect(atoms).toStrictEqual(['O', 3, 'C', 2, 'C', 1]);
     const molecule2 = Molecule.fromSmiles('CCC');
-    molecule2.setAtomicNo(2, 8)
+    molecule2.setAtomicNo(2, 8);
     const atoms2 = [];
     const ranks2 = [...molecule2.getFinalRanks()];
     for (let i = 0; i < molecule2.getAllAtoms(); i++) {
       atoms2.push(molecule2.getAtomLabel(i), ranks2[i]);
     }
-    expect(atoms2).toStrictEqual(['C', 1, 'C', 2, 'O', 3])
-  })
+    expect(atoms2).toStrictEqual(['C', 1, 'C', 2, 'O', 3]);
+  });
 
   it('getFinalRanks of xMolecule', () => {
     const molecule = Molecule.fromSmiles('CCCO');
@@ -188,12 +188,8 @@ describe('Molecule', () => {
     }
 
     const ranks = [...molecule.getFinalRanks()];
-    expect(ranks).toStrictEqual([
-      3, 1, 2, 4, 11,
-      10, 9, 5, 6, 7,
-      8, 12
-    ])
-  })
+    expect(ranks).toStrictEqual([3, 1, 2, 4, 11, 10, 9, 5, 6, 7, 8, 12]);
+  });
 
   it('should have a method that returns the OCL object', () => {
     const molecule = Molecule.fromSmiles('C');
