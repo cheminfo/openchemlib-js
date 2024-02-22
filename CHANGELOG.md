@@ -1,5 +1,17 @@
 # Changelog
 
+## [8.9.0](https://github.com/cheminfo/openchemlib-js/compare/v8.8.1...v8.9.0) (2024-02-22)
+
+
+### Features
+
+* update OCL to v2024.2.1 ([afaae1e](https://github.com/cheminfo/openchemlib-js/commit/afaae1e5f69be99a96d83831cd9925db6796602f))
+
+
+### Bug Fixes
+
+* do not crash when drag-and-drop comes from toolbar ([#195](https://github.com/cheminfo/openchemlib-js/issues/195)) ([f10c782](https://github.com/cheminfo/openchemlib-js/commit/f10c782d1672770f636696549bd34daac087c088))
+
 ## [8.8.1](https://github.com/cheminfo/openchemlib-js/compare/v8.8.0...v8.8.1) (2024-02-01)
 
 
