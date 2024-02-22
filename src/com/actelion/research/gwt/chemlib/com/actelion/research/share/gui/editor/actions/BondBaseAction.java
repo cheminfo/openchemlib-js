@@ -79,6 +79,10 @@ public abstract class BondBaseAction extends BondHighlightAction
 
     public boolean onMouseUp(IMouseEvent evt)
     {
+        // Ignore event if the action didn't start in the editor.
+        if (origin == null) {
+            return false;
+        }
 
         boolean ok = true;
         GenericPoint pt = new GenericPoint(evt.getX(), evt.getY());
