@@ -5,9 +5,8 @@ import com.actelion.research.util.DoubleFormat;
 import org.openmolecules.chem.conf.so.ConformationRule;
 import org.openmolecules.chem.conf.so.SelfOrganizedConformer;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.TreeMap;
 
@@ -65,11 +64,35 @@ public class ConformerSetDiagnostics {
 		return mExitReason;
 	}
 
-	
+	public void writeEliminationRuleFile(String path) {
+		try {
+			BufferedWriter writer = new BufferedWriter();
+			writeDataWarriorHeader(writer, true);
+			writer.write("Structure\tcoords\tconformer\telim_rules");
+			writer.newLine();
+			int conformer = 0;
+			for (ConformerDiagnostics cd:mDiagnosticsMap.values()) {
+				writer.write(cd.getIDCode());
+				writer.write("\t");
+				writer.write(cd.getCoords());
+				writer.write("\t");
+				writer.write(conformer++);
+				writer.write("\t");
+				for (String rule:cd.getEliminationRules()) {
+					writer.write(rule);
+					writer.write("<NL>");
+				}
+				writer.write("\n");
+			}
+			writeDataWarriorFooter(writer);
+			writer.close();
+		}
+		catch (IOException ioe) {}
+	}
 
 	public void writePermutationSpace(String fileName) {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+			BufferedWriter writer = new BufferedWriter();
 			writer.write("rigid fragments");
 			for (int i=1; i<=mRotatableBond.length; i++)
 				writer.write("\ttorsion "+i);
@@ -102,7 +125,7 @@ public class ConformerSetDiagnostics {
 
 	public void writeAllConformersFile(String fileName) {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+			BufferedWriter writer = new BufferedWriter();
 			writeDataWarriorHeader(writer, true);
 			writer.write("Structure\tcoords\tname\tsuccess\tlikelihood\tcollision");
 			for (int i=1; i<=mRigidFragment.length; i++)
@@ -139,7 +162,7 @@ public class ConformerSetDiagnostics {
 
 	public void writeRigidFragmentFile(String path) {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+			BufferedWriter writer = new BufferedWriter();
 			writeDataWarriorHeader(writer, true);
 			writer.write("Structure\tcoords\tfragment\tconformer\tlikelyhood\trule strain\tatom strain");
 			writer.newLine();
@@ -171,7 +194,7 @@ public class ConformerSetDiagnostics {
 
 	public void writeRotatableBondsFile(String path) {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+			BufferedWriter writer = new BufferedWriter();
 			writeDataWarriorHeader(writer, false);
 			writer.write("Structure\ttorsion-ID\tfragments\ttorsions\tfrequenies\trelevance");
 			writer.newLine();

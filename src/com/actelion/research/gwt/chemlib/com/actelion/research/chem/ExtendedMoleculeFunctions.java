@@ -93,6 +93,35 @@ public class ExtendedMoleculeFunctions {
 	public static final String [] arrRGroupsSymbol = {"R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14","R15","R16"};
 
 
+	public final static Coordinates getCenterGravity(ExtendedMolecule mol) {
+
+		int n = mol.getAllAtoms();
+
+		int [] indices = new int [n];
+
+		for (int i = 0; i < indices.length; i++) {
+			indices[i]=i;
+		}
+
+		return getCenterGravity(mol, indices);
+	}
+
+	public final static Coordinates getCenterGravity(ExtendedMolecule mol, int[] indices) {
+
+		Coordinates c = new Coordinates();
+		for (int i = 0; i < indices.length; i++) {
+			c.x += mol.getAtomX(indices[i]);
+			c.y += mol.getAtomY(indices[i]);
+			c.z += mol.getAtomZ(indices[i]);
+		}
+		c.x /= indices.length;
+		c.y /= indices.length;
+		c.z /= indices.length;
+
+		return c;
+	}
+
+
 	public static void makeSkeleton(StereoMolecule mol) {
 		for (int bond=0; bond<mol.getAllBonds(); bond++)
 			mol.setBondType(bond, Molecule.cBondTypeSingle);
@@ -1163,9 +1192,7 @@ public class ExtendedMoleculeFunctions {
 	public static boolean isIsolatedCarbon(StereoMolecule mol, int indexAtCentral, int [] arrIndexAt){
 
 		boolean isolated=true;
-
 		int nConnected = mol.getConnAtoms(indexAtCentral);
-
 		boolean [] arrConnected = new boolean[mol.getAtoms()];
 
 		for (int i = 0; i < nConnected; i++) {
@@ -1176,7 +1203,6 @@ public class ExtendedMoleculeFunctions {
 			if(!arrConnected[indexAt]){
 				continue;
 			}
-
 			if(mol.getAtomicNo(indexAt)==6){
 				isolated=false;
 				break;

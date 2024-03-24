@@ -38,10 +38,8 @@ import com.actelion.research.chem.MolfileParser;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public abstract class CompoundFileHelper {

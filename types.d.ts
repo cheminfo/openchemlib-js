@@ -2592,8 +2592,6 @@ export interface ISmilesParserOptions {
    */
   smartsMode?: 'smiles' | 'smarts' | 'guess';
 
-  createSmartsWarnings?: boolean;
-
   skipCoordinateTemplates?: boolean;
 
   makeHydrogenExplicit?: boolean;
@@ -2602,6 +2600,13 @@ export interface ISmilesParserOptions {
    * Disable parsing of CACTVS syntax.
    */
   noCactvs?: boolean;
+
+  /**
+   * Consider single dots '.' (rather than '..') as molecule separator when parsing reactions.
+   */
+  singleDotSeparator?: boolean;
+
+  createSmartsWarnings?: boolean;
 }
 
 export interface ISmilesParserParseMoleculeOptions {
