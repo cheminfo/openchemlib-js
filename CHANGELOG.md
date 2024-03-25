@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.9.1](https://github.com/cheminfo/openchemlib-js/compare/v8.9.0...v8.9.1) (2024-03-25)
+
+
+### Bug Fixes
+
+* stop propagation of key events ([#198](https://github.com/cheminfo/openchemlib-js/issues/198)) ([bd21926](https://github.com/cheminfo/openchemlib-js/commit/bd219261daa664b30b1b327bb6884be099d43d4d))
+
 ## [8.9.0](https://github.com/cheminfo/openchemlib-js/compare/v8.8.1...v8.9.0) (2024-02-22)
 
 
