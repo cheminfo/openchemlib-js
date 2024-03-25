@@ -307,10 +307,12 @@ class DrawArea implements IChangeListener {
         meta = event.isMetaKeyDown() || event.isControlKeyDown();
         code = event.getNativeKeyCode();
         if (!meta && isValidKey(code)) {
+          event.stopPropagation();
           event.preventDefault();
         } else if (meta) {
           if (code == KeyCodes.KEY_C) {
             copyMolecule();
+            event.stopPropagation();
             event.preventDefault();
           }
         }
@@ -321,6 +323,7 @@ class DrawArea implements IChangeListener {
       public void onKeyUp(KeyUpEvent event) {
         code = event.getNativeKeyCode();
         if (!meta && isValidKey(code)) {
+          event.stopPropagation();
           event.preventDefault();
           handler.onKey(new ACTKeyEvent(code, event, // .isShiftKeyDown(),
               pressed ? (ACTKeyEvent.LETTER | ACTKeyEvent.DIGIT) : 0));
@@ -335,6 +338,7 @@ class DrawArea implements IChangeListener {
         pressed = true;
         code = event.getCharCode();
         if (isValidKey(code)) {
+          event.stopPropagation();
           event.preventDefault();
         }
       }
