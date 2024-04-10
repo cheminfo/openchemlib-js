@@ -1,6 +1,7 @@
 package java.io;
 
 public class BufferedWriter {
+  public BufferedWriter() {}
 
   public BufferedWriter(FileWriter fileWriter) {
   }
@@ -15,6 +16,9 @@ public class BufferedWriter {
   }
 
   public void write(short value) {
+  }
+
+  public void write(int value) {
   }
 
   public void flush() {

@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -233,7 +233,7 @@ public final class Character implements Comparable<Character>, Serializable {
   }
 
   public static native boolean isDigit(char c) /*-{
-                                               return (null != String.fromCharCode(c).match(/\d/));
+                                               return /\d/.test(String.fromCharCode(c));
                                                }-*/;
 
   public static boolean isHighSurrogate(char ch) {
@@ -244,14 +244,28 @@ public final class Character implements Comparable<Character>, Serializable {
    * TODO: correct Unicode handling.
    */
   public static native boolean isLetter(char c) /*-{
-                                                return (null != String.fromCharCode(c).match(/[A-Z]/i));
+                                                return /[A-Z]/i.test(String.fromCharCode(c));
+                                                }-*/;
+
+  /*
+   * TODO: correct Unicode handling.
+   */
+  public static native boolean isLetter(byte c) /*-{
+                                                return /[A-Z]/i.test(String.fromCharCode(c));
                                                 }-*/;
 
   /*
    * TODO: correct Unicode handling.
    */
   public static native boolean isLetterOrDigit(char c) /*-{
-                                                       return (null != String.fromCharCode(c).match(/[A-Z\d]/i));
+                                                       return /[A-Z\d]/i.test(String.fromCharCode(c));
+                                                       }-*/;
+
+  /*
+   * TODO: correct Unicode handling.
+   */
+  public static native boolean isLetterOrDigit(byte c) /*-{
+                                                       return /[A-Z\d]/i.test(String.fromCharCode(c));
                                                        }-*/;
 
   /*
@@ -422,7 +436,7 @@ public final class Character implements Comparable<Character>, Serializable {
   /**
    * Computes the high surrogate character of the UTF16 representation of a
    * non-BMP code point. See {@link getLowSurrogate}.
-   * 
+   *
    * @param codePoint requested codePoint, required to be >=
    *                  MIN_SUPPLEMENTARY_CODE_POINT
    * @return high surrogate character
@@ -434,7 +448,7 @@ public final class Character implements Comparable<Character>, Serializable {
   /**
    * Computes the low surrogate character of the UTF16 representation of a non-BMP
    * code point. See {@link getHighSurrogate}.
-   * 
+   *
    * @param codePoint requested codePoint, required to be >=
    *                  MIN_SUPPLEMENTARY_CODE_POINT
    * @return low surrogate character

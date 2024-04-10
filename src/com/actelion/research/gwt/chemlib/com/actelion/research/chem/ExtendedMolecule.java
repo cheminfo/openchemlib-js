@@ -36,10 +36,7 @@ package com.actelion.research.chem;
 
 import com.actelion.research.util.Angle;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Arrays;
 
 /**
@@ -212,7 +209,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		destMol.mAllAtoms = 0;
 		for (int atom=0; atom<mAllAtoms;atom++) {
 			atomMap[atom] = -1;
-			for (int i=0; i< mConnAtoms[atom]; i++) {
+			for (int i=0; i<mConnAtoms[atom]; i++) {
 				if (includeBond[mConnBond[atom][i]]) {
 					atomMap[atom] = copyAtom(destMol, atom, 0, 0);
 
@@ -294,35 +291,30 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				int lostStereoBond = -1;
 				int lostAtom = -1;
 				for (int i=0; i<mAllConnAtoms[atom]; i++) {
-//if (mConnAtom.length>=atom || atomMap.length>=mConnAtom[atom][i])
-// System.out.println("mConnAtom.length:"+mConnAtom.length+" atom:"+atom+" atomMap.length:"+atomMap.length+" i:"+i+" mConnAtom[atom][i]:"+mConnAtom[atom][i]+" mAtoms:"+mAtoms+" mAllAtoms:"+mAllAtoms);
-					if (atomMap.length>mConnAtom[atom][i]
-					 && atomMap[mConnAtom[atom][i]] != -1)
+					if (bondMap[mConnBond[atom][i]] != -1)
 						remainingNeighbours++;
 					else if (mConnBondOrder[atom][i] == 1
-							&& isStereoBond(mConnBond[atom][i])
-							&& mBondAtom[0][mConnBond[atom][i]] == atom) {
+						 && isStereoBond(mConnBond[atom][i])
+						 && mBondAtom[0][mConnBond[atom][i]] == atom) {
 						lostStereoBond = mConnBond[atom][i];
 						lostAtom = mConnAtom[atom][i];
+						}
 					}
-				}
-				if (lostStereoBond != -1
-						&& remainingNeighbours >= 3) {
+				if (lostStereoBond != -1 && remainingNeighbours >= 3) {
 					double angle = getBondAngle(atom, lostAtom);
 					double minAngleDif = 10.0;
 					int minConnBond = -1;
 					for (int i=0; i<mAllConnAtoms[atom]; i++) {
 						if (mConnBondOrder[atom][i] == 1
-								&& (!isStereoBond(mConnBond[atom][i]) || mBondAtom[0][mConnBond[atom][i]] == atom)
-								&& atomMap.length>mConnAtom[atom][i]
-								&& atomMap[mConnAtom[atom][i]] != -1) {
+						 && (!isStereoBond(mConnBond[atom][i]) || mBondAtom[0][mConnBond[atom][i]] == atom)
+						 && bondMap[mConnBond[atom][i]] != -1) {
 							double angleDif = Math.abs(getAngleDif(angle, getBondAngle(atom, mConnAtom[atom][i])));
 							if (minAngleDif > angleDif) {
 								minAngleDif = angleDif;
 								minConnBond = mConnBond[atom][i];
+								}
 							}
 						}
-					}
 					if (minConnBond != -1) {
 						int destBond = bondMap[minConnBond];
 						destMol.setBondType(destBond, mBondType[minConnBond] == cBondTypeUp ? cBondTypeDown : cBondTypeUp);
@@ -629,7 +621,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	public int getExcludedNeighbourCount(int atom) {
 		int count = 0;
 		for (int i=0; i<mConnAtoms[atom]; i++)
-			if ((mAtomQueryFeatures[i] & Molecule.cAtomQFExcludeGroup) != 0)
+			if ((mAtomQueryFeatures[mConnAtom[atom][i]] & Molecule.cAtomQFExcludeGroup) != 0)
 				count++;
 		return count;
 		}
@@ -4070,7 +4062,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				mAtomQueryFeatures[atom] &= ~cAtomQFNotChain;   // redundant
 
 			if (mAtomCharge[atom] != 0)	// explicit charge supersedes query features
-				mAtomFlags[atom] &= ~cAtomQFCharge;
+				mAtomQueryFeatures[atom] &= ~cAtomQFCharge;
+
+			if (getOccupiedValence(atom) == getMaxValence(atom)) {
+				mAtomQueryFeatures[atom] &= ~cAtomQFNeighbours;
+				mAtomQueryFeatures[atom] &= ~cAtomQFENeighbours;
+				mAtomQueryFeatures[atom] &= ~cAtomQFHydrogen;
+				mAtomQueryFeatures[atom] &= ~cAtomQFPiElectrons;
+				}
 			}
 		}
 
@@ -4107,37 +4106,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			}
 		}
 
-
 	private void writeObject(ObjectOutputStream stream) throws IOException {}
+
 	private void readObject(ObjectInputStream stream) throws IOException {}
-
-
-	public final static Coordinates getCenterGravity(ExtendedMolecule mol) {
-
-		int n = mol.getAllAtoms();
-
-		int [] indices = new int [n];
-
-		for (int i = 0; i < indices.length; i++) {
-			indices[i]=i;
-		}
-
-		return getCenterGravity(mol, indices);
-	}
-
-	public final static Coordinates getCenterGravity(ExtendedMolecule mol, int[] indices) {
-
-		Coordinates c = new Coordinates();
-		for (int i = 0; i < indices.length; i++) {
-			c.x += mol.getAtomX(indices[i]);
-			c.y += mol.getAtomY(indices[i]);
-			c.z += mol.getAtomZ(indices[i]);
-		}
-		c.x /= indices.length;
-		c.y /= indices.length;
-		c.z /= indices.length;
-
-		return c;
-	}
-
 }
