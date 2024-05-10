@@ -94,7 +94,6 @@ const removed = [
   'chem/AtomTypeList.java',
   'chem/chemicalspaces',
   'chem/Clusterer.java',
-  'chem/combinatorialspace',
   'chem/conf/BondRotationHelper.java',
   'chem/conf/ConformerSetGenerator.java',
   'chem/conf/MolecularFlexibilityCalculator.java',
