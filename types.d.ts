@@ -93,6 +93,11 @@ export declare class Molecule {
 
   // based on JSMolecule.java you can do a regexp ".*static.* (int|long|double)(.*) = .*;" and replace with "$2: number;"
 
+  static MODE_CREATE_SMARTS = 1;
+  static MODE_INCLUDE_MAPPING = 2;
+  static MODE_KEKULIZED_OUTPUT = 4; // no lower case atom labels and single/double
+                                                     // bonds to represent aromaticity
+
   static CANONIZER_CREATE_SYMMETRY_RANK: number;
   static CANONIZER_CONSIDER_DIASTEREOTOPICITY: number;
   static CANONIZER_CONSIDER_ENANTIOTOPICITY: number;
@@ -435,7 +440,7 @@ export declare class Molecule {
    */
   getOCL(): any;
 
-  toSmiles(): string;
+  toSmiles(mode?: number): string;
 
   toIsomericSmiles(): string;
 
@@ -1302,7 +1307,7 @@ export declare class Molecule {
    * @param mapNo
    * @param autoMapped
    */
-  setAtomMapNo(atom: number, mapNo: number, autoMapped: boolean): void;
+  setAtomMapNo(atom: number, mapNo: number, autoMapped?: boolean): void;
 
   /**
    * Set atom to specific isotop or to have a natural isotop distribution

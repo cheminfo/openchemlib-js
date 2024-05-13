@@ -82,11 +82,17 @@ public class JSMolecule {
   }-*/;
 
   public String toSmiles() {
+    // we still allow to old code that do not care about stereo features and provide another SMILES
     return new SmilesCreator().generateSmiles(oclMolecule);
   }
 
-  public String toIsomericSmiles(boolean includeAtomMapping) {
-    return new IsomericSmilesCreator(oclMolecule, includeAtomMapping).getSmiles();
+  public String toIsomericSmiles(int mode) {
+    return new IsomericSmilesCreator(oclMolecule, mode).getSmiles();
+  }
+
+  public String toSmarts() {
+    return new IsomericSmilesCreator(oclMolecule, IsomericSmilesCreator.MODE_CREATE_SMARTS)
+        .getSmiles();
   }
 
   public String toMolfile() {
@@ -293,7 +299,14 @@ public class JSMolecule {
     return oclMolecule;
   }
 
-  // coming form Canonizer.java
+  // coming from IsomericSmilesCreator.java
+  public static final int MODE_CREATE_SMARTS = 1;
+  public static final int MODE_INCLUDE_MAPPING = 2;
+  public static final int MODE_KEKULIZED_OUTPUT = 4; // no lower case atom labels and single/double
+                                                     // bonds to represent aromaticity
+
+
+  // coming from Canonizer.java
   public static final int CANONIZER_CREATE_SYMMETRY_RANK = 1;
   public static final int CANONIZER_CONSIDER_DIASTEREOTOPICITY = 2;
   public static final int CANONIZER_CONSIDER_ENANTIOTOPICITY = 4;
