@@ -39,15 +39,15 @@ describe('from and to SMILES', () => {
     const mol = Molecule.fromSmiles('C1=CC=CC=C1');
     expect(mol.toSmiles()).toBe('C1(=CC=CC=C1)');
     expect(mol.toIsomericSmiles()).toBe('c1ccccc1');
-    expect(mol.toIsomericSmiles(Molecule.MODE_KEKULIZED_OUTPUT)).toBe('C1=CC=CC=C1');
-    expect(mol.toIsomericSmiles(Molecule.MODE_CREATE_SMARTS)).toBe('c1ccccc1');
+    expect(mol.toIsomericSmiles({ kekulizedOutput: true })).toBe('C1=CC=CC=C1');
+    expect(mol.toIsomericSmiles({ createSmarts: true })).toBe('c1ccccc1');
     mol.setAtomMapNo(0, 1);
-    expect(mol.toIsomericSmiles(Molecule.MODE_INCLUDE_MAPPING)).toBe('c1cc[cH:1]cc1');
+    expect(mol.toIsomericSmiles({ includeMapping: true })).toBe('c1cc[cH:1]cc1');
 
     const fragment = Molecule.fromSmiles('C1=CC=CC=C1C');
     fragment.setFragment(true);
     fragment.setAtomicNo(6, 1)
-    expect(fragment.toIsomericSmiles(Molecule.MODE_CREATE_SMARTS)).toBe('c1cc[c;!H0]cc1');
+    expect(fragment.toIsomericSmiles({ createSmarts: true })).toBe('c1cc[c;!H0]cc1');
   })
 });
 

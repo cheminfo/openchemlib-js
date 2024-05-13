@@ -61,6 +61,24 @@ export interface IHoseCodesOptions {
   type: 0 | 1;
 }
 
+export interface ISmilesGeneratorOptions {
+  /**
+   * Whether to create SMILES with SMARTS capabilities.
+   * @default `false`
+   */
+  createSmarts?: boolean;
+  /**
+   * Whether to include mapping information (atomMapNo) in the SMILES.
+   * @default `false`
+   */
+  includeMapping?: boolean;
+  /**
+   * Should localisation of double bonds be attempted?
+   * @default `false`
+   */
+  kekulizedOutput?: boolean;
+}
+
 export interface Rectangle {
   /**
    * X-coordinate of the top-left corner.
@@ -93,10 +111,7 @@ export declare class Molecule {
 
   // based on JSMolecule.java you can do a regexp ".*static.* (int|long|double)(.*) = .*;" and replace with "$2: number;"
 
-  static MODE_CREATE_SMARTS = 1;
-  static MODE_INCLUDE_MAPPING = 2;
-  static MODE_KEKULIZED_OUTPUT = 4; // no lower case atom labels and single/double
-                                                     // bonds to represent aromaticity
+  // bonds to represent aromaticity
 
   static CANONIZER_CREATE_SYMMETRY_RANK: number;
   static CANONIZER_CONSIDER_DIASTEREOTOPICITY: number;
@@ -442,7 +457,7 @@ export declare class Molecule {
 
   toSmiles(mode?: number): string;
 
-  toIsomericSmiles(): string;
+  toIsomericSmiles(options?: ISmilesGeneratorOptions): string;
 
   /**
    * Returns a MDL Molfile V2000 string.

@@ -86,7 +86,29 @@ public class JSMolecule {
     return new SmilesCreator().generateSmiles(oclMolecule);
   }
 
-  public String toIsomericSmiles(int mode) {
+  public native String toIsomericSmiles(JavaScriptObject options)
+  /*-{
+    options = options || {}
+    var createSmarts = options.createSmarts === true;
+    var includeMapping = options.includeMapping === true;
+    var kekulizedOutput = options.kekulizedOutput === true;
+    console.log(createSmarts, includeMapping, kekulizedOutput);
+    return this.@com.actelion.research.gwt.minimal.JSMolecule::toIsomericSmilesInternal(ZZZ)(createSmarts, includeMapping, kekulizedOutput);
+  }-*/;
+
+  @JsIgnore
+  public String toIsomericSmilesInternal(boolean createSmarts, boolean includeMapping,
+      boolean kekulizedOutput) {
+    int mode = 0;
+    if (createSmarts) {
+      mode |= IsomericSmilesCreator.MODE_CREATE_SMARTS;
+    }
+    if (includeMapping) {
+      mode |= IsomericSmilesCreator.MODE_INCLUDE_MAPPING;
+    }
+    if (kekulizedOutput) {
+      mode |= IsomericSmilesCreator.MODE_KEKULIZED_OUTPUT;
+    }
     return new IsomericSmilesCreator(oclMolecule, mode).getSmiles();
   }
 
@@ -298,13 +320,6 @@ public class JSMolecule {
   public StereoMolecule getStereoMolecule() {
     return oclMolecule;
   }
-
-  // coming from IsomericSmilesCreator.java
-  public static final int MODE_CREATE_SMARTS = 1;
-  public static final int MODE_INCLUDE_MAPPING = 2;
-  public static final int MODE_KEKULIZED_OUTPUT = 4; // no lower case atom labels and single/double
-                                                     // bonds to represent aromaticity
-
 
   // coming from Canonizer.java
   public static final int CANONIZER_CREATE_SYMMETRY_RANK = 1;
