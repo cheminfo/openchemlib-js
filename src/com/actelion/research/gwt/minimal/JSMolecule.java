@@ -1,5 +1,6 @@
 package com.actelion.research.gwt.minimal;
 
+import com.actelion.research.gwt.minimal.MoleculeQueryFeatures;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
@@ -920,6 +921,11 @@ public class JSMolecule {
   // return oclMolecule.getAtomQueryFeatures(atom);
   // }
 
+  public MoleculeQueryFeatures getAtomQueryFeaturesObject(int atom) {
+    return MoleculeQueryFeatures.getAtomQueryFeatures(oclMolecule, atom);
+  }
+
+
   public int getAtomRadical(int atom) {
     return oclMolecule.getAtomRadical(atom);
   }
@@ -1714,4 +1720,4 @@ public class JSMolecule {
   public void setAssignParitiesToNitrogen(boolean b) {
     oclMolecule.setAssignParitiesToNitrogen(b);
   }
-}
+};
