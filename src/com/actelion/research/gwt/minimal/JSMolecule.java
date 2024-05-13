@@ -92,7 +92,6 @@ public class JSMolecule {
     var createSmarts = options.createSmarts === true;
     var includeMapping = options.includeMapping === true;
     var kekulizedOutput = options.kekulizedOutput === true;
-    console.log(createSmarts, includeMapping, kekulizedOutput);
     return this.@com.actelion.research.gwt.minimal.JSMolecule::toIsomericSmilesInternal(ZZZ)(createSmarts, includeMapping, kekulizedOutput);
   }-*/;
 
