@@ -51,6 +51,13 @@ describe('from and to SMILES', () => {
   })
 });
 
+it('smarts options', () => {
+  const fragment = Molecule.fromSmiles('C1=CC=CC=C1C');
+  fragment.setFragment(true);
+  fragment.setAtomicNo(6, 1)
+  expect(fragment.toSmarts()).toBe('c1cc[c;!H0]cc1');
+})
+
 describe('Molecule', () => {
   it('medley', () => {
     const idcode =
