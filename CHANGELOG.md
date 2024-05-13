@@ -1,5 +1,19 @@
 # Changelog
 
+## [8.10.0](https://github.com/cheminfo/openchemlib-js/compare/v8.9.0...v8.10.0) (2024-05-13)
+
+
+### Features
+
+* add possitility to generate smarts and kekule isomeric smiles ([#204](https://github.com/cheminfo/openchemlib-js/issues/204)) ([0290193](https://github.com/cheminfo/openchemlib-js/commit/0290193bde842c1be2cd4661c138906476b549b8))
+* update OCL to 2024.5.0 ([#203](https://github.com/cheminfo/openchemlib-js/issues/203)) ([802d12d](https://github.com/cheminfo/openchemlib-js/commit/802d12da550d8fd482cb4feb8245d2667b32730d))
+* update OCL to v2024.4.0 ([#197](https://github.com/cheminfo/openchemlib-js/issues/197)) ([70edd49](https://github.com/cheminfo/openchemlib-js/commit/70edd49cc5b7d45ac0e7060ad81f3281fdc4cef4))
+
+
+### Bug Fixes
+
+* stop propagation of key events ([#198](https://github.com/cheminfo/openchemlib-js/issues/198)) ([bd21926](https://github.com/cheminfo/openchemlib-js/commit/bd219261daa664b30b1b327bb6884be099d43d4d))
+
 ## [8.9.0](https://github.com/cheminfo/openchemlib-js/compare/v8.8.1...v8.9.0) (2024-02-22)
 
 
