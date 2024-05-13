@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 
-const Molecule = require('../minimal').Molecule;
+const { Molecule } = require('../minimal');
 
 describe('from and to SMILES', () => {
   it.each(['C', 'COCOC', 'c1cc2cccc3c4cccc5cccc(c(c1)c23)c54'])(
@@ -34,7 +34,29 @@ describe('from and to SMILES', () => {
     const mol = Molecule.fromSmiles(input);
     expect(mol.toIsomericSmiles()).toBe(output);
   });
+
+  it('smiles options', () => {
+    const mol = Molecule.fromSmiles('C1=CC=CC=C1');
+    expect(mol.toSmiles()).toBe('C1(=CC=CC=C1)');
+    expect(mol.toIsomericSmiles()).toBe('c1ccccc1');
+    expect(mol.toIsomericSmiles({ kekulizedOutput: true })).toBe('C1=CC=CC=C1');
+    expect(mol.toIsomericSmiles({ createSmarts: true })).toBe('c1ccccc1');
+    mol.setAtomMapNo(0, 1);
+    expect(mol.toIsomericSmiles({ includeMapping: true })).toBe('c1cc[cH:1]cc1');
+
+    const fragment = Molecule.fromSmiles('C1=CC=CC=C1C');
+    fragment.setFragment(true);
+    fragment.setAtomicNo(6, 1)
+    expect(fragment.toIsomericSmiles({ createSmarts: true })).toBe('c1cc[c;!H0]cc1');
+  })
 });
+
+it('smarts options', () => {
+  const fragment = Molecule.fromSmiles('C1=CC=CC=C1C');
+  fragment.setFragment(true);
+  fragment.setAtomicNo(6, 1)
+  expect(fragment.toSmarts()).toBe('c1cc[c;!H0]cc1');
+})
 
 describe('Molecule', () => {
   it('medley', () => {

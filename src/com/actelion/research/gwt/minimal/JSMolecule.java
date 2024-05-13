@@ -82,11 +82,38 @@ public class JSMolecule {
   }-*/;
 
   public String toSmiles() {
+    // we still allow to old code that do not care about stereo features and provide another SMILES
     return new SmilesCreator().generateSmiles(oclMolecule);
   }
 
-  public String toIsomericSmiles(boolean includeAtomMapping) {
-    return new IsomericSmilesCreator(oclMolecule, includeAtomMapping).getSmiles();
+  public native String toIsomericSmiles(JavaScriptObject options)
+  /*-{
+    options = options || {}
+    var createSmarts = options.createSmarts === true;
+    var includeMapping = options.includeMapping === true;
+    var kekulizedOutput = options.kekulizedOutput === true;
+    return this.@com.actelion.research.gwt.minimal.JSMolecule::toIsomericSmilesInternal(ZZZ)(createSmarts, includeMapping, kekulizedOutput);
+  }-*/;
+
+  @JsIgnore
+  public String toIsomericSmilesInternal(boolean createSmarts, boolean includeMapping,
+      boolean kekulizedOutput) {
+    int mode = 0;
+    if (createSmarts) {
+      mode |= IsomericSmilesCreator.MODE_CREATE_SMARTS;
+    }
+    if (includeMapping) {
+      mode |= IsomericSmilesCreator.MODE_INCLUDE_MAPPING;
+    }
+    if (kekulizedOutput) {
+      mode |= IsomericSmilesCreator.MODE_KEKULIZED_OUTPUT;
+    }
+    return new IsomericSmilesCreator(oclMolecule, mode).getSmiles();
+  }
+
+  public String toSmarts() {
+    return new IsomericSmilesCreator(oclMolecule, IsomericSmilesCreator.MODE_CREATE_SMARTS)
+        .getSmiles();
   }
 
   public String toMolfile() {
@@ -293,7 +320,7 @@ public class JSMolecule {
     return oclMolecule;
   }
 
-  // coming form Canonizer.java
+  // coming from Canonizer.java
   public static final int CANONIZER_CREATE_SYMMETRY_RANK = 1;
   public static final int CANONIZER_CONSIDER_DIASTEREOTOPICITY = 2;
   public static final int CANONIZER_CONSIDER_ENANTIOTOPICITY = 4;
