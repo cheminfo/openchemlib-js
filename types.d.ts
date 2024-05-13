@@ -455,7 +455,7 @@ export declare class Molecule {
    */
   getOCL(): any;
 
-  toSmiles(mode?: number): string;
+  toSmiles(): string;
 
   toIsomericSmiles(options?: ISmilesGeneratorOptions): string;
 
