@@ -457,6 +457,8 @@ export declare class Molecule {
 
   toSmiles(): string;
 
+  toSmarts(): string;
+
   toIsomericSmiles(options?: ISmilesGeneratorOptions): string;
 
   /**
