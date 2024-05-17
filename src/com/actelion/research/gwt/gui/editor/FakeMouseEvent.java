@@ -33,7 +33,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.actelion.research.gwt.gui.editor;
 
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Touch;
 import com.google.gwt.event.dom.client.MouseEvent;
+import com.google.gwt.event.dom.client.TouchEvent;
 
 public class FakeMouseEvent implements IMouseEvent {
   private int x = 0;
@@ -42,9 +46,40 @@ public class FakeMouseEvent implements IMouseEvent {
   private boolean ctrl = false;
   private boolean alt = false;
 
+  static MousePoint getPointFromTouchEvent(TouchEvent evt) {
+    JsArray<Touch> touches = evt.getTouches();
+    Touch touch = touches.get(0);
+    if (touch == null) {
+      return null;
+    }
+    Element target = evt.getRelativeElement();
+    int x = touch.getRelativeX(target);
+    int y = touch.getRelativeY(target);
+    return new MousePoint(x, y);
+  }
+
   public FakeMouseEvent(MouseEvent evt) {
     x = evt.getX();
     y = evt.getY();
+    shift = evt.isShiftKeyDown();
+    ctrl = evt.isControlKeyDown();
+    alt = evt.isAltKeyDown();
+  }
+
+  public FakeMouseEvent(TouchEvent evt) {
+    MousePoint point = getPointFromTouchEvent(evt);
+    if (point != null) {
+      x = point.getX();
+      y = point.getY();
+    }
+    shift = evt.isShiftKeyDown();
+    ctrl = evt.isControlKeyDown();
+    alt = evt.isAltKeyDown();
+  }
+
+  public FakeMouseEvent(TouchEvent evt, MousePoint mousePoint) {
+    x = mousePoint.getX();
+    y = mousePoint.getY();
     shift = evt.isShiftKeyDown();
     ctrl = evt.isControlKeyDown();
     alt = evt.isAltKeyDown();
