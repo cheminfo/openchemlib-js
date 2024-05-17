@@ -921,7 +921,7 @@ public class JSMolecule {
   // return oclMolecule.getAtomQueryFeatures(atom);
   // }
 
-  public MoleculeQueryFeatures getAtomQueryFeaturesObject(int atom) {
+  public JavaScriptObject getAtomQueryFeaturesObject(int atom) {
     return MoleculeQueryFeatures.getAtomQueryFeatures(oclMolecule, atom);
   }
 

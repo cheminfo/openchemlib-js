@@ -1,19 +1,15 @@
 package com.actelion.research.gwt.minimal;
 
-import jsinterop.annotations.*;
 import com.actelion.research.chem.StereoMolecule;
+import com.google.gwt.core.client.JavaScriptObject;
 
-@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
 class MoleculeQueryFeatures {
-  String oclID;
-  String smiles;
+  public static JavaScriptObject getAtomQueryFeatures(StereoMolecule oclMolecule, int atom) {
+    PlainJSObject moleculeQueryFeatures = PlainJSObject.create();
 
-  @JsOverlay
-  public static MoleculeQueryFeatures getAtomQueryFeatures(StereoMolecule oclMolecule, int atom) {
-    MoleculeQueryFeatures moleculeQueryFeatures = new MoleculeQueryFeatures();
-    moleculeQueryFeatures.oclID = "ABC";
-    // moleculeQueryFeatures.oclID = Long.toString(oclMolecule.getAtomQueryFeatures(0));
-    moleculeQueryFeatures.smiles = "asd";
+    moleculeQueryFeatures.setPropertyString("oclID", "ABC");
+    moleculeQueryFeatures.setPropertyString("smiles", "asd");
+
     return moleculeQueryFeatures;
   }
 }
