@@ -241,20 +241,36 @@ class DrawArea implements IChangeListener {
     canvas.addMouseMoveHandler(handler);
   }
 
-  public void setOnMouseMoved(MouseMoveHandler handler) {
-    canvas.addMouseMoveHandler(handler);
-  }
-
   public void setOnMouseOut(MouseOutHandler h) {
     canvas.addMouseOutHandler(h);
   }
 
-  public void setOnMousePressed(MouseDownHandler h) {
+  public void setOnMouseDown(MouseDownHandler h) {
     canvas.addMouseDownHandler(h);
   }
 
-  public void setOnMouseReleased(MouseUpHandler handler) {
+  public void setOnTouchStart(TouchStartHandler h) {
+    canvas.addTouchStartHandler(h);
+  }
+
+  public void setOnMouseMove(MouseMoveHandler handler) {
+    canvas.addMouseMoveHandler(handler);
+  }
+
+  public void setOnTouchMove(TouchMoveHandler h) {
+    canvas.addTouchMoveHandler(h);
+  }
+
+  public void setOnMouseUp(MouseUpHandler handler) {
     canvas.addMouseUpHandler(handler);
+  }
+
+  public void setOnTouchEnd(TouchEndHandler handler) {
+    canvas.addTouchEndHandler(handler);
+  }
+
+  public void setOnTouchCancel(TouchCancelHandler handler) {
+    canvas.addTouchCancelHandler(handler);
   }
 
   protected boolean isMarkush() {
