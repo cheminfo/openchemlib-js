@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.11.0](https://github.com/cheminfo/openchemlib-js/compare/v8.10.0...v8.11.0) (2024-05-17)
+
+
+### Features
+
+* add experimental support for touch events in editor ([#206](https://github.com/cheminfo/openchemlib-js/issues/206)) ([bc41dcc](https://github.com/cheminfo/openchemlib-js/commit/bc41dccbaddeedce1105046f796859d32e94ad84))
+
 ## [8.10.0](https://github.com/cheminfo/openchemlib-js/compare/v8.9.0...v8.10.0) (2024-05-13)
 
 
