@@ -14,6 +14,40 @@ export interface IMoleculeFromSmilesOptions {
   noStereo?: boolean;
 }
 
+export interface AtomQueryFeatures {
+  aromatic: boolean;
+  notAromatic: boolean;
+  notChain: boolean;
+  not2RingBonds: boolean;
+  not3RingBonds: boolean;
+  not4RingBonds: boolean;
+  noMoreNeighbours: boolean;
+  moreNeighbours: boolean;
+  matchStereo: boolean;
+  not0PiElectrons: boolean;
+  not1PiElectrons: boolean;
+  not2PiElectrons: boolean;
+  not0Hydrogen: boolean;
+  not1Hydrogen: boolean;
+  not2Hydrogen: boolean;
+  not3Hydrogen: boolean;
+  not0Neighbours: boolean;
+  not1Neighbours: boolean;
+  not2Neighbours: boolean;
+  not3Neighbours: boolean;
+  not4Neighbours: boolean;
+  notChargeNeg: boolean;
+  notCharge0: boolean;
+  noChargePos: boolean;
+  ringSize0: boolean;
+  ringSize3: boolean;
+  ringSize4: boolean;
+  ringSize5: boolean;
+  ringSize6: boolean;
+  ringSize7: boolean;
+  ringSizeLarge: boolean;
+}
+
 export interface IMoleculeToSVGOptions extends IDepictorOptions {
   /**
    * Factor used to compute the size of text nodes.
@@ -904,6 +938,12 @@ export declare class Molecule {
    * @returns standard atom label of the atom: C,Li,Sc,...
    */
   getAtomLabel(atom: number): string;
+
+  /**
+   * Get the atomic query features as an object
+   * @param atom
+   */
+  getAtomQueryFeaturesObject(atom: number): AtomQueryFeatures;
 
   /**
    * The list of atoms that are allowed at this position during sub-structure

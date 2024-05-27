@@ -100,6 +100,7 @@ exports[`prototype properties of Molecule 1`] = `
   "getAtomParity",
   "getAtomPi",
   "getAtomPreferredStereoBond",
+  "getAtomQueryFeaturesObject",
   "getAtomRadical",
   "getAtomRingBondCount",
   "getAtomRingCount",
