@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.12.0](https://github.com/cheminfo/openchemlib-js/compare/v8.11.0...v8.12.0) (2024-05-27)
+
+
+### Features
+
+* add method Molecule.getAtomQueryFeaturesObject ([c1843b8](https://github.com/cheminfo/openchemlib-js/commit/c1843b8738eb8c87d12997dd0be7b9cec265b75c))
+
 ## [8.11.0](https://github.com/cheminfo/openchemlib-js/compare/v8.10.0...v8.11.0) (2024-05-17)
 
 
