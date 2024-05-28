@@ -952,6 +952,9 @@ public class JSMolecule {
     return MoleculeQueryFeatures.getAtomQueryFeatures(oclMolecule, atom);
   }
 
+  public JavaScriptObject getBondQueryFeaturesObject(int atom) {
+    return MoleculeQueryFeatures.getBondQueryFeatures(oclMolecule, atom);
+  }
 
   public int getAtomRadical(int atom) {
     return oclMolecule.getAtomRadical(atom);

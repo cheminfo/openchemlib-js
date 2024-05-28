@@ -125,6 +125,7 @@ exports[`prototype properties of Molecule 1`] = `
   "getBondParity",
   "getBondPreferredStereoBond",
   "getBondQueryFeatures",
+  "getBondQueryFeaturesObject",
   "getBondRingSize",
   "getBondType",
   "getBondTypeSimple",
