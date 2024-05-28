@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.13.0](https://github.com/cheminfo/openchemlib-js/compare/v8.12.0...v8.13.0) (2024-05-28)
+
+
+### Features
+
+* add molecule.getBondQueryFeaturesObject ([#210](https://github.com/cheminfo/openchemlib-js/issues/210)) ([2844831](https://github.com/cheminfo/openchemlib-js/commit/2844831650d8b76442d00effbcd7ed93a66b1d18))
+
 ## [8.12.0](https://github.com/cheminfo/openchemlib-js/compare/v8.11.0...v8.12.0) (2024-05-27)
 
 
