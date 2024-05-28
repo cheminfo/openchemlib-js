@@ -48,6 +48,23 @@ export interface AtomQueryFeatures {
   ringSizeLarge: boolean;
 }
 
+export interface BondQueryFeatures {
+  single: boolean;
+  double: boolean;
+  triple: boolean;
+  delocalized: boolean;
+  metalLigand: boolean;
+  quadruple: boolean;
+  quintuple: boolean;
+  notRing: boolean;
+  ring: boolean;
+  aromatic: boolean;
+  nonAromatic: boolean;
+  ringSize: number;
+  brigdeMin: number;
+  brigdeSpan: number;
+}
+
 export interface IMoleculeToSVGOptions extends IDepictorOptions {
   /**
    * Factor used to compute the size of text nodes.
@@ -944,6 +961,12 @@ export declare class Molecule {
    * @param atom
    */
   getAtomQueryFeaturesObject(atom: number): AtomQueryFeatures;
+
+  /**
+   * Get the bond query features as an object
+   * @param bond
+   */
+  getBondQueryFeaturesObject(bond: number): BondQueryFeatures;
 
   /**
    * The list of atoms that are allowed at this position during sub-structure

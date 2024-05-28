@@ -6,79 +6,102 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 class MoleculeQueryFeatures {
   public static JavaScriptObject getAtomQueryFeatures(StereoMolecule oclMolecule, int atom) {
-    PlainJSObject moleculeQueryFeatures = PlainJSObject.create();
+    PlainJSObject toReturn = PlainJSObject.create();
     long atomQueryFeatures = oclMolecule.getAtomQueryFeatures(atom);
 
-    moleculeQueryFeatures.setPropertyBoolean("aromatic",
-        (atomQueryFeatures & Molecule.cAtomQFAromatic) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("notAromatic",
+    toReturn.setPropertyBoolean("aromatic", (atomQueryFeatures & Molecule.cAtomQFAromatic) > 0);
+    toReturn.setPropertyBoolean("notAromatic",
         (atomQueryFeatures & Molecule.cAtomQFNotAromatic) > 0);
 
-    moleculeQueryFeatures.setPropertyBoolean("notChain",
-        (atomQueryFeatures & Molecule.cAtomQFNotChain) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not2RingBonds",
+    toReturn.setPropertyBoolean("notChain", (atomQueryFeatures & Molecule.cAtomQFNotChain) > 0);
+    toReturn.setPropertyBoolean("not2RingBonds",
         (atomQueryFeatures & Molecule.cAtomQFNot2RingBonds) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not3RingBonds",
+    toReturn.setPropertyBoolean("not3RingBonds",
         (atomQueryFeatures & Molecule.cAtomQFNot3RingBonds) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not4RingBonds",
+    toReturn.setPropertyBoolean("not4RingBonds",
         (atomQueryFeatures & Molecule.cAtomQFNot4RingBonds) > 0);
 
-    moleculeQueryFeatures.setPropertyBoolean("noMoreNeighbours",
+    toReturn.setPropertyBoolean("noMoreNeighbours",
         (atomQueryFeatures & Molecule.cAtomQFNoMoreNeighbours) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("moreNeighbours",
+    toReturn.setPropertyBoolean("moreNeighbours",
         (atomQueryFeatures & Molecule.cAtomQFMoreNeighbours) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("matchStereo",
+    toReturn.setPropertyBoolean("matchStereo",
         (atomQueryFeatures & Molecule.cAtomQFMatchStereo) > 0);
 
-    moleculeQueryFeatures.setPropertyBoolean("not0PiElectrons",
+    toReturn.setPropertyBoolean("not0PiElectrons",
         (atomQueryFeatures & Molecule.cAtomQFNot0PiElectrons) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not1PiElectrons",
+    toReturn.setPropertyBoolean("not1PiElectrons",
         (atomQueryFeatures & Molecule.cAtomQFNot1PiElectron) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not2PiElectrons",
+    toReturn.setPropertyBoolean("not2PiElectrons",
         (atomQueryFeatures & Molecule.cAtomQFNot2PiElectrons) > 0);
 
-    moleculeQueryFeatures.setPropertyBoolean("not0Hydrogen",
+    toReturn.setPropertyBoolean("not0Hydrogen",
         (atomQueryFeatures & Molecule.cAtomQFNot0Hydrogen) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not1Hydrogen",
+    toReturn.setPropertyBoolean("not1Hydrogen",
         (atomQueryFeatures & Molecule.cAtomQFNot1Hydrogen) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not2Hydrogen",
+    toReturn.setPropertyBoolean("not2Hydrogen",
         (atomQueryFeatures & Molecule.cAtomQFNot2Hydrogen) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not3Hydrogen",
+    toReturn.setPropertyBoolean("not3Hydrogen",
         (atomQueryFeatures & Molecule.cAtomQFNot3Hydrogen) > 0);
 
-    moleculeQueryFeatures.setPropertyBoolean("not0Neighbours",
+    toReturn.setPropertyBoolean("not0Neighbours",
         (atomQueryFeatures & Molecule.cAtomQFNot0Neighbours) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not1Neighbours",
+    toReturn.setPropertyBoolean("not1Neighbours",
         (atomQueryFeatures & Molecule.cAtomQFNot0Neighbours) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not2Neighbours",
+    toReturn.setPropertyBoolean("not2Neighbours",
         (atomQueryFeatures & Molecule.cAtomQFNot2Neighbours) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not3Neighbours",
+    toReturn.setPropertyBoolean("not3Neighbours",
         (atomQueryFeatures & Molecule.cAtomQFNot3Neighbours) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("not4Neighbours",
+    toReturn.setPropertyBoolean("not4Neighbours",
         (atomQueryFeatures & Molecule.cAtomQFNot4Neighbours) > 0);
 
-    moleculeQueryFeatures.setPropertyBoolean("notChargeNeg",
+    toReturn.setPropertyBoolean("notChargeNeg",
         (atomQueryFeatures & Molecule.cAtomQFNotChargeNeg) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("notCharge0",
-        (atomQueryFeatures & Molecule.cAtomQFNotCharge0) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("noChargePos",
+    toReturn.setPropertyBoolean("notCharge0", (atomQueryFeatures & Molecule.cAtomQFNotCharge0) > 0);
+    toReturn.setPropertyBoolean("noChargePos",
         (atomQueryFeatures & Molecule.cAtomQFNotChargePos) > 0);
 
-    moleculeQueryFeatures.setPropertyBoolean("ringSize0",
-        (atomQueryFeatures & Molecule.cAtomQFRingSize0) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("ringSize3",
-        (atomQueryFeatures & Molecule.cAtomQFRingSize3) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("ringSize4",
-        (atomQueryFeatures & Molecule.cAtomQFRingSize4) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("ringSize5",
-        (atomQueryFeatures & Molecule.cAtomQFRingSize5) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("ringSize6",
-        (atomQueryFeatures & Molecule.cAtomQFRingSize6) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("ringSize7",
-        (atomQueryFeatures & Molecule.cAtomQFRingSize7) > 0);
-    moleculeQueryFeatures.setPropertyBoolean("ringSizeLarge",
+    toReturn.setPropertyBoolean("ringSize0", (atomQueryFeatures & Molecule.cAtomQFRingSize0) > 0);
+    toReturn.setPropertyBoolean("ringSize3", (atomQueryFeatures & Molecule.cAtomQFRingSize3) > 0);
+    toReturn.setPropertyBoolean("ringSize4", (atomQueryFeatures & Molecule.cAtomQFRingSize4) > 0);
+    toReturn.setPropertyBoolean("ringSize5", (atomQueryFeatures & Molecule.cAtomQFRingSize5) > 0);
+    toReturn.setPropertyBoolean("ringSize6", (atomQueryFeatures & Molecule.cAtomQFRingSize6) > 0);
+    toReturn.setPropertyBoolean("ringSize7", (atomQueryFeatures & Molecule.cAtomQFRingSize7) > 0);
+    toReturn.setPropertyBoolean("ringSizeLarge",
         (atomQueryFeatures & Molecule.cAtomQFRingSizeLarge) > 0);
 
-    return moleculeQueryFeatures;
+    return toReturn;
+  }
+
+  public static JavaScriptObject getBondQueryFeatures(StereoMolecule oclMolecule, int bond) {
+    PlainJSObject toReturn = PlainJSObject.create();
+    long bondQueryFeatures = oclMolecule.getBondQueryFeatures(bond);
+
+    toReturn.setPropertyBoolean("single", (bondQueryFeatures & Molecule.cBondQFSingle) > 0);
+    toReturn.setPropertyBoolean("double", (bondQueryFeatures & Molecule.cBondQFDouble) > 0);
+    toReturn.setPropertyBoolean("triple", (bondQueryFeatures & Molecule.cBondQFTriple) > 0);
+    toReturn.setPropertyBoolean("delocalized",
+        (bondQueryFeatures & Molecule.cBondQFDelocalized) > 0);
+    toReturn.setPropertyBoolean("metalLigand",
+        (bondQueryFeatures & Molecule.cBondQFMetalLigand) > 0);
+    toReturn.setPropertyBoolean("quadruple", (bondQueryFeatures & Molecule.cBondQFQuadruple) > 0);
+    toReturn.setPropertyBoolean("quintuple", (bondQueryFeatures & Molecule.cBondQFQuintuple) > 0);
+
+    toReturn.setPropertyBoolean("notRing", (bondQueryFeatures & Molecule.cBondQFNotRing) > 0);
+    toReturn.setPropertyBoolean("ring", (bondQueryFeatures & Molecule.cBondQFRing) > 0);
+
+    toReturn.setPropertyBoolean("aromatic", (bondQueryFeatures & Molecule.cBondQFAromatic) > 0);
+    toReturn.setPropertyBoolean("nonAromatic",
+        (bondQueryFeatures & Molecule.cBondQFNotAromatic) > 0);
+
+    toReturn.setPropertyInt("ringSize",
+        (int) (bondQueryFeatures & Molecule.cBondQFRingSize) >> Molecule.cBondQFRingSizeShift);
+
+    toReturn.setPropertyInt("brigdeMin",
+        (int) (bondQueryFeatures & Molecule.cBondQFBridgeMin) >> Molecule.cBondQFBridgeMinShift);
+    toReturn.setPropertyInt("brigdeSpan",
+        (int) (bondQueryFeatures & Molecule.cBondQFBridgeSpan) >> Molecule.cBondQFBridgeSpanShift);
+
+    return toReturn;
   }
 }
