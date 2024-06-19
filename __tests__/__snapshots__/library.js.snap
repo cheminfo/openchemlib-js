@@ -256,6 +256,7 @@ exports[`prototype properties of Molecule 1`] = `
   "setAtomMarker",
   "setAtomMass",
   "setAtomParity",
+  "setAtomQueryFeature",
   "setAtomRadical",
   "setAtomSelection",
   "setAtomX",
