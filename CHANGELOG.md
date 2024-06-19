@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.14.0](https://github.com/cheminfo/openchemlib-js/compare/v8.13.0...v8.14.0) (2024-06-19)
+
+
+### Features
+
+* add setAtomQueryFeature ([#213](https://github.com/cheminfo/openchemlib-js/issues/213)) ([7136cd9](https://github.com/cheminfo/openchemlib-js/commit/7136cd98f4752a633eeba2ea352ea1193c075a5b))
+
 ## [8.13.0](https://github.com/cheminfo/openchemlib-js/compare/v8.12.0...v8.13.0) (2024-05-28)
 
 
