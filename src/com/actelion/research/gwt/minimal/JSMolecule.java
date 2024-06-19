@@ -1192,9 +1192,9 @@ public class JSMolecule {
     oclMolecule.setAtomParity(atom, parity, isPseudo);
   }
 
-  // public void setAtomQueryFeature(int atom, int feature, boolean value) {
-  // oclMolecule.setAtomQueryFeature(atom, feature, value);
-  // }
+  public void setAtomQueryFeature(int atom, long feature, boolean value) {
+    oclMolecule.setAtomQueryFeature(atom, feature, value);
+  }
 
   public void setAtomRadical(int atom, int radical) {
     oclMolecule.setAtomRadical(atom, radical);
