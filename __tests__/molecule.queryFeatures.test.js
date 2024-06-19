@@ -4,12 +4,32 @@ const { Molecule } = require('../minimal');
 
 test('atom query features more than 2 neighbours', () => {
   const molecule = Molecule.fromIDCode('eF@Hp[qp');
-  const firstAtomQueryFeatures = molecule.getAtomQueryFeaturesObject(0);
-  expect(firstAtomQueryFeatures.not0Neighbours).toBe(true);
-  expect(firstAtomQueryFeatures.not1Neighbours).toBe(true);
-  expect(firstAtomQueryFeatures.not2Neighbours).toBe(true);
-  expect(firstAtomQueryFeatures.not3Neighbours).toBe(false);
-
+  const firstQueryFeatures = molecule.getAtomQueryFeaturesObject(0);
+  expect(firstQueryFeatures.not0Neighbours).toBe(true);
+  expect(firstQueryFeatures.not1Neighbour).toBe(true);
+  expect(firstQueryFeatures.not2Neighbours).toBe(true);
+  expect(firstQueryFeatures.not3Neighbours).toBe(false);
+  let secondQueryFeatures = molecule.getAtomQueryFeaturesObject(1);
+  expect(secondQueryFeatures.not0Neighbours).toBe(false);
+  expect(secondQueryFeatures.not1Neighbour).toBe(false);
+  expect(secondQueryFeatures.not2Neighbours).toBe(false);
+  expect(secondQueryFeatures.not3Neighbours).toBe(false);
+  molecule.setAtomQueryFeature(1, Molecule.cAtomQFNot0Neighbours, true);
+  molecule.setAtomQueryFeature(1, Molecule.cAtomQFNot2Neighbours, true);
+  secondQueryFeatures = molecule.getAtomQueryFeaturesObject(1);
+  expect(secondQueryFeatures.not0Neighbours).toBe(true);
+  expect(secondQueryFeatures.not1Neighbour).toBe(false);
+  expect(secondQueryFeatures.not2Neighbours).toBe(true);
+  expect(secondQueryFeatures.not3Neighbours).toBe(false);
+  molecule.setAtomQueryFeature(1, Molecule.cAtomQFNot0Neighbours, false);
+  molecule.setAtomQueryFeature(1, Molecule.cAtomQFNot2Neighbours, false);
+  molecule.setAtomQueryFeature(1, Molecule.cAtomQFNot1Neighbour, true);
+  molecule.setAtomQueryFeature(1, Molecule.cAtomQFNot3Neighbours, true);
+  secondQueryFeatures = molecule.getAtomQueryFeaturesObject(1);
+  expect(secondQueryFeatures.not0Neighbours).toBe(false);
+  expect(secondQueryFeatures.not1Neighbour).toBe(true);
+  expect(secondQueryFeatures.not2Neighbours).toBe(false);
+  expect(secondQueryFeatures.not3Neighbours).toBe(true);
 });
 
 test('atom query features exactly 2 hydrogens', () => {

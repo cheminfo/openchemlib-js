@@ -30,7 +30,7 @@ class MoleculeQueryFeatures {
 
     toReturn.setPropertyBoolean("not0PiElectrons",
         (atomQueryFeatures & Molecule.cAtomQFNot0PiElectrons) > 0);
-    toReturn.setPropertyBoolean("not1PiElectrons",
+    toReturn.setPropertyBoolean("not1PiElectron",
         (atomQueryFeatures & Molecule.cAtomQFNot1PiElectron) > 0);
     toReturn.setPropertyBoolean("not2PiElectrons",
         (atomQueryFeatures & Molecule.cAtomQFNot2PiElectrons) > 0);
@@ -46,8 +46,8 @@ class MoleculeQueryFeatures {
 
     toReturn.setPropertyBoolean("not0Neighbours",
         (atomQueryFeatures & Molecule.cAtomQFNot0Neighbours) > 0);
-    toReturn.setPropertyBoolean("not1Neighbours",
-        (atomQueryFeatures & Molecule.cAtomQFNot0Neighbours) > 0);
+    toReturn.setPropertyBoolean("not1Neighbour",
+        (atomQueryFeatures & Molecule.cAtomQFNot1Neighbour) > 0);
     toReturn.setPropertyBoolean("not2Neighbours",
         (atomQueryFeatures & Molecule.cAtomQFNot2Neighbours) > 0);
     toReturn.setPropertyBoolean("not3Neighbours",

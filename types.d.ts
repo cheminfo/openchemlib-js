@@ -25,14 +25,14 @@ export interface AtomQueryFeatures {
   moreNeighbours: boolean;
   matchStereo: boolean;
   not0PiElectrons: boolean;
-  not1PiElectrons: boolean;
+  not1PiElectron: boolean;
   not2PiElectrons: boolean;
   not0Hydrogen: boolean;
   not1Hydrogen: boolean;
   not2Hydrogen: boolean;
   not3Hydrogen: boolean;
   not0Neighbours: boolean;
-  not1Neighbours: boolean;
+  not1Neighbour: boolean;
   not2Neighbours: boolean;
   not3Neighbours: boolean;
   not4Neighbours: boolean;
@@ -1449,10 +1449,10 @@ export declare class Molecule {
    * sub-structure search.
    * </p>
    * @param atom
-   * @param feature - one of cAtomQF...
+   * @param feature - one of cAtomQF... Because of long it could be an internal object
    * @param value - if true, the feature is set, otherwise it is removed
    */
-  // setAtomQueryFeature(atom: number, feature: number, value: boolean): void;
+  setAtomQueryFeature(atom: number, feature: any, value: boolean): void;
 
   /**
    * Sets an atom's radical state as singulet,dublet,triplet or none
