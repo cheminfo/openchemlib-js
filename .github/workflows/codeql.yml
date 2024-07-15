@@ -4,9 +4,9 @@ name: "CodeQL-Advanced"
 # Define when the workflow should be triggered (on push to a specific branch and pull requests to the master branch)
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "feat-DA-2143" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "feat-DA-2143" ]
 #  schedule:
 #    - cron: '29 11 * * 5'
 
