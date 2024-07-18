@@ -393,6 +393,10 @@ public final class Character implements Comparable<Character>, Serializable {
                                                 return String.fromCharCode(c).toUpperCase().charCodeAt(0);
                                                 }-*/;
 
+  public static native char toUpperCase(byte c) /*-{
+                                                return String.fromCharCode(c).toUpperCase().charCodeAt(0);
+                                                }-*/;
+
   public static Character valueOf(char c) {
     if (c < 128) {
       Character result = BoxedValues.boxedValues[c];

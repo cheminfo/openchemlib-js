@@ -538,21 +538,37 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
-	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
 	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
 	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+	 * Note: This method includes neighbours marked as being part of an exclude group!
 	 * @param atom
 	 * @return count of category 1 neighbour atoms (excludes plain H and bond zero orders)
 	 */
-	public int getConnAtoms(int atom) {
-		return mConnAtoms[atom];
+	public int getNotExcludedConnAtoms(int atom) {
+		return mConnAtoms[atom] - getExcludedNeighbourCount(atom);
 		}
 
 
 	/**
 	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
-	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+	 * Note: This method includes neighbours marked as being part of an exclude group!
+	 * @param atom
+	 * @return count of category 1 neighbour atoms (excludes plain H and bond zero orders)
+	 */
+	public int getConnAtoms(int atom) {
+		return mConnAtoms[atom];
+	}
+
+
+	/**
+	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
 	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
 	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
@@ -566,7 +582,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
-	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
 	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
 	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
@@ -581,7 +597,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
-	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
 	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
 	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
@@ -616,13 +632,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	/**
 	 * This method returns the count of atom neighbours which are marked as being an exclude group.
 	 * @param atom
-	 * @return the number of non-hydrogen neighbor atoms
+	 * @return the number of non-hydrogen neighbor atoms marked as being part of an exclude group
 	 */
 	public int getExcludedNeighbourCount(int atom) {
 		int count = 0;
-		for (int i=0; i<mConnAtoms[atom]; i++)
-			if ((mAtomQueryFeatures[mConnAtom[atom][i]] & Molecule.cAtomQFExcludeGroup) != 0)
-				count++;
+		if (mIsFragment)
+			for (int i=0; i<mConnAtoms[atom]; i++)
+				if ((mAtomQueryFeatures[mConnAtom[atom][i]] & Molecule.cAtomQFExcludeGroup) != 0)
+					count++;
 		return count;
 		}
 
@@ -1736,17 +1753,17 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return whether the atom is a member of a delocalized ring (subset of aromatic rings)
 	 */
 	public boolean isDelocalizedAtom(int atom) {
-		return (atom < mAtoms) ? mRingSet.isDelocalizedAtom(atom) : false;
+		return atom<mAtoms && mRingSet.isDelocalizedAtom(atom);
 	}
 
 
 	public boolean isAromaticBond(int bond) {
-		return (bond < mBonds) ? mRingSet.isAromaticBond(bond) : false;
+		return bond<mBonds && mRingSet.isAromaticBond(bond);
 	}
 
 
 	public boolean isHeteroAromaticBond(int bond) {
-		return (bond < mBonds) ? mRingSet.isHeteroAromaticBond(bond) : false;
+		return bond<mBonds && mRingSet.isHeteroAromaticBond(bond);
 	}
 
 
@@ -3482,12 +3499,12 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		if ((mValidHelperArrays & cHelperBitNeighbours) == 0) {
 			handleHydrogens();
 			calculateNeighbours();
-
 			mValidHelperArrays |= cHelperBitNeighbours;
 
 			if (convertHydrogenToQueryFeatures()) {
 				handleHydrogens();
 				calculateNeighbours();
+				mValidHelperArrays |= cHelperBitNeighbours;
 				}
 			}
 
