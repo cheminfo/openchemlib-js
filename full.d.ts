@@ -6,4 +6,5 @@ export {
   AtomHighlightCallback,
   BondHighlightCallback,
   ChangeListenerCallback,
+  CanvasEditor,
 } from './types';

@@ -22,8 +22,10 @@
     "build-debug-minimal": "npm run build:pretty -- -m minimal --verbose",
     "build-minimal": "npm run build:min -- -m minimal",
     "build-full-pretty": "npm run build:pretty -- -m full",
-    "build-esm": "npm run build-full-pretty && npm run build-esm-bundle",
-    "build-esm-bundle": "esbuild full.pretty.js --bundle --format=esm --outfile=distesm/full.pretty.js && echo \"export * from '../full.pretty';\" > distesm/full.pretty.d.ts",
+    "build-esm": "npm run build-full-pretty && npm run build-esm-bundle-export",
+    "build-esm-bundle": "esbuild full.pretty.js --bundle --format=esm --outfile=distesm/full.pretty.js",
+    "build-esm-bundle-watch": "npm run build-esm-bundle -- --watch",
+    "build-esm-bundle-export": "npm run build-esm-bundle && echo \"export * from '../full.pretty';\" > distesm/full.pretty.d.ts",
     "eslint": "eslint .",
     "eslint-fix": "npm run eslint -- --fix",
     "prettier": "prettier --check .",
@@ -88,6 +90,6 @@
     "yargs": "^17.7.2"
   },
   "volta": {
-    "node": "22.4.1"
+    "node": "22.5.1"
   }
 }

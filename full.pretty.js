@@ -1,6 +1,9 @@
 'use strict';
 
 const OCL = require('./dist/openchemlib-full.pretty.js');
+const createCanvasEditor = require('./lib/canvas_editor');
+
+exports.CanvasEditor = createCanvasEditor(OCL.EditorArea, OCL.EditorToolbar);
 
 exports.default = OCL;
 exports.CanonizerUtil = OCL.CanonizerUtil;

@@ -3679,3 +3679,20 @@ export declare namespace SVGRenderer {
     height: number,
   ): string;
 }
+
+export interface CanvasEditorOptions {
+  /**
+   * The width of the canvas.
+   */
+  width: number;
+  /**
+   * The height of the canvas.
+   */
+  height: number;
+}
+
+export declare class CanvasEditor {
+  constructor(element: HTMLElement, options?: CanvasEditorOptions);
+
+  setMolecule(molecule: Molecule): void;
+}

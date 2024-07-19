@@ -18,7 +18,7 @@ export default [
   ...cheminfo,
   ...unicorn,
   {
-    files: ['*.js'],
+    files: ['*.js', 'lib/**'],
     languageOptions: {
       sourceType: 'commonjs',
     },
