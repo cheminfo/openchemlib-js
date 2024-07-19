@@ -235,7 +235,9 @@ async function build() {
   log('Creating ESM-compatible entry points');
   for (const mod of modules) {
     log(`Creating ESM-compatible entry point for module ${mod.name}${suffix}`);
-    const moduleInstance = require(`../dist/openchemlib-${mod.name}${suffix}.js`);
+    const moduleInstance = require(
+      `../dist/openchemlib-${mod.name}${suffix}.js`,
+    );
     const moduleExports = Object.keys(moduleInstance).map(
       (moduleExport) => `exports.${moduleExport} = OCL.${moduleExport};`,
     );

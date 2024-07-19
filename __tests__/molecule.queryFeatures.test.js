@@ -47,7 +47,7 @@ test('bond query features cycle of 4 atoms with aromatic bond', () => {
   expect(firstBondQueryFeatures.ringSize).toBe(4);
   expect(firstBondQueryFeatures.aromatic).toBe(true);
   expect(firstBondQueryFeatures.nonAromatic).toBe(false);
-})
+});
 
 test('bond query features atom bridge 2 to 7', () => {
   const molecule = Molecule.fromIDCode('eM@HzCNDh');
@@ -55,4 +55,4 @@ test('bond query features atom bridge 2 to 7', () => {
   expect(firstBondQueryFeatures.brigdeMin).toBe(2);
   expect(firstBondQueryFeatures.brigdeSpan).toBe(5);
   expect(firstBondQueryFeatures.nonAromatic).toBe(false);
-})
+});
