@@ -1,7 +1,7 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const { decode } = require('fast-png');
 
@@ -31,7 +31,7 @@ function generateImageData() {
     const compressed = base64.replaceAll('A'.repeat(20), '%');
     const compressedSplit = [];
     for (let i = 0; i < compressed.length; i += 50_000) {
-      compressedSplit.push(compressed.substring(i, i + 50_000));
+      compressedSplit.push(compressed.slice(i, i + 50_000));
     }
     imageData.push(
       `

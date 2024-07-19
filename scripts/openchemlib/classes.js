@@ -252,7 +252,7 @@ function methodRegExp(methodName, options = {}) {
 }
 
 function removePrintf(code) {
-  return code.replace(/System\.out\.printf/g, '// System.out.print');
+  return code.replaceAll('System.out.printf', '// System.out.print');
 }
 
 function removeToStringSpaceDelimited(code) {
@@ -261,7 +261,7 @@ function removeToStringSpaceDelimited(code) {
 
 function replaceChecked(code, from, to, times = 1) {
   for (let i = 0; i < times; i++) {
-    if (code.indexOf(from) === -1) {
+    if (!code.includes(from)) {
       throw new Error(`Cannot find ${from} in code (iteration: ${i}}`);
     }
     code = code.replace(from, to);
@@ -278,7 +278,7 @@ function removeSlice(code, start, end) {
   if (endIdx === -1) {
     throw new Error(`did not find index for: ${end}`);
   }
-  return code.substr(0, startIdx) + code.substr(endIdx + end.length);
+  return code.slice(0, startIdx) + code.slice(endIdx + end.length);
 }
 
 function changeInventorFragment(code) {
@@ -319,8 +319,8 @@ function changeTautomerHelper(code) {
 function changeTextDrawingObject(code) {
   return replaceChecked(
     code,
-    'detail.append(String.format(" size=\\"%.4f\\"", new Double(mSize)));',
-    'detail.append(" size=\\""+mSize+"\\"");',
+    String.raw`detail.append(String.format(" size=\"%.4f\"", new Double(mSize)));`,
+    String.raw`detail.append(" size=\""+mSize+"\"");`,
   );
 }
 
@@ -380,7 +380,7 @@ function changeMolecule(code) {
 }
 
 function changeLineSeparator(code) {
-  return code.replaceAll('System.lineSeparator()', '"\\n"');
+  return code.replaceAll('System.lineSeparator()', String.raw`"\n"`);
 }
 
 const newInit = `
@@ -442,10 +442,7 @@ function changeTorsionDB(code) {
   const initIndexStart = code.indexOf('private void init');
   const initIndexEnd = code.indexOf('/**', initIndexStart);
 
-  code =
-    code.substr(0, initIndexStart) +
-    newInit +
-    code.substr(initIndexEnd, code.length);
+  code = code.slice(0, initIndexStart) + newInit + code.slice(initIndexEnd);
 
   return code;
 }
@@ -496,9 +493,7 @@ function changeBondLengthSet(code) {
   );
 
   code =
-    code.substr(0, initIndexStart) +
-    newInitialize +
-    code.substr(initIndexEnd, code.length);
+    code.slice(0, initIndexStart) + newInitialize + code.slice(initIndexEnd);
 
   return code;
 }
@@ -607,7 +602,7 @@ function changeCsv(code) {
   );
   const fnfeStart = code.indexOf('catch (FileNotFoundException e) {');
   const fnfeEnd = code.indexOf('}', fnfeStart);
-  code = code.substr(0, fnfeStart) + code.substr(fnfeEnd + 1, code.length);
+  code = code.slice(0, fnfeStart) + code.slice(fnfeEnd + 1);
   return code;
 }
 
@@ -641,16 +636,13 @@ function changeTables(code) {
   const indexStart = code.indexOf('public static Tables');
   const indexEnd = code.indexOf('}', indexStart);
 
-  code =
-    code.substr(0, indexStart) +
-    newTables +
-    code.substr(indexEnd + 1, code.length);
+  code = code.slice(0, indexStart) + newTables + code.slice(indexEnd + 1);
 
   return code;
 }
 
 function replaceHashTable(code) {
-  return code.replace(/Hashtable/g, 'HashMap');
+  return code.replaceAll('Hashtable', 'HashMap');
 }
 
 function changeVector3(code) {

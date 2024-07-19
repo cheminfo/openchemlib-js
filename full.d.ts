@@ -5,5 +5,5 @@ export {
   SVGRenderer,
   AtomHighlightCallback,
   BondHighlightCallback,
-  ChangeListenerCallback
+  ChangeListenerCallback,
 } from './types';

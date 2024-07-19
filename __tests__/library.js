@@ -47,12 +47,12 @@ test('core', () => {
 });
 
 test('full', () => {
-  [full, pretty].forEach((lib) => {
+  for (const lib of [full, pretty]) {
     checkHas(lib, allAPI);
-  });
+  }
 });
 
-allAPI.forEach((key) => {
+for (const key of allAPI) {
   const api = full[key];
   if (typeof api === 'function') {
     test(`static properties of ${key}`, () => {
@@ -64,16 +64,16 @@ allAPI.forEach((key) => {
       });
     }
   }
-});
+}
 
 function checkHas(obj, properties) {
   expect(Object.keys(obj).sort()).toStrictEqual(properties.sort());
 }
 
 function checkHasNot(obj, properties) {
-  properties.forEach((prop) => {
+  for (const prop of properties) {
     expect(obj).not.toHaveProperty(prop);
-  });
+  }
 }
 
 function getFilteredKeys(obj) {

@@ -11,11 +11,11 @@ test('molfile with atomMapNo', () => {
   const newMolfile = molecule.toMolfile();
   const atomMapNo = newMolfile
     .split(/\r?\n/)
-    .filter((line) => line.match(/ [OCH] /))
-    // eslint-disable-next-line prefer-named-capture-group
+    .filter((line) => line.match(/ [CHO] /))
     .map((line) =>
-      line.replace(/.* (?<och>[OCH]) .*(?<n>.) {2}0 {2}0$/, '$<och> $<n>'),
+      line.replace(/.* (?<och>[CHO]) .*(?<n>.) {2}0 {2}0$/, '$<och> $<n>'),
     );
+
   expect(atomMapNo).toStrictEqual(['O 5', 'C 1', 'C 3', 'C 4', 'H 2']);
 
   const svg = molecule.toSVG(300, 200);

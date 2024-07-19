@@ -10,8 +10,7 @@ describe('SSSearcher', () => {
   let benzeneFragment = Molecule.fromSmiles('c1ccccc1');
   benzeneFragment.setFragment(true);
   let ethylBenzene = Molecule.fromSmiles('CCc1ccccc1');
-  let allicin = Molecule.fromSmiles('O=S(SC\\C=C)C\\C=C');
-
+  let allicin = Molecule.fromSmiles(String.raw`O=S(SC\C=C)C\C=C`);
   it('should find in itself', () => {
     let searcher = new SSSearcher();
     searcher.setMolecule(benzene);

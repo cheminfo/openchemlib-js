@@ -22,10 +22,10 @@
     "build-debug-minimal": "npm run build:pretty -- -m minimal --verbose",
     "build-minimal": "npm run build:min -- -m minimal",
     "build-full-pretty": "npm run build:pretty -- -m full",
-    "eslint": "eslint __tests__ scripts benchmark",
+    "eslint": "eslint .",
     "eslint-fix": "npm run eslint -- --fix",
-    "prettier": "prettier --check __tests__ benchmark examples scripts tests",
-    "prettier-write": "prettier --write __tests__ benchmark examples scripts tests",
+    "prettier": "prettier --check .",
+    "prettier-write": "prettier --write .",
     "test": "npm run build && npm run test-only && npm run eslint && npm run prettier",
     "test-only": "jest"
   },
@@ -75,12 +75,13 @@
     "@types/jest": "^29.5.12",
     "benchmark": "^2.1.4",
     "eslint": "^8.56.0",
-    "eslint-config-cheminfo": "^9.1.1",
+    "eslint-config-cheminfo": "^11.0.3",
     "fast-png": "^6.2.0",
+    "globals": "^15.8.0",
     "gwt-api-exporter": "^2.0.0",
     "jest": "^29.7.0",
-    "openchemlib-utils": "^5.8.0",
-    "prettier": "^3.2.5",
+    "openchemlib-utils": "^6.3.0",
+    "prettier": "^3.3.3",
     "yargs": "^17.7.2"
   }
 }

@@ -1,9 +1,9 @@
 'use strict';
 
-const childProcess = require('child_process');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
+const childProcess = require('node:child_process');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 
 const exporter = require('gwt-api-exporter');
 const yargs = require('yargs');
@@ -65,7 +65,7 @@ if (argv.m) {
 let config;
 try {
   config = require('../config.json');
-} catch (e) {
+} catch {
   // eslint-disable-next-line no-console
   console.error(
     'config.json not found. You can copy config.default.json to start from an example.',
@@ -188,9 +188,9 @@ function compile(mode) {
         maxBuffer: Infinity,
         env: { ...process.env, PATH },
       });
-    } catch (e) {
-      result = e.stdout;
-      throw e;
+    } catch (error) {
+      result = error.stdout;
+      throw error;
     } finally {
       if (verbose) {
         let name = `compile-${modules[i].name}.log`;
