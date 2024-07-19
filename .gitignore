@@ -9,6 +9,8 @@ war/**
 *.log
 /gwt/
 gwt.zip
+/jdk/
+jdk.tar.gz
 /dist/
 /distbuild/
 /distold/
