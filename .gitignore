@@ -10,4 +10,6 @@ war/**
 /gwt/
 gwt.zip
 /dist/
+/distbuild/
 /distold/
+/distesm/

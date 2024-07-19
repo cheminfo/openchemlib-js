@@ -1,5 +1,7 @@
 CHANGELOG.md
 dist
+distbuild
+distesm
 distold
 gwt
 openchemlib

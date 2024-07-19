@@ -1,11 +1,13 @@
-import cheminfo from 'eslint-config-cheminfo/base';
-import unicorn from 'eslint-config-cheminfo/unicorn';
+import cheminfo from 'eslint-config-cheminfo-typescript/base';
+import unicorn from 'eslint-config-cheminfo-typescript/unicorn';
 import globals from 'globals';
 
 export default [
   {
     ignores: [
       'dist/**',
+      'distbuild/**',
+      'distesm/**',
       'distold/**',
       'examples/**',
       'gwt/**',
