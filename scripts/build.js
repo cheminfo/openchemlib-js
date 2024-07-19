@@ -159,7 +159,7 @@ function compile(mode) {
   let min = mode === 'min';
   let PATH = process.env.PATH;
   if (config.jdk) {
-    PATH = `${path.join(config.jdk, 'bin')};${PATH}`;
+    PATH = `${path.resolve(config.jdk, 'bin')};${PATH}`;
   }
   for (let i = 0; i < modules.length; i++) {
     log(`Compiling module ${modules[i].name}`);
