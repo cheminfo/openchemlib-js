@@ -16,7 +16,7 @@ module.exports = function extendCore(exports) {
     funcTol: 1e-6,
   };
   ForceFieldMMFF94.prototype.minimise = function minimise(options) {
-    options = { ...defaultMinimiseOptions, ...options};
+    options = { ...defaultMinimiseOptions, ...options };
     return this._minimise(options.maxIts, options.gradTol, options.funcTol);
   };
 };

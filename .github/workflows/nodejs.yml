@@ -18,6 +18,8 @@ jobs:
         run: npm ci
       - name: Run ESLint
         run: npm run eslint
+      - name: Run Prettier
+        run: npm run prettier
   test:
     runs-on: ubuntu-latest
     strategy:
