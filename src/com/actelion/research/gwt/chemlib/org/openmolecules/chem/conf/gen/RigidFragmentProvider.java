@@ -82,14 +82,15 @@ import java.util.ArrayList;
  * methods and passing an overridden instance to the constructor(s) of the ConformerGenerator to be used.
  */
 public class RigidFragmentProvider {
-	private static int MAX_CONFORMERS = 16;
-	private static int MAX_ATOMS_FOR_CACHING = 32;
+	private static final int MAX_CONFORMERS = 16;
+	private static final int MAX_ATOMS_FOR_CACHING = 32;
 
 	// Random seed for initializing the SelfOrganizer.
-	private long mRandomSeed;
-	private boolean mOptimizeFragments;
+	private final long mRandomSeed;
+	private final boolean mOptimizeFragments;
 	private RigidFragmentCache mCache;
 	private ThreadMaster mThreadMaster;
+	private long mStopMillis;
 
 	public RigidFragmentProvider(long randomSeed, RigidFragmentCache cache, boolean optimizeRigidFragments) {
 		mRandomSeed = randomSeed;
@@ -106,6 +107,13 @@ public class RigidFragmentProvider {
 	 */
 	public void setThreadMaster(ThreadMaster tm) {
 		mThreadMaster = tm;
+		}
+
+	/**
+	 * @param millis time point as system millis after which to gracefully stop self organization even if not successful
+	 */
+	public void setStopTime(long millis) {
+		mStopMillis = millis;
 		}
 
 	public void setCache(RigidFragmentCache cache) {
@@ -214,7 +222,7 @@ public class RigidFragmentProvider {
 		String key = null;
 		boolean invertedEnantiomer = false;
 
-		boolean useCache = (mCache != null && atomCount <= MAX_ATOMS_FOR_CACHING);
+		boolean useCache = (mCache != null && mCache.canAddEntry() && atomCount <= MAX_ATOMS_FOR_CACHING);
 
 		// Generate stereo parities for all potential stereo features in the fragment.
 		// If one or more potential stereo features are unknown, then the fragment doesn't qualify to be cached.
@@ -283,6 +291,7 @@ public class RigidFragmentProvider {
 
 			ConformationSelfOrganizer selfOrganizer = new ConformationSelfOrganizer(fragment, true);
 			selfOrganizer.setThreadMaster(mThreadMaster);
+			selfOrganizer.setStopTime(mStopMillis);
 			selfOrganizer.initializeConformers(mRandomSeed, MAX_CONFORMERS);
 
 			// Generate multiple low constraint conformers

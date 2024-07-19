@@ -35,7 +35,6 @@ import com.actelion.research.chem.conf.TorsionDescriptorHelper;
 import com.actelion.research.util.DoubleFormat;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -75,17 +74,18 @@ private static int mDWCycle;
 private String mDWMode;
 private double[] mDWStrain; 	// TODO get rid of this section
 
-	private StereoMolecule		mMol;
+	private final StereoMolecule mMol;
     private Random				mRandom;
     private int					mMaxConformers;
     private boolean				mPoolIsClosed;
-	private ArrayList<ConformationRule> mRuleList;
+	private final ArrayList<ConformationRule> mRuleList;
 	private ArrayList<SelfOrganizedConformer> mConformerList;
 	private double              mMinStrainInPool;
-	private int[]				mRuleCount;
-	private boolean[]			mSkipRule;
+	private final int[]			mRuleCount;
+	private final boolean[]		mSkipRule;
 	private int[]				mRotatableBondForDescriptor;
 	private ThreadMaster        mThreadMaster;
+	private long                mStopMillis;
 
 	/**
 	 * Generates a new ConformationSelfOrganizer from the given molecule.
@@ -208,6 +208,13 @@ System.out.println("angle:"+a+"  in degrees:"+(a*180/Math.PI));
 		}
 
 	/**
+	 * @param millis time point as system millis after which to gracefully stop self organization even if not successful
+	 */
+	public void setStopTime(long millis) {
+		mStopMillis = millis;
+		}
+
+	/**
 	 * This convenience method returns the StereoMolecule that has been passed
 	 * to the constructor after modifying its atom coordinates
 	 * to reflect the conformer internally created by generateOneConformer().
@@ -234,7 +241,7 @@ System.out.println("angle:"+a+"  in degrees:"+(a*180/Math.PI));
         SelfOrganizedConformer conformer = new SelfOrganizedConformer(mMol);
 		SelfOrganizedConformer bestConformer = null;
 		for (int i=0; i<MAX_CONFORMER_TRIES; i++) {
-			if (mThreadMaster != null && mThreadMaster.threadMustDie())
+			if (mustStop())
 				break;
 
 			if (tryGenerateConformer(conformer) || randomSeed != 0L)
@@ -293,10 +300,7 @@ System.out.println("angle:"+a+"  in degrees:"+(a*180/Math.PI));
 		SelfOrganizedConformer conformer = null;
 		int finalPoolSize = mConformerList.size() + newConformerCount;
 		int tryCount = newConformerCount * MAX_CONFORMER_TRIES;
-		for (int i=0; i<tryCount && mConformerList.size()<finalPoolSize; i++) {
-			if (mThreadMaster != null && mThreadMaster.threadMustDie())
-				break;
-
+		for (int i=0; i<tryCount && mConformerList.size()<finalPoolSize && !mustStop(); i++) {
 			if (conformer == null)
 				conformer = new SelfOrganizedConformer(mMol);
 			if (tryGenerateConformer(conformer)) {
@@ -413,7 +417,7 @@ System.out.println("angle:"+a+"  in degrees:"+(a*180/Math.PI));
 		mLastDWConformer = null;
 
 		try {
-			mDWWriter = new BufferedWriter(new FileWriter(DATAWARRIOR_DEBUG_FILE));
+			mDWWriter = new BufferedWriter();
 			mDWWriter.write("<column properties>");
 			mDWWriter.newLine();
 			mDWWriter.write("<columnName=\"Structure\">");
@@ -598,9 +602,7 @@ System.out.println("angle:"+a+"  in degrees:"+(a*180/Math.PI));
 			optimize(conformer, bestConformer, PHASE_PRE_OPTIMIZATION);
 			}
 
-		for (int i=0; containsTrappedAtom(conformer) && i<MAX_BREAKOUT_ROUNDS; i++) {
-			if (mThreadMaster != null && mThreadMaster.threadMustDie())
-				break;
+		for (int i=0; containsTrappedAtom(conformer) && i<MAX_BREAKOUT_ROUNDS && !mustStop(); i++) {
 			if (escapeFromTrappedStates(conformer) == 0)
 				break;
 			optimize(conformer, bestConformer, PHASE_BREAKOUT);
@@ -623,17 +625,11 @@ mDWMode = PHASE_NAME[phase];
 		double[] previousTotalStrains = new double[CONSIDERED_PREVIOUS_CYCLE_COUNT];
 		int previousTotalStrainIndex = 0;
 
-		for (int outerCycle=0; outerCycle<cycles; outerCycle++) {
-			if (mThreadMaster != null && mThreadMaster.threadMustDie())
-				break;
-
+		for (int outerCycle=0; outerCycle<cycles && !mustStop(); outerCycle++) {
 			if (phase != PHASE_PREPARATION && (outerCycle % TWIST_BOAT_ESCAPE_FREQUENCY) == 0)
 				tryEscapeTwistBoats(conformer);
 
-			for (int innerCycle=0; innerCycle<atomsSquare; innerCycle++) {
-				if (mThreadMaster != null && mThreadMaster.threadMustDie())
-					break;
-
+			for (int innerCycle=0; innerCycle<atomsSquare && !mustStop(); innerCycle++) {
 				ConformationRule rule = null;
 				if (PREFER_HIGH_STRAIN_RULES) {
 					// Select the rule based on a weighted random algorithm preferring rules with larger strain
@@ -997,6 +993,11 @@ if (mDWWriter != null && conformerChanged) {
 		}
 
 			return changeDone;
+		}
+
+	private boolean mustStop() {
+		return (mThreadMaster != null && mThreadMaster.threadMustDie())
+			|| (mStopMillis != 0 && System.currentTimeMillis() > mStopMillis);
 		}
 
 	public boolean disableCollidingTorsionRules(SelfOrganizedConformer conformer) {

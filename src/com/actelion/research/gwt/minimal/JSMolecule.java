@@ -1,5 +1,6 @@
 package com.actelion.research.gwt.minimal;
 
+import com.actelion.research.gwt.minimal.MoleculeQueryFeatures;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
@@ -82,11 +83,38 @@ public class JSMolecule {
   }-*/;
 
   public String toSmiles() {
+    // we still allow to old code that do not care about stereo features and provide another SMILES
     return new SmilesCreator().generateSmiles(oclMolecule);
   }
 
-  public String toIsomericSmiles(boolean includeAtomMapping) {
-    return new IsomericSmilesCreator(oclMolecule, includeAtomMapping).getSmiles();
+  public native String toIsomericSmiles(JavaScriptObject options)
+  /*-{
+    options = options || {}
+    var createSmarts = options.createSmarts === true;
+    var includeMapping = options.includeMapping === true;
+    var kekulizedOutput = options.kekulizedOutput === true;
+    return this.@com.actelion.research.gwt.minimal.JSMolecule::toIsomericSmilesInternal(ZZZ)(createSmarts, includeMapping, kekulizedOutput);
+  }-*/;
+
+  @JsIgnore
+  public String toIsomericSmilesInternal(boolean createSmarts, boolean includeMapping,
+      boolean kekulizedOutput) {
+    int mode = 0;
+    if (createSmarts) {
+      mode |= IsomericSmilesCreator.MODE_CREATE_SMARTS;
+    }
+    if (includeMapping) {
+      mode |= IsomericSmilesCreator.MODE_INCLUDE_MAPPING;
+    }
+    if (kekulizedOutput) {
+      mode |= IsomericSmilesCreator.MODE_KEKULIZED_OUTPUT;
+    }
+    return new IsomericSmilesCreator(oclMolecule, mode).getSmiles();
+  }
+
+  public String toSmarts() {
+    return new IsomericSmilesCreator(oclMolecule, IsomericSmilesCreator.MODE_CREATE_SMARTS)
+        .getSmiles();
   }
 
   public String toMolfile() {
@@ -293,7 +321,7 @@ public class JSMolecule {
     return oclMolecule;
   }
 
-  // coming form Canonizer.java
+  // coming from Canonizer.java
   public static final int CANONIZER_CREATE_SYMMETRY_RANK = 1;
   public static final int CANONIZER_CONSIDER_DIASTEREOTOPICITY = 2;
   public static final int CANONIZER_CONSIDER_ENANTIOTOPICITY = 4;
@@ -920,6 +948,14 @@ public class JSMolecule {
   // return oclMolecule.getAtomQueryFeatures(atom);
   // }
 
+  public JavaScriptObject getAtomQueryFeaturesObject(int atom) {
+    return MoleculeQueryFeatures.getAtomQueryFeatures(oclMolecule, atom);
+  }
+
+  public JavaScriptObject getBondQueryFeaturesObject(int atom) {
+    return MoleculeQueryFeatures.getBondQueryFeatures(oclMolecule, atom);
+  }
+
   public int getAtomRadical(int atom) {
     return oclMolecule.getAtomRadical(atom);
   }
@@ -1156,9 +1192,9 @@ public class JSMolecule {
     oclMolecule.setAtomParity(atom, parity, isPseudo);
   }
 
-  // public void setAtomQueryFeature(int atom, int feature, boolean value) {
-  // oclMolecule.setAtomQueryFeature(atom, feature, value);
-  // }
+  public void setAtomQueryFeature(int atom, long feature, boolean value) {
+    oclMolecule.setAtomQueryFeature(atom, feature, value);
+  }
 
   public void setAtomRadical(int atom, int radical) {
     oclMolecule.setAtomRadical(atom, radical);
@@ -1714,4 +1750,4 @@ public class JSMolecule {
   public void setAssignParitiesToNitrogen(boolean b) {
     oclMolecule.setAssignParitiesToNitrogen(b);
   }
-}
+};

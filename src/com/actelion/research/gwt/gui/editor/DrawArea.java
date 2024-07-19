@@ -241,20 +241,36 @@ class DrawArea implements IChangeListener {
     canvas.addMouseMoveHandler(handler);
   }
 
-  public void setOnMouseMoved(MouseMoveHandler handler) {
-    canvas.addMouseMoveHandler(handler);
-  }
-
   public void setOnMouseOut(MouseOutHandler h) {
     canvas.addMouseOutHandler(h);
   }
 
-  public void setOnMousePressed(MouseDownHandler h) {
+  public void setOnMouseDown(MouseDownHandler h) {
     canvas.addMouseDownHandler(h);
   }
 
-  public void setOnMouseReleased(MouseUpHandler handler) {
+  public void setOnTouchStart(TouchStartHandler h) {
+    canvas.addTouchStartHandler(h);
+  }
+
+  public void setOnMouseMove(MouseMoveHandler handler) {
+    canvas.addMouseMoveHandler(handler);
+  }
+
+  public void setOnTouchMove(TouchMoveHandler h) {
+    canvas.addTouchMoveHandler(h);
+  }
+
+  public void setOnMouseUp(MouseUpHandler handler) {
     canvas.addMouseUpHandler(handler);
+  }
+
+  public void setOnTouchEnd(TouchEndHandler handler) {
+    canvas.addTouchEndHandler(handler);
+  }
+
+  public void setOnTouchCancel(TouchCancelHandler handler) {
+    canvas.addTouchCancelHandler(handler);
   }
 
   protected boolean isMarkush() {
@@ -307,10 +323,12 @@ class DrawArea implements IChangeListener {
         meta = event.isMetaKeyDown() || event.isControlKeyDown();
         code = event.getNativeKeyCode();
         if (!meta && isValidKey(code)) {
+          event.stopPropagation();
           event.preventDefault();
         } else if (meta) {
           if (code == KeyCodes.KEY_C) {
             copyMolecule();
+            event.stopPropagation();
             event.preventDefault();
           }
         }
@@ -321,6 +339,7 @@ class DrawArea implements IChangeListener {
       public void onKeyUp(KeyUpEvent event) {
         code = event.getNativeKeyCode();
         if (!meta && isValidKey(code)) {
+          event.stopPropagation();
           event.preventDefault();
           handler.onKey(new ACTKeyEvent(code, event, // .isShiftKeyDown(),
               pressed ? (ACTKeyEvent.LETTER | ACTKeyEvent.DIGIT) : 0));
@@ -335,6 +354,7 @@ class DrawArea implements IChangeListener {
         pressed = true;
         code = event.getCharCode();
         if (isValidKey(code)) {
+          event.stopPropagation();
           event.preventDefault();
         }
       }

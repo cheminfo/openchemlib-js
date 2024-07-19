@@ -14,6 +14,57 @@ export interface IMoleculeFromSmilesOptions {
   noStereo?: boolean;
 }
 
+export interface AtomQueryFeatures {
+  aromatic: boolean;
+  notAromatic: boolean;
+  notChain: boolean;
+  not2RingBonds: boolean;
+  not3RingBonds: boolean;
+  not4RingBonds: boolean;
+  noMoreNeighbours: boolean;
+  moreNeighbours: boolean;
+  matchStereo: boolean;
+  not0PiElectrons: boolean;
+  not1PiElectron: boolean;
+  not2PiElectrons: boolean;
+  not0Hydrogen: boolean;
+  not1Hydrogen: boolean;
+  not2Hydrogen: boolean;
+  not3Hydrogen: boolean;
+  not0Neighbours: boolean;
+  not1Neighbour: boolean;
+  not2Neighbours: boolean;
+  not3Neighbours: boolean;
+  not4Neighbours: boolean;
+  notChargeNeg: boolean;
+  notCharge0: boolean;
+  noChargePos: boolean;
+  ringSize0: boolean;
+  ringSize3: boolean;
+  ringSize4: boolean;
+  ringSize5: boolean;
+  ringSize6: boolean;
+  ringSize7: boolean;
+  ringSizeLarge: boolean;
+}
+
+export interface BondQueryFeatures {
+  single: boolean;
+  double: boolean;
+  triple: boolean;
+  delocalized: boolean;
+  metalLigand: boolean;
+  quadruple: boolean;
+  quintuple: boolean;
+  notRing: boolean;
+  ring: boolean;
+  aromatic: boolean;
+  nonAromatic: boolean;
+  ringSize: number;
+  brigdeMin: number;
+  brigdeSpan: number;
+}
+
 export interface IMoleculeToSVGOptions extends IDepictorOptions {
   /**
    * Factor used to compute the size of text nodes.
@@ -61,6 +112,24 @@ export interface IHoseCodesOptions {
   type: 0 | 1;
 }
 
+export interface ISmilesGeneratorOptions {
+  /**
+   * Whether to create SMILES with SMARTS capabilities.
+   * @default `false`
+   */
+  createSmarts?: boolean;
+  /**
+   * Whether to include mapping information (atomMapNo) in the SMILES.
+   * @default `false`
+   */
+  includeMapping?: boolean;
+  /**
+   * Should localisation of double bonds be attempted?
+   * @default `false`
+   */
+  kekulizedOutput?: boolean;
+}
+
 export interface Rectangle {
   /**
    * X-coordinate of the top-left corner.
@@ -92,6 +161,8 @@ export declare class Molecule {
   constructor(maxAtoms: number, maxBonds: number);
 
   // based on JSMolecule.java you can do a regexp ".*static.* (int|long|double)(.*) = .*;" and replace with "$2: number;"
+
+  // bonds to represent aromaticity
 
   static CANONIZER_CREATE_SYMMETRY_RANK: number;
   static CANONIZER_CONSIDER_DIASTEREOTOPICITY: number;
@@ -437,7 +508,9 @@ export declare class Molecule {
 
   toSmiles(): string;
 
-  toIsomericSmiles(): string;
+  toSmarts(): string;
+
+  toIsomericSmiles(options?: ISmilesGeneratorOptions): string;
 
   /**
    * Returns a MDL Molfile V2000 string.
@@ -884,6 +957,18 @@ export declare class Molecule {
   getAtomLabel(atom: number): string;
 
   /**
+   * Get the atomic query features as an object
+   * @param atom
+   */
+  getAtomQueryFeaturesObject(atom: number): AtomQueryFeatures;
+
+  /**
+   * Get the bond query features as an object
+   * @param bond
+   */
+  getBondQueryFeaturesObject(bond: number): BondQueryFeatures;
+
+  /**
    * The list of atoms that are allowed at this position during sub-structure
    * search. (or refused atoms, if atom query feature cAtomQFAny is set).
    * @param atom
@@ -1302,7 +1387,7 @@ export declare class Molecule {
    * @param mapNo
    * @param autoMapped
    */
-  setAtomMapNo(atom: number, mapNo: number, autoMapped: boolean): void;
+  setAtomMapNo(atom: number, mapNo: number, autoMapped?: boolean): void;
 
   /**
    * Set atom to specific isotop or to have a natural isotop distribution
@@ -1364,10 +1449,10 @@ export declare class Molecule {
    * sub-structure search.
    * </p>
    * @param atom
-   * @param feature - one of cAtomQF...
+   * @param feature - one of cAtomQF... Because of long it could be an internal object
    * @param value - if true, the feature is set, otherwise it is removed
    */
-  // setAtomQueryFeature(atom: number, feature: number, value: boolean): void;
+  setAtomQueryFeature(atom: number, feature: any, value: boolean): void;
 
   /**
    * Sets an atom's radical state as singulet,dublet,triplet or none
@@ -2592,8 +2677,6 @@ export interface ISmilesParserOptions {
    */
   smartsMode?: 'smiles' | 'smarts' | 'guess';
 
-  createSmartsWarnings?: boolean;
-
   skipCoordinateTemplates?: boolean;
 
   makeHydrogenExplicit?: boolean;
@@ -2602,6 +2685,13 @@ export interface ISmilesParserOptions {
    * Disable parsing of CACTVS syntax.
    */
   noCactvs?: boolean;
+
+  /**
+   * Consider single dots '.' (rather than '..') as molecule separator when parsing reactions.
+   */
+  singleDotSeparator?: boolean;
+
+  createSmartsWarnings?: boolean;
 }
 
 export interface ISmilesParserParseMoleculeOptions {

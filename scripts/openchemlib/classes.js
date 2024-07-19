@@ -30,6 +30,10 @@ const changed = [
     changeConformerGenerator,
   ],
   [
+    '@org/openmolecules/chem/conf/so/ConformationSelfOrganizer',
+    changeConformationSelfOrganizer,
+  ],
+  [
     '@org/openmolecules/chem/conf/so/SelfOrganizedConformer',
     changeSelfOrganizedConformer,
   ],
@@ -91,7 +95,6 @@ const removed = [
   'chem/AtomTypeList.java',
   'chem/chemicalspaces',
   'chem/Clusterer.java',
-  'chem/combinatorialspace',
   'chem/conf/BondRotationHelper.java',
   'chem/conf/ConformerSetGenerator.java',
   'chem/conf/MolecularFlexibilityCalculator.java',
@@ -501,7 +504,10 @@ function changeBondLengthSet(code) {
 }
 
 function changeConformerSetDiagnostics(code) {
-  code = code.replace(methodRegExp('writeEliminationRuleFile'), '');
+  code = code.replaceAll(
+    /BufferedWriter writer = new BufferedWriter.*/g,
+    'BufferedWriter writer = new BufferedWriter();',
+  );
   return code;
 }
 
@@ -659,5 +665,18 @@ function fixCompoundFileHelper(code) {
     '',
   );
   code = code.replaceAll('file.getName()', '""');
+  return code;
+}
+
+function changeConformationSelfOrganizer(code) {
+  code = code.replace('import java.io.FileOutputStream;\n', '');
+  code = code.replace(
+    'import java.io.OutputStreamWriter;\nimport java.nio.charset.StandardCharsets;\n',
+    '',
+  );
+  code = code.replace(
+    /mDWWriter = new BufferedWriter.*/,
+    'mDWWriter = new BufferedWriter();',
+  );
   return code;
 }

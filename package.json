@@ -1,6 +1,6 @@
 {
   "name": "openchemlib",
-  "version": "8.8.1",
+  "version": "8.14.0",
   "description": "Manipulate molecules",
   "keywords": [
     "chemistry",
@@ -72,6 +72,7 @@
   },
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "benchmark": "^2.1.4",
     "eslint": "^8.56.0",
     "eslint-config-cheminfo": "^9.1.1",

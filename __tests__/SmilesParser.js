@@ -65,11 +65,10 @@ it('should optionally skip coordinate templates', () => {
 it('should optionally make hydrogens explicit', () => {
   const smiles = '[CH4]';
   const molecule = new Molecule(0, 0);
-  const parserWithoutExplicitH = new SmilesParser({ smartsMode: 'smarts' });
+  const parserWithoutExplicitH = new SmilesParser();
   parserWithoutExplicitH.parseMolecule(smiles, { molecule });
   expect(molecule.getAllAtoms()).toBe(1);
   const parserWithExplicitH = new SmilesParser({
-    smartsMode: 'smarts',
     makeHydrogenExplicit: true,
   });
   parserWithExplicitH.parseMolecule(smiles, { molecule });

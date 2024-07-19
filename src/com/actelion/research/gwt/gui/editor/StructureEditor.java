@@ -53,7 +53,6 @@ import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import jsinterop.annotations.*;
 import com.actelion.research.gwt.minimal.JSMolecule;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +65,7 @@ public class StructureEditor implements IChangeListener {
   static int TOOLBARWIDTH = 45;
 
   private boolean drag = false;
-  private Point2D mousePoint = null;
+  private MousePoint mousePoint = null;
   private Model model;
   private ToolBar<Element> toolBar;
   private DrawArea drawPane;
@@ -384,36 +383,61 @@ public class StructureEditor implements IChangeListener {
 
       }
     });
-    drawPane.setOnMouseMoved(new MouseMoveHandler() {
-      @Override
-      public void onMouseMove(MouseMoveEvent event) {
-        boolean moved = mousePoint == null ? false : true;
-        if (!drag && moved) {
-          onMouseMoved(event);
-        }
-        mousePoint = new Point2D.Double(event.getX(), event.getY());
-      }
-    });
     drawPane.setOnMouseOut(new MouseOutHandler() {
       @Override
       public void onMouseOut(MouseOutEvent event) {
         mousePoint = null;
       }
     });
-    drawPane.setOnMousePressed(new MouseDownHandler() {
+    drawPane.setOnMouseDown(new MouseDownHandler() {
       @Override
       public void onMouseDown(MouseDownEvent event) {
-
-        drag = true;
         onMousePressed(event);
       }
     });
-    drawPane.setOnMouseReleased(new MouseUpHandler() {
+    drawPane.setOnTouchStart(new TouchStartHandler() {
+      @Override
+      public void onTouchStart(TouchStartEvent event) {
+         onTouchStarted(event);
+      }
+    });
+    drawPane.setOnMouseMove(new MouseMoveHandler() {
+      @Override
+      public void onMouseMove(MouseMoveEvent event) {
+        boolean moved = mousePoint == null ? false : true;
+        if (!drag && moved) {
+          onMouseMoved(event);
+        }
+        mousePoint = new MousePoint(event.getX(), event.getY());
+      }
+    });
+    drawPane.setOnTouchMove(new TouchMoveHandler() {
+      @Override
+      public void onTouchMove(TouchMoveEvent event) {
+        if (drag) {
+          onTouchMoved(event);
+        }
+      }
+    });
+    drawPane.setOnTouchCancel(new TouchCancelHandler() {
+      @Override
+      public void onTouchCancel(TouchCancelEvent event) {
+        onTouchCancelled(event);
+      }
+    });
+    drawPane.setOnMouseUp(new MouseUpHandler() {
       @Override
       public void onMouseUp(MouseUpEvent event) {
-        drag = false;
         onMouseReleased(event);
-        mousePoint = null;
+      }
+    });
+    drawPane.setOnTouchEnd(new TouchEndHandler() {
+      @Override
+      public void onTouchEnd(TouchEndEvent event) {
+        // Simulate a previous mouse move event so action that depend on the currently hovered element can work properly.
+        // Touch screens only emit move events for some hardware like the Apple Pencil Pro.
+        onMouseMovedFake(event);
+        onTouchEnded(event);
       }
     });
     drawPane.setOnKeyPressed(new ACTKeyEventHandler() {
@@ -425,7 +449,7 @@ public class StructureEditor implements IChangeListener {
 
     /*
      * drawPane.setOnKeyReleased(new ACTKeyEventHandler() {
-     * 
+     *
      * @Override public void onKey(IKeyEvent event) { onKeyPressed(event); } });
      */
 
@@ -443,32 +467,6 @@ public class StructureEditor implements IChangeListener {
   }
 
   private void handleKeyEvent(IKeyEvent keyEvent) {
-  }
-
-  private void onMouseMoved(MouseEvent evt) {
-    if (!rightClick) {
-      Action a = toolBar.getCurrentAction();
-      if (a != null && !a.isCommand()) {
-        if (a.onMouseMove(new ACTMouseEvent(evt), false)) {
-          drawPane.draw(a);
-          drawPane.requestFocus();
-        }
-      }
-    }
-  }
-
-  private void onMouseDragged(MouseEvent evt) {
-    if (!rightClick) {
-      Action a = toolBar.getCurrentAction();
-      if (a != null && !a.isCommand()) {
-        FakeMouseEvent thisEvt = new FakeMouseEvent(evt);
-        if (mousePressEvt == null || !isSmallMovement(thisEvt, mousePressEvt)) {
-          if (a.onMouseMove(new ACTMouseEvent(evt), true)) {
-            drawPane.draw(a);
-          }
-        }
-      }
-    }
   }
 
   public boolean onPasteString(String s) {
@@ -517,7 +515,7 @@ public class StructureEditor implements IChangeListener {
                           var blob = items[i].getAsFile();
                           var URLObj = window.URL || window.webkitURL;
                           var source = URLObj.createObjectURL(blob);
-  
+
                           var pastedImage = new Image();
                           pastedImage.onload = function () {
                               if(self.@com.actelion.research.gwt.gui.editor.StructureEditor::onPasteImage(Ljava/lang/Object;)(pastedImage)) {
@@ -531,13 +529,13 @@ public class StructureEditor implements IChangeListener {
                                  done = true;
                              }
                           });
-  
+
                       }
                   }
                   e.preventDefault();
               }
           }
-  
+
       }, false); //official paste handler
   }-*/;
 
@@ -553,7 +551,89 @@ public class StructureEditor implements IChangeListener {
 
   }
 
+  private void onMousePressed(MouseEvent evt) {
+    drag = true;
+    mousePressEvt = new FakeMouseEvent(evt);
+    if (evt.getNativeButton() == NativeEvent.BUTTON_RIGHT) {
+      rightClick = true;
+    }
+    if (!rightClick) {
+      Action a = toolBar.getCurrentAction();
+      if (a != null && !a.isCommand()) {
+        a.onMouseDown(new ACTMouseEvent(evt));
+        setCursor(a.getCursor());
+      }
+    }
+  }
+
+  private void onTouchStarted(TouchEvent evt) {
+    evt.preventDefault();
+    mousePoint = FakeMouseEvent.getPointFromTouchEvent(evt);
+    drag = true;
+    mousePressEvt = new FakeMouseEvent(evt);
+    Action a = toolBar.getCurrentAction();
+    if (a != null && !a.isCommand()) {
+      a.onMouseDown(new ACTTouchEvent(evt, mousePoint));
+      setCursor(a.getCursor());
+    }
+  }
+
+  private void onMouseMoved(MouseEvent evt) {
+    if (!rightClick) {
+      Action a = toolBar.getCurrentAction();
+      if (a != null && !a.isCommand()) {
+        if (a.onMouseMove(new ACTMouseEvent(evt), false)) {
+          drawPane.draw(a);
+          drawPane.requestFocus();
+        }
+      }
+    }
+  }
+
+  private void onMouseMovedFake(TouchEvent evt) {
+    Action a = toolBar.getCurrentAction();
+    if (mousePoint != null && a != null && !a.isCommand()) {
+      if (a.onMouseMove(new ACTTouchEvent(evt, mousePoint), false)) {
+        drawPane.draw(a);
+      }
+    }
+  }
+
+  private void onMouseDragged(MouseEvent evt) {
+    if (!rightClick) {
+      Action a = toolBar.getCurrentAction();
+      if (a != null && !a.isCommand()) {
+        FakeMouseEvent thisEvt = new FakeMouseEvent(evt);
+        if (mousePressEvt == null || !isSmallMovement(thisEvt, mousePressEvt)) {
+          if (a.onMouseMove(new ACTMouseEvent(evt), true)) {
+            drawPane.draw(a);
+          }
+        }
+      }
+    }
+  }
+
+  private void onTouchMoved(TouchEvent evt) {
+    evt.preventDefault();
+    mousePoint = FakeMouseEvent.getPointFromTouchEvent(evt);
+    Action a = toolBar.getCurrentAction();
+    if (a != null && !a.isCommand()) {
+      FakeMouseEvent thisEvt = new FakeMouseEvent(evt);
+      if (mousePressEvt == null || !isSmallMovement(thisEvt, mousePressEvt)) {
+        if (a.onMouseMove(new ACTTouchEvent(evt, mousePoint), true)) {
+          drawPane.draw(a);
+        }
+      }
+    }
+  }
+
+  private void onTouchCancelled(TouchEvent evt) {
+    drag = false;
+    mousePressEvt = null;
+  }
+
   private void onMouseReleased(MouseEvent evt) {
+    drag = false;
     if (!rightClick) {
       Action a = toolBar.getCurrentAction();
       if (a != null && !a.isCommand()) {
@@ -573,20 +653,30 @@ public class StructureEditor implements IChangeListener {
     setCursor(ICursor.DEFAULT);
     rightClick = false;
     mousePressEvt = null;
+    mousePoint = null;
   }
 
-  private void onMousePressed(MouseEvent evt) {
-    mousePressEvt = new FakeMouseEvent(evt);
-    if (evt.getNativeButton() == NativeEvent.BUTTON_RIGHT) {
-      rightClick = true;
-    }
-    if (!rightClick) {
-      Action a = toolBar.getCurrentAction();
-      if (a != null && !a.isCommand()) {
-        a.onMouseDown(new ACTMouseEvent(evt));
-        setCursor(a.getCursor());
+  private void onTouchEnded(TouchEvent evt) {
+    evt.preventDefault();
+    drag = false;
+    Action a = toolBar.getCurrentAction();
+    if (a != null && !a.isCommand()) {
+      FakeMouseEvent thisEvt = new FakeMouseEvent(evt, mousePoint);
+      FakeMouseEvent syntheticEvt = null;
+      if (mousePressEvt != null && isSmallMovement(thisEvt, mousePressEvt)) {
+        syntheticEvt = mousePressEvt;
+      } else {
+        syntheticEvt = thisEvt;
+      }
+      if (a.onMouseUp(syntheticEvt)) {
+        drawPane.draw();
+        model.changed();
       }
     }
+    setCursor(ICursor.DEFAULT);
+    rightClick = false;
+    mousePressEvt = null;
+    mousePoint = null;
   }
 
   private boolean isSmallMovement(FakeMouseEvent evt1, FakeMouseEvent evt2) {

@@ -1,5 +1,59 @@
 # Changelog
 
+## [8.14.0](https://github.com/cheminfo/openchemlib-js/compare/v8.13.0...v8.14.0) (2024-06-19)
+
+
+### Features
+
+* add setAtomQueryFeature ([#213](https://github.com/cheminfo/openchemlib-js/issues/213)) ([7136cd9](https://github.com/cheminfo/openchemlib-js/commit/7136cd98f4752a633eeba2ea352ea1193c075a5b))
+
+## [8.13.0](https://github.com/cheminfo/openchemlib-js/compare/v8.12.0...v8.13.0) (2024-05-28)
+
+
+### Features
+
+* add molecule.getBondQueryFeaturesObject ([#210](https://github.com/cheminfo/openchemlib-js/issues/210)) ([2844831](https://github.com/cheminfo/openchemlib-js/commit/2844831650d8b76442d00effbcd7ed93a66b1d18))
+
+## [8.12.0](https://github.com/cheminfo/openchemlib-js/compare/v8.11.0...v8.12.0) (2024-05-27)
+
+
+### Features
+
+* add method Molecule.getAtomQueryFeaturesObject ([c1843b8](https://github.com/cheminfo/openchemlib-js/commit/c1843b8738eb8c87d12997dd0be7b9cec265b75c))
+
+## [8.11.0](https://github.com/cheminfo/openchemlib-js/compare/v8.10.0...v8.11.0) (2024-05-17)
+
+
+### Features
+
+* add experimental support for touch events in editor ([#206](https://github.com/cheminfo/openchemlib-js/issues/206)) ([bc41dcc](https://github.com/cheminfo/openchemlib-js/commit/bc41dccbaddeedce1105046f796859d32e94ad84))
+
+## [8.10.0](https://github.com/cheminfo/openchemlib-js/compare/v8.9.0...v8.10.0) (2024-05-13)
+
+
+### Features
+
+* add possitility to generate smarts and kekule isomeric smiles ([#204](https://github.com/cheminfo/openchemlib-js/issues/204)) ([0290193](https://github.com/cheminfo/openchemlib-js/commit/0290193bde842c1be2cd4661c138906476b549b8))
+* update OCL to 2024.5.0 ([#203](https://github.com/cheminfo/openchemlib-js/issues/203)) ([802d12d](https://github.com/cheminfo/openchemlib-js/commit/802d12da550d8fd482cb4feb8245d2667b32730d))
+* update OCL to v2024.4.0 ([#197](https://github.com/cheminfo/openchemlib-js/issues/197)) ([70edd49](https://github.com/cheminfo/openchemlib-js/commit/70edd49cc5b7d45ac0e7060ad81f3281fdc4cef4))
+
+
+### Bug Fixes
+
+* stop propagation of key events ([#198](https://github.com/cheminfo/openchemlib-js/issues/198)) ([bd21926](https://github.com/cheminfo/openchemlib-js/commit/bd219261daa664b30b1b327bb6884be099d43d4d))
+
+## [8.9.0](https://github.com/cheminfo/openchemlib-js/compare/v8.8.1...v8.9.0) (2024-02-22)
+
+
+### Features
+
+* update OCL to v2024.2.1 ([afaae1e](https://github.com/cheminfo/openchemlib-js/commit/afaae1e5f69be99a96d83831cd9925db6796602f))
+
+
+### Bug Fixes
+
+* do not crash when drag-and-drop comes from toolbar ([#195](https://github.com/cheminfo/openchemlib-js/issues/195)) ([f10c782](https://github.com/cheminfo/openchemlib-js/commit/f10c782d1672770f636696549bd34daac087c088))
+
 ## [8.8.1](https://github.com/cheminfo/openchemlib-js/compare/v8.8.0...v8.8.1) (2024-02-01)
 
 

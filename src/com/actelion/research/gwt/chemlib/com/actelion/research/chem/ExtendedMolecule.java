@@ -36,10 +36,7 @@ package com.actelion.research.chem;
 
 import com.actelion.research.util.Angle;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Arrays;
 
 /**
@@ -212,7 +209,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		destMol.mAllAtoms = 0;
 		for (int atom=0; atom<mAllAtoms;atom++) {
 			atomMap[atom] = -1;
-			for (int i=0; i< mConnAtoms[atom]; i++) {
+			for (int i=0; i<mConnAtoms[atom]; i++) {
 				if (includeBond[mConnBond[atom][i]]) {
 					atomMap[atom] = copyAtom(destMol, atom, 0, 0);
 
@@ -294,35 +291,30 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				int lostStereoBond = -1;
 				int lostAtom = -1;
 				for (int i=0; i<mAllConnAtoms[atom]; i++) {
-//if (mConnAtom.length>=atom || atomMap.length>=mConnAtom[atom][i])
-// System.out.println("mConnAtom.length:"+mConnAtom.length+" atom:"+atom+" atomMap.length:"+atomMap.length+" i:"+i+" mConnAtom[atom][i]:"+mConnAtom[atom][i]+" mAtoms:"+mAtoms+" mAllAtoms:"+mAllAtoms);
-					if (atomMap.length>mConnAtom[atom][i]
-					 && atomMap[mConnAtom[atom][i]] != -1)
+					if (bondMap[mConnBond[atom][i]] != -1)
 						remainingNeighbours++;
 					else if (mConnBondOrder[atom][i] == 1
-							&& isStereoBond(mConnBond[atom][i])
-							&& mBondAtom[0][mConnBond[atom][i]] == atom) {
+						 && isStereoBond(mConnBond[atom][i])
+						 && mBondAtom[0][mConnBond[atom][i]] == atom) {
 						lostStereoBond = mConnBond[atom][i];
 						lostAtom = mConnAtom[atom][i];
+						}
 					}
-				}
-				if (lostStereoBond != -1
-						&& remainingNeighbours >= 3) {
+				if (lostStereoBond != -1 && remainingNeighbours >= 3) {
 					double angle = getBondAngle(atom, lostAtom);
 					double minAngleDif = 10.0;
 					int minConnBond = -1;
 					for (int i=0; i<mAllConnAtoms[atom]; i++) {
 						if (mConnBondOrder[atom][i] == 1
-								&& (!isStereoBond(mConnBond[atom][i]) || mBondAtom[0][mConnBond[atom][i]] == atom)
-								&& atomMap.length>mConnAtom[atom][i]
-								&& atomMap[mConnAtom[atom][i]] != -1) {
+						 && (!isStereoBond(mConnBond[atom][i]) || mBondAtom[0][mConnBond[atom][i]] == atom)
+						 && bondMap[mConnBond[atom][i]] != -1) {
 							double angleDif = Math.abs(getAngleDif(angle, getBondAngle(atom, mConnAtom[atom][i])));
 							if (minAngleDif > angleDif) {
 								minAngleDif = angleDif;
 								minConnBond = mConnBond[atom][i];
+								}
 							}
 						}
-					}
 					if (minConnBond != -1) {
 						int destBond = bondMap[minConnBond];
 						destMol.setBondType(destBond, mBondType[minConnBond] == cBondTypeUp ? cBondTypeDown : cBondTypeUp);
@@ -546,21 +538,37 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
-	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
 	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
 	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+	 * Note: This method includes neighbours marked as being part of an exclude group!
 	 * @param atom
 	 * @return count of category 1 neighbour atoms (excludes plain H and bond zero orders)
 	 */
-	public int getConnAtoms(int atom) {
-		return mConnAtoms[atom];
+	public int getNotExcludedConnAtoms(int atom) {
+		return mConnAtoms[atom] - getExcludedNeighbourCount(atom);
 		}
 
 
 	/**
 	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
-	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
+	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
+	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
+	 * Note: This method includes neighbours marked as being part of an exclude group!
+	 * @param atom
+	 * @return count of category 1 neighbour atoms (excludes plain H and bond zero orders)
+	 */
+	public int getConnAtoms(int atom) {
+		return mConnAtoms[atom];
+	}
+
+
+	/**
+	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
 	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
 	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
@@ -574,7 +582,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
-	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
 	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
 	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
@@ -589,7 +597,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
-	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotops, custom labelled hydrogen, etc.)<br>
 	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
 	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
@@ -624,13 +632,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	/**
 	 * This method returns the count of atom neighbours which are marked as being an exclude group.
 	 * @param atom
-	 * @return the number of non-hydrogen neighbor atoms
+	 * @return the number of non-hydrogen neighbor atoms marked as being part of an exclude group
 	 */
 	public int getExcludedNeighbourCount(int atom) {
 		int count = 0;
-		for (int i=0; i<mConnAtoms[atom]; i++)
-			if ((mAtomQueryFeatures[i] & Molecule.cAtomQFExcludeGroup) != 0)
-				count++;
+		if (mIsFragment)
+			for (int i=0; i<mConnAtoms[atom]; i++)
+				if ((mAtomQueryFeatures[mConnAtom[atom][i]] & Molecule.cAtomQFExcludeGroup) != 0)
+					count++;
 		return count;
 		}
 
@@ -1744,17 +1753,17 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return whether the atom is a member of a delocalized ring (subset of aromatic rings)
 	 */
 	public boolean isDelocalizedAtom(int atom) {
-		return (atom < mAtoms) ? mRingSet.isDelocalizedAtom(atom) : false;
+		return atom<mAtoms && mRingSet.isDelocalizedAtom(atom);
 	}
 
 
 	public boolean isAromaticBond(int bond) {
-		return (bond < mBonds) ? mRingSet.isAromaticBond(bond) : false;
+		return bond<mBonds && mRingSet.isAromaticBond(bond);
 	}
 
 
 	public boolean isHeteroAromaticBond(int bond) {
-		return (bond < mBonds) ? mRingSet.isHeteroAromaticBond(bond) : false;
+		return bond<mBonds && mRingSet.isHeteroAromaticBond(bond);
 	}
 
 
@@ -3490,12 +3499,12 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		if ((mValidHelperArrays & cHelperBitNeighbours) == 0) {
 			handleHydrogens();
 			calculateNeighbours();
-
 			mValidHelperArrays |= cHelperBitNeighbours;
 
 			if (convertHydrogenToQueryFeatures()) {
 				handleHydrogens();
 				calculateNeighbours();
+				mValidHelperArrays |= cHelperBitNeighbours;
 				}
 			}
 
@@ -4058,19 +4067,35 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		ensureHelperArrays(cHelperRings);
 
 		for (int atom=0; atom<mAtoms; atom++) {
-			if (isRingAtom(atom))
-				mAtomQueryFeatures[atom] &= ~(cAtomQFRingSize0 | cAtomQFNotChain);  // forbidden
+			if (isRingAtom(atom)) {
+				// don't remove cAtomQFNotChain, if it is part of more complex ringstate
+				if ((mAtomQueryFeatures[atom] & cAtomQFRingState) == cAtomQFNotChain)
+					mAtomQueryFeatures[atom] &= ~cAtomQFNotChain;  // redundant
+				mAtomQueryFeatures[atom] &= ~cAtomQFRingSize0;  // forbidden
+				}
 
 			if (isAromaticAtom(atom))
 				mAtomQueryFeatures[atom] &= ~cAtomQFAromState;   // redundant or impossible
 			else if ((mAtomQueryFeatures[atom] & cAtomQFAromatic) != 0)
 				mAtomQueryFeatures[atom] &= ~cAtomQFNotAromatic;
 
-			if ((mAtomQueryFeatures[atom] & cAtomQFSmallRingSize) != 0)
-				mAtomQueryFeatures[atom] &= ~cAtomQFNotChain;   // redundant
+			if ((mAtomQueryFeatures[atom] & cAtomQFSmallRingSize) != 0  // of (legacy) smallest ring size is defined
+			 || ((mAtomQueryFeatures[atom] & cAtomQFNewRingSize) != 0)  // allowed list of ring sizes is provided and doesn't contain 'no-ring'
+			  && ((mAtomQueryFeatures[atom] & cAtomQFRingSize0) == 0)) {
+				// don't remove cAtomQFNotChain, if it is part of more complex ringstate
+				if ((mAtomQueryFeatures[atom] & cAtomQFRingState) == cAtomQFNotChain)
+					mAtomQueryFeatures[atom] &= ~cAtomQFNotChain;  // redundant
+				}
 
 			if (mAtomCharge[atom] != 0)	// explicit charge supersedes query features
-				mAtomFlags[atom] &= ~cAtomQFCharge;
+				mAtomQueryFeatures[atom] &= ~cAtomQFCharge;
+
+			if (getOccupiedValence(atom) == getMaxValence(atom)) {
+				mAtomQueryFeatures[atom] &= ~cAtomQFNeighbours;
+				mAtomQueryFeatures[atom] &= ~cAtomQFENeighbours;
+				mAtomQueryFeatures[atom] &= ~cAtomQFHydrogen;
+				mAtomQueryFeatures[atom] &= ~cAtomQFPiElectrons;
+				}
 			}
 		}
 
@@ -4107,37 +4132,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			}
 		}
 
-
 	private void writeObject(ObjectOutputStream stream) throws IOException {}
+
 	private void readObject(ObjectInputStream stream) throws IOException {}
-
-
-	public final static Coordinates getCenterGravity(ExtendedMolecule mol) {
-
-		int n = mol.getAllAtoms();
-
-		int [] indices = new int [n];
-
-		for (int i = 0; i < indices.length; i++) {
-			indices[i]=i;
-		}
-
-		return getCenterGravity(mol, indices);
-	}
-
-	public final static Coordinates getCenterGravity(ExtendedMolecule mol, int[] indices) {
-
-		Coordinates c = new Coordinates();
-		for (int i = 0; i < indices.length; i++) {
-			c.x += mol.getAtomX(indices[i]);
-			c.y += mol.getAtomY(indices[i]);
-			c.z += mol.getAtomZ(indices[i]);
-		}
-		c.x /= indices.length;
-		c.y /= indices.length;
-		c.z /= indices.length;
-
-		return c;
-	}
-
 }

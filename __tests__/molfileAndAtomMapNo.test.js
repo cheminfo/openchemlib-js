@@ -12,6 +12,7 @@ test('molfile with atomMapNo', () => {
   const atomMapNo = newMolfile
     .split(/\r?\n/)
     .filter((line) => line.match(/ [OCH] /))
+    // eslint-disable-next-line prefer-named-capture-group
     .map((line) =>
       line.replace(/.* (?<och>[OCH]) .*(?<n>.) {2}0 {2}0$/, '$<och> $<n>'),
     );
@@ -21,6 +22,8 @@ test('molfile with atomMapNo', () => {
   const mapNos = svg
     .split(/\r?\n/)
     .filter((line) => line.includes('data-atom-map'))
-    .map((line) => line.replace(/.*atom-map-no="(?<mapno>.).*/, '$<mapno>'));
+    .map((line) =>
+      line.replace(/.*atom-map-no="(?<atom_map_no>.).*/, '$<atom_map_no>'),
+    );
   expect(mapNos).toStrictEqual(['5', '1', '3', '4', '2']);
 });

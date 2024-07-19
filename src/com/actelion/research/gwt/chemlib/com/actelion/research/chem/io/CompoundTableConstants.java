@@ -130,8 +130,7 @@ public interface CompoundTableConstants {
     String cColumnPropertyRelatedCatalystColumn = "catalystColumn";    // one could think of coupling solvent, condition, etc as well
     String[] cColumnRelationTypes = {cColumnPropertyRelatedIdentifierColumn, cColumnPropertyRelatedCatalystColumn};
 
-    String cColumnPropertyDisplayGroup = "displayGroup";  // columns within same display group can be easily shown and hidden together
-    String cColumnPropertyGroupName = "groupName";  // cell entries in same column group relate to each other in entry order
+    String cColumnPropertyDisplayGroup = "displayGroup";  // Columns within same display group can be easily shown and hidden together; cell entries in same groups alo relate to each other in entry order
     String cColumnPropertyUseThumbNail = "useThumbNail";
     String cColumnPropertyImagePath = "imagePath";
     String cColumnPropertyIsFragment = "isFragment";    // specifies for structure & reaction columns, whether the fragment bit is set, when editing a new object
@@ -159,6 +158,7 @@ public interface CompoundTableConstants {
     String cColumnPropertyLookupFilterRemoveMinus = "lookupFilterRemoveMinus";
     String cColumnPropertyLookupEncode = "lookupEncode";
     String cColumnPropertyLookupDetailURL = "lookupDetailURL";
+    String cColumnPropertyCategorySpecificLookup = "catSpecificLookup";
     String cColumnPropertyLaunchCount = "launchCount";
     String cColumnPropertyLaunchName = "launchName";
     String cColumnPropertyLaunchCommand = "launchCommand";

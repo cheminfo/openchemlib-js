@@ -17,16 +17,17 @@ public class JSSmilesParser {
     options = options || {};
 
     var smartsMode = options.smartsMode || 'smiles';
-    var createSmartsWarnings = options.createSmartsWarnings || false;
     var skipCoordinateTemplates = options.skipCoordinateTemplates || false;
     var makeHydrogenExplicit = options.makeHydrogenExplicit || false;
     var noCactvs = options.noCactvs || false;
-    this.@com.actelion.research.gwt.minimal.JSSmilesParser::init(Ljava/lang/String;ZZZZ)(smartsMode, createSmartsWarnings, skipCoordinateTemplates, makeHydrogenExplicit, noCactvs);
+    var singleDotSeparator = options.singleDotSeparator || false;
+    var createSmartsWarnings = options.createSmartsWarnings || false;
+    this.@com.actelion.research.gwt.minimal.JSSmilesParser::init(Ljava/lang/String;ZZZZZ)(smartsMode, skipCoordinateTemplates, makeHydrogenExplicit, noCactvs, singleDotSeparator, createSmartsWarnings);
   }-*/;
 
-  private void init(String smartsMode, boolean createSmartsWarnings,
+  private void init(String smartsMode,
     boolean skipCoordinateTemplates, boolean makeHydrogenExplicit,
-    boolean noCactvs) {
+    boolean noCactvs, boolean singleDotSeparator, boolean createSmartsWarnings) {
     int mode = SmilesParser.SMARTS_MODE_IS_SMILES;
     switch (smartsMode) {
       case "smarts":
@@ -45,7 +46,13 @@ public class JSSmilesParser {
     if (noCactvs) {
       mode |= SmilesParser.MODE_NO_CACTUS_SYNTAX;
     }
-    oclParser = new SmilesParser(mode, createSmartsWarnings);
+    if (singleDotSeparator) {
+      mode |= SmilesParser.MODE_SINGLE_DOT_SEPARATOR;
+    }
+    if (createSmartsWarnings) {
+      mode |= SmilesParser.MODE_CREATE_SMARTS_WARNING;
+    }
+    oclParser = new SmilesParser(mode);
   }
 
   public void setRandomSeed(int seed) {
