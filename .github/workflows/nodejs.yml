@@ -49,7 +49,7 @@ jobs:
         run: npm run build-debug-full
       - name: Upload debug build and logs
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: debug-build
           path: |

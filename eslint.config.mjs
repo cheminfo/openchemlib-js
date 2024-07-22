@@ -24,6 +24,15 @@ export default [
     },
   },
   {
+    files: ['lib/**'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+  {
     files: ['__tests__/**'],
     languageOptions: {
       globals: {
@@ -60,6 +69,12 @@ export default [
     files: ['tests/**'],
     rules: {
       'no-console': 'off',
+    },
+  },
+  {
+    files: ['types.d.ts'],
+    rules: {
+      '@typescript-eslint/naming-convention': 'off',
     },
   },
 ];

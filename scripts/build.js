@@ -231,28 +231,6 @@ async function build() {
     );
   }
   await Promise.all(prom);
-
-  log('Creating ESM-compatible entry points');
-  for (const mod of modules) {
-    log(`Creating ESM-compatible entry point for module ${mod.name}${suffix}`);
-    const moduleInstance = require(
-      `../dist/openchemlib-${mod.name}${suffix}.js`,
-    );
-    const moduleExports = Object.keys(moduleInstance).map(
-      (moduleExport) => `exports.${moduleExport} = OCL.${moduleExport};`,
-    );
-    const facade = `'use strict';
-
-const OCL = require('./dist/openchemlib-${mod.name}${suffix}.js');
-
-exports.default = OCL;
-${moduleExports.join('\n')}
-`;
-    fs.writeFileSync(
-      path.join(__dirname, `../${mod.name}${suffix}.js`),
-      facade,
-    );
-  }
 }
 
 function log(value) {

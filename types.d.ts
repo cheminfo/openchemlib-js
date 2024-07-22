@@ -504,6 +504,7 @@ export declare class Molecule {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   toSmiles(): string;
@@ -1452,7 +1453,7 @@ export declare class Molecule {
    * @param feature - one of cAtomQF... Because of long it could be an internal object
    * @param value - if true, the feature is set, otherwise it is removed
    */
-  setAtomQueryFeature(atom: number, feature: any, value: boolean): void;
+  setAtomQueryFeature(atom: number, feature: number, value: boolean): void;
 
   /**
    * Sets an atom's radical state as singulet,dublet,triplet or none
@@ -2767,6 +2768,7 @@ export declare class RingCollection {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   getAtomRingSize(atom: number): number;
@@ -2824,6 +2826,7 @@ export declare class RingCollection {
  * console.log(OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NOSTEREO_TAUTOMER));
  * ```
  */
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export declare class CanonizerUtil {
   static NORMAL: 0;
   static NOSTEREO: 1;
@@ -2902,6 +2905,7 @@ export declare class Reaction {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3085,6 +3089,7 @@ export declare class Reaction {
   getMergedCopy(): Reaction;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class,unicorn/no-static-only-class
 export declare class ReactionEncoder {
   static encode(reaction: Reaction): string;
   static decode(reaction: string): Reaction;
@@ -3108,6 +3113,7 @@ export declare class SDFileParser {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3164,6 +3170,7 @@ export declare class SSSearcher {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3204,6 +3211,7 @@ export declare class SSSearcherWithIndex {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3315,6 +3323,7 @@ export declare class DruglikenessPredictor {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3359,6 +3368,7 @@ export declare class ToxicityPredictor {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3406,6 +3416,7 @@ export declare class ConformerGenerator {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3512,6 +3523,7 @@ export declare class ForceFieldMMFF94 {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3583,6 +3595,7 @@ export declare class StructureEditor {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   getMolecule(): Molecule;
@@ -3663,14 +3676,14 @@ export declare class StructureEditor {
   hasFocus(): boolean;
 }
 
-export type AtomHighlightCallback = (atom: number, selected: boolean) => any;
+export type AtomHighlightCallback = (atom: number, selected: boolean) => void;
 
-export type BondHighlightCallback = (bond: number, selected: boolean) => any;
+export type BondHighlightCallback = (bond: number, selected: boolean) => void;
 
 export type ChangeListenerCallback = (
   idcode: string,
   molecule: Molecule,
-) => any;
+) => void;
 
 export declare namespace SVGRenderer {
   export function renderMolecule(
@@ -3680,19 +3693,32 @@ export declare namespace SVGRenderer {
   ): string;
 }
 
-export interface CanvasEditorOptions {
-  /**
-   * The width of the canvas.
-   */
-  width: number;
-  /**
-   * The height of the canvas.
-   */
-  height: number;
+export type OnChangeEventType =
+  | 'molecule'
+  | 'selection'
+  | 'highlight-atom'
+  | 'highlight-bond';
+
+export interface OnChangeEvent {
+  type: OnChangeEventType;
+  isUserEvent: boolean;
 }
 
+export type OnChangeListenerCallback = (event: OnChangeEvent) => void;
+
 export declare class CanvasEditor {
-  constructor(element: HTMLElement, options?: CanvasEditorOptions);
+  /**
+   * Create a new canvas-based editor.
+   * @param element - The DOM element in which to create the editor.
+   */
+  constructor(element: HTMLElement);
 
   setMolecule(molecule: Molecule): void;
+  getMolecule(): Molecule;
+
+  setReaction(reaction: Reaction): void;
+  getReaction(): Reaction;
+
+  setOnChangeListener(callback: OnChangeListenerCallback): void;
+  removeOnChangeListener(): void;
 }

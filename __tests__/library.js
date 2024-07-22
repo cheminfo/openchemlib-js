@@ -31,7 +31,12 @@ const coreAPI = [
   'Transformer',
 ];
 
-const fullAPI = ['StructureView', 'StructureEditor', 'SVGRenderer'];
+const fullAPI = [
+  'CanvasEditor',
+  'StructureView',
+  'StructureEditor',
+  'SVGRenderer',
+];
 
 const allAPI = [...minimalAPI, ...coreAPI, ...fullAPI];
 

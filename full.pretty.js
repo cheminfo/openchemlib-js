@@ -1,17 +1,21 @@
 'use strict';
 
 const OCL = require('./dist/openchemlib-full.pretty.js');
-const createCanvasEditor = require('./lib/canvas_editor');
 
-exports.CanvasEditor = createCanvasEditor(OCL.EditorArea, OCL.EditorToolbar);
+OCL.CanvasEditor = require('./lib/canvas_editor')(
+  OCL.EditorArea,
+  OCL.EditorToolbar,
+);
+
+delete OCL.EditorArea;
+delete OCL.EditorToolbar;
 
 exports.default = OCL;
 exports.CanonizerUtil = OCL.CanonizerUtil;
+exports.CanvasEditor = OCL.CanvasEditor;
 exports.ConformerGenerator = OCL.ConformerGenerator;
 exports.DrugScoreCalculator = OCL.DrugScoreCalculator;
 exports.DruglikenessPredictor = OCL.DruglikenessPredictor;
-exports.EditorArea = OCL.EditorArea;
-exports.EditorToolbar = OCL.EditorToolbar;
 exports.ForceFieldMMFF94 = OCL.ForceFieldMMFF94;
 exports.Molecule = OCL.Molecule;
 exports.MoleculeProperties = OCL.MoleculeProperties;
