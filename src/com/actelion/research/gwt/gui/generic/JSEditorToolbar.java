@@ -1,9 +1,7 @@
 package com.actelion.research.gwt.gui.generic;
 
-import com.actelion.research.gui.editor.GenericEditorArea;
 import com.actelion.research.gui.editor.GenericEditorToolbar;
 import com.actelion.research.gui.generic.*;
-import com.actelion.research.gwt.minimal.JSMolecule;
 import com.google.gwt.core.client.JavaScriptObject;
 
 import jsinterop.annotations.*;
