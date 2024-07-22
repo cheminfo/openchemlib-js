@@ -1,6 +1,5 @@
-import { CanvasEditor } from './generic-editor/index.js';
-
-const { Reaction, Molecule, EditorArea } = OCL;
+import OCL from '../distesm/full.pretty';
+const { CanvasEditor, Molecule, Reaction } = OCL;
 
 const rxn = `$RXN
 
@@ -167,37 +166,46 @@ const molfile = `446220
  22 43  1  0  0  0  0
 M  END`;
 
-const changeCountDiv = document.getElementById('changeCount');
-const idcodeDiv = document.getElementById('idcode');
-const molfileDiv = document.getElementById('molfile');
+const changeCountDiv = document.getElementById('changeCount') as HTMLElement;
+const idcodeDiv = document.getElementById('idcode') as HTMLElement;
+const molfileDiv = document.getElementById('molfile') as HTMLElement;
 let changeCount = 0;
 
-const editor = new CanvasEditor(document.getElementById('editor'), {
-  onChange({ what, isUserEvent }) {
-    if (isUserEvent && what === EditorArea.EDITOR_EVENT_MOLECULE_CHANGED) {
-      changeCountDiv.innerText = ++changeCount;
-      const idcodeAndCoords = editor.getMolecule().getIDCodeAndCoordinates();
-      idcodeDiv.innerText = `${idcodeAndCoords.idCode} ${idcodeAndCoords.coordinates}`;
-      const molfile = editor.getMolecule().toMolfileV3();
-      molfileDiv.innerText = molfile;
-    }
-  },
+const editorElement = document.getElementById('editor') as HTMLElement;
+const editor = new CanvasEditor(editorElement);
+
+editor.setOnChangeListener(({ type, isUserEvent }) => {
+  if (isUserEvent && type === 'molecule') {
+    changeCountDiv.innerText = String(++changeCount);
+    const idcodeAndCoords = editor.getMolecule().getIDCodeAndCoordinates();
+    idcodeDiv.innerText = `${idcodeAndCoords.idCode} ${idcodeAndCoords.coordinates}`;
+    molfileDiv.innerText = editor.getMolecule().toMolfileV3();
+  }
 });
 
-document.getElementById('loadMolecule').onclick = () => {
+const loadMolecule = document.getElementById(
+  'loadMolecule',
+) as HTMLButtonElement;
+loadMolecule.onclick = () => {
   // const molecule = Molecule.fromMolfile(molfile);
   const molecule = Molecule.fromSmiles('c1ccccc1CO');
   editor.setMolecule(molecule);
 };
 
-document.getElementById('loadFragment').onclick = () => {
+const loadFragment = document.getElementById(
+  'loadFragment',
+) as HTMLButtonElement;
+loadFragment.onclick = () => {
   // const molecule = Molecule.fromMolfile(molfile);
   const molecule = Molecule.fromSmiles('CCC');
   molecule.setFragment(true);
   editor.setMolecule(molecule);
 };
 
-document.getElementById('loadReaction').onclick = () => {
+const loadReaction = document.getElementById(
+  'loadReaction',
+) as HTMLButtonElement;
+loadReaction.onclick = () => {
   const reaction = Reaction.fromSmiles('c1ccccc1..CC>CO>c1ccccc1..CCC..CC');
   // const reaction = Reaction.fromRxn(rxn);
   // reaction.addCatalyst(Molecule.fromSmiles('CO'));

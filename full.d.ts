@@ -6,5 +6,8 @@ export {
   AtomHighlightCallback,
   BondHighlightCallback,
   ChangeListenerCallback,
+  OnChangeEventType,
+  OnChangeEvent,
+  OnChangeListenerCallback,
   CanvasEditor,
 } from './types';
