@@ -3,13 +3,13 @@
 export interface IMoleculeFromSmilesOptions {
   /**
    * Disable coordinate invention.
-   * @default `false`
+   * @default false
    */
   noCoordinates?: boolean;
 
   /**
    * Disable stereo features parsing.
-   * @default `false`
+   * @default false
    */
   noStereo?: boolean;
 }
@@ -115,17 +115,17 @@ export interface IHoseCodesOptions {
 export interface ISmilesGeneratorOptions {
   /**
    * Whether to create SMILES with SMARTS capabilities.
-   * @default `false`
+   * @default false
    */
   createSmarts?: boolean;
   /**
    * Whether to include mapping information (atomMapNo) in the SMILES.
-   * @default `false`
+   * @default false
    */
   includeMapping?: boolean;
   /**
    * Should localisation of double bonds be attempted?
-   * @default `false`
+   * @default false
    */
   kekulizedOutput?: boolean;
 }
@@ -2674,7 +2674,7 @@ export declare class Molecule {
 export interface ISmilesParserOptions {
   /**
    * Enable SMARTS parsing with `'smarts'` or `'guess'`.
-   * @default `'smiles'`
+   * @default 'smiles'
    */
   smartsMode?: 'smiles' | 'smarts' | 'guess';
 
@@ -2703,13 +2703,13 @@ export interface ISmilesParserParseMoleculeOptions {
 
   /**
    * Disable coordinate invention.
-   * @default `false`
+   * @default false
    */
   noCoordinates?: boolean;
 
   /**
    * Disable stereo features parsing.
-   * @default `false`
+   * @default false
    */
   noStereo?: boolean;
 }
@@ -3706,13 +3706,21 @@ export interface OnChangeEvent {
 
 export type OnChangeListenerCallback = (event: OnChangeEvent) => void;
 
+export interface CanvasEditorOptions {
+  /**
+   * No toolbar and user interactions are ignored.
+   * @default false
+   */
+  readOnly?: boolean;
+}
+
 export declare class CanvasEditor {
   /**
    * Create a new canvas-based editor.
    * @param element - The DOM element in which to create the editor.
-   * @param isReadOnly - No toolbar and user interactions are ignored.
+   * @param options
    */
-  constructor(element: HTMLElement, isReadOnly = false);
+  constructor(element: HTMLElement, options?: CanvasEditorOptions);
 
   /**
    * Set the molecule to be edited.
