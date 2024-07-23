@@ -3710,8 +3710,9 @@ export declare class CanvasEditor {
   /**
    * Create a new canvas-based editor.
    * @param element - The DOM element in which to create the editor.
+   * @param isReadOnly - No toolbar and user interactions are ignored.
    */
-  constructor(element: HTMLElement);
+  constructor(element: HTMLElement, isReadOnly = false);
 
   /**
    * Set the molecule to be edited.
