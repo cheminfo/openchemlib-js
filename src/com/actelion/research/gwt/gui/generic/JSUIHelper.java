@@ -10,6 +10,7 @@ import java.io.File;
 @JsType(name = "GenericUIHelper")
 public class JSUIHelper implements GenericUIHelper {
   private JavaScriptObject mJsObject;
+  private JSEditorArea mEditorArea;
 
   public JSUIHelper(JavaScriptObject jsObject) {
     mJsObject = jsObject;
@@ -26,9 +27,13 @@ public class JSUIHelper implements GenericUIHelper {
     jsObject.register(this);
   }-*/;
 
+  public void setEditorArea(JSEditorArea mEditorArea) {
+    this.mEditorArea = mEditorArea;
+  }
+
   @Override
   public GenericDialog createDialog(String title, GenericEventListener<GenericActionEvent> consumer) {
-    JSDialog dialog = new JSDialog(createNativeDialog(title));
+    JSDialog dialog = new JSDialog(createNativeDialog(title), mEditorArea);
     dialog.setEventConsumer(consumer);
     return dialog;
   }

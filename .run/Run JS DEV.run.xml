@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run JS DEV" type="CompoundRunConfigurationType">
+    <toRun name="build-esm-bundle-watch" type="js.build_tools.npm" />
+    <toRun name="vite" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>

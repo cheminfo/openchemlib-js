@@ -6,9 +6,11 @@ import com.google.gwt.core.client.JavaScriptObject;
 public class JSDialog implements GenericDialog {
   private JavaScriptObject mJsDialog;
   private GenericEventListener<GenericActionEvent> mConsumer;
+  private JSEditorArea mEditorArea;
 
-  public JSDialog(JavaScriptObject jsDialog) {
+  public JSDialog(JavaScriptObject jsDialog, JSEditorArea editorArea) {
     mJsDialog = jsDialog;
+    mEditorArea = editorArea;
   }
 
   private JavaScriptObject getJsDialog() {
@@ -110,6 +112,7 @@ public class JSDialog implements GenericDialog {
     if (mConsumer != null) {
       mConsumer.eventHappened(new GenericActionEvent(this, GenericActionEvent.WHAT_OK, 0));
     }
+    mEditorArea.repaint();
   }
 
   private void fireCancel() {
