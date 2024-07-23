@@ -3713,12 +3713,38 @@ export declare class CanvasEditor {
    */
   constructor(element: HTMLElement);
 
+  /**
+   * Set the molecule to be edited.
+   * Actions in the editor will mutate the molecule object directly.
+   * @param molecule
+   */
   setMolecule(molecule: Molecule): void;
+
+  /**
+   * Get the molecule being edited.
+   */
   getMolecule(): Molecule;
 
+  /**
+   * Set the reaction to be edited.
+   * Actions in the editor will mutate the reaction object directly.
+   * @param reaction
+   */
   setReaction(reaction: Reaction): void;
+
+  /**
+   * Get the reaction being edited.
+   */
   getReaction(): Reaction;
 
+  /**
+   * Set a callback to be notified when the editor state changes.
+   * @param callback
+   */
   setOnChangeListener(callback: OnChangeListenerCallback): void;
+
+  /**
+   * Remove the change listener callback.
+   */
   removeOnChangeListener(): void;
 }
