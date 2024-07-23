@@ -4,5 +4,6 @@ distbuild
 distesm
 distold
 gwt
+lib/canvas_editor/cursors_24px.js
 openchemlib
 war
