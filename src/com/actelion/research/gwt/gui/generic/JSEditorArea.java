@@ -59,6 +59,7 @@ public class JSEditorArea implements GenericCanvas {
 	public static final int[][] IMAGE_DATA_16 = GenericCursorHelper.IMAGE_DATA_16;
 	public static final int[] HOTSPOT_16 = GenericCursorHelper.HOTSPOT_16;
 	public static final int[] HOTSPOT_32 = GenericCursorHelper.HOTSPOT_32;
+	public static final String[] IMAGE_NAME_32 = GenericCursorHelper.IMAGE_NAME_32;
 
 	public static final int TableLayoutPreferred = (int)TableLayout.PREFERRED;
 	public static final int TableLayoutFill = (int)TableLayout.FILL;
