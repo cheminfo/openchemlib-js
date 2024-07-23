@@ -1,20 +1,30 @@
 package com.actelion.research.gwt.gui.generic;
 
-import java.io.File;
-
 import com.actelion.research.gui.generic.*;
 import com.google.gwt.core.client.JavaScriptObject;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsType;
 
+import java.io.File;
+
+@JsType(name = "GenericUIHelper")
 public class JSUIHelper implements GenericUIHelper {
-	private JavaScriptObject mOptions;
+  private JavaScriptObject mJsObject;
 
-  public JSUIHelper(JavaScriptObject options) {
-		mOptions = options;
+  public JSUIHelper(JavaScriptObject jsObject) {
+    mJsObject = jsObject;
+    registerToJs();
   }
 
-	private JavaScriptObject getOptions() {
-		return mOptions;
+  private JavaScriptObject getJsObject() {
+		return mJsObject;
 	}
+
+  private native void registerToJs()
+  /*-{
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getJsObject()();
+    jsObject.register(this);
+  }-*/;
 
   @Override
   public GenericDialog createDialog(String title, GenericEventListener<GenericActionEvent> consumer) {
@@ -25,11 +35,12 @@ public class JSUIHelper implements GenericUIHelper {
   
   public native JavaScriptObject createNativeDialog(String title)
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getOptions()();
-		return options.createDialog(title);
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getJsObject()();
+    return jsObject.createDialog(title);
   }-*/;
 
   @Override
+  @JsIgnore
   public GenericImage createImage(String name) {
     if (name.equals("editorButtons.png")) {
       String data = ImageData.editorButtonsData0 + ImageData.editorButtonsData1 + ImageData.editorButtonsData2 + ImageData.editorButtonsData3 + ImageData.editorButtonsData4 + ImageData.editorButtonsData5;
@@ -43,15 +54,15 @@ public class JSUIHelper implements GenericUIHelper {
 
   private native JavaScriptObject createImageFromBase64(int width, int height, String base64)
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getOptions()();
-    return options.createImageFromBase64(width, height, base64);
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getJsObject()();
+    return jsObject.createImageFromBase64(width, height, base64);
   }-*/;
 
   @Override
-  public native GenericImage createImage(int width, int height)
+  public native JSImage createImage(int width, int height)
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getOptions()();
-    var image = options.createImage(width, height);
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getJsObject()();
+    var image = jsObject.createImage(width, height);
     return @com.actelion.research.gwt.gui.generic.JSImage::new(Lcom/google/gwt/core/client/JavaScriptObject;)(image);
   }-*/;
 
@@ -64,8 +75,8 @@ public class JSUIHelper implements GenericUIHelper {
   @Override
   public native void grabFocus()
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getOptions()();
-		return options.grabFocus();
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getJsObject()();
+    return jsObject.grabFocus();
   }-*/;
 
   @Override
@@ -89,18 +100,23 @@ public class JSUIHelper implements GenericUIHelper {
   @Override
   public native void setCursor(int cursor)
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getOptions()();
-		return options.setCursor(cursor);
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getJsObject()();
+    return jsObject.setCursor(cursor);
   }-*/;
 
   @Override
   public native void showHelpDialog(String url, String title)
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getOptions()();
-		return options.showHelpDialog(url, title);
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSUIHelper::getJsObject()();
+    return jsObject.showHelpDialog(url, title);
   }-*/;
 
   @Override
   public void showMessage(String message) {}
-  
+
+  public JavaScriptObject build16x16CursorImage(int cursor) {
+    JSImage cursorImage = createImage(16, 16);
+    GenericCursorHelper.build16x16CursorImage(cursorImage, cursor);
+    return cursorImage.getJsImage();
+  }
 }

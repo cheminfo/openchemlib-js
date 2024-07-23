@@ -3,12 +3,14 @@
 const OCL = require('./dist/openchemlib-full.pretty.js');
 
 OCL.CanvasEditor = require('./lib/canvas_editor')(
-  OCL.EditorArea,
-  OCL.EditorToolbar,
+  OCL.GenericEditorArea,
+  OCL.GenericEditorToolbar,
+  OCL.GenericUIHelper,
 );
 
-delete OCL.EditorArea;
-delete OCL.EditorToolbar;
+delete OCL.GenericEditorArea;
+delete OCL.GenericEditorToolbar;
+delete OCL.GenericUIHelper;
 
 exports.default = OCL;
 exports.CanonizerUtil = OCL.CanonizerUtil;

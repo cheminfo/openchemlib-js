@@ -7,12 +7,11 @@ import com.actelion.research.gui.generic.*;
 import com.actelion.research.gwt.minimal.JSMolecule;
 import com.actelion.research.gwt.minimal.JSReaction;
 import com.google.gwt.core.client.JavaScriptObject;
-
 import info.clearthought.layout.TableLayout;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsType;
 
-import jsinterop.annotations.*;
-
-@JsType(name = "EditorArea")
+@JsType(name = "GenericEditorArea")
 public class JSEditorArea implements GenericCanvas {
 	private GenericEditorArea mDrawArea;
 	private JavaScriptObject mOptions;
@@ -57,13 +56,15 @@ public class JSEditorArea implements GenericCanvas {
 	public static final int cPointerCursor = GenericCursorHelper.cPointerCursor;
 	public static final int cTextCursor = GenericCursorHelper.cTextCursor;
 	public static final int cPointedHandCursor = GenericCursorHelper.cPointedHandCursor;
+	public static final int[][] IMAGE_DATA_16 = GenericCursorHelper.IMAGE_DATA_16;
+	public static final int[] HOTSPOT_16 = GenericCursorHelper.HOTSPOT_16;
 	public static final int[] HOTSPOT_32 = GenericCursorHelper.HOTSPOT_32;
 
 	public static final int TableLayoutPreferred = (int)TableLayout.PREFERRED;
 	public static final int TableLayoutFill = (int)TableLayout.FILL;
 
-	public JSEditorArea(JavaScriptObject options) {
-		mDrawArea = new GenericEditorArea(new StereoMolecule(), 0, new JSUIHelper(options), this);
+	public JSEditorArea(JavaScriptObject options, JSUIHelper uiHelper) {
+		mDrawArea = new GenericEditorArea(new StereoMolecule(), 0, uiHelper, this);
 		mDrawArea.addDrawAreaListener(new GenericEventListener<EditorEvent>() {
 			@Override
 			public void eventHappened(EditorEvent e) {

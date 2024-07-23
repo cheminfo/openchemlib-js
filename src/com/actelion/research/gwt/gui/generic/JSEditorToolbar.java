@@ -1,12 +1,13 @@
 package com.actelion.research.gwt.gui.generic;
 
 import com.actelion.research.gui.editor.GenericEditorToolbar;
-import com.actelion.research.gui.generic.*;
+import com.actelion.research.gui.generic.GenericCanvas;
+import com.actelion.research.gui.generic.GenericMouseEvent;
 import com.google.gwt.core.client.JavaScriptObject;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsType;
 
-import jsinterop.annotations.*;
-
-@JsType(name = "EditorToolbar")
+@JsType(name = "GenericEditorToolbar")
 public class JSEditorToolbar implements GenericCanvas {
 	private GenericEditorToolbar mGenericToolbar;
 	private JavaScriptObject mOptions;
