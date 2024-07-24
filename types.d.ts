@@ -3756,4 +3756,11 @@ export declare class CanvasEditor {
    * Remove the change listener callback.
    */
   removeOnChangeListener(): void;
+
+  /**
+   * Destroy the editor.
+   * This should be called when the editor is no longer needed to free resources.
+   * All methods will throw an error after calling this.
+   */
+  destroy(): void;
 }
