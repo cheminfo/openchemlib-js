@@ -18,8 +18,8 @@ public class JSUIHelper implements GenericUIHelper {
   }
 
   private JavaScriptObject getJsObject() {
-		return mJsObject;
-	}
+    return mJsObject;
+  }
 
   private native void registerToJs()
   /*-{
@@ -27,8 +27,8 @@ public class JSUIHelper implements GenericUIHelper {
     jsObject.register(this);
   }-*/;
 
-  public void setEditorArea(JSEditorArea mEditorArea) {
-    this.mEditorArea = mEditorArea;
+  public void setEditorArea(JSEditorArea editorArea) {
+    mEditorArea = editorArea;
   }
 
   @Override

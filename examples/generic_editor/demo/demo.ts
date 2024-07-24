@@ -173,7 +173,9 @@ const molfileDiv = document.getElementById('molfile') as HTMLElement;
 let changeCount = 0;
 
 const editorElement = document.getElementById('editor') as HTMLElement;
-const editor = new CanvasEditor(editorElement);
+const editor = new CanvasEditor(editorElement, {
+  initialMode: 'molecule',
+});
 
 editor.setOnChangeListener(({ type, isUserEvent }) => {
   if (isUserEvent && type === 'molecule') {
