@@ -3765,6 +3765,12 @@ export declare class CanvasEditor {
   removeOnChangeListener(): void;
 
   /**
+   * Clear the editor state.
+   * Same as clicking on the clear button in the toolbar.
+   */
+  clearAll(): void;
+
+  /**
    * Destroy the editor.
    * This should be called when the editor is no longer needed to free resources.
    * All methods will throw an error after calling this.

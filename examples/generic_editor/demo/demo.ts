@@ -175,6 +175,11 @@ resetButton.onclick = () => {
   resetEditor();
 };
 
+const clearButton = document.getElementById('clearButton') as HTMLButtonElement;
+clearButton.onclick = () => {
+  getEditor().clearAll();
+};
+
 const loadMolecule = document.getElementById(
   'loadMolecule',
 ) as HTMLButtonElement;

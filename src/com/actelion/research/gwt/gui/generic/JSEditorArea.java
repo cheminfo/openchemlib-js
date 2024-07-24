@@ -183,4 +183,8 @@ public class JSEditorArea implements GenericCanvas {
   public void repaint() {
     draw();
   }
+
+  public void clearAll() {
+    mDrawArea.clearAll();
+  }
 }
