@@ -9,6 +9,7 @@ export {
   OnChangeEventType,
   OnChangeEvent,
   OnChangeListenerCallback,
+  CanvasEditorMode,
   CanvasEditorOptions,
   CanvasEditor,
 } from './types';

@@ -12,7 +12,7 @@
       class="grid gap-2"
       style="
         grid-template-rows: 30px 600px 30px;
-        grid-template-columns: 100px 600px;
+        grid-template-columns: 150px 600px;
         grid-template-areas:
           '.            top-actions .     '
           'left-actions editor      result'
@@ -24,6 +24,16 @@
         <button id="loadFragment">Load fragment</button>
         <button id="loadReaction">Load reaction</button>
       </div>
+      <div class="flex flex-col gap-1" style="grid-area: left-actions">
+        <label>
+          Mode:
+          <select id="modeSelect" class="w-full">
+            <option value="molecule">Molecule</option>
+            <option value="reaction">Reaction</option>
+          </select>
+        </label>
+        <button id="resetButton">Reset</button>
+      </div>
       <div
         id="editor"
         class="border border-blue-300"
@@ -34,7 +44,7 @@
         style="grid-area: result; grid-template-columns: fit-content(100%) 1fr"
       >
         <div>Change count</div>
-        <div id="changeCount"></div>
+        <div id="changeCount">0</div>
         <div>ID Code</div>
         <div id="idcode"></div>
         <div>Molfile</div>

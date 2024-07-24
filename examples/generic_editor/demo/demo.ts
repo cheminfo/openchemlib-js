@@ -1,6 +1,7 @@
 import OCL from '../../../distesm/full.pretty';
+import { getEditor, resetEditor } from './editor.ts';
 
-const { CanvasEditor, Molecule, Reaction } = OCL;
+const { Molecule, Reaction } = OCL;
 
 const rxn = `$RXN
 
@@ -167,24 +168,12 @@ const molfile = `446220
  22 43  1  0  0  0  0
 M  END`;
 
-const changeCountDiv = document.getElementById('changeCount') as HTMLElement;
-const idcodeDiv = document.getElementById('idcode') as HTMLElement;
-const molfileDiv = document.getElementById('molfile') as HTMLElement;
-let changeCount = 0;
+resetEditor();
 
-const editorElement = document.getElementById('editor') as HTMLElement;
-const editor = new CanvasEditor(editorElement, {
-  initialMode: 'molecule',
-});
-
-editor.setOnChangeListener(({ type, isUserEvent }) => {
-  if (isUserEvent && type === 'molecule') {
-    changeCountDiv.innerText = String(++changeCount);
-    const idcodeAndCoords = editor.getMolecule().getIDCodeAndCoordinates();
-    idcodeDiv.innerText = `${idcodeAndCoords.idCode} ${idcodeAndCoords.coordinates}`;
-    molfileDiv.innerText = editor.getMolecule().toMolfileV3();
-  }
-});
+const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
+resetButton.onclick = () => {
+  resetEditor();
+};
 
 const loadMolecule = document.getElementById(
   'loadMolecule',
@@ -192,7 +181,7 @@ const loadMolecule = document.getElementById(
 loadMolecule.onclick = () => {
   // const molecule = Molecule.fromMolfile(molfile);
   const molecule = Molecule.fromSmiles('c1ccccc1CO');
-  editor.setMolecule(molecule);
+  getEditor().setMolecule(molecule);
 };
 
 const loadFragment = document.getElementById(
@@ -202,7 +191,7 @@ loadFragment.onclick = () => {
   // const molecule = Molecule.fromMolfile(molfile);
   const molecule = Molecule.fromSmiles('CCC');
   molecule.setFragment(true);
-  editor.setMolecule(molecule);
+  getEditor().setMolecule(molecule);
 };
 
 const loadReaction = document.getElementById(
@@ -213,5 +202,5 @@ loadReaction.onclick = () => {
   // const reaction = Reaction.fromRxn(rxn);
   // reaction.addCatalyst(Molecule.fromSmiles('CO'));
   console.log(reaction.toSmiles());
-  editor.setReaction(reaction);
+  getEditor().setReaction(reaction);
 };
