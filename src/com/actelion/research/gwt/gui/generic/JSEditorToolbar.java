@@ -9,89 +9,89 @@ import jsinterop.annotations.JsType;
 
 @JsType(name = "GenericEditorToolbar")
 public class JSEditorToolbar implements GenericCanvas {
-	private GenericEditorToolbar mGenericToolbar;
-	private JavaScriptObject mOptions;
-	private JSMouseHandler mMouseHandler;
+  private GenericEditorToolbar mGenericToolbar;
+  private JavaScriptObject mJsObject;
+  private JSMouseHandler mMouseHandler;
 
-	public JSEditorToolbar(JSEditorArea jsEditorArea, JavaScriptObject options) {
-		mGenericToolbar = new GenericEditorToolbar(this, jsEditorArea.getGenericEditorArea());
-		mOptions = options;
+  public JSEditorToolbar(JSEditorArea jsEditorArea, JavaScriptObject jsObject) {
+    mGenericToolbar = new GenericEditorToolbar(this, jsEditorArea.getGenericEditorArea());
+    mJsObject = jsObject;
 
-		mMouseHandler = new JSMouseHandler(mGenericToolbar);
-		mMouseHandler.addListener(mGenericToolbar);
+    mMouseHandler = new JSMouseHandler(mGenericToolbar);
+    mMouseHandler.addListener(mGenericToolbar);
 
-		setDimensions(mGenericToolbar.getWidth(), mGenericToolbar.getHeight());
-		draw();
-	}
+    setDimensions(mGenericToolbar.getWidth(), mGenericToolbar.getHeight());
+    draw();
+  }
 
-	public int getWidth() {
-		return mGenericToolbar.getWidth();
-	}
+  public int getWidth() {
+    return mGenericToolbar.getWidth();
+  }
 
-	public int getHeight() {
-		return mGenericToolbar.getHeight();
-	}
+  public int getHeight() {
+    return mGenericToolbar.getHeight();
+  }
 
-	public void draw() {
-		JSDrawContext ctx = getDrawContext();
-		ctx.clearRect(0, 0, getWidth(), getHeight());
-		mGenericToolbar.paintContent(getDrawContext());
-	}
+  public void draw() {
+    JSDrawContext ctx = getDrawContext();
+    ctx.clearRect(0, 0, getWidth(), getHeight());
+    mGenericToolbar.paintContent(getDrawContext());
+  }
 
-	public void fireMouseEvent(int what, int button, int clickCount, int x, int y, boolean shiftDown, boolean ctrlDown, boolean altDown, boolean isPopupTrigger) {
-		GenericMouseEvent gme = new GenericMouseEvent(what, button, clickCount, x, y, shiftDown, ctrlDown, altDown, isPopupTrigger, mGenericToolbar);
-		mMouseHandler.fireEvent(gme);
-	}
+  public void fireMouseEvent(int what, int button, int clickCount, int x, int y, boolean shiftDown, boolean ctrlDown, boolean altDown, boolean isPopupTrigger) {
+    GenericMouseEvent gme = new GenericMouseEvent(what, button, clickCount, x, y, shiftDown, ctrlDown, altDown, isPopupTrigger, mGenericToolbar);
+    mMouseHandler.fireEvent(gme);
+  }
 
-	private JavaScriptObject getOptions() {
-		return mOptions;
-	}
-	
-	public native void setDimensions(int width, int height)
+  private JavaScriptObject getJsObject() {
+    return mJsObject;
+  }
+  
+  public native void setDimensions(int width, int height)
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getOptions()();
-		return options.setDimensions(width, height);
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getJsObject()();
+    return jsObject.setDimensions(width, height);
   }-*/;
 
-	@Override
-	@JsIgnore
-	public native int getBackgroundRGB()
+  @Override
+  @JsIgnore
+  public native int getBackgroundRGB()
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getOptions()();
-		return options.getBackgroundRGB();
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getJsObject()();
+    return jsObject.getBackgroundRGB();
   }-*/;
 
-	@Override
-	@JsIgnore
-	public native double getCanvasHeight()
+  @Override
+  @JsIgnore
+  public native double getCanvasHeight()
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getOptions()();
-		return options.getCanvasHeight();
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getJsObject()();
+    return jsObject.getCanvasHeight();
   }-*/;
 
-	@Override
-	@JsIgnore
-	public native double getCanvasWidth()
+  @Override
+  @JsIgnore
+  public native double getCanvasWidth()
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getOptions()();
-		return options.getCanvasWidth();
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getJsObject()();
+    return jsObject.getCanvasWidth();
   }-*/;
 
-	@Override
-	@JsIgnore
-	public JSDrawContext getDrawContext() {
-		return new JSDrawContext(getDrawContextFromOptions());
-	}
+  @Override
+  @JsIgnore
+  public JSDrawContext getDrawContext() {
+    return new JSDrawContext(getDrawContextFromJsObject());
+  }
 
-	private native JavaScriptObject getDrawContextFromOptions()
+  private native JavaScriptObject getDrawContextFromJsObject()
   /*-{
-		var options = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getOptions()();
-		return options.getDrawContext();
+    var jsObject = this.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::getJsObject()();
+    return jsObject.getDrawContext();
   }-*/;
 
-	@Override
-	@JsIgnore
-	public void repaint() {
-		draw();
-	}
+  @Override
+  @JsIgnore
+  public void repaint() {
+    draw();
+  }
 }

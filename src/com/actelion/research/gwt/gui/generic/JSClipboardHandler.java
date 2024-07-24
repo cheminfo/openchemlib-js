@@ -1,15 +1,15 @@
 package com.actelion.research.gwt.gui.generic;
 
-import java.util.ArrayList;
-
 import com.actelion.research.chem.MolfileParser;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.gui.clipboard.IClipboardHandler;
 import com.google.gwt.core.client.JavaScriptObject;
 
+import java.util.ArrayList;
+
 public class JSClipboardHandler implements IClipboardHandler {
-	private JavaScriptObject mJsHandler;
+  private JavaScriptObject mJsHandler;
 
   public JSClipboardHandler(JavaScriptObject jsHandler) {
     mJsHandler = jsHandler;
@@ -51,11 +51,11 @@ public class JSClipboardHandler implements IClipboardHandler {
   public boolean copyMolecule(String molfile) {
     Object test = null;
     System.out.println("test: " + test.toString());
-	  StereoMolecule m = new StereoMolecule();
-	  MolfileParser p = new MolfileParser();
-	  p.parse(m, molfile);
+    StereoMolecule m = new StereoMolecule();
+    MolfileParser p = new MolfileParser();
+    p.parse(m, molfile);
     return copyMolecule(m);
-	}
+  }
 
   public native boolean copyMolecule(StereoMolecule mol)
   /*-{

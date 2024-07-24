@@ -1,14 +1,14 @@
 package com.actelion.research.gwt.gui.generic;
 
 import com.actelion.research.gui.generic.GenericPolygon;
-
-import jsinterop.annotations.*;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsType;
 
 @JsType(name = "Polygon")
 public class JSPolygon {
   private GenericPolygon mPolygon;
 
-	@JsIgnore
+  @JsIgnore
   JSPolygon(GenericPolygon polygon) {
     mPolygon = polygon;
   }

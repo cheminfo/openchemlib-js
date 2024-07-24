@@ -3706,12 +3706,19 @@ export interface OnChangeEvent {
 
 export type OnChangeListenerCallback = (event: OnChangeEvent) => void;
 
+export type CanvasEditorMode = 'molecule' | 'reaction';
+
 export interface CanvasEditorOptions {
   /**
    * No toolbar and user interactions are ignored.
    * @default false
    */
   readOnly?: boolean;
+  /**
+   * Mode in which the editor will be initialized.
+   * @default 'molecule'
+   */
+  initialMode?: CanvasEditorMode;
 }
 
 export declare class CanvasEditor {
@@ -3756,6 +3763,12 @@ export declare class CanvasEditor {
    * Remove the change listener callback.
    */
   removeOnChangeListener(): void;
+
+  /**
+   * Clear the editor state.
+   * Same as clicking on the clear button in the toolbar.
+   */
+  clearAll(): void;
 
   /**
    * Destroy the editor.

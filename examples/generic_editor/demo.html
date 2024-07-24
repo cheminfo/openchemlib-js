@@ -2,26 +2,55 @@
 
 <html lang="en">
   <head>
-    <title>Generic editor - PoC</title>
+    <title>Generic editor - Demo</title>
     <link rel="stylesheet" href="../base.css" />
     <script type="module" src="demo/demo.ts"></script>
   </head>
   <body>
-    <div class="flex flex-row gap-4 mb-4">
-      <button id="loadMolecule">Load molecule</button>
-      <button id="loadFragment">Load fragment</button>
-      <button id="loadReaction">Load reaction</button>
-    </div>
-    <div class="bg-green-300 p-3">
-      <div id="editor" class="w-[800px] h-[600px]"></div>
-    </div>
-    <div class="mt-4 grid grid-cols-2 gap-4">
-      <div>Change count</div>
-      <div id="changeCount"></div>
-      <div>ID Code</div>
-      <div id="idcode"></div>
-      <div>Molfile</div>
-      <div id="molfile"></div>
-    </div>
+    <h1>Generic editor - Demo</h1>
+    <section
+      class="grid gap-2"
+      style="
+        grid-template-rows: 30px 400px 30px;
+        grid-template-columns: 150px 600px;
+        grid-template-areas:
+          '.            top-actions .     '
+          'left-actions editor      result'
+          '.            .           result';
+      "
+    >
+      <div class="flex flex-row gap-4" style="grid-area: top-actions">
+        <button id="loadMolecule">Load molecule</button>
+        <button id="loadFragment">Load fragment</button>
+        <button id="loadReaction">Load reaction</button>
+      </div>
+      <div class="flex flex-col gap-1" style="grid-area: left-actions">
+        <label>
+          Mode:
+          <select id="modeSelect" class="w-full">
+            <option value="molecule">Molecule</option>
+            <option value="reaction">Reaction</option>
+          </select>
+        </label>
+        <button id="resetButton">Reset</button>
+        <button id="clearButton">Clear</button>
+      </div>
+      <div
+        id="editor"
+        class="border border-blue-300"
+        style="grid-area: editor"
+      ></div>
+      <div
+        class="grid auto-rows-min gap-2"
+        style="grid-area: result; grid-template-columns: fit-content(100%) 1fr"
+      >
+        <div>Change count</div>
+        <div id="changeCount">0</div>
+        <div>ID Code</div>
+        <div id="idcode"></div>
+        <div>Molfile</div>
+        <div id="molfile"></div>
+      </div>
+    </section>
   </body>
 </html>
