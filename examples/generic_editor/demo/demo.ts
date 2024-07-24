@@ -1,7 +1,5 @@
 import OCL from '../../../distesm/full.pretty';
 import { getEditor, resetEditor } from './editor.ts';
-import rxn from './seeds/rxn.ts';
-import molfile from './seeds/molfile.ts';
 
 const { Molecule, Reaction } = OCL;
 
