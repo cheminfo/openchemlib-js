@@ -42,7 +42,7 @@ public class JSDialog implements GenericDialog {
   public native GenericCheckBox createCheckBox(String text)
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.gui.generic.JSDialog::getJsDialog()();
-    var checkBox = dialog.createCheckBox(text);
+    var checkBox = jsDialog.createCheckBox(text);
     return @com.actelion.research.gwt.gui.generic.JSCheckBox::new(Lcom/google/gwt/core/client/JavaScriptObject;)(checkBox);
   }-*/;
 
@@ -50,7 +50,7 @@ public class JSDialog implements GenericDialog {
   public native GenericComboBox createComboBox()
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.gui.generic.JSDialog::getJsDialog()();
-    var comboBox = dialog.createComboBox();
+    var comboBox = jsDialog.createComboBox();
     return @com.actelion.research.gwt.gui.generic.JSComboBox::new(Lcom/google/gwt/core/client/JavaScriptObject;)(comboBox);
   }-*/;
 
@@ -58,7 +58,7 @@ public class JSDialog implements GenericDialog {
   public native GenericLabel createLabel(String text)
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.gui.generic.JSDialog::getJsDialog()();
-    var label = dialog.createLabel(text);
+    var label = jsDialog.createLabel(text);
     return @com.actelion.research.gwt.gui.generic.JSLabel::new(Lcom/google/gwt/core/client/JavaScriptObject;)(label);
   }-*/;
 
@@ -66,7 +66,7 @@ public class JSDialog implements GenericDialog {
   public native GenericTextField createTextField(int width, int height)
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.gui.generic.JSDialog::getJsDialog()();
-    var textField = dialog.createTextField(width, height);
+    var textField = jsDialog.createTextField(width, height);
     return @com.actelion.research.gwt.gui.generic.JSTextField::new(Lcom/google/gwt/core/client/JavaScriptObject;)(textField);
   }-*/;
 
@@ -84,28 +84,28 @@ public class JSDialog implements GenericDialog {
         that.@com.actelion.research.gwt.gui.generic.JSDialog::fireCancel()();
       }
     };
-    dialog.setEventConsumer(jsConsumer);
+    jsDialog.setEventConsumer(jsConsumer);
   }-*/;
 
   @Override
   public native void showDialog()
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.gui.generic.JSDialog::getJsDialog()();
-    dialog.showDialog();
+    jsDialog.showDialog();
   }-*/;
 
   @Override
   public native void disposeDialog()
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.gui.generic.JSDialog::getJsDialog()();
-    dialog.disposeDialog();
+    jsDialog.disposeDialog();
   }-*/;
 
   @Override
   public native void showMessage(String message)
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.gui.generic.JSDialog::getJsDialog()();
-    dialog.showMessage(message);
+    jsDialog.showMessage(message);
   }-*/;
 
   private void fireOk() {
