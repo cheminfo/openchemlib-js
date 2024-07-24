@@ -1,4 +1,4 @@
-const molfile = `446220
+export const molfile = `446220
 -OEChem-02022300542D
 
  43 45  0     1  0  0  0  0  0999 V2000
