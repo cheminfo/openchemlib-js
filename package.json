@@ -51,6 +51,7 @@
   },
   "files": [
     "dist",
+    "lib",
     "types.d.ts",
     "minimal.js",
     "minimal.d.ts",
