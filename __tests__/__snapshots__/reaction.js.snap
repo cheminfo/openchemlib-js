@@ -68,7 +68,8 @@ exports[`Reaction class should load and create RXN files 2`] = `
 
 
 OCL_RXN_V1.0:gJX@@eKU@@ gGQHDHaInfh@!gJX@@eKU@@ fHdP@@##!ROvp@[C}c@FNZz@@ !R_\`CW?Hc|_\`BH_Ykh@@ !ROvp@[C}c@FNZz@@ !RGP@@##
- VM  V30 BEGIN REACTANT
+M  V30 COUNTS 2 2
+M  V30 BEGIN REACTANT
 M  V30 BEGIN CTAB
 M  V30 COUNTS 6 5 0 0 0
 M  V30 BEGIN ATOM
