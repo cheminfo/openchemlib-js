@@ -3810,43 +3810,85 @@ interface CanvasEditorElementConstructor extends CustomElementConstructor {
  *
  * Usage:
  *
+ * In Javascript:
  * ```js
- * import {registerCustomElement} from 'openchemlib/minimal';
+ * import {registerCustomElement, Molecule, ReactionEncoder} from 'openchemlib/minimal';
  *
  * // register CanvasEditorElement with `openchemlib-editor` tag name
  * const CanvasEditorElement = registerCustomElement();
  *
  * // CanvasEditorElementConstructor.MODE return enums of possible modes
+ * const firstEditor = document.querySelector('openchemlib-editor');
+ * console.assert(firstEditor instanceof CanvasEditorElement);
  *
+ * firstEditor.setMolecule(Molecule.fromIDCode('ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@'));
+ * const molecule = firstEditor.getMolecule();
+ *
+ * firstEditor.setReaction(ReactionEncoder.decode('gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@'));
+ * const reaction = firstEditor.getReaction();
+ *
+ * firstEditor.clearAll();
  * ```
  *
- * @example
- *
+ * In HTML
  * ```html
- * Molecule
- * <openchemlib-editor idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"></openchemlib-editor>
+ * <p>Empty editor</p>
+ * <openchemlib-editor></openchemlib-editor>
  *
- * Molecule Fragment
+ * <p>Molecule <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code></p>
  * <openchemlib-editor
- *  idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp"
- *  fragment
+ *   idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
  * ></openchemlib-editor>
  *
- * Reaction
+ * <p>
+ *   Molecule Fragment
+ *   <code>
+ *     ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp
+ *   </code>
+ * </p>
  * <openchemlib-editor
- *  idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
- *  mode="reaction"
+ *   idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp"
+ *   fragment
  * ></openchemlib-editor>
  *
- * Reaction Fragment
+ * <p>Reaction <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@</code></p>
  * <openchemlib-editor
- *  idcode="gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B"
- *  mode="reaction"
- *  fragment
+ *   idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
+ *   mode="reaction"
  * ></openchemlib-editor>
  *
- * Molecule readonly
- * <openchemlib-editor readonly idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"></openchemlib-editor>
+ * <p>
+ *   Reaction Fragment
+ *   <code>gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B</code>
+ * </p>
+ * <openchemlib-editor
+ *   idcode="gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B"
+ *   mode="reaction"
+ *   fragment
+ * ></openchemlib-editor>
+ *
+ * <p>
+ *   Molecule readonly
+ *   <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code>
+ * </p>
+ * <openchemlib-editor
+ *   readonly
+ *   idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+ * ></openchemlib-editor>
+ * ```
+ *
+ * Styling:
+ * `registerCustomElement()` insertRule to define height to 400px and width to 600px on `openchemlib-editor` element.
+ * This element need to be contained by fixed width and height, or it will grow indefinitely.
+ * So for responsive layout, ensure your container has max-width and max-height
+ * before override the inserted rules to 100% instead fixed units.
+ *
+ * ```css
+ * // need to be into a fixed size container
+ * openchemlib-editor:defined {
+ *  width: 100%;
+ *  height: 100%
+ * }
  * ```
  */
 declare interface CanvasEditorElement extends HTMLElement {
