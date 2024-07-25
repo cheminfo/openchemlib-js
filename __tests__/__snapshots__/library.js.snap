@@ -407,6 +407,8 @@ exports[`prototype properties of Transformer 1`] = `
 
 exports[`prototype properties of Util 1`] = `[]`;
 
+exports[`prototype properties of registerCustomElement 1`] = `[]`;
+
 exports[`static properties of CanonizerUtil 1`] = `
 [
   "BACKBONE",
@@ -780,3 +782,5 @@ exports[`static properties of Util 1`] = `
   "getHoseCodesFromDiastereotopicID",
 ]
 `;
+
+exports[`static properties of registerCustomElement 1`] = `[]`;
