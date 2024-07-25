@@ -3803,8 +3803,51 @@ interface CanvasEditorElementConstructor extends CustomElementConstructor {
 }
 
 /**
+ * a Webcomponent to wrap CanvasEditor
+ *
  * The class CanvasEditorElement is not exposed in OCL scope.
  * You can obtain it from `registerCustomElement`
+ *
+ * Usage:
+ *
+ * ```js
+ * import {registerCustomElement} from 'openchemlib/minimal';
+ *
+ * // register CanvasEditorElement with `openchemlib-editor` tag name
+ * const CanvasEditorElement = registerCustomElement();
+ *
+ * // CanvasEditorElementConstructor.MODE return enums of possible modes
+ *
+ * ```
+ *
+ * @example
+ *
+ * ```html
+ * Molecule
+ * <openchemlib-editor idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"></openchemlib-editor>
+ *
+ * Molecule Fragment
+ * <openchemlib-editor
+ *  idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp"
+ *  fragment
+ * ></openchemlib-editor>
+ *
+ * Reaction
+ * <openchemlib-editor
+ *  idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
+ *  mode="reaction"
+ * ></openchemlib-editor>
+ *
+ * Reaction Fragment
+ * <openchemlib-editor
+ *  idcode="gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B"
+ *  mode="reaction"
+ *  fragment
+ * ></openchemlib-editor>
+ *
+ * Molecule readonly
+ * <openchemlib-editor readonly idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"></openchemlib-editor>
+ * ```
  */
 declare interface CanvasEditorElement extends HTMLElement {
   /**
