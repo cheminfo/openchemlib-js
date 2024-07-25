@@ -33,6 +33,7 @@ const coreAPI = [
 
 const fullAPI = [
   'CanvasEditor',
+  'registerCustomElement',
   'StructureView',
   'StructureEditor',
   'SVGRenderer',

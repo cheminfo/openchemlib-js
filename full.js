@@ -5,7 +5,7 @@ const OCL = require('./dist/openchemlib-full.js');
 require('./lib/canvas_editor/init')(OCL);
 
 exports.CanvasEditor = OCL.CanvasEditor;
-exports.registerCanvasEditor = OCL.registerCanvasEditor;
+exports.registerCustomElement = OCL.registerCustomElement;
 
 exports.default = OCL;
 exports.CanonizerUtil = OCL.CanonizerUtil;

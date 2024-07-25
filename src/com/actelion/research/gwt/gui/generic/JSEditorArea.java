@@ -191,4 +191,8 @@ public class JSEditorArea implements GenericCanvas {
   public void clearAll() {
     mDrawArea.clearAll();
   }
+
+  public int getMode() {
+    return mDrawArea.getMode();
+  }
 }
