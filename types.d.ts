@@ -3786,3 +3786,54 @@ export declare class CanvasEditor {
    */
   destroy(): void;
 }
+
+interface CanvasEditorElementModeEnum {
+  MOLECULE: 'molecule';
+  REACTION: 'reaction';
+}
+
+type CanvasEditorElementMode = 'molecule' | 'reaction';
+
+interface CanvasEditorElementConstructor extends CustomElementConstructor {
+  readonly MODE: CanvasEditorElementModeEnum;
+  readonly observedAttributes: ['idcode', 'fragment', 'mode', 'readonly'];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new (...params: any[]): CanvasEditorElement;
+}
+
+/**
+ * The class CanvasEditorElement is not exposed in OCL scope.
+ * You can obtain it from `registerCustomElement`
+ */
+declare interface CanvasEditorElement extends HTMLElement {
+  /**
+   * @defaultValue ''
+   */
+  idcode: string;
+  /**
+   * @defaultValue false
+   */
+  fragment: boolean;
+  /**
+   * @defaultValue 'molecule'
+   */
+  mode: CanvasEditorElementMode;
+  /**
+   * @defaultValue false
+   */
+  readonly: boolean;
+
+  getMolecule(): Molecule;
+  setMolecule(molecule: Molecule): void;
+
+  getReaction(): Reaction;
+  setReaction(reaction: Reaction): void;
+
+  clearAll(): void;
+}
+
+/**
+ * register `<openchemlib-editor>` element with `CanvasEditorElementConstructor` if not already defined.
+ */
+declare function registerCustomElement(): CanvasEditorElementConstructor;

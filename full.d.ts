@@ -12,4 +12,5 @@ export {
   CanvasEditorMode,
   CanvasEditorOptions,
   CanvasEditor,
+  registerCustomElement,
 } from './types';
