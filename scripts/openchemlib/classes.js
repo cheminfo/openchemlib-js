@@ -335,18 +335,10 @@ function changeGenericEditorArea(code) {
     'private void openReaction() {}',
   );
   code = code.replaceAll('System.getProperty("development") != null', 'false');
-  // TODO: remove after the fix has been merged upstream.
-  code = code.replaceAll(methodRegExp('toolChanged'), `public void toolChanged(int newTool) {
-\t\tif (mCurrentTool != newTool) {
-\t\t\tif (mCurrentTool == GenericEditorToolbar.cToolMapper
-\t\t\t\t\t|| newTool == GenericEditorToolbar.cToolMapper) {
-\t\t\t\tmCurrentTool = newTool;
-\t\t\t\tupdate(UPDATE_REDRAW);
-\t\t\t} else {
-\t\t\t\tmCurrentTool = newTool;
-\t\t\t}
-\t\t}
-\t}`)
+  code = code.replace(
+    'private void updateAndFireEvent(int updateMode)',
+    'public void updateAndFireEvent(int updateMode)',
+  );
   return code;
 }
 

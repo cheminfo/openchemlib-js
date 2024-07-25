@@ -94,7 +94,7 @@ public class JSEditorToolbar implements GenericCanvas {
   public native void repaint()
   /*-{
     var that = this;
-    requestAnimationFrame(function repaintEditorToolbar() {
+    $wnd.requestAnimationFrame(function repaintEditorToolbar() {
       that.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::draw()();
     });
   }-*/;

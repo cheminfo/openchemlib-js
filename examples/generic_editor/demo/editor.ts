@@ -17,11 +17,15 @@ export function resetEditor() {
   const readOnlyCheckbox = document.getElementById(
     'readOnlyCheckbox',
   ) as HTMLInputElement;
+  const fragmentCheckbox = document.getElementById(
+    'fragmentCheckbox',
+  ) as HTMLInputElement;
   const newEditor = new OCL.CanvasEditor(
     document.getElementById('editor') as HTMLElement,
     {
       readOnly: readOnlyCheckbox.checked,
       initialMode: modeSelect.value as OCL.CanvasEditorMode,
+      initialFragment: fragmentCheckbox.checked,
     },
   );
 
@@ -45,7 +49,8 @@ export function resetEditor() {
         updateMolfileOrRxnV3(molecule.toMolfileV3());
       } else {
         const reaction = newEditor.getReaction();
-        updateIDCode(OCL.ReactionEncoder.encode(reaction));
+        const idCode = OCL.ReactionEncoder.encode(reaction);
+        updateIDCode(idCode ?? '');
         updateMolfileOrRxn(reaction.toRxn());
         updateMolfileOrRxnV3(reaction.toRxnV3());
       }

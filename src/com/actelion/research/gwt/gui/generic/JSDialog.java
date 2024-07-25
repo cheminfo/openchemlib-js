@@ -112,7 +112,7 @@ public class JSDialog implements GenericDialog {
     if (mConsumer != null) {
       mConsumer.eventHappened(new GenericActionEvent(this, GenericActionEvent.WHAT_OK, 0));
     }
-    mEditorArea.repaint();
+    mEditorArea.getGenericEditorArea().updateAndFireEvent(1);
   }
 
   private void fireCancel() {

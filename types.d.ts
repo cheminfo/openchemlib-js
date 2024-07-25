@@ -3091,7 +3091,7 @@ export declare class Reaction {
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class,unicorn/no-static-only-class
 export declare class ReactionEncoder {
-  static encode(reaction: Reaction): string;
+  static encode(reaction: Reaction): string | null;
   static decode(reaction: string): Reaction;
 }
 
@@ -3719,6 +3719,10 @@ export interface CanvasEditorOptions {
    * @default 'molecule'
    */
   initialMode?: CanvasEditorMode;
+  /**
+   * Whether the editor should be initialized with a fragment.
+   */
+  initialFragment?: boolean;
 }
 
 export declare class CanvasEditor {

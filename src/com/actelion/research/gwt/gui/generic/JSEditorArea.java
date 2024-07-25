@@ -183,7 +183,7 @@ public class JSEditorArea implements GenericCanvas {
   public native void repaint()
   /*-{
     var that = this;
-    requestAnimationFrame(function repaintEditorArea() {
+    $wnd.requestAnimationFrame(function repaintEditorArea() {
       that.@com.actelion.research.gwt.gui.generic.JSEditorArea::draw()();
     });
   }-*/;
