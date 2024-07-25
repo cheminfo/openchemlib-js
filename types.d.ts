@@ -3730,6 +3730,11 @@ export declare class CanvasEditor {
   constructor(element: HTMLElement, options?: CanvasEditorOptions);
 
   /**
+   * Get the current editor mode.
+   */
+  getMode(): CanvasEditorMode;
+
+  /**
    * Set the molecule to be edited.
    * Actions in the editor will mutate the molecule object directly.
    * @param molecule

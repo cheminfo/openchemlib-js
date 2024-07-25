@@ -3,7 +3,7 @@ import {
   incrementChangeCount,
   resetChangeCount,
   updateIDCode,
-  updateMolfile,
+  updateMolfileOrRxn,
 } from './result.ts';
 
 let editor: OCL.CanvasEditor | undefined;
@@ -29,8 +29,17 @@ export function resetEditor() {
       if (isUserEvent) {
         incrementChangeCount();
       }
-      updateIDCode(newEditor.getMolecule());
-      updateMolfile(newEditor.getMolecule());
+      const mode = newEditor.getMode();
+      if (mode === 'molecule') {
+        const molecule = newEditor.getMolecule();
+        updateIDCode(molecule.getIDCode());
+        updateMolfileOrRxn(molecule.toMolfileV3());
+      } else {
+        const reaction = newEditor.getReaction();
+        const encoder = new OCL.ReactionEncoder();
+        updateIDCode(OCL.ReactionEncoder.encode(reaction));
+        updateMolfileOrRxn(reaction.toRxnV3());
+      }
     }
   });
 }
