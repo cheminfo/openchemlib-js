@@ -2,9 +2,13 @@
 
 <html lang="en">
   <head>
-    <title>Generic editor - Demo CanvasEditorElement (WebComponent)</title>
+    <title>Generic editor - &lt;openchemlib-editor> (Web Component) demo</title>
     <link rel="stylesheet" href="../base.css" />
-    <script type="module" src="demo.ts"></script>
+    <script type="module">
+      import OCL from '../../distesm/full.pretty';
+
+      OCL.registerCustomElement();
+    </script>
 
     <style>
       openchemlib-editor:defined {
@@ -13,7 +17,7 @@
     </style>
   </head>
   <body>
-    <h1>Generic editor - Demo CanvasEditorElement (WebComponent)</h1>
+    <h1>Generic editor - &lt;openchemlib-editor> (Web Component) demo</h1>
 
     <p>Empty editor</p>
     <openchemlib-editor></openchemlib-editor>
@@ -34,6 +38,15 @@
       fragment
     ></openchemlib-editor>
 
+    <p>
+      Molecule readonly
+      <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code>
+    </p>
+    <openchemlib-editor
+      readonly
+      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+    ></openchemlib-editor>
+
     <p>Reaction <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@</code></p>
     <openchemlib-editor
       idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
@@ -51,12 +64,12 @@
     ></openchemlib-editor>
 
     <p>
-      Molecule readonly
-      <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code>
+      Reaction readonly <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@</code>
     </p>
     <openchemlib-editor
+      idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
+      mode="reaction"
       readonly
-      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
     ></openchemlib-editor>
   </body>
 </html>
