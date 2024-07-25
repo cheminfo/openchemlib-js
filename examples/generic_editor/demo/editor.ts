@@ -4,6 +4,7 @@ import {
   resetChangeCount,
   updateIDCode,
   updateMolfileOrRxn,
+  updateMolfileOrRxnV3,
 } from './result.ts';
 
 let editor: OCL.CanvasEditor | undefined;
@@ -13,9 +14,13 @@ export function resetEditor() {
     editor.destroy();
   }
   const modeSelect = document.getElementById('modeSelect') as HTMLSelectElement;
+  const readOnlyCheckbox = document.getElementById(
+    'readOnlyCheckbox',
+  ) as HTMLInputElement;
   const newEditor = new OCL.CanvasEditor(
     document.getElementById('editor') as HTMLElement,
     {
+      readOnly: readOnlyCheckbox.checked,
       initialMode: modeSelect.value as OCL.CanvasEditorMode,
     },
   );
@@ -25,6 +30,7 @@ export function resetEditor() {
   resetChangeCount();
   updateIDCode('');
   updateMolfileOrRxn('');
+  updateMolfileOrRxnV3('');
 
   editor.setOnChangeListener(({ type, isUserEvent }) => {
     if (type === 'molecule') {
@@ -35,11 +41,13 @@ export function resetEditor() {
       if (mode === 'molecule') {
         const molecule = newEditor.getMolecule();
         updateIDCode(molecule.getIDCode());
-        updateMolfileOrRxn(molecule.toMolfileV3());
+        updateMolfileOrRxn(molecule.toMolfile());
+        updateMolfileOrRxnV3(molecule.toMolfileV3());
       } else {
         const reaction = newEditor.getReaction();
         updateIDCode(OCL.ReactionEncoder.encode(reaction));
-        updateMolfileOrRxn(reaction.toRxnV3());
+        updateMolfileOrRxn(reaction.toRxn());
+        updateMolfileOrRxnV3(reaction.toRxnV3());
       }
     }
   });
