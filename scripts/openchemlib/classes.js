@@ -317,10 +317,15 @@ function changeTautomerHelper(code) {
 }
 
 function changeTextDrawingObject(code) {
+  code = replaceChecked(
+    code,
+    'import java.util.ArrayList;',
+    'import java.math.BigDecimal;\nimport java.math.MathContext;\nimport java.util.ArrayList;',
+  );
   return replaceChecked(
     code,
     String.raw`detail.append(String.format(" size=\"%.4f\"", new Double(mSize)));`,
-    String.raw`detail.append(" size=\""+mSize+"\"");`,
+    String.raw`detail.append(" size=\""+new BigDecimal(mSize, new MathContext(4)).toString()+"\"");`,
   );
 }
 
@@ -365,7 +370,7 @@ function removeRXNStringFormat(code) {
   return replaceChecked(
     code,
     'theWriter.write(String.format("M  V30 COUNTS %d %d"+NL,rcnt,pcnt));',
-    'theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+NL,rcnt,pcnt);',
+    'theWriter.write("M  V30 COUNTS "+rcnt+" "+pcnt+NL);',
   );
 }
 
