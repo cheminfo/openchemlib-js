@@ -38,7 +38,6 @@ export function resetEditor() {
         updateMolfileOrRxn(molecule.toMolfileV3());
       } else {
         const reaction = newEditor.getReaction();
-        const encoder = new OCL.ReactionEncoder();
         updateIDCode(OCL.ReactionEncoder.encode(reaction));
         updateMolfileOrRxn(reaction.toRxnV3());
       }
