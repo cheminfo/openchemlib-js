@@ -1,5 +1,18 @@
 # Changelog
 
+## [8.15.0](https://github.com/cheminfo/openchemlib-js/compare/v8.14.0...v8.15.0) (2024-07-25)
+
+
+### Features
+
+* implement generic editor ([#219](https://github.com/cheminfo/openchemlib-js/issues/219)) ([8a8185f](https://github.com/cheminfo/openchemlib-js/commit/8a8185f7f32f9c99ede783a8d3fcc5bc6882f638))
+
+
+### Bug Fixes
+
+* hydrogen highlight reset ([f0de006](https://github.com/cheminfo/openchemlib-js/commit/f0de006015e082259033134ba5962e8bfcbcac88))
+* update OCL to 2024.7.1 ([4d6b4fb](https://github.com/cheminfo/openchemlib-js/commit/4d6b4fb4d0f47b379aaaf31720e0b6f7e028d5b9))
+
 ## [8.14.0](https://github.com/cheminfo/openchemlib-js/compare/v8.13.0...v8.14.0) (2024-06-19)
 
 
