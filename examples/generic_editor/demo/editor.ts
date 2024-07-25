@@ -23,6 +23,8 @@ export function resetEditor() {
   editor = newEditor;
 
   resetChangeCount();
+  updateIDCode('');
+  updateMolfileOrRxn('');
 
   editor.setOnChangeListener(({ type, isUserEvent }) => {
     if (type === 'molecule') {
