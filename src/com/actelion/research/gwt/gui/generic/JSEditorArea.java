@@ -117,7 +117,7 @@ public class JSEditorArea implements GenericCanvas {
     return jsObject.onChange(what, isUserChange);
   }-*/;
 
-  public void draw() {
+  private void draw() {
     mDrawArea.paintContent(getDrawContext());
   }
 
@@ -180,9 +180,13 @@ public class JSEditorArea implements GenericCanvas {
   }-*/;
 
   @Override
-  public void repaint() {
-    draw();
-  }
+  public native void repaint()
+  /*-{
+    var that = this;
+    requestAnimationFrame(function repaintEditorArea() {
+      that.@com.actelion.research.gwt.gui.generic.JSEditorArea::draw()();
+    });
+  }-*/;
 
   public void clearAll() {
     mDrawArea.clearAll();

@@ -32,7 +32,7 @@ public class JSEditorToolbar implements GenericCanvas {
     return mGenericToolbar.getHeight();
   }
 
-  public void draw() {
+  private void draw() {
     JSDrawContext ctx = getDrawContext();
     ctx.clearRect(0, 0, getWidth(), getHeight());
     mGenericToolbar.paintContent(getDrawContext());
@@ -91,7 +91,11 @@ public class JSEditorToolbar implements GenericCanvas {
 
   @Override
   @JsIgnore
-  public void repaint() {
-    draw();
-  }
+  public native void repaint()
+  /*-{
+    var that = this;
+    requestAnimationFrame(function repaintEditorToolbar() {
+      that.@com.actelion.research.gwt.gui.generic.JSEditorToolbar::draw()();
+    });
+  }-*/;
 }
