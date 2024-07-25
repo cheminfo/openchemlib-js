@@ -1,4 +1,7 @@
+'use strict';
+
 module.exports = function extendCore(exports) {
+  // eslint-disable-next-line strict
   'use strict';
 
   let ConformerGenerator = exports.ConformerGenerator;

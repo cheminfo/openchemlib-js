@@ -1,9 +1,0 @@
-extends: cheminfo
-env:
-  node: true
-  jest: true
-parserOptions:
-  sourceType: script
-rules:
-  import/no-unresolved: off
-  jest/prefer-strict-equal: off

@@ -124,7 +124,7 @@ it('should should optionally not invent coordinates', () => {
 
 it('should should optionally not parse stereo features', () => {
   const parser = new SmilesParser();
-  const vitaminA = 'C/C(=C\\CO)/C=C/C=C(/C)\\C=C\\C1=C(C)CCCC1(C)C';
+  const vitaminA = String.raw`C/C(=C\CO)/C=C/C=C(/C)\C=C\C1=C(C)CCCC1(C)C`;
   const molecule = new Molecule(0, 0);
   parser.parseMolecule(vitaminA, { molecule, noStereo: true });
   const idCodeWithoutStereo = molecule.getIDCode();

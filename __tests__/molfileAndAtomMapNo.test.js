@@ -1,6 +1,6 @@
 'use strict';
 
-const { readFileSync } = require('fs');
+const { readFileSync } = require('node:fs');
 
 const { Molecule } = require('../minimal');
 
@@ -11,9 +11,11 @@ test('molfile with atomMapNo', () => {
   const newMolfile = molecule.toMolfile();
   const atomMapNo = newMolfile
     .split(/\r?\n/)
-    .filter((line) => line.match(/ [OCH] /))
-    // eslint-disable-next-line prefer-named-capture-group
-    .map((line) => line.replace(/.* ([OCH]) .*(.) {2}0 {2}0$/, '$1 $2'));
+    .filter((line) => line.match(/ [CHO] /))
+    .map((line) =>
+      line.replace(/.* (?<och>[CHO]) .*(?<n>.) {2}0 {2}0$/, '$<och> $<n>'),
+    );
+
   expect(atomMapNo).toStrictEqual(['O 5', 'C 1', 'C 3', 'C 4', 'H 2']);
 
   const svg = molecule.toSVG(300, 200);

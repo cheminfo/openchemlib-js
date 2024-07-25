@@ -49,9 +49,9 @@ jobs:
         run: npm run build-debug-full
       - name: Upload debug build and logs
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: debug-build
+          name: debug-build-${{ matrix.node-version }}
           path: |
             dist/openchemlib-full.pretty.js
             compile-full.log

@@ -17,17 +17,25 @@
     "export": "node scripts/build.js export",
     "build": "npm run build:min && npm run build-full-pretty",
     "build-core": "npm run build:min -- -m core",
-    "build-debug-full": "npm run build:pretty -- -m full --verbose",
     "build-debug-core": "npm run build:pretty -- -m core --verbose",
+    "build-debug-full": "npm run build:pretty -- -m full --verbose",
     "build-debug-minimal": "npm run build:pretty -- -m minimal --verbose",
-    "build-minimal": "npm run build:min -- -m minimal",
+    "build-esm": "npm run build-full-pretty && npm run build-esm-bundle-export",
+    "build-esm-bundle": "esbuild full.pretty.js --bundle --sourcemap --format=esm --outfile=distesm/full.pretty.js",
+    "build-esm-bundle-export": "npm run build-esm-bundle && node scripts/build_esm_bundle_types.js",
+    "build-esm-bundle-types": "node scripts/esm_bundle_types.js",
+    "build-esm-bundle-watch": "npm run build-esm-bundle -- --watch",
     "build-full-pretty": "npm run build:pretty -- -m full",
-    "eslint": "eslint __tests__ scripts benchmark",
+    "build-minimal": "npm run build:min -- -m minimal",
+    "eslint": "eslint .",
     "eslint-fix": "npm run eslint -- --fix",
-    "prettier": "prettier --check __tests__ scripts benchmark",
-    "prettier-write": "prettier --write __tests__ scripts benchmark",
+    "prettier": "prettier --check .",
+    "prettier-write": "prettier --write .",
     "test": "npm run build && npm run test-only && npm run eslint && npm run prettier",
-    "test-only": "jest"
+    "test-only": "jest",
+    "vite": "vite --open",
+    "vite-build": "vite build",
+    "vite-preview": "vite preview"
   },
   "main": "./core.js",
   "exports": {
@@ -38,14 +46,8 @@
     "./core.js": "./core.js",
     "./full": "./full.js",
     "./full.js": "./full.js",
-    "./full.pretty": {
-      "types": "./full.d.ts",
-      "default": "./full.pretty.js"
-    },
-    "./full.pretty.js": {
-      "types": "./full.d.ts",
-      "default": "./full.pretty.js"
-    }
+    "./full.pretty": "./full.pretty.js",
+    "./full.pretty.js": "./full.pretty.js"
   },
   "files": [
     "dist",
@@ -56,7 +58,8 @@
     "core.d.ts",
     "full.js",
     "full.d.ts",
-    "full.pretty.js"
+    "full.pretty.js",
+    "full.pretty.d.ts"
   ],
   "repository": {
     "type": "git",
@@ -73,13 +76,25 @@
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
     "@types/jest": "^29.5.12",
+    "autoprefixer": "^10.4.19",
     "benchmark": "^2.1.4",
+    "esbuild": "^0.23.0",
     "eslint": "^8.56.0",
-    "eslint-config-cheminfo": "^9.1.1",
+    "eslint-config-cheminfo-typescript": "^14.0.0",
+    "fast-png": "^6.2.0",
+    "globals": "^15.8.0",
     "gwt-api-exporter": "^2.0.0",
+    "image-js": "0.0.0-next-d280f46ab7",
     "jest": "^29.7.0",
-    "openchemlib-utils": "^5.8.0",
-    "prettier": "^3.2.5",
+    "openchemlib-utils": "^6.3.0",
+    "postcss": "^8.4.39",
+    "prettier": "^3.3.3",
+    "tailwindcss": "^3.4.6",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4",
     "yargs": "^17.7.2"
+  },
+  "volta": {
+    "node": "22.5.1"
   }
 }

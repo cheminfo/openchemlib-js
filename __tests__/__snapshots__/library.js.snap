@@ -2,6 +2,8 @@
 
 exports[`prototype properties of CanonizerUtil 1`] = `[]`;
 
+exports[`prototype properties of CanvasEditor 1`] = `[]`;
+
 exports[`prototype properties of ConformerGenerator 1`] = `
 [
   "getConformerCount",
@@ -405,6 +407,8 @@ exports[`prototype properties of Transformer 1`] = `
 
 exports[`prototype properties of Util 1`] = `[]`;
 
+exports[`prototype properties of registerCustomElement 1`] = `[]`;
+
 exports[`static properties of CanonizerUtil 1`] = `
 [
   "BACKBONE",
@@ -415,6 +419,8 @@ exports[`static properties of CanonizerUtil 1`] = `
   "getIDCode",
 ]
 `;
+
+exports[`static properties of CanvasEditor 1`] = `[]`;
 
 exports[`static properties of ConformerGenerator 1`] = `
 [
@@ -776,3 +782,5 @@ exports[`static properties of Util 1`] = `
   "getHoseCodesFromDiastereotopicID",
 ]
 `;
+
+exports[`static properties of registerCustomElement 1`] = `[]`;

@@ -5,5 +5,12 @@ export {
   SVGRenderer,
   AtomHighlightCallback,
   BondHighlightCallback,
-  ChangeListenerCallback
+  ChangeListenerCallback,
+  OnChangeEventType,
+  OnChangeEvent,
+  OnChangeListenerCallback,
+  CanvasEditorMode,
+  CanvasEditorOptions,
+  CanvasEditor,
+  registerCustomElement,
 } from './types';

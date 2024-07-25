@@ -2,6 +2,11 @@
 
 const OCL = require('./dist/openchemlib-full.pretty.js');
 
+require('./lib/canvas_editor/init')(OCL);
+
+exports.CanvasEditor = OCL.CanvasEditor;
+exports.registerCustomElement = OCL.registerCustomElement;
+
 exports.default = OCL;
 exports.CanonizerUtil = OCL.CanonizerUtil;
 exports.ConformerGenerator = OCL.ConformerGenerator;

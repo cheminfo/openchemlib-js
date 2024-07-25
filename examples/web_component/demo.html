@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <title>Generic editor - Demo CanvasEditorElement (WebComponent)</title>
+    <link rel="stylesheet" href="../base.css" />
+    <script type="module" src="demo.ts"></script>
+
+    <style>
+      openchemlib-editor:defined {
+        width: 50vw;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Generic editor - Demo CanvasEditorElement (WebComponent)</h1>
+
+    <p>Empty editor</p>
+    <openchemlib-editor></openchemlib-editor>
+
+    <p>Molecule <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code></p>
+    <openchemlib-editor
+      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+    ></openchemlib-editor>
+
+    <p>
+      Molecule Fragment
+      <code>
+        ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp
+      </code>
+    </p>
+    <openchemlib-editor
+      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp"
+      fragment
+    ></openchemlib-editor>
+
+    <p>Reaction <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@</code></p>
+    <openchemlib-editor
+      idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
+      mode="reaction"
+    ></openchemlib-editor>
+
+    <p>
+      Reaction Fragment
+      <code>gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B</code>
+    </p>
+    <openchemlib-editor
+      idcode="gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B"
+      mode="reaction"
+      fragment
+    ></openchemlib-editor>
+
+    <p>
+      Molecule readonly
+      <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code>
+    </p>
+    <openchemlib-editor
+      readonly
+      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+    ></openchemlib-editor>
+  </body>
+</html>

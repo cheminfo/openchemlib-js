@@ -1,9 +1,9 @@
 'use strict';
 
-const childProcess = require('child_process');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
+const childProcess = require('node:child_process');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 
 const exporter = require('gwt-api-exporter');
 const yargs = require('yargs');
@@ -65,7 +65,7 @@ if (argv.m) {
 let config;
 try {
   config = require('../config.json');
-} catch (e) {
+} catch {
   // eslint-disable-next-line no-console
   console.error(
     'config.json not found. You can copy config.default.json to start from an example.',
@@ -159,7 +159,7 @@ function compile(mode) {
   let min = mode === 'min';
   let PATH = process.env.PATH;
   if (config.jdk) {
-    PATH = `${path.join(config.jdk, 'bin')};${PATH}`;
+    PATH = `${path.resolve(config.jdk, 'bin')}:${PATH}`;
   }
   for (let i = 0; i < modules.length; i++) {
     log(`Compiling module ${modules[i].name}`);
@@ -188,9 +188,9 @@ function compile(mode) {
         maxBuffer: Infinity,
         env: { ...process.env, PATH },
       });
-    } catch (e) {
-      result = e.stdout;
-      throw e;
+    } catch (error) {
+      result = error.stdout;
+      throw error;
     } finally {
       if (verbose) {
         let name = `compile-${modules[i].name}.log`;
@@ -231,28 +231,6 @@ async function build() {
     );
   }
   await Promise.all(prom);
-
-  log('Creating ESM-compatible entry points');
-  for (const mod of modules) {
-    log(`Creating ESM-compatible entry point for module ${mod.name}${suffix}`);
-    const moduleInstance = require(
-      `../dist/openchemlib-${mod.name}${suffix}.js`,
-    );
-    const moduleExports = Object.keys(moduleInstance).map(
-      (moduleExport) => `exports.${moduleExport} = OCL.${moduleExport};`,
-    );
-    const facade = `'use strict';
-
-const OCL = require('./dist/openchemlib-${mod.name}${suffix}.js');
-
-exports.default = OCL;
-${moduleExports.join('\n')}
-`;
-    fs.writeFileSync(
-      path.join(__dirname, `../${mod.name}${suffix}.js`),
-      facade,
-    );
-  }
 }
 
 function log(value) {

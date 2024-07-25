@@ -120,7 +120,7 @@ function getTestData() {
   const ethylBenzene = Molecule.fromSmiles('CCc1ccccc1');
   const ethylBenzeneIndex = searcher.createIndex(ethylBenzene);
 
-  const allicin = Molecule.fromSmiles('O=S(SC\\C=C)C\\C=C');
+  const allicin = Molecule.fromSmiles(String.raw`O=S(SC\C=C)C\C=C`);
   const allicinIndex = searcher.createIndex(allicin);
   return {
     benzene,

@@ -3,13 +3,13 @@
 export interface IMoleculeFromSmilesOptions {
   /**
    * Disable coordinate invention.
-   * @default `false`
+   * @default false
    */
   noCoordinates?: boolean;
 
   /**
    * Disable stereo features parsing.
-   * @default `false`
+   * @default false
    */
   noStereo?: boolean;
 }
@@ -115,17 +115,17 @@ export interface IHoseCodesOptions {
 export interface ISmilesGeneratorOptions {
   /**
    * Whether to create SMILES with SMARTS capabilities.
-   * @default `false`
+   * @default false
    */
   createSmarts?: boolean;
   /**
    * Whether to include mapping information (atomMapNo) in the SMILES.
-   * @default `false`
+   * @default false
    */
   includeMapping?: boolean;
   /**
    * Should localisation of double bonds be attempted?
-   * @default `false`
+   * @default false
    */
   kekulizedOutput?: boolean;
 }
@@ -504,6 +504,7 @@ export declare class Molecule {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   toSmiles(): string;
@@ -1452,7 +1453,7 @@ export declare class Molecule {
    * @param feature - one of cAtomQF... Because of long it could be an internal object
    * @param value - if true, the feature is set, otherwise it is removed
    */
-  setAtomQueryFeature(atom: number, feature: any, value: boolean): void;
+  setAtomQueryFeature(atom: number, feature: number, value: boolean): void;
 
   /**
    * Sets an atom's radical state as singulet,dublet,triplet or none
@@ -2673,7 +2674,7 @@ export declare class Molecule {
 export interface ISmilesParserOptions {
   /**
    * Enable SMARTS parsing with `'smarts'` or `'guess'`.
-   * @default `'smiles'`
+   * @default 'smiles'
    */
   smartsMode?: 'smiles' | 'smarts' | 'guess';
 
@@ -2702,13 +2703,13 @@ export interface ISmilesParserParseMoleculeOptions {
 
   /**
    * Disable coordinate invention.
-   * @default `false`
+   * @default false
    */
   noCoordinates?: boolean;
 
   /**
    * Disable stereo features parsing.
-   * @default `false`
+   * @default false
    */
   noStereo?: boolean;
 }
@@ -2767,6 +2768,7 @@ export declare class RingCollection {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   getAtomRingSize(atom: number): number;
@@ -2824,6 +2826,7 @@ export declare class RingCollection {
  * console.log(OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NOSTEREO_TAUTOMER));
  * ```
  */
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export declare class CanonizerUtil {
   static NORMAL: 0;
   static NOSTEREO: 1;
@@ -2902,6 +2905,7 @@ export declare class Reaction {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3085,8 +3089,9 @@ export declare class Reaction {
   getMergedCopy(): Reaction;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class,unicorn/no-static-only-class
 export declare class ReactionEncoder {
-  static encode(reaction: Reaction): string;
+  static encode(reaction: Reaction): string | null;
   static decode(reaction: string): Reaction;
 }
 
@@ -3108,6 +3113,7 @@ export declare class SDFileParser {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3164,6 +3170,7 @@ export declare class SSSearcher {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3204,6 +3211,7 @@ export declare class SSSearcherWithIndex {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3315,6 +3323,7 @@ export declare class DruglikenessPredictor {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3359,6 +3368,7 @@ export declare class ToxicityPredictor {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3406,6 +3416,7 @@ export declare class ConformerGenerator {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3512,6 +3523,7 @@ export declare class ForceFieldMMFF94 {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   /**
@@ -3583,6 +3595,7 @@ export declare class StructureEditor {
   /**
    * Returns the OCL object.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
   getMolecule(): Molecule;
@@ -3663,14 +3676,14 @@ export declare class StructureEditor {
   hasFocus(): boolean;
 }
 
-export type AtomHighlightCallback = (atom: number, selected: boolean) => any;
+export type AtomHighlightCallback = (atom: number, selected: boolean) => void;
 
-export type BondHighlightCallback = (bond: number, selected: boolean) => any;
+export type BondHighlightCallback = (bond: number, selected: boolean) => void;
 
 export type ChangeListenerCallback = (
   idcode: string,
   molecule: Molecule,
-) => any;
+) => void;
 
 export declare namespace SVGRenderer {
   export function renderMolecule(
@@ -3679,3 +3692,233 @@ export declare namespace SVGRenderer {
     height: number,
   ): string;
 }
+
+export type OnChangeEventType =
+  | 'molecule'
+  | 'selection'
+  | 'highlight-atom'
+  | 'highlight-bond';
+
+export interface OnChangeEvent {
+  type: OnChangeEventType;
+  isUserEvent: boolean;
+}
+
+export type OnChangeListenerCallback = (event: OnChangeEvent) => void;
+
+export type CanvasEditorMode = 'molecule' | 'reaction';
+
+export interface CanvasEditorOptions {
+  /**
+   * No toolbar and user interactions are ignored.
+   * @default false
+   */
+  readOnly?: boolean;
+  /**
+   * Mode in which the editor will be initialized.
+   * @default 'molecule'
+   */
+  initialMode?: CanvasEditorMode;
+  /**
+   * Whether the editor should be initialized with a fragment.
+   */
+  initialFragment?: boolean;
+}
+
+export declare class CanvasEditor {
+  /**
+   * Create a new canvas-based editor.
+   * @param element - The DOM element in which to create the editor.
+   * @param options
+   */
+  constructor(element: HTMLElement, options?: CanvasEditorOptions);
+
+  /**
+   * Get the current editor mode.
+   */
+  getMode(): CanvasEditorMode;
+
+  /**
+   * Set the molecule to be edited.
+   * Actions in the editor will mutate the molecule object directly.
+   * @param molecule
+   */
+  setMolecule(molecule: Molecule): void;
+
+  /**
+   * Get the molecule being edited.
+   */
+  getMolecule(): Molecule;
+
+  /**
+   * Set the reaction to be edited.
+   * Actions in the editor will mutate the reaction object directly.
+   * @param reaction
+   */
+  setReaction(reaction: Reaction): void;
+
+  /**
+   * Get the reaction being edited.
+   */
+  getReaction(): Reaction;
+
+  /**
+   * Set a callback to be notified when the editor state changes.
+   * @param callback
+   */
+  setOnChangeListener(callback: OnChangeListenerCallback): void;
+
+  /**
+   * Remove the change listener callback.
+   */
+  removeOnChangeListener(): void;
+
+  /**
+   * Clear the editor state.
+   * Same as clicking on the clear button in the toolbar.
+   */
+  clearAll(): void;
+
+  /**
+   * Destroy the editor.
+   * This should be called when the editor is no longer needed to free resources.
+   * All methods will throw an error after calling this.
+   */
+  destroy(): void;
+}
+
+interface CanvasEditorElementModeEnum {
+  MOLECULE: 'molecule';
+  REACTION: 'reaction';
+}
+
+type CanvasEditorElementMode = 'molecule' | 'reaction';
+
+interface CanvasEditorElementConstructor extends CustomElementConstructor {
+  readonly MODE: CanvasEditorElementModeEnum;
+  readonly observedAttributes: ['idcode', 'fragment', 'mode', 'readonly'];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new (...params: any[]): CanvasEditorElement;
+}
+
+/**
+ * a Webcomponent to wrap CanvasEditor
+ *
+ * The class CanvasEditorElement is not exposed in OCL scope.
+ * You can obtain it from `registerCustomElement`
+ *
+ * Usage:
+ *
+ * In Javascript:
+ * ```js
+ * import {registerCustomElement, Molecule, ReactionEncoder} from 'openchemlib/minimal';
+ *
+ * // register CanvasEditorElement with `openchemlib-editor` tag name
+ * const CanvasEditorElement = registerCustomElement();
+ *
+ * // CanvasEditorElementConstructor.MODE return enums of possible modes
+ * const firstEditor = document.querySelector('openchemlib-editor');
+ * console.assert(firstEditor instanceof CanvasEditorElement);
+ *
+ * firstEditor.setMolecule(Molecule.fromIDCode('ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@'));
+ * const molecule = firstEditor.getMolecule();
+ *
+ * firstEditor.setReaction(ReactionEncoder.decode('gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@'));
+ * const reaction = firstEditor.getReaction();
+ *
+ * firstEditor.clearAll();
+ * ```
+ *
+ * In HTML
+ * ```html
+ * <p>Empty editor</p>
+ * <openchemlib-editor></openchemlib-editor>
+ *
+ * <p>Molecule <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code></p>
+ * <openchemlib-editor
+ *   idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+ * ></openchemlib-editor>
+ *
+ * <p>
+ *   Molecule Fragment
+ *   <code>
+ *     ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp
+ *   </code>
+ * </p>
+ * <openchemlib-editor
+ *   idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp"
+ *   fragment
+ * ></openchemlib-editor>
+ *
+ * <p>Reaction <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@</code></p>
+ * <openchemlib-editor
+ *   idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
+ *   mode="reaction"
+ * ></openchemlib-editor>
+ *
+ * <p>
+ *   Reaction Fragment
+ *   <code>gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B</code>
+ * </p>
+ * <openchemlib-editor
+ *   idcode="gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B"
+ *   mode="reaction"
+ *   fragment
+ * ></openchemlib-editor>
+ *
+ * <p>
+ *   Molecule readonly
+ *   <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code>
+ * </p>
+ * <openchemlib-editor
+ *   readonly
+ *   idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+ * ></openchemlib-editor>
+ * ```
+ *
+ * Styling:
+ * `registerCustomElement()` insertRule to define height to 400px and width to 600px on `openchemlib-editor` element.
+ * This element need to be contained by fixed width and height, or it will grow indefinitely.
+ * So for responsive layout, ensure your container has max-width and max-height
+ * before override the inserted rules to 100% instead fixed units.
+ *
+ * ```css
+ * // need to be into a fixed size container
+ * openchemlib-editor:defined {
+ *  width: 100%;
+ *  height: 100%
+ * }
+ * ```
+ */
+declare interface CanvasEditorElement extends HTMLElement {
+  /**
+   * @defaultValue ''
+   */
+  idcode: string;
+  /**
+   * @defaultValue false
+   */
+  fragment: boolean;
+  /**
+   * @defaultValue 'molecule'
+   */
+  mode: CanvasEditorElementMode;
+  /**
+   * @defaultValue false
+   */
+  readonly: boolean;
+
+  getMolecule(): Molecule;
+  setMolecule(molecule: Molecule): void;
+
+  getReaction(): Reaction;
+  setReaction(reaction: Reaction): void;
+
+  clearAll(): void;
+}
+
+/**
+ * register `<openchemlib-editor>` element with `CanvasEditorElementConstructor` if not already defined.
+ */
+declare function registerCustomElement(): CanvasEditorElementConstructor;
