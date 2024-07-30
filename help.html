@@ -1,0 +1,327 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+  <title>Osiris Structure Editor</title>
+  <style>body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; color: #000000; text-decoration: none }
+h1 { font-size: 18pt; font-weight : bold; color: #C06020; margin-top: 13px; margin-bottom: 10px; }
+h2 { font-size: 16pt; font-weight: bold; color: #8080FF }
+h3 { font-size: 13pt; font-style: italic; font-weight: bold; color: #3030AA }
+td { font-size: 12pt }
+.menu { font-weight: bold }
+.keyword { font-style: italic }
+a:link { color: #000099; font-weight: bold; text-decoration: none }
+a:visited { color: #660066; font-weight: bold; text-decoration: none }
+a:hover { color: #990000; font-weight: bold; text-decoration: none }
+tt.regex { white-space: nowrap; background-color: #FFECE0; }
+tt.match { white-space: nowrap; background-color: #E0ECFF; }
+tt.string { white-space: nowrap; background-color: #D0FFD0; }
+table.wspace { border-width:0; }
+td.wspace { margin:0px 4px; padding:0px; border-width:0px; }
+table.colored {
+	border-width: 2px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: #FFFFA0;
+	border-collapse: collapse;
+	background-color: white;
+	}
+th.colored {
+	border-width: 1px;
+	padding: 2px;
+	border-style: solid;
+	border-color: #FFFFA0;
+	background-color: #FFFFA0;
+	}
+td.colored {
+	border-width: 1px;
+	padding: 2px;
+	border-style: solid;
+	border-color: #FFFFA0;
+	background-color: #FFFFF0;
+	}
+</style>
+</head>
+
+<body>
+
+<H2>Chemical Editor Concepts</H2>
+<p>The structure editor is used to draw chemical molecules, substructure fragments,
+reactions and simple drawing objects like text, boxes, etc. Its functionality changes
+depending on the kind of object(s) being edited. Thus, the atom mapping tool is only available,
+when a reaction is edited. Query feature dialogs only open, when a substructure is edited, etc.</p>
+<br>
+<H3>Atom and Bond Hot-Keys</H3>
+<p>Hot-keys allow to quickly change atoms and bonds or to attach common groups to an atom.
+When the mouse pointer is moving near to an atom or bond then the atom or bond is automatically highlighted,
+indicating that a mouse click or typing hot-keys will affect the highlighted atom or bond.</p>
+<p><table BORDER=1 CELLSPACING=0 CELLPADDING=4 CLASS=body width="100%">
+ <tr align="Left">
+  <th>Hot-Key</th>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Explanation</th>
+ </tr>
+ <tr>
+  <td><b>'Delete'</b></td>
+  <td>Atoms<br>Bonds<br>Mapping</td>
+  <td>Delete</td>
+  <td>Deletes highlighted and selected atoms and bonds. When a reaction is edited and
+the mapping tool is selected, then pressing the 'Delete' key removes all atom mapping from the reaction.
+  </td>
+ </tr>
+ <tr>
+  <td><b>'1','2','3', ...</b></td>
+  <td>Atom</td>
+  <td>Atom Chain</td>
+  <td>Attaches a chain of 'n' carbon atoms to the highlighted atom provided that its valence maximum is not exceeded.</td>
+ </tr>
+ <tr>
+  <td><b>'+', '-'</b></td>
+  <td>Atom</td>
+  <td>Charge Modifiers</td>
+  <td>Increases or decreases the charge of the highlighted atom.</td>
+ </tr>
+ <tr>
+  <td><b>'.'</b></td>
+  <td>Atom</td>
+  <td>Radical State Modifier</td>
+  <td>Adds or removes a single electron to change the atom's radical state.</td>
+ </tr>
+ <tr>
+  <td><b>':'</b></td>
+  <td>Atom</td>
+  <td>Radical State Modifier</td>
+  <td>Add or removes two electrons and toggles between singlet and triplet states.</td>
+ </tr>
+ <tr>
+  <td><b>'?'</b></td>
+  <td>Atom</td>
+  <td>Connection Point</td>
+  <td>Converts an atom into a connection point of a substituent or building block.</td>
+ </tr>
+ <tr>
+  <td><b>'q'</b></td>
+  <td>Atom,<br>Bond</td>
+  <td>Query Feature Dialog</td>
+  <td>If a substructure query is edited then this key opens a query feature dialog,
+which allows to specify additional atom/bond conditions for the substructure search.</td>
+ </tr>
+ <tr>
+  <td><b>'1','2','3','0'</b></td>
+  <td>Bond</td>
+  <td>Bond Order</td>
+  <td>Changes the highlighted bond into a single, double, triple, or coordinate (0-order) bond.</td>
+ </tr>
+ <tr>
+  <td><b>'u'</b></td>
+  <td>Bond</td>
+  <td>Up Bond</td>
+  <td>Changes the highlighted bond into 'up' stereo bond, if at least one of the associated
+atoms is a relative or absolute stereo center.</td>
+ </tr>
+ <tr>
+  <td><b>'d'</b></td>
+  <td>Bond</td>
+  <td>Down Bond</td>
+  <td>Changes the highlighted bond into 'down' stereo bond, if at least one of the associated
+atoms is a relative or absolute stereo center.</td>
+ </tr>
+ <tr>
+  <td><b>'c'</b></td>
+  <td>Bond</td>
+  <td>Cross Bond</td>
+  <td>Changes the highlighted bond into a double bond with unknown configuration.</td>
+ </tr>
+ <tr>
+  <td><b>'v','4','5','6','7'</b></td>
+  <td>Bond</td>
+  <td>Annelate Ring</td>
+  <td>Annellates a new saturated n-membered ring the highlighted bond ('v' adds a 3-membered ring).</td>
+ </tr>
+ <tr>
+  <td><b>'b'</b></td>
+  <td>Bond</td>
+  <td>Annelate Benzo</td>
+  <td>Annellates a new benzene ring to the highlighted bond.</td>
+ </tr>
+</table></p>
+
+<br>
+<H3>Atom labels & Substituents & Protecting Groups</H3>
+<p>While the mouse pointer is near an atom such that the atom is highlighted, you may type one or
+multiple keys to change the atom label or to attach common substituent.
+The sequence of typed keys is shown in the editor. If it is recognized to represent a valid atom label,
+then the key string is shown in black. If it is recognized as a known substituent or protecting group name,
+then it is shown in blue. The key string is shown in gray, if it can be extended by adding more keys to
+a known group name. Finally, it is shown in red, if no valid completion to a known name is possible.
+Once a black or blue color indicates that your key string is recognized, you may move the mouse away or type
+<i>Enter</i> to actually convert the atom into the new type or to automatically attach the recognized
+substituent.</p>
+<p>For the sake of convenience atom labels or group names can be typed using lower case letters only.
+Dashes in group names may also be omitted. E.g. typing 'n' followed by 'a' converts the atom to a sodium atom
+and typing 'otolyl' attaches an ortho-Tolyl group.</p>
+<p>Known group names are: Ac, Alloc, Allyl, Am, Benzoyl, Benzyl, Boc, BOM, Bn, Bs, Bt, Btm, Bu, Bz,
+Bzh, Bzl, BzOM, Cbz, Cy, cyclobutyl, cycloheptyl, cyclooctyl, cyclopentyl, cyclopropyl, Dan, DEAE, DEIPS,
+DMIPS, DMPM, DMPS, DMTr, DNP, DNS, DPIPS, DPTBS, DTBMS, Et, Fmoc, i-Am, i-Bu, i-Pr, Im, m-Tolyl, MDIPS,
+MDPS, MEM, MMTr, MOM, MPM, MTM, Me, Mes, Ms, N3, n-Am, n-Bu, n-Pr, neo-Am, nitro, NO2, Np, o-Tolyl, p-Tolyl,
+PMB, PMBM, PNB, PPi, Ph, Phenyl, Pht, Piv, Poc, Pr, Pv, s-Am, s-Bu, s-Butyl, SEM, SES, t-Am, t-Bu, t-Butyl,
+TBDMS, TBDPS, TBMPS, TBS, TDS, TFA, THF, THP, TIPS, TMS, Tf, Thexyl, Tos, Troc, Trt, Ts, Xyl.</p>
+<p>To be compatible with ChemDraw, 'l' is recognized as chlorine atom. If you are editing a sub-structure,
+you may use 'x' to convert an atom into an atom list containing all halogene atoms.</p>
+
+<br>
+<H3>Buttons and Tools</H3>
+<p>Chemical structures are drawn by selecting an appropriate tool and applying it
+while moving, clicking and dragging the mouse pointer over the drawing area. While the
+selection of a tool has no immidiate effect on the drawn structure, pressing a button
+does. Currently available buttons allow to clean up atom coordinates or to revert the
+most recent structure change.</p>
+<table BORDER=1 CELLSPACING=0 CELLPADDING=4 CLASS=body width="100%">
+ <tr align="Left">
+  <th>Button or Tool</th>
+  <th>Name</th>
+  <th>Explanation</th>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,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" border="0"></td>
+  <td>Atom Tools</td>
+  <td>The Atom Tools cover atoms frequently used in organic chemistry. After
+selecting one of these tools, you may place new atoms by clicking into the
+empty space or change existing atom by clicking onto them.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAoCAYAAACIC2hQAAACfUlEQVRYw+2XQUgUYRTHf29mViIxyEtFgQlCeZcurXYpoRxqW7CCoKunIoQuXbvUtY7WQTpEGO7WrpSXIN2lqEs3i04iIgV5qSy2ne918Fv70l3UxFkP84eBmfe9N/x5897/vYEECRIkSLAVyEacMr3FAMUHVUFMrhRWdwzRbO8LiYj2i+pF4ARwEKgC8yhTgoz5nvf5yfRpbRrRbLogBhkA7gIdgLfKxQBzAtdFeDY+HZrtJurVMxqVHmAU6HR8qvaqxXUojBqV/jgyuobo+XQxQBgG2p3svQQuA4PAGBDZsz2gt8/2TbRuN9FgbTFIG6qnHMs7ERnMTQ8sAmT6ipMYWoBz9rzbM9oDvIo1o4p2A232MRLkQY0kQH4q/Ak8dMogAI7Gn1FDO8ISUAEqCjN14n4AbrfvasKn57mVohp+/aupBR+l34k1wGzsRPOlMAKW6gp/esJnWVeHHGmbRyk1RZ4aTKcU6FVgBNhtzd+AYRHv644gmu0teijXgDsOyXmUKxjyudIZjb9G6w4AuoCbQIttorIoQxJVZ8bfZGIZocEG/UJgr73/BFzIlcOFOJeSdYlm+wqeMRx2dLMMfIl7e1qXqOeJquG+wqQ1zUaRmh1HNDLqgewTSFlTZyvRByfDrjIIyjGBAyvlrZTy5XAxc7zYLkK61sAKCyK8BdAGMZsiqkZSdt3rqk2lpaDlEPB9zaxQ9RW5oX/3gIqgJ4HXgh5R5JFtSICnqF6ykXVj/qeZAsc3tY6vv2pqibP7uu/x0ZXTRjGbF/xmYyMZrQL3HHn6bReWer8LRuEx8L5W4sCcvZ8DbtnsAXwEjCzXa6OYBAkSJEiQIMHW8Acf2dgy0ZrlNgAAAABJRU5ErkJggg==" border="0"></td>
+  <td>Atom Detail Tool</td>
+  <td>When this tool is selected and an atom is clicked with the left mouse button
+while pressing the 'Ctrl'-key, then a dialog window open that allows to
+specify an unusual/custom atom label, a specific isotop, an abnormal valence
+and/or a radical state. When closing the dialog the clicked atom is changed
+accordingly. The dialog settings are remembered and applied to any other clicked atom,
+as long as the tool is selected.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAAAqCAYAAAAtQ3xwAAAA40lEQVRo3u3YMQ6DIBiG4c/GCQ/QtQfpERx6VIcewYN09QCy0sUmxGAjQYjE91lMHMjvL/ChEgAAAAAAqElz9ICv59t447ph7C0NTWvmR5JZbllJjys1tc3wgoykLucqOLMbux4NpaGEUnya/wRDabn6iqX/Rp17RdfZJBTpN24dSj4ryQXuZU//P3XuFV1nmzCz12m+xZQ6AyfWecikYw89yTnUBfbF2CXvCjzfVp0xS95lm86EUvlPz07S5O1Zs6T7MPYz51DQUBpKykenaqk0r//Tc2eqXu4HMwAAAAAAqMsXKk9MM3YL6ZwAAAAASUVORK5CYII=" border="0"></td>
+  <td>Charge Tools</td>
+  <td>These tools let you assign charges to atoms. Multiple clicks on the
+same atom will increase or decrease the charge by 1. The <b>Osiris Structure
+Editor</b> assumes the presence of implicit hydrogens at any charged or non
+charged atoms to meet the atom's default valence. However, implicit hydrogens
+are only shown on hetero atoms.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,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" border="0"></td>
+  <td>Ring Tools</td>
+  <td>After selecting one of the predefined rings, one may create a new ring
+or attach a ring to an existing bond or atom to create annelated ring systems
+or a spiro compound, respectively.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,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" border="0"></td>
+  <td>Bond Tools</td>
+  <td>Bond Tools allow you to create new bonds and to change existing bonds
+concerning their order or stereo-orientation. By clicking into the open
+space you create a new bond of the selected type including two carbon atoms.
+Clicking onto an existing atom will attach a new carbon. Dragging the mouse from
+one atom to another one will just connect these atoms or increment the bond order
+between them, if they were already connected. If the plain single bond tool is
+selected, bonds may be multiply clicked to cycle through the possible bond orders.
+Where reasonable, it also toggles between double bonds with known or unknown
+configuration, the so-called cross bond.
+When using stereo bonds please consider that the pointed tip of the bond should
+always point to the stereo center.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAC0klEQVRYw+2WTUgVURTHfzN+ZFTQoqISSdEKERHEbNFYtLGFdzFBpvaFlbUJiYSC2gURQW3atAiCoEgN0ytNhZgJeiMIC6IIoiKjD9KKUKk25mtzjMvLj/fG1yKYPzyY959zz/u9c+85MxApUqRIkSJFCiEn7ELfC/IBtFGvUw3le8ECoBiHAd2vxgHckInKgLtAj+8F61MMuQi4BHQTo3LSd0MkKgFagFxgFdDse0FpCit5AagGFgLrQoH6XlAEtAL5lp0HtPpeUDxHyPnAeaBOuGLAWNKgvhesEci1YsXkA1AgsIUhIbOAc0A9kCb2K6A9KVBpnOtAkVgTQJt4E+IVCmxBkpDzgNPAQQtyEKjTRg0mDOp7QZ6cyRILsh1okOQ3LNhigc1NEDITOAk0AulivwdqtVGP7Fh3lkQ5QDNQZm13J9CgjRrVRo0CB4Cb1jEoBVpk7Uy5M4ATQJMF+VHO6MP4eHeGRNlSyXIL8jawXxs1Mhkn1/uAOxZsuUyDlTNAHgOOAxliDwE73TTnvjYqltDA971ghVRyo8TEgC5glzbq6zRrlgBXgC3Wmn5guzZq6E9cRZBOjCPAKSBT7M9ALdA7FeSUoL4XLBPIzdYP3gN2aKOGZ9nOpbIL9tpeaYxhgWwEzliQX4Ddrut0tfdVxRJ6hEpVrgKVcVWp0UZ9SrBBlssf3RS3G/UyyM8CWRL+DdgD3Jqukn+B+l6wWLauyvIfANXaqA9JjpxsmbkbrPP9DFhtQY4Aex2Xzo4+NZHQS4nvBa7MsqNWgw0A27RRb0MO8RyZteVT3B6T8damzeyQdtenA571/YnMslCQMg3eSYM8jrv1HTjkOIlD2qAx4IdcP5czOefXN23UG4F9KtZP4DBwraM/cUgbdBy4CHTLOHmRqtc2bdRLoAboAZoch8vaqF+hE26tCFx5pP0T+V6QKb0QKVKkSJEiRYr0/+o3f/j0eUxBZ5oAAAAASUVORK5CYII=" border="0"></td>
+  <td>Chain Tool</td>
+  <td>The Chain Tool provides the fastest way to draw aliphatic carbon chains in
+zig-zag orientation. With the selected Chain Tool click into the empty space or at
+an existing atom and drag the mouse to create a new zig-zag chain and flip its
+orientation.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,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" border="0"></td>
+  <td>ESR Tools</td>
+  <td>The editor supports the enhanced stereo recognition (ESR) introduced by
+Molecular Design Ltd. with IsisDraw V2.5. The ESR Tools allow to define for every
+stereo center, whether it is an absolute one or if it belongs to a group of stereo
+centers that have the drawn, but relative configuration. For any group of relative
+stereo centers one may define that the drawn <b>and</b> the inverse configurations are present,
+i.e. that we have a racemic situation concerning the group members. This is indicated by
+green stereo bonds and an ampersand '<b>&</b>' at the stereo centers. Likewise one may
+define groups of relative stereo centers that contain either the drawn configuration <b>or</b>
+the opposite one. Stereo centers of such a group are indicated by blue stereo bonds and
+the word '<b>or</b>' at the stereo centers. In addition to the '<b>&</b>' or '<b>or</b>'
+indicators group numbers show which stereo centers belong to the same group.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAoCAYAAACIC2hQAAAEeElEQVRYw+2YT2wUdRTHP2+6a0thsVQPgsEE8EAwNCEBY3ShDRdjGJItBdNUEw9qxFKjMdEYNQQSY5SD2IOJhkSiBwQrMML2golAOwRT/yHRykVJBIWS8Me2dos7O89D3+q4bpdtC02JfafZ3/x+M5997/v+7MK0TdvUNol+SCXTlUADUAUccRzp39e1RicLJpVMVwFzgQue7/5RFLRxZdpRZQvwIuAAPwLtQIfnuwM3GDDvoJeB5cD3wAbPd3/J74nlL1SJA2uBSluqA94DNqaS6W1Ap+e7mRsE+AKQjLx7BdAEbP8PKEKAcgxYClRE7q8AdgFfpZLprcARz3evThAwDqyy6NVHAPMWAH2lNDobeAJoBRaYBKJ2FTgKbAO6PN/NjgNwOfA84FouRC0EzgLvAts93x0uCmpaFVVqgY3A0ybuQuBhIA28BXzp+W4wBsA1wIyCLQr8BuwAdohwfn+3G47q0QJgR5W5wJPAJuC2IvszwD7zcG8hcJmAl4CdwNsinCsEvCZoAfACg30MmFPkXD/wMfCmCD8rOCh1wEsW4mKAl4EPgHdEOD0aYNmgf3tnZdpBWWze2QAkCs7nvbMLmAWstz2FgANAB9AuQu/+bjc35oJfZkLEgCWWsetG8Vax5/4jE6HX6y6t6wmBqkgVqvNB5gzWrBp4Y3HrHb2xmZt0RH9VoxyLJt63wH2WnD2e7w6W+26nLMBYzFF4CNWjwHegXbOuHP36tS+at330zat7ajS3Djhk5SVvOVtzgRbPd48DtwB7AQ9YOBYnlQVKENxv2rsXiFtBjoEurxw6sXPnscZEjeZagKHIqZ+A9SIcFiGqw7gBi0nJSSXTFRMG1ZHu1AbUmM7agEVAM3ARmAnh5pbfT8VMn9HinVWlSZX2VDL9IDA7IrfqVDKdBF4HWhtXpUvKMFaGPyuBB+y6E8d5X8Iwq7GYRxCstrK1cMnlH+ZTc0+x5zcDjcBT1harDbYDuN28e0JDdpiexw1aAfQAJ4EDEoYjbTMeV4IgP1WJaBgvHhA6DKwemBeJ4jxgEDgGHCiIxthBBfrVcZpHhOLkCKyqZDKLrFYC9J1NLDxT5HjO893dqWT6E5PLIeAuuzdg3aoHyHq+qxNOJgnDrIRhVoIgNDcts5p4tyXQ1t21df0lvq0CjwJ3GuB5awYbAbkWZPlZ/+9Yzrd2udQGiceBD09XVGmJQw3AcxbezTadDQMPA4+sq++U6wqqiYQALRbGc8BaZszYIzBqG2xq6BQD7AMO2jB+0Ea5i0AmzOn1BWVoyDGNXQE+B05KJlMybHuPrNGKmBwGVgNtnu9mbMraYmu7Pb/0QDKuXq9QayUli8glUVUr3Ang18ggcgpYFh1+J2JjC71IJfCpQfSgWj1Zv1Bj4ziTAG4FsuOJyOSAioSoHgcuAP2IBKhOPVAJw6zCM3lPimp2yoZeRianSTeHm8T+l6CB1dG8nSmY+KcGqFMhw8CzgA98Brzi+e6fN+Rvx4laU0On5AKNA1xPyGmbtpvB/gLh4ZX/eutDJgAAAABJRU5ErkJggg==" border="0"></td>
+   <td>Unknown Configuration Tool</td>
+   <td>This symbol is used to denote an unknown stereo configuration at a chiral center.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,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" border="0"></td>
+  <td>Cleanup Button</td>
+  <td>A cleanup will generate new coordinates of an existing molecule. It
+rearranges bond and atom positions in order to have a proper 2D structure.
+If a part of the molecule or reaction is selected, the cleanup will retain
+the relative orientation of the non-selected atoms.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,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" border="0"></td>
+  <td>Lasso Pointer Tool</td>
+  <td>This tools allows you to select multiple atoms and bonds to rearrange,
+rotate, resize, delete or duplicate at the same time. Just drag the mouse pointer
+around the atoms of interest. Selected atoms and bonds are shown in red. By pressing
+the control key you switch to the rectangular selection mode and the shift key lets
+you add atoms to the current selection. By clicking onto an atom or bonds and dragging
+the mouse one may more it or all selected atoms, if the clicked one is selected.
+When pressing the shift key while dragging a selected fragment, an automatically created
+copy of the selected fragment is dragged.
+Where the editor needs to support multiple molecules, e.g. if a reaction is edited,
+then every reactant and product is indicated by a large light gray indicator in
+the background ('A', 'B', 'P1', etc.). Where independent fragments shall be treated
+as one molecule, e.g. anion and kation of one salt, one must locate those fragments
+close enough that there is only one indicator behind them.
+If a reaction or molecule query is edited, then one may double click an atom or
+a set of selected atoms to open a query feature dialog to specify additional conditions
+for a fragment to match in a substructure search. The same applies to individual or
+multiple selected bonds. If the edited object is not a query then double clicking of
+an atom or bond will just select the entire fragment.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAoCAYAAACIC2hQAAAEFElEQVRYw+3YW2jbdRTA8e9J0narrfVaddrWDoTi5UVxLdrOB9HpGlk6mzoquovSFXWtiqgIXhAfBFGRsqm7OKdz9sJcxjIQ5r1Bu4KI4GUgTjZkD06d1Oqqaf7Hh57Cv2ma/f/Nkj7YA3noafP7f3p+539+/wTm438aUoiLtDTFA6rcBFQCvbFEOOl3jUCBkK1AP7ANeCLSGC/yu06wAMjbga3AmXa96wCtq27//NDRXc6cQw3ZYsiKtGteDyTrqtuHvGKDeURGgDdcyJPACeAMu26TH2wgT8gV1o+TyFFgPbACOGK5YuBp4BEvPRvMA/I2YDtwlqX/Au4HdgE/A18Ay+yfmKzsybrq9uFslZU8Ic9OQ+6MJcKpyb+NNMbrbQpUW+pf4EngpVgiPJ63rW9piosq4QzIDSJTkQDBkAwDq4CjrjZ4FuiONMVDeamoIZuBHcA5lv4b2ICwIzY4FTkZK2/YL05KG6yyl7gq+zhCT2xwamXlNCCXA2+lIbsQ3pwJ6WoBsbnaB1xs6X+Ax0To2TMYdnLeekPemqGS3V6QALFEWBEOAu8CaukSoEuVkpx71JC3WCXPdc3JhxC2e0HaOkGU1cB9rt39HXggEJSxnKCGXGaVTEdu84NU5W7gFaDU0ieANRLg/fc+bdZZz9GWpXFR5WZgJ3C+C/kwwtZZIHvspHIj43s+C2tO40kdrrDtPs9SSeBRhC0+kXdmQK4VyYyczdYr4KT9HPQ6PexQaAc2upB/APeIsM99l/uGakWFKFyt8NTuofVOAO4CfnEN6udROmca1BkquQkocyHXirA3G9LTHNWJOdcLVAGHnNCiaGvD5kU6tU/HrE83Z2oBq2Qm5DovyFNWVKHeZlyVpeoC48f6B4Y6j8lEZY9bfgHwIkpHpCkezIBclYYcATq8IrNWVGGJHW81GX79fSpUFY02vFql8Lbr5pqYALAllginDHkH8DpQ7kLeK8Jur8gZoQrXGvLSLO/9LhWqjkYbNtUY1j1TH7QHlFbgNfsYMmtkRqjCNcAAUOvh/d+mimqi0fqNtTr9lHoHaEtDdogw4Bc5DaoiC1D9ErjcxxrfpIpq26L1PYt16sOJutb/05D9s0FOv5lEUsBh1wOCl7gymPypr/9g148Cq+2sdhdhFOjMBTkNKo6TBNYBB3xirwolD/f1D3f/ILDGTho3sjcXZLabqdJ67Eafz6xfjxdf1ta25OU6hWeAF0ToyxV5qkFfqXBAwVFQH6+vxkNVi1c2xktalu4vyFdGKFyg8KFPrKPwnJaVFQbpwl6o8JEP7HGd+Ahc+DDsxx6wvyos19JSYa5C4SKFT7Jgf1No1oUL5w6Zhv1AYTTtdSTfSN8LayBQjGr6d0UO5eVjMjKizMd8nN74D8SsJ4C1EZLlAAAAAElFTkSuQmCC" border="0"></td>
+  <td>Delete Tool</td>
+  <td>It allows you to delete individual atoms or bonds or selected parts of the molecule.
+Selected areas may also be removed by pressing the delete key from the keyboard.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAoCAYAAACIC2hQAAAB9klEQVRYw+2Wv2sUQRSAv9nkzrPwRyPpJBwBQdAiWG5sLDMJe8EUpk2v/0M6K0utxEKx0HAD7nVCJC6KQtKFYHOkEcEmIUVMWHNj4SAh7t7O7u3eXTEfXHVv33y8ee/tgsPhcDgc44QY5eHBXCjQ1IGLKpIHYyUa+KEA6sANYMH8rgIrKpLbIxVtzYVC6//kbgONMw5dYDlNVgy5cuflzpMqK0ZQuSwSZcWIKpdbtrBo625H6J6ezpCrAxf6pDkCTvvIPlCR3B24ooEf1oyMl/D3deAp4Kec8w0IgO99jjhWkYwrGSbTp7PAc+BWyhk/gZaK5CfbvF7Jkz6hNYtAx7RCkuQv4KHw+Jwnt1eiZB14BLwEplLCYmANwdv2ptR58k+WJHkZeAysArWUsB7wAniiPsrTob/rAz9sAs+Ae31uSAPvgfsqkodD/SgJ/NAD7pihuZmRawdYVJHslvL1ZNZNw/K5FWANuJYRuw8sAVsZcT3gREXyt02PzgCvgaaFaMOyx68A78z1J8kdA19MTAf4YXX1gR/OAm8sZIvSMyvq6xm5vYmaiNc35nWuHq1ANlluUsTrH+b1QMNUguzActZTX0C2VLlc68lCtjK53Hs0QXYocoUWvpF9ZdbHPznhibi9WY1c4TdT4IeXgJMqK+dwOBx/+QNZU8UK9IaH9wAAAABJRU5ErkJggg==" border="0"></td>
+  <td>Zoom and Rotate Tool</td>
+  <td>This tool allows to zoom or rotate the entire drawing or a selected subset.
+Just click at the intended origin for the rotation or zooming and drag the mouse vertically
+to zoom or horizontically to rotate.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAoCAYAAACIC2hQAAACXElEQVRYw+2YsWsTURzHPy8c1QYHl+LUElx0CIgKDuHiX3DgKxy1tJuDQzfnDE7ZnDs6SitCTnh/QXt0EKIIXdyKncTBDq2SVHIO+R09ai7kmru8C/qDDHn3uPvy+73v9/d+X5iTUGUAoV3jAAvytx+E3u9SAV19bFQ04AHQAhqyfAC0VYWPnT0vivc6NoEKyHdALYkfuB8N8IFuvFixXO7WJZBx1ICW7LELVM5kY8zzRuLcWgWaKWwC7Qtx0uJA9tgFKhLUBo5GPD4C2kmZKpT1umkcIhZSZDACPgF+mjwlNxcrTxF3gZ0UZv8EakHodbVr1qwLvnbNI2B3BNgz4FYQemelIFMQeh+ADeD7PLD+DnBzmhcUekZXm6YSRVwDluVb58AJsFSajArIF8AhUAVeAs+BJymSZCejkskt4DawBtSD0PslBHsKvBaJsgNUtHMTWAHeCshtpeglCaZds4666Dwzvzhr1zwE9oBFKfcroBeE3qAUZJJM3gNuAD9k+Wtc7mkjv9IPy70tIDeBU+BzXq93cpSgFSk3wGkQel0r1zzdNI52TX0CCdrKM5PZMzq8Be1o1zyTtjhWguwBHSpEDdjVrtmQtriclCC4kCCbQJOD13vp3Y6Uu64Uvc7+dBJUBJniXn0OHBdV7jx7/QnwZR6GuyXgjVyOZ+89jfKCtGuqcuuppgxj60HoHc4E6DgvSAax66mDmqIf7P896xRCpnFeEODn3W2udEazekE2nZJMXtC/ZOlcGWgmL8ga0KxekNXSi9/jAx3gm/w6gH/ZC5p1TCz4/I/J4g/pPdktq+x9eQAAAABJRU5ErkJggg==" border="0"></td>
+  <td>Mapping Tool</td>
+  <td>This tool is only available when a reaction is edited. Use this tool to
+map reactant atoms to the respective product atoms. This is done by clicking on
+a reactant atom and dragging the mouse onto the corresponding product atom. The
+editor will acknowledge the link by displaying a red mapping number at both atoms.
+Afterwards it tries to map atoms in the vicinity automatically and displays green
+numbers at automatically mapped atoms. Please assign manually as many reactant-product
+pairs as are needed that the entire reaction is mapped completely and correctly.
+Pressing the 'Delete' key while this tool is selected removes all mapping from the reaction.</td>
+ </tr>
+ <tr>
+  <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAoCAYAAACIC2hQAAAEJ0lEQVRYw+2Xb4hUVRjGf8+9u2OlZhH9USqwIE1M+mAkOWNb2Qd11pkxg0gyKRIqJPpQa/Uh+gMhJkhQfmkNqpUKZGfZOwtKRtvMggv9ofoUhAUqZCqYRu7Ozj1vH+bMcl1Qd2uLiPvAhTn3zDn3Oe/zvO97L6RIkSJFihT/Jaj1o5SLMpYYXxRGo1zLx/8W0TaAYjbKmPE+MH+S6xywDShPJ5niiv5gPHgWuHJ1jZ1DFAiAJcCtUyB6zXSSXJcbkHNuE3Av4BDvAAcnEnXAd8CZxNrZwEJ/wrqfd4n//zqtHjQE3AlsABrAQJLoeT1qjhUSEZABjoAtRhpJbNwwszDE2mOCgIB6GFDfO5i3poyVNmILASRoz8T1Tz4rGEApG7WZEbYYqJ266kGbk3sbeAJoIG2U6ePe2mrXkhyA3mq+Xq7mR1sXMHZO6sD4vDNhsAnpQKzgMOIoxsE4pmvt8mhOc4V1IIYQwwbVej1c1JQ4Cg1eRgwjhoHdLta1Tm4nkPXPCzF73HA7itkok5R+0ijlooyZ7QA2A+1eJoDbgSWBuL+Uix5yFlZFfBRY6+e7StnoMWcsBLYAc4ARYKuQwDYCMxNK3+Pz5iWgHkyVqJmKXp524GvvqfXA/tYDzHghkGtIdAHH/NIHDLsLeN6TNGC3SZ8q1imMzcDniRzYBTwNVj/HoxNRWB51SOzzHj0MtgDUMvlKH41cuZb/sum7yjzDvgKuA47JWOxCOymnp4CdXr3vgVuAGcAPBh19tfwvAOuWDwRObpdXqoH0SLm65iMSZWnymSnNApb64UmTZhVylWWFXGWZEzcBP/m5K00s6fui00ILdwMH/P3bPMlRRFeL5GQQTE12uxq4xA/nyWyfzAb9dcCXl2YywA0Ae4dWnZW0FfgjsVXZjIEpd6YpRDQ0G28WvwHfJGrrxIZwEqBwd0UW21JvoRYWg10BHP9HiGJ2IpHlR4CCNb3a8nvQUkkwCqCYm4FX/LNiH+1Fkl4s5fqf6612NqZfejjtEwJgvkk39tXyY321/JgsCASvCT4QdIPNLWajGWDbgLk+ym8BhwBhbMbUcd6XJTP9ZaJxs5V2+6jOlNl7xWz0aDEbPYhcN/AssA6YjTgOPAx0+mgfkngD2O4je5nBm6VcdFUzCDGJJhMAq4rZaGUhG4VTJtpfy5tC6wF6PNk7PPE9npSAYRlbMF0PvOrrbQxsDwKdUBD0AN+2qoAZXaVcJewd6nRq3m/4fTYAPWpWiQt69GfgdX+Y063T9g52jqzPDTzZMDfkyS3wvvsR6MXU3TB3KpRWAO/6vc5K8Yd7BwsGnClmo2eA+8bnzC4FflcY7LHYLfCqXO73dBcs+Bdtpdl+IbUbhBgyaMiCsfLQavtb76S5SohZxnOLy7X8aPp9kyJFihQpUvz/8ScHt6OUtv9lvgAAAABJRU5ErkJggg==" border="0"></td>
+  <td>Text Tool</td>
+  <td>The text tool may only be selected in certain situations. If it is selected
+one may use it to place text elements directly into the drawing. These text elements
+will be integral part of the drawing and, thus, move, resize and rotate with the molecules
+or reaction.</td>
+ </tr>
+</table>
+</body>
+</html>
