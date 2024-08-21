@@ -54,12 +54,24 @@ export default [
     },
   },
   {
-    files: ['scripts/**'],
+    files: ['scripts/**/*.js'],
     languageOptions: {
       globals: {
         ...globals.node,
       },
       sourceType: 'commonjs',
+    },
+    rules: {
+      'unicorn/no-process-exit': 'off',
+    },
+  },
+  {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+      sourceType: 'module',
     },
     rules: {
       'unicorn/no-process-exit': 'off',

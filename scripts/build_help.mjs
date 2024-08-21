@@ -1,4 +1,5 @@
-import { readdir, readFile, writeFile } from 'fs/promises'
+/* eslint-disable no-await-in-loop */
+import { readdir, readFile, writeFile } from 'node:fs/promises'
 
 const homedir = new URL('../openchemlib/src/main/resources/html/', import.meta.url)
 
