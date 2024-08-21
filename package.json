@@ -25,6 +25,7 @@
     "build-esm-bundle-export": "npm run build-esm-bundle && node scripts/build_esm_bundle_types.js",
     "build-esm-bundle-types": "node scripts/esm_bundle_types.js",
     "build-esm-bundle-watch": "npm run build-esm-bundle -- --watch",
+    "build-help": "node scripts/build_help.mjs",
     "build-full-pretty": "npm run build:pretty -- -m full",
     "build-minimal": "npm run build:min -- -m minimal",
     "eslint": "eslint .",
@@ -77,6 +78,7 @@
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
     "@types/jest": "^29.5.12",
+    "@types/node": "^22.0.0",
     "autoprefixer": "^10.4.19",
     "benchmark": "^2.1.4",
     "esbuild": "^0.23.0",
