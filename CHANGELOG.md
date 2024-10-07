@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.16.0](https://github.com/cheminfo/openchemlib-js/compare/v8.15.0...v8.16.0) (2024-10-07)
+
+
+### Features
+
+* create a script to build help ([#223](https://github.com/cheminfo/openchemlib-js/issues/223)) ([cc7042f](https://github.com/cheminfo/openchemlib-js/commit/cc7042f13b41e2dcb8c347ada9c28b2dd919e860))
+* update OCL to v2024.10.0 ([2cee300](https://github.com/cheminfo/openchemlib-js/commit/2cee300f4b19aed035f3c79beda8abf1ea4f8888))
+
 ## [8.15.0](https://github.com/cheminfo/openchemlib-js/compare/v8.14.0...v8.15.0) (2024-07-25)
 
 
