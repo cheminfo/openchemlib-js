@@ -3,9 +3,10 @@ package com.actelion.research.chem.shredder;
 import com.actelion.research.chem.conf.TorsionDescriptor;
 
 public class Fragment3D implements Comparable<Fragment3D> {
-	private String mIDCode,mIDCoords;
-	private TorsionDescriptor mTorsions;
-	private int[] mExitAtoms;
+	private final String mIDCode;
+	private String mIDCoords;
+	private final TorsionDescriptor mTorsions;
+	private final int[] mExitAtoms;
 
 	public Fragment3D(String idcode, String coords, TorsionDescriptor td, int[] exitAtoms) {
 		this.mIDCode = idcode;
@@ -38,7 +39,7 @@ public class Fragment3D implements Comparable<Fragment3D> {
 	@Override public int compareTo(Fragment3D f) {
 		int comparison = mIDCode.compareTo(f.mIDCode);
 		if (comparison != 0 || mTorsions == null)	// different structure or no rotatable bonds
-		return comparison;
+			return comparison;
 
 		return mTorsions.compareTo(f.mTorsions);
 		}

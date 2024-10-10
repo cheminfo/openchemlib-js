@@ -66,6 +66,8 @@
 package com.actelion.research.chem;
 
 import com.actelion.research.calc.ArrayUtilsCalc;
+import com.actelion.research.calc.statistics.StatisticsOverview;
+import com.actelion.research.calc.statistics.median.MedianStatisticFunctions;
 import com.actelion.research.chem.descriptor.DescriptorEncoder;
 import com.actelion.research.chem.descriptor.DescriptorHandler;
 import com.actelion.research.util.BurtleHasher;
@@ -770,6 +772,23 @@ public class ExtendedMoleculeFunctions {
 		return arr;
 	}
 
+	public final static int [] getTopologicalDistances(int [][] topoDistMatrix, int [] at1, int [] at2) {
+
+		int [] d = new int[at1.length*at2.length];
+		int cc=0;
+		for (int i = 0; i < at1.length; i++) {
+			for (int j = 0; j < at2.length; j++) {
+				d[cc++]=topoDistMatrix[at1[i]][at2[j]];
+			}
+		}
+
+		return d;
+	}
+	public final static int getMedianTopologicalDistance(int [][] topoDistMatrix, int [] at1, int [] at2) {
+		int [] d = getTopologicalDistances(topoDistMatrix, at1, at2);
+		int medTopoDist = MedianStatisticFunctions.getMedianForInteger(d).median;
+		return medTopoDist;
+	}
 
 	public final static int getTopologicalDistance(ExtendedMolecule mol, int at1, int at2) {
 		int dist = 0;
@@ -1271,19 +1290,31 @@ public class ExtendedMoleculeFunctions {
 	}
 
 
-	public static int getNumAlcoholicOxygen(StereoMolecule mol){
-
+	public static int getTotalCharge(StereoMolecule mol){
 		int n = 0;
-
 		for (int i = 0; i < mol.getAllAtoms(); i++) {
+			n+=mol.getAtomCharge(i);
+		}
+		return n;
+	}
+	public static int getNumAtomsCharged(StereoMolecule mol){
+		int n = 0;
+		for (int i = 0; i < mol.getAllAtoms(); i++) {
+			if(mol.getAtomCharge(i)!=0){
+				n++;
+			}
+		}
+		return n;
+	}
 
+	public static int getNumAlcoholicOxygen(StereoMolecule mol){
+		int n = 0;
+		for (int i = 0; i < mol.getAllAtoms(); i++) {
 			if(isAlcoholicOxygen(mol, i)){
 				n++;
 			}
 		}
-
 		return n;
-
 	}
 
 	public static int getNumThioEther(StereoMolecule mol){
