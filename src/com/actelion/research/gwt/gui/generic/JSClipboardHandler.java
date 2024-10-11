@@ -1,15 +1,17 @@
 package com.actelion.research.gwt.gui.generic;
 
+import com.actelion.research.chem.Canonizer;
 import com.actelion.research.chem.MolfileParser;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
+import com.actelion.research.chem.reaction.ReactionEncoder;
 import com.actelion.research.gui.clipboard.IClipboardHandler;
 import com.google.gwt.core.client.JavaScriptObject;
 
 import java.util.ArrayList;
 
 public class JSClipboardHandler implements IClipboardHandler {
-  private JavaScriptObject mJsHandler;
+  private final JavaScriptObject mJsHandler;
 
   public JSClipboardHandler(JavaScriptObject jsHandler) {
     mJsHandler = jsHandler;
@@ -19,72 +21,70 @@ public class JSClipboardHandler implements IClipboardHandler {
     return mJsHandler;
   }
 
-  public native StereoMolecule pasteMolecule()
+  public native boolean putStringJS(String data)
   /*-{
-    var handler = this.@com.actelion.research.gwt.gui.generic.JSClipboardHandler::getJsHandler()();
-    var jsMolecule = handler.pasteMolecule();
-    if (jsMolecule) {
-      return jsMolecule.@com.actelion.research.gwt.minimal.JSMolecule::getStereoMolecule()();
-    } else {
-      return null;
-    }
+    var clipboard = this.@com.actelion.research.gwt.gui.generic.JSClipboardHandler::getJsHandler()();
+    return clipboard.putString(data);
   }-*/;
 
+  // Can't be implemented here
+  // Clipboard is not accessible with sync API
+  public StereoMolecule pasteMolecule() {
+    return null;
+  }
+
+  // Not used, No implementation needed yet
   public StereoMolecule pasteMolecule(boolean prefer2D, int smartsMode) {
-    Object test = null;
-    System.out.println("test: " + test.toString());
     return null;
   }
 
+  // Not used, No implementation needed yet
   public ArrayList<StereoMolecule> pasteMolecules() {
-    Object test = null;
-    System.out.println("test: " + test.toString());
     return null;
   }
 
+  // Can't be implemented here
+  // Clipboard is not accessible with sync API
   public Reaction pasteReaction() {
-    Object test = null;
-    System.out.println("test: " + test.toString());
     return null;
   }
 
+  // Not used, No implementation needed yet
   public boolean copyMolecule(String molfile) {
-    Object test = null;
-    System.out.println("test: " + test.toString());
     StereoMolecule m = new StereoMolecule();
     MolfileParser p = new MolfileParser();
     p.parse(m, molfile);
     return copyMolecule(m);
   }
 
-  public native boolean copyMolecule(StereoMolecule mol)
-  /*-{
-    var handler = this.@com.actelion.research.gwt.gui.generic.JSClipboardHandler::getJsHandler()();
-    var jsMolecule = @com.actelion.research.gwt.minimal.JSMolecule::new(Lcom/actelion/research/chem/StereoMolecule;)(mol);
-    return handler.copyMolecule(jsMolecule);
-  }-*/;
+  public boolean copyMolecule(StereoMolecule mol) {
+    final Canonizer canonizer = new Canonizer(mol);
+    final String idCode = canonizer.getIDCode();
+    final String coordinates = canonizer.getEncodedCoordinates(true);
+
+    final String serializedData = idCode + " " + coordinates;
+    return putStringJS(serializedData);
+  }
 
   public boolean copyReaction(Reaction r) {
-    Object test = null;
-    System.out.println("test: " + test.toString());
-    return true;
+    final String[] data = ReactionEncoder.encode(r, true);
+    final String serializedData = String.join(ReactionEncoder.OBJECT_DELIMITER_STRING, data);
+
+    return putStringJS(serializedData);
   }
 
+  // Not used yet, no implementation needed
   public boolean copyReaction(String ctab) {
-    Object test = null;
-    System.out.println("test: " + test.toString());
     return true;
   }
 
+  // Not used yet, no implementation needed
   public boolean copyImage(java.awt.Image img) {
-    Object test = null;
-    System.out.println("test: " + test.toString());
     return true;
   }
 
+  // Not used yet, no implementation needed
   public java.awt.Image pasteImage() {
-    Object test = null;
-    System.out.println("test: " + test.toString());
     return null;
   }
 }

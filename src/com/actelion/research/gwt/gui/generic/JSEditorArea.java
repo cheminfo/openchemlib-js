@@ -17,6 +17,7 @@ public class JSEditorArea implements GenericCanvas {
   private JavaScriptObject mJsObject;
   private JSMouseHandler mMouseHandler;
   private JSKeyHandler mKeyHandler;
+  private JSClipboardEventHandler mClipboardHandler;
 
   public static final int MODE_MULTIPLE_FRAGMENTS = GenericEditorArea.MODE_MULTIPLE_FRAGMENTS;
   public static final int MODE_MARKUSH_STRUCTURE = GenericEditorArea.MODE_MARKUSH_STRUCTURE;
@@ -46,6 +47,9 @@ public class JSEditorArea implements GenericCanvas {
 
   public static final int KEY_EVENT_PRESSED = GenericKeyEvent.KEY_PRESSED;
   public static final int KEY_EVENT_RELEASED = GenericKeyEvent.KEY_RELEASED;
+
+  public static final int CLIPBOARD_EVENT_COPY = GenericClipboardEvent.WHAT_COPY;
+  public static final int CLIPBOARD_EVENT_PASTE = GenericClipboardEvent.WHAT_PASTE;
 
   public static final int cChainCursor = GenericCursorHelper.cChainCursor;
   public static final int cDeleteCursor = GenericCursorHelper.cDeleteCursor;
@@ -84,6 +88,9 @@ public class JSEditorArea implements GenericCanvas {
 
     mKeyHandler = new JSKeyHandler(mDrawArea);
     mKeyHandler.addListener(mDrawArea);
+
+    mClipboardHandler = new JSClipboardEventHandler(mDrawArea);
+    mClipboardHandler.addListener(mDrawArea);
 
     JavaScriptObject clipboardHandler = getClipboardHandler();
     mDrawArea.setClipboardHandler(new JSClipboardHandler(clipboardHandler));
@@ -133,6 +140,11 @@ public class JSEditorArea implements GenericCanvas {
   public void fireKeyEvent(int what, int key, boolean isAltDown, boolean isCtrlDown, boolean isShiftDown, boolean isMenuShortcut) {
     GenericKeyEvent gke = new GenericKeyEvent(what, key, isAltDown, isCtrlDown, isShiftDown, isMenuShortcut, mDrawArea);
     mKeyHandler.fireEvent(gke);
+  }
+
+  public void fireClipboardEvent(int what, String data) {
+    GenericClipboardEvent gce = new GenericClipboardEvent(what, mDrawArea, data);
+    mClipboardHandler.fireEvent(gce);
   }
 
   public void toolChanged(int newTool) {

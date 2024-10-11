@@ -616,6 +616,17 @@ public class GenericEditorArea implements GenericEventListener {
 			eventHappened((GenericKeyEvent)e);
 		else if (e instanceof GenericMouseEvent)
 			eventHappened((GenericMouseEvent)e);
+		else if (e instanceof GenericClipboardEvent)
+			eventHappened((GenericClipboardEvent)e);
+	}
+
+	private void eventHappened(GenericClipboardEvent e) {
+		if (e.getWhat() == GenericClipboardEvent.WHAT_COPY) {
+			copy();
+		}
+		else if (e.getWhat() == GenericClipboardEvent.WHAT_PASTE) {
+			paste(e.getPasteData());
+		}
 	}
 
 	private void eventHappened(GenericActionEvent e) {
@@ -623,11 +634,11 @@ public class GenericEditorArea implements GenericEventListener {
 		if (command.equals(ITEM_COPY_STRUCTURE) || command.equals(ITEM_COPY_REACTION)) {
 			copy();
 		} else if (command.equals(ITEM_PASTE_REACTION)) {
-			pasteReaction();
+			pasteReaction(null);
 		} else if (command.startsWith(ITEM_USE_TEMPLATE)) {
 			useTemplate(command.substring(ITEM_USE_TEMPLATE.length()));
 		} else if (command.startsWith(ITEM_PASTE_STRUCTURE)) {
-			pasteMolecule();
+			pasteMolecule(null);
 		} else if (command.equals(ITEM_LOAD_REACTION)) {
 			openReaction();
 		} else if (command.equals(ITEM_ADD_AUTO_MAPPING)) {
@@ -801,20 +812,46 @@ public class GenericEditorArea implements GenericEventListener {
 		return false;
 	}
 
-	private void paste() {
+	private void paste(String data) {
 		if ((mMode & MODE_REACTION) != 0) {
-			if (pasteReaction()) {
+			if (pasteReaction(data)) {
 				return;
 			}
 		}
 
-		pasteMolecule();
+		pasteMolecule(data);
 	}
 
-	private boolean pasteReaction() {
-		boolean ret = false;
+	/**
+	 * Try to parse reaction with ReactionEncoder, RXNFileParser and SmilesParser
+	 *
+	 * @param data text from paste event
+	 * @return parsed reaction or null if not parsable
+	 */
+	private Reaction parseReaction(String data) {
+		Reaction reaction;
+
+		try {
+			reaction = ReactionEncoder.decode(data, true);
+			if (reaction != null && !reaction.isEmpty()) return reaction;
+		} catch (Exception _) {}
+
+		try {
+			reaction = new RXNFileParser().getReaction(data);
+			if (reaction != null && !reaction.isEmpty()) return reaction;
+		} catch (Exception _) {}
+
+		try {
+			reaction = new SmilesParser().parseReaction(data);
+			if (reaction != null && !reaction.isEmpty()) return reaction;
+		} catch (Exception _) {}
+
+		return null;
+	}
+
+	private boolean pasteReaction(String data) {
 		if (mClipboardHandler != null) {
-			Reaction rxn = mClipboardHandler.pasteReaction();
+			Reaction rxn = data != null ? parseReaction(data) : mClipboardHandler.pasteReaction();
 			if (rxn != null) {
 				if (!mAllowFragmentChangeOnPasteOrDrop)
 					for (int i = 0; i<rxn.getMolecules(); i++)
@@ -822,17 +859,117 @@ public class GenericEditorArea implements GenericEventListener {
 
 				storeState();
 				setReaction(rxn);
-				ret = true;
+				return true;
 			} else {
 				showWarningMessage("No reaction on clipboard!");
 			}
 		}
-		return ret;
+
+		return false;
 	}
 
-	private boolean pasteMolecule() {
+	/**
+	 * Try to parse molecule with
+	 * - MolfileParser
+	 * - TSV with [idcode] column
+	 * - IDCodeParser
+	 * - SmilesParser
+	 * - StructureNameResolver.resolveLocal
+	 * - StructureNameResolver.resolveRemote
+	 *
+	 * @param data text from clipboard event
+	 * @param skipMolfileAndTSV should be set to false, true is for internal recursion when parse tsv
+	 * @return StereoMolecule from first parser success
+	 */
+	private StereoMolecule parseMolecule(String data, boolean skipMolfileAndTSV) {
+		StereoMolecule molecule;
+
+		if (!skipMolfileAndTSV) {
+			try {
+				molecule = new MolfileParser().getCompactMolecule(data);
+				if (molecule != null && molecule.getAllAtoms() > 0) return molecule;
+			} catch (Exception _) {}
+
+			try {
+				String[] lines = data.split("\\n");
+				if (lines.length < 2) throw new Exception("Not a TSV, or not enough lines");
+
+				Integer column = null;
+				String header = lines[0];
+				String[] columns = header.split("\\t");
+
+				for (int i = 0; i < columns.length; i++) {
+					if (columns[i].endsWith("[idcode]")) {
+						column = i;
+						break;
+					}
+				}
+
+				if (column == null) throw new Exception("No [idcode] column in this TSV");
+
+				for (int i = 1; i < lines.length; i++) {
+					String line = lines[i].trim();
+					if (line.isEmpty()) continue;
+
+					String[] entries = line.split("\\t");
+					if (entries.length < column) continue;
+
+					try {
+						String idcode = entries[column];
+						molecule = parseMolecule(idcode, true);
+						if (molecule != null && molecule.getAllAtoms() > 0) return molecule;
+					} catch (Exception _) {}
+
+					try {
+						molecule = parseMolecule(line, true);
+						if (molecule != null && molecule.getAllAtoms() > 0) return molecule;
+					} catch (Exception _) {}
+				}
+			} catch (Exception _) {}
+		}
+
+		try {
+			molecule = new IDCodeParser(true).getCompactMolecule(data);
+			if (molecule != null && molecule.getAllAtoms() > 0) return molecule;
+		} catch (Exception _) {}
+
+		try {
+			molecule = new StereoMolecule();
+			new SmilesParser(SmilesParser.SMARTS_MODE_GUESS).parse(molecule, data);
+			if (molecule.getAllAtoms() > 0) return molecule;
+			molecule = null;
+		} catch (Exception _) {}
+
+		try {
+			molecule = StructureNameResolver.resolveLocal(data);
+			if (molecule != null && molecule.getAllAtoms() > 0) return molecule;
+		} catch (Exception _) {}
+
+		try {
+			molecule = StructureNameResolver.resolveRemote(data);
+			if (molecule != null && molecule.getAllAtoms() > 0) return molecule;
+		} catch (Exception _) {}
+
+		return null;
+	}
+
+	private StereoMolecule ensure2DMolecule(StereoMolecule molecule) {
+		if (molecule == null) return null;
+
+		if (molecule.is3D()) {
+			molecule.ensureHelperArrays(Molecule.cHelperParities);
+			new CoordinateInventor().invent(molecule);
+		}
+
+		return molecule;
+	}
+
+	private boolean pasteMolecule(String data) {
 		if (mClipboardHandler != null) {
-			StereoMolecule mol = mClipboardHandler.pasteMolecule();
+			StereoMolecule mol = data != null
+					? ensure2DMolecule(parseMolecule(data, false))
+					: mClipboardHandler.pasteMolecule();
+
 			if (addPastedOrDropped(mol, null))
 				return true;
 
@@ -1196,7 +1333,7 @@ public class GenericEditorArea implements GenericEventListener {
 					copy();
 				}
 				else if (e.getKey() == 'v') {
-					paste();
+					paste(null);
 				}
 			} else if (e.getKey() == GenericKeyEvent.KEY_DELETE) {
 				storeState();
