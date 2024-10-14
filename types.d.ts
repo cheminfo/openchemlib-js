@@ -3479,6 +3479,7 @@ export declare class ConformerGenerator {
   molecules(): IterableIterator<Molecule>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IForceFieldMMFF94Options {
   // TODO
 }
