@@ -3111,11 +3111,11 @@ export interface ReactionEncoderEncodeOptionsSort
 /**
  * Bound to Java ReactionEncoder `String encode(Reaction reaction, boolean keepAbsoluteCoordinates, int mode)`
  */
-export interface ReactionEncoderEncodeOptionsMode {
+export interface ReactionEncoderEncodeOptionsMode
+  extends ReactionEncoderEncodeOptionsBase {
   /**
-   * @default ReactionEncoder.COMBINED_MODES.INCLUDE_DEFAULT
-   * @see ReactionEncoder.MODES
-   * @see ReactionEncoder.COMBINED_MODES
+   * @default ReactionEncoder.INCLUDE_DEFAULT
+   * @see ReactionEncoder.INCLUDE_DEFAULT
    */
   mode?: number;
 }
@@ -3133,9 +3133,8 @@ export interface ReactionEncoderDecodeOptionsCoordinates {
 
 export interface ReactionEncoderDecodeOptionsMode {
   /**
-   * @default ReactionEncoder.COMBINED_MODES.INCLUDE_DEFAULT
-   * @see ReactionEncoder.MODES
-   * @see ReactionEncoder.COMBINED_MODES
+   * @default ReactionEncoder.INCLUDE_DEFAULT
+   * @see ReactionEncoder.INCLUDE_DEFAULT
    */
   mode?: number;
 }
@@ -3146,18 +3145,25 @@ export type ReactionEncoderDecodeOptions =
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export declare class ReactionEncoder {
-  static readonly MODES = {
-    MAPPING: 0b0001,
-    COORDS: 0b0010,
-    DRAWING_OBJECTS: 0b0100,
-    CATALYSTS: 0b1000,
-  } as const;
+  static readonly INCLUDE_MAPPING = 0b00001;
+  static readonly INCLUDE_COORDS = 0b00010;
+  static readonly INCLUDE_DRAWING_OBJECTS = 0b00100;
+  static readonly INCLUDE_CATALYSTS = 0b01000;
+  static readonly RETAIN_REACTANT_AND_PRODUCT_ORDER = 0b10000;
 
-  static readonly COMBINED_MODES = {
-    ALL: 0b1111,
-    RXN_CODE_ONLY: 0b0000,
-    DEFAULT: ReactionEncoder.MODES.MAPPING | ReactionEncoder.MODES.COORDS,
-  } as const;
+  static readonly INCLUDE_ALL =
+    ReactionEncoder.INCLUDE_MAPPING |
+    ReactionEncoder.INCLUDE_COORDS |
+    ReactionEncoder.INCLUDE_DRAWING_OBJECTS |
+    ReactionEncoder.INCLUDE_CATALYSTS;
+  static readonly INCLUDE_RXN_CODE_ONLY = 0b00000;
+  static readonly INCLUDE_DEFAULT =
+    ReactionEncoder.INCLUDE_MAPPING | ReactionEncoder.INCLUDE_COORDS;
+
+  static readonly MOLECULE_DELIMITER: string;
+  static readonly OBJECT_DELIMITER: string;
+  static readonly PRODUCT_IDENTIFIER: string;
+  static readonly CATALYST_DELIMITER: string;
 
   /**
    * @param reaction
@@ -3174,7 +3180,7 @@ export declare class ReactionEncoder {
    */
   static decode(
     reaction: string,
-    options: ReactionEncoderDecodeOptions,
+    options?: ReactionEncoderDecodeOptions,
   ): Reaction | null;
 }
 
