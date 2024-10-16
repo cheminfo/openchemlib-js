@@ -13,4 +13,44 @@ describe('ReactionEncoder class', () => {
     expect(newReaction.getReactants()).toBe(2);
     expect(newReaction.getProducts()).toBe(1);
   });
+
+  it('should be able to decode using string from idcodeexplorer', () => {
+    const idcode =
+      'gOp@DjWkB@@@ gOp@DjWkB@@@ gOp@DjWkB@@@!fhy@@@LdbbbTQQRYhTg^@@``@`@@@##!RbGwW_Wx@_c}~O}]}v`@@ !Rb@KW@gx?_`A~@M\\Bv`@@ !R|Gq~_{]||Owp?Wy?v`@@ !R_c~H?M_|uwvH_Xa}_`CW_]_|_c~H?M_|uwwW_]_|u?sZ@@@##';
+    const reaction = ReactionEncoder.decode(idcode);
+    expect(reaction.getReactants()).toBe(3);
+    expect(reaction.getProducts()).toBe(1);
+  });
+
+  it('should reencode identically', () => {
+    const idcode =
+      'gOp@DjWkB@@@ gOp@DjWkB@@@ gOp@DjWkB@@@!fhy@@@LdbbbTQQRYhTg^@@``@`@@@##!RbGwW_Wx@_c}~O}]}v`@@ !Rb@KW@gx?_`A~@M\\Bv`@@ !R|Gq~_{]||Owp?Wy?v`@@ !R_c~H?M_|uwvH_Xa}_`CW_]_|_c~H?M_|uwwW_]_|u?sZ@@@##';
+    const _reaction = ReactionEncoder.decode(idcode, {
+      ensureCoordinates: true,
+      mode:
+        ReactionEncoder.INCLUDE_DEFAULT |
+        ReactionEncoder.RETAIN_REACTANT_AND_PRODUCT_ORDER,
+    });
+
+    const baseIdCode = ReactionEncoder.encode(_reaction, {
+      keepAbsoluteCoordinates: true,
+      mode:
+        ReactionEncoder.INCLUDE_DEFAULT |
+        ReactionEncoder.RETAIN_REACTANT_AND_PRODUCT_ORDER,
+    });
+    const reaction = ReactionEncoder.decode(idcode, {
+      ensureCoordinates: true,
+      mode:
+        ReactionEncoder.INCLUDE_DEFAULT |
+        ReactionEncoder.RETAIN_REACTANT_AND_PRODUCT_ORDER,
+    });
+    const idCodeToCompare = ReactionEncoder.encode(reaction, {
+      keepAbsoluteCoordinates: true,
+      mode:
+        ReactionEncoder.INCLUDE_DEFAULT |
+        ReactionEncoder.RETAIN_REACTANT_AND_PRODUCT_ORDER,
+    });
+
+    expect(idCodeToCompare).toBe(baseIdCode);
+  });
 });
