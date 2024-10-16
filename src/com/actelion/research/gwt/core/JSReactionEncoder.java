@@ -25,6 +25,7 @@ public class JSReactionEncoder {
 
   public static native String encode(JSReaction reaction, JavaScriptObject options) /*-{
     if (!options) options = {keepAbsoluteCoordinates: false, mode: @com.actelion.research.gwt.core.JSReactionEncoder::INCLUDE_DEFAULT};
+    options = Object.assign({}, options);
     options.keepAbsoluteCoordinates = Boolean(options.keepAbsoluteCoordinates);
 
     if ('sortByIDCode' in options) {
@@ -59,6 +60,7 @@ public class JSReactionEncoder {
 
   public static native JSReaction decode(String reaction, JavaScriptObject options) /*-{
     if (!options) options = {mode: @com.actelion.research.gwt.core.JSReactionEncoder::INCLUDE_DEFAULT};
+    options = Object.assign({}, options);
 
     if ('ensureCoordinates' in options) {
       options.ensureCoordinates = Boolean(options.ensureCoordinates);
