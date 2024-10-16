@@ -3089,10 +3089,93 @@ export declare class Reaction {
   getMergedCopy(): Reaction;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class,unicorn/no-static-only-class
+interface ReactionEncoderEncodeOptionsBase {
+  /**
+   * @default false
+   */
+  keepAbsoluteCoordinates?: boolean;
+}
+
+/**
+ * Bound to Java ReactionEncoder `String[] encode(Reaction reaction, boolean keepAbsoluteCoordinates, boolean sortByIDCode)`
+ * result will be joined with Java `ReactionEncoder.OBJECT_DELIMITER`
+ */
+export interface ReactionEncoderEncodeOptionsSort
+  extends ReactionEncoderEncodeOptionsBase {
+  /**
+   * @default false
+   */
+  sortByIDCode?: boolean;
+}
+
+/**
+ * Bound to Java ReactionEncoder `String encode(Reaction reaction, boolean keepAbsoluteCoordinates, int mode)`
+ */
+export interface ReactionEncoderEncodeOptionsMode {
+  /**
+   * @default ReactionEncoder.COMBINED_MODES.INCLUDE_DEFAULT
+   * @see ReactionEncoder.MODES
+   * @see ReactionEncoder.COMBINED_MODES
+   */
+  mode?: number;
+}
+
+export type ReactionEncoderEncodeOptions =
+  | ReactionEncoderEncodeOptionsSort
+  | ReactionEncoderEncodeOptionsMode;
+
+export interface ReactionEncoderDecodeOptionsCoordinates {
+  /**
+   * @default false
+   */
+  ensureCoordinates?: boolean;
+}
+
+export interface ReactionEncoderDecodeOptionsMode {
+  /**
+   * @default ReactionEncoder.COMBINED_MODES.INCLUDE_DEFAULT
+   * @see ReactionEncoder.MODES
+   * @see ReactionEncoder.COMBINED_MODES
+   */
+  mode?: number;
+}
+
+export type ReactionEncoderDecodeOptions =
+  | ReactionEncoderDecodeOptionsCoordinates
+  | ReactionEncoderDecodeOptionsMode;
+
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export declare class ReactionEncoder {
-  static encode(reaction: Reaction): string | null;
-  static decode(reaction: string): Reaction;
+  static readonly MODES = {
+    MAPPING: 0b0001,
+    COORDS: 0b0010,
+    DRAWING_OBJECTS: 0b0100,
+    CATALYSTS: 0b1000,
+  } as const;
+
+  static readonly COMBINED_MODES = {
+    ALL: 0b1111,
+    RXN_CODE_ONLY: 0b0000,
+    DEFAULT: ReactionEncoder.MODES.MAPPING | ReactionEncoder.MODES.COORDS,
+  } as const;
+
+  /**
+   * @param reaction
+   * @param options - @default {keepAbsoluteCoordinates: false, mode: ReactionEncoder.COMBINED_MODES.INCLUDE_DEFAULT}
+   */
+  static encode(
+    reaction: Reaction,
+    options?: ReactionEncoderEncodeOptions,
+  ): string | null;
+
+  /**
+   * @param reaction
+   * @param options - @default {mode: ReactionEncoder.COMBINED_MODES.INCLUDE_DEFAULT}
+   */
+  static decode(
+    reaction: string,
+    options: ReactionEncoderDecodeOptions,
+  ): Reaction | null;
 }
 
 export declare class Reactor {
