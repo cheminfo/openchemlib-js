@@ -711,6 +711,18 @@ exports[`static properties of MoleculeProperties 1`] = `[]`;
 
 exports[`static properties of ReactionEncoder 1`] = `
 [
+  "CATALYST_DELIMITER",
+  "INCLUDE_ALL",
+  "INCLUDE_CATALYSTS",
+  "INCLUDE_COORDS",
+  "INCLUDE_DEFAULT",
+  "INCLUDE_DRAWING_OBJECTS",
+  "INCLUDE_MAPPING",
+  "INCLUDE_RXN_CODE_ONLY",
+  "MOLECULE_DELIMITER",
+  "OBJECT_DELIMITER",
+  "PRODUCT_IDENTIFIER",
+  "RETAIN_REACTANT_AND_PRODUCT_ORDER",
   "decode",
   "encode",
 ]

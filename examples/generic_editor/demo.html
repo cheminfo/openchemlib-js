@@ -16,7 +16,7 @@
         grid-template-areas:
           '.            top-actions .     '
           'left-actions editor      result'
-          '.            .           result';
+          'id-code      id-code     result';
       "
     >
       <div class="flex flex-row gap-4" style="grid-area: top-actions">
@@ -56,6 +56,76 @@
         <label for="molfilev3">Molfile or RXN v3</label>
         <textarea class="font-mono p-2" rows="12" id="molfilev3"></textarea>
       </div>
+
+      <form id="idcodeForm" style="grid-area: id-code">
+        <h3>ID-Code loader parametrized</h3>
+
+        <label for="idcodeInput">ID Code</label>
+        <input
+          type="text"
+          id="idcodeInput"
+          name="idcode"
+          class="w-full"
+          placeholder="Enter an ID code"
+        />
+
+        <fieldset>
+          <legend>Type</legend>
+
+          <label>
+            <input type="radio" name="type" value="molecule" checked />
+            Molecule
+          </label>
+
+          <label>
+            <input type="radio" name="type" value="reaction" />
+            Reaction
+          </label>
+        </fieldset>
+
+        <input
+          type="checkbox"
+          name="ensureCoordinates"
+          id="idcodeEnsureCoordinates"
+          checked
+        />
+        <label for="idcodeEnsureCoordinates">
+          ensure2DCoordinates for <code>Molecules.fromIDCode</code>,
+          <br />
+          ensureCoordinates for <code>ReactionEncoder.decode</code>
+        </label>
+
+        <label class="block" for="idcodeDecodeOptions"
+          >decode options (reaction only)</label
+        >
+        <label class="block">
+          <input type="checkbox" name="options-type" id="idcodeDecodeOptions" />
+          Not checked: ensureCoordinates, Checked: mode
+        </label>
+
+        <fieldset>
+          <legend>Mode</legend>
+
+          <label class="block">
+            <input type="checkbox" name="INCLUDE_MAPPING" checked />
+            INCLUDE_MAPPING
+          </label>
+          <label class="block">
+            <input type="checkbox" name="INCLUDE_COORDS" checked />
+            INCLUDE_COORDS
+          </label>
+          <label class="block">
+            <input type="checkbox" name="INCLUDE_DRAWING_OBJECTS" checked />
+            INCLUDE_DRAWING_OBJECTS
+          </label>
+          <label class="block">
+            <input type="checkbox" name="INCLUDE_CATALYSTS" checked />
+            INCLUDE_CATALYSTS
+          </label>
+        </fieldset>
+
+        <button class="block" type="submit">Load</button>
+      </form>
     </section>
   </body>
 </html>
