@@ -3921,13 +3921,17 @@ interface CanvasEditorElementConstructor extends CustomElementConstructor {
  * ```
  *
  * In HTML
+ *
+ * /!\ The `idcode` attribute MUST be encoded with `JSON.stringify`.
+ * `idcode` can include special characters like `\u007F` which are not valid in `UVString`
+ *
  * ```html
  * <p>Empty editor</p>
  * <openchemlib-editor></openchemlib-editor>
  *
  * <p>Molecule <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code></p>
  * <openchemlib-editor
- *   idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+ *   idcode="&quot;ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@&quot;"
  * ></openchemlib-editor>
  *
  * <p>
@@ -3937,13 +3941,13 @@ interface CanvasEditorElementConstructor extends CustomElementConstructor {
  *   </code>
  * </p>
  * <openchemlib-editor
- *   idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp"
+ *   idcode="&quot;ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp&quot;"
  *   fragment
  * ></openchemlib-editor>
  *
  * <p>Reaction <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@</code></p>
  * <openchemlib-editor
- *   idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
+ *   idcode="&quot;gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@&quot;"
  *   mode="reaction"
  * ></openchemlib-editor>
  *
@@ -3952,7 +3956,7 @@ interface CanvasEditorElementConstructor extends CustomElementConstructor {
  *   <code>gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B</code>
  * </p>
  * <openchemlib-editor
- *   idcode="gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B"
+ *   idcode="&quot;gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B&quot;"
  *   mode="reaction"
  *   fragment
  * ></openchemlib-editor>
@@ -3963,7 +3967,7 @@ interface CanvasEditorElementConstructor extends CustomElementConstructor {
  * </p>
  * <openchemlib-editor
  *   readonly
- *   idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+ *   idcode="&quot;ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@&quot;"
  * ></openchemlib-editor>
  * ```
  *
@@ -3983,7 +3987,8 @@ interface CanvasEditorElementConstructor extends CustomElementConstructor {
  */
 declare interface CanvasEditorElement extends HTMLElement {
   /**
-   * @defaultValue ''
+   * If set from attributes, init from DOM, it MUST be encoded with JSON.stringify.
+   * @defaultValue '""'
    */
   idcode: string;
   /**
