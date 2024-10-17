@@ -3167,7 +3167,7 @@ export declare class ReactionEncoder {
 
   /**
    * @param reaction
-   * @param options - @default {keepAbsoluteCoordinates: false, mode: ReactionEncoder.COMBINED_MODES.INCLUDE_DEFAULT}
+   * @param options - @default {keepAbsoluteCoordinates: false, mode: ReactionEncoder.INCLUDE_DEFAULT}
    */
   static encode(
     reaction: Reaction,
@@ -3176,7 +3176,7 @@ export declare class ReactionEncoder {
 
   /**
    * @param reaction
-   * @param options - @default {mode: ReactionEncoder.COMBINED_MODES.INCLUDE_DEFAULT}
+   * @param options - @default {mode: ReactionEncoder.INCLUDE_DEFAULT}
    */
   static decode(
     reaction: string,
