@@ -1,5 +1,21 @@
 # Changelog
 
+## [8.16.0](https://github.com/cheminfo/openchemlib-js/compare/v8.15.0...v8.16.0) (2024-10-17)
+
+
+### Features
+
+* add options to `ReactionEncoder.decode` and `ReactionEncoder.decode` ([9716b26](https://github.com/cheminfo/openchemlib-js/commit/9716b26a6c4d6a3927c0c2d59c021f96559b668c))
+* create a script to build help ([#223](https://github.com/cheminfo/openchemlib-js/issues/223)) ([cc7042f](https://github.com/cheminfo/openchemlib-js/commit/cc7042f13b41e2dcb8c347ada9c28b2dd919e860))
+* sync webcomponent props with attributes ([#234](https://github.com/cheminfo/openchemlib-js/issues/234)) ([9716b26](https://github.com/cheminfo/openchemlib-js/commit/9716b26a6c4d6a3927c0c2d59c021f96559b668c))
+* update OCL to v2024.10.0 ([2cee300](https://github.com/cheminfo/openchemlib-js/commit/2cee300f4b19aed035f3c79beda8abf1ea4f8888))
+* update OCL to v2024.10.1 ([#233](https://github.com/cheminfo/openchemlib-js/issues/233)) ([5eb0ed8](https://github.com/cheminfo/openchemlib-js/commit/5eb0ed8a4a107a98d70056452e52737b4a441507))
+
+
+### Bug Fixes
+
+* double click event handling ([#232](https://github.com/cheminfo/openchemlib-js/issues/232)) ([8cb438b](https://github.com/cheminfo/openchemlib-js/commit/8cb438b15f0f4b82e33f1fa8e302964929ae1f2f))
+
 ## [8.15.0](https://github.com/cheminfo/openchemlib-js/compare/v8.14.0...v8.15.0) (2024-07-25)
 
 
