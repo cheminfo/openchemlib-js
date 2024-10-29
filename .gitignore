@@ -15,3 +15,4 @@ jdk.tar.gz
 /distbuild/
 /distold/
 /distesm/
+/j2cl/bazel-*
