@@ -1,5 +1,14 @@
 # Changelog
 
+## [8.17.0](https://github.com/cheminfo/openchemlib-js/compare/v8.16.0...v8.17.0) (2024-11-06)
+
+
+### Features
+
+* also emit change events when in readonly mode ([#240](https://github.com/cheminfo/openchemlib-js/issues/240)) ([c4ea31c](https://github.com/cheminfo/openchemlib-js/commit/c4ea31c3cbf751c538c135695c566c34db419e8e))
+* update OCL to v2024.10.2 ([#237](https://github.com/cheminfo/openchemlib-js/issues/237)) ([63f7771](https://github.com/cheminfo/openchemlib-js/commit/63f777125b15fb6962ffef4350c851b925a7ebd5))
+* update OCL to v2024.11.1 ([#241](https://github.com/cheminfo/openchemlib-js/issues/241)) ([9cfc345](https://github.com/cheminfo/openchemlib-js/commit/9cfc3454640279ceead43860d6cc6535a6f10171))
+
 ## [8.16.0](https://github.com/cheminfo/openchemlib-js/compare/v8.15.0...v8.16.0) (2024-10-17)
 
 
