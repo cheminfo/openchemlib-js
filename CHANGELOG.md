@@ -1,5 +1,18 @@
 # Changelog
 
+## [8.18.0](https://github.com/cheminfo/openchemlib-js/compare/v8.17.0...v8.18.0) (2025-02-05)
+
+
+### Features
+
+* update GWT to v2.12.1 ([588efac](https://github.com/cheminfo/openchemlib-js/commit/588efac77bc93f5ea5b8b9e7ca49a884edbf405f))
+* update OCL to v2025.2.0 ([e821ecb](https://github.com/cheminfo/openchemlib-js/commit/e821ecb8150e37be12930287c87cda07c42d91ed))
+
+
+### Bug Fixes
+
+* **types:** declare ambient types correctly ([aea1332](https://github.com/cheminfo/openchemlib-js/commit/aea1332da06b8f4322332f656d18f57636de475d))
+
 ## [8.17.0](https://github.com/cheminfo/openchemlib-js/compare/v8.16.0...v8.17.0) (2024-11-06)
 
 
