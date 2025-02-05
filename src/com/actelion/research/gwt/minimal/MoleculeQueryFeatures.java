@@ -77,15 +77,15 @@ class MoleculeQueryFeatures {
     PlainJSObject toReturn = PlainJSObject.create();
     long bondQueryFeatures = oclMolecule.getBondQueryFeatures(bond);
 
-    toReturn.setPropertyBoolean("single", (bondQueryFeatures & Molecule.cBondQFSingle) > 0);
-    toReturn.setPropertyBoolean("double", (bondQueryFeatures & Molecule.cBondQFDouble) > 0);
-    toReturn.setPropertyBoolean("triple", (bondQueryFeatures & Molecule.cBondQFTriple) > 0);
+    toReturn.setPropertyBoolean("single", (bondQueryFeatures & Molecule.cBondTypeSingle) > 0);
+    toReturn.setPropertyBoolean("double", (bondQueryFeatures & Molecule.cBondTypeDouble) > 0);
+    toReturn.setPropertyBoolean("triple", (bondQueryFeatures & Molecule.cBondTypeTriple) > 0);
     toReturn.setPropertyBoolean("delocalized",
-        (bondQueryFeatures & Molecule.cBondQFDelocalized) > 0);
+        (bondQueryFeatures & Molecule.cBondTypeDelocalized) > 0);
     toReturn.setPropertyBoolean("metalLigand",
-        (bondQueryFeatures & Molecule.cBondQFMetalLigand) > 0);
-    toReturn.setPropertyBoolean("quadruple", (bondQueryFeatures & Molecule.cBondQFQuadruple) > 0);
-    toReturn.setPropertyBoolean("quintuple", (bondQueryFeatures & Molecule.cBondQFQuintuple) > 0);
+        (bondQueryFeatures & Molecule.cBondTypeMetalLigand) > 0);
+    toReturn.setPropertyBoolean("quadruple", (bondQueryFeatures & Molecule.cBondTypeQuadruple) > 0);
+    toReturn.setPropertyBoolean("quintuple", (bondQueryFeatures & Molecule.cBondTypeQuintuple) > 0);
 
     toReturn.setPropertyBoolean("notRing", (bondQueryFeatures & Molecule.cBondQFNotRing) > 0);
     toReturn.setPropertyBoolean("ring", (bondQueryFeatures & Molecule.cBondQFRing) > 0);

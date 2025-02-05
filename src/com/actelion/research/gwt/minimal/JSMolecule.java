@@ -456,10 +456,10 @@ public class JSMolecule {
   public static final int cBondTypeSingle = 0x00000001;
   public static final int cBondTypeDouble = 0x00000002;
   public static final int cBondTypeTriple = 0x00000004;
-  public static final int cBondTypeQuadruple = 0x00000008;
-  public static final int cBondTypeQuintuple = 0x00000010;
-  public static final int cBondTypeMetalLigand = 0x00000020;
-  public static final int cBondTypeDelocalized = 0x00000040;
+  public static final int cBondTypeDelocalized = 0x00000008;
+  public static final int cBondTypeMetalLigand = 0x00000010;
+  public static final int cBondTypeQuadruple = 0x00000020;
+  public static final int cBondTypeQuintuple = 0x00000040;
   public static final int cBondTypeDown = 0x00000081;
   public static final int cBondTypeUp = 0x00000101;
   public static final int cBondTypeCross = 0x00000182;

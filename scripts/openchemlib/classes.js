@@ -56,6 +56,8 @@ const changed = [
   ['chem/MolfileParser', replaceStandardCharsets(1)],
   ['chem/MolfileV3Creator', changeLineSeparator],
   ['chem/Molecule3D', removeCloneInfos],
+  ['chem/reaction/mapping/RootAtomPairSource', changeRootAtomPairSource],
+  ['chem/reaction/mapping/ReactionCenterMapper', changeReactionCenterMapper],
   ['chem/TautomerHelper', changeTautomerHelper],
   ['chem/TextDrawingObject', changeTextDrawingObject],
   ['gui/editor/GenericEditorArea', changeGenericEditorArea],
@@ -136,7 +138,6 @@ const removed = [
   'chem/properties/fractaldimension',
   'chem/reaction/ClassificationData.java',
   'chem/reaction/FunctionalGroupClassifier.java',
-  'chem/reaction/mapping',
   'chem/reaction/ReactionClassifier.java',
   'chem/reaction/ReactionSearch.java',
   'chem/RingHelper.java',
@@ -154,6 +155,7 @@ const removed = [
   'gui/editor/FXEditorArea.java',
   'gui/editor/FXEditorDialog.java',
   'gui/editor/FXEditorPane.java',
+  'gui/editor/FXEditorTestApp.java',
   'gui/editor/FXEditorToolbar.java',
   'gui/editor/SwingEditorArea.java',
   'gui/editor/SwingEditorDialog.java',
@@ -295,6 +297,34 @@ function removeCloneInfos(code) {
     'infos[a] = m.infos[i].clone();',
     '// infos[a] = m.infos[i].clone();',
   );
+}
+
+function changeRootAtomPairSource(code) {
+  code = replaceChecked(
+    code,
+    'mReactantRank = mReactantCanonizer.getSymmetryRanks().clone();',
+    'int[] reactantRank_ = mReactantCanonizer.getSymmetryRanks(); mReactantRank = Arrays.copyOf(reactantRank_, reactantRank_.length);',
+  );
+  code = replaceChecked(
+    code,
+    'mProductRank = mProductCanonizer.getSymmetryRanks().clone();',
+    'int[] productRank_ = mProductCanonizer.getSymmetryRanks(); mProductRank = Arrays.copyOf(productRank_, productRank_.length);',
+  );
+  return code;
+}
+
+function changeReactionCenterMapper(code) {
+  code = replaceChecked(
+    code,
+    'import java.util.ArrayList;',
+    'import java.util.Arrays;\nimport java.util.ArrayList;',
+  );
+  code = replaceChecked(
+    code,
+    'mPermutationList.add(solution.clone());',
+    'mPermutationList.add(Arrays.copyOf(solution, solution.length));',
+  );
+  return code;
 }
 
 function changeTautomerHelper(code) {

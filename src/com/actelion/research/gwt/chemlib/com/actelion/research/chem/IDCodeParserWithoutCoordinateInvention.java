@@ -869,10 +869,12 @@ public class IDCodeParserWithoutCoordinateInvention {
 
 		boolean coords2DAvailable = (coordinates != null && !coordsAre3D);
 
+		fixMultipleBondTypes();
+
 		// If we have or create 2D-coordinates, then we need to set all double bonds to a cross bond, which
 		// - have distinguishable substituents on both ends, i.e. is a stereo double bond
 		// - are not in a small ring
-		// Here we don't know, whether a double bond without E/Z parity is a stereo bond with unknown
+		// Here we don't know whether a double bond without E/Z parity is a stereo bond with unknown
 		// configuration or not a stereo bond. Therefore, we need to set a flag, that causes the Canonizer
 		// during the next stereo recognition with atom coordinates to assign an unknown configuration rather
 		// than E or Z based on created or given coordinates.
@@ -908,6 +910,59 @@ public class IDCodeParserWithoutCoordinateInvention {
 			}
 		}
 
+	/**
+	 * New convention is that in case of a substructure bond with multiple allowed bond types,
+	 * all allowed bond types are set as query feature and in addition the bond itself has to
+	 * be the lowest bond type of these.
+	 */
+	private void fixMultipleBondTypes() {
+		if (mMol.isFragment()) {
+			for (int bond=0; bond<mMol.getAllBonds(); bond++) {
+				int queryFeatures = mMol.getBondQueryFeatures(bond);
+				if ((queryFeatures & Molecule.cBondQFBondTypes) == 0)
+					continue;
+
+				int bondType = -1;
+				int selectionCount = 0;
+
+				if ((queryFeatures & Molecule.cBondTypeMetalLigand) != 0) {
+					bondType = Molecule.cBondTypeMetalLigand;
+					selectionCount++;
+				}
+				if ((queryFeatures & Molecule.cBondTypeQuintuple) != 0) {
+					bondType = Molecule.cBondTypeQuintuple;
+					selectionCount++;
+				}
+				if ((queryFeatures & Molecule.cBondTypeQuadruple) != 0) {
+					bondType = Molecule.cBondTypeQuadruple;
+					selectionCount++;
+				}
+				if ((queryFeatures & Molecule.cBondTypeTriple) != 0) {
+					bondType = Molecule.cBondTypeTriple;
+					selectionCount++;
+				}
+				if ((queryFeatures & Molecule.cBondTypeDouble) != 0) {
+					bondType = Molecule.cBondTypeDouble;
+					selectionCount++;
+				}
+				if ((queryFeatures & Molecule.cBondTypeDelocalized) != 0) {
+					bondType = Molecule.cBondTypeDelocalized;
+					selectionCount++;
+				}
+				if ((queryFeatures & Molecule.cBondTypeSingle) != 0) {
+					bondType = Molecule.cBondTypeSingle;
+					selectionCount++;
+				}
+
+				if (bondType != -1) {
+					mMol.setBondType(bond, bondType);    // set to the lowest bond order of query options
+					if (selectionCount == 1)
+						mMol.setBondQueryFeature(bond, Molecule.cBondQFBondTypes, false);
+				}
+			}
+		}
+	}
+
 	protected void inventCoordinates(StereoMolecule mol) throws Exception {
 		throw new Exception("Unexpected request to invent coordinates. Check source code logic!");
 		}
@@ -916,7 +971,7 @@ public class IDCodeParserWithoutCoordinateInvention {
 	 * This method parses an id-coordinate string (new format only) and writes the coordinates into a Coordinates array.
 	 * If the id-coordinates contain implicit hydrogen coordinates, then this method does not(!!!) add these hydrogen atoms
 	 * to the Molecule. Thus, for 3D-coordinates with implicit hydrogen coordinates, you need to make sure that all
-	 * of the Molecule's hydrogen atoms are explicit and that the Coordinates array's size covers all hydrogens atoms.
+	 * the Molecule's hydrogen atoms are explicit and that the Coordinates array's size covers all hydrogens atoms.
 	 * For instance, if parsing idcodes and coordinates of a conformer set, you may parse the first conformer with one
 	 * of the getCompactMolecule() or parse() methods.
 	 * This adds all implicit hydrogens as explicit ones to the Molecule and conformer object. All subsequent conformers

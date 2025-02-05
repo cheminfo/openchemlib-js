@@ -342,12 +342,19 @@ export declare class Molecule {
   static cBondQFNarrowing: number;
   static cBondQFBondTypes: number;
   static cBondQFRareBondTypes: number;
+  /* @deprecated Use `cBondTypeSingle` instead */
   static cBondQFSingle: number;
+  /* @deprecated Use `cBondTypeDouble` instead */
   static cBondQFDouble: number;
+  /* @deprecated Use `cBondTypeTriple` instead */
   static cBondQFTriple: number;
+  /* @deprecated Use `cBondTypeDelocalized` instead */
   static cBondQFDelocalized: number;
+  /* @deprecated Use `cBondTypeMetalLigand` instead */
   static cBondQFMetalLigand: number;
+  /* @deprecated Use `cBondTypeQuadruple` instead */
   static cBondQFQuadruple: number;
+  /* @deprecated Use `cBondTypeQuintuple` instead */
   static cBondQFQuintuple: number;
   static cBondQFRingState: number;
   static cBondQFNotRing: number;
