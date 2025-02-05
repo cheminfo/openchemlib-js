@@ -1,8 +1,8 @@
-'use strict';
+import fs from 'node:fs';
 
-const fs = require('node:fs');
+import { describe, expect, it } from 'vitest';
 
-const { Molecule } = require('../minimal');
+import { Molecule } from '../minimal';
 
 describe('from and to SMILES', () => {
   it.each(['C', 'COCOC', 'c1cc2cccc3c4cccc5cccc(c(c1)c23)c54'])(

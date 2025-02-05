@@ -1,8 +1,7 @@
-'use strict';
+import { getMF } from 'openchemlib-utils';
+import { describe, expect, it } from 'vitest';
 
-const { getMF } = require('openchemlib-utils');
-
-const { Reactor, Molecule, Reaction, ReactionEncoder } = require('../core');
+import { Molecule, Reaction, ReactionEncoder, Reactor } from '../core';
 
 // the actelion reaction ID is encoded in the RXN file !!!
 // this code has priority so if it is there the rest of the RXN file is ignored

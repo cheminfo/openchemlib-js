@@ -1,6 +1,6 @@
-'use strict';
+import { expect, test } from 'vitest';
 
-const OCL = require('../..');
+import { Molecule } from '../..';
 
 const molfile = `
   -ISIS-  09030813062D
@@ -13,6 +13,6 @@ M  END
 `;
 
 test('parsing molfile for NaH should keep the hydrogen', () => {
-  const mol = OCL.Molecule.fromMolfile(molfile);
+  const mol = Molecule.fromMolfile(molfile);
   expect(mol.getIDCode()).toBe('eFACPhBL@');
 });

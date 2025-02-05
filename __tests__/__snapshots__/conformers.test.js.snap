@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ConformerGenerator should generate conformers 1`] = `
+exports[`ConformerGenerator > should generate conformers 1`] = `
 "#1
 Actelion Java MolfileCreator 1.0
 
@@ -38,7 +38,7 @@ M  END
 "
 `;
 
-exports[`ConformerGenerator should generate conformers 2`] = `
+exports[`ConformerGenerator > should generate conformers 2`] = `
 "#2
 Actelion Java MolfileCreator 1.0
 

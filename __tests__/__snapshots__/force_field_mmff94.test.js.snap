@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ForceFieldMMFF94 should generate force field 1`] = `
+exports[`ForceFieldMMFF94 > should generate force field 1`] = `
 "#1
 Actelion Java MolfileCreator 1.0
 

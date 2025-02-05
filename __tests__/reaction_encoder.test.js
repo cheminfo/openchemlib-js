@@ -1,6 +1,6 @@
-'use strict';
+import { describe, expect, it } from 'vitest';
 
-const { ReactionEncoder, Molecule, Reaction } = require('../core');
+import { Molecule, Reaction, ReactionEncoder } from '../core';
 
 describe('ReactionEncoder class', () => {
   it('should be able to encode and decode using string', () => {

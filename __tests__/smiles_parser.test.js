@@ -1,6 +1,6 @@
-'use strict';
+import { expect, it } from 'vitest';
 
-const { SmilesParser, Molecule } = require('../minimal');
+import { Molecule, SmilesParser } from '../minimal';
 
 it.each([
   ['COCO', { atoms: 4 }],

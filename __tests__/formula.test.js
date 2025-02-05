@@ -1,8 +1,6 @@
-'use strict';
+import { describe, expect, it } from 'vitest';
 
-const OCL = require('../minimal');
-
-const Molecule = OCL.Molecule;
+import { Molecule } from '../minimal';
 
 describe('MoleculeFormula', () => {
   it('should compute formula', () => {
