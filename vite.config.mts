@@ -3,7 +3,6 @@ import path from 'node:path';
 
 import { defineConfig } from 'vite';
 
-// @ts-expect-error globSync is not defined in the types.
 const examples: string[] = fs.globSync('examples/**/*.html', {
   cwd: import.meta.dirname,
 });
