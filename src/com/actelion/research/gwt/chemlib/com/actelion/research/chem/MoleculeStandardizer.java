@@ -14,8 +14,13 @@ import com.actelion.research.chem.coords.CoordinateInventor;
  *             - If charges (e.g. quaternary nitrogen) cannot be balanced, then Na(+) or Cl(-) are added to neutralize as last resort<br>
  */
 public class MoleculeStandardizer {
-	public static final int MODE_GET_PARENT = 1;
-	public static final int MODE_ADD_NA_AND_CL = 2;
+	public static final int MODE_STANDARDIZE_ONLY = 0;
+	public static final int MODE_LARGEST_FRAGMENT = 1;
+	public static final int MODE_REMOVE_ISOTOPS = 2;
+	public static final int MODE_ADD_NA_AND_CL = 4;
+	public static final int MODE_PROHIBIT_REMAINING_CHARGE = 8;
+
+	public static final int MODE_GET_PARENT = MODE_LARGEST_FRAGMENT + MODE_REMOVE_ISOTOPS;	// for compatibility
 
 	/**
 	 * Under normal circumstances, one should never need to standardize a molecule from an idcode,
@@ -24,7 +29,7 @@ public class MoleculeStandardizer {
 	 * potentially MODE_ADD_NA_AND_CL.
 	 * @param idcode
 	 * @param coordinates if null the result may change.
-	 * @param mode 0 or any combination of MODE_GET_PARENT and MODE_ADD_NA_AND_CL
+	 * @param mode 0 or any combination of MODE_LARGEST_FRAGMENT, MODE_REMOVE_ISOTOPS, and MODE_ADD_NA_AND_CL
 	 * @return
 	 * @throws Exception
 	 */
@@ -50,14 +55,15 @@ public class MoleculeStandardizer {
 	 * If mode includes MODE_ADD_NA_AND_CL, then molecules, that are still charged after normalization,
 	 * e.g. quarternary ammonium, are neutralized by adding the right amount of Na+ or Cl- ions.
 	 * @param mol
-	 * @param mode 0 or any combination of MODE_GET_PARENT and MODE_ADD_NA_AND_CL
+	 * @param mode 0 or any combination of MODE_LARGEST_FRAGMENT, MODE_REMOVE_ISOTOPS, and MODE_ADD_NA_AND_CL, MODE_PROHIBIT_REMAINING_CHARGE
 	 * @throws Exception
 	 */
 	public static void standardize(StereoMolecule mol, int mode) throws Exception {
-		if((mode & MODE_GET_PARENT) != 0) {
+		if ((mode & MODE_LARGEST_FRAGMENT) != 0)
 			mol.stripSmallFragments();
+
+		if ((mode & MODE_REMOVE_ISOTOPS) != 0)
 			mol.stripIsotopInfo();
-			}
 
 		repairAndUnify(mol);
 
@@ -66,7 +72,10 @@ public class MoleculeStandardizer {
 		int remainingCharge = mol.canonizeCharge(true, true);
 
 		if (remainingCharge != 0)
-			neutralizeCharges(mol, mode, remainingCharge);
+			remainingCharge = neutralizeCharges(mol, mode, remainingCharge);
+
+		if ((mode & MODE_PROHIBIT_REMAINING_CHARGE) != 0 && remainingCharge != 0)
+			throw new Exception("Couldn't neutralize molecule.");
 
 		mol.validateAtomQueryFeatures();
 		mol.validateBondQueryFeatures();
@@ -89,7 +98,7 @@ public class MoleculeStandardizer {
 		unifyAzido(mol);
 	}
 
-	private static void neutralizeCharges(StereoMolecule mol, int mode, int totalCharge) {
+	private static int neutralizeCharges(StereoMolecule mol, int mode, int totalCharge) {
 		mol.ensureHelperArrays(Molecule.cHelperNeighbours);
 
 		for (int atom=0; atom<mol.getAllAtoms() && totalCharge>0; atom++) {
@@ -127,6 +136,8 @@ public class MoleculeStandardizer {
 			new CoordinateInventor(CoordinateInventor.MODE_KEEP_MARKED_ATOM_COORDS
 					+ CoordinateInventor.MODE_REMOVE_HYDROGEN).invent(mol);
 		}
+
+		return totalCharge;
 	}
 
 	/**

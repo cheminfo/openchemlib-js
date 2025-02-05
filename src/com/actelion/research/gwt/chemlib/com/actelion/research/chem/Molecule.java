@@ -207,13 +207,13 @@ public class Molecule implements Serializable {
 	public static final long cAtomQFIsNotStereo     = 0x0000200000000000L;
 	public static final long cAtomQFHeteroAromatic  = 0x0000400000000000L;
 
-	public static final int cBondTypeSingle			= 0x00000001;
-	public static final int cBondTypeDouble			= 0x00000002;
-	public static final int cBondTypeTriple			= 0x00000004;
-	public static final int cBondTypeQuadruple		= 0x00000008;
-	public static final int cBondTypeQuintuple		= 0x00000010;
-	public static final int cBondTypeMetalLigand	= 0x00000020;
-	public static final int cBondTypeDelocalized	= 0x00000040;
+	public static final int cBondTypeSingle			= 0x00000001;	// first 5 bond types must not be changed,
+	public static final int cBondTypeDouble			= 0x00000002;	// because they are part of the idcode
+	public static final int cBondTypeTriple			= 0x00000004;	// within the bond query features
+	public static final int cBondTypeDelocalized	= 0x00000008;
+	public static final int cBondTypeMetalLigand	= 0x00000010;
+	public static final int cBondTypeQuadruple		= 0x00000020;
+	public static final int cBondTypeQuintuple		= 0x00000040;
 	public static final int cBondTypeDown			= 0x00000081;
 	public static final int cBondTypeUp				= 0x00000101;
 	public static final int cBondTypeCross			= 0x00000182;
@@ -279,13 +279,6 @@ public class Molecule implements Serializable {
 	public static final int cBondQFNarrowing		= 0x00600180;
 	public static final int cBondQFBondTypes		= 0x0000001F;   // original 5 bond types for idcode
 	public static final int cBondQFRareBondTypes    = 0x00000060;   // using OR logic for all 7 bond types
-	public static final int cBondQFSingle           = 0x00000001;
-	public static final int cBondQFDouble           = 0x00000002;
-	public static final int cBondQFTriple           = 0x00000004;
-	public static final int cBondQFDelocalized      = 0x00000008;
-	public static final int cBondQFMetalLigand      = 0x00000010;
-	public static final int cBondQFQuadruple        = 0x00000020;
-	public static final int cBondQFQuintuple        = 0x00000040;
 	public static final int cBondQFRingState		= 0x00000180;
 	public static final int cBondQFNotRing			= 0x00000080;
 	public static final int cBondQFRing				= 0x00000100;
@@ -1157,6 +1150,7 @@ public class Molecule implements Serializable {
 	 * Copies all atoms and bonds of mol to the end of this Molecule's atom and bond
 	 * tables. If mol is a fragment then this Molecule's fragment flag is set to true
 	 * and all query features of mol are also copied.
+	 * If this Molecule is a fragment that contains exclude groups, these are included.
 	 * High level function for constructing a molecule. Does not require any helper arrays.
 	 * @param mol
 	 * @return atom mapping from original mol to this molecule after incorporation of mol
@@ -1172,6 +1166,7 @@ public class Molecule implements Serializable {
 	 * and all query features of mol are also copied. Typically, this is used to add a
 	 * molecule without explicit hydrogen atoms. If parities of copied molecules are valid,
 	 * then you may call setParitiesValid() on this molecule after adding molecules.
+	 * If this Molecule is a fragment that contains exclude groups, these are included.
 	 * High level function for constructing a molecule. Does not require any helper arrays.
 	 * @param mol
 	 * @param atoms count of atoms to be copied
@@ -1179,8 +1174,26 @@ public class Molecule implements Serializable {
 	 * @return atom mapping from original mol to this molecule after incorporation of mol
 	 */
 	public int[] addMolecule(Molecule mol, int atoms, int bonds) {
-		return addMolecule(mol, 0, atoms, 0, bonds);
+		return addMolecule(mol, 0, atoms, 0, bonds, true);
 		}
+
+
+	/**
+	 * Copies first atoms and first bonds of mol to the end of this Molecule's atom and bond
+	 * tables. If mol is a fragment then this Molecule's fragment flag is set to true
+	 * and all query features of mol are also copied. Typically, this is used to add a
+	 * molecule without explicit hydrogen atoms. If parities of copied molecules are valid,
+	 * then you may call setParitiesValid() on this molecule after adding molecules.
+	 * High level function for constructing a molecule. Does not require any helper arrays.
+	 * @param mol
+	 * @param atoms count of atoms to be copied
+	 * @param bonds count of bonds to be copied
+	 * @param includeExcludeGroups whether atoms and bonds of exclude groups shall be included
+	 * @return atom mapping from original mol to this molecule after incorporation of mol
+	 */
+	public int[] addMolecule(Molecule mol, int atoms, int bonds, boolean includeExcludeGroups) {
+		return addMolecule(mol, 0, atoms, 0, bonds, includeExcludeGroups);
+	}
 
 
 	/**
@@ -1195,20 +1208,24 @@ public class Molecule implements Serializable {
 	 * @param atom2 1+last atom to be copied
 	 * @param bond1 first bond to be copied
 	 * @param bond2 one+last bond to be copied
+	 * @param includeExcludeGroups whether atoms and bonds of exclude groups shall be included
 	 * @return atom mapping from original mol to this molecule after incorporation of mol
 	 */
-	public int[] addMolecule(Molecule mol, int atom1, int atom2, int bond1, int bond2) {
+	public int[] addMolecule(Molecule mol, int atom1, int atom2, int bond1, int bond2, boolean includeExcludeGroups) {
 		mIsFragment |= mol.mIsFragment;
 
 		int[] atomMap = new int[mol.mAllAtoms];
 		int esrGroupCountAND = renumberESRGroups(cESRTypeAnd);
 		int esrGroupCountOR = renumberESRGroups(cESRTypeOr);
-		for (int atom=atom1; atom<atom2; atom++) {
-			atomMap[atom] = mol.copyAtom(this, atom, esrGroupCountAND, esrGroupCountOR);
-		}
-		for (int bond=bond1; bond<bond2; bond++) {
-			mol.copyBond(this, bond, esrGroupCountAND, esrGroupCountOR, atomMap, false);
-		}
+		for (int atom=atom1; atom<atom2; atom++)
+			if (includeExcludeGroups || (mol.getAtomQueryFeatures(atom) & cAtomQFExcludeGroup) == 0)
+				atomMap[atom] = mol.copyAtom(this, atom, esrGroupCountAND, esrGroupCountOR);
+
+		for (int bond=bond1; bond<bond2; bond++)
+			if (includeExcludeGroups
+			 || ((mol.getAtomQueryFeatures(mol.getBondAtom(0, bond)) & cAtomQFExcludeGroup) == 0
+			  && (mol.getAtomQueryFeatures(mol.getBondAtom(1, bond)) & cAtomQFExcludeGroup) == 0))
+				mol.copyBond(this, bond, esrGroupCountAND, esrGroupCountOR, atomMap, false);
 
 		mIsRacemate = (mIsRacemate && mol.mIsRacemate);
 		mChirality = cChiralityUnknown;
@@ -2640,17 +2657,17 @@ public class Molecule implements Serializable {
 	 */
 	public int getBondOrder(int bond) {
 		if (mIsFragment && (mBondQueryFeatures[bond] & cBondQFBondTypes) != 0) {
-			if ((mBondQueryFeatures[bond] & (cBondQFSingle | cBondQFDelocalized)) != 0)
+			if ((mBondQueryFeatures[bond] & (cBondTypeSingle | cBondTypeDelocalized)) != 0)
 				return 1;
-			if ((mBondQueryFeatures[bond] & cBondQFDouble) != 0)
+			if ((mBondQueryFeatures[bond] & cBondTypeDouble) != 0)
 				return 2;
-			if ((mBondQueryFeatures[bond] & cBondQFTriple) != 0)
+			if ((mBondQueryFeatures[bond] & cBondTypeTriple) != 0)
 				return 3;
-			if ((mBondQueryFeatures[bond] & cBondQFQuadruple) != 0)
+			if ((mBondQueryFeatures[bond] & cBondTypeQuadruple) != 0)
 				return 4;
-			if ((mBondQueryFeatures[bond] & cBondQFQuintuple) != 0)
+			if ((mBondQueryFeatures[bond] & cBondTypeQuintuple) != 0)
 				return 5;
-			if ((mBondQueryFeatures[bond] & cBondQFMetalLigand) != 0)
+			if ((mBondQueryFeatures[bond] & cBondTypeMetalLigand) != 0)
 				return 0;
 			}
 		switch (mBondType[bond] & cBondTypeMaskSimple) {
@@ -3482,6 +3499,55 @@ public class Molecule implements Serializable {
 
 
 	/**
+	 * If a molecule is a substructure fragment, and if multiple allowed bond types
+	 * are defined in a bond's query features, then the explicit bond type must match
+	 * the lowest order of the allowed query feature bond types.
+	 * Call this function after setting bond type and query features to make sure,
+	 * the correct bond type is used.
+	 * @param bond
+	 */
+	public void adaptBondTypeToQueryFeatures(int bond) {
+		int bondType = -1;
+		int selectionCount = 0;
+
+		if ((mBondQueryFeatures[bond] & Molecule.cBondTypeMetalLigand) != 0) {
+			bondType = Molecule.cBondTypeMetalLigand;
+			selectionCount++;
+		}
+		if ((mBondQueryFeatures[bond] & Molecule.cBondTypeQuintuple) != 0) {
+			bondType = Molecule.cBondTypeQuintuple;
+			selectionCount++;
+		}
+		if ((mBondQueryFeatures[bond] & Molecule.cBondTypeQuadruple) != 0) {
+			bondType = Molecule.cBondTypeQuadruple;
+			selectionCount++;
+		}
+		if ((mBondQueryFeatures[bond] & Molecule.cBondTypeTriple) != 0) {
+			bondType = Molecule.cBondTypeTriple;
+			selectionCount++;
+		}
+		if ((mBondQueryFeatures[bond] & Molecule.cBondTypeDouble) != 0) {
+			bondType = Molecule.cBondTypeDouble;
+			selectionCount++;
+		}
+		if ((mBondQueryFeatures[bond] & Molecule.cBondTypeDelocalized) != 0) {
+			bondType = Molecule.cBondTypeDelocalized;
+			selectionCount++;
+		}
+		if ((mBondQueryFeatures[bond] & Molecule.cBondTypeSingle) != 0) {
+			bondType = Molecule.cBondTypeSingle;
+			selectionCount++;
+		}
+
+		if (bondType != -1 && bondType != (mBondType[bond] & cBondTypeMaskSimple))
+			mBondType[bond] = bondType;	// set to the lowest bond order of query options
+
+		if (selectionCount < 2)
+			mBondQueryFeatures[bond] &= ~(cBondQFBondTypes + cBondQFRareBondTypes);
+	}
+
+
+	/**
 	 * Sets the bond type based on bond order without stereo orientation.
 	 * @param bond
 	 * @param order 1,2, or 3
@@ -3607,7 +3673,7 @@ public class Molecule implements Serializable {
 				label = null;
 			else {
 				int atomicNo = getAtomicNoFromLabel(label);
-				if ((atomicNo != 0 && label.equals(cAtomLabel[atomicNo]))
+				if ((atomicNo != 0 && atomicNo == mAtomicNo[atom])
 				 || label.equals("?")) {
 					setAtomicNo(atom, atomicNo);
 					label = null;
@@ -3853,8 +3919,30 @@ public class Molecule implements Serializable {
 			double ay = mCoordinates[atom].y - y;
 			mCoordinates[atom].x = x + ax * cos - ay * sin;
 			mCoordinates[atom].y = y + ay * cos + ax * sin;
+			}
 		}
-	}
+
+
+	/**
+	 * Flips coordinates by mirroring the molecule at the axis defined by x,y and angle.
+	 * This method also inverts all stereo bonds to keep correct stereo center configurations.
+	 * @param x
+	 * @param y
+	 * @param angle
+	 */
+	public void flipCoordinates(double x, double y, double angle) {
+		double a = Math.cos(angle);
+		double b = -Math.sin(angle);
+		double c = -a * x - b * y;
+		for (int atom=0; atom<mAllAtoms; atom++) {
+			double d = a * mCoordinates[atom].x + b * mCoordinates[atom].y + c;
+			mCoordinates[atom].x -= 2 * a * d;
+			mCoordinates[atom].y -= 2 * b * d;
+			}
+		for (int bond=0; bond<mAllBonds; bond++)
+			if (isStereoBond(bond))
+				mBondType[bond] = (mBondType[bond] == cBondTypeUp) ? cBondTypeDown : cBondTypeUp;
+		}
 
 
 	public void zoomAndRotateInit(double x, double y) {
