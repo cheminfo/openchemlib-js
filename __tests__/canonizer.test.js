@@ -1,30 +1,28 @@
-'use strict';
+import { expect, test } from 'vitest';
 
-const OCL = require('../core');
+import { CanonizerUtil, Molecule } from '../core';
 
 test('canonizer chiral', () => {
-  const molecule = OCL.Molecule.fromSmiles('C[C@H](Cl)CC');
+  const molecule = Molecule.fromSmiles('C[C@H](Cl)CC');
   const idCode = molecule.getIDCode();
 
   expect(idCode).toBe('gJPHADILuTb@');
-  expect(OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NORMAL)).toBe(
-    idCode,
+  expect(CanonizerUtil.getIDCode(molecule, CanonizerUtil.NORMAL)).toBe(idCode);
+
+  expect(CanonizerUtil.getIDCode(molecule, CanonizerUtil.NOSTEREO)).toBe(
+    'gJPHADILuP@',
+  );
+
+  expect(CanonizerUtil.getIDCode(molecule, CanonizerUtil.BACKBONE)).toBe(
+    'gJPHADILuP@',
+  );
+
+  expect(CanonizerUtil.getIDCode(molecule, CanonizerUtil.TAUTOMER)).toBe(
+    'gJPHADILuTb@',
   );
 
   expect(
-    OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NOSTEREO),
-  ).toBe('gJPHADILuP@');
-
-  expect(
-    OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.BACKBONE),
-  ).toBe('gJPHADILuP@');
-
-  expect(
-    OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.TAUTOMER),
-  ).toBe('gJPHADILuTb@');
-
-  expect(
-    OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NOSTEREO_TAUTOMER),
+    CanonizerUtil.getIDCode(molecule, CanonizerUtil.NOSTEREO_TAUTOMER),
   ).toBe('gJPHADILuP@');
 
   molecule.stripStereoInformation();
@@ -32,29 +30,27 @@ test('canonizer chiral', () => {
 });
 
 test('canonizer tautomer', () => {
-  const molecule = OCL.Molecule.fromSmiles('CC=C(O)CC');
+  const molecule = Molecule.fromSmiles('CC=C(O)CC');
 
   const idCode = molecule.getIDCode();
 
   expect(idCode).toBe('gGQ@@drsT@@');
-  expect(OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NORMAL)).toBe(
-    idCode,
+  expect(CanonizerUtil.getIDCode(molecule, CanonizerUtil.NORMAL)).toBe(idCode);
+
+  expect(CanonizerUtil.getIDCode(molecule, CanonizerUtil.NOSTEREO)).toBe(
+    'gGQ@@drsT@@',
+  );
+
+  expect(CanonizerUtil.getIDCode(molecule, CanonizerUtil.BACKBONE)).toBe(
+    'gGQ@@druT@@',
+  );
+
+  expect(CanonizerUtil.getIDCode(molecule, CanonizerUtil.TAUTOMER)).toBe(
+    'gGQ@@druTAkabXVOtfBicxX~F@',
   );
 
   expect(
-    OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NOSTEREO),
-  ).toBe('gGQ@@drsT@@');
-
-  expect(
-    OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.BACKBONE),
-  ).toBe('gGQ@@druT@@');
-
-  expect(
-    OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.TAUTOMER),
-  ).toBe('gGQ@@druTAkabXVOtfBicxX~F@');
-
-  expect(
-    OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NOSTEREO_TAUTOMER),
+    CanonizerUtil.getIDCode(molecule, CanonizerUtil.NOSTEREO_TAUTOMER),
   ).toBe('gGQ@@druTAkabXVOtfBicxX~F@');
 
   molecule.stripStereoInformation();

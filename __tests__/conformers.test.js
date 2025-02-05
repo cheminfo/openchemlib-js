@@ -1,8 +1,6 @@
-'use strict';
+import { describe, expect, it } from 'vitest';
 
-const OCL = require('../core');
-
-const { Molecule, ConformerGenerator } = OCL;
+import { ConformerGenerator, Molecule } from '../core';
 
 describe('ConformerGenerator', () => {
   it('should return one conformer', () => {

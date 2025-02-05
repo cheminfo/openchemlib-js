@@ -1,12 +1,11 @@
-'use strict';
+import { expect, test } from 'vitest';
 
-const core = require('../core');
-const full = require('../full');
-const pretty = require('../full.pretty');
-const minimal = require('../minimal');
+import core from '../core';
+import full from '../full';
+import pretty from '../full.pretty';
+import minimal from '../minimal';
 
 const minimalAPI = [
-  'default',
   'Molecule',
   'Reaction',
   'RingCollection',
@@ -47,7 +46,7 @@ test('minimal', () => {
 });
 
 test('core', () => {
-  expect(core).toBe(require('..'));
+  expect(core).toBe(require('..').default);
   checkHas(core, [...minimalAPI, ...coreAPI]);
   checkHasNot(core, fullAPI);
 });

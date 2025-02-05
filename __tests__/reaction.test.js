@@ -1,6 +1,6 @@
-'use strict';
+import { describe, expect, it } from 'vitest';
 
-const { Molecule, Reaction } = require('../minimal');
+import { Molecule, Reaction } from '../minimal';
 
 describe('Reaction class', () => {
   it('should create an empty Reaction', () => {

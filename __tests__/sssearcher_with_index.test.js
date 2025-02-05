@@ -1,6 +1,6 @@
-'use strict';
+import { expect, test } from 'vitest';
 
-const { Molecule, SSSearcherWithIndex } = require('../minimal');
+import { Molecule, SSSearcherWithIndex } from '../minimal';
 
 test('getOCL', () => {
   const searcher = new SSSearcherWithIndex();

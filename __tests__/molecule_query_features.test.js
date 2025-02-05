@@ -1,6 +1,6 @@
-'use strict';
+import { expect, test } from 'vitest';
 
-const { Molecule } = require('../minimal');
+import { Molecule } from '../minimal';
 
 test('atom query features more than 2 neighbours', () => {
   const molecule = Molecule.fromIDCode('eF@Hp[qp');

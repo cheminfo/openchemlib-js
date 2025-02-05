@@ -1,6 +1,6 @@
-'use strict';
+import { expect, test } from 'vitest';
 
-const Molecule = require('../minimal').Molecule;
+import { Molecule } from '../minimal';
 
 test('no ring', () => {
   const mol = Molecule.fromSmiles('CCOCC');

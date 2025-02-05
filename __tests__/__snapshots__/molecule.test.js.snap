@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Molecule toSVG with autoCrop 1`] = `
+exports[`Molecule > toSVG with autoCrop 1`] = `
 "<svg id="myId" xmlns="http://www.w3.org/2000/svg" version="1.1" width="135px" height="41px" viewBox="74 55 135 41">
   <style> text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
   <text x="154.95" y="73.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
@@ -25,7 +25,7 @@ exports[`Molecule toSVG with autoCrop 1`] = `
 </svg>"
 `;
 
-exports[`Molecule toSVG with autoCrop 2`] = `
+exports[`Molecule > toSVG with autoCrop 2`] = `
 "<svg id="myId" xmlns="http://www.w3.org/2000/svg" version="1.1" width="175px" height="81px" viewBox="54 35 175 81">
   <style> text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
   <text x="154.95" y="73.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>

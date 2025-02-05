@@ -1,6 +1,6 @@
-'use strict';
+import { describe, expect, it } from 'vitest';
 
-const Molecule = require('../minimal').Molecule;
+import { Molecule } from '../minimal';
 
 describe('diastereotopicIDs', () => {
   it('methylcyclohexane', () => {

@@ -1,9 +1,6 @@
-'use strict';
+import { describe, expect, it } from 'vitest';
 
-const OCL = require('../core');
-
-const Molecule = OCL.Molecule;
-const MoleculeProperties = OCL.MoleculeProperties;
+import { Molecule, MoleculeProperties } from '../core';
 
 describe('MoleculeProperties', () => {
   it('should compute properties', () => {

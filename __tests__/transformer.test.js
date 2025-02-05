@@ -1,9 +1,6 @@
-'use strict';
+import { describe, expect, it } from 'vitest';
 
-const OCL = require('../core');
-
-const Molecule = OCL.Molecule;
-const Transformer = OCL.Transformer;
+import { Molecule, Transformer } from '../core';
 
 describe('Transformer', () => {
   it('transform single in double bond', () => {

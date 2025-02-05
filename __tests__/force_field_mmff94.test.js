@@ -1,8 +1,6 @@
-'use strict';
+import { describe, expect, it } from 'vitest';
 
-const OCL = require('../core');
-
-const { Molecule, ForceFieldMMFF94, ConformerGenerator } = OCL;
+import { ConformerGenerator, ForceFieldMMFF94, Molecule } from '../core';
 
 describe('ForceFieldMMFF94', () => {
   it('should generate force field', () => {

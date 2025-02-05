@@ -1,8 +1,8 @@
-'use strict';
+import { readFileSync } from 'node:fs';
 
-const { readFileSync } = require('node:fs');
+import { expect, test } from 'vitest';
 
-const { Molecule } = require('../minimal');
+import { Molecule } from '../minimal';
 
 test('molfile with atomMapNo', () => {
   const molfile = readFileSync(`${__dirname}/data/atomMapNo.mol`, 'utf8');

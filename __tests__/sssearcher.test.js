@@ -1,9 +1,6 @@
-'use strict';
+import { describe, expect, it } from 'vitest';
 
-const OCL = require('../minimal');
-
-const Molecule = OCL.Molecule;
-const SSSearcher = OCL.SSSearcher;
+import { Molecule, SSSearcher } from '../minimal';
 
 describe('SSSearcher', () => {
   let benzene = Molecule.fromSmiles('c1ccccc1');

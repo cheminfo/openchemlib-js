@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Reaction class should load and create RXN files 1`] = `
+exports[`Reaction class > should load and create RXN files 1`] = `
 "$RXN
 
 
@@ -63,7 +63,7 @@ M  END
 "
 `;
 
-exports[`Reaction class should load and create RXN files 2`] = `
+exports[`Reaction class > should load and create RXN files 2`] = `
 "$RXN V3000
 
 
