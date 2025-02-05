@@ -77,27 +77,27 @@
   },
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
-    "@types/jest": "^29.5.13",
-    "@types/node": "^22.7.4",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.1",
     "autoprefixer": "^10.4.20",
     "benchmark": "^2.1.4",
-    "esbuild": "^0.24.0",
-    "eslint": "^9.12.0",
-    "eslint-config-cheminfo-typescript": "^16.0.0",
+    "esbuild": "^0.24.2",
+    "eslint": "^9.19.0",
+    "eslint-config-cheminfo-typescript": "^17.0.0",
     "fast-png": "^6.2.0",
-    "globals": "^15.10.0",
+    "globals": "^15.14.0",
     "gwt-api-exporter": "^2.0.0",
-    "image-js": "0.0.0-next-d280f46ab7",
+    "image-js": "0.0.0-next-692b15513a",
     "jest": "^29.7.0",
-    "openchemlib-utils": "^6.4.1",
-    "postcss": "^8.4.47",
-    "prettier": "^3.3.3",
+    "openchemlib-utils": "^6.5.2",
+    "postcss": "^8.5.1",
+    "prettier": "^3.4.2",
     "tailwindcss": "^3.4.13",
-    "typescript": "^5.6.2",
-    "vite": "^5.4.8",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.11",
     "yargs": "^17.7.2"
   },
   "volta": {
-    "node": "22.9.0"
+    "node": "22.13.1"
   }
 }
