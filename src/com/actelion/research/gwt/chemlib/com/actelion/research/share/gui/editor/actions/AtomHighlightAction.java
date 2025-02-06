@@ -54,6 +54,7 @@ import java.util.function.Consumer;
  * Date: 2/1/13
  * Time: 4:13 PM
  */
+@Deprecated
 public abstract class AtomHighlightAction extends DrawAction
 {
 
