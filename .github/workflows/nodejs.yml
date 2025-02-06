@@ -6,6 +6,9 @@ on:
       - main
   pull_request:
 
+env:
+  NODE_VERSION_INTEGRATION: 22.x
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -44,6 +47,12 @@ jobs:
         run: npm run build
       - name: Run tests
         run: npm run test-only
+      - name: Upload build to test integration with openchemlib-utils
+        if: matrix.node-version == env.NODE_VERSION_INTEGRATION
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-integration
+          path: dist
       - name: Run debug build
         if: failure()
         run: npm run build-debug-full
@@ -55,3 +64,27 @@ jobs:
           path: |
             dist/openchemlib-full.pretty.js
             compile-full.log
+          retention-days: 1
+  utils-integration:
+    name: Integration with openchemlib-utils
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'cheminfo/openchemlib-utils'
+      - name: Use Node.js ${{ env.NODE_VERSION_INTEGRATION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION_INTEGRATION }}
+      - name: Install dependencies
+        run: npm install
+      - name: Download OCL build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-integration
+          path: ocl-dist
+      - name: Replace OCL build in the dependencies
+        run: 'cp ocl-dist/* node_modules/openchemlib/dist/'
+      - name: Run unit tests
+        run: npm run test-only
