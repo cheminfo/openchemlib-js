@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { Molecule } from '../full.pretty.js';
+import { Molecule } from '../minimal.js';
 
 // idCode debug view: https://www.cheminfo.org/?viewURL=https%3A%2F%2Fcouch.cheminfo.org%2Fcheminfo-public%2F1cc9e892242664b1d5a37312bda159ef%2Fview.json&loadversion=true&fillsearch=Display+OCLcode+oclID
 test('copyMoleculeByAtoms and keep aromaticity. We copy only 3 atoms', () => {
