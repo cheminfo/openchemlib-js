@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.18.1](https://github.com/cheminfo/openchemlib-js/compare/v8.18.0...v8.18.1) (2025-02-06)
+
+
+### Bug Fixes
+
+* update OCL to master branch ([#247](https://github.com/cheminfo/openchemlib-js/issues/247)) ([29e9f08](https://github.com/cheminfo/openchemlib-js/commit/29e9f087385e99140fd9fce7cf62435400f84ac8))
+
 ## [8.18.0](https://github.com/cheminfo/openchemlib-js/compare/v8.17.0...v8.18.0) (2025-02-05)
 
 
