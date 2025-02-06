@@ -37,6 +37,7 @@ import com.actelion.research.share.gui.DialogResult;
 
 import java.util.function.Consumer;
 
+@Deprecated
 public interface IDialog
 {
     DialogResult doModal();
