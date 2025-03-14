@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.19.0](https://github.com/cheminfo/openchemlib-js/compare/v8.18.1...v8.19.0) (2025-03-14)
+
+
+### Features
+
+* **CanvasEditorElement:** expose the `moleculeChanged()` method ([#250](https://github.com/cheminfo/openchemlib-js/issues/250)) ([d4c1c13](https://github.com/cheminfo/openchemlib-js/commit/d4c1c1342575e92cc9448f8a2ab98834b37c0772))
+
 ## [8.18.1](https://github.com/cheminfo/openchemlib-js/compare/v8.18.0...v8.18.1) (2025-02-06)
 
 
