@@ -43,6 +43,7 @@ public class JSEditorArea implements GenericCanvas {
   public static final int KEY_BACK_SPACE = GenericKeyEvent.KEY_BACK_SPACE;
   public static final int KEY_HELP = GenericKeyEvent.KEY_HELP;
   public static final int KEY_ESCAPE = GenericKeyEvent.KEY_ESCAPE;
+  public static final int KEY_ENTER = GenericKeyEvent.KEY_ENTER;
 
   public static final int KEY_EVENT_PRESSED = GenericKeyEvent.KEY_PRESSED;
   public static final int KEY_EVENT_RELEASED = GenericKeyEvent.KEY_RELEASED;
