@@ -1,4 +1,4 @@
-import OCL from '../../../distesm/full.pretty';
+import OCL from '../../../distesm/full';
 import {
   incrementChangeCount,
   resetChangeCount,

@@ -1,4 +1,4 @@
-import OCL from '../../../distesm/full.pretty';
+import OCL from '../../../distesm/full';
 import { getEditor, resetEditor } from './editor.ts';
 import rxn from './seeds/rxn.ts';
 import molfile from './seeds/molfile.ts';
