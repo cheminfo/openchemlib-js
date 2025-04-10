@@ -1,5 +1,17 @@
 # Changelog
 
+## [8.20.0](https://github.com/cheminfo/openchemlib-js/compare/v8.19.0...v8.20.0) (2025-04-10)
+
+
+### Features
+
+* update OCL to v2025.4.0 ([97ca346](https://github.com/cheminfo/openchemlib-js/commit/97ca346ad1fc9b07594358950f80982317d5ce89))
+
+
+### Bug Fixes
+
+* do not use unexposed Java API from JS ([#257](https://github.com/cheminfo/openchemlib-js/issues/257)) ([9af170b](https://github.com/cheminfo/openchemlib-js/commit/9af170b32139ac2423707a7c3b57cd872ba9f02f))
+
 ## [8.19.0](https://github.com/cheminfo/openchemlib-js/compare/v8.18.1...v8.19.0) (2025-03-14)
 
 
