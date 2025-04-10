@@ -28,14 +28,16 @@ public class JSDialog implements GenericDialog {
   public native void add(GenericComponent c, int x, int y)
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.gui.generic.JSDialog::getJsDialog()();
-    return jsDialog.add(c, x, y);
+    var jsComponent = c.@com.actelion.research.gwt.gui.generic.JSComponent::getJsComponent()();
+    return jsDialog.add(jsComponent, x, y);
   }-*/;
 
   @Override
   public native void add(GenericComponent c, int x1, int y1, int x2, int y2)
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.gui.generic.JSDialog::getJsDialog()();
-    return jsDialog.add(c, x1, y1, x2, y2);
+    var jsComponent = c.@com.actelion.research.gwt.gui.generic.JSComponent::getJsComponent()();
+    return jsDialog.add(jsComponent, x1, y1, x2, y2);
   }-*/;
 
   @Override
