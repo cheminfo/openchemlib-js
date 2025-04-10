@@ -76,7 +76,7 @@ It contains a structure viewer and a structure editor for browser applications.
 To build this project, you need :
 
 - Java JDK (Tested with version 21)
-- GWT (Tested with version 2.12.1, [Download build here](http://www.gwtproject.org/download.html))
+- GWT (Tested with version 2.12.2, [Download build here](http://www.gwtproject.org/download.html))
 - Node.js (Tested with version 22, [Download here](https://nodejs.org/en/download/))
 
 ### Install dependencies
