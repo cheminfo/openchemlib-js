@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.20.1](https://github.com/cheminfo/openchemlib-js/compare/v8.20.0...v8.20.1) (2025-04-11)
+
+
+### Bug Fixes
+
+* typo in CanvasEditor removeOnChangeListener method ([#260](https://github.com/cheminfo/openchemlib-js/issues/260)) ([270731c](https://github.com/cheminfo/openchemlib-js/commit/270731c3f63bb231b7cb174fd20badc182de3195))
+
 ## [8.20.0](https://github.com/cheminfo/openchemlib-js/compare/v8.19.0...v8.20.0) (2025-04-10)
 
 
