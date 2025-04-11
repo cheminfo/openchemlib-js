@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.21.0](https://github.com/cheminfo/openchemlib-js/compare/v8.20.2...v8.21.0) (2025-04-11)
+
+
+### Features
+
+* **CanvasEditor:** add `isDestroyed` getter ([#264](https://github.com/cheminfo/openchemlib-js/issues/264)) ([37065c6](https://github.com/cheminfo/openchemlib-js/commit/37065c6e7af0232e405438646c457025c3a6cb94))
+
 ## [8.20.2](https://github.com/cheminfo/openchemlib-js/compare/v8.20.1...v8.20.2) (2025-04-11)
 
 
