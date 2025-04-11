@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.20.2](https://github.com/cheminfo/openchemlib-js/compare/v8.20.1...v8.20.2) (2025-04-11)
+
+
+### Bug Fixes
+
+* expose `moleculeChanged` method from Java ([#262](https://github.com/cheminfo/openchemlib-js/issues/262)) ([6f0057c](https://github.com/cheminfo/openchemlib-js/commit/6f0057ca196fcd66218f5870e0e2fdf5078b9d90))
+
 ## [8.20.1](https://github.com/cheminfo/openchemlib-js/compare/v8.20.0...v8.20.1) (2025-04-11)
 
 
