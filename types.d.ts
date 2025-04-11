@@ -3883,6 +3883,11 @@ export declare class CanvasEditor {
    * All methods will throw an error after calling this.
    */
   destroy(): void;
+
+  /**
+   * Returns whether the editor has been destroyed.
+   */
+  get isDestroyed(): boolean;
 }
 
 interface CanvasEditorElementModeEnum {
