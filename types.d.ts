@@ -3861,6 +3861,12 @@ export declare class CanvasEditor {
   setOnChangeListener(callback: OnChangeListenerCallback): void;
 
   /**
+   * Notify the editor that the molecule has changed (programmatically).
+   * This will trigger a redraw and an onChange event with `isUserEvent=false`.
+   */
+  moleculeChanged(): void;
+
+  /**
    * Remove the change listener callback.
    */
   removeOnChangeListener(): void;

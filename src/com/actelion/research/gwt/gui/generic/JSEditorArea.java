@@ -105,7 +105,11 @@ public class JSEditorArea implements GenericCanvas {
   public JSReaction getReaction() {
     return new JSReaction(mDrawArea.getReaction());
   }
- 
+
+  public void moleculeChanged() {
+    mDrawArea.moleculeChanged();
+  }
+
   private native JavaScriptObject getClipboardHandler()
   /*-{
     var jsObject = this.@com.actelion.research.gwt.gui.generic.JSEditorArea::getJsObject()();
