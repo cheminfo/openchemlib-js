@@ -27,7 +27,6 @@ exports[`prototype properties of DruglikenessPredictor 1`] = `
 
 exports[`prototype properties of ForceFieldMMFF94 1`] = `
 [
-  "_minimise",
   "getTotalEnergy",
   "minimise",
   "size",
