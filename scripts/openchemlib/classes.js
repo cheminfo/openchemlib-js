@@ -62,6 +62,7 @@ const changed = [
   ['chem/TextDrawingObject', changeTextDrawingObject],
   ['gui/editor/GenericEditorArea', changeGenericEditorArea],
   ['gui/editor/CustomAtomDialogBuilder', changeCustomAtomDialogBuilder],
+  ['gui/generic/GenericDialog', changeGenericDialog],
   ['share/gui/ChemistryGeometryHelper', removePrintf],
   ['share/gui/editor/Model', removePrintf],
   ['util/ArrayUtils', changeArrayUtils],
@@ -72,151 +73,7 @@ exports.changed = changed.map(([path, ...transformers]) => {
   return [getFilename(path), transformers];
 });
 
-const removed = [
-  '@org/machinelearning',
-  'calc/BoxCox.java',
-  'calc/classification',
-  'calc/combinatorics',
-  'calc/distance',
-  'calc/filter',
-  'calc/graph',
-  'calc/histogram',
-  'calc/BinarySOM.java',
-  'calc/LUDecomposition.java',
-  'calc/Matrix.java',
-  'calc/MatrixFunctions.java',
-  'calc/MatrixTests.java',
-  'calc/regression',
-  'calc/ScaleClasses.java',
-  'calc/SelfOrganizedMap.java',
-  'calc/SimilarityMulticore.java',
-  'calc/SOMController.java',
-  'calc/statistics',
-  'calc/VectorSOM.java',
-  'chem/alignment3d',
-  'chem/AtomTypeList.java',
-  'chem/chemicalspaces',
-  'chem/Clusterer.java',
-  'chem/conf/BondRotationHelper.java',
-  'chem/conf/ConformerSetGenerator.java',
-  'chem/conf/MolecularFlexibilityCalculator.java',
-  'chem/conf/SymmetryCorrectedRMSDCalculator.java',
-  'chem/conf/torsionstrain',
-  'chem/contrib/DiastereoIDTest.java',
-  'chem/descriptor/DescriptorHandlerBinarySkelSpheres.java',
-  'chem/descriptor/DescriptorHandlerFlexophore.java',
-  'chem/descriptor/DescriptorHandlerFunctionalGroups.java',
-  'chem/descriptor/DescriptorHandlerHashedCFp.java',
-  'chem/descriptor/DescriptorHandlerLongPFP512.java',
-  'chem/descriptor/DescriptorHandlerPFP512.java',
-  'chem/descriptor/DescriptorHandlerStandardFactory.java',
-  'chem/descriptor/DescriptorHandlerStandard2DFactory.java',
-  'chem/descriptor/FingerPrintGenerator.java',
-  'chem/descriptor/flexophore',
-  'chem/descriptor/pharmacophoregraph',
-  'chem/descriptor/pharmacophoretree',
-  'chem/dnd', // ui
-  'chem/docking',
-  'chem/forcefield/mmff/Sdf.java', // needs access to disk
-  'chem/hyperspace',
-  'chem/interactionstatistics',
-  'chem/io/AbstractParser.java',
-  'chem/io/CompoundFileFilter.java',
-  'chem/io/DWARFileCreator.java',
-  'chem/io/NativeMDLReactionReader.java',
-  'chem/io/pdb',
-  'chem/mmp',
-  'chem/Molecule3DFunctions.java',
-  'chem/optimization/MCHelper.java',
-  'chem/phesa',
-  'chem/phesaflex',
-  'chem/potentialenergy',
-  'chem/prediction/FastMolecularComplexityCalculator.java',
-  'chem/prediction/IncrementTableWithIndex.java',
-  'chem/prediction/MolecularPropertyHelper.java',
-  'chem/properties/complexity',
-  'chem/properties/fractaldimension',
-  'chem/reaction/ClassificationData.java',
-  'chem/reaction/FunctionalGroupClassifier.java',
-  'chem/reaction/ReactionClassifier.java',
-  'chem/reaction/ReactionSearch.java',
-  'chem/RingHelper.java',
-  'chem/shredder/Fragment.java',
-  'chem/StructureSearch.java',
-  'jfx',
-  'gui/clipboard/ClipboardHandler.java',
-  'gui/clipboard/external',
-  'gui/clipboard/ImageClipboardHandler.java',
-  'gui/clipboard/NativeClipboardAccessor.java',
-  'gui/clipboard/TextClipboardHandler.java',
-  'gui/CompoundCollectionPane.java',
-  'gui/dnd',
-  'gui/dock',
-  'gui/editor/FXEditorArea.java',
-  'gui/editor/FXEditorDialog.java',
-  'gui/editor/FXEditorPane.java',
-  'gui/editor/FXEditorTestApp.java',
-  'gui/editor/FXEditorToolbar.java',
-  'gui/editor/SwingEditorArea.java',
-  'gui/editor/SwingEditorDialog.java',
-  'gui/editor/SwingEditorPanel.java',
-  'gui/editor/SwingEditorToolbar.java',
-  'gui/fx',
-  'gui/HeaderPaintHelper.java',
-  'gui/hidpi',
-  'gui/JAtomLabelDialog.java',
-  'gui/JAtomQueryFeatureDialog.java',
-  'gui/JBondQueryFeatureDialog.java',
-  'gui/JChemistryView.java',
-  'gui/JDrawArea.java',
-  'gui/JDrawDialog.java',
-  'gui/JDrawPanel.java',
-  'gui/JDrawToolbar.java',
-  'gui/JEditableChemistryView.java',
-  'gui/JEditableStructureView.java',
-  'gui/JImagePanel.java',
-  'gui/JImagePanelFixedSize.java',
-  'gui/JMessageBar.java',
-  'gui/JMultiPanelTitle.java',
-  'gui/JMultiPanelView.java',
-  'gui/JPopupButton.java',
-  'gui/JProgressDialog.java',
-  'gui/JProgressPanel.java',
-  'gui/JPruningBar.java',
-  'gui/JScrollableMenu.java',
-  'gui/JStructureView.java',
-  'gui/JTextDrawingObjectDialog.java',
-  'gui/MultiPanelDragListener.java',
-  'gui/PopupItemProvider.java',
-  'gui/ScrollPaneAutoScrollerWhenDragging.java',
-  'gui/table',
-  'gui/VerticalFlowLayout.java',
-  'gui/wmf',
-  'io/StringReadChannel.java',
-  'share/gui/editor/chem/DrawingObject.java',
-  'util/Base64.java',
-  'util/BinaryEncoder.java',
-  'util/BrowserControl.java',
-  'util/CommandLineParser.java',
-  'util/concurrent',
-  'util/convert/String2DoubleArray.java',
-  'util/Formatter.java',
-  'util/graph',
-  'util/IO.java',
-  'util/IntQueue.java', // unused, depends on ArrayUtils
-  'util/LittleEndianDataInputStream.java',
-  'util/LittleEndianDataOutputStream.java',
-  'util/MatrixSparse.java',
-  'util/Pipeline.java',
-  'util/Pipeline2FileWriter.java',
-  'util/Platform.java',
-  'util/Prefs.java',
-  'util/SizeOf.java',
-  'util/Sketch.java',
-  'util/StringFunctions.java', // uses RegExp things
-];
-
-exports.removed = removed.map(getFolderName);
+exports.removed = require('./removed').map(getFolderName);
 
 const generated = [
   ['chem/conf/TorsionDBData', require('./generateTorsionDBData')],
@@ -227,6 +84,9 @@ const generated = [
 exports.generated = generated.map((file) => [getFilename(file[0]), file[1]]);
 
 function getFilename(file) {
+  if (file.startsWith('@info/')) {
+    return `../info/${file.replace('@info/', '')}.java`;
+  }
   if (file.startsWith('@org/')) {
     return `../org/${file.replace('@org/', '')}.java`;
   }
@@ -240,6 +100,8 @@ function getFilename(file) {
 function getFolderName(file) {
   if (file.startsWith('@org/')) {
     return `../org/${file.replace('@org/', '')}`;
+  } else if (file.startsWith('@info/')) {
+    return `../info/${file.replace('@info/', '')}`;
   } else {
     return `actelion/research/${file}`;
   }
@@ -379,6 +241,25 @@ function changeGenericEditorArea(code) {
 
 function changeCustomAtomDialogBuilder(code) {
   code = replaceChecked(code, 'e.getSource() instanceof JTextField', 'false');
+  return code;
+}
+
+function changeGenericDialog(code) {
+  code = replaceChecked(
+    code,
+    'import info.clearthought.layout.TableLayout;\n',
+    '',
+  );
+  code = replaceChecked(
+    code,
+    'int PREFERRED = (int)TableLayout.PREFERRED;',
+    'int PREFERRED = -2;',
+  );
+  code = replaceChecked(
+    code,
+    'int FILL = (int)TableLayout.FILL;',
+    'int FILL = -1;',
+  );
   return code;
 }
 

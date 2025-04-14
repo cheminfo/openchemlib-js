@@ -1,10 +1,9 @@
 package com.actelion.research.gui.generic;
 
-import info.clearthought.layout.TableLayout;
 
 public interface GenericDialog {
-	int PREFERRED = (int)TableLayout.PREFERRED;
-	int FILL = (int)TableLayout.FILL;
+	int PREFERRED = -2;
+	int FILL = -1;
 
 	void setLayout(int[] hLayout, int[] vLayout);
 	void add(GenericComponent c, int x, int y);

@@ -180,7 +180,9 @@ function compile(mode) {
       min ? '9' : '0',
       '-style',
       min ? 'OBFUSCATED' : 'PRETTY',
-      //          verbose ? '-failOnError' : '-nofailOnError'
+      '-sourceLevel',
+      '17',
+      '-failOnError',
     ];
     let result;
     try {

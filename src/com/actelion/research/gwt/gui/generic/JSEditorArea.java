@@ -67,8 +67,8 @@ public class JSEditorArea implements GenericCanvas {
   public static final int[] HOTSPOT_32 = GenericCursorHelper.HOTSPOT_32;
   public static final String[] IMAGE_NAME_32 = GenericCursorHelper.IMAGE_NAME_32;
 
-  public static final int TableLayoutPreferred = (int)TableLayout.PREFERRED;
-  public static final int TableLayoutFill = (int)TableLayout.FILL;
+  public static final int TableLayoutPreferred = -2;
+  public static final int TableLayoutFill = -1;
 
   public JSEditorArea(int mode, JavaScriptObject jsObject, JSUIHelper uiHelper) {
     mDrawArea = new GenericEditorArea(new StereoMolecule(), mode, uiHelper, this);

@@ -1,5 +1,11 @@
 [
   {
+    "name": "js",
+    "war": "oclJs",
+    "entrypoint": "com.actelion.research.gwt.Js",
+    "fake": true
+  },
+  {
     "name": "minimal",
     "war": "oclMinimal",
     "entrypoint": "com.actelion.research.gwt.Minimal",

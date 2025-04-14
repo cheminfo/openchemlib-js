@@ -1,0 +1,7 @@
+<module rename-to="oclJs">
+  <source path="js"/>
+  <entry-point class="com.actelion.research.gwt.js.JsEntrypoint" />
+
+  <super-source path="chemlib" />
+  <super-source path="jre" />
+</module>
