@@ -1,16 +1,16 @@
-'use strict';
+import childProcess from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 
-const childProcess = require('node:child_process');
-const fs = require('node:fs');
-const os = require('node:os');
-const path = require('node:path');
+import exporter from 'gwt-api-exporter';
+import yargs from 'yargs';
 
-const exporter = require('gwt-api-exporter');
-const yargs = require('yargs');
+import pack from '../package.json' with { type: 'json' };
 
-const pack = require('../package.json');
+import * as chemlibClasses from './openchemlib/classes.js';
 
-const argv = yargs
+const argv = yargs(process.argv.slice(2))
   .command(
     'copy:openchemlib',
     'Copy the required java files from the OpenChemLib project.',
@@ -43,7 +43,8 @@ if (argv.suffix) {
 
 let config;
 try {
-  config = require('../config.json');
+  const cfgJson = await import('../config.json', { with: { type: 'json' } });
+  config = cfgJson.default;
 } catch {
   // eslint-disable-next-line no-console
   console.error(
@@ -77,14 +78,18 @@ function run(command) {
 }
 
 function copyOpenchemlib() {
-  const chemlibDir = path.join(__dirname, '../openchemlib/src/main/java/com');
+  const chemlibDir = path.join(
+    import.meta.dirname,
+    '../openchemlib/src/main/java/com',
+  );
   const outDir = path.join(
-    __dirname,
+    import.meta.dirname,
     '../src/com/actelion/research/gwt/chemlib/com',
   );
-  const modifiedDir = path.join(__dirname, './openchemlib/modified/com');
-
-  const chemlibClasses = require('./openchemlib/classes');
+  const modifiedDir = path.join(
+    import.meta.dirname,
+    './openchemlib/modified/com',
+  );
 
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.cpSync(chemlibDir, outDir, { recursive: true });
@@ -123,9 +128,13 @@ function copyOpenchemlib() {
 }
 
 function copyAdditionalDir(name) {
-  const sourceDir = path.join(__dirname, '../openchemlib/src/main/java', name);
+  const sourceDir = path.join(
+    import.meta.dirname,
+    '../openchemlib/src/main/java',
+    name,
+  );
   const destDir = path.join(
-    __dirname,
+    import.meta.dirname,
     '../src/com/actelion/research/gwt/chemlib',
     name,
   );
@@ -182,7 +191,7 @@ function compile(mode) {
 
 async function build() {
   let prom = [];
-  fs.mkdirSync('dist', { recursive: true });
+  fs.mkdirSync('lib/java', { recursive: true });
   log('Exporting module');
   let warDir = path.join('war', 'oclJs');
   let files = fs.readdirSync(warDir);
@@ -199,7 +208,7 @@ async function build() {
   prom.push(
     exporter({
       input: file,
-      output: `dist/openchemlib${suffix}.js`,
+      output: `lib/java/openchemlib${suffix}.js`,
       exports: 'OCL',
       fake: true,
       package: pack,

@@ -2,12 +2,12 @@
 /.settings
 /config.json
 /dist/
-/distesm/
 /gwt
 /gwt.zip
 /gwt-unitCache
 /jdk
 /jdk.tar.gz
+/lib/java
 /node_modules
 /war
 

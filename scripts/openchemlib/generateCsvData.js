@@ -1,7 +1,5 @@
-'use strict';
-
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from 'node:fs';
+import path from 'node:path';
 
 const folder = 'main/resources/resources/forcefield/mmff94';
 const files = [
@@ -34,11 +32,16 @@ const end = `
 }
 `;
 
-function generateCsvData() {
+export function generateCsvData() {
   const csvData = [start];
   for (const file of files) {
     const contents = fs.readFileSync(
-      path.join(__dirname, '../../openchemlib/src', folder, `${file}.csv`),
+      path.join(
+        import.meta.dirname,
+        '../../openchemlib/src',
+        folder,
+        `${file}.csv`,
+      ),
       'utf8',
     );
     csvData.push(
@@ -51,5 +54,3 @@ function generateCsvData() {
   csvData.push(end);
   return csvData.join('');
 }
-
-module.exports = generateCsvData;

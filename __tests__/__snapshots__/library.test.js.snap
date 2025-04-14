@@ -169,6 +169,7 @@ exports[`prototype properties of Molecule 1`] = `
   "getName",
   "getNonHydrogenNeighbourCount",
   "getNumberOfHydrogens",
+  "getOCL",
   "getOccupiedValence",
   "getPath",
   "getPathBonds",

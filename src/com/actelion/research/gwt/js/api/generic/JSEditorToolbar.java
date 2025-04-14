@@ -12,10 +12,13 @@ public class JSEditorToolbar implements GenericCanvas {
   private GenericEditorToolbar mGenericToolbar;
   private JavaScriptObject mJsObject;
   private JSMouseHandler mMouseHandler;
+  private JSUIHelper mUIHelper;
+  private boolean mDrawPending;
 
-  public JSEditorToolbar(JSEditorArea jsEditorArea, JavaScriptObject jsObject) {
+  public JSEditorToolbar(JSEditorArea jsEditorArea, JavaScriptObject jsObject, JSUIHelper uiHelper) {
     mGenericToolbar = new GenericEditorToolbar(this, jsEditorArea.getGenericEditorArea());
     mJsObject = jsObject;
+    mUIHelper = uiHelper;
 
     mMouseHandler = new JSMouseHandler(mGenericToolbar);
     mMouseHandler.addListener(mGenericToolbar);
@@ -33,6 +36,7 @@ public class JSEditorToolbar implements GenericCanvas {
   }
 
   private void draw() {
+    mDrawPending = false;
     JSDrawContext ctx = getDrawContext();
     ctx.clearRect(0, 0, getWidth(), getHeight());
     mGenericToolbar.paintContent(getDrawContext());
@@ -91,11 +95,10 @@ public class JSEditorToolbar implements GenericCanvas {
 
   @Override
   @JsIgnore
-  public native void repaint()
-  /*-{
-    var that = this;
-    $wnd.requestAnimationFrame(function repaintEditorToolbar() {
-      that.@com.actelion.research.gwt.js.api.generic.JSEditorToolbar::draw()();
-    });
-  }-*/;
+  public void repaint() {
+    if (!mDrawPending) {
+      mDrawPending = true;
+      mUIHelper.runLater(() -> draw());
+    }
+  }
 }

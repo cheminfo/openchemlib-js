@@ -17,6 +17,8 @@ public class JSEditorArea implements GenericCanvas {
   private JavaScriptObject mJsObject;
   private JSMouseHandler mMouseHandler;
   private JSKeyHandler mKeyHandler;
+  private JSUIHelper mUIHelper;
+  private boolean mDrawPending;
 
   public static final int MODE_MULTIPLE_FRAGMENTS = GenericEditorArea.MODE_MULTIPLE_FRAGMENTS;
   public static final int MODE_MARKUSH_STRUCTURE = GenericEditorArea.MODE_MARKUSH_STRUCTURE;
@@ -79,6 +81,7 @@ public class JSEditorArea implements GenericCanvas {
       }
     });
     mJsObject = jsObject;
+    mUIHelper = uiHelper;
 
     mMouseHandler = new JSMouseHandler(mDrawArea);
     mMouseHandler.addListener(mDrawArea);
@@ -123,6 +126,7 @@ public class JSEditorArea implements GenericCanvas {
   }-*/;
 
   private void draw() {
+    mDrawPending = false;
     mDrawArea.paintContent(getDrawContext());
   }
 
@@ -185,13 +189,12 @@ public class JSEditorArea implements GenericCanvas {
   }-*/;
 
   @Override
-  public native void repaint()
-  /*-{
-    var that = this;
-    $wnd.requestAnimationFrame(function repaintEditorArea() {
-      that.@com.actelion.research.gwt.js.api.generic.JSEditorArea::draw()();
-    });
-  }-*/;
+  public void repaint() {
+    if (!mDrawPending) {
+      mDrawPending = true;
+      mUIHelper.runLater(() -> draw());
+    }
+  }
 
   public void clearAll() {
     mDrawArea.clearAll();

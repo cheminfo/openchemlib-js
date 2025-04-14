@@ -1,6 +1,9 @@
-'use strict';
+import { generateCsvData } from './generateCsvData.js';
+import { generateImageData } from './generateImageData.js';
+import { generateTorsionDBData } from './generateTorsionDBData.js';
+import { removedClasses } from './removed.js';
 
-const modified = [
+const modifiedClasses = [
   'calc/ArrayUtilsCalc',
 
   'chem/io/DWARFileParser',
@@ -17,9 +20,9 @@ const modified = [
   'util/ConstantsDWAR',
 ];
 
-exports.modified = modified.map(getFilename);
+export const modified = modifiedClasses.map(getFilename);
 
-const changed = [
+const changedClasses = [
   [
     '@org/openmolecules/chem/conf/gen/ConformerSetDiagnostics',
     changeConformerSetDiagnostics,
@@ -69,19 +72,22 @@ const changed = [
   ['util/datamodel/IntVec', changeIntVec],
 ];
 
-exports.changed = changed.map(([path, ...transformers]) => {
+export const changed = changedClasses.map(([path, ...transformers]) => {
   return [getFilename(path), transformers];
 });
 
-exports.removed = require('./removed').map(getFolderName);
+export const removed = removedClasses.map(getFolderName);
 
-const generated = [
-  ['chem/conf/TorsionDBData', require('./generateTorsionDBData')],
-  ['chem/forcefield/mmff/CsvData', require('./generateCsvData')],
-  ['@gwt/js/api/generic/internal/ImageData', require('./generateImageData')],
+const generatedClasses = [
+  ['chem/conf/TorsionDBData', generateTorsionDBData],
+  ['chem/forcefield/mmff/CsvData', generateCsvData],
+  ['@gwt/js/api/generic/internal/ImageData', generateImageData],
 ];
 
-exports.generated = generated.map((file) => [getFilename(file[0]), file[1]]);
+export const generated = generatedClasses.map((file) => [
+  getFilename(file[0]),
+  file[1],
+]);
 
 function getFilename(file) {
   if (file.startsWith('@info/')) {

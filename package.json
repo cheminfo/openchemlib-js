@@ -1,6 +1,7 @@
 {
   "name": "openchemlib",
   "version": "8.21.0",
+  "type": "module",
   "description": "Manipulate molecules",
   "keywords": [
     "chemistry",
@@ -9,20 +10,17 @@
     "SMILES"
   ],
   "scripts": {
-    "build:min": "node scripts/build.js build --mode=min",
-    "build:debug": "node scripts/build.js build --mode=pretty -s debug",
-    "compile:min": "node scripts/build.js compile --mode=min",
-    "compile:debug": "node scripts/build.js compile --mode=debug",
-    "copy:openchemlib": "node scripts/build.js copy:openchemlib",
-    "export": "node scripts/build.js export",
-    "build": "npm run build:min && npm run build:debug",
-    "build-debug-verbose": "npm run build:debug -- --verbose",
-    "build-esm": "npm run build && npm run build-esm-bundle-export",
-    "build-esm-bundle": "esbuild lib/index.js --bundle --sourcemap --format=esm --outfile=distesm/full.js",
-    "build-esm-bundle-export": "npm run build-esm-bundle && node scripts/build_esm_bundle_types.js",
-    "build-esm-bundle-types": "node scripts/esm_bundle_types.js",
-    "build-esm-bundle-watch": "npm run build-esm-bundle -- --watch",
-    "build-help": "node scripts/build_help.mjs",
+    "build": "npm run build-java && npm run build-js",
+    "build-help": "node scripts/build_help.js",
+    "build-java": "npm run build-java-min && npm run build-java-debug",
+    "build-java-debug": "node scripts/build.js build --mode=pretty -s debug",
+    "build-java-debug-verbose": "npm run build-java-debug -- --verbose",
+    "build-java-min": "node scripts/build.js build --mode=min",
+    "build-js": "npm run build-js-min && npm run build-js-debug && npm run build-js-types",
+    "build-js-debug": "esbuild lib/index.debug.js --bundle --format=esm --outfile=dist/openchemlib.debug.js",
+    "build-js-min": "esbuild lib/index.js --minify --bundle --format=esm --outfile=dist/openchemlib.js",
+    "build-js-types": "cp lib/index.d.ts dist/openchemlib.d.ts",
+    "copy-openchemlib": "node scripts/build.js copy:openchemlib",
     "eslint": "eslint .",
     "eslint-fix": "npm run eslint -- --fix",
     "prettier": "prettier --check .",
@@ -35,17 +33,16 @@
   },
   "exports": {
     ".": {
-      "types": "./lib/types.d.ts",
-      "default": "./lib/index.js"
+      "types": "./dist/openchemlib.d.ts",
+      "default": "./dist/openchemlib.js"
     },
     "./debug": {
-      "types": "./lib/types.d.ts",
-      "default": "./lib/index.debug.js"
+      "types": "./dist/openchemlib.d.ts",
+      "default": "./dist/openchemlib.debug.js"
     }
   },
   "files": [
-    "dist",
-    "lib"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -69,7 +66,7 @@
     "eslint-config-cheminfo-typescript": "^18.0.0",
     "fast-png": "^6.3.0",
     "globals": "^16.0.0",
-    "gwt-api-exporter": "^2.0.0",
+    "gwt-api-exporter": "^3.0.0",
     "image-js": "0.0.0-next-692b15513a",
     "openchemlib-utils": "^6.7.0",
     "postcss": "^8.5.3",

@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = [
+export const removedClasses = [
   '@info/clearthought',
   '@org/machinelearning',
   'calc/BoxCox.java',

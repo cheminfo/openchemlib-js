@@ -93,7 +93,8 @@ public class JSUIHelper implements GenericUIHelper {
   public native void runLater(Runnable r)
   /*-{
     var that = this;
-    $wnd.requestAnimationFrame(function(){
+    var jsObject = this.@com.actelion.research.gwt.js.api.generic.JSUIHelper::getJsObject()();
+    jsObject.runLater(function(){
       that.@com.actelion.research.gwt.js.api.generic.JSUIHelper::runNow(Ljava/lang/Runnable;)(r);
     });
   }-*/;

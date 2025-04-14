@@ -1,9 +1,7 @@
-import OCL from '../../../distesm/full';
+import { Molecule, Reaction, ReactionEncoder } from '../../../lib/index.js';
 import { getEditor, resetEditor } from './editor.ts';
 import rxn from './seeds/rxn.ts';
 import molfile from './seeds/molfile.ts';
-
-const { Molecule, Reaction, ReactionEncoder } = OCL;
 
 resetEditor();
 

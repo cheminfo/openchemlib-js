@@ -18,5 +18,5 @@
     /* Linting */
     "strict": true
   },
-  "include": ["examples", "lib", "scripts", "vite*.config.mts"]
+  "include": ["examples", "lib", "scripts", "vite*.config.ts"]
 }

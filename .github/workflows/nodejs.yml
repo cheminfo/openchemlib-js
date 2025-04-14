@@ -62,7 +62,7 @@ jobs:
         with:
           name: debug-build-${{ matrix.node-version }}
           path: |
-            dist/openchemlib.debug.js
+            lib/java/openchemlib.debug.js
             compile.debug.log
           retention-days: 1
   utils-integration:

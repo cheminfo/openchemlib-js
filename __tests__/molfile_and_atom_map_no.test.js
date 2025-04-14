@@ -5,7 +5,10 @@ import { expect, test } from 'vitest';
 import { Molecule } from '../lib/index.js';
 
 test('molfile with atomMapNo', () => {
-  const molfile = readFileSync(`${__dirname}/data/atomMapNo.mol`, 'utf8');
+  const molfile = readFileSync(
+    `${import.meta.dirname}/data/atomMapNo.mol`,
+    'utf8',
+  );
   const molecule = Molecule.fromMolfile(molfile);
 
   const newMolfile = molecule.toMolfile();

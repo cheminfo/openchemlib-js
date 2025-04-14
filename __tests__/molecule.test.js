@@ -2,7 +2,7 @@ import fs from 'node:fs';
 
 import { describe, expect, it } from 'vitest';
 
-import { Molecule } from '../lib/index.js';
+import OCL, { Molecule } from '../lib/index.js';
 
 describe('from and to SMILES', () => {
   it.each(['C', 'COCOC', 'c1cc2cccc3c4cccc5cccc(c(c1)c23)c54'])(
@@ -133,7 +133,7 @@ describe('Molecule', () => {
 
   it('fromMolfileWithAtomMap', () => {
     const molfile = fs.readFileSync(
-      `${__dirname}/data/molfileWithHMap.mol`,
+      `${import.meta.dirname}/data/molfileWithHMap.mol`,
       'utf8',
     );
     const result = Molecule.fromMolfileWithAtomMap(molfile);
@@ -215,5 +215,10 @@ describe('Molecule', () => {
 
     const ranks = [...molecule.getFinalRanks()];
     expect(ranks).toStrictEqual([3, 1, 2, 4, 11, 10, 9, 5, 6, 7, 8, 12]);
+  });
+
+  it('getOCL', () => {
+    const molecule = new Molecule(0, 0);
+    expect(molecule.getOCL()).toBe(OCL);
   });
 });

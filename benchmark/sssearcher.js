@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default-member */
+
 import Benchmark from 'benchmark';
 
 import OCLNew from '../dist/openchemlib.js';

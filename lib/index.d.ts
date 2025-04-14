@@ -506,6 +506,12 @@ export declare class Molecule {
 
   static isAtomicNoElectropositive(atomicNo: number): boolean;
 
+  /**
+   * Returns the OCL object.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getOCL(): any;
+
   toSmiles(): string;
 
   toSmarts(): string;
@@ -3703,7 +3709,7 @@ interface CanvasEditorElementConstructor extends CustomElementConstructor {
  *
  * In Javascript:
  * ```js
- * import {registerCustomElement, Molecule, ReactionEncoder} from 'openchemlib/minimal';
+ * import {registerCustomElement, Molecule, ReactionEncoder} from 'openchemlib';
  *
  * // register CanvasEditorElement with `openchemlib-editor` tag name
  * const CanvasEditorElement = registerCustomElement();

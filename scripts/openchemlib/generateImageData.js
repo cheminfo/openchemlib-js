@@ -1,12 +1,10 @@
-'use strict';
+import fs from 'node:fs';
+import path from 'node:path';
 
-const fs = require('node:fs');
-const path = require('node:path');
-
-const { decode } = require('fast-png');
+import { decode } from 'fast-png';
 
 const resourcesDir = path.join(
-  __dirname,
+  import.meta.dirname,
   '../../openchemlib/src/main/resources/images',
 );
 
@@ -21,7 +19,7 @@ const end = `
 }
 `;
 
-function generateImageData() {
+export function generateImageData() {
   const imageData = [start];
   for (const image of images) {
     const contents = fs.readFileSync(path.join(resourcesDir, image));
@@ -46,5 +44,3 @@ ${compressedSplit
   imageData.push(end);
   return imageData.join('\n');
 }
-
-module.exports = generateImageData;

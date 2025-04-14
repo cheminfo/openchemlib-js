@@ -13,7 +13,7 @@ jobs:
       - name: Build documentation
         uses: zakodium/typedoc-action@v2
         with:
-          entry: 'lib/types.d.ts'
+          entry: 'lib/index.d.ts'
           name: OpenChemLib JS
       - name: Deploy to GitHub pages
         uses: JamesIves/github-pages-deploy-action@releases/v4

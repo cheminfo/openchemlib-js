@@ -1,7 +1,5 @@
-'use strict';
-
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from 'node:fs';
+import path from 'node:path';
 
 const folder = 'main/resources/resources/cod';
 const files = [
@@ -23,11 +21,16 @@ const end = `
 }
 `;
 
-function generateTorsionDBData() {
+export function generateTorsionDBData() {
   const torsionDBData = [start];
   for (const file of files) {
     const contents = fs.readFileSync(
-      path.join(__dirname, '../../openchemlib/src', folder, `${file}.txt`),
+      path.join(
+        import.meta.dirname,
+        '../../openchemlib/src',
+        folder,
+        `${file}.txt`,
+      ),
       'utf8',
     );
     const lines = contents
@@ -47,5 +50,3 @@ public static final String[] get${file}Data() {
   torsionDBData.push(end);
   return torsionDBData.join('');
 }
-
-module.exports = generateTorsionDBData;

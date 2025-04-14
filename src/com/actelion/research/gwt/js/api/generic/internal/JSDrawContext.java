@@ -139,16 +139,11 @@ public class JSDrawContext implements GenericDrawContext {
   }-*/;
 
   @Override
-  public GenericRectangle getBounds(String s) {
-    JSRectangle jsRect = new JSRectangle();
-    getBounds(s, jsRect);
-    return jsRect.getRectangle();
-  }
-
-  public native GenericRectangle getBounds(String s, JSRectangle jsRect)
+  public native GenericRectangle getBounds(String s)
   /*-{
     var jsContext = this.@com.actelion.research.gwt.js.api.generic.internal.JSDrawContext::getJsContext()();
-    return jsContext.getBounds(s, jsRect);
+    var bounds = jsContext.getBounds(s);
+    return @com.actelion.research.gui.generic.GenericRectangle::new(DDDD)(bounds.x, bounds.y, bounds.width, bounds.height);
   }-*/;
 
   @Override
