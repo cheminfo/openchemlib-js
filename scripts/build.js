@@ -13,25 +13,20 @@ const pack = require('../package.json');
 const extendCore = require('./extend/core');
 const extendFull = require('./extend/full');
 const extendMinimal = require('./extend/minimal');
-let modules = require('./modules.json');
 
 const argv = yargs
   .command(
     'copy:openchemlib',
-    'Copy the required java files from the openchemlib project.',
+    'Copy the required java files from the OpenChemLib project.',
   )
   .command('build', 'Compile and export')
   .command('compile', 'Execute the GWT compiler.')
-  .command('export', 'Transform the GWT compiled files to JavaScript modules.')
+  .command('export', 'Transform the GWT compiled files to a JavaScript module.')
   .demandCommand()
   .option('v', {
     alias: 'verbose',
     default: false,
     type: 'boolean',
-  })
-  .option('m', {
-    alias: 'module',
-    description: 'Compile only this module',
   })
   .option('mode', {
     description: 'Compilation mode',
@@ -48,18 +43,6 @@ const { mode, verbose } = argv;
 let suffix = '';
 if (argv.suffix) {
   suffix = `.${argv.suffix}`;
-}
-
-if (argv.m) {
-  for (let i = 0; i < modules.length; i++) {
-    if (modules[i].name === argv.m) {
-      modules = [modules[i]];
-      break;
-    }
-  }
-  if (modules.length !== 1) {
-    throw new Error(`module ${argv.m} not found`);
-  }
 }
 
 let config;
@@ -161,44 +144,42 @@ function compile(mode) {
   if (config.jdk) {
     PATH = `${path.resolve(config.jdk, 'bin')}${sep}${PATH}`;
   }
-  for (let i = 0; i < modules.length; i++) {
-    log(`Compiling module ${modules[i].name}`);
-    let args = [
-      '-Xmx2G',
-      '-cp',
-      classpath,
-      'com.google.gwt.dev.Compiler',
-      modules[i].entrypoint,
-      '-logLevel',
-      verbose ? 'DEBUG' : 'ERROR',
-      min ? '-XnocheckCasts' : '-XcheckCasts',
-      '-XnoclassMetadata',
-      verbose ? '-draftCompile' : '-nodraftCompile',
-      '-nocheckAssertions',
-      '-generateJsInteropExports',
-      '-optimize',
-      min ? '9' : '0',
-      '-style',
-      min ? 'OBFUSCATED' : 'PRETTY',
-      '-sourceLevel',
-      '17',
-      '-failOnError',
-    ];
-    let result;
-    try {
-      result = childProcess.execFileSync('java', args, {
-        maxBuffer: Infinity,
-        env: { ...process.env, PATH },
-      });
-    } catch (error) {
-      result = error.stdout;
-      throw error;
-    } finally {
-      if (verbose) {
-        let name = `compile-${modules[i].name}.log`;
-        log(`Compilation log written to ${name}`);
-        fs.writeFileSync(`./${name}`, result);
-      }
+  log('Compiling module');
+  let args = [
+    '-Xmx2G',
+    '-cp',
+    classpath,
+    'com.google.gwt.dev.Compiler',
+    'com.actelion.research.gwt.Js',
+    '-logLevel',
+    verbose ? 'DEBUG' : 'ERROR',
+    min ? '-XnocheckCasts' : '-XcheckCasts',
+    '-XnoclassMetadata',
+    verbose ? '-draftCompile' : '-nodraftCompile',
+    '-nocheckAssertions',
+    '-generateJsInteropExports',
+    '-optimize',
+    min ? '9' : '0',
+    '-style',
+    min ? 'OBFUSCATED' : 'PRETTY',
+    '-sourceLevel',
+    '17',
+    '-failOnError',
+  ];
+  let result;
+  try {
+    result = childProcess.execFileSync('java', args, {
+      maxBuffer: Infinity,
+      env: { ...process.env, PATH },
+    });
+  } catch (error) {
+    result = error.stdout;
+    throw error;
+  } finally {
+    if (verbose) {
+      let name = `compile${suffix}.log`;
+      log(`Compilation log written to ${name}`);
+      fs.writeFileSync(`./${name}`, result);
     }
   }
 }
@@ -206,32 +187,29 @@ function compile(mode) {
 async function build() {
   let prom = [];
   fs.mkdirSync('dist', { recursive: true });
-  log('Exporting modules');
-  for (const mod of modules) {
-    log(`Exporting module ${mod.name}${suffix}`);
-    let warDir = path.join('war', mod.war);
-    let files = fs.readdirSync(warDir);
-    let file;
-    for (let i = 0; i < files.length; i++) {
-      if (files[i].indexOf('.cache.js') > 0) {
-        file = path.join(warDir, files[i]);
-        break;
-      }
+  log('Exporting module');
+  let warDir = path.join('war', 'oclJs');
+  let files = fs.readdirSync(warDir);
+  let file;
+  for (let i = 0; i < files.length; i++) {
+    if (files[i].indexOf('.cache.js') > 0) {
+      file = path.join(warDir, files[i]);
+      break;
     }
-    if (!file) {
-      throw new Error(`Could not find GWT file for module ${mod.name}`);
-    }
-    prom.push(
-      exporter({
-        input: file,
-        output: `dist/openchemlib-${mod.name}${suffix}.js`,
-        exports: 'OCL',
-        fake: mod.fake,
-        package: pack,
-        extendApi: createExtender(mod.name),
-      }),
-    );
   }
+  if (!file) {
+    throw new Error('Could not find GWT file for module oclJs');
+  }
+  prom.push(
+    exporter({
+      input: file,
+      output: `dist/openchemlib${suffix}.js`,
+      exports: 'OCL',
+      fake: true,
+      package: pack,
+      extendApi: createExtender(),
+    }),
+  );
   await Promise.all(prom);
 }
 
@@ -248,12 +226,12 @@ function handleCatch(err) {
   process.exit(1);
 }
 
-function createExtender(name) {
-  const toPut = [addAndCallExtender(extendMinimal, 'extendMinimal')];
-  if (name === 'core' || name === 'full') {
-    toPut.push(addAndCallExtender(extendCore, 'extendCore'));
-  }
-  if (name === 'full') toPut.push(addAndCallExtender(extendFull, 'extendFull'));
+function createExtender() {
+  const toPut = [
+    addAndCallExtender(extendMinimal, 'extendMinimal'),
+    addAndCallExtender(extendCore, 'extendCore'),
+    addAndCallExtender(extendFull, 'extendFull'),
+  ];
   return `function extendApi(exports) {
     ${toPut.join('\n')}
   }`;
