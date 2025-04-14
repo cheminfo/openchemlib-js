@@ -8,7 +8,6 @@ exports[`prototype properties of ConformerGenerator 1`] = `
 [
   "getConformerCount",
   "getNextConformerAsMolecule",
-  "getOCL",
   "getOneConformerAsMolecule",
   "getPotentialConformerCount",
   "initializeConformers",
@@ -23,14 +22,12 @@ exports[`prototype properties of DruglikenessPredictor 1`] = `
   "assessDruglikeness",
   "getDetail",
   "getDruglikenessString",
-  "getOCL",
 ]
 `;
 
 exports[`prototype properties of ForceFieldMMFF94 1`] = `
 [
   "_minimise",
-  "getOCL",
   "getTotalEnergy",
   "minimise",
   "size",
@@ -173,7 +170,6 @@ exports[`prototype properties of Molecule 1`] = `
   "getName",
   "getNonHydrogenNeighbourCount",
   "getNumberOfHydrogens",
-  "getOCL",
   "getOccupiedValence",
   "getPath",
   "getPathBonds",
@@ -329,14 +325,12 @@ exports[`prototype properties of SDFileParser 1`] = `
   "getMolecule",
   "getNextFieldData",
   "getNextMolFile",
-  "getOCL",
   "next",
 ]
 `;
 
 exports[`prototype properties of SSSearcher 1`] = `
 [
-  "getOCL",
   "isFragmentInMolecule",
   "setFragment",
   "setMol",
@@ -347,14 +341,11 @@ exports[`prototype properties of SSSearcher 1`] = `
 exports[`prototype properties of SSSearcherWithIndex 1`] = `
 [
   "createIndex",
-  "getOCL",
   "isFragmentInMolecule",
   "setFragment",
   "setMolecule",
 ]
 `;
-
-exports[`prototype properties of SVGRenderer 1`] = `[]`;
 
 exports[`prototype properties of SmilesParser 1`] = `
 [
@@ -365,36 +356,10 @@ exports[`prototype properties of SmilesParser 1`] = `
 ]
 `;
 
-exports[`prototype properties of StructureEditor 1`] = `
-[
-  "getIDCode",
-  "getMolFile",
-  "getMolFileV3",
-  "getMolecule",
-  "getOCL",
-  "getSmiles",
-  "hasFocus",
-  "isFragment",
-  "onChange",
-  "onPasteImage",
-  "onPasteString",
-  "setAtomHightlightCallback",
-  "setBondHightlightCallback",
-  "setChangeListenerCallback",
-  "setFragment",
-  "setIDCode",
-  "setMolFile",
-  "setSmiles",
-]
-`;
-
-exports[`prototype properties of StructureView 1`] = `[]`;
-
 exports[`prototype properties of ToxicityPredictor 1`] = `
 [
   "assessRisk",
   "getDetail",
-  "getOCL",
 ]
 `;
 
@@ -745,33 +710,7 @@ exports[`static properties of SSSearcherWithIndex 1`] = `
 ]
 `;
 
-exports[`static properties of SVGRenderer 1`] = `
-[
-  "renderMolecule",
-]
-`;
-
 exports[`static properties of SmilesParser 1`] = `[]`;
-
-exports[`static properties of StructureEditor 1`] = `
-[
-  "addPasteHandler",
-  "createEditor",
-  "createSVGEditor",
-  "notify",
-]
-`;
-
-exports[`static properties of StructureView 1`] = `
-[
-  "drawMolecule",
-  "drawStructure",
-  "drawStructureWithText",
-  "getIDCode",
-  "renderStructure",
-  "showStructures",
-]
-`;
 
 exports[`static properties of ToxicityPredictor 1`] = `
 [
@@ -796,3 +735,29 @@ exports[`static properties of Util 1`] = `
 `;
 
 exports[`static properties of registerCustomElement 1`] = `[]`;
+
+exports[`top-level API 1`] = `
+[
+  "CanonizerUtil",
+  "CanvasEditor",
+  "ConformerGenerator",
+  "DrugScoreCalculator",
+  "DruglikenessPredictor",
+  "ForceFieldMMFF94",
+  "Molecule",
+  "MoleculeProperties",
+  "Reaction",
+  "ReactionEncoder",
+  "Reactor",
+  "RingCollection",
+  "SDFileParser",
+  "SSSearcher",
+  "SSSearcherWithIndex",
+  "SmilesParser",
+  "ToxicityPredictor",
+  "Transformer",
+  "Util",
+  "registerCustomElement",
+  "version",
+]
+`;

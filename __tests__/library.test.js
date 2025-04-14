@@ -1,64 +1,25 @@
+import assert from 'node:assert';
+
 import { expect, test } from 'vitest';
 
-import core from '../core';
-import full from '../full';
-import pretty from '../full.pretty';
-import minimal from '../minimal';
+import OCL from '../lib/index';
+import debugOCL from '../lib/index.debug';
 
-const minimalAPI = [
-  'Molecule',
-  'Reaction',
-  'RingCollection',
-  'SDFileParser',
-  'SmilesParser',
-  'SSSearcher',
-  'SSSearcherWithIndex',
-  'Util',
-  'version',
-];
+const allAPI = Object.keys(OCL).sort();
 
-const coreAPI = [
-  'CanonizerUtil',
-  'ConformerGenerator',
-  'DruglikenessPredictor',
-  'DrugScoreCalculator',
-  'ForceFieldMMFF94',
-  'MoleculeProperties',
-  'ReactionEncoder',
-  'Reactor',
-  'ToxicityPredictor',
-  'Transformer',
-];
-
-const fullAPI = [
-  'CanvasEditor',
-  'registerCustomElement',
-  'StructureView',
-  'StructureEditor',
-  'SVGRenderer',
-];
-
-const allAPI = [...minimalAPI, ...coreAPI, ...fullAPI];
-
-test('minimal', () => {
-  checkHas(minimal, minimalAPI);
-  checkHasNot(minimal, [...coreAPI, ...fullAPI]);
+test('debug build should have the same exports', () => {
+  expect(allAPI).toStrictEqual(Object.keys(debugOCL).sort());
 });
 
-test('core', () => {
-  expect(core).toBe(require('..').default);
-  checkHas(core, [...minimalAPI, ...coreAPI]);
-  checkHasNot(core, fullAPI);
-});
-
-test('full', () => {
-  for (const lib of [full, pretty]) {
-    checkHas(lib, allAPI);
+test('top-level API', () => {
+  expect(allAPI).toMatchSnapshot();
+  for (const api of allAPI) {
+    assert.ok(OCL[api], `Missing top-level API: ${api}`);
   }
 });
 
 for (const key of allAPI) {
-  const api = full[key];
+  const api = OCL[key];
   if (typeof api === 'function') {
     test(`static properties of ${key}`, () => {
       expect(getFilteredKeys(api)).toMatchSnapshot();
@@ -68,16 +29,6 @@ for (const key of allAPI) {
         expect(getFilteredKeys(api.prototype)).toMatchSnapshot();
       });
     }
-  }
-}
-
-function checkHas(obj, properties) {
-  expect(Object.keys(obj).sort()).toStrictEqual(properties.sort());
-}
-
-function checkHasNot(obj, properties) {
-  for (const prop of properties) {
-    expect(obj).not.toHaveProperty(prop);
   }
 }
 

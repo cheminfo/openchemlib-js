@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { Molecule } from '../minimal';
+import { Molecule } from '../lib/index.js';
 
 test('atom query features more than 2 neighbours', () => {
   const molecule = Molecule.fromIDCode('eF@Hp[qp');

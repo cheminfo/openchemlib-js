@@ -55,15 +55,15 @@ jobs:
           path: dist
       - name: Run debug build
         if: failure()
-        run: npm run build-debug-full
+        run: npm run build-debug-verbose
       - name: Upload debug build and logs
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: debug-build-${{ matrix.node-version }}
           path: |
-            dist/openchemlib-full.pretty.js
-            compile-full.log
+            dist/openchemlib.debug.js
+            compile.debug.log
           retention-days: 1
   utils-integration:
     name: Integration with openchemlib-utils

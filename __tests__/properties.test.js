@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Molecule, MoleculeProperties } from '../core';
+import { Molecule, MoleculeProperties } from '../lib/index.js';
 
 describe('MoleculeProperties', () => {
   it('should compute properties', () => {

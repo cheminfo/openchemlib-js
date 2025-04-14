@@ -1,7 +1,7 @@
 import Benchmark from 'benchmark';
 
-import OCLOld from '../distold/openchemlib-full.pretty.js';
-import OCLNew from '../full.pretty.js';
+import OCLNew from '../dist/openchemlib.js';
+import OCLOld from '../distold/openchemlib.js';
 
 const idcode = 'enYXNH@MHDAELem`OCIILdhhdiheCDlieKDdefndZRVVjjfjjfjihJBbb@@@';
 const mol = OCLNew.Molecule.fromIDCode(idcode);

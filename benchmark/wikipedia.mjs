@@ -1,4 +1,4 @@
-import { Molecule, version } from '../full.js';
+import { Molecule, version } from '../lib/index.js';
 
 console.log('OCL version', version);
 console.time('wikipedia');

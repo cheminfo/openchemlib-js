@@ -2,7 +2,7 @@ import fs from 'node:fs';
 
 import { describe, expect, it } from 'vitest';
 
-import { Molecule } from '../minimal';
+import { Molecule } from '../lib/index.js';
 
 describe('from and to SMILES', () => {
   it.each(['C', 'COCOC', 'c1cc2cccc3c4cccc5cccc(c(c1)c23)c54'])(
@@ -215,11 +215,5 @@ describe('Molecule', () => {
 
     const ranks = [...molecule.getFinalRanks()];
     expect(ranks).toStrictEqual([3, 1, 2, 4, 11, 10, 9, 5, 6, 7, 8, 12]);
-  });
-
-  it('should have a method that returns the OCL object', () => {
-    const molecule = Molecule.fromSmiles('C');
-    const OCL = molecule.getOCL();
-    expect(OCL.Molecule).toStrictEqual(Molecule);
   });
 });

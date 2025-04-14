@@ -65,12 +65,6 @@ It contains a structure viewer and a structure editor for browser applications.
 - [ToxicityPredictor](https://cheminfo.github.io/openchemlib-js/classes/ToxicityPredictor.html)
 - [Transformer](https://cheminfo.github.io/openchemlib-js/classes/Transformer.html)
 
-### Modules present only in full build
-
-- [StructureEditor](https://cheminfo.github.io/openchemlib-js/classes/StructureEditor.html)
-- [StructureView](https://cheminfo.github.io/openchemlib-js/modules/StructureView.html)
-- [SVGRenderer](https://cheminfo.github.io/openchemlib-js/modules/SVGRenderer.html)
-
 ## Development
 
 To build this project, you need :

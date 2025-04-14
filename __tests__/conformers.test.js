@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { ConformerGenerator, Molecule } from '../core';
+import { ConformerGenerator, Molecule } from '../lib/index.js';
 
 describe('ConformerGenerator', () => {
   it('should return one conformer', () => {

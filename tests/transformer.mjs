@@ -1,4 +1,4 @@
-import { Molecule, Transformer } from '../full.pretty.js';
+import { Molecule, Transformer } from '../lib/index.js';
 
 const reagent = Molecule.fromSmiles('CCO');
 

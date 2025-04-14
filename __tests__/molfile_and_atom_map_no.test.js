@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 
 import { expect, test } from 'vitest';
 
-import { Molecule } from '../minimal';
+import { Molecule } from '../lib/index.js';
 
 test('molfile with atomMapNo', () => {
   const molfile = readFileSync(`${__dirname}/data/atomMapNo.mol`, 'utf8');

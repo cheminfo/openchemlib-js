@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Molecule, Reaction, ReactionEncoder } from '../core';
+import { Molecule, Reaction, ReactionEncoder } from '../lib/index.js';
 
 describe('ReactionEncoder class', () => {
   it('should be able to encode and decode using string', () => {

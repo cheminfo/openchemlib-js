@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { CanonizerUtil, Molecule } from '../core';
+import { CanonizerUtil, Molecule } from '../lib/index.js';
 
 test('canonizer chiral', () => {
   const molecule = Molecule.fromSmiles('C[C@H](Cl)CC');

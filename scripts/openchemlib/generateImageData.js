@@ -12,7 +12,7 @@ const resourcesDir = path.join(
 
 const images = ['editorButtons.png', 'esrButtons.png'];
 
-const start = `package com.actelion.research.gwt.gui.generic;
+const start = `package com.actelion.research.gwt.js.api.generic.internal;
 
 public class ImageData {
 `;

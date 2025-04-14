@@ -1,7 +1,7 @@
 import Benchmark from 'benchmark';
 
-import OCLOld from '../distold/openchemlib-full.pretty.js';
-import OCLNew from '../full.pretty.js';
+import OCLNew from '../dist/openchemlib.js';
+import OCLOld from '../distold/openchemlib.js';
 
 let benzeneFragmentNew = OCLNew.Molecule.fromSmiles('c1ccccc1');
 benzeneFragmentNew.setFragment(true);

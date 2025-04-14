@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Molecule, Transformer } from '../core';
+import { Molecule, Transformer } from '../lib/index.js';
 
 describe('Transformer', () => {
   it('transform single in double bond', () => {

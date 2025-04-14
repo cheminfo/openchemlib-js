@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Molecule } from '../minimal';
+import { Molecule } from '../lib/index.js';
 
 describe('addImplicitHydroens', () => {
   it('C', () => {

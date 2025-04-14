@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { CanonizerUtil, Molecule } from '../core';
+import { CanonizerUtil, Molecule } from '../lib/index.js';
 
 describe('CanonizerUtil', () => {
   it('check id codes', () => {

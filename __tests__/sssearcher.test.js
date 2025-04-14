@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Molecule, SSSearcher } from '../minimal';
+import { Molecule, SSSearcher } from '../lib/index.js';
 
 describe('SSSearcher', () => {
   let benzene = Molecule.fromSmiles('c1ccccc1');

@@ -1,4 +1,4 @@
-import OCL from '../full.js';
+import OCL from '../lib/index.js';
 
 let molecule = OCL.Molecule.fromSmiles('C[C@H](Cl)CC');
 molecule = OCL.Molecule.fromSmiles('CC=C(O)CC');

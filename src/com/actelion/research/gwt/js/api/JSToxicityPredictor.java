@@ -1,0 +1,38 @@
+package com.actelion.research.gwt.js.api;
+
+import com.google.gwt.core.client.JavaScriptObject;
+import jsinterop.annotations.*;
+
+import com.actelion.research.chem.prediction.ToxicityPredictor;
+import com.actelion.research.gwt.js.utils.Services2;
+import com.actelion.research.gwt.js.utils.Util2;
+
+@JsType(name = "ToxicityPredictor")
+public class JSToxicityPredictor {
+  private static Services2 services = Services2.getInstance();
+  private ToxicityPredictor predictor;
+
+  public static int RISK_UNKNOWN = ToxicityPredictor.cUnknownRisk;
+  public static int RISK_NO = ToxicityPredictor.cNoRisk;
+  public static int RISK_LOW = ToxicityPredictor.cLowRisk;
+  public static int RISK_HIGH = ToxicityPredictor.cHighRisk;
+
+  public static int TYPE_MUTAGENIC = ToxicityPredictor.cRiskTypeMutagenic;
+  public static int TYPE_TUMORIGENIC = ToxicityPredictor.cRiskTypeTumorigenic;
+  public static int TYPE_IRRITANT = ToxicityPredictor.cRiskTypeIrritant;
+  public static int TYPE_REPRODUCTIVE_EFFECTIVE = ToxicityPredictor.cRiskTypeReproductiveEffective;
+
+  public static final String[] RISK_NAMES = ToxicityPredictor.cRiskNameN;
+
+  public JSToxicityPredictor() {
+    predictor = new ToxicityPredictor();
+  }
+
+  public int assessRisk(JSMolecule molecule, int riskType) {
+    return predictor.assessRisk(molecule.getStereoMolecule(), riskType, services.getThreadMaster());
+  }
+
+  public JavaScriptObject getDetail(JSMolecule molecule, int riskType) {
+    return Util2.convertParameterizedStringList(predictor.getDetail(molecule.getStereoMolecule(), riskType));
+  }
+}

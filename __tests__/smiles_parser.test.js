@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 
-import { Molecule, SmilesParser } from '../minimal';
+import { Molecule, SmilesParser } from '../lib/index.js';
 
 it.each([
   ['COCO', { atoms: 4 }],

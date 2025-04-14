@@ -78,7 +78,7 @@ exports.removed = require('./removed').map(getFolderName);
 const generated = [
   ['chem/conf/TorsionDBData', require('./generateTorsionDBData')],
   ['chem/forcefield/mmff/CsvData', require('./generateCsvData')],
-  ['@gwt/gui/generic/ImageData', require('./generateImageData')],
+  ['@gwt/js/api/generic/internal/ImageData', require('./generateImageData')],
 ];
 
 exports.generated = generated.map((file) => [getFilename(file[0]), file[1]]);

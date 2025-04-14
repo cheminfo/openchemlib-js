@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { ConformerGenerator, ForceFieldMMFF94, Molecule } from '../core';
+import {
+  ConformerGenerator,
+  ForceFieldMMFF94,
+  Molecule,
+} from '../lib/index.js';
 
 describe('ForceFieldMMFF94', () => {
   it('should generate force field', () => {

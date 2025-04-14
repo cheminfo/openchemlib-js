@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Molecule, Reaction } from '../minimal';
+import { Molecule, Reaction } from '../lib/index.js';
 
 describe('Reaction class', () => {
   it('should create an empty Reaction', () => {

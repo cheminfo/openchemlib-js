@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { Molecule } from '../minimal';
+import { Molecule } from '../lib/index.js';
 
 test('no ring', () => {
   const mol = Molecule.fromSmiles('CCOCC');

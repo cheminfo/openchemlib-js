@@ -1,11 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { Molecule, SSSearcherWithIndex } from '../minimal';
-
-test('getOCL', () => {
-  const searcher = new SSSearcherWithIndex();
-  expect(searcher.getOCL().Molecule).toBe(Molecule);
-});
+import { Molecule, SSSearcherWithIndex } from '../lib/index.js';
 
 test('getKeyIDCode', () => {
   expect(SSSearcherWithIndex.getKeyIDCode()).toMatchSnapshot();
