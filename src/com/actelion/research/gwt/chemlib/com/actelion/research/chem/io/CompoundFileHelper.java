@@ -169,7 +169,7 @@ public abstract class CompoundFileHelper {
 	                                     boolean readIdentifier, boolean readIDCoords) {
 	    mRecordCount = 0;
 	    mErrorCount = 0;
-	    String filename = "";
+	    String filename = file.getName();
 	    int index = filename.indexOf('.');
 	    String extention = (index == -1) ? "" : filename.substring(index).toLowerCase();
 
@@ -294,7 +294,7 @@ public abstract class CompoundFileHelper {
 	 */
 	public static String getExtension(File file) {
 		int index = -1;
-		String filename = (file == null) ? null : "";
+		String filename = (file == null) ? null : file.getName();
 		if (filename != null)
 			index = getExtensionIndex(filename);
 
@@ -324,7 +324,7 @@ public abstract class CompoundFileHelper {
 	 * @return naked file name without leading path and extension
 	 */
 	public static String removePathAndExtension(String filePath) {
-		int i1 = filePath.lastIndexOf(10);
+		int i1 = filePath.lastIndexOf(File.separatorChar);
 		int i2 = (getFileType(filePath) != cFileTypeUnknown) ? getExtensionIndex(filePath) : -1;
 		if (i1 == -1)
 			return (i2 == -1) ? filePath : filePath.substring(0, i2);

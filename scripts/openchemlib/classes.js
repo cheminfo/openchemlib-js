@@ -4,37 +4,21 @@ import { generateTorsionDBData } from './generateTorsionDBData.js';
 import { removedClasses } from './removed.js';
 
 const modifiedClasses = [
-  'calc/ArrayUtilsCalc',
-
   'chem/io/DWARFileParser',
   'chem/io/Mol2FileParser',
   'chem/io/ODEFileParser',
-
-  'chem/prediction/DruglikenessPredictor',
-  'chem/prediction/IncrementTable',
-  'chem/prediction/ToxicityPredictor',
-
   'gui/hidpi/HiDPIHelper',
   'gui/hidpi/HiDPIIcon',
-
   'util/ConstantsDWAR',
 ];
 
 export const modified = modifiedClasses.map(getFilename);
 
 const changedClasses = [
-  [
-    '@org/openmolecules/chem/conf/gen/ConformerSetDiagnostics',
-    changeConformerSetDiagnostics,
-  ],
   ['@org/openmolecules/chem/conf/gen/BaseConformer', changeBaseConformer],
   [
     '@org/openmolecules/chem/conf/gen/ConformerGenerator',
     changeConformerGenerator,
-  ],
-  [
-    '@org/openmolecules/chem/conf/so/ConformationSelfOrganizer',
-    changeConformationSelfOrganizer,
   ],
   [
     '@org/openmolecules/chem/conf/so/SelfOrganizedConformer',
@@ -59,6 +43,8 @@ const changedClasses = [
   ['chem/MolfileParser', replaceStandardCharsets(1)],
   ['chem/MolfileV3Creator', changeLineSeparator],
   ['chem/Molecule3D', removeCloneInfos],
+  ['chem/prediction/IncrementTable', changeIncrementTable],
+  ['chem/prediction/ToxicityPredictor', changeToxicityPredictor],
   ['chem/reaction/mapping/RootAtomPairSource', changeRootAtomPairSource],
   ['chem/reaction/mapping/ReactionCenterMapper', changeReactionCenterMapper],
   ['chem/TautomerHelper', changeTautomerHelper],
@@ -159,6 +145,30 @@ function removeCloneInfos(code) {
     'infos[a] = m.infos[i].clone();',
     '// infos[a] = m.infos[i].clone();',
   );
+}
+
+function changeIncrementTable(code) {
+  code = replaceChecked(
+    code,
+    'this.getClass().getResourceAsStream(filename)',
+    'new FakeFileInputStream(filename)',
+  );
+  return code;
+}
+
+function changeToxicityPredictor(code) {
+  code = replaceChecked(
+    code,
+    'import java.io.IOException;',
+    'import java.io.FakeFileInputStream;\nimport java.io.IOException;',
+  );
+  code = replaceChecked(
+    code,
+    'this.getClass().getResourceAsStream(filename)',
+    'new FakeFileInputStream(filename)',
+    2,
+  );
+  return code;
 }
 
 function changeRootAtomPairSource(code) {
@@ -418,14 +428,6 @@ function changeBondLengthSet(code) {
   return code;
 }
 
-function changeConformerSetDiagnostics(code) {
-  code = code.replaceAll(
-    /BufferedWriter writer = new BufferedWriter.*/g,
-    'BufferedWriter writer = new BufferedWriter();',
-  );
-  return code;
-}
-
 function changeBaseConformer(code) {
   code = replaceChecked(
     code,
@@ -512,17 +514,14 @@ function removeCacheIO(code) {
 function changeCsv(code) {
   code = replaceChecked(
     code,
-    'java.io.InputStreamReader;',
-    'java.io.StringReader;',
+    'import java.io.InputStreamReader;',
+    'import java.io.InputStreamReader;\nimport java.io.FakeFileInputStream;',
   );
   code = replaceChecked(
     code,
-    'br = new BufferedReader(new InputStreamReader(Csv.class.getResourceAsStream(path), StandardCharsets.UTF_8));',
-    'br = new BufferedReader(new StringReader(path));',
+    'Csv.class.getResourceAsStream(path)',
+    'new FakeFileInputStream(path)',
   );
-  const fnfeStart = code.indexOf('catch (FileNotFoundException e) {');
-  const fnfeEnd = code.indexOf('}', fnfeStart);
-  code = code.slice(0, fnfeStart) + code.slice(fnfeEnd + 1);
   return code;
 }
 
@@ -571,24 +570,9 @@ function changeVector3(code) {
 
 function fixCompoundFileHelper(code) {
   code = code.replaceAll(methodRegExp('saveRXNFile', { indent: '\t\t' }), '');
-  code = code.replaceAll('File.separatorChar', '10');
   code = code.replaceAll(
     methodRegExp('createFileFilter', { indent: '\t\t' }),
     '',
-  );
-  code = code.replaceAll('file.getName()', '""');
-  return code;
-}
-
-function changeConformationSelfOrganizer(code) {
-  code = code.replace('import java.io.FileOutputStream;\n', '');
-  code = code.replace(
-    'import java.io.OutputStreamWriter;\nimport java.nio.charset.StandardCharsets;\n',
-    '',
-  );
-  code = code.replace(
-    /mDWWriter = new BufferedWriter.*/,
-    'mDWWriter = new BufferedWriter();',
   );
   return code;
 }
