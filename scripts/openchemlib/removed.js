@@ -159,7 +159,7 @@ export const removedClasses = [
   'gui/wmf',
   'io/BufferedReaderHelper.java',
   'io/StringReadChannel.java',
-  'share/gui/editor/chem/DrawingObject.java',
+  'share',
   'util/AnimatedGIFWriter.java',
   'util/Base64.java',
   'util/BinaryEncoder.java',

@@ -66,8 +66,6 @@ const changedClasses = [
   ['gui/editor/GenericEditorArea', changeGenericEditorArea],
   ['gui/editor/CustomAtomDialogBuilder', changeCustomAtomDialogBuilder],
   ['gui/generic/GenericDialog', changeGenericDialog],
-  ['share/gui/ChemistryGeometryHelper', removePrintf],
-  ['share/gui/editor/Model', removePrintf],
   ['util/ArrayUtils', changeArrayUtils],
   ['util/datamodel/IntVec', changeIntVec],
 ];
@@ -119,10 +117,6 @@ function methodRegExp(methodName, options = {}) {
     `(?:public|private|protected).*? ${methodName}\\(.*\n(?:.*\n)*?${indent}}`,
     'g',
   );
-}
-
-function removePrintf(code) {
-  return code.replaceAll('System.out.printf', '// System.out.print');
 }
 
 function removeToStringSpaceDelimited(code) {
