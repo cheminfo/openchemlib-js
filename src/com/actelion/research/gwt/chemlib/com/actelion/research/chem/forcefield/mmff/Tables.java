@@ -128,21 +128,20 @@ public final class Tables {
      * directory as build.xml and the README.
      */
     public static Tables newMMFF94(String tableSet) {
-  return new com.actelion.research.chem.forcefield.mmff.Tables(
-    CsvData.angleData,
-    CsvData.atomData,
-    CsvData.bciData,
-    CsvData.bndkData,
-    CsvData.bondData,
-    CsvData.covradData,
-    CsvData.dfsbData,
-    CsvData.defData,
-    CsvData.herschbachlaurieData,
-    (tableSet.equals(ForceFieldMMFF94.MMFF94S) || tableSet.equals(ForceFieldMMFF94.MMFF94SPLUS) ? CsvData.n94s_outofplaneData : CsvData.outofplaneData),
-    CsvData.pbciData,
-    CsvData.stbnData,
-    (tableSet.equals(ForceFieldMMFF94.MMFF94S) ? CsvData.n94s_torsionData : tableSet.equals(ForceFieldMMFF94.MMFF94SPLUS) ? CsvData.n94s_torsionPlusData : CsvData.torsionData),
-    CsvData.vanderwaalsData
-  );
-}
+        return new com.actelion.research.chem.forcefield.mmff.Tables(
+        		RESOURCE_PATH + "angle.csv",
+        		RESOURCE_PATH + "atom.csv",
+        		RESOURCE_PATH + "bci.csv",
+        		RESOURCE_PATH + "bndk.csv",
+        		RESOURCE_PATH + "bond.csv",
+        		RESOURCE_PATH + "covrad.csv",
+        		RESOURCE_PATH + "dfsb.csv",
+        		RESOURCE_PATH + "def.csv",
+        		RESOURCE_PATH + "herschbachlaurie.csv",
+        		RESOURCE_PATH + (tableSet.equals(ForceFieldMMFF94.MMFF94S) || tableSet.equals(ForceFieldMMFF94.MMFF94SPLUS)?"94s/outofplane.csv":"outofplane.csv"),
+        		RESOURCE_PATH + "pbci.csv",
+        		RESOURCE_PATH + "stbn.csv",
+        		RESOURCE_PATH + (tableSet.equals(ForceFieldMMFF94.MMFF94S)?"94s/torsion.csv":tableSet.equals(ForceFieldMMFF94.MMFF94SPLUS)?"94s/torsionPlus.csv":"torsion.csv"),
+        		RESOURCE_PATH + "vanderwaals.csv");
+    }
 }

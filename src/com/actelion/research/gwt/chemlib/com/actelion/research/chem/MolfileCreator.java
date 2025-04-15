@@ -92,7 +92,7 @@ public class MolfileCreator {
      */
     public MolfileCreator(ExtendedMolecule mol, boolean allowScaling, double scalingFactor, StringBuilder builder) {
 		mDoubleFormat = new DecimalFormat("0.0000", new DecimalFormatSymbols(Locale.ENGLISH)); //English local ('.' for the dot)
-        final String nl = "\n";
+        final String nl = System.lineSeparator();
 
         mol.ensureHelperArrays(Molecule.cHelperParities);
 

@@ -23,23 +23,18 @@ const changedClasses = [
     changeSelfOrganizedConformer,
   ],
   ['@org/openmolecules/chem/conf/gen/RigidFragmentCache', removeCacheIO],
+  ['chem/conf/TorsionDB', changeTorsionDB],
   ['chem/Coordinates', removeToStringSpaceDelimited],
   ['chem/coords/InventorFragment', changeInventorFragment],
-  ['chem/conf/BondLengthSet', changeBondLengthSet],
-  ['chem/conf/TorsionDB', changeTorsionDB],
   ['chem/forcefield/mmff/Csv', changeCsv],
   ['chem/forcefield/mmff/Separation', replaceHashTable],
-  ['chem/forcefield/mmff/Tables', changeTables],
   ['chem/forcefield/mmff/Vector3', changeVector3],
   ['chem/io/CompoundFileHelper', fixCompoundFileHelper],
-  ['chem/io/RXNFileCreator', changeLineSeparator],
   ['chem/io/RXNFileParser', replaceStandardCharsets(2)],
-  ['chem/io/RXNFileV3Creator', changeLineSeparator, removeRXNStringFormat],
+  ['chem/io/RXNFileV3Creator', removeRXNStringFormat],
   ['chem/io/SDFileParser', replaceStandardCharsets(2)],
   ['chem/Molecule', changeMolecule],
-  ['chem/MolfileCreator', changeLineSeparator],
   ['chem/MolfileParser', replaceStandardCharsets(1)],
-  ['chem/MolfileV3Creator', changeLineSeparator],
   ['chem/Molecule3D', removeCloneInfos],
   ['chem/prediction/IncrementTable', changeIncrementTable],
   ['chem/prediction/ToxicityPredictor', changeToxicityPredictor],
@@ -99,6 +94,16 @@ function methodRegExp(methodName, options = {}) {
     `(?:public|private|protected).*? ${methodName}\\(.*\n(?:.*\n)*?${indent}}`,
     'g',
   );
+}
+
+function changeTorsionDB(code) {
+  code = replaceChecked(
+    code,
+    'TorsionDB.class.getResourceAsStream(',
+    'new FakeFileInputStream(',
+    2,
+  );
+  return code;
 }
 
 function removeToStringSpaceDelimited(code) {
@@ -305,125 +310,6 @@ function changeMolecule(code) {
   return code;
 }
 
-function changeLineSeparator(code) {
-  return code.replaceAll('System.lineSeparator()', String.raw`"\n"`);
-}
-
-const newInit = `
-private void init(int mode) {
-  mSupportedModes |= mode;
-
-  String[] tr = TorsionDBData.gettorsionIDData();
-  String[] ar = ((mode & MODE_ANGLES) == 0) ? null : TorsionDBData.gettorsionAngleData();
-  String[] rr = ((mode & MODE_ANGLES) == 0) ? null : TorsionDBData.gettorsionRangeData();
-  String[] fr = ((mode & MODE_ANGLES) == 0) ? null : TorsionDBData.gettorsionFrequencyData();
-  String[] br = ((mode & MODE_BINS) == 0) ? null : TorsionDBData.gettorsionBinsData();
-
-  for (int trLine = 0; trLine < tr.length; trLine++) {
-    String type = tr[trLine];
-    TorsionInfo torsionInfo = mTreeMap.get(type);
-		if (torsionInfo == null) {
-			torsionInfo = new TorsionInfo(getSymmetryType(type));
-			mTreeMap.put(type, torsionInfo);
-		}
-
-		if (ar != null) {
-			String[] angle = ar[trLine].split(",");
-			torsionInfo.angle = new short[angle.length];
-			for (int i=0; i<angle.length; i++)
-				torsionInfo.angle[i] = Short.parseShort(angle[i]);
-		}
-		if (rr != null) {
-			String[] range = rr[trLine].split(",");
-			torsionInfo.range = new short[range.length][2];
-			for (int i=0; i<range.length; i++) {
-				int index = range[i].indexOf('-', 1);
-				torsionInfo.range[i][0] = Short.parseShort(range[i].substring(0, index));
-				torsionInfo.range[i][1] = Short.parseShort(range[i].substring(index+1));
-			}
-		}
-		if (fr != null) {
-			String[] frequency = fr[trLine].split(",");
-			torsionInfo.frequency = new short[frequency.length];
-			for (int i=0; i<frequency.length; i++)
-				torsionInfo.frequency[i] = Byte.parseByte(frequency[i]);
-		}
-		if (br != null) {
-			String[] binSize = br[trLine].split(",");
-			torsionInfo.binSize = new byte[binSize.length];
-			for (int i=0; i<binSize.length; i++)
-				torsionInfo.binSize[i] = Byte.parseByte(binSize[i]);
-		}
-  }
-}
-`;
-
-function changeTorsionDB(code) {
-  code = replaceChecked(
-    code,
-    'util.TreeMap;',
-    'util.TreeMap;\nimport com.actelion.research.chem.conf.TorsionDBData;',
-  );
-
-  const initIndexStart = code.indexOf('private void init');
-  const initIndexEnd = code.indexOf('/**', initIndexStart);
-
-  code = code.slice(0, initIndexStart) + newInit + code.slice(initIndexEnd);
-
-  return code;
-}
-
-const newInitialize = `
-private static void initialize() {
-  if (!isInitialized) {
-    String[] bdr = TorsionDBData.getbondLengthDataData();
-    String countString = bdr[0];
-    int count = Integer.parseInt(countString);
-
-    BOND_ID = new int[count];
-    BOND_LENGTH = new float[count];
-    BOND_STDDEV = new float[count];
-    BOND_COUNT = new int[count];
-
-    for (int i=0; i<count; i++) {
-      String line = bdr[i+1];
-      String[] item = line.split("\\t");
-      if (item.length == 4) {
-        try {
-          BOND_ID[i] = Integer.parseInt(item[0]);
-          BOND_LENGTH[i] = Float.parseFloat(item[1]);
-          BOND_STDDEV[i] = Float.parseFloat(item[2]);
-          BOND_COUNT[i] = Integer.parseInt(item[3]);
-        } catch (NumberFormatException nfe) {
-          break;
-        }
-      }
-    }
-    isInitialized = true;
-  }
-}
-
-`;
-
-function changeBondLengthSet(code) {
-  code = replaceChecked(
-    code,
-    'chem.StereoMolecule;',
-    'chem.StereoMolecule;\nimport com.actelion.research.chem.conf.TorsionDBData;',
-  );
-
-  const initIndexStart = code.indexOf('private static void initialize');
-  const initIndexEnd = code.indexOf(
-    '\n\tpublic float getLength',
-    initIndexStart,
-  );
-
-  code =
-    code.slice(0, initIndexStart) + newInitialize + code.slice(initIndexEnd);
-
-  return code;
-}
-
 function changeBaseConformer(code) {
   code = replaceChecked(
     code,
@@ -526,34 +412,6 @@ function replaceStandardCharsets(times) {
     code = replaceChecked(code, 'StandardCharsets.UTF_8', '"UTF-8"', times);
     return code;
   };
-}
-
-const newTables = `public static Tables newMMFF94(String tableSet) {
-  return new com.actelion.research.chem.forcefield.mmff.Tables(
-    CsvData.angleData,
-    CsvData.atomData,
-    CsvData.bciData,
-    CsvData.bndkData,
-    CsvData.bondData,
-    CsvData.covradData,
-    CsvData.dfsbData,
-    CsvData.defData,
-    CsvData.herschbachlaurieData,
-    (tableSet.equals(ForceFieldMMFF94.MMFF94S) || tableSet.equals(ForceFieldMMFF94.MMFF94SPLUS) ? CsvData.n94s_outofplaneData : CsvData.outofplaneData),
-    CsvData.pbciData,
-    CsvData.stbnData,
-    (tableSet.equals(ForceFieldMMFF94.MMFF94S) ? CsvData.n94s_torsionData : tableSet.equals(ForceFieldMMFF94.MMFF94SPLUS) ? CsvData.n94s_torsionPlusData : CsvData.torsionData),
-    CsvData.vanderwaalsData
-  );
-}`;
-
-function changeTables(code) {
-  const indexStart = code.indexOf('public static Tables');
-  const indexEnd = code.indexOf('}', indexStart);
-
-  code = code.slice(0, indexStart) + newTables + code.slice(indexEnd + 1);
-
-  return code;
 }
 
 function replaceHashTable(code) {
