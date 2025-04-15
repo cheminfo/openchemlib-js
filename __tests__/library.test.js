@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 
-import { expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import OCL from '../lib/index';
 import debugOCL from '../lib/index.debug';
@@ -18,19 +18,21 @@ test('top-level API', () => {
   }
 });
 
-for (const key of allAPI) {
-  const api = OCL[key];
-  if (typeof api === 'function') {
-    test(`static properties of ${key}`, () => {
-      expect(getFilteredKeys(api)).toMatchSnapshot();
-    });
-    if (typeof api.prototype === 'object') {
-      test(`prototype properties of ${key}`, () => {
-        expect(getFilteredKeys(api.prototype)).toMatchSnapshot();
+describe('class prototypes', () => {
+  for (const key of allAPI) {
+    const api = OCL[key];
+    if (typeof api === 'function') {
+      test(`static properties of ${key}`, () => {
+        expect(getFilteredKeys(api)).toMatchSnapshot();
       });
+      if (typeof api.prototype === 'object') {
+        test(`prototype properties of ${key}`, () => {
+          expect(getFilteredKeys(api.prototype)).toMatchSnapshot();
+        });
+      }
     }
   }
-}
+});
 
 function getFilteredKeys(obj) {
   return Object.keys(obj)

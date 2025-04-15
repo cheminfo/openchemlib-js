@@ -1,10 +1,10 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`prototype properties of CanonizerUtil 1`] = `[]`;
+exports[`class prototypes > prototype properties of CanonizerUtil 1`] = `[]`;
 
-exports[`prototype properties of CanvasEditor 1`] = `[]`;
+exports[`class prototypes > prototype properties of CanvasEditor 1`] = `[]`;
 
-exports[`prototype properties of ConformerGenerator 1`] = `
+exports[`class prototypes > prototype properties of ConformerGenerator 1`] = `
 [
   "getConformerCount",
   "getNextConformerAsMolecule",
@@ -15,9 +15,9 @@ exports[`prototype properties of ConformerGenerator 1`] = `
 ]
 `;
 
-exports[`prototype properties of DrugScoreCalculator 1`] = `[]`;
+exports[`class prototypes > prototype properties of DrugScoreCalculator 1`] = `[]`;
 
-exports[`prototype properties of DruglikenessPredictor 1`] = `
+exports[`class prototypes > prototype properties of DruglikenessPredictor 1`] = `
 [
   "assessDruglikeness",
   "getDetail",
@@ -25,7 +25,7 @@ exports[`prototype properties of DruglikenessPredictor 1`] = `
 ]
 `;
 
-exports[`prototype properties of ForceFieldMMFF94 1`] = `
+exports[`class prototypes > prototype properties of ForceFieldMMFF94 1`] = `
 [
   "getTotalEnergy",
   "minimise",
@@ -33,7 +33,7 @@ exports[`prototype properties of ForceFieldMMFF94 1`] = `
 ]
 `;
 
-exports[`prototype properties of Molecule 1`] = `
+exports[`class prototypes > prototype properties of Molecule 1`] = `
 [
   "addAtom",
   "addBond",
@@ -306,18 +306,18 @@ exports[`prototype properties of Molecule 1`] = `
 ]
 `;
 
-exports[`prototype properties of MoleculeProperties 1`] = `[]`;
+exports[`class prototypes > prototype properties of MoleculeProperties 1`] = `[]`;
 
-exports[`prototype properties of ReactionEncoder 1`] = `[]`;
+exports[`class prototypes > prototype properties of ReactionEncoder 1`] = `[]`;
 
-exports[`prototype properties of Reactor 1`] = `
+exports[`class prototypes > prototype properties of Reactor 1`] = `
 [
   "getProducts",
   "setReactant",
 ]
 `;
 
-exports[`prototype properties of SDFileParser 1`] = `
+exports[`class prototypes > prototype properties of SDFileParser 1`] = `
 [
   "getField",
   "getFieldData",
@@ -329,7 +329,7 @@ exports[`prototype properties of SDFileParser 1`] = `
 ]
 `;
 
-exports[`prototype properties of SSSearcher 1`] = `
+exports[`class prototypes > prototype properties of SSSearcher 1`] = `
 [
   "isFragmentInMolecule",
   "setFragment",
@@ -338,7 +338,7 @@ exports[`prototype properties of SSSearcher 1`] = `
 ]
 `;
 
-exports[`prototype properties of SSSearcherWithIndex 1`] = `
+exports[`class prototypes > prototype properties of SSSearcherWithIndex 1`] = `
 [
   "createIndex",
   "isFragmentInMolecule",
@@ -347,7 +347,7 @@ exports[`prototype properties of SSSearcherWithIndex 1`] = `
 ]
 `;
 
-exports[`prototype properties of SmilesParser 1`] = `
+exports[`class prototypes > prototype properties of SmilesParser 1`] = `
 [
   "getSmartsWarning",
   "parseMolecule",
@@ -356,25 +356,25 @@ exports[`prototype properties of SmilesParser 1`] = `
 ]
 `;
 
-exports[`prototype properties of ToxicityPredictor 1`] = `
+exports[`class prototypes > prototype properties of ToxicityPredictor 1`] = `
 [
   "assessRisk",
   "getDetail",
 ]
 `;
 
-exports[`prototype properties of Transformer 1`] = `
+exports[`class prototypes > prototype properties of Transformer 1`] = `
 [
   "applyTransformation",
   "setMolecule",
 ]
 `;
 
-exports[`prototype properties of Util 1`] = `[]`;
+exports[`class prototypes > prototype properties of Util 1`] = `[]`;
 
-exports[`prototype properties of registerCustomElement 1`] = `[]`;
+exports[`class prototypes > prototype properties of registerCustomElement 1`] = `[]`;
 
-exports[`static properties of CanonizerUtil 1`] = `
+exports[`class prototypes > static properties of CanonizerUtil 1`] = `
 [
   "BACKBONE",
   "NORMAL",
@@ -385,9 +385,9 @@ exports[`static properties of CanonizerUtil 1`] = `
 ]
 `;
 
-exports[`static properties of CanvasEditor 1`] = `[]`;
+exports[`class prototypes > static properties of CanvasEditor 1`] = `[]`;
 
-exports[`static properties of ConformerGenerator 1`] = `
+exports[`class prototypes > static properties of ConformerGenerator 1`] = `
 [
   "STRATEGY_ADAPTIVE_RANDOM",
   "STRATEGY_LIKELY_RANDOM",
@@ -396,19 +396,19 @@ exports[`static properties of ConformerGenerator 1`] = `
 ]
 `;
 
-exports[`static properties of DrugScoreCalculator 1`] = `
+exports[`class prototypes > static properties of DrugScoreCalculator 1`] = `
 [
   "calculate",
 ]
 `;
 
-exports[`static properties of DruglikenessPredictor 1`] = `
+exports[`class prototypes > static properties of DruglikenessPredictor 1`] = `
 [
   "DRUGLIKENESS_UNKNOWN",
 ]
 `;
 
-exports[`static properties of ForceFieldMMFF94 1`] = `
+exports[`class prototypes > static properties of ForceFieldMMFF94 1`] = `
 [
   "MMFF94",
   "MMFF94S",
@@ -416,7 +416,7 @@ exports[`static properties of ForceFieldMMFF94 1`] = `
 ]
 `;
 
-exports[`static properties of Molecule 1`] = `
+exports[`class prototypes > static properties of Molecule 1`] = `
 [
   "CANONIZER_ASSIGN_PARITIES_TO_TETRAHEDRAL_N",
   "CANONIZER_CONSIDER_DIASTEREOTOPICITY",
@@ -672,9 +672,9 @@ exports[`static properties of Molecule 1`] = `
 ]
 `;
 
-exports[`static properties of MoleculeProperties 1`] = `[]`;
+exports[`class prototypes > static properties of MoleculeProperties 1`] = `[]`;
 
-exports[`static properties of ReactionEncoder 1`] = `
+exports[`class prototypes > static properties of ReactionEncoder 1`] = `
 [
   "CATALYST_DELIMITER",
   "INCLUDE_ALL",
@@ -693,13 +693,13 @@ exports[`static properties of ReactionEncoder 1`] = `
 ]
 `;
 
-exports[`static properties of Reactor 1`] = `[]`;
+exports[`class prototypes > static properties of Reactor 1`] = `[]`;
 
-exports[`static properties of SDFileParser 1`] = `[]`;
+exports[`class prototypes > static properties of SDFileParser 1`] = `[]`;
 
-exports[`static properties of SSSearcher 1`] = `[]`;
+exports[`class prototypes > static properties of SSSearcher 1`] = `[]`;
 
-exports[`static properties of SSSearcherWithIndex 1`] = `
+exports[`class prototypes > static properties of SSSearcherWithIndex 1`] = `
 [
   "bitCount",
   "getHexStringFromIndex",
@@ -710,9 +710,9 @@ exports[`static properties of SSSearcherWithIndex 1`] = `
 ]
 `;
 
-exports[`static properties of SmilesParser 1`] = `[]`;
+exports[`class prototypes > static properties of SmilesParser 1`] = `[]`;
 
-exports[`static properties of ToxicityPredictor 1`] = `
+exports[`class prototypes > static properties of ToxicityPredictor 1`] = `
 [
   "RISK_HIGH",
   "RISK_LOW",
@@ -726,15 +726,15 @@ exports[`static properties of ToxicityPredictor 1`] = `
 ]
 `;
 
-exports[`static properties of Transformer 1`] = `[]`;
+exports[`class prototypes > static properties of Transformer 1`] = `[]`;
 
-exports[`static properties of Util 1`] = `
+exports[`class prototypes > static properties of Util 1`] = `
 [
   "getHoseCodesFromDiastereotopicID",
 ]
 `;
 
-exports[`static properties of registerCustomElement 1`] = `[]`;
+exports[`class prototypes > static properties of registerCustomElement 1`] = `[]`;
 
 exports[`top-level API 1`] = `
 [
