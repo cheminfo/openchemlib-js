@@ -1,3 +1,15 @@
+export declare class Resources {
+  /**
+   * Register a static resource.
+   * This is needed for some APIs.
+   * @param fileName
+   * @param contents
+   */
+  static registerResource(fileName: string, contents: string): void;
+
+  private constructor();
+}
+
 export interface IMoleculeFromSmilesOptions {
   /**
    * Disable coordinate invention.

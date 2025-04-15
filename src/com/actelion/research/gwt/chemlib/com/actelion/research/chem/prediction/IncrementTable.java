@@ -34,6 +34,7 @@
 package com.actelion.research.chem.prediction;
 
 import java.io.*;
+import org.cheminfo.utils.FakeFileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class IncrementTable {
 		}
 
 	protected IncrementTable(String filename) throws Exception {
-		BufferedReader theReader = new BufferedReader(new InputStreamReader(new FakeFileInputStream(filename), StandardCharsets.UTF_8));
+		BufferedReader theReader = new BufferedReader(new InputStreamReader(FakeFileInputStream.getResourceAsStream(filename), StandardCharsets.UTF_8));
 		mRecords = new ArrayList<IncrementTableRecord>();
 		while (true) {
 			String theLine = theReader.readLine();

@@ -3,6 +3,7 @@ package com.actelion.research.gwt.js.utils;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.Molecule;
 import com.google.gwt.core.client.JavaScriptObject;
+import org.cheminfo.utils.PlainJSObject;
 
 public class MoleculeQueryFeatures {
   public static JavaScriptObject getAtomQueryFeatures(StereoMolecule oclMolecule, int atom) {

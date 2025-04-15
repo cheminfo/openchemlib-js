@@ -4,4 +4,5 @@
 
   <super-source path="chemlib" />
   <super-source path="jre" />
+  <super-source path="utils" />
 </module>

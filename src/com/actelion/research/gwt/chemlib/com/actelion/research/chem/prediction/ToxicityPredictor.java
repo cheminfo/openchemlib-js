@@ -41,7 +41,7 @@ import com.actelion.research.chem.SortedStringList;
 import com.actelion.research.chem.StereoMolecule;
 
 import java.io.BufferedReader;
-import java.io.FakeFileInputStream;
+import org.cheminfo.utils.FakeFileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -207,7 +207,7 @@ public class ToxicityPredictor {
 
 
 	private ArrayList<String> readIDCodeFile(String filename) throws Exception {
-		BufferedReader theReader = new BufferedReader(new InputStreamReader(new FakeFileInputStream(filename), StandardCharsets.UTF_8));
+		BufferedReader theReader = new BufferedReader(new InputStreamReader(FakeFileInputStream.getResourceAsStream(filename), StandardCharsets.UTF_8));
 		ArrayList<String> fragments = new ArrayList<String>();
 		while (true) {
 			try {
@@ -226,7 +226,7 @@ public class ToxicityPredictor {
 
 
 	private SortedStringList readAndSortIDCodeFile(String filename) throws Exception {
-		BufferedReader theReader = new BufferedReader(new InputStreamReader(new FakeFileInputStream(filename), StandardCharsets.UTF_8));
+		BufferedReader theReader = new BufferedReader(new InputStreamReader(FakeFileInputStream.getResourceAsStream(filename), StandardCharsets.UTF_8));
 		SortedStringList molecules = new SortedStringList();
 		while (true) {
 			try {

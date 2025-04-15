@@ -38,7 +38,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.FakeFileInputStream;
+import org.cheminfo.utils.FakeFileInputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -93,7 +93,7 @@ public final class Csv {
 
         try {
             String line;
-            br = new BufferedReader(new InputStreamReader(new FakeFileInputStream(path), StandardCharsets.UTF_8));
+            br = new BufferedReader(new InputStreamReader(FakeFileInputStream.getResourceAsStream(path), StandardCharsets.UTF_8));
 
             int size = Integer.parseInt(br.readLine().trim());
             String[] format = br.readLine().trim().split(",");

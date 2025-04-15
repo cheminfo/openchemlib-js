@@ -38,6 +38,7 @@ import com.actelion.research.chem.Molecule;
 import com.actelion.research.chem.StereoMolecule;
 
 import java.io.*;
+import org.cheminfo.utils.FakeFileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.TreeMap;
 
@@ -296,7 +297,7 @@ public class TorsionDB {
 			return new BufferedReader(new FileReader(sExternalResourcePath+resourceName));
 
 		if (sDatabase == null) {
-			InputStream is = new FakeFileInputStream(cBasePath+DATABASE_CSD+resourceName);
+			InputStream is = FakeFileInputStream.getResourceAsStream(cBasePath+DATABASE_CSD+resourceName);
 			if (is != null) {
 				sDatabase = DATABASE_CSD;
 				return new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
@@ -305,7 +306,7 @@ public class TorsionDB {
 			sDatabase = DATABASE_COD;
 			}
 
-	   	return new BufferedReader(new InputStreamReader(new FakeFileInputStream(
+	   	return new BufferedReader(new InputStreamReader(FakeFileInputStream.getResourceAsStream(
    				cBasePath+sDatabase+resourceName), StandardCharsets.UTF_8));
 		}
 

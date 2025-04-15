@@ -10,7 +10,7 @@
     "SMILES"
   ],
   "scripts": {
-    "build": "npm run build-java && npm run build-js",
+    "build": "npm run build-java && npm run build-js && npm run build-resources",
     "build-help": "node scripts/build_help.js",
     "build-java": "npm run build-java-min && npm run build-java-debug",
     "build-java-debug": "node scripts/build.js build --mode=pretty -s debug",
@@ -20,6 +20,7 @@
     "build-js-debug": "esbuild lib/index.debug.js --bundle --format=esm --outfile=dist/openchemlib.debug.js",
     "build-js-min": "esbuild lib/index.js --minify --bundle --format=esm --outfile=dist/openchemlib.js",
     "build-js-types": "cp lib/index.d.ts dist/openchemlib.d.ts",
+    "build-resources": "node scripts/copy_resources.js",
     "copy-openchemlib": "node scripts/build.js copy:openchemlib",
     "eslint": "eslint .",
     "eslint-fix": "npm run eslint -- --fix",

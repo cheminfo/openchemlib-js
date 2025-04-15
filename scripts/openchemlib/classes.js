@@ -99,8 +99,13 @@ function methodRegExp(methodName, options = {}) {
 function changeTorsionDB(code) {
   code = replaceChecked(
     code,
+    'import java.io.*;',
+    'import java.io.*;\nimport org.cheminfo.utils.FakeFileInputStream;',
+  );
+  code = replaceChecked(
+    code,
     'TorsionDB.class.getResourceAsStream(',
-    'new FakeFileInputStream(',
+    'FakeFileInputStream.getResourceAsStream(',
     2,
   );
   return code;
@@ -151,8 +156,13 @@ function removeCloneInfos(code) {
 function changeIncrementTable(code) {
   code = replaceChecked(
     code,
-    'this.getClass().getResourceAsStream(filename)',
-    'new FakeFileInputStream(filename)',
+    'import java.io.*;',
+    'import java.io.*;\nimport org.cheminfo.utils.FakeFileInputStream;',
+  );
+  code = replaceChecked(
+    code,
+    'this.getClass().getResourceAsStream(',
+    'FakeFileInputStream.getResourceAsStream(',
   );
   return code;
 }
@@ -161,12 +171,12 @@ function changeToxicityPredictor(code) {
   code = replaceChecked(
     code,
     'import java.io.IOException;',
-    'import java.io.FakeFileInputStream;\nimport java.io.IOException;',
+    'import org.cheminfo.utils.FakeFileInputStream;\nimport java.io.IOException;',
   );
   code = replaceChecked(
     code,
-    'this.getClass().getResourceAsStream(filename)',
-    'new FakeFileInputStream(filename)',
+    'this.getClass().getResourceAsStream(',
+    'FakeFileInputStream.getResourceAsStream(',
     2,
   );
   return code;
@@ -397,12 +407,12 @@ function changeCsv(code) {
   code = replaceChecked(
     code,
     'import java.io.InputStreamReader;',
-    'import java.io.InputStreamReader;\nimport java.io.FakeFileInputStream;',
+    'import java.io.InputStreamReader;\nimport org.cheminfo.utils.FakeFileInputStream;',
   );
   code = replaceChecked(
     code,
-    'Csv.class.getResourceAsStream(path)',
-    'new FakeFileInputStream(path)',
+    'Csv.class.getResourceAsStream(',
+    'FakeFileInputStream.getResourceAsStream(',
   );
   return code;
 }
