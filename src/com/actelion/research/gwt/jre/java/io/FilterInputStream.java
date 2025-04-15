@@ -1,4 +1,5 @@
 package java.io;
 
-// We don't need it, but still define an empty class, as the GWT version generates compiler errors.
+// This class is unused but the version implemented by GWT (com/google/gwt/emul/java/io/FilterInputStream.java)
+// has compile errors.
 public class FilterInputStream {}
