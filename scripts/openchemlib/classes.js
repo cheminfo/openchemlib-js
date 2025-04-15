@@ -1,6 +1,4 @@
-import { generateCsvData } from './generateCsvData.js';
 import { generateImageData } from './generateImageData.js';
-import { generateTorsionDBData } from './generateTorsionDBData.js';
 import { removedClasses } from './removed.js';
 
 const modifiedClasses = [
@@ -63,8 +61,6 @@ export const changed = changedClasses.map(([path, ...transformers]) => {
 export const removed = removedClasses.map(getFolderName);
 
 const generatedClasses = [
-  ['chem/conf/TorsionDBData', generateTorsionDBData],
-  ['chem/forcefield/mmff/CsvData', generateCsvData],
   ['@gwt/js/api/generic/internal/ImageData', generateImageData],
 ];
 
