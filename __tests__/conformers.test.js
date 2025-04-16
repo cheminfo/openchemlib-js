@@ -1,6 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 
-import { ConformerGenerator, Molecule } from '../lib/index.js';
+import { ConformerGenerator, Molecule, Resources } from '../lib/index.js';
+
+beforeAll(() => {
+  Resources.registerResourcesNodejs();
+});
 
 describe('ConformerGenerator', () => {
   it('should return one conformer', () => {

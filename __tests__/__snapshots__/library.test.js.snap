@@ -317,6 +317,8 @@ exports[`class prototypes > prototype properties of Reactor 1`] = `
 ]
 `;
 
+exports[`class prototypes > prototype properties of Resources 1`] = `[]`;
+
 exports[`class prototypes > prototype properties of SDFileParser 1`] = `
 [
   "getField",
@@ -695,6 +697,13 @@ exports[`class prototypes > static properties of ReactionEncoder 1`] = `
 
 exports[`class prototypes > static properties of Reactor 1`] = `[]`;
 
+exports[`class prototypes > static properties of Resources 1`] = `
+[
+  "registerResource",
+  "registerResourcesNodejs",
+]
+`;
+
 exports[`class prototypes > static properties of SDFileParser 1`] = `[]`;
 
 exports[`class prototypes > static properties of SSSearcher 1`] = `[]`;
@@ -749,6 +758,7 @@ exports[`top-level API 1`] = `
   "Reaction",
   "ReactionEncoder",
   "Reactor",
+  "Resources",
   "RingCollection",
   "SDFileParser",
   "SSSearcher",

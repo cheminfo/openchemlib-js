@@ -1,10 +1,15 @@
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 
 import {
   ConformerGenerator,
   ForceFieldMMFF94,
   Molecule,
+  Resources,
 } from '../lib/index.js';
+
+beforeAll(() => {
+  Resources.registerResourcesNodejs();
+});
 
 describe('ForceFieldMMFF94', () => {
   it('should generate force field', () => {

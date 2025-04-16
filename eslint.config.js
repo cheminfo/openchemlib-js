@@ -17,10 +17,18 @@ export default defineConfig(
   ...cheminfo,
   ...unicorn,
   {
-    files: ['lib/**'],
+    files: ['lib/canvas_editor/**'],
     languageOptions: {
       globals: {
         ...globals.browser,
+      },
+    },
+  },
+  {
+    files: ['lib/register_resources_nodejs.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
       },
     },
   },

@@ -1,4 +1,4 @@
-export declare class Resources {
+export declare const Resources: {
   /**
    * Register a static resource.
    * This is needed for some APIs.
@@ -7,10 +7,14 @@ export declare class Resources {
    * @param fileName
    * @param contents
    */
-  static registerResource(fileName: string, contents: Uint8Array): void;
+  registerResource(fileName: string, contents: Uint8Array): void;
 
-  private constructor();
-}
+  /**
+   * Read and register all static resources synchronously.
+   * This method can only be called in Node.js.
+   */
+  registerResourcesNodejs(): void;
+};
 
 export interface IMoleculeFromSmilesOptions {
   /**
