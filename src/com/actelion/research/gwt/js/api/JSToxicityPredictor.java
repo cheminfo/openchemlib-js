@@ -5,7 +5,7 @@ import jsinterop.annotations.*;
 
 import com.actelion.research.chem.prediction.ToxicityPredictor;
 import com.actelion.research.gwt.js.utils.Services2;
-import com.actelion.research.gwt.js.utils.Util2;
+import com.actelion.research.gwt.js.utils.Util;
 
 @JsType(name = "ToxicityPredictor")
 public class JSToxicityPredictor {
@@ -33,6 +33,6 @@ public class JSToxicityPredictor {
   }
 
   public JavaScriptObject getDetail(JSMolecule molecule, int riskType) {
-    return Util2.convertParameterizedStringList(predictor.getDetail(molecule.getStereoMolecule(), riskType));
+    return Util.convertParameterizedStringList(predictor.getDetail(molecule.getStereoMolecule(), riskType));
   }
 }

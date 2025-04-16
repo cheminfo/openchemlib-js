@@ -5,7 +5,7 @@ import jsinterop.annotations.*;
 
 import com.actelion.research.chem.prediction.DruglikenessPredictor;
 import com.actelion.research.gwt.js.utils.Services2;
-import com.actelion.research.gwt.js.utils.Util2;
+import com.actelion.research.gwt.js.utils.Util;
 
 @JsType(name = "DruglikenessPredictor")
 public class JSDruglikenessPredictor {
@@ -27,6 +27,6 @@ public class JSDruglikenessPredictor {
   }
 
   public JavaScriptObject getDetail() {
-    return Util2.convertParameterizedStringList(predictor.getDetail());
+    return Util.convertParameterizedStringList(predictor.getDetail());
   }
 }
