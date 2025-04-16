@@ -2885,7 +2885,7 @@ export declare class Canonizer {
 
   getCanMolecule(includeExplicitHydrogen?: boolean): Molecule;
 
-  getIDCode(): String;
+  getIDCode(): string;
 
   getFinalRank(): int[];
 
@@ -2895,9 +2895,9 @@ export declare class Canonizer {
 
   invalidateCoordinates(): void;
 
-  getEncodedCoordinates(keepPositionAndScale?: boolean): String;
+  getEncodedCoordinates(keepPositionAndScale?: boolean): string;
 
-  getEncodedMapping(): String;
+  getEncodedMapping(): string;
 
   normalizeEnantiomer(): boolean;
 
