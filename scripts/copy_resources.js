@@ -36,7 +36,7 @@ const toCopy = [
   'toxpredictor/r3.txt',
 ];
 
-const source = path.join(import.meta.dirname, '../src/resources');
+const source = path.join(import.meta.dirname, '../src/resources/resources');
 const destination = path.join(import.meta.dirname, '../dist/resources');
 
 rmSync(destination, { recursive: true, force: true });
