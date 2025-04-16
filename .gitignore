@@ -1,7 +1,8 @@
 /.idea
 /.settings
 /config.json
-/dist/
+/dist
+/distbuild
 /gwt
 /gwt.zip
 /gwt-unitCache

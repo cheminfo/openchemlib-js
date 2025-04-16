@@ -34,7 +34,7 @@ const toCopy = [
   'toxpredictor/t3.txt',
   'toxpredictor/i3.txt',
   'toxpredictor/r3.txt',
-];
+].map((p) => p.replaceAll('/', path.sep));
 
 const source = path.join(import.meta.dirname, '../src/resources/resources');
 const destination = path.join(import.meta.dirname, '../dist/resources');
