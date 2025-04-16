@@ -2,10 +2,12 @@ export declare class Resources {
   /**
    * Register a static resource.
    * This is needed for some APIs.
+   *
+   * The contents must be ASCII only.
    * @param fileName
    * @param contents
    */
-  static registerResource(fileName: string, contents: string): void;
+  static registerResource(fileName: string, contents: Uint8Array): void;
 
   private constructor();
 }
