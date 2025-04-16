@@ -4,6 +4,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
 import com.actelion.research.chem.prediction.DruglikenessPredictor;
+import com.actelion.research.chem.prediction.ParameterizedStringList;
 import com.actelion.research.gwt.js.utils.Services2;
 import com.actelion.research.gwt.js.utils.Util;
 
@@ -27,6 +28,15 @@ public class JSDruglikenessPredictor {
   }
 
   public JavaScriptObject getDetail() {
-    return Util.convertParameterizedStringList(predictor.getDetail());
+    ParameterizedStringList detail = predictor.getDetail();
+    if (detail == null) {
+      throwDetailError();
+    }
+    return Util.convertParameterizedStringList(detail);
   }
+
+  private native void throwDetailError()
+  /*-{
+    throw new Error('drug likeness must be assessed first');
+  }-*/;
 }

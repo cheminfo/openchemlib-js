@@ -16,7 +16,7 @@ export declare const Resources: {
   registerResourcesNodejs(): void;
 };
 
-export interface IMoleculeFromSmilesOptions {
+export interface MoleculeFromSmilesOptions {
   /**
    * Disable coordinate invention.
    * @default false
@@ -81,7 +81,7 @@ export interface BondQueryFeatures {
   brigdeSpan: number;
 }
 
-export interface IMoleculeToSVGOptions extends IDepictorOptions {
+export interface MoleculeToSVGOptions extends DepictorOptions {
   /**
    * Factor used to compute the size of text nodes.
    * Default: 1.
@@ -112,7 +112,7 @@ export interface IMoleculeToSVGOptions extends IDepictorOptions {
   autoCropMargin?: number;
 }
 
-export interface IHoseCodesOptions {
+export interface HoseCodesOptions {
   /**
    * Maximum number of atoms from the center.
    * Default: 5.
@@ -128,7 +128,7 @@ export interface IHoseCodesOptions {
   type: 0 | 1;
 }
 
-export interface ISmilesGeneratorOptions {
+export interface SmilesGeneratorOptions {
   /**
    * Whether to create SMILES with SMARTS capabilities.
    * @default false
@@ -467,7 +467,7 @@ export declare class Molecule {
    */
   static fromSmiles(
     smiles: string,
-    options?: IMoleculeFromSmilesOptions,
+    options?: MoleculeFromSmilesOptions,
   ): Molecule;
 
   /**
@@ -534,7 +534,7 @@ export declare class Molecule {
 
   toSmarts(): string;
 
-  toIsomericSmiles(options?: ISmilesGeneratorOptions): string;
+  toIsomericSmiles(options?: SmilesGeneratorOptions): string;
 
   /**
    * Returns a MDL Molfile V2000 string.
@@ -558,7 +558,7 @@ export declare class Molecule {
     width: number,
     height: number,
     id?: string,
-    options?: IMoleculeToSVGOptions,
+    options?: MoleculeToSVGOptions,
   ): string;
 
   /**
@@ -613,7 +613,7 @@ export declare class Molecule {
    * Spherical Environments) codes represented as diastereotopic actelion IDs.
    * @param options
    */
-  getHoseCodes(options?: IHoseCodesOptions): string[][];
+  getHoseCodes(options?: HoseCodesOptions): string[][];
 
   getRingSet(): RingCollection;
 
@@ -2694,7 +2694,7 @@ export declare class Molecule {
   setAssignParitiesToNitrogen(b: boolean): void;
 }
 
-export interface ISmilesParserOptions {
+export interface SmilesParserOptions {
   /**
    * Enable SMARTS parsing with `'smarts'` or `'guess'`.
    * @default 'smiles'
@@ -2718,7 +2718,7 @@ export interface ISmilesParserOptions {
   createSmartsWarnings?: boolean;
 }
 
-export interface ISmilesParserParseMoleculeOptions {
+export interface SmilesParserParseMoleculeOptions {
   /**
    * Molecule to parse into.
    */
@@ -2741,7 +2741,7 @@ export declare class SmilesParser {
   /**
    * Create a SMILES parser.
    */
-  constructor(options?: ISmilesParserOptions);
+  constructor(options?: SmilesParserOptions);
 
   /**
    * Set the random seed used to invent coordinates.
@@ -2754,7 +2754,7 @@ export declare class SmilesParser {
    */
   parseMolecule(
     smiles: string,
-    options?: ISmilesParserParseMoleculeOptions,
+    options?: SmilesParserParseMoleculeOptions,
   ): Molecule;
 
   /**
@@ -2863,7 +2863,7 @@ export declare class CanonizerUtil {
 /**
  * All depictor options default to `false`.
  */
-export interface IDepictorOptions {
+export interface DepictorOptions {
   inflateToMaxAVBL?: boolean;
   inflateToHighResAVBL?: boolean;
   chiralTextBelowMolecule?: boolean;
@@ -3351,7 +3351,7 @@ export declare namespace Util {
    */
   export function getHoseCodesFromDiastereotopicID(
     diastereotopicID: string,
-    options?: IHoseCodesOptions,
+    options?: HoseCodesOptions,
   ): string[];
 }
 
@@ -3360,7 +3360,7 @@ export declare namespace Util {
  */
 export declare const version: string;
 
-export interface IParameterizedString {
+export interface ParameterizedString {
   type: number;
 
   value: string;
@@ -3375,15 +3375,15 @@ export declare class MoleculeProperties {
 
   logP: number;
 
-  logPString: IParameterizedString[];
+  logPString: ParameterizedString[];
 
   logS: number;
 
-  logSString: IParameterizedString[];
+  logSString: ParameterizedString[];
 
   polarSurfaceArea: number;
 
-  polarSurfaceAreaString: IParameterizedString[];
+  polarSurfaceAreaString: ParameterizedString[];
 
   rotatableBondCount: number;
 
@@ -3391,6 +3391,9 @@ export declare class MoleculeProperties {
 }
 
 export declare class DruglikenessPredictor {
+  /**
+   * Create a new predictor.
+   */
   constructor();
 
   static DRUGLIKENESS_UNKNOWN: number;
@@ -3406,7 +3409,7 @@ export declare class DruglikenessPredictor {
   /**
    * Returns detailed information about the previous drug likeness assessment.
    */
-  getDetail(): IParameterizedString[];
+  getDetail(): ParameterizedString[];
 }
 
 export declare namespace DrugScoreCalculator {
@@ -3447,23 +3450,23 @@ export declare class ToxicityPredictor {
    * @param molecule
    * @param riskType
    */
-  getDetail(molecule: Molecule, riskType: number): IParameterizedString[];
+  getDetail(molecule: Molecule, riskType: number): ParameterizedString[];
 }
 
-export interface IInitializeConformersOptions {
+export interface InitializeConformersOptions {
   /**
    * One of the ConformerGenerator.STRATEGY_ constants.
-   * Default: `ConformerGenerator.STRATEGY_LIKELY_RANDOM`.
+   * @default ConformerGenerator.STRATEGY_LIKELY_RANDOM
    */
   strategy?: number;
   /**
-   * Maximum number of distinct torsion sets the strategy will try.
-   * Default: `100000`.
+   * Maximum amount of distinct torsion sets the strategy will try.
+   * @efault 10_0000
    */
   maxTorsionSets?: number;
   /**
    * Use 60 degree steps for every rotatable bond instead of torsion DB.
-   * Default: `false`.
+   * @default false
    */
   use60degreeSteps?: boolean;
 }
@@ -3502,7 +3505,7 @@ export declare class ConformerGenerator {
    */
   initializeConformers(
     mol: Molecule,
-    options?: IInitializeConformersOptions,
+    options?: InitializeConformersOptions,
   ): boolean;
 
   /**
@@ -3537,11 +3540,11 @@ export declare class ConformerGenerator {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface IForceFieldMMFF94Options {
+export interface ForceFieldMMFF94Options {
   // TODO
 }
 
-export interface IForceFieldMinimiseOptions {
+export interface ForceFieldMinimiseOptions {
   /**
    * The maximum number of iterations to run for.
    * Default: 4000.
@@ -3575,7 +3578,7 @@ export declare class ForceFieldMMFF94 {
   constructor(
     molecule: Molecule,
     tablename: 'MMFF94' | 'MMFF94s' | 'MMFF94s+',
-    options?: IForceFieldMMFF94Options,
+    options?: ForceFieldMMFF94Options,
   );
 
   /**
@@ -3594,7 +3597,7 @@ export declare class ForceFieldMMFF94 {
    * @param options
    * @returns - Return code, 0 on success.
    */
-  minimise(options?: IForceFieldMinimiseOptions): number;
+  minimise(options?: ForceFieldMinimiseOptions): number;
 }
 
 export type OnChangeEventType =
