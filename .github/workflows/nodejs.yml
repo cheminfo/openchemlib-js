@@ -85,6 +85,6 @@ jobs:
           name: build-integration
           path: ocl-dist
       - name: Replace OCL build in the dependencies
-        run: 'cp ocl-dist/* node_modules/openchemlib/dist/'
+        run: 'cp -r ocl-dist/* node_modules/openchemlib/dist/'
       - name: Run unit tests
         run: npm run test-only
