@@ -12,6 +12,7 @@ export default defineConfig(
     'gwt/**',
     'lib/java/**',
     'scripts/stringWidthDataGenerator.js',
+    'src/resources/**',
     'war/**',
   ]),
   ...cheminfo,
