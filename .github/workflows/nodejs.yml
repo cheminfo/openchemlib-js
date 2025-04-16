@@ -55,7 +55,7 @@ jobs:
           path: dist
       - name: Run debug build
         if: failure()
-        run: npm run build-debug-verbose
+        run: npm run build-java-debug-verbose
       - name: Upload debug build and logs
         if: failure()
         uses: actions/upload-artifact@v4
