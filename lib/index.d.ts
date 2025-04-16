@@ -2866,6 +2866,48 @@ export declare class CanonizerUtil {
   static getIDCode(mol: Molecule, type: number): string;
 }
 
+export declare class Canonizer {
+  static CREATE_SYMMETRY_RANK: 1;
+  static CONSIDER_STEREOHETEROTOPICITY: 2;
+  static ENCODE_ATOM_CUSTOM_LABELS: 8;
+  static ENCODE_ATOM_SELECTION: 16;
+  static ASSIGN_PARITIES_TO_TETRAHEDRAL_N: 32;
+  static COORDS_ARE_3D: 64;
+  static CREATE_PSEUDO_STEREO_GROUPS: 128;
+  static DISTINGUISH_RACEMIC_OR_GROUPS: 256;
+  static TIE_BREAK_FREE_VALENCE_ATOMS: 512;
+  static ENCODE_ATOM_CUSTOM_LABELS_WITHOUT_RANKING: 1024;
+  static NEGLECT_ANY_STEREO_INFORMATION: 2048;
+
+  constructor(mol: Molecule, mode?: int);
+
+  hasCIPParityDistinctionProblem(): boolean;
+
+  getCanMolecule(includeExplicitHydrogen?: boolean): Molecule;
+
+  getIDCode(): String;
+
+  getFinalRank(): int[];
+
+  getSymmetryRank(atom: int): int;
+
+  getSymmetryRanks(): int[];
+
+  invalidateCoordinates(): void;
+
+  getEncodedCoordinates(keepPositionAndScale?: boolean): String;
+
+  getEncodedMapping(): String;
+
+  normalizeEnantiomer(): boolean;
+
+  setParities(): void;
+
+  getGraphAtoms(): int[];
+
+  getGraphIndexes(): int[];
+}
+
 /**
  * All depictor options default to `false`.
  */
