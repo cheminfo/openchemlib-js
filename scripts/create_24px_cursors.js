@@ -5,7 +5,7 @@ import { encodePng, readSync } from 'image-js';
 
 const cursorsFolder = path.join(
   import.meta.dirname,
-  '../openchemlib/src/main/resources/images/cursor',
+  '../src/resources/images/cursor',
 );
 const cursorNames = fs.readdirSync(cursorsFolder);
 

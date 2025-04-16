@@ -91,6 +91,14 @@ function copyOpenchemlib() {
     './openchemlib/modified/com',
   );
 
+  const resourcesSrcDir = path.join(
+    import.meta.dirname,
+    '../openchemlib/src/main/resources',
+  );
+  const resourcesOutDir = path.join(import.meta.dirname, '../src/resources');
+  fs.rmSync(resourcesOutDir, { recursive: true, force: true });
+  fs.cpSync(resourcesSrcDir, resourcesOutDir, { recursive: true });
+
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.cpSync(chemlibDir, outDir, { recursive: true });
 

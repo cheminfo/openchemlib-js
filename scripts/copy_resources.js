@@ -36,10 +36,7 @@ const toCopy = [
   'toxpredictor/r3.txt',
 ];
 
-const source = path.join(
-  import.meta.dirname,
-  '../openchemlib/src/main/resources/resources',
-);
+const source = path.join(import.meta.dirname, '../src/resources');
 const destination = path.join(import.meta.dirname, '../dist/resources');
 
 rmSync(destination, { recursive: true, force: true });

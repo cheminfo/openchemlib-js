@@ -1,10 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 
-const homedir = new URL(
-  '../openchemlib/src/main/resources/html/',
-  import.meta.url,
-);
+const homedir = new URL('../src/resources/html/', import.meta.url);
 
 // loading the images
 const pngNames = await readdir(new URL('editor', homedir)).then((files) =>

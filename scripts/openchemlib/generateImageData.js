@@ -5,7 +5,7 @@ import { decode } from 'fast-png';
 
 const resourcesDir = path.join(
   import.meta.dirname,
-  '../../openchemlib/src/main/resources/images',
+  '../../src/resources/images',
 );
 
 const images = ['editorButtons.png', 'esrButtons.png'];
