@@ -1,5 +1,16 @@
 # Changelog
 
+## [9.0.0](https://github.com/cheminfo/openchemlib-js/compare/v8.21.0...v9.0.0) (2025-04-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* rework library packaging and remove deprecated editor ([#266](https://github.com/cheminfo/openchemlib-js/issues/266))
+
+### Features
+
+* rework library packaging and remove deprecated editor ([#266](https://github.com/cheminfo/openchemlib-js/issues/266)) ([88cc001](https://github.com/cheminfo/openchemlib-js/commit/88cc0010f3d2f9000fd10d2b76b71101b8764160))
+
 ## [8.21.0](https://github.com/cheminfo/openchemlib-js/compare/v8.20.2...v8.21.0) (2025-04-11)
 
 
