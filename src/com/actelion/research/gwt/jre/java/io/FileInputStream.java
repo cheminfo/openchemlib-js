@@ -1,6 +1,6 @@
 package java.io;
 
-public class FileInputStream {
+public class FileInputStream extends InputStream {
 
   public FileInputStream(File file) throws IOException {
     // TODO Auto-generated constructor stub

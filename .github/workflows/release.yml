@@ -8,34 +8,33 @@ on:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
     steps:
-      - uses: google-github-actions/release-please-action@v3
+      - uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{ secrets.BOT_TOKEN }}
           release-type: node
-          package-name: 'openchemlib'
+  publish-package:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
       - uses: actions/checkout@v4
-        # These if statements ensure that a publication only occurs when a new release is created
-        if: ${{ steps.release.outputs.release_created }}
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-        if: ${{ steps.release.outputs.release_created }}
-      - name: Install GWT
-        run: ./scripts/get-gwt.sh
-        if: ${{ steps.release.outputs.release_created }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
           registry-url: 'https://registry.npmjs.org'
-        if: ${{ steps.release.outputs.release_created }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Install GWT
+        run: ./scripts/get-gwt.sh
       - run: npm ci
-        if: ${{ steps.release.outputs.release_created }}
       - run: npm run build
-        if: ${{ steps.release.outputs.release_created }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_BOT_TOKEN }}
-        if: ${{ steps.release.outputs.release_created }}

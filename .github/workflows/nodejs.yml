@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [20.x, 22.x, 23.x]
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
@@ -55,15 +55,15 @@ jobs:
           path: dist
       - name: Run debug build
         if: failure()
-        run: npm run build-debug-full
+        run: npm run build-java-debug-verbose
       - name: Upload debug build and logs
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: debug-build-${{ matrix.node-version }}
           path: |
-            dist/openchemlib-full.pretty.js
-            compile-full.log
+            lib/java/openchemlib.debug.js
+            compile.debug.log
           retention-days: 1
   utils-integration:
     name: Integration with openchemlib-utils
@@ -85,6 +85,6 @@ jobs:
           name: build-integration
           path: ocl-dist
       - name: Replace OCL build in the dependencies
-        run: 'cp ocl-dist/* node_modules/openchemlib/dist/'
+        run: 'cp -r ocl-dist/* node_modules/openchemlib/dist/'
       - name: Run unit tests
         run: npm run test-only

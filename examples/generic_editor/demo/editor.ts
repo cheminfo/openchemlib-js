@@ -1,4 +1,8 @@
-import OCL from '../../../distesm/full';
+import {
+  CanvasEditor,
+  CanvasEditorMode,
+  ReactionEncoder,
+} from '../../../lib/index.js';
 import {
   incrementChangeCount,
   resetChangeCount,
@@ -7,7 +11,7 @@ import {
   updateMolfileOrRxnV3,
 } from './result.ts';
 
-let editor: OCL.CanvasEditor | undefined;
+let editor: CanvasEditor | undefined;
 
 export function resetEditor() {
   if (editor) {
@@ -20,11 +24,11 @@ export function resetEditor() {
   const fragmentCheckbox = document.getElementById(
     'fragmentCheckbox',
   ) as HTMLInputElement;
-  const newEditor = new OCL.CanvasEditor(
+  const newEditor = new CanvasEditor(
     document.getElementById('editor') as HTMLElement,
     {
       readOnly: readOnlyCheckbox.checked,
-      initialMode: modeSelect.value as OCL.CanvasEditorMode,
+      initialMode: modeSelect.value as CanvasEditorMode,
       initialFragment: fragmentCheckbox.checked,
     },
   );
@@ -49,7 +53,7 @@ export function resetEditor() {
         updateMolfileOrRxnV3(molecule.toMolfileV3());
       } else {
         const reaction = newEditor.getReaction();
-        const idCode = OCL.ReactionEncoder.encode(reaction);
+        const idCode = ReactionEncoder.encode(reaction);
         updateIDCode(idCode ?? '');
         updateMolfileOrRxn(reaction.toRxn());
         updateMolfileOrRxnV3(reaction.toRxnV3());
@@ -58,7 +62,7 @@ export function resetEditor() {
   });
 }
 
-export function getEditor(): OCL.CanvasEditor {
+export function getEditor(): CanvasEditor {
   if (!editor) {
     throw new Error('Editor not initialized');
   }

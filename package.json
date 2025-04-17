@@ -1,6 +1,7 @@
 {
   "name": "openchemlib",
   "version": "8.21.0",
+  "type": "module",
   "description": "Manipulate molecules",
   "keywords": [
     "chemistry",
@@ -9,26 +10,19 @@
     "SMILES"
   ],
   "scripts": {
-    "build:min": "node scripts/build.js build --mode=min",
-    "build:pretty": "node scripts/build.js build --mode=pretty -s pretty",
-    "compile:min": "node scripts/build.js compile --mode=min",
-    "compile:pretty": "node scripts/build.js compile --mode=pretty",
-    "copy:openchemlib": "node scripts/build.js copy:openchemlib",
-    "export": "node scripts/build.js export",
-    "build": "npm run build:min && npm run build-full-pretty",
-    "build-core": "npm run build:min -- -m core",
-    "build-debug-core": "npm run build:pretty -- -m core --verbose",
-    "build-debug-full": "npm run build:pretty -- -m full --verbose",
-    "build-debug-minimal": "npm run build:pretty -- -m minimal --verbose",
-    "build-esm": "npm run build-full && npm run build-esm-bundle-export",
-    "build-esm-bundle": "esbuild full.js --bundle --sourcemap --format=esm --outfile=distesm/full.js",
-    "build-esm-bundle-export": "npm run build-esm-bundle && node scripts/build_esm_bundle_types.js",
-    "build-esm-bundle-types": "node scripts/esm_bundle_types.js",
-    "build-esm-bundle-watch": "npm run build-esm-bundle -- --watch",
-    "build-help": "node scripts/build_help.mjs",
-    "build-full": "npm run build:min -- -m full",
-    "build-full-pretty": "npm run build:pretty -- -m full",
-    "build-minimal": "npm run build:min -- -m minimal",
+    "build": "npm run build-java && npm run build-js && npm run build-resources",
+    "build-help": "node scripts/build_help.js",
+    "build-java": "npm run build-java-min && npm run build-java-debug",
+    "build-java-debug": "node scripts/build.js build --mode=pretty -s debug",
+    "build-java-debug-verbose": "npm run build-java-debug -- --verbose",
+    "build-java-min": "node scripts/build.js build --mode=min",
+    "build-js": "npm run build-js-min && npm run build-js-debug && npm run build-js-types",
+    "build-js-debug": "esbuild lib/index.debug.js --bundle --format=esm --outfile=dist/openchemlib.debug.js",
+    "build-js-min": "esbuild lib/index.js --minify --bundle --format=esm --outfile=dist/openchemlib.js",
+    "build-js-types": "node -e \"fs.cpSync('lib/index.d.ts', 'dist/openchemlib.d.ts')\"",
+    "build-resources": "node scripts/build_resources.js",
+    "clean": "node scripts/clean.js",
+    "copy-openchemlib": "node scripts/build.js copy:openchemlib",
     "eslint": "eslint .",
     "eslint-fix": "npm run eslint -- --fix",
     "prettier": "prettier --check .",
@@ -39,30 +33,18 @@
     "vite-build": "vite build",
     "vite-preview": "vite preview"
   },
-  "main": "./core.js",
   "exports": {
-    ".": "./core.js",
-    "./minimal": "./minimal.js",
-    "./minimal.js": "./minimal.js",
-    "./core": "./core.js",
-    "./core.js": "./core.js",
-    "./full": "./full.js",
-    "./full.js": "./full.js",
-    "./full.pretty": "./full.pretty.js",
-    "./full.pretty.js": "./full.pretty.js"
+    ".": {
+      "types": "./dist/openchemlib.d.ts",
+      "default": "./dist/openchemlib.js"
+    },
+    "./debug": {
+      "types": "./dist/openchemlib.d.ts",
+      "default": "./dist/openchemlib.debug.js"
+    }
   },
   "files": [
-    "dist",
-    "lib",
-    "types.d.ts",
-    "minimal.js",
-    "minimal.d.ts",
-    "core.js",
-    "core.d.ts",
-    "full.js",
-    "full.d.ts",
-    "full.pretty.js",
-    "full.pretty.d.ts"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -78,7 +60,7 @@
   },
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.14.1",
     "autoprefixer": "^10.4.21",
     "benchmark": "^2.1.4",
     "esbuild": "^0.25.2",
@@ -86,7 +68,7 @@
     "eslint-config-cheminfo-typescript": "^18.0.0",
     "fast-png": "^6.3.0",
     "globals": "^16.0.0",
-    "gwt-api-exporter": "^2.0.0",
+    "gwt-api-exporter": "^3.0.0",
     "image-js": "0.0.0-next-692b15513a",
     "openchemlib-utils": "^6.7.0",
     "postcss": "^8.5.3",

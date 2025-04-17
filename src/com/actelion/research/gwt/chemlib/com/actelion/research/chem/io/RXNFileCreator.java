@@ -43,7 +43,7 @@ import java.io.Writer;
 
 public class RXNFileCreator {
 	public static final String RXN_CODE_TAG = "OCL_RXN_V1.0:";
-	private static final String NL = "\n";
+	private static final String NL = System.lineSeparator();
 
     private StringBuffer rxnbuffer = null;
 

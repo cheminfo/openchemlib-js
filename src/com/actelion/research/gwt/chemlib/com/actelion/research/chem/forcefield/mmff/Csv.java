@@ -37,7 +37,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.InputStreamReader;
+import org.cheminfo.utils.FakeFileInputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -92,7 +93,7 @@ public final class Csv {
 
         try {
             String line;
-            br = new BufferedReader(new StringReader(path));
+            br = new BufferedReader(new InputStreamReader(FakeFileInputStream.getResourceAsStream(path), StandardCharsets.UTF_8));
 
             int size = Integer.parseInt(br.readLine().trim());
             String[] format = br.readLine().trim().split(",");
@@ -118,7 +119,9 @@ public final class Csv {
             }
 
             return table;
-        }  catch (IOException e) {
+        } catch (FileNotFoundException e) {
+            System.out.println("Could not find file: '"+path+"'");
+        } catch (IOException e) {
             System.out.println("IO Exception!");
         } finally {
             try {

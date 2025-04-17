@@ -1,25 +1,35 @@
 package java.text;
 
-import com.google.gwt.i18n.client.NumberFormat;
-
 public class DecimalFormat extends java.text.NumberFormat {
-
-  NumberFormat formatter;
+  private int numDigits;
 
   public DecimalFormat(String pattern, DecimalFormatSymbols symbols) {
     this(pattern);
   }
 
   public DecimalFormat(String pattern) {
-    formatter = NumberFormat.getFormat(pattern);
+    numDigits = parsePattern(pattern);
   }
 
+  private native int parsePattern(String pattern)
+  /*-{
+    var result = /^#?0\.(0+)$/.exec(pattern);
+    if (!result) {
+      throw new Error('unimplemented DecimalFormat with pattern ' + pattern);
+    }
+    return result[1].length;
+  }-*/;
+
   public String format(double number) {
-    return formatter.format(number);
+    return formatNative(number, numDigits);
   }
 
   public String format(float number) {
-    return formatter.format(number);
+    return formatNative((double) number, numDigits);
   }
 
+  private native String formatNative(double number, int numDigits)
+  /*-{
+    return number.toFixed(numDigits);
+  }-*/;
 }

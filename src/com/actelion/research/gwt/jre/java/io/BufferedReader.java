@@ -64,10 +64,6 @@ public class BufferedReader extends Reader {
     this.savedNextChar = -2;
   }
 
-  public BufferedReader(InputStreamReader inputStreamReader) {
-    // TODO Auto-generated constructor stub
-  }
-
   /**
    * 
    */

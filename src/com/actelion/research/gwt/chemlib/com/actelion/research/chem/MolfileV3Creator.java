@@ -101,7 +101,7 @@ public class MolfileV3Creator
      */
     public MolfileV3Creator(StereoMolecule mol, boolean allowScaling, double scalingFactor, StringBuilder builder) {
 		mol.ensureHelperArrays(Molecule.cHelperParities);
-		final String nl = "\n";
+		final String nl = System.lineSeparator();
 
 		mMolfile = (builder == null) ? new StringBuilder() : builder;
 
@@ -204,7 +204,7 @@ public class MolfileV3Creator
     	}
 
     private void writeBody(StereoMolecule mol, boolean hasCoordinates) {
-		final String nl = "\n";
+		final String nl = System.lineSeparator();
         mMolfile.append("M  V30 BEGIN CTAB"+nl);
         mMolfile.append("M  V30 COUNTS " + mol.getAllAtoms() + " " + mol.getAllBonds() + " 0 0 0"+nl);
         mMolfile.append("M  V30 BEGIN ATOM"+nl);

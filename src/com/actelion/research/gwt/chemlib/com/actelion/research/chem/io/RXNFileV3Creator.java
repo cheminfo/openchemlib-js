@@ -50,7 +50,7 @@ import java.io.Writer;
 public class RXNFileV3Creator
 {
 	public static final String RXN_CODE_TAG = RXNFileCreator.RXN_CODE_TAG;
-    private static final String NL = "\n";
+    private static final String NL = System.lineSeparator();
 
     private StringBuffer rxnbuffer = null;
 

@@ -1,5 +1,3 @@
-'use strict';
-
 function getStringWidth(str, size = 20) {
   var canvas = document.createElement('canvas');
   var font = `${size}px Helvetica`;
