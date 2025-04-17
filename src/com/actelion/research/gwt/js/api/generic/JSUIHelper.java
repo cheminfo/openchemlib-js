@@ -48,7 +48,7 @@ public class JSUIHelper implements GenericUIHelper {
   @JsIgnore
   public GenericImage createImage(String name) {
     if (name.equals("editorButtons.png")) {
-      String data = ImageData.editorButtonsData0 + ImageData.editorButtonsData1 + ImageData.editorButtonsData2 + ImageData.editorButtonsData3 + ImageData.editorButtonsData4 + ImageData.editorButtonsData5;
+      String data = ImageData.editorButtonsData0 + ImageData.editorButtonsData1 + ImageData.editorButtonsData2 + ImageData.editorButtonsData3;
       return new JSImage(createImageFromBase64(ImageData.editorButtonsWidth, ImageData.editorButtonsHeight, data));
     } else if (name.equals("esrButtons.png")) {
       return new JSImage(createImageFromBase64(ImageData.esrButtonsWidth, ImageData.esrButtonsHeight, ImageData.esrButtonsData0));

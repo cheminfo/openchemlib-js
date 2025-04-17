@@ -26,7 +26,10 @@ export function generateImageData() {
     const png = decode(contents);
     const name = image.replace('.png', '');
     const base64 = Buffer.from(png.data).toString('base64');
-    const compressed = base64.replaceAll('A'.repeat(20), '%');
+    const compressed = base64.replaceAll(/A+/g, (match) => {
+      const n = match.length;
+      return n < 4 ? match : `%${n}%`;
+    });
     const compressedSplit = [];
     for (let i = 0; i < compressed.length; i += 50_000) {
       compressedSplit.push(compressed.slice(i, i + 50_000));
