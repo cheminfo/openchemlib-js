@@ -1,11 +1,22 @@
 package com.actelion.research.gwt.js.utils;
 
 import com.actelion.research.chem.AbstractDepictor;
+import com.actelion.research.chem.SSSearcherWithIndex;
+import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.prediction.ParameterizedStringList;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 
 public class Util {
+  private static SSSearcherWithIndex searcher = null;
+
+  public static int[] createSSSearcherIndex(StereoMolecule molecule) {
+    if (searcher == null) {
+      searcher = new SSSearcherWithIndex();
+    }
+    return searcher.createIndex(molecule);
+  }
+
   public static JavaScriptObject convertParameterizedStringList(ParameterizedStringList list) {
     int size = list.getSize();
     JsArray<JavaScriptObject> array = newJsArray(size);

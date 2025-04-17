@@ -15,7 +15,6 @@ import com.actelion.research.gwt.js.utils.*;
 @JsType(name = "Molecule")
 public class JSMolecule {
 
-  private static Services services = Services.getInstance();
   private static GenericRectangle rectangle = new GenericRectangle();
 
   private StereoMolecule oclMolecule;
@@ -211,7 +210,7 @@ public class JSMolecule {
   }
 
   public int[] getIndex() {
-    return services.getSSSearcherWithIndex().createIndex(oclMolecule);
+    return Util.createSSSearcherIndex(oclMolecule);
   }
 
   public void inventCoordinates() {

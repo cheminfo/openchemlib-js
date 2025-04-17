@@ -5,12 +5,10 @@ import jsinterop.annotations.*;
 
 import com.actelion.research.chem.prediction.DruglikenessPredictor;
 import com.actelion.research.chem.prediction.ParameterizedStringList;
-import com.actelion.research.gwt.js.utils.Services2;
-import com.actelion.research.gwt.js.utils.Util;
+import com.actelion.research.gwt.js.utils.*;
 
 @JsType(name = "DruglikenessPredictor")
 public class JSDruglikenessPredictor {
-  private static Services2 services = Services2.getInstance();
   private DruglikenessPredictor predictor;
 
   public static double DRUGLIKENESS_UNKNOWN = DruglikenessPredictor.cDruglikenessUnknown;
@@ -21,7 +19,7 @@ public class JSDruglikenessPredictor {
   }
 
   public double assessDruglikeness(JSMolecule molecule) {
-    return predictor.assessDruglikeness(molecule.getStereoMolecule(), services.getThreadMaster());
+    return predictor.assessDruglikeness(molecule.getStereoMolecule(), ThreadMaster.getInstance());
   }
 
   public String getDruglikenessString(JSMolecule molecule) {
