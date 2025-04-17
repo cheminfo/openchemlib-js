@@ -4,8 +4,8 @@ import { Molecule } from '../lib/index.js';
 
 describe('diastereotopicIDs', () => {
   it('methylcyclohexane', () => {
-    let molecule = Molecule.fromSmiles('C1CCCCC1C');
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const molecule = Molecule.fromSmiles('C1CCCCC1C');
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toStrictEqual([
       'gOp@DiekjjiJ@qAP_iDCaU@',
       'gOp@DiVMjjij@qAP_iDCaU@',
@@ -15,9 +15,9 @@ describe('diastereotopicIDs', () => {
     ]);
 
     molecule.addImplicitHydrogens();
-    let diaIDsH = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const diaIDsH = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
 
-    for (let diaID of diaIDs) {
+    for (const diaID of diaIDs) {
       expect(diaIDsH.indexOf(diaID)).toBeGreaterThan(-1);
     }
 
@@ -39,72 +39,72 @@ describe('diastereotopicIDs', () => {
   });
 
   it('methane', () => {
-    let molecule = Molecule.fromSmiles('C');
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const molecule = Molecule.fromSmiles('C');
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(1);
     molecule.addImplicitHydrogens();
-    let diaIDsH = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const diaIDsH = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
 
     expect(diaIDsH).toHaveLength(2);
   });
 
   it('hexane', () => {
-    let molecule = Molecule.fromSmiles('CCCCCC');
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const molecule = Molecule.fromSmiles('CCCCCC');
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(3);
   });
 
   it('butanol meso', () => {
-    let molecule = Molecule.fromSmiles('C[C@@H](O)[C@@H](O)C');
+    const molecule = Molecule.fromSmiles('C[C@@H](O)[C@@H](O)C');
     molecule.addImplicitHydrogens();
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(6);
   });
 
   it('butanol C2', () => {
-    let molecule = Molecule.fromSmiles('C[C@@H](O)[C@H](O)C');
+    const molecule = Molecule.fromSmiles('C[C@@H](O)[C@H](O)C');
     molecule.addImplicitHydrogens();
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(6);
   });
 
   it('trans pyrolidine', () => {
-    let molecule = Molecule.fromSmiles('CCN1[C@@H](C)CC[C@@H]1C');
+    const molecule = Molecule.fromSmiles('CCN1[C@@H](C)CC[C@@H]1C');
     molecule.addImplicitHydrogens();
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(13);
   });
 
   it('cis pyrolidine', () => {
-    let molecule = Molecule.fromSmiles('CCN1[C@@H](C)CC[C@H]1C');
+    const molecule = Molecule.fromSmiles('CCN1[C@@H](C)CC[C@H]1C');
     molecule.addImplicitHydrogens();
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(12);
   });
 
   it('benzene', () => {
-    let molecule = Molecule.fromSmiles('c1ccccc1');
+    const molecule = Molecule.fromSmiles('c1ccccc1');
     molecule.addImplicitHydrogens();
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(2);
   });
 
   it('ethylbenzene', () => {
-    let molecule = Molecule.fromSmiles('c1ccccc1CC');
+    const molecule = Molecule.fromSmiles('c1ccccc1CC');
     molecule.addImplicitHydrogens();
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(11);
   });
 
   it('ethylbenzene 2', () => {
-    let molecule = Molecule.fromSmiles('CC(O)C(C)C');
-    let diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
+    const molecule = Molecule.fromSmiles('CC(O)C(C)C');
+    const diaIDs = Array.from(new Set(molecule.getDiastereotopicAtomIDs()));
     expect(diaIDs).toHaveLength(6);
   });
 
   it('CC(Cl)CC', () => {
-    let molecule = Molecule.fromSmiles('CC(Cl)CC');
-    let diaIDs = Array.from(molecule.getDiastereotopicAtomIDs());
+    const molecule = Molecule.fromSmiles('CC(Cl)CC');
+    const diaIDs = Array.from(molecule.getDiastereotopicAtomIDs());
     expect(diaIDs).toStrictEqual([
       'gJPHADIMuTe@XbhOtbIpj`',
       'gJPHADILuTe@XdhOtbQpj`',

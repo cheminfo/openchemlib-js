@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { Molecule } from '../..';
+import { Molecule } from '../../lib/index.js';
 
 const molfile = `
   -ISIS-  09030813062D

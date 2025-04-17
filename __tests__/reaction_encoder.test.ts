@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { assert, describe, expect, it } from 'vitest';
 
 import { Molecule, Reaction, ReactionEncoder } from '../lib/index.js';
 
@@ -9,7 +9,9 @@ describe('ReactionEncoder class', () => {
     const product = Molecule.fromSmiles('CO');
     const reaction = Reaction.fromMolecules([reactant1, reactant2, product], 2);
     const string = ReactionEncoder.encode(reaction);
+    assert(string);
     const newReaction = ReactionEncoder.decode(string);
+    assert(newReaction);
     expect(newReaction.getReactants()).toBe(2);
     expect(newReaction.getProducts()).toBe(1);
   });
@@ -18,6 +20,7 @@ describe('ReactionEncoder class', () => {
     const idcode =
       'gOp@DjWkB@@@ gOp@DjWkB@@@ gOp@DjWkB@@@!fhy@@@LdbbbTQQRYhTg^@@``@`@@@##!RbGwW_Wx@_c}~O}]}v`@@ !Rb@KW@gx?_`A~@M\\Bv`@@ !R|Gq~_{]||Owp?Wy?v`@@ !R_c~H?M_|uwvH_Xa}_`CW_]_|_c~H?M_|uwwW_]_|u?sZ@@@##';
     const reaction = ReactionEncoder.decode(idcode);
+    assert(reaction);
     expect(reaction.getReactants()).toBe(3);
     expect(reaction.getProducts()).toBe(1);
   });

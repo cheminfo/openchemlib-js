@@ -1,9 +1,7 @@
-import assert from 'node:assert';
+import { assert, describe, expect, test } from 'vitest';
 
-import { describe, expect, test } from 'vitest';
-
-import OCL from '../lib/index';
-import debugOCL from '../lib/index.debug';
+import debugOCL from '../lib/index.debug.js';
+import OCL from '../lib/index.js';
 
 const allAPI = Object.keys(OCL).sort();
 
@@ -14,13 +12,15 @@ test('debug build should have the same exports', () => {
 test('top-level API', () => {
   expect(allAPI).toMatchSnapshot();
   for (const api of allAPI) {
-    assert.ok(OCL[api], `Missing top-level API: ${api}`);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    assert((OCL as any)[api], `Missing top-level API: ${api}`);
   }
 });
 
 describe('class prototypes', () => {
   for (const key of allAPI) {
-    const api = OCL[key];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const api = (OCL as any)[key];
     if (typeof api === 'function') {
       test(`static properties of ${key}`, () => {
         expect(getFilteredKeys(api)).toMatchSnapshot();
@@ -34,7 +34,7 @@ describe('class prototypes', () => {
   }
 });
 
-function getFilteredKeys(obj) {
+function getFilteredKeys(obj: Record<string, unknown>) {
   return Object.keys(obj)
     .filter((key) => {
       // Filter out GWT-specific properties.

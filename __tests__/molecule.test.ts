@@ -99,7 +99,7 @@ describe('Molecule', () => {
       mol.setAtomY(i, 0);
       mol.setAtomZ(i, 0);
     }
-    let svg = mol.toSVG(300, 150, 'myId');
+    const svg = mol.toSVG(300, 150, 'myId');
     for (let i = 0; i < mol.getAllAtoms(); i++) {
       expect(mol.getAtomX(i)).toBe(0);
       expect(mol.getAtomY(i)).toBe(0);
@@ -184,7 +184,7 @@ describe('Molecule', () => {
     const molecule = Molecule.fromSmiles('CCC');
     molecule.setAtomicNo(0, 8);
     const atoms = [];
-    const ranks = [...molecule.getFinalRanks()];
+    const ranks = [...molecule.getFinalRanks(0)];
     for (let i = 0; i < molecule.getAllAtoms(); i++) {
       atoms.push(molecule.getAtomLabel(i), ranks[i]);
     }
@@ -192,7 +192,7 @@ describe('Molecule', () => {
     const molecule2 = Molecule.fromSmiles('CCC');
     molecule2.setAtomicNo(2, 8);
     const atoms2 = [];
-    const ranks2 = [...molecule2.getFinalRanks()];
+    const ranks2 = [...molecule2.getFinalRanks(0)];
     for (let i = 0; i < molecule2.getAllAtoms(); i++) {
       atoms2.push(molecule2.getAtomLabel(i), ranks2[i]);
     }
@@ -213,7 +213,7 @@ describe('Molecule', () => {
       }
     }
 
-    const ranks = [...molecule.getFinalRanks()];
+    const ranks = [...molecule.getFinalRanks(0)];
     expect(ranks).toStrictEqual([3, 1, 2, 4, 11, 10, 9, 5, 6, 7, 8, 12]);
   });
 

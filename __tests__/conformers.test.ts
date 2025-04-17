@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from 'vitest';
+import { assert, beforeAll, describe, expect, it } from 'vitest';
 
 import { ConformerGenerator, Molecule, Resources } from '../lib/index.js';
 
@@ -17,7 +17,7 @@ describe('ConformerGenerator', () => {
     const result = gen.getOneConformerAsMolecule(mol);
     expect(gen.getConformerCount()).toBe(1);
     expect(result).toBe(mol);
-    expect(result.getAtomZ(0)).not.toBe(0);
+    expect(mol.getAtomZ(0)).not.toBe(0);
   });
 
   it('should generate conformers', () => {
@@ -31,11 +31,13 @@ describe('ConformerGenerator', () => {
 
     const conf1 = gen.getNextConformerAsMolecule();
     expect(gen.getConformerCount()).toBe(1);
+    assert(conf1);
     const conf1Molfile = conf1.toMolfile();
     expect(conf1Molfile).toMatchSnapshot();
 
     const conf2 = gen.getNextConformerAsMolecule();
     expect(gen.getConformerCount()).toBe(2);
+    assert(conf2);
     const conf2Molfile = conf2.toMolfile();
     expect(conf2Molfile).toMatchSnapshot();
 

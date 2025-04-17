@@ -1,10 +1,9 @@
-import { getMF } from 'openchemlib-utils';
-import { describe, expect, it } from 'vitest';
+import { assert, describe, expect, it } from 'vitest';
 
 import { Molecule, Reaction, ReactionEncoder, Reactor } from '../lib/index.js';
 
 // the actelion reaction ID is encoded in the RXN file !!!
-// this code has priority so if it is there the rest of the RXN file is ignored
+// this code has priority, so if it is there the rest of the RXN file is ignored
 // Currently we generate RXN files using ChemDraw
 
 describe('Reactor class', () => {
@@ -12,6 +11,7 @@ describe('Reactor class', () => {
     const reaction = ReactionEncoder.decode(
       'eMHAIhH!eF@HhP#QF Qd#!R_vq?DqtJ_@ !R@Fp]Agp',
     );
+    assert(reaction);
 
     const reactor = new Reactor(reaction);
 
@@ -26,6 +26,7 @@ describe('Reactor class', () => {
     const reaction = ReactionEncoder.decode(
       'eMHAIhH!eF@HhP#QF Qd#!R_vq?DqtJ_@ !R@Fp]Agp',
     );
+    assert(reaction);
 
     const reactor = new Reactor(reaction);
 
@@ -34,10 +35,10 @@ describe('Reactor class', () => {
 
     const products = reactor.getProducts();
 
-    const smiles = [];
-    for (let i = 0; i < products.length; i++) {
-      for (let j = 0; j < products[i].length; j++) {
-        smiles.push(products[i][j].toSmiles());
+    const smiles: string[] = [];
+    for (const line of products) {
+      for (const product of line) {
+        smiles.push(product.toSmiles());
       }
     }
 
@@ -82,10 +83,10 @@ M  END`;
 
     const products = reactor.getProducts();
 
-    const smiles = [];
-    for (let i = 0; i < products.length; i++) {
-      for (let j = 0; j < products[i].length; j++) {
-        smiles.push(products[i][j].toSmiles());
+    const smiles: string[] = [];
+    for (const line of products) {
+      for (const product of line) {
+        smiles.push(product.toSmiles());
       }
     }
     expect(smiles).toStrictEqual(['[OH2+]C(CCCO)C', 'OC(C)CCC[OH2+]']);
@@ -137,21 +138,21 @@ M  END
 
     const products = reactor.getProducts();
 
-    const smiles = [];
-    const mfs = [];
-    for (let i = 0; i < products.length; i++) {
-      for (let j = 0; j < products[i].length; j++) {
-        smiles.push(products[i][j].toSmiles());
-        mfs.push(getMF(products[i][j]).mf);
+    const smiles: string[] = [];
+    const mfs: string[] = [];
+    for (const line of products) {
+      for (const product of line) {
+        smiles.push(product.toSmiles());
+        mfs.push(product.getMolecularFormula().formula);
       }
     }
     expect(mfs).toStrictEqual([
       'CH3',
-      'C4H11O2(+)',
+      'C4H11O2',
       'C3H7O',
-      'C2H7O(+)',
+      'C2H7O',
       'C4H9O',
-      'CH5O(+)',
+      'CH5O',
     ]);
   });
 });

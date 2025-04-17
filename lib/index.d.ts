@@ -91,12 +91,12 @@ export interface MoleculeToSVGOptions extends DepictorOptions {
   /**
    * font-weight attribute of atom labels.
    */
-  fontWeight?: string;
+  fontWeight?: number | string;
 
   /**
    * stroke-width styling property of bonds.
    */
-  strokeWidth?: string;
+  strokeWidth?: number | string;
 
   /**
    * Automatically crop the SVG to fit around the molecule.
@@ -1773,7 +1773,7 @@ export declare class Molecule {
     destMol: Molecule,
     includeAtom: boolean[],
     recognizeDelocalizedBonds: boolean,
-    atomMap: number[],
+    atomMap: number[] | null,
   ): void;
 
   /**
@@ -3418,7 +3418,7 @@ export declare namespace DrugScoreCalculator {
     mSolubility: number,
     mMolweight: number,
     mDruglikeness: number,
-    toxRisks: number[],
+    toxRisks: number[] | null,
   ): number;
 }
 
