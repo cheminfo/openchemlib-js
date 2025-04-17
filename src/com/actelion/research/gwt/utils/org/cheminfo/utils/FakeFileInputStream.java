@@ -5,7 +5,7 @@ import java.io.*;
 import java.lang.Math;
 
 public class FakeFileInputStream extends InputStream {
-  private static PlainJSObject registeredResources = PlainJSObject.create();
+  private static PlainJSObject registeredResources = null;
 
   public static FakeFileInputStream getResourceAsStream(String path) throws IOException {
     if (path.contains("/csd/")) {
@@ -20,12 +20,13 @@ public class FakeFileInputStream extends InputStream {
 
   private static native void throwError(String path)
   /*-{
-    throw new Error('Missing resource (forgot to call Resources.registerResource?): ' + path);
+    throw new Error('missing static resource: ' + path);
   }-*/;
 
-  public static void registerResource(String path, JavaScriptObject contents) {
-    registeredResources.setProperty(path, contents);
-  }
+  public static native void registerResources(JavaScriptObject contents)
+  /*-{
+    @org.cheminfo.utils.FakeFileInputStream::registeredResources = contents;
+  }-*/;
 
   // Should be a Uint8Array.
   private JavaScriptObject mContents;

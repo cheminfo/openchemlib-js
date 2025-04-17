@@ -20,7 +20,7 @@
     "build-js-debug": "esbuild lib/index.debug.js --bundle --format=esm --outfile=dist/openchemlib.debug.js",
     "build-js-min": "esbuild lib/index.js --minify --bundle --format=esm --outfile=dist/openchemlib.js",
     "build-js-types": "node -e \"fs.cpSync('lib/index.d.ts', 'dist/openchemlib.d.ts')\"",
-    "build-resources": "node scripts/copy_resources.js",
+    "build-resources": "node scripts/build_resources.js",
     "clean": "node scripts/clean.js",
     "copy-openchemlib": "node scripts/build.js copy:openchemlib",
     "eslint": "eslint .",

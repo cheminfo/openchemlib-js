@@ -7,7 +7,22 @@ import org.cheminfo.utils.FakeFileInputStream;
 
 @JsType(name = "Resources")
 public class JSResources {
-  public static void registerResource(String path, JavaScriptObject contents) {
-    FakeFileInputStream.registerResource(path, contents);
+  private static boolean hasRegistered = false;
+
+  public static void _register(JavaScriptObject data) {
+    FakeFileInputStream.registerResources(data);
+    hasRegistered = true;
   }
+
+  @JsIgnore
+  public static void checkHasRegistered() {
+    if (!hasRegistered) {
+      throwUnregistered();
+    }
+  }
+
+  private static native void throwUnregistered()
+  /*-{
+    throw new Error('static resources must be registered first');
+  }-*/;
 }

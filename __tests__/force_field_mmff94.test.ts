@@ -8,20 +8,23 @@ import {
 } from '../lib/index.js';
 
 beforeAll(() => {
-  Resources.registerResourcesNodejs();
+  Resources.registerFromNodejs();
 });
 
 describe('ForceFieldMMFF94', () => {
-  it('should generate force field', () => {
-    const mol = Molecule.fromSmiles('COCCON');
-    const gen = new ConformerGenerator(1);
-    gen.getOneConformerAsMolecule(mol);
-    const molfileBefore = mol.toMolfile();
+  it.each(['MMFF94', 'MMFF94s', 'MMFF94s+'] as const)(
+    'should generate force field (%s)',
+    (tablename) => {
+      const mol = Molecule.fromSmiles('COCCON');
+      const gen = new ConformerGenerator(1);
+      gen.getOneConformerAsMolecule(mol);
+      const molfileBefore = mol.toMolfile();
 
-    const ff = new ForceFieldMMFF94(mol, 'MMFF94');
-    ff.minimise();
-    const molfileAfter = mol.toMolfile();
-    expect(molfileAfter).toMatchSnapshot();
-    expect(molfileAfter).not.toBe(molfileBefore);
-  });
+      const ff = new ForceFieldMMFF94(mol, tablename);
+      ff.minimise();
+      const molfileAfter = mol.toMolfile();
+      expect(molfileAfter).toMatchSnapshot();
+      expect(molfileAfter).not.toBe(molfileBefore);
+    },
+  );
 });

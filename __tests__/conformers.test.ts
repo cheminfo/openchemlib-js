@@ -3,7 +3,7 @@ import { assert, beforeAll, describe, expect, it } from 'vitest';
 import { ConformerGenerator, Molecule, Resources } from '../lib/index.js';
 
 beforeAll(() => {
-  Resources.registerResourcesNodejs();
+  Resources.registerFromNodejs();
 });
 
 describe('ConformerGenerator', () => {

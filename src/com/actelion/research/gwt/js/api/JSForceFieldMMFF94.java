@@ -20,6 +20,7 @@ public class JSForceFieldMMFF94 {
   private static boolean isMMFF94SPLUSInit = false;
 
   public JSForceFieldMMFF94(JSMolecule molecule, String tablename, JavaScriptObject options) {
+    JSResources.checkHasRegistered();
     initializeTables(tablename);
     oclMmff = new ForceFieldMMFF94(molecule.getStereoMolecule(), tablename, new HashMap<String, Object>());
   }

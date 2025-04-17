@@ -25,6 +25,7 @@ public class JSToxicityPredictor {
   public static final String[] RISK_NAMES = ToxicityPredictor.cRiskNameN;
 
   public JSToxicityPredictor() {
+    JSResources.checkHasRegistered();
     predictor = new ToxicityPredictor();
   }
 

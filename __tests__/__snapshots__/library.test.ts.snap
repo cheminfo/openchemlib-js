@@ -699,8 +699,9 @@ exports[`class prototypes > static properties of Reactor 1`] = `[]`;
 
 exports[`class prototypes > static properties of Resources 1`] = `
 [
-  "registerResource",
-  "registerResourcesNodejs",
+  "register",
+  "registerFromNodejs",
+  "registerFromUrl",
 ]
 `;
 

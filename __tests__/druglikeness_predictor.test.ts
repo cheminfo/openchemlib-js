@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { DruglikenessPredictor, Molecule, Resources } from '../lib/index.js';
 
 beforeAll(() => {
-  Resources.registerResourcesNodejs();
+  Resources.registerFromNodejs();
 });
 
 describe('DruglikenessPredictor', () => {

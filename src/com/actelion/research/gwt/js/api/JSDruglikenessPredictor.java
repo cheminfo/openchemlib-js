@@ -16,6 +16,7 @@ public class JSDruglikenessPredictor {
   public static double DRUGLIKENESS_UNKNOWN = DruglikenessPredictor.cDruglikenessUnknown;
 
   public JSDruglikenessPredictor() {
+    JSResources.checkHasRegistered();
     predictor = new DruglikenessPredictor();
   }
 

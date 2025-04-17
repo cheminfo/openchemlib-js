@@ -26,7 +26,7 @@ export default defineConfig(
     },
   },
   {
-    files: ['lib/register_resources_nodejs.js'],
+    files: ['lib/register_resources.js'],
     languageOptions: {
       globals: {
         ...globals.node,

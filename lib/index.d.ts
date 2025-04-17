@@ -1,19 +1,25 @@
 export declare const Resources: {
   /**
-   * Register a static resource.
+   * Register the static resources.
    * This is needed for some APIs.
-   *
-   * The contents must be ASCII only.
-   * @param fileName
-   * @param contents
+   * @param data - Object containing the resources or JSON string for such an object.
    */
-  registerResource(fileName: string, contents: Uint8Array): void;
+  register(data: string | Record<string, string>): void;
 
   /**
-   * Read and register all static resources synchronously.
-   * This method can only be called in Node.js.
+   * Fetch and register the static resources asynchronously from a URL.
+   * @param url - URL to the resources.json file.
+   * If omitted, fetch will be done relative to the openchemlib.js module location.
    */
-  registerResourcesNodejs(): void;
+  registerFromUrl(url?: string): Promise<void>;
+
+  /**
+   * Read and register the static resources synchronously.
+   * This is a convenience method for Node.js.
+   * @param path - Path to the resources.json file.
+   * If omitted, the file will be read relative to the openchemlib.js module location.
+   */
+  registerFromNodejs(path?: string): void;
 };
 
 export interface MoleculeFromSmilesOptions {

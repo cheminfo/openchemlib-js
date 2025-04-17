@@ -16,6 +16,7 @@ public class JSConformerGenerator {
 	public static final int STRATEGY_ADAPTIVE_RANDOM = 4;
 
   public JSConformerGenerator(int seed) {
+    JSResources.checkHasRegistered();
     oclGenerator = new ConformerGenerator(seed, false);
   }
 
