@@ -5,7 +5,18 @@
 
 ### ⚠ BREAKING CHANGES
 
-* rework library packaging and remove deprecated editor ([#266](https://github.com/cheminfo/openchemlib-js/issues/266))
+* `openchemlib` is now exported as an ESM-only package. This doesn't prevent using it from CommonJS (`require('openchemlib')`), as long as you are using a supported and up to date Node.js version.
+* The library now exposes only one build. If you were using `openchemlib/minimal`, `openchemlib/core`, or `openchemlib/full`, switch back to `openchemlib`, which contains everything.
+* Removed the following classes: `SVGRenderer`, `StructureEditor`, and `StructureView`. They were using old and deprecated OpenChemLib java APIs.
+  * Instead of the `SVGRenderer`, `molecule.toSVG()` can be used.
+  * Instead of the `StructureEditor`, the replacement `CanvasEditor` can be used.
+  * Instead of the `StructureView`, the replacement `CanvasEditor` with the `readOnly` option can be used.
+* Removed the bundled static resources. This allows to reduce the build size by half.
+  * Static data can be loaded/registered with these new methods: `OCL.Resources.register`, `OCL.Resources.registerFromUrl`, or `OCL.Resources.registerFromNodejs`.
+  * These classes require static resources to be registered before being instantiated: `ConformerGenerator`, `ForceFieldMMFF94`, `DruglikenessPredictor`, `ToxicityPredictor`.
+* Removed support for Node.js 18, which will be EoL at the end of April 2025.
+* Removed the `getOCL` method from all classes except `Molecule`.
+* Renamed some TypeScript types for consistency.
 
 ### Features
 
