@@ -2879,11 +2879,11 @@ export declare class Canonizer {
   static ENCODE_ATOM_CUSTOM_LABELS_WITHOUT_RANKING: 1024;
   static NEGLECT_ANY_STEREO_INFORMATION: 2048;
 
-  constructor(mol: Molecule, mode?: int);
+  constructor(mol: Molecule, mode: int);
 
   hasCIPParityDistinctionProblem(): boolean;
 
-  getCanMolecule(includeExplicitHydrogen?: boolean): Molecule;
+  getCanMolecule(includeExplicitHydrogen: boolean): Molecule;
 
   getIDCode(): string;
 
@@ -2895,7 +2895,7 @@ export declare class Canonizer {
 
   invalidateCoordinates(): void;
 
-  getEncodedCoordinates(keepPositionAndScale?: boolean): string;
+  getEncodedCoordinates(keepPositionAndScale: boolean): string;
 
   getEncodedMapping(): string;
 

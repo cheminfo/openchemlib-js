@@ -22,26 +22,27 @@ public class JSCanonizer {
 
     private Canonizer canonizer;
 
-    public JSCanonizer(JSMolecule mol, @JsOptional Integer mode) {
-        if (mode == null) {
-            canonizer = new Canonizer(mol.getStereoMolecule());
-        } else {
-            canonizer = new Canonizer(mol.getStereoMolecule(), mode);
-        }
+    public JSCanonizer(JSMolecule mol, int mode) {
+        canonizer = new Canonizer(mol.getStereoMolecule(), mode);
+    }
+
+    @JsIgnore
+    public JSCanonizer(JSMolecule mol) {
+        this(mol, 0);
     }
 
     public boolean hasCIPParityDistinctionProblem() {
         return canonizer.hasCIPParityDistinctionProblem();
     }
 
-    public JSMolecule getCanMolecule(@JsOptional Boolean includeExplicitHydrogen) {
-        StereoMolecule mol;
-        if (includeExplicitHydrogen == null) {
-            mol = canonizer.getCanMolecule();
-        } else {
-            mol = canonizer.getCanMolecule(includeExplicitHydrogen);
-        }
+    public JSMolecule getCanMolecule(boolean includeExplicitHydrogen) {
+        StereoMolecule mol = canonizer.getCanMolecule(includeExplicitHydrogen);
         return new JSMolecule(mol);
+    }
+
+    @JsIgnore
+    public JSMolecule getCanMolecule() {
+        return getCanMolecule(false);
     }
 
     public String getIDCode() {
@@ -64,12 +65,13 @@ public class JSCanonizer {
         canonizer.invalidateCoordinates();
     }
 
-    public String getEncodedCoordinates(@JsOptional Boolean keepPositionAndScale) {
-        if (keepPositionAndScale == null) {
-            return canonizer.getEncodedCoordinates();
-        } else {
-            return canonizer.getEncodedCoordinates(keepPositionAndScale);
-        }
+    public String getEncodedCoordinates(boolean keepPositionAndScale) {
+        return canonizer.getEncodedCoordinates(keepPositionAndScale);
+    }
+
+    @JsIgnore
+    public String getEncodedCoordinates() {
+        return canonizer.getEncodedCoordinates();
     }
 
     public String getEncodedMapping() {
