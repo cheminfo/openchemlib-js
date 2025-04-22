@@ -1,8 +1,8 @@
-package com.actelion.research.gwt.core;
+package com.actelion.research.gwt.js.api;
 
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.Canonizer;
-import com.actelion.research.gwt.minimal.JSMolecule;
+import com.actelion.research.gwt.js.api.JSMolecule;
 import jsinterop.annotations.*;
 
 @JsType(name = "Canonizer")
@@ -26,11 +26,6 @@ public class JSCanonizer {
         canonizer = new Canonizer(mol.getStereoMolecule(), mode);
     }
 
-    @JsIgnore
-    public JSCanonizer(JSMolecule mol) {
-        this(mol, 0);
-    }
-
     public boolean hasCIPParityDistinctionProblem() {
         return canonizer.hasCIPParityDistinctionProblem();
     }
@@ -38,11 +33,6 @@ public class JSCanonizer {
     public JSMolecule getCanMolecule(boolean includeExplicitHydrogen) {
         StereoMolecule mol = canonizer.getCanMolecule(includeExplicitHydrogen);
         return new JSMolecule(mol);
-    }
-
-    @JsIgnore
-    public JSMolecule getCanMolecule() {
-        return getCanMolecule(false);
     }
 
     public String getIDCode() {
@@ -67,11 +57,6 @@ public class JSCanonizer {
 
     public String getEncodedCoordinates(boolean keepPositionAndScale) {
         return canonizer.getEncodedCoordinates(keepPositionAndScale);
-    }
-
-    @JsIgnore
-    public String getEncodedCoordinates() {
-        return canonizer.getEncodedCoordinates();
     }
 
     public String getEncodedMapping() {

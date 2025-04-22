@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { CanonizerUtil, Molecule, Canonizer } from '../core';
+import { CanonizerUtil, Molecule, Canonizer } from '../lib/index.js';
 
 test('canonizer chiral', () => {
   const molecule = Molecule.fromSmiles('C[C@H](Cl)CC');
@@ -96,7 +96,10 @@ test('getFinalRank returns an array with expected length', () => {
 
 test('getSymmetryRank and getSymmetryRanks return consistent results', () => {
   const moleculeSymmetric = Molecule.fromSmiles('CC(C)C');
-  const canonizer = new Canonizer(moleculeSymmetric, Canonizer.CREATE_SYMMETRY_RANK);
+  const canonizer = new Canonizer(
+    moleculeSymmetric,
+    Canonizer.CREATE_SYMMETRY_RANK,
+  );
   const symmetryRanks = canonizer.getSymmetryRanks();
   expect(Array.isArray(symmetryRanks)).toBe(true);
   expect(symmetryRanks.toString()).toBe('1,2,1,1');
@@ -188,7 +191,7 @@ test('Constructor with mode parameter works', () => {
 
   // Use custom label to test mode
   const mode = Canonizer.ENCODE_ATOM_CUSTOM_LABELS;
-  moleculeTautomer.setAtomCustomLabel(0, "label");
+  moleculeTautomer.setAtomCustomLabel(0, 'label');
   canonizer = new Canonizer(moleculeTautomer, mode);
   idCode = canonizer.getIDCode();
   expect(typeof idCode).toBe('string');
