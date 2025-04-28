@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.1](https://github.com/cheminfo/openchemlib-js/compare/v9.0.0...v9.0.1) (2025-04-28)
+
+
+### Bug Fixes
+
+* register resources from URL ([#275](https://github.com/cheminfo/openchemlib-js/issues/275)) ([342f038](https://github.com/cheminfo/openchemlib-js/commit/342f0386f5939b2f6165023ed939d9321a3cd97b))
+
 ## [9.0.0](https://github.com/cheminfo/openchemlib-js/compare/v8.21.0...v9.0.0) (2025-04-17)
 
 
