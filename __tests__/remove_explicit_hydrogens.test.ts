@@ -1,5 +1,6 @@
-import { Molecule } from 'openchemlib';
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
+
+import { Molecule } from '../lib/index.js';
 
 test('removeExplicitHydrogens', () => {
   const molfile = `cytisine
