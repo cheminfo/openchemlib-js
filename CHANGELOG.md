@@ -1,5 +1,18 @@
 # Changelog
 
+## [9.1.0](https://github.com/cheminfo/openchemlib-js/compare/v9.0.1...v9.1.0) (2025-04-30)
+
+
+### Features
+
+* update OCL to v2025.4.3 ([#278](https://github.com/cheminfo/openchemlib-js/issues/278)) ([ce69044](https://github.com/cheminfo/openchemlib-js/commit/ce69044dc884ae2ff938c7a004d4c31c622973cb))
+
+
+### Bug Fixes
+
+* **canvas_editor:** open shadow root ([cb6c2d2](https://github.com/cheminfo/openchemlib-js/commit/cb6c2d22d4f3086fc5b11696c6e065ba45521164))
+* **canvas_editor:** optimize draw context ([b7868f0](https://github.com/cheminfo/openchemlib-js/commit/b7868f0d2d72158d6fdd22017204056577e5dd57))
+
 ## [9.0.1](https://github.com/cheminfo/openchemlib-js/compare/v9.0.0...v9.0.1) (2025-04-28)
 
 
