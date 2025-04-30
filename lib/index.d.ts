@@ -2591,9 +2591,9 @@ export declare class Molecule {
    * stereo bond to indicate the proper configuration.
    * If the removal of a hydrogen atom would change an atom's implicit valence,
    * the atom's abnormal valence is set accordingly.
-   * @param is3D pass true, if atom coordinates are three dimensional
+   * @param is3D Deprecated: this parameter is unused and has no effect.
    */
-  removeExplicitHydrogens(is3D: boolean): void;
+  removeExplicitHydrogens(is3D?: boolean): void;
 
   /**
    * Separates all disconnected fragments of this Molecule into individual
