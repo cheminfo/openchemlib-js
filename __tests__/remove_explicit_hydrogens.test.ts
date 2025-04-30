@@ -45,7 +45,7 @@ M  END
   const molfile1 = molecule.toMolfile();
   expect(molfile1).toMatchSnapshot();
 
-  molecule.removeExplicitHydrogens(false);
+  molecule.removeExplicitHydrogens();
   const molfile2 = molecule.toMolfile();
   expect(molfile2).toMatchSnapshot();
 
