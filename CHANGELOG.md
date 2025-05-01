@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.1.1](https://github.com/cheminfo/openchemlib-js/compare/v9.1.0...v9.1.1) (2025-05-01)
+
+
+### Bug Fixes
+
+* **canvas_editor:** avoid blurry rendering on hdpi screens ([#281](https://github.com/cheminfo/openchemlib-js/issues/281)) ([efd4e5d](https://github.com/cheminfo/openchemlib-js/commit/efd4e5d11f92452bf300ea84746e279f5899ed0d))
+
 ## [9.1.0](https://github.com/cheminfo/openchemlib-js/compare/v9.0.1...v9.1.0) (2025-04-30)
 
 
