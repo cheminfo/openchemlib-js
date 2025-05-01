@@ -7,17 +7,22 @@ import com.actelion.research.util.ColorHelper;
 import java.awt.Color;
 
 public class HiDPIHelper {
+	private static float sUIScaleFactor = -1f;
+
 	public static int scale(float value) {
 		return Math.round(getUIScaleFactor() * value);
 	}
 
 	public static float getUIScaleFactor() {
-		return 1.0f;
+		if (sUIScaleFactor == -1) {
+			sUIScaleFactor = getDevicePixelRatio();
+		}
+		return sUIScaleFactor;
 	}
 
-	public static void adaptForLookAndFeel(GenericImage image) {
-		return;
-	}
+	private static native float getDevicePixelRatio() /*-{
+		return globalThis.devicePixelRatio || 1;
+	}-*/;
 
 	public static void disableImage(GenericImage image) {
 		Color gray = ColorHelper.brighter(new Color(238, 238, 238), 0.8f);
