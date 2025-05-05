@@ -2879,7 +2879,7 @@ export declare class Canonizer {
   static ENCODE_ATOM_CUSTOM_LABELS_WITHOUT_RANKING: 1024;
   static NEGLECT_ANY_STEREO_INFORMATION: 2048;
 
-  constructor(mol: Molecule, mode: int);
+  constructor(mol: Molecule, mode: number);
 
   hasCIPParityDistinctionProblem(): boolean;
 
@@ -2887,11 +2887,11 @@ export declare class Canonizer {
 
   getIDCode(): string;
 
-  getFinalRank(): int[];
+  getFinalRank(): number[];
 
-  getSymmetryRank(atom: int): int;
+  getSymmetryRank(atom: number): number;
 
-  getSymmetryRanks(): int[];
+  getSymmetryRanks(): number[];
 
   invalidateCoordinates(): void;
 
@@ -2903,9 +2903,9 @@ export declare class Canonizer {
 
   setParities(): void;
 
-  getGraphAtoms(): int[];
+  getGraphAtoms(): number[];
 
-  getGraphIndexes(): int[];
+  getGraphIndexes(): number[];
 }
 
 /**
