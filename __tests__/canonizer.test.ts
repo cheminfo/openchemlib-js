@@ -59,14 +59,14 @@ test('canonizer tautomer', () => {
 
 test('getIDCode returns expected value', () => {
   const moleculeChiral = Molecule.fromSmiles('C[C@H](Cl)CC');
-  const canonizer = new Canonizer(moleculeChiral, 0);
+  const canonizer = new Canonizer(moleculeChiral);
   // The default canonicalization should yield the same ID code as the molecule's method.
   expect(canonizer.getIDCode()).toBe(moleculeChiral.getIDCode());
 });
 
 test('hasCIPParityDistinctionProblem returns a boolean', () => {
   const moleculeChiral = Molecule.fromSmiles('C[C@H](Cl)CC');
-  const canonizer = new Canonizer(moleculeChiral, 0);
+  const canonizer = new Canonizer(moleculeChiral);
   const result = canonizer.hasCIPParityDistinctionProblem();
   expect(typeof result).toBe('boolean');
   expect(result).toBe(false);
@@ -75,7 +75,7 @@ test('hasCIPParityDistinctionProblem returns a boolean', () => {
 test('getCanMolecule returns a canonical molecule', () => {
   const moleculeChiral = Molecule.fromSmiles('C[C@H](Cl)CC');
   moleculeChiral.addImplicitHydrogens();
-  const canonizer = new Canonizer(moleculeChiral, 0);
+  const canonizer = new Canonizer(moleculeChiral);
 
   const canMolDefault = canonizer.getCanMolecule(false);
   const canMolWithH = canonizer.getCanMolecule(true);
@@ -87,7 +87,7 @@ test('getCanMolecule returns a canonical molecule', () => {
 
 test('getFinalRank returns an array with expected length', () => {
   const moleculeChiral = Molecule.fromSmiles('C[C@H](Cl)CC');
-  const canonizer = new Canonizer(moleculeChiral, 0);
+  const canonizer = new Canonizer(moleculeChiral);
   const finalRank = canonizer.getFinalRank();
   expect(Array.isArray(finalRank)).toBe(true);
   expect(finalRank.length).toBeGreaterThan(0);
@@ -96,10 +96,9 @@ test('getFinalRank returns an array with expected length', () => {
 
 test('getSymmetryRank and getSymmetryRanks return consistent results', () => {
   const moleculeSymmetric = Molecule.fromSmiles('CC(C)C');
-  const canonizer = new Canonizer(
-    moleculeSymmetric,
-    Canonizer.CREATE_SYMMETRY_RANK,
-  );
+  const canonizer = new Canonizer(moleculeSymmetric, {
+    createSymmetryRank: true,
+  });
   const symmetryRanks = canonizer.getSymmetryRanks();
   expect(Array.isArray(symmetryRanks)).toBe(true);
   expect(symmetryRanks.toString()).toBe('1,2,1,1');
@@ -112,7 +111,7 @@ test('getSymmetryRank and getSymmetryRanks return consistent results', () => {
 test('invalidateCoordinates and getEncodedCoordinates work as expected', () => {
   const moleculeChiral = Molecule.fromSmiles('C[C@H](Cl)CC');
   moleculeChiral.inventCoordinates();
-  const canonizer = new Canonizer(moleculeChiral, 0);
+  const canonizer = new Canonizer(moleculeChiral);
   // Get encoded coordinates before invalidation.
   const encodedBefore = canonizer.getEncodedCoordinates(false);
   expect(typeof encodedBefore).toBe('string');
@@ -133,14 +132,14 @@ test('getEncodedMapping returns a non-empty string', () => {
   const moleculeMapped = Molecule.fromSmiles('C[C@H](Cl)CC');
   moleculeMapped.setAtomMapNo(0, 1, false);
   moleculeMapped.setAtomMapNo(1, 1, false);
-  let canonizer = new Canonizer(moleculeMapped, 0);
+  let canonizer = new Canonizer(moleculeMapped);
   let mapping = canonizer.getEncodedMapping();
   expect(typeof mapping).toBe('string');
   expect(mapping.length).toBeGreaterThan(0);
   expect(mapping).toBe('aT');
 
   const molecule = Molecule.fromSmiles('C[C@H](Cl)CC');
-  canonizer = new Canonizer(molecule, 0);
+  canonizer = new Canonizer(molecule);
   mapping = canonizer.getEncodedMapping();
   expect(typeof mapping).toBe('string');
   expect(mapping.length).toBe(0);
@@ -148,7 +147,7 @@ test('getEncodedMapping returns a non-empty string', () => {
 
 test('normalizeEnantiomer returns a boolean value', () => {
   const moleculeChiral = Molecule.fromSmiles('C[C@H](Cl)CC');
-  const canonizer = new Canonizer(moleculeChiral, 0);
+  const canonizer = new Canonizer(moleculeChiral);
   const normalized = canonizer.normalizeEnantiomer();
   expect(typeof normalized).toBe('boolean');
   expect(normalized).toBe(true);
@@ -156,7 +155,7 @@ test('normalizeEnantiomer returns a boolean value', () => {
 
 test('setParities, getGraphAtoms, and getGraphIndexes produce consistent results', () => {
   const moleculeChiral = Molecule.fromSmiles('C[C@H](Cl)CC');
-  const canonizer = new Canonizer(moleculeChiral, 0);
+  const canonizer = new Canonizer(moleculeChiral);
   // Obtain initial graph arrays.
   const graphAtomsBefore = canonizer.getGraphAtoms();
   const graphIndexesBefore = canonizer.getGraphIndexes();
@@ -183,16 +182,15 @@ test('setParities, getGraphAtoms, and getGraphIndexes produce consistent results
 
 test('Constructor with mode parameter works', () => {
   const moleculeTautomer = Molecule.fromSmiles('CC=C(O)CC');
-  let canonizer = new Canonizer(moleculeTautomer, 0);
+  let canonizer = new Canonizer(moleculeTautomer);
   let idCode = canonizer.getIDCode();
   expect(typeof idCode).toBe('string');
   expect(idCode.length).toBeGreaterThan(0);
   expect(idCode).toBe('gGQ@@drsT@@');
 
   // Use custom label to test mode
-  const mode = Canonizer.ENCODE_ATOM_CUSTOM_LABELS;
   moleculeTautomer.setAtomCustomLabel(0, 'label');
-  canonizer = new Canonizer(moleculeTautomer, mode);
+  canonizer = new Canonizer(moleculeTautomer, { encodeAtomCustomLabels: true });
   idCode = canonizer.getIDCode();
   expect(typeof idCode).toBe('string');
   expect(idCode.length).toBeGreaterThan(0);

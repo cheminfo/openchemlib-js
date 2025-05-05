@@ -2866,20 +2866,22 @@ export declare class CanonizerUtil {
   static getIDCode(mol: Molecule, type: number): string;
 }
 
-export declare class Canonizer {
-  static CREATE_SYMMETRY_RANK: 1;
-  static CONSIDER_STEREOHETEROTOPICITY: 2;
-  static ENCODE_ATOM_CUSTOM_LABELS: 8;
-  static ENCODE_ATOM_SELECTION: 16;
-  static ASSIGN_PARITIES_TO_TETRAHEDRAL_N: 32;
-  static COORDS_ARE_3D: 64;
-  static CREATE_PSEUDO_STEREO_GROUPS: 128;
-  static DISTINGUISH_RACEMIC_OR_GROUPS: 256;
-  static TIE_BREAK_FREE_VALENCE_ATOMS: 512;
-  static ENCODE_ATOM_CUSTOM_LABELS_WITHOUT_RANKING: 1024;
-  static NEGLECT_ANY_STEREO_INFORMATION: 2048;
+export interface CanonizerOptions {
+  createSymmetryRank?: boolean;
+  considerStereoheterotopicity?: boolean;
+  encodeAtomCustomLabels?: boolean;
+  encodeAtomSelection?: boolean;
+  assignParitiesToTetrahedralN?: boolean;
+  coordsAre3d?: boolean;
+  createPseudoStereoGroups?: boolean;
+  distinguishRacemicOrGroups?: boolean;
+  tieBreakFreeValenceAtoms?: boolean;
+  encodeAtomCustomLabelsWithoutRanking?: boolean;
+  neglectAnyStereoInformation?: boolean;
+}
 
-  constructor(mol: Molecule, mode: number);
+export declare class Canonizer {
+  constructor(mol: Molecule, options?: CanonizerOptions);
 
   hasCIPParityDistinctionProblem(): boolean;
 
