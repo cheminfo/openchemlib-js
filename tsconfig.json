@@ -18,5 +18,6 @@
     /* Linting */
     "strict": true
   },
-  "include": ["__tests__", "examples", "lib", "scripts", "vite*.config.ts"]
+  "include": ["__tests__", "examples", "lib", "scripts", "vite*.config.ts"],
+  "exclude": ["lib/java"]
 }
