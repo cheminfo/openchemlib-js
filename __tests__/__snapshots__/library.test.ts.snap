@@ -1,5 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`class prototypes > prototype properties of Canonizer 1`] = `
+[
+  "getCanMolecule",
+  "getEncodedCoordinates",
+  "getEncodedMapping",
+  "getFinalRank",
+  "getGraphAtoms",
+  "getGraphIndexes",
+  "getIDCode",
+  "getSymmetryRank",
+  "getSymmetryRanks",
+  "hasCIPParityDistinctionProblem",
+  "invalidateCoordinates",
+  "normalizeEnantiomer",
+  "setParities",
+]
+`;
+
 exports[`class prototypes > prototype properties of CanonizerUtil 1`] = `[]`;
 
 exports[`class prototypes > prototype properties of CanvasEditor 1`] = `[]`;
@@ -376,6 +394,22 @@ exports[`class prototypes > prototype properties of Util 1`] = `[]`;
 
 exports[`class prototypes > prototype properties of registerCustomElement 1`] = `[]`;
 
+exports[`class prototypes > static properties of Canonizer 1`] = `
+[
+  "ASSIGN_PARITIES_TO_TETRAHEDRAL_N",
+  "CONSIDER_STEREOHETEROTOPICITY",
+  "COORDS_ARE_3D",
+  "CREATE_PSEUDO_STEREO_GROUPS",
+  "CREATE_SYMMETRY_RANK",
+  "DISTINGUISH_RACEMIC_OR_GROUPS",
+  "ENCODE_ATOM_CUSTOM_LABELS",
+  "ENCODE_ATOM_CUSTOM_LABELS_WITHOUT_RANKING",
+  "ENCODE_ATOM_SELECTION",
+  "NEGLECT_ANY_STEREO_INFORMATION",
+  "TIE_BREAK_FREE_VALENCE_ATOMS",
+]
+`;
+
 exports[`class prototypes > static properties of CanonizerUtil 1`] = `
 [
   "BACKBONE",
@@ -746,8 +780,45 @@ exports[`class prototypes > static properties of Util 1`] = `
 
 exports[`class prototypes > static properties of registerCustomElement 1`] = `[]`;
 
+exports[`prototype properties of Canonizer 1`] = `
+[
+  "getCanMolecule",
+  "getEncodedCoordinates",
+  "getEncodedMapping",
+  "getFinalRank",
+  "getGraphAtoms",
+  "getGraphIndexes",
+  "getIDCode",
+  "getSymmetryRank",
+  "getSymmetryRanks",
+  "hasCIPParityDistinctionProblem",
+  "invalidateCoordinates",
+  "normalizeEnantiomer",
+  "setParities",
+]
+`;
+
+exports[`prototype properties of registerCustomElement 1`] = `[]`;
+
+exports[`static properties of Canonizer 1`] = `
+[
+  "ASSIGN_PARITIES_TO_TETRAHEDRAL_N",
+  "CONSIDER_STEREOHETEROTOPICITY",
+  "COORDS_ARE_3D",
+  "CREATE_PSEUDO_STEREO_GROUPS",
+  "CREATE_SYMMETRY_RANK",
+  "DISTINGUISH_RACEMIC_OR_GROUPS",
+  "ENCODE_ATOM_CUSTOM_LABELS",
+  "ENCODE_ATOM_CUSTOM_LABELS_WITHOUT_RANKING",
+  "ENCODE_ATOM_SELECTION",
+  "NEGLECT_ANY_STEREO_INFORMATION",
+  "TIE_BREAK_FREE_VALENCE_ATOMS",
+]
+`;
+
 exports[`top-level API 1`] = `
 [
+  "Canonizer",
   "CanonizerUtil",
   "CanvasEditor",
   "ConformerGenerator",
