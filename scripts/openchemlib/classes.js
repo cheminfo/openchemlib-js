@@ -41,6 +41,7 @@ const changedClasses = [
   ['chem/reaction/ClassificationData', changeClassificationData],
   ['chem/reaction/mapping/RootAtomPairSource', changeRootAtomPairSource],
   ['chem/reaction/mapping/ReactionCenterMapper', changeReactionCenterMapper],
+  ['chem/reaction/RSSSearcher', changeRSSSearcher],
   ['chem/TautomerHelper', changeTautomerHelper],
   ['chem/TextDrawingObject', changeTextDrawingObject],
   ['gui/editor/GenericEditorArea', changeGenericEditorArea],
@@ -221,6 +222,22 @@ function changeReactionCenterMapper(code) {
     code,
     'mPermutationList.add(solution.clone());',
     'mPermutationList.add(Arrays.copyOf(solution, solution.length));',
+  );
+  return code;
+}
+
+function changeRSSSearcher(code) {
+  code = replaceChecked(
+    code,
+    'import java.util.ArrayList;',
+    'import java.util.Arrays;\nimport java.util.ArrayList;',
+  );
+  code = replaceChecked(code, 's.clone()', 'Arrays.copyOf(s, s.length)');
+  code = replaceChecked(
+    code,
+    'System.out.printf(format,args);',
+    'System.out.println("");',
+    2,
   );
   return code;
 }
