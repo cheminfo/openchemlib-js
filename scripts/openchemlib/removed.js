@@ -94,7 +94,6 @@ export const removedClasses = [
   'chem/reaction/ReactionClassifier.java',
   'chem/reaction/ReactionIndexer.java',
   'chem/reaction/ReactionSearch.java',
-  'chem/reaction/RSSSearcher.java',
   'chem/RingHelper.java',
   'chem/shredder',
   'chem/StructureSearch.java',
