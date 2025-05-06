@@ -2,7 +2,6 @@ import { generateImageData } from './generateImageData.js';
 import { removedClasses } from './removed.js';
 
 const modifiedClasses = [
-  'chem/io/DWARFileParser',
   'chem/io/Mol2FileParser',
   'chem/io/ODEFileParser',
   'gui/hidpi/HiDPIHelper',
@@ -26,6 +25,7 @@ const changedClasses = [
   ['chem/conf/TorsionDB', changeTorsionDB],
   ['chem/Coordinates', removeToStringSpaceDelimited],
   ['chem/coords/InventorFragment', changeInventorFragment],
+  ['chem/descriptor/FingerPrintGenerator', changeFingerPrintGenerator],
   ['chem/forcefield/mmff/Csv', changeCsv],
   ['chem/forcefield/mmff/Separation', replaceHashTable],
   ['chem/forcefield/mmff/Vector3', changeVector3],
@@ -38,6 +38,7 @@ const changedClasses = [
   ['chem/Molecule3D', removeCloneInfos],
   ['chem/prediction/IncrementTable', changeIncrementTable],
   ['chem/prediction/ToxicityPredictor', changeToxicityPredictor],
+  ['chem/reaction/ClassificationData', changeClassificationData],
   ['chem/reaction/mapping/RootAtomPairSource', changeRootAtomPairSource],
   ['chem/reaction/mapping/ReactionCenterMapper', changeReactionCenterMapper],
   ['chem/TautomerHelper', changeTautomerHelper],
@@ -145,6 +146,12 @@ function changeInventorFragment(code) {
   );
 }
 
+function changeFingerPrintGenerator(code) {
+  code = code.replace(methodRegExp('main', { indent: '    ' }), '');
+  code = replaceChecked(code, 'Hashtable', 'JSHashMap', 3);
+  return code;
+}
+
 function removeCloneInfos(code) {
   return replaceChecked(
     code,
@@ -178,6 +185,14 @@ function changeToxicityPredictor(code) {
     'this.getClass().getResourceAsStream(',
     'FakeFileInputStream.getResourceAsStream(',
     2,
+  );
+  return code;
+}
+
+function changeClassificationData(code) {
+  code = code.replace(
+    methodRegExp('initialize', { indent: '\t\t' }),
+    'private void initialize() {}',
   );
   return code;
 }
