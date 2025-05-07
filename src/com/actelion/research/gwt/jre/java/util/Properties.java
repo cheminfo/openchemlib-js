@@ -16,6 +16,11 @@ public class Properties {
     return map.put(key, value);
   }
 
+  public Set<String> stringPropertyNames() {
+    JSException.throwUnimplemented();
+    return null;
+  }
+
   public void load(InputStream inStream) {
     JSException.throwUnimplemented();
   }

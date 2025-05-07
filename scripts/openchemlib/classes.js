@@ -38,6 +38,14 @@ const changedClasses = [
     'chem/descriptor/flexophore/calculator/StructureCalculator',
     changeStructureCalculator,
   ],
+  [
+    'chem/descriptor/pharmacophoretree/HungarianAlgorithm',
+    changeHungarianAlgorithm,
+  ],
+  [
+    'chem/descriptor/pharmacophoretree/PharmacophoreTree',
+    changePharmacophoreTree,
+  ],
   ['chem/forcefield/mmff/Csv', changeCsv],
   ['chem/forcefield/mmff/Separation', replaceHashTable],
   ['chem/forcefield/mmff/Vector3', changeVector3],
@@ -202,6 +210,24 @@ function changeStructureCalculator(code) {
     code,
     'match.clone()',
     'Arrays.copyOf(match, match.length)',
+  );
+  return code;
+}
+
+function changeHungarianAlgorithm(code) {
+  code = removeSlice(
+    code,
+    'public static int readInput(String prompt)',
+    'System.out.print("\\nTotal time required: " + timeElapsed + "\\n\\n");\n\t\t}',
+  );
+  return code;
+}
+
+function changePharmacophoreTree(code) {
+  code = replaceChecked(
+    code,
+    'previousCut.clone()',
+    'Arrays.copyOf(previousCut, previousCut.length)',
   );
   return code;
 }
