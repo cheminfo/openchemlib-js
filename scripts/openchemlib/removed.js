@@ -45,8 +45,6 @@ export const removedClasses = [
   'chem/mmp',
   'chem/Molecule3DFunctions.java',
   'chem/Mutator.java',
-  'chem/prediction/DruglikenessPredictorWithIndex.java',
-  'chem/prediction/IncrementTableWithIndex.java',
   'chem/properties/complexity',
   'chem/properties/fractaldimension',
   'chem/reaction/CommonSubGraphHelper.java',
