@@ -17,4 +17,9 @@ public class Matcher {
     JSException.throwUnimplemented();
     return null;
   }
+
+  public String group(int group) {
+    JSException.throwUnimplemented();
+    return null;
+  }
 }
