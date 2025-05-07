@@ -7,7 +7,7 @@ import java.lang.Math;
 public class FakeFileInputStream extends InputStream {
   private static PlainJSObject registeredResources = null;
 
-  public static FakeFileInputStream getResourceAsStream(String path) throws IOException {
+  public static FakeFileInputStream getResourceAsStream(String path) {
     if (path.contains("/csd/")) {
       return null;
     }
@@ -33,7 +33,7 @@ public class FakeFileInputStream extends InputStream {
   private int currentByte = 0;
   private int length;
 
-  public FakeFileInputStream(JavaScriptObject contents) throws IOException {
+  public FakeFileInputStream(JavaScriptObject contents) {
     mContents = contents;
     length = getLength(contents);
   }

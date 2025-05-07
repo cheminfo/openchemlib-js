@@ -37,6 +37,7 @@ import com.actelion.research.gui.FileHelper;
 import com.actelion.research.util.DoubleFormat;
 
 import java.io.*;
+import org.cheminfo.utils.FakeFileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.TreeSet;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -145,7 +146,24 @@ public class RigidFragmentCache extends ConcurrentHashMap<String, RigidFragmentC
 	/**
 	 * This loads the default cache file
 	 */
-	
+	public synchronized void loadDefaultCache() {
+		if (!mDefaultCacheLoaded) {
+			try {
+				InputStream is = FakeFileInputStream.getResourceAsStream(DEFAULT_CACHE_FILE);
+				if (is != null) {
+					ZipInputStream zipStream = new ZipInputStream(is);
+					zipStream.getNextEntry();
+					BufferedReader reader = new BufferedReader(new InputStreamReader(zipStream, StandardCharsets.UTF_8));
+					loadCache(reader);
+					reader.close();
+					mDefaultCacheLoaded = true;
+					}
+				}
+			catch (Exception e) {
+				e.printStackTrace();
+				}
+			}
+		}
 
 	/**
 	 * Loads pre-calculated rigid fragment coordinates from a cache file, which is either a text file

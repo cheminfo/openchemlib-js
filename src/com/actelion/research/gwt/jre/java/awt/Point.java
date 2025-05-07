@@ -47,6 +47,10 @@ public class Point extends Point2D {
     this.y = y;
   }
 
+  public Point(Point p) {
+    this(p.x, p.y);
+  }
+
   public double getX() {
     return x;
   }

@@ -1,6 +1,7 @@
-package java.util;
+package org.cheminfo.utils;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import java.util.Enumeration;
 
 public class JSHashMap {
   private JavaScriptObject data;
@@ -10,22 +11,22 @@ public class JSHashMap {
   }
 
   public native void init() /*-{
-    this.@java.util.JSHashMap::data = new Map();
+    this.@org.cheminfo.utils.JSHashMap::data = new Map();
   }-*/;
 
   public native boolean containsKey(String key) /*-{
-    var data = this.@java.util.JSHashMap::data;
+    var data = this.@org.cheminfo.utils.JSHashMap::data;
     return data.has(key);
   }-*/;
 
   public native String get(String key) /*-{
-    var data = this.@java.util.JSHashMap::data;
+    var data = this.@org.cheminfo.utils.JSHashMap::data;
     var hasKey = data.has(key);
     return hasKey ? data.get(key) : null;
   }-*/;
 
   public native String put(String key, String value) /*-{
-    var data = this.@java.util.JSHashMap::data;
+    var data = this.@org.cheminfo.utils.JSHashMap::data;
     var hasKey = data.has(key);
     var previous = hasKey ? data.get(key) : null;
     data.set(key, value);
@@ -33,6 +34,7 @@ public class JSHashMap {
   }-*/;
 
   public Enumeration elements() {
+    JSException.throwUnimplemented();
     return null;
   };
 }
