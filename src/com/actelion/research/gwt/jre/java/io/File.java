@@ -26,6 +26,16 @@ public class File {
     return "";
   }
 
+  public String getAbsoluteFile() {
+    JSException.throwUnimplemented();
+    return "";
+  }
+
+  public boolean mkdir() {
+    JSException.throwUnimplemented();
+    return false;
+  }
+
   public boolean exists() {
     JSException.throwUnimplemented();
     return false;
