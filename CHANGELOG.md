@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.2.0](https://github.com/cheminfo/openchemlib-js/compare/v9.1.1...v9.2.0) (2025-05-07)
+
+
+### Features
+
+* implement and expose Canonizer ([#267](https://github.com/cheminfo/openchemlib-js/issues/267)) ([35b7705](https://github.com/cheminfo/openchemlib-js/commit/35b77053633c8751ac70e84321c279f95b5b8857))
+
 ## [9.1.1](https://github.com/cheminfo/openchemlib-js/compare/v9.1.0...v9.1.1) (2025-05-01)
 
 
