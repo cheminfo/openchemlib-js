@@ -64,6 +64,7 @@ const changedClasses = [
   ['chem/PeriodicTable', replaceHashTable],
   ['chem/phesaflex/EvaluableFlexibleOverlap', changeEvaluableFlexibleOverlap],
   ['chem/prediction/IncrementTable', changeIncrementTable],
+  ['chem/prediction/IncrementTableWithIndex', changeIncrementTableWithIndex],
   ['chem/prediction/ToxicityPredictor', changeToxicityPredictor],
   ['chem/reaction/ClassificationData', changeClassificationData],
   ['chem/reaction/mapping/RootAtomPairSource', changeRootAtomPairSource],
@@ -253,6 +254,20 @@ function changeIncrementTable(code) {
     code,
     'import java.io.*;',
     'import java.io.*;\nimport org.cheminfo.utils.FakeFileInputStream;',
+  );
+  code = replaceChecked(
+    code,
+    'this.getClass().getResourceAsStream(',
+    'FakeFileInputStream.getResourceAsStream(',
+  );
+  return code;
+}
+
+function changeIncrementTableWithIndex(code) {
+  code = replaceChecked(
+    code,
+    'import java.io.BufferedReader;',
+    'import org.cheminfo.utils.FakeFileInputStream;\nimport java.io.BufferedReader;',
   );
   code = replaceChecked(
     code,
