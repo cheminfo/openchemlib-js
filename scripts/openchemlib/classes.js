@@ -76,7 +76,6 @@ const changedClasses = [
   ['gui/generic/GenericDialog', changeGenericDialog],
   ['util/ArrayUtils', changeArrayUtils],
   ['util/datamodel/ByteVec', changeByteVec],
-  ['util/datamodel/IntVec', changeIntVec],
   ['util/StringFunctions', changeStringFunctions],
 ];
 
@@ -425,14 +424,6 @@ function changeArrayUtils(code) {
 
 function changeByteVec(code) {
   code = replaceChecked(code, 'doubleToRawLongBits', 'doubleToLongBits', 1);
-  return code;
-}
-
-function changeIntVec(code) {
-  const options = { indent: '    ' };
-  code = code.replace(methodRegExp('convert', options), '');
-  code = code.replace(methodRegExp('read', options), '');
-  code = code.replace(methodRegExp('readBitStringDense', options), '');
   return code;
 }
 
