@@ -646,9 +646,55 @@ public class IntVec implements Comparable<IntVec> {
     	return h;
     }
     
+    private static int[] convert(String sLine) {
+
+        StringTokenizer st = new StringTokenizer(sLine);
+        int[] dArray = new int[st.countTokens()];
+        int i = 0;
+        while (st.hasMoreTokens()) {
+            String sNumber = st.nextToken();
+            // The formatting sign "'" is not recognized by the Double.valueOf(...)
+            // function.
+            sNumber = sNumber.replaceAll("'", "");
+            try {
+                int val = (int) Double.parseDouble(sNumber);
+                dArray[i] = val;
+            }
+
+            catch (NumberFormatException ex1) {
+                System.err.println("No number: " + sNumber + ".");
+                ex1.printStackTrace();
+            }
+            i++;
+        }
+        return dArray;
+    }
     
-    
-    
+    public static IntVec readBitStringDense(String s) {
+
+    	int bits = s.length();
+    	
+    	if(bits%Integer.SIZE!=0){
+    		throw new RuntimeException("Wrong size ("+ bits +") of string for coversion.");
+    	}
+    	
+    	int size = bits/Integer.SIZE;
+    	
+        IntVec iv = new IntVec(size);
+
+        for (int i = 0; i < bits; i++) {
+        	
+        	int index = bits-i-1;
+        	
+			if(s.charAt(index)=='1'){
+				iv.setBit(i);
+			} else if(s.charAt(index)!='0'){
+				throw new RuntimeException("Illegal character.");
+			} 
+		}
+       
+        return iv;
+    }
 
     private void init() {
     	hash = -1;
@@ -824,9 +870,43 @@ public class IntVec implements Comparable<IntVec> {
         return dVecSub;
     }
 
-    
+    public void read(String s) {
+    	data = convert(s);
+    	hash = -1;
+    }
 
-    
+    public static IntVec [] read(File file) {
+    	
+    	List<IntVec> li = new ArrayList<IntVec>();
+    	
+    	try {
+			BufferedReader buf = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+			
+			while(buf.ready()) {
+				String s = buf.readLine();
+				int [] a = convert(s);
+				IntVec v = new IntVec(a);
+				li.add(v);
+			}
+			
+			buf.close();
+			
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+    	
+    	IntVec [] arrIV = new IntVec [li.size()];
+    	for (int i = 0; i < arrIV.length; i++) {
+			arrIV[i]=(IntVec)li.get(i);
+		}
+    	
+    	return arrIV;
+    	
+    }
     
     /**
      * Removes all values with no corresponding index in the list.
@@ -1613,9 +1693,54 @@ public class IntVec implements Comparable<IntVec> {
     	bw.close();
     }
     
-    
+    public static List<IntVec> readBitStringDense(File fi) throws IOException{
+    	List<IntVec> li = new ArrayList<IntVec>();
+    	
+    	BufferedReader br = new BufferedReader(new FileReader(fi));
+    	
+    	String line="";
+    	
+    	int cc=0;
+    	while((line=br.readLine())!=null){
+    		
+    		
+    		try {
+				IntVec iv = readBitStringDense(line);
+				
+				li.add(iv);
+			} catch (Exception e) {
+				System.err.println("Error in line " + cc + ".");
+				e.printStackTrace();
+			}
+			cc++;
+    	}
+    	
+    	br.close();
+    	
+    	return li;
+    }
 
-    
+    public static IntVec read(InputStream s) throws IOException{
+    	    	
+    	int size = IntArray.parseInteger(s);
+    	
+    	int hash = IntArray.parseInteger(s);
+    	
+    	int [] a = new int [size];
+    	
+    	for (int i = 0; i < size; i++) {
+    		a[i] = IntArray.parseInteger(s);
+		}
+    	
+    	IntVec iv = new IntVec();
+    	
+    	iv.data = a;
+    	
+    	iv.hash = hash;
+    	
+    	return iv;
+    	
+    }
     
     public static boolean isBitSet(int [] a, int i) {
         int ind = a.length - (i / Integer.SIZE) - 1;
