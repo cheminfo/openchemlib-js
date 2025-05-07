@@ -38,6 +38,14 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public class ArrayUtils {
+	public static int[] resize(int[] arr, int newSize) {
+		int[] newArray = new int[newSize];
+		int toCopy = Math.min(arr.length, newSize);
+		for (int i = 0; i < toCopy; i++) {
+			newArray[i] = arr[i];
+		}
+		return newArray;
+	}
 
 
 	public static boolean equals(int [] a, int [] b){

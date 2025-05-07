@@ -7,6 +7,7 @@ const modifiedClasses = [
   'gui/hidpi/HiDPIHelper',
   'gui/hidpi/HiDPIIcon',
   'util/ConstantsDWAR',
+  '@smile/clustering/KMeans',
 ];
 
 export const modified = modifiedClasses.map(getFilename);
@@ -21,21 +22,39 @@ const changedClasses = [
     '@org/openmolecules/chem/conf/so/SelfOrganizedConformer',
     changeSelfOrganizedConformer,
   ],
-  ['@org/openmolecules/chem/conf/gen/RigidFragmentCache', removeCacheIO],
+  [
+    '@org/openmolecules/chem/conf/gen/RigidFragmentCache',
+    changeRigidFragmentCache,
+  ],
   ['chem/conf/TorsionDB', changeTorsionDB],
+  [
+    'chem/conf/torsionstrain/StatisticalTorsionPotential',
+    changeStatisticalTorsionPotential,
+  ],
   ['chem/Coordinates', removeToStringSpaceDelimited],
   ['chem/coords/InventorFragment', changeInventorFragment],
   ['chem/descriptor/FingerPrintGenerator', changeFingerPrintGenerator],
+  [
+    'chem/descriptor/flexophore/calculator/StructureCalculator',
+    changeStructureCalculator,
+  ],
   ['chem/forcefield/mmff/Csv', changeCsv],
   ['chem/forcefield/mmff/Separation', replaceHashTable],
   ['chem/forcefield/mmff/Vector3', changeVector3],
+  [
+    'chem/interactionstatistics/InteractionDistanceStatistics',
+    changeInteractionDistanceStatistics,
+  ],
   ['chem/io/CompoundFileHelper', fixCompoundFileHelper],
+  ['chem/io/pdb/converter/BondsCalculator', changeBondsCalculator],
   ['chem/io/RXNFileParser', replaceStandardCharsets(2)],
   ['chem/io/RXNFileV3Creator', removeRXNStringFormat],
   ['chem/io/SDFileParser', replaceStandardCharsets(2)],
   ['chem/Molecule', changeMolecule],
   ['chem/MolfileParser', replaceStandardCharsets(1)],
   ['chem/Molecule3D', removeCloneInfos],
+  ['chem/PeriodicTable', replaceHashTable],
+  ['chem/phesaflex/EvaluableFlexibleOverlap', changeEvaluableFlexibleOverlap],
   ['chem/prediction/IncrementTable', changeIncrementTable],
   ['chem/prediction/ToxicityPredictor', changeToxicityPredictor],
   ['chem/reaction/ClassificationData', changeClassificationData],
@@ -48,7 +67,9 @@ const changedClasses = [
   ['gui/editor/CustomAtomDialogBuilder', changeCustomAtomDialogBuilder],
   ['gui/generic/GenericDialog', changeGenericDialog],
   ['util/ArrayUtils', changeArrayUtils],
+  ['util/datamodel/ByteVec', changeByteVec],
   ['util/datamodel/IntVec', changeIntVec],
+  ['util/StringFunctions', changeStringFunctions],
 ];
 
 export const changed = changedClasses.map(([path, ...transformers]) => {
@@ -72,6 +93,9 @@ function getFilename(file) {
   }
   if (file.startsWith('@org/')) {
     return `../org/${file.replace('@org/', '')}.java`;
+  }
+  if (file.startsWith('@smile/')) {
+    return `../smile/${file.replace('@smile/', '')}.java`;
   }
   if (file.startsWith('@gwt/')) {
     return `../../${file.replace('@gwt/', '')}.java`;
@@ -103,6 +127,21 @@ function changeTorsionDB(code) {
     code,
     'import java.io.*;',
     'import java.io.*;\nimport org.cheminfo.utils.FakeFileInputStream;',
+  );
+  code = replaceChecked(
+    code,
+    'TorsionDB.class.getResourceAsStream(',
+    'FakeFileInputStream.getResourceAsStream(',
+    2,
+  );
+  return code;
+}
+
+function changeStatisticalTorsionPotential(code) {
+  code = replaceChecked(
+    code,
+    'import java.io.InputStreamReader;',
+    'import java.io.InputStreamReader;\nimport org.cheminfo.utils.FakeFileInputStream;',
   );
   code = replaceChecked(
     code,
@@ -149,7 +188,21 @@ function changeInventorFragment(code) {
 
 function changeFingerPrintGenerator(code) {
   code = code.replace(methodRegExp('main', { indent: '    ' }), '');
-  code = replaceChecked(code, 'Hashtable', 'JSHashMap', 3);
+  code = replaceChecked(
+    code,
+    'import java.util.Hashtable',
+    'import org.cheminfo.utils.JSHashMap',
+  );
+  code = replaceChecked(code, 'Hashtable', 'JSHashMap', 2);
+  return code;
+}
+
+function changeStructureCalculator(code) {
+  code = replaceChecked(
+    code,
+    'match.clone()',
+    'Arrays.copyOf(match, match.length)',
+  );
   return code;
 }
 
@@ -159,6 +212,15 @@ function removeCloneInfos(code) {
     'infos[a] = m.infos[i].clone();',
     '// infos[a] = m.infos[i].clone();',
   );
+}
+
+function changeEvaluableFlexibleOverlap(code) {
+  code = replaceChecked(
+    code,
+    '@Override\n\tpublic EvaluableFlexibleOverlap clone',
+    'public EvaluableFlexibleOverlap clone',
+  );
+  return code;
 }
 
 function changeIncrementTable(code) {
@@ -317,8 +379,26 @@ function changeGenericDialog(code) {
 }
 
 function changeArrayUtils(code) {
+  code = replaceChecked(
+    code,
+    'public class ArrayUtils {',
+    `public class ArrayUtils {
+\tpublic static int[] resize(int[] arr, int newSize) {
+\t\tint[] newArray = new int[newSize];
+\t\tint toCopy = Math.min(arr.length, newSize);
+\t\tfor (int i = 0; i < toCopy; i++) {
+\t\t\tnewArray[i] = arr[i];
+\t\t}
+\t\treturn newArray;
+\t}`,
+  );
   code = removeSlice(code, '\n	/**\n	 * Resize an array', 'return newArray;\n	}');
   code = removeSlice(code, '\n	/**\n	 * Copy an array ', 'return newArray;\n	}');
+  return code;
+}
+
+function changeByteVec(code) {
+  code = replaceChecked(code, 'doubleToRawLongBits', 'doubleToLongBits', 1);
   return code;
 }
 
@@ -327,6 +407,20 @@ function changeIntVec(code) {
   code = code.replace(methodRegExp('convert', options), '');
   code = code.replace(methodRegExp('read', options), '');
   code = code.replace(methodRegExp('readBitStringDense', options), '');
+  return code;
+}
+
+function changeStringFunctions(code) {
+  code = removeSlice(
+    code,
+    '\n\tpublic static String toString(Exception ex) {',
+    'exceptionAsString;\n\t}',
+  );
+  code = removeSlice(
+    code,
+    '\n\tpublic static String toStringStackTrace(Throwable ex){',
+    'return sw.toString();\n\n\t}',
+  );
   return code;
 }
 
@@ -399,11 +493,16 @@ function changeSelfOrganizedConformer(code) {
   return code;
 }
 
-function removeCacheIO(code) {
-  code = removeSlice(
+function changeRigidFragmentCache(code) {
+  code = replaceChecked(
     code,
-    'public synchronized void loadDefaultCache() {',
-    '\n		}',
+    'import java.io.*;',
+    'import java.io.*;\nimport org.cheminfo.utils.FakeFileInputStream;',
+  );
+  code = replaceChecked(
+    code,
+    'RigidFragmentCache.class.getResourceAsStream(',
+    'FakeFileInputStream.getResourceAsStream(',
   );
   code = removeSlice(
     code,
@@ -464,11 +563,29 @@ function changeVector3(code) {
   return removeSlice(code, 'public String toString() {', '}');
 }
 
+function changeInteractionDistanceStatistics(code) {
+  code = replaceChecked(
+    code,
+    'InteractionDistanceStatistics.class.getResource(file);',
+    'null;',
+  );
+  return code;
+}
+
 function fixCompoundFileHelper(code) {
   code = code.replaceAll(methodRegExp('saveRXNFile', { indent: '\t\t' }), '');
   code = code.replaceAll(
     methodRegExp('createFileFilter', { indent: '\t\t' }),
     '',
+  );
+  return code;
+}
+
+function changeBondsCalculator(code) {
+  code = replaceChecked(
+    code,
+    'isAromaticBond.clone()',
+    'Arrays.copyOf(isAromaticBond, isAromaticBond.length)',
   );
   return code;
 }

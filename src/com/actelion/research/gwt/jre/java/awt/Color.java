@@ -32,9 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package java.awt;
 
-/**
- * * JDK Class Emulation for GWT
- */
+import org.cheminfo.utils.JSException;
 
 public class Color {
 
@@ -194,4 +192,8 @@ public class Color {
     return f;
   }
 
+  public static int HSBtoRGB(float hue, float saturation, float brightness) {
+    JSException.throwUnimplemented();
+    return 0;
+  }
 }

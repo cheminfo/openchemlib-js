@@ -1,7 +1,15 @@
 package java.text;
 
+import java.math.RoundingMode;
+
+import org.cheminfo.utils.JSException;
+
 public class DecimalFormat extends java.text.NumberFormat {
   private int numDigits;
+
+  public DecimalFormat() {
+    this("0.000");
+  }
 
   public DecimalFormat(String pattern, DecimalFormatSymbols symbols) {
     this(pattern);
@@ -32,4 +40,10 @@ public class DecimalFormat extends java.text.NumberFormat {
   /*-{
     return number.toFixed(numDigits);
   }-*/;
+
+  public void setRoundingMode(RoundingMode mode) {
+    if (mode != RoundingMode.HALF_UP) {
+      JSException.throwError("Only HALF_UP rounding mode is supported");
+    }
+  }
 }
