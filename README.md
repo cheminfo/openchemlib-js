@@ -24,7 +24,8 @@ npm install openchemlib
 
 ## Documentation
 
-- [TypeDoc home page](https://cheminfo.github.io/openchemlib-js/index.html)
+- [Generated API documentation](https://cheminfo.github.io/openchemlib-js/)
+- [Web examples](https://openchemlib-js.pages.dev)
 
 ## Development
 
