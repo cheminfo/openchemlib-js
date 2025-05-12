@@ -1,23 +1,20 @@
-# OpenChemLib JS
-
-JavaScript port of the [OpenChemLib](https://github.com/actelion/openchemlib) Java library.
-
 <h3 align="center">
-
   <a href="https://www.zakodium.com">
     <img src="https://www.zakodium.com/brand/zakodium-logo-white.svg" width="50" alt="Zakodium logo" />
   </a>
-
   <p>
     Maintained by <a href="https://www.zakodium.com">Zakodium</a>
   </p>
-  
-  [![NPM version][npm-image]][npm-url]
-  [![build status][ci-image]][ci-url]
-  [![npm download][download-image]][download-url]
-  [![DOI](https://www.zenodo.org/badge/23346814.svg)](https://www.zenodo.org/badge/latestdoi/23346814)
-
 </h3>
+
+# OpenChemLib JS
+
+[![NPM version][npm-image]][npm-url]
+[![npm download][download-image]][download-url]
+[![license][license-image]][license-url]
+[![DOI](https://www.zenodo.org/badge/23346814.svg)](https://www.zenodo.org/badge/latestdoi/23346814)
+
+JavaScript port of the [OpenChemLib](https://github.com/actelion/openchemlib) Java library.
 
 ## Installation
 
@@ -31,7 +28,7 @@ npm install openchemlib
 
 ## Development
 
-To build this project, you need :
+To build this project, you need:
 
 - Java JDK (Tested with version 21)
 - GWT (Tested with version 2.12.2, [Download build here](http://www.gwtproject.org/download.html))
@@ -39,7 +36,9 @@ To build this project, you need :
 
 ### Install dependencies
 
-`npm ci`
+```console
+npm ci
+```
 
 ### Configure directories
 
@@ -50,11 +49,6 @@ If you want to use a custom JDK installation, set the "jdk" key to be the path t
 
 To run one of the scripts, use `npm run <scriptName>`.  
 To pass additional options, use `npm run <scriptName> -- --option`.
-
-**Options** :
-
-- -m [name]: only process module "name"
-- -v: verbose output
 
 #### build-java
 
@@ -70,7 +64,7 @@ Copy the required java files from the openchemlib project.
 
 [npm-image]: https://img.shields.io/npm/v/openchemlib.svg
 [npm-url]: https://www.npmjs.com/package/openchemlib
-[ci-image]: https://github.com/cheminfo/openchemlib-js/workflows/Node.js%20CI/badge.svg?branch=main
-[ci-url]: https://github.com/cheminfo/openchemlib-js/actions?query=workflow%3A%22Node.js+CI%22
 [download-image]: https://img.shields.io/npm/dm/openchemlib.svg
 [download-url]: https://www.npmjs.com/package/openchemlib
+[license-image]: https://img.shields.io/npm/l/openchemlib.svg
+[license-url]: https://github.com/cheminfo/openchemlib-js/blob/main/LICENSE
