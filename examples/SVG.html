@@ -1,8 +1,7 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <title>Static Structure Rendering</title>
-    <script src="../lib/index.js"></script>
   </head>
 
   <body>
@@ -39,13 +38,13 @@
 
       <button id="ok">Click</button>
     </div>
-    <script>
-      var init = false;
-      var el = document.getElementById('idcode');
-      var btn = document.getElementById('ok');
+    <script type="module">
+      import { Molecule } from '../lib/index.js';
+      const el = document.getElementById('idcode');
+      const btn = document.getElementById('ok');
 
       btn.onclick = function () {
-        const mol = OCL.Molecule.fromIDCode(el.getAttribute('data-idcode'));
+        const mol = Molecule.fromIDCode(el.getAttribute('data-idcode'));
         el.innerHTML =
           mol.toSVG(200, 100) +
           mol.toSVG(200, 100, 'test', { factorTextSize: 2 });
