@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.2.1](https://github.com/cheminfo/openchemlib-js/compare/v9.2.0...v9.2.1) (2025-05-14)
+
+
+### Bug Fixes
+
+* handle empty reactions in custom element ([082d1b8](https://github.com/cheminfo/openchemlib-js/commit/082d1b84497b305ca429e0e757dd13bda8e29a09))
+* initialize custom element state on construct ([31c1a11](https://github.com/cheminfo/openchemlib-js/commit/31c1a1187937ef093d1e0b705502c33130683caa))
+
 ## [9.2.0](https://github.com/cheminfo/openchemlib-js/compare/v9.1.1...v9.2.0) (2025-05-13)
 
 
