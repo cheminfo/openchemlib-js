@@ -1,5 +1,18 @@
 # Changelog
 
+## [9.3.0](https://github.com/cheminfo/openchemlib-js/compare/v9.2.0...v9.3.0) (2025-06-17)
+
+
+### Features
+
+* update OCL to v2025.6.1 ([#295](https://github.com/cheminfo/openchemlib-js/issues/295)) ([343cf4b](https://github.com/cheminfo/openchemlib-js/commit/343cf4b8067ec60cb3c198280c3d14ca8592f9e3))
+
+
+### Bug Fixes
+
+* handle empty reactions in custom element ([082d1b8](https://github.com/cheminfo/openchemlib-js/commit/082d1b84497b305ca429e0e757dd13bda8e29a09))
+* initialize custom element state on construct ([31c1a11](https://github.com/cheminfo/openchemlib-js/commit/31c1a1187937ef093d1e0b705502c33130683caa))
+
 ## [9.2.0](https://github.com/cheminfo/openchemlib-js/compare/v9.1.1...v9.2.0) (2025-05-13)
 
 
