@@ -65,10 +65,10 @@ describe('ConformerGenerator', () => {
     gen.initializeConformers(mol);
 
     const allConformers = [...gen.molecules()];
-    expect(allConformers).toHaveLength(26);
+    expect(allConformers).toHaveLength(24);
 
     // All molecules should be different
-    expect(new Set(allConformers).size).toBe(26);
+    expect(new Set(allConformers).size).toBe(24);
 
     expect(allConformers[0].getAtomZ(0)).not.toBe(allConformers[1].getAtomZ(1));
 

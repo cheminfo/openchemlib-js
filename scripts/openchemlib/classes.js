@@ -54,6 +54,7 @@ const changedClasses = [
     changeInteractionDistanceStatistics,
   ],
   ['chem/io/CompoundFileHelper', fixCompoundFileHelper],
+  ['chem/io/pdb/converter/BondOrderCalculator', changeBondOrderCalculator],
   ['chem/io/pdb/converter/BondsCalculator', changeBondsCalculator],
   ['chem/io/RXNFileParser', replaceStandardCharsets(2)],
   ['chem/io/RXNFileV3Creator', removeRXNStringFormat],
@@ -371,7 +372,7 @@ function changeTextDrawingObject(code) {
   );
   return replaceChecked(
     code,
-    String.raw`detail.append(String.format(" size=\"%.4f\"", new Double(mSize)));`,
+    String.raw`detail.append(String.format(" size=\"%.4f\"", mSize));`,
     String.raw`detail.append(" size=\""+new BigDecimal(mSize, new MathContext(4)).toString()+"\"");`,
   );
 }
@@ -452,6 +453,11 @@ function changeStringFunctions(code) {
     code,
     '\n\tpublic static String toStringStackTrace(Throwable ex){',
     'return sw.toString();\n\n\t}',
+  );
+  code = removeSlice(
+    code,
+    '\tpublic static String toString(Throwable ex) {',
+    'return exceptionAsString;\n\t}',
   );
   return code;
 }
@@ -609,6 +615,15 @@ function fixCompoundFileHelper(code) {
   code = code.replaceAll(
     methodRegExp('createFileFilter', { indent: '\t\t' }),
     '',
+  );
+  return code;
+}
+
+function changeBondOrderCalculator(code) {
+  code = replaceChecked(
+    code,
+    'isAromaticBond.clone()',
+    'Arrays.copyOf(isAromaticBond, isAromaticBond.length)',
   );
   return code;
 }

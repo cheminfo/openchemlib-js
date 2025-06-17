@@ -49,7 +49,8 @@ public class ChemicalRuleEnhancedReactionMapper implements IReactionMapper {
 	// change bonding of the reaction the rule is applied to. Nevertheless, the rule's entire reactant is used
 	// for the substructure search that identifies applicability.
 	// NOTE: Rule reactions must contain one reactant and one product only (usually these consist of multiple fragments)!
-	// NOTE: You may use the idcodeexplorer.jar to generate new rules.
+	// NOTE: You may use the idcodeexplorer.jar to generate new rules. An up-to-date version should always be available
+	//       from https://openmolecules.org/idcodeexplorer.jar
 	private static final ChemicalRule[] CHEMICAL_RULE = {
 // With cleaned coordinates:
 			new ChemicalRule("d","gGQ@@eKtRA@!gGQ@@djqRA@#qMsT qM\\V#!B_qL@Dw}l@Fp@Dp !B@AL@[@@S@Fp@Dp##", 3.5f),
@@ -85,9 +86,10 @@ public class ChemicalRuleEnhancedReactionMapper implements IReactionMapper {
 			new ChemicalRule("diazomethanHomologation", "gFU@lQioIIs\\AyH!gFU@CPdimXD#qbM^ qbqk#!B?X`BbFZN?`C~_p !B@AL@[@@Su[x@Dp##", 7.5f),
 
 			// methathese
-			new ChemicalRule("ene-Metathesis","daX@@LdPLSSPAlRXwQIHXLa`ZFChXO}IL[`!daX@@LdPLSSPAlRXwQIHXLa`ZFChXO}IL[`#qT@q@ qt@Q@#!BNIu^@O{wD^EGhkzO?a@ !BNIu^@O{wD^EGhkzO?a@##", 3.5f),
+			new ChemicalRule("ene-Metathesis", "deD@@LdbEdSTu@FqHWSDda`JFChXIa`?tdKi@!deD@@Ldb`\\SUM@FqHPsDda`JF@XXIa`?tdHY@#qTEApX qQECf@#!BQzK~}ubbW`BEgcb]?a@gg[zO !BQzK~}ubbW`Ag{VVAQzJ~c?xP##", 3.5f),
+//			new ChemicalRule("ene-Metathesis","daX@@LdPLSSPAlRXwQIHXLa`ZFChXO}IL[`!daX@@LdPLSSPAlRXwQIHXLa`ZFChXO}IL[`#qT@q@ qt@Q@#!BNIu^@O{wD^EGhkzO?a@ !BNIu^@O{wD^EGhkzO?a@##", 3.5f),
 			new ChemicalRule("yne-Metathesis","daX@@LdPLWWPAlRXwQIHXLa`ZFChXO}IL[`!daX@@LdPLWWPAlRXwQIHXLa`ZFChXO}IL[`#qT@q@ qt@Q@#!BZmoi@Fjo|SFe|IkGiU@ !BZmoi@Fjo|SFe|IkGiU@##", 3.5f),
-			new ChemicalRule("ene-yne-Metathesis","dcd@@LdPLPLWSSPAlrXwKlVRFCHXFa`zFAXXMa`udqnWP!dcT@@LdbbplTsTt@[MeMr{Ela`jFAhXNa`VFCXXO}[J[et#qe@N@S@ qeHP@s@#!B?g?~@Oy?^gG}bOvw?H`E@PJw@hc}mp !B?`BH?[_}mpJH@oy??`AuC`Jw@hc}mp##", 7.5f),
+			new ChemicalRule("ene-yne-Metathesis","dcd@@LdPLPLWSSPAlrXwKlVRFCHXFa`zFAXXMa`?udqnWP!dcT@@LdbbplTsTt@[MeMr{Ela`jFAhXNa`VFCXXO}[J[et#qe@N@S@ qeHP@s@#!B?g?~@Oy?^gG}bOvw?H`E@PJw@hc}mp !B?`BH?[_}mpJH@oy??`AuC`Jw@hc}mp##", 7.5f),
 			new ChemicalRule("Alkyne-Cyclisation", "gG`@DcO|CFAFC`@!gFp@DiTt@@CFAFC`@#qi\\V qiSt#!B_y[qA`Biu^zV@@ !B?g~w@k_}m?vw@`##", 8.5f),
 
 			// two-step
@@ -119,11 +121,13 @@ public class ChemicalRuleEnhancedReactionMapper implements IReactionMapper {
 
 			// condensation with ring closure
 			new ChemicalRule("Hantzsch Thiazol", "gOYDGaDDHRTve`H!gKXHL@aJWFe`H#qB`ip qiV`#!B_vq?Dw}lL{y?[G|S !BTqa`FbpX?`@##", 3.5f),
+
+			// ester cleavage
+//			new ChemicalRule("Ester cleavage", "gKa`@bdhtA@!gKa`@ldftA@#qbqh qbnH#!BDw}l_qM?i^d !B?OC}|IfVjW|##", 1.5f),
 	};
 
 	private static boolean sInitialized;
 
-	private StereoMolecule mReactant,mProduct;
 	private float mScore;
 	private int mMaxRuleTries;
 	private ChemicalRule mAppliedRule;
@@ -151,16 +155,16 @@ public class ChemicalRuleEnhancedReactionMapper implements IReactionMapper {
 		SimilarityGraphBasedReactionMapper mapper = new SimilarityGraphBasedReactionMapper();
 		mapper.mergeReactantsAndProducts(rxn);
 
-		mReactant = mapper.getReactant();
-		mProduct = mapper.getProduct();
-		mReactant.ensureHelperArrays(Molecule.cHelperNeighbours);
-		mProduct.ensureHelperArrays(Molecule.cHelperNeighbours);
+		StereoMolecule reactant = mapper.getReactant();
+		StereoMolecule product = mapper.getProduct();
+		reactant.ensureHelperArrays(Molecule.cHelperNeighbours);
+		product.ensureHelperArrays(Molecule.cHelperNeighbours);
 
 		// TODO use indexes
 		SSSearcher reactantSearcher = new SSSearcher();
 		SSSearcher productSearcher = new SSSearcher();
-		reactantSearcher.setMolecule(mReactant);
-		productSearcher.setMolecule(mProduct);
+		reactantSearcher.setMolecule(reactant);
+		productSearcher.setMolecule(product);
 
 		mScore = Integer.MIN_VALUE;
 		int[] bestReactantMapNo = null;
@@ -173,7 +177,7 @@ public class ChemicalRuleEnhancedReactionMapper implements IReactionMapper {
 if (SimilarityGraphBasedReactionMapper.DEBUG)
  System.out.println("Reaction\tScore");
 
-		StereoMolecule reactant = new StereoMolecule(); // reusable container
+		StereoMolecule adaptedReactant = new StereoMolecule(); // reusable container
 
 		for (ChemicalRule rule:CHEMICAL_RULE) {
 			if (ruleApplicationCount++ == mMaxRuleTries)
@@ -190,12 +194,12 @@ float historyScore = -10000;
 						if (ruleApplicationCount++ >= mMaxRuleTries)
 							break;
 
-						mReactant.copyMolecule(reactant);
-						rule.apply(reactant, reactantMatch);
-						int[] reactantMapNo = new int[mReactant.getAtoms()];
-						int[] productMapNo = new int[mProduct.getAtoms()];
+						reactant.copyMolecule(adaptedReactant);
+						rule.apply(adaptedReactant, reactantMatch);
+						int[] reactantMapNo = new int[reactant.getAtoms()];
+						int[] productMapNo = new int[product.getAtoms()];
 //System.out.println(new MolfileCreator(reactant).getMolfile());
-						mapper.map(reactant, mProduct, reactantMapNo, productMapNo);
+						mapper.map(adaptedReactant, product, reactantMapNo, productMapNo);
 						float score = mapper.getScore() - rule.getPanalty();
 
 if (historyScore < score) historyScore = score;
@@ -214,9 +218,9 @@ mHistory.append(rule.getName()+historyScore+pairSequences+"\n");
 			}
 
 		// map and score the reaction without applying any rules
-		int[] reactantMapNo = new int[mReactant.getAtoms()];
-		int[] productMapNo = new int[mProduct.getAtoms()];
-		mapper.map(mReactant, mProduct, reactantMapNo, productMapNo);
+		int[] reactantMapNo = new int[reactant.getAtoms()];
+		int[] productMapNo = new int[product.getAtoms()];
+		mapper.map(reactant, product, reactantMapNo, productMapNo);
 		float score = mapper.getScore();
 
 		if (mScore <= score) {
