@@ -735,6 +735,14 @@ public class IDCodeParserWithoutCoordinateInvention {
 					selectedHydrogenBits[atom] = conns;
 					}
 				break;
+			case 39: //  datatype 'AtomQFOxydationState'
+				no = decodeBits(abits);
+				for (int i=0; i<no; i++) {
+					int atom = decodeBits(abits);
+					long oxydationState = (long)decodeBits(Molecule.cAtomQFOxidationStateBits) << Molecule.cAtomQFOxidationStateShift;
+					mMol.setAtomQueryFeature(atom, oxydationState, true);
+				}
+				break;
 				}
 			}
 
@@ -922,7 +930,7 @@ public class IDCodeParserWithoutCoordinateInvention {
 		if (mMol.isFragment()) {
 			for (int bond=0; bond<mMol.getAllBonds(); bond++) {
 				int queryFeatures = mMol.getBondQueryFeatures(bond);
-				if ((queryFeatures & Molecule.cBondQFBondTypes) == 0)
+				if ((queryFeatures & Molecule.cBondQFAllBondTypes) == 0)
 					continue;
 
 				int bondType = -1;
@@ -960,7 +968,7 @@ public class IDCodeParserWithoutCoordinateInvention {
 				if (bondType != -1) {
 					mMol.setBondType(bond, bondType);    // set to the lowest bond order of query options
 					if (selectionCount == 1)
-						mMol.setBondQueryFeature(bond, Molecule.cBondQFBondTypes, false);
+						mMol.setBondQueryFeature(bond, Molecule.cBondQFAllBondTypes, false);
 				}
 			}
 		}
@@ -1722,6 +1730,13 @@ public class IDCodeParserWithoutCoordinateInvention {
 							int conns = decodeBits(connBits);
 							System.out.print(" " + atom + ":" + conns);
 						}
+						System.out.println();
+						break;
+					case 39: //  datatype 'AtomQFOxydationState'
+						no = decodeBits(abits);
+						System.out.print("AtomQFOxydationState:");
+						for (int i=0; i<no; i++)
+							System.out.print(" " + decodeBits(abits) + ":" + decodeBits(Molecule.cAtomQFOxidationStateBits));
 						System.out.println();
 						break;
 					}

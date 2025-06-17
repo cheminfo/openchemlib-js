@@ -816,16 +816,21 @@ System.out.println();
 		 && mFragment.getAtomRadical(fragmentAtom) != mMolecule.getAtomRadical(moleculeAtom))
 			return false;
 
-		int smallestRingSize = (int)((mFragment.getAtomQueryFeatures(fragmentAtom) & Molecule.cAtomQFSmallRingSize) >> Molecule.cAtomQFSmallRingSizeShift);
+		long oxidationState = fragmentQF & Molecule.cAtomQFOxidationState;
+		if (oxidationState != 0L
+		 && mMolecule.getOxidationState(moleculeAtom) != (int)(oxidationState >> Molecule.cAtomQFOxidationStateShift)
+				- Molecule.cAtomQFOxidationStateOffset)
+			return false;
+
+		long smallestRingSize = fragmentQF & Molecule.cAtomQFSmallRingSize;
 		if (smallestRingSize != 0) {
+			smallestRingSize >>= Molecule.cAtomQFSmallRingSizeShift;
 			if (!mMolecule.isFragment()) {
-				if (mMolecule.getAtomRingSize(moleculeAtom) != smallestRingSize)
-					return false;
+				return mMolecule.getAtomRingSize(moleculeAtom) == (int)(smallestRingSize);
 				}
 			else {
 				int targetRingSize = (int)((mMolecule.getAtomQueryFeatures(moleculeAtom) & Molecule.cAtomQFSmallRingSize) >> Molecule.cAtomQFSmallRingSizeShift);
-				if (smallestRingSize != targetRingSize)
-					return false;
+				return (int)smallestRingSize == targetRingSize;
 				}
 			}
 
@@ -1297,7 +1302,7 @@ System.out.println();
 		if ((mFragment.getBondQueryFeatures(fragmentBond) & Molecule.cBondQFMatchFormalOrder) != 0) {
 			int molBondType = mMolecule.getBondTypeSimple(moleculeBond);
 			int frgBondType = mFragment.getBondTypeSimple(fragmentBond);
-			int frgBondTypes = mFragment.getBondQueryFeatures(fragmentBond) & Molecule.cBondQFBondTypes;
+			int frgBondTypes = mFragment.getBondQueryFeatures(fragmentBond) & Molecule.cBondQFAllBondTypes;
 			if (molBondType != frgBondType
 			 && !(molBondType == Molecule.cBondTypeSingle && (frgBondTypes & Molecule.cBondTypeSingle) != 0)
 			 && !(molBondType == Molecule.cBondTypeDouble && (frgBondTypes & Molecule.cBondTypeDouble) != 0)
@@ -1308,8 +1313,8 @@ System.out.println();
 			 && !(molBondType == Molecule.cBondTypeDelocalized && (frgBondTypes & Molecule.cBondTypeDelocalized) != 0))
 				return false;
 
-			molDefaults &= ~Molecule.cBondQFBondTypes;
-			frgDefaults &= ~Molecule.cBondQFBondTypes;
+			molDefaults &= ~Molecule.cBondQFAllBondTypes;
+			frgDefaults &= ~Molecule.cBondQFAllBondTypes;
 			}
 
 		if ((molDefaults & ~frgDefaults) != 0)

@@ -248,14 +248,16 @@ public class ExtendedMoleculeFunctions {
 		return bnds;
 	}
 	public static int getNumNonHydrogenAtoms(ExtendedMolecule mol) {
+		return getNumNonHydrogenAtoms(mol, 1000);
+	}
+	public static int getNumNonHydrogenAtoms(ExtendedMolecule mol, int atNosNot2Consider) {
 		int non = 0;
 		for (int i = 0; i < mol.getAtoms(); i++) {
 			int atomicNo = mol.getAtomicNo(i);
-			if(atomicNo!=1) {
-				non++;
-			}
+			if((atomicNo==1) || (atomicNo>=atNosNot2Consider))
+				continue;
+			non++;
 		}
-
 		return non;
 	}
 	public static int getNumCarbonAtoms(ExtendedMolecule mol) {
@@ -455,6 +457,12 @@ public class ExtendedMoleculeFunctions {
 			return -1;
 		int bndtype = mol.getBondParity(bndno);
 		return bndtype;
+	}
+	public static boolean isPseudoParity(ExtendedMolecule mol, int atm1,int atm2) {
+		int bndno = getBondNo(mol, atm1,atm2);
+		if(bndno==-1)
+			return false;
+		return mol.isBondParityPseudo(bndno);
 	}
 
 	public static boolean deleteBond(ExtendedMolecule mol, int atm1,int atm2) {
@@ -714,6 +722,17 @@ public class ExtendedMoleculeFunctions {
 
 	public final static int [][] getTopologicalDistanceMatrix(StereoMolecule mol) {
 		return getNumberOfBondsBetweenAtoms(mol, mol.getBonds(), null);
+	}
+
+	public static int getMaximumTopologicalDistance(int [][] topoDistance){
+		int max=0;
+		for (int i = 0; i < topoDistance.length; i++) {
+			for (int j = i+1; j < topoDistance.length; j++) {
+				if(topoDistance[i][j]>max)
+					max=topoDistance[i][j];
+			}
+		}
+		return max;
 	}
 
 	/**

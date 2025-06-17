@@ -447,10 +447,10 @@ public class SmilesParser {
 				// At this position the atom is determined and the square bracket is closed! //
 				///////////////////////////////////////////////////////////////////////////////
 
-				if (atomParser.atomicNo == -1 && theChar != '?')
+				if (atomParser.getAtomicNo() == -1 && theChar != '?')
 					throw new Exception("SmilesParser: unknown element label found. Position:" + (position - 1));
 
-				if (atomParser.atomQueryFeaturesFound())
+				if (atomParser.foundSmartsFeatures())
 					mSmartsFeatureFound = true;
 
 				int atom = atomParser.addParsedAtom(mMol, theChar, position);
@@ -480,18 +480,18 @@ public class SmilesParser {
 				if (readStereoFeatures) {
 					THParity parity = (parityMap == null) ? null : parityMap.get(fromAtom);
 					if (parity != null) // if previous atom is a stereo center
-						parity.addNeighbor(atom, position, atomParser.atomicNo == 1 && mMol.getAtomMass(atom) == 0);
+						parity.addNeighbor(atom, position, atomParser.getAtomicNo() == 1 && mMol.getAtomMass(atom) == 0);
 
-					if (atomParser.parityFound) { // if this atom is a stereo center
+					if (atomParser.foundParities()) { // if this atom is a stereo center
 						if (parityMap == null)
 							parityMap = new TreeMap<>();
 
 						// using position as hydrogenPosition is close enough
-						int hydrogenCount = (atomParser.explicitHydrogens == HYDROGEN_IMPLICIT_ZERO) ? 0
-								: atomParser.explicitHydrogens;
+						int hydrogenCount = (atomParser.getExplicitHydrogens() == HYDROGEN_IMPLICIT_ZERO) ? 0
+								: atomParser.getExplicitHydrogens();
 						// BH this is great, but it does not solve the problem for allene neighbors
-						parityMap.put(atom, new THParity(atom, position - 2, fromAtom, hydrogenCount, position - 1,
-								atomParser.isClockwise));
+						parityMap.put(atom, new THParity(atom, position - 2, fromAtom, hydrogenCount,
+								atomParser.isClockwise()));
 					}
 				}
 
@@ -584,7 +584,7 @@ public class SmilesParser {
 					}
 
 					if (excludedBonds != 0)
-						bondQueryFeatures |= Molecule.cBondQFBondTypes & ~excludedBonds;
+						bondQueryFeatures |= Molecule.cBondQFAllBondTypes & ~excludedBonds;
 
 					break;
 				}
@@ -912,7 +912,7 @@ public class SmilesParser {
 			 : symbol == '$' ? Molecule.cBondTypeQuadruple
 			 : symbol == ':' ? Molecule.cBondTypeDelocalized
 			 : symbol == '>' ? Molecule.cBondTypeMetalLigand
-			 : symbol == '~' ? Molecule.cBondQFBondTypes : Molecule.cBondTypeSingle;
+			 : symbol == '~' ? Molecule.cBondQFAllBondTypes : Molecule.cBondTypeSingle;
 		}
 
 	protected void smartsWarning(String feature) {
@@ -1542,10 +1542,9 @@ public class SmilesParser {
 		 * @param centralAtomPosition position in SMILES of central atom
 		 * @param fromAtom index of parent atom of centralAtom (-1 if centralAtom is first atom in smiles)
 		 * @param explicitHydrogen Daylight syntax: hydrogen atoms defined within square bracket of other atom
-		 * @param hydrogenPosition position in SMILES of central atom
 		 * @param isClockwise true if central atom is marked with @@ rather than @
 		 */
-		public THParity(int centralAtom, int centralAtomPosition, int fromAtom, int explicitHydrogen, int hydrogenPosition, boolean isClockwise) {
+		public THParity(int centralAtom, int centralAtomPosition, int fromAtom, int explicitHydrogen, boolean isClockwise) {
 			if (explicitHydrogen != 0 && explicitHydrogen != 1) {
 				mError = true;
 				}
@@ -1602,6 +1601,9 @@ public class SmilesParser {
 			boolean isInverse = false;
 			switch (mNeighbourList.size()) {
 			case 2:
+				if (mNeighbourList.get(0).mAtom >= PSEUDO_ATOM_HYDROGEN
+				 || mNeighbourList.get(1).mAtom >= PSEUDO_ATOM_HYDROGEN)
+					return Molecule.cAtomParityUnknown;	// result of wrong SMILES as CC(=[N@H])N
 				isInverse = isInverseOrderAllene(handleHydrogenAtomMap);
 				break;
 			case 3:
