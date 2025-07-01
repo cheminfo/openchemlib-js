@@ -110,6 +110,9 @@ public class Canonizer {
 
 	public static final int NEGLECT_ANY_STEREO_INFORMATION = 2048;
 
+	// Don't consider tetrahedral stereo information on Si,P,S
+	public static final int NEGLECT_LARGE_ATOM_STEREO_INFORMATION = 4096;
+
 	protected static final int cIDCodeVersion2 = 8;
 		// productive version till May 2006 based on the molfile version 2
 
@@ -1648,6 +1651,11 @@ System.out.println("noOfRanks:"+canRank);
 		 && mMol.getAtomicNo(atom) != 16)
 			return false;
 
+		if ((mMode & NEGLECT_LARGE_ATOM_STEREO_INFORMATION) != 0
+		 && mMol.getAtomicNo(atom) >= 14)
+			return false;
+
+
 		if (mMol.getAtomPi(atom) != 0) {
 			if (mMol.isCentralAlleneAtom(atom))
 				return canCalcAlleneParity(atom, mode);
@@ -1669,10 +1677,10 @@ System.out.println("noOfRanks:"+canRank);
 			return false;
 
 		if (mMol.isFragment()) {  // don't calculate parities if atom or some neighbours are exclude groups
-			if ((mMol.getAtomQueryFeatures(atom) & Molecule.cAtomQFExcludeGroup) != 0)
+			if (mMol.isExcludeGroupAtom(atom))
 				return false;
 			for (int i=0; i<mMol.getAllConnAtoms(atom); i++)
-				if ((mMol.getAtomQueryFeatures(mMol.getConnAtom(atom, i)) & Molecule.cAtomQFExcludeGroup) != 0)
+				if (mMol.isExcludeGroupAtom(mMol.getConnAtom(atom, i)))
 					return false;
 			}
 
@@ -2092,7 +2100,7 @@ System.out.println("noOfRanks:"+canRank);
 			for (int i=0; i<2; i++) {
 				int atom = mMol.getBondAtom(i, bond);
 				for (int j=0; j<mMol.getAllConnAtoms(atom); j++)
-					if ((mMol.getAtomQueryFeatures(mMol.getConnAtom(atom, j)) & Molecule.cAtomQFExcludeGroup) != 0)
+					if (mMol.isExcludeGroupAtom(mMol.getConnAtom(atom, j)))
 						return false;
 				}
 			}

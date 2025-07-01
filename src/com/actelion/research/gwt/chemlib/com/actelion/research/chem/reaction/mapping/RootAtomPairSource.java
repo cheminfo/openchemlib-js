@@ -54,24 +54,28 @@ public class RootAtomPairSource {
 	private static final int PSEUDO_MAP_NO_SKIPPED_PAIR = -99999;
 
 	private ArrayList<RootAtomPair> mPairBuffer;
-	private StereoMolecule mReactant,mProduct;
+	private final StereoMolecule mReactant,mProduct;
 	private Canonizer mReactantCanonizer,mProductCanonizer;
 	private CanonizerBaseValue[] mCanBase;
 	private int mSequenceCount,mCurrentRadius,mManualMapCount,mMappableAtomCount,mCurrentEnvIndex0,mCurrentEnvIndex1,mCurrentEnvIndex2,mCurrentEnvIndex3;
 	private RootAtomPairDecisionHelper mDecisionHelper;
-	private boolean mIsStoichiometric;
-	private int[] mReactantRank,mProductRank,mReactantFragmentNo,mProductFragmentNo,mReactantMapNo,mProductMapNo;
+	private final boolean mIsStoichiometric;
+	private int[] mReactantRank,mProductRank;
+	private final int[] mReactantFragmentNo,mProductFragmentNo,mReactantMapNo,mProductMapNo;
+	private final boolean[][] mVetoMatrix;
 	private int mAtomBits,mMaxConnAtoms,mHighestReactionRank,mHighestProductRank;
-	private boolean[] mReactantFragmentUsed,mProductFragmentUsed;
-	private TreeMap<byte[],int[][]>[] mEnvToAtomsMap; // index: radius
-	private byte[][][] mEnvKey;
+	private final boolean[] mReactantFragmentUsed,mProductFragmentUsed;
+	private final TreeMap<byte[],int[][]>[] mEnvToAtomsMap; // index: radius
+	private final byte[][][] mEnvKey;
 
-	public RootAtomPairSource(StereoMolecule reactant, StereoMolecule product, int[] reactantMapNo, int[] productMapNo) {
+	public RootAtomPairSource(StereoMolecule reactant, StereoMolecule product, int[] reactantMapNo, int[] productMapNo, boolean[][] vetoMatrix) {
 		mReactant = reactant;
 		mProduct = product;
 
 		mReactantMapNo = reactantMapNo;
 		mProductMapNo = productMapNo;
+
+		mVetoMatrix = vetoMatrix;
 
 		// Reactant and product atom ranks are updated with every assigned pair in order to reflect
 		// decreasing symmetry due to unsymmetrically assigned atom mapping.
@@ -191,55 +195,52 @@ public class RootAtomPairSource {
 
 		int[] atomList = new int[mol.getAtoms()];
 		boolean[] atomMask = new boolean[mol.getAtoms()];
+		boolean[] bondMask = new boolean[mol.getBonds()];
 		for (int rootAtom=0; rootAtom<mol.getAtoms(); rootAtom++) {
-			if (rootAtom != 0)
+			if (rootAtom != 0) {
 				Arrays.fill(atomMask, false);
+				Arrays.fill(bondMask, false);
+			}
+
+			environment[rootAtom][0] = new byte[2];
+			environment[rootAtom][0][0] = (byte)mol.getAtomicNo(rootAtom);
+			environment[rootAtom][0][1] = (byte)mol.getAtomMass(rootAtom);
+
+			atomList[0] = rootAtom;
+			atomMask[rootAtom] = true;
 
 			int min = 0;
-			int max = 0;
+			int max = 1;
 
 			// we need to mark the root atom, because otherwise close-by root atoms may end up with the same fragment
 			mol.setAtomSelection(rootAtom, true);
 
-			for (int sphere = 0; sphere<=MAX_ENVIRONMENT_RADIUS && max<mol.getAtoms(); sphere++) {
-				if (max == 0) {
-					atomList[0] = rootAtom;
-					atomMask[rootAtom] = true;
-					max = 1;
-					}
-				else {
-					int newMax = max;
-					for (int i=min; i<max; i++) {
-						int atom = atomList[i];
-						for (int j=0; j<mol.getConnAtoms(atom); j++) {
-							int connAtom = mol.getConnAtom(atom, j);
-							if (!atomMask[connAtom]) {
-								atomMask[connAtom] = true;
-								atomList[newMax++] = connAtom;
-								}
+			for (int sphere=1; sphere<=MAX_ENVIRONMENT_RADIUS && max<mol.getAtoms(); sphere++) {
+				int newMax = max;
+				for (int i=min; i<max; i++) {
+					int atom = atomList[i];
+					for (int j=0; j<mol.getConnAtoms(atom); j++) {
+						int connAtom = mol.getConnAtom(atom, j);
+						if (!atomMask[connAtom]) {
+							atomMask[connAtom] = true;
+							atomList[newMax++] = connAtom;
 							}
+						bondMask[mol.getConnBond(atom, j)] = true;
 						}
-
-					if (newMax == max)
-						break;
-
-					min = max;
-					max = newMax;
 					}
 
-				if (sphere == 0) {
-					environment[rootAtom][sphere] = new byte[2];
-					environment[rootAtom][sphere][0] = (byte)mol.getAtomicNo(rootAtom);
-					environment[rootAtom][sphere][1] = (byte)mol.getAtomMass(rootAtom);
+				if (newMax == max)
+					break;
+
+				min = max;
+				max = newMax;
+
+				mol.copyMoleculeByBonds(fragment, bondMask, true, null);
+				for (int atom=0; atom<fragment.getAllAtoms(); atom++) {
+					fragment.setAtomCharge(atom, 0);
+					fragment.setAtomRadical(atom, 0);
 					}
-				else {
-					mol.copyMoleculeByAtoms(fragment, atomMask, true, null);
-					for (int atom=0; atom<fragment.getAllAtoms(); atom++) {
-						fragment.setAtomCharge(atom, 0);
-						fragment.setAtomRadical(atom, 0);
-						}
-					environment[rootAtom][sphere] = new Canonizer(fragment, Canonizer.ENCODE_ATOM_SELECTION).getIDCode().getBytes(StandardCharsets.UTF_8);
-					}
+				environment[rootAtom][sphere] = new Canonizer(fragment, Canonizer.ENCODE_ATOM_SELECTION).getIDCode().getBytes(StandardCharsets.UTF_8);
 				}
 
 			mol.setAtomSelection(rootAtom, false);
@@ -361,7 +362,7 @@ public class RootAtomPairSource {
 			if (reactantAtomHasUnmappedNeighbours && productAtomHasUnmappedNeighbours)
 				break;
 
-			// we need to mark refused pairs as being used to avaid getting them again
+			// we need to mark refused pairs as being used to avoid getting them again
 			mReactantMapNo[pair.reactantAtom] = PSEUDO_MAP_NO_SKIPPED_PAIR;
 			mProductMapNo[pair.productAtom] = PSEUDO_MAP_NO_SKIPPED_PAIR;
 
@@ -381,14 +382,15 @@ public class RootAtomPairSource {
 		}
 
 	private RootAtomPair nextRawPair() {
-		while (mPairBuffer.size() != 0) {
+		while (!mPairBuffer.isEmpty()) {
 			RootAtomPair pair = mPairBuffer.remove(0);
 			if (mReactantMapNo[pair.reactantAtom] == 0 && mProductMapNo[pair.productAtom] == 0)
 				return pair;
 			}
 
+		// We create starting pairs of similar atoms regarding neighbourship in reactant and product
 		while (mCurrentRadius >= 0) {
-			// We create starting pairs of reasonably similar atoms with similarity derived priority
+			// 1st priority: carbon atoms with matching neighbourhood
 			while (mCurrentRadius >= MIN_ENVIRONMENT_RADIUS
 				&& mCurrentEnvIndex0 < mEnvKey[mCurrentRadius].length) {
 				byte[] envKey = mEnvKey[mCurrentRadius][mCurrentEnvIndex0];
@@ -401,6 +403,7 @@ public class RootAtomPairSource {
 				mCurrentEnvIndex0++;    // go to next environment key once all potential pairs with current environment are depleted
 				}
 
+			// 2nd priority: non-carbon atoms with matching neighbourhood
 			while (mCurrentRadius >= MIN_ENVIRONMENT_RADIUS
 			    && mCurrentEnvIndex1 < mEnvKey[mCurrentRadius].length) {
 				byte[] envKey = mEnvKey[mCurrentRadius][mCurrentEnvIndex1];
@@ -414,7 +417,7 @@ public class RootAtomPairSource {
 				mCurrentEnvIndex1++;    // go to next environment key once all potential pairs with current environment are depleted
 				}
 
-			// We create a low priority starting pair if we just have one atom of a kind
+			// 3rd priority: For stoichiometric reactions we create a starting pair of single atoms if we just have one atom of a kind
 			while (mIsStoichiometric && mCurrentRadius == 0
 			 && mCurrentEnvIndex2 < mEnvKey[0].length) {
 				byte[] envKey = mEnvKey[0][mCurrentEnvIndex2++];
@@ -426,24 +429,25 @@ public class RootAtomPairSource {
 					}
 				}
 
-			// Check with decreasing sphere size down to atomicNo level, whether all reactant or product atoms
-			// are in separate fragments and are equivalent. If this is the case, and if we have at least
-			// as many equivalent atoms as atoms on the other side, then we just match reactant atoms
-			// to product atoms in order of appearance.
-			while (mCurrentEnvIndex3 < mEnvKey[mCurrentRadius].length) {
+			// Check with decreasing sphere size down to atomicNo level, whether all equivalent reactant OR(!) product atoms
+			// that are not mapped yet, are in separate fragments. If this is the case, and if we have at least
+			// as many equivalent atoms as atoms on the other side, then we just match unmapped reactant atoms
+			// to unmapped product atoms in order of appearance.
+			while (mCurrentRadius == 0 && mCurrentEnvIndex3 < mEnvKey[mCurrentRadius].length) {
 				byte[] envKey = mEnvKey[mCurrentRadius][mCurrentEnvIndex3++];
 				int[][] atoms = mEnvToAtomsMap[mCurrentRadius].get(envKey);
-				if (atoms[0].length == 1 && atoms[1].length == 1) {
-					RootAtomPair pair = tryCreatePair(atoms[0][0], atoms[1][0]);
-					if (pair != null)
-						return pair;
-					}
-				else if ((atoms[0].length >= atoms[1].length
-						&& areInDistinctEquivalentFragments(atoms[0], mReactantFragmentNo, mReactantFragmentUsed, mReactantRank))
-						|| (atoms[1].length >= atoms[0].length
-						&& areInDistinctEquivalentFragments(atoms[1], mProductFragmentNo, mProductFragmentUsed, mProductRank))) {
-					for (int i=0; i<Math.min(atoms[0].length, atoms[1].length); i++) {
-						RootAtomPair pair = tryCreatePair(atoms[0][i], atoms[1][i]);
+				if ((atoms[0].length >= atoms[1].length
+				  && areEquivalentAndInDifferentUnusedFragments(atoms[0], mReactantMapNo, mReactantFragmentNo, mReactantFragmentUsed, mReactantRank))
+				 || (atoms[1].length >= atoms[0].length
+				  && areEquivalentAndInDifferentUnusedFragments(atoms[1], mProductMapNo, mProductFragmentNo, mProductFragmentUsed, mProductRank))) {
+					int reactantIndex = 0;
+					int productIndex = 0;
+					while (reactantIndex < atoms[0].length && mReactantMapNo[atoms[0][reactantIndex]] != 0)
+						reactantIndex++;
+					while (productIndex < atoms[1].length && mProductMapNo[atoms[1][productIndex]] != 0)
+						productIndex++;
+					if (reactantIndex < atoms[0].length && productIndex < atoms[1].length) {
+						RootAtomPair pair = tryCreatePair(atoms[0][reactantIndex], atoms[1][productIndex]);
 						if (pair != null)
 							return pair;
 						}
@@ -525,6 +529,9 @@ public class RootAtomPairSource {
 		}
 
 	private RootAtomPair tryCreatePair(int reactantAtom, int productAtom) {
+		if (mVetoMatrix != null && mVetoMatrix[reactantAtom] != null && mVetoMatrix[reactantAtom][productAtom])
+			return null;
+
 		if (mReactantMapNo[reactantAtom] == 0 && mProductMapNo[productAtom] == 0)
 			return createPair(reactantAtom, productAtom);
 
@@ -645,24 +652,39 @@ public class RootAtomPairSource {
 		return canRank;
 		}
 
-	private boolean areInDistinctEquivalentFragments(int[] atom, int[] fragmentNo, boolean[] fragmentUsed, int[] symmetryRank) {
-		for (int a:atom)
-			if (fragmentUsed[fragmentNo[a]])
-				return false;
+	// Checks, whether all unmapped of the given atoms have the same symmetry rank and are all in different unused fragments
+	private boolean areEquivalentAndInDifferentUnusedFragments(int[] atom, int[] mapNo, int[] fragmentNo, boolean[] fragmentUsed, int[] symmetryRank) {
+		boolean[] sameFragmentUsed = new boolean[fragmentUsed.length];
+		for (int a:atom) {
+			if (mapNo[a] == 0) {
+				if (fragmentUsed[fragmentNo[a]])
+					return false;
+				if (sameFragmentUsed[fragmentNo[a]])
+					return false;
+				sameFragmentUsed[fragmentNo[a]] = true;
+				}
+			}
 
-		for (int i=1; i<atom.length; i++)
-			if (symmetryRank[atom[i]] != symmetryRank[atom[0]])
-				return false;
+		int rank = -1;
+		for (int a:atom) {
+			if (mapNo[a] == 0) {
+				if (rank == -1)
+					rank = symmetryRank[a];
+				else if (symmetryRank[a] != rank)
+					return false;
+				}
+			}
 
 		return true;
 		}
 	}
 
 class RootAtomPairDecisionHelper {
-	private RootAtomPairDecisionNode mRootNode,mCurrentNode;
+	private final RootAtomPairDecisionNode mRootNode;
+	private RootAtomPairDecisionNode mCurrentNode;
 
 	public RootAtomPairDecisionHelper() {
-		mRootNode = new RootAtomPairDecisionNode(null);
+		mRootNode = new RootAtomPairDecisionNode();
 		mCurrentNode = mRootNode;
 		}
 
@@ -683,12 +705,10 @@ class RootAtomPairDecisionHelper {
 
 class RootAtomPairDecisionNode {
 	private int mCurrentChoice,mChoiceCount;
-	private RootAtomPairDecisionNode mParent;
 	private RootAtomPairDecisionNode[] mChildren;
 	private boolean mIsComplete;
 
-	public RootAtomPairDecisionNode(RootAtomPairDecisionNode parent) {
-		mParent = parent;
+	public RootAtomPairDecisionNode() {
 		mChoiceCount = -1;    // no choice count known
 		}
 
@@ -715,7 +735,7 @@ class RootAtomPairDecisionNode {
 				} while (mChildren[mCurrentChoice] != null && mChildren[mCurrentChoice].isComplete());
 			}
 		if (mChildren[mCurrentChoice] == null)
-			mChildren[mCurrentChoice] = new RootAtomPairDecisionNode(this);
+			mChildren[mCurrentChoice] = new RootAtomPairDecisionNode();
 
 		return mCurrentChoice;
 		}
