@@ -36,6 +36,7 @@ package com.actelion.research.chem.reaction.mapping;
 
 import com.actelion.research.chem.*;
 import com.actelion.research.chem.reaction.Reaction;
+import com.actelion.research.chem.reaction.ReactionEncoder;
 import com.actelion.research.util.ByteArrayComparator;
 
 import java.nio.charset.StandardCharsets;
@@ -43,12 +44,15 @@ import java.util.Arrays;
 
 public class SimilarityGraphBasedReactionMapper {
 	public static final boolean DEBUG = false;
+	private static final boolean DEBUG_RED_CENTER_MAPPING = true;	// use red mapping numbers for ReactionCenterMapper
+	private static final boolean DEBUG_PRINT_REACTION_BEFORE_CENTER_MAPPING = false;
+	private static final boolean DEBUG_PRINT_MOLFILES_BEFORE_CENTER_MAPPING = false;
 	public static final boolean PRINT_SCORES = false;
 
 	// When building the mapping graph, next neighbors are added based on directed environment similarity.
 	// To determine this similarity, directed radial substructures are precalculated for every atom from
-	// the perspective of every of one its neighbour atoms (fromAtom). The smallest fragment just contains
-	// the neighbor and the atom itself. The next fragment is build from the first by adding all direct
+	// the perspective of every one of its neighbour atoms (fromAtom). The smallest fragment just contains
+	// the fromAtom and the atom itself. The next fragment is build from the first by adding all direct
 	// neighbours to the atom (except fromAtom neighbours).
 	private static final int SIMILARITY_SHIFT = 8;  // bit shift to allow for lower significant features to distinguish equal environment similarities
 	private static final int NO_PI_PENALTY = 1;
@@ -63,7 +67,9 @@ public class SimilarityGraphBasedReactionMapper {
 	private static final int ENDO_RING_PLUS = 128;
 
 	private StereoMolecule mReactant,mProduct;
-	private int mMapNo,mGraphMapNoCount,mMappableAtomCount,mAtomPairSequenceCount;
+	private int mMapNo;
+	private int mGraphMapNoCount;
+	private int mAtomPairSequenceCount;
 	private int[] mReactantMapNo,mProductMapNo,mReactantRingMembership,mProductRingMembership;
 	private float mScore;
 	private ByteArrayComparator mSimilarityComparator;
@@ -79,18 +85,24 @@ public class SimilarityGraphBasedReactionMapper {
 	 */
 	public void map(Reaction rxn) {
 		mergeReactantsAndProducts(rxn);
-		map(mReactant, mProduct, new int[mReactant.getAtoms()], new int[mProduct.getAtoms()]);
+		map(mReactant, mProduct, new int[mReactant.getAtoms()], new int[mProduct.getAtoms()], null);
 		copyMapNosToReaction(rxn, mReactantMapNo, mProductMapNo, mGraphMapNoCount);
 		}
 
 	/**
 	 * Entirely maps the given reaction by setting all reactant's and product's mapping numbers.
+	 * Optionally, vetoMatrix contains forbidden mapping combinations from reactantAtoms to productAtoms.
+	 * vetoMatrix may be null and vetoMatrix[reactantAtom] may be null for individual reactantAtoms.
+	 * If neither is null and if vetoMatrix[reactantAtom][productAtom]==true then reactantAtom
+	 * may not be mapped to productAtom. You may use this method to prohibit mappings of any leaving
+	 * atom to any incoming atom.
 	 * @param reactant all reactants merged into one molecule; may contain seed mapping
 	 * @param product all products merged into one molecule; may contain seed mapping
 	 * @param reactantMapNo array to receive the created mapping numbers
 	 * @param productMapNo array to receive the created mapping numbers
+	 * @param vetoMatrix null or matrix of prohibited atom mappings
 	 */
-	public void map(StereoMolecule reactant, StereoMolecule product, int[] reactantMapNo, int[] productMapNo) {
+	public void map(StereoMolecule reactant, StereoMolecule product, int[] reactantMapNo, int[] productMapNo, boolean[][] vetoMatrix) {
 		mReactant = reactant;
 		mProduct = product;
 
@@ -109,14 +121,14 @@ public class SimilarityGraphBasedReactionMapper {
 		mSimilarityComparator = new ByteArrayComparator();
 		mScore = -1e10f;
 
-		RootAtomPairSource rootAtomPairSource = new RootAtomPairSource(reactant, product, mReactantMapNo, mProductMapNo);
+		RootAtomPairSource rootAtomPairSource = new RootAtomPairSource(reactant, product, mReactantMapNo, mProductMapNo, vetoMatrix);
 
 		mAtomPairSequenceCount = 0;
 
 		while (rootAtomPairSource.hasNextPairSequence()) {
 			mAtomPairSequenceCount++;
 			mMapNo = rootAtomPairSource.getManualMapCount();
-			mMappableAtomCount = rootAtomPairSource.getMappableAtomCount();
+			int mappableAtomCount = rootAtomPairSource.getMappableAtomCount();
 
 			RootAtomPair pair = rootAtomPairSource.nextPair();
 			while (pair != null) {
@@ -130,8 +142,26 @@ if (PRINT_SCORES)  { System.out.print("@ pMapNo:"); for (int mapNo:mProductMapNo
 			mGraphMapNoCount = mMapNo;
 
 			float score;
-			if (mMapNo < mMappableAtomCount) {
-				ReactionCenterMapper centerMapper = new ReactionCenterMapper(mReactant, mProduct, mReactantMapNo, mProductMapNo, mMapNo);
+			if (mMapNo <mappableAtomCount) {
+
+if (DEBUG_PRINT_REACTION_BEFORE_CENTER_MAPPING || DEBUG_PRINT_MOLFILES_BEFORE_CENTER_MAPPING) {
+ StereoMolecule mappedReactant = new StereoMolecule(mReactant);
+ StereoMolecule mappedProduct = new StereoMolecule(mProduct);
+ for (int i=0; i<mReactantMapNo.length; i++) mappedReactant.setAtomMapNo(i, mReactantMapNo[i], true);
+ for (int i=0; i<mProductMapNo.length; i++) mappedProduct.setAtomMapNo(i, mProductMapNo[i], true);
+ if (DEBUG_PRINT_MOLFILES_BEFORE_CENTER_MAPPING) {
+  System.out.println("Reactant before center mapping:" + new MolfileCreator(mappedReactant).getMolfile());
+  System.out.println("Product before center mapping:" + new MolfileCreator(mappedProduct).getMolfile());
+ }
+ if (DEBUG_PRINT_REACTION_BEFORE_CENTER_MAPPING) {
+  Reaction rxn = new Reaction();
+  rxn.addReactant(mappedReactant);
+  rxn.addProduct(mappedProduct);
+  System.out.println("Before center mapping:" + ReactionEncoder.encode(rxn, false, ReactionEncoder.INCLUDE_DEFAULT));
+ }
+}
+
+				ReactionCenterMapper centerMapper = new ReactionCenterMapper(mReactant, mProduct, mReactantMapNo, mProductMapNo, mMapNo, vetoMatrix);
 				score = centerMapper.completeAndScoreMapping();
 				mMapNo += centerMapper.getMappedAtomCount();
 				}
@@ -498,9 +528,8 @@ if (DEBUG) {
 					reactantAtom = 0;
 					reactant = rxn.getReactant(++reactantIndex);
 					}
-				} while (reactant.isFragment()
-					&& (reactant.getAtomQueryFeatures(reactantAtom) & Molecule.cAtomQFExcludeGroup) != 0);
-			reactant.setAtomMapNo(reactantAtom, reactantMapNo[atom], reactantMapNo[atom] <= graphMapNoCount);
+				} while (reactant.isFragment() && reactant.isExcludeGroupAtom(reactantAtom));
+			reactant.setAtomMapNo(reactantAtom, reactantMapNo[atom], reactantMapNo[atom] <= graphMapNoCount || !DEBUG_RED_CENTER_MAPPING);
 			}
 
 		int productIndex = 0;
@@ -513,9 +542,8 @@ if (DEBUG) {
 					productAtom = 0;
 					product = rxn.getProduct(++productIndex);
 					}
-				} while (product.isFragment()
-					&& (product.getAtomQueryFeatures(productAtom) & Molecule.cAtomQFExcludeGroup) != 0);
-			product.setAtomMapNo(productAtom, productMapNo[atom], productMapNo[atom] <= graphMapNoCount);
+				} while (product.isFragment() && product.isExcludeGroupAtom(productAtom));
+			product.setAtomMapNo(productAtom, productMapNo[atom], productMapNo[atom] <= graphMapNoCount || !DEBUG_RED_CENTER_MAPPING);
 			}
 		}
 
