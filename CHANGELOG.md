@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.4.0](https://github.com/cheminfo/openchemlib-js/compare/v9.3.0...v9.4.0) (2025-07-10)
+
+
+### Features
+
+* update OCL to v2025.6.3 ([#296](https://github.com/cheminfo/openchemlib-js/issues/296)) ([533ed5d](https://github.com/cheminfo/openchemlib-js/commit/533ed5db9bc5d49194885ff0b27e92b124bb541e))
+
+
+### Bug Fixes
+
+* **canvas_editor:** do not repaint editor when its size is zero ([#298](https://github.com/cheminfo/openchemlib-js/issues/298)) ([a8d8805](https://github.com/cheminfo/openchemlib-js/commit/a8d8805e07ccd18f2ad10a91394cbe7ebd08a3ca))
+
 ## [9.3.0](https://github.com/cheminfo/openchemlib-js/compare/v9.2.0...v9.3.0) (2025-06-17)
 
 
