@@ -248,3 +248,40 @@ describe('Molecule', () => {
     expect(molecule.getOCL()).toBe(OCL);
   });
 });
+
+describe('fromText', () => {
+  it('should parse molfile V2000', () => {
+    const molfile = fs.readFileSync(
+      `${import.meta.dirname}/data/molfile_v2000.mol`,
+      'utf8',
+    );
+    expect(Molecule.fromText(molfile)?.toSmiles()).toBe('COCO');
+  });
+
+  it('should parse molfile V3000', () => {
+    const molfile = fs.readFileSync(
+      `${import.meta.dirname}/data/molfile_v3000.mol`,
+      'utf8',
+    );
+    expect(Molecule.fromText(molfile)?.toSmiles()).toBe('COCO');
+  });
+
+  it('should parse SMILES', () => {
+    expect(Molecule.fromText('COCO')?.toSmiles()).toBe('COCO');
+  });
+
+  it('should parse ID code and coordinates', () => {
+    const idCode = 'gC``Adij@@';
+    const coordinates = '!B@Fq?[@@S';
+    const molecule = Molecule.fromText(`${idCode} ${coordinates}`);
+    expect(molecule?.getIDCodeAndCoordinates()).toStrictEqual({
+      idCode,
+      coordinates,
+    });
+  });
+
+  it('should return null on invalid text', () => {
+    expect(Molecule.fromText('')).toBeNull();
+    expect(Molecule.fromText('BAD')).toBeNull();
+  });
+});
