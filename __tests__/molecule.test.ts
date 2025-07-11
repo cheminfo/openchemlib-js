@@ -62,6 +62,72 @@ it('smarts options', () => {
   expect(fragment.toSmarts()).toBe('c1cc[c;!H0]cc1');
 });
 
+describe('toSVG', () => {
+  it('should create a valid SVG with requested size and id', () => {
+    const mol = Molecule.fromSmiles('CCOCCO');
+    const svg = mol.toSVG(300, 150, 'myId');
+
+    expect(svg).toContain('width="300px" height="150px"');
+    expect(svg).toContain('"myId:Bond:0"');
+    expect(svg).toContain('"myId:Atom:0"');
+  });
+
+  it('should support custom style', () => {
+    const mol = Molecule.fromSmiles('CCOCCO');
+    const svg = mol.toSVG(300, 300, 'myId', {
+      strokeWidth: 2,
+      fontWeight: 'bold',
+    });
+
+    expect(svg).toContain('font-weight="bold"');
+    expect(svg).toContain('stroke-width="2"');
+  });
+
+  it('should work with wrong coordinates (all 0)', () => {
+    const mol = Molecule.fromSmiles('CCOCCO');
+    for (let i = 0; i < mol.getAllAtoms(); i++) {
+      mol.setAtomX(i, 0);
+      mol.setAtomY(i, 0);
+      mol.setAtomZ(i, 0);
+    }
+    const svg = mol.toSVG(300, 150, 'myId');
+
+    for (let i = 0; i < mol.getAllAtoms(); i++) {
+      expect(mol.getAtomX(i)).toBe(0);
+      expect(mol.getAtomY(i)).toBe(0);
+      expect(mol.getAtomZ(i)).toBe(0);
+    }
+    expect(svg).toContain('width="300px" height="150px"');
+  });
+
+  it('should autoCrop', () => {
+    const mol = Molecule.fromSmiles('CCOCCO');
+
+    expect(mol.toSVG(300, 150, 'myId', { autoCrop: true })).toMatchSnapshot();
+    expect(
+      mol.toSVG(300, 150, 'myId', {
+        autoCrop: true,
+        autoCropMargin: 25,
+      }),
+    ).toMatchSnapshot();
+  });
+
+  it('should throw with no size', () => {
+    const mol = Molecule.fromSmiles('CCOCCO');
+
+    // @ts-expect-error testing error
+    expect(() => mol.toSVG()).toThrow(
+      'Molecule#toSVG requires width and height to be specified',
+    );
+  });
+
+  it('should not throw with zero size', () => {
+    const mol = Molecule.fromSmiles('CCOCCO');
+
+    expect(mol.toSVG(0, 0)).toMatchSnapshot();
+  });
+});
+
 describe('Molecule', () => {
   it('medley', () => {
     const idcode =
@@ -75,46 +141,6 @@ describe('Molecule', () => {
     const smiles = mol.toSmiles();
     mol = Molecule.fromSmiles(smiles);
     expect(mol.getIDCode()).toBe(idcode);
-  });
-
-  it('toSVG', () => {
-    const mol = Molecule.fromSmiles('CCOCCO');
-    let svg = mol.toSVG(300, 150, 'myId');
-    expect(svg).toContain('width="300px" height="150px"');
-    expect(svg).toContain('"myId:Bond:0"');
-    expect(svg).toContain('"myId:Atom:0"');
-
-    svg = mol.toSVG(300, 300, 'myId', {
-      strokeWidth: 2,
-      fontWeight: 'bold',
-    });
-    expect(svg).toContain('font-weight="bold"');
-    expect(svg).toContain('stroke-width="2"');
-  });
-
-  it('toSVG wrong coordinates (all 0)', () => {
-    const mol = Molecule.fromSmiles('CCOCCO');
-    for (let i = 0; i < mol.getAllAtoms(); i++) {
-      mol.setAtomX(i, 0);
-      mol.setAtomY(i, 0);
-      mol.setAtomZ(i, 0);
-    }
-    const svg = mol.toSVG(300, 150, 'myId');
-    for (let i = 0; i < mol.getAllAtoms(); i++) {
-      expect(mol.getAtomX(i)).toBe(0);
-      expect(mol.getAtomY(i)).toBe(0);
-      expect(mol.getAtomZ(i)).toBe(0);
-    }
-    expect(svg).toContain('width="300px" height="150px"');
-  });
-
-  it('toSVG with autoCrop', () => {
-    const mol = Molecule.fromSmiles('CCOCCO');
-    let svg = mol.toSVG(300, 150, 'myId', { autoCrop: true });
-    expect(svg).toMatchSnapshot();
-
-    svg = mol.toSVG(300, 150, 'myId', { autoCrop: true, autoCropMargin: 25 });
-    expect(svg).toMatchSnapshot();
   });
 
   it('molfile V3', () => {

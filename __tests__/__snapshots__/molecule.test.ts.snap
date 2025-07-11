@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Molecule > toSVG with autoCrop 1`] = `
+exports[`toSVG > should autoCrop 1`] = `
 "<svg id="myId" xmlns="http://www.w3.org/2000/svg" version="1.1" width="135px" height="41px" viewBox="74 55 135 41">
   <style> text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
   <text x="154.95" y="73.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
@@ -25,7 +25,7 @@ exports[`Molecule > toSVG with autoCrop 1`] = `
 </svg>"
 `;
 
-exports[`Molecule > toSVG with autoCrop 2`] = `
+exports[`toSVG > should autoCrop 2`] = `
 "<svg id="myId" xmlns="http://www.w3.org/2000/svg" version="1.1" width="175px" height="81px" viewBox="54 35 175 81">
   <style> text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
   <text x="154.95" y="73.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
@@ -47,5 +47,25 @@ exports[`Molecule > toSVG with autoCrop 2`] = `
   <circle id="myId:Atom:3" class="event" cx="139.61" cy="81" r="8" opacity="0" />
   <circle id="myId:Atom:4" class="event" cx="118.82" cy="69" r="8" opacity="0" />
   <circle id="myId:Atom:5" class="event" cx="98.04" cy="81" r="8" opacity="0" />
+</svg>"
+`;
+
+exports[`toSVG > should not throw with zero size 1`] = `
+"<svg id="mol6" xmlns="http://www.w3.org/2000/svg" version="1.1" width="0px" height="0px" viewBox="0 0 0 0">
+  <style> text {font-family: sans-serif;} #mol6 { pointer-events:none; } #mol6 .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
+  <text x="0" y="0" stroke="none" font-size="0" fill="rgb(255,13,13)">O</text>
+  <text x="0" y="0" stroke="none" font-size="0" fill="rgb(255,13,13)">O</text>
+  <text x="0" y="0" stroke="none" font-size="0" fill="rgb(255,13,13)">H</text>
+  <line id="mol6:Bond:0" class="event" x1="0" y1="0" x2="0" y2="0" stroke-width="8" opacity="0" />
+  <line id="mol6:Bond:1" class="event" x1="0" y1="0" x2="0" y2="0" stroke-width="8" opacity="0" />
+  <line id="mol6:Bond:2" class="event" x1="0" y1="0" x2="0" y2="0" stroke-width="8" opacity="0" />
+  <line id="mol6:Bond:3" class="event" x1="0" y1="0" x2="0" y2="0" stroke-width="8" opacity="0" />
+  <line id="mol6:Bond:4" class="event" x1="0" y1="0" x2="0" y2="0" stroke-width="8" opacity="0" />
+  <circle id="mol6:Atom:0" class="event" cx="0" cy="0" r="8" opacity="0" />
+  <circle id="mol6:Atom:1" class="event" cx="0" cy="0" r="8" opacity="0" />
+  <circle id="mol6:Atom:2" class="event" cx="0" cy="0" r="8" opacity="0" />
+  <circle id="mol6:Atom:3" class="event" cx="0" cy="0" r="8" opacity="0" />
+  <circle id="mol6:Atom:4" class="event" cx="0" cy="0" r="8" opacity="0" />
+  <circle id="mol6:Atom:5" class="event" cx="0" cy="0" r="8" opacity="0" />
 </svg>"
 `;
