@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.5.0](https://github.com/cheminfo/openchemlib-js/compare/v9.4.1...v9.5.0) (2025-07-11)
+
+
+### Features
+
+* add `Molecule.fromText` method and support pasting in the editor ([#301](https://github.com/cheminfo/openchemlib-js/issues/301)) ([00322ad](https://github.com/cheminfo/openchemlib-js/commit/00322ad4a3d80392578ed1ac8ca0569cee96d536))
+
 ## [9.4.1](https://github.com/cheminfo/openchemlib-js/compare/v9.4.0...v9.4.1) (2025-07-11)
 
 
