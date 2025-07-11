@@ -127,7 +127,7 @@ public class JSMolecule {
   	//if (!$doc.createElement) {
   	//	throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
   	//}
-    if (!width || !height) {
+    if (typeof width !== 'number' || typeof height !== 'number') {
       throw new Error('Molecule#toSVG requires width and height to be specified');
     }
   	options = options || {};
