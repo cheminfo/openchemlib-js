@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.4.1](https://github.com/cheminfo/openchemlib-js/compare/v9.4.0...v9.4.1) (2025-07-11)
+
+
+### Bug Fixes
+
+* do not throw when molecule.toSVG is called with zero size ([#299](https://github.com/cheminfo/openchemlib-js/issues/299)) ([2b22ab7](https://github.com/cheminfo/openchemlib-js/commit/2b22ab74701b633f72259d6562fc07f3c1911902))
+
 ## [9.4.0](https://github.com/cheminfo/openchemlib-js/compare/v9.3.0...v9.4.0) (2025-07-10)
 
 
