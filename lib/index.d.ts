@@ -506,6 +506,16 @@ export declare class Molecule {
    */
   static fromIDCode(idcode: string, ensure2DCoordinates?: boolean): Molecule;
 
+  /**
+   * Tries to parse a molecule from arbitrary text, with the following algorithm:
+   * - If it contains V2000 or V3000, Molfile is assumed.
+   * - Try to parse as SMILES.
+   * - Try to parse as ID code.
+   * @param text - The text to parse.
+   * @returns A molecule or null if the text could not be parsed or would give an empty molecule.
+   */
+  static fromText(text: string): Molecule | null;
+
   static getAtomicNoFromLabel(
     atomLabel: string,
     allowedPseudoAtomGroups?: number,

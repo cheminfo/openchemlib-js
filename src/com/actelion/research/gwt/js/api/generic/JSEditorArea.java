@@ -113,6 +113,10 @@ public class JSEditorArea implements GenericCanvas {
     mDrawArea.moleculeChanged();
   }
 
+  public void addPastedOrDropped(JSMolecule mol, double x, double y) {
+    mDrawArea.addPastedOrDropped(mol.getStereoMolecule(), null);
+  }
+
   private native JavaScriptObject getClipboardHandler()
   /*-{
     var jsObject = this.@com.actelion.research.gwt.js.api.generic.JSEditorArea::getJsObject()();
