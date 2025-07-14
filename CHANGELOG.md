@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.5.1](https://github.com/cheminfo/openchemlib-js/compare/v9.5.0...v9.5.1) (2025-07-14)
+
+
+### Bug Fixes
+
+* update OCL to 2025.7.1 + editor fix ([#303](https://github.com/cheminfo/openchemlib-js/issues/303)) ([1f84edf](https://github.com/cheminfo/openchemlib-js/commit/1f84edf4c19efe9046ef9900197bc6a9d3ec5f83))
+
 ## [9.5.0](https://github.com/cheminfo/openchemlib-js/compare/v9.4.1...v9.5.0) (2025-07-11)
 
 
