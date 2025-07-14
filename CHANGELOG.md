@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.6.0](https://github.com/cheminfo/openchemlib-js/compare/v9.5.1...v9.6.0) (2025-07-14)
+
+
+### Features
+
+* allow to identify root div of CanvasEditor ([#305](https://github.com/cheminfo/openchemlib-js/issues/305)) ([aadd46f](https://github.com/cheminfo/openchemlib-js/commit/aadd46f0c964e739501bc6102b34923988a8a727))
+
 ## [9.5.1](https://github.com/cheminfo/openchemlib-js/compare/v9.5.0...v9.5.1) (2025-07-14)
 
 
