@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readFile, readdir, writeFile } from 'node:fs/promises';
 
 const homedir = new URL('../src/resources/html/', import.meta.url);
 
