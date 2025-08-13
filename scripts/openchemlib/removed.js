@@ -38,7 +38,6 @@ export const removedClasses = [
   'chem/mcs/ExhaustiveFragmentGeneratorBonds.java',
   'chem/mcs/ExhaustiveFragmentGeneratorParallizer.java',
   'chem/mcs/ExhaustiveMCSGeneratorParallel.java',
-  'chem/mcs/ListWithIntVec.java',
   'chem/mcs/MCSFast.java',
   'chem/mcs/MCSFunctions.java',
   'chem/mcs/RunBondVector2IdCode.java',

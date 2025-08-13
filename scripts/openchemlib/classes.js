@@ -612,9 +612,10 @@ function changeInteractionDistanceStatistics(code) {
 
 function fixCompoundFileHelper(code) {
   code = code.replaceAll(methodRegExp('saveRXNFile', { indent: '\t\t' }), '');
-  code = code.replaceAll(
-    methodRegExp('createFileFilter', { indent: '\t\t' }),
-    '',
+  code = removeSlice(
+    code,
+    '\tpublic static CompoundFileFilter createFileFilter(int filetypes, boolean isSaving) {',
+    'return filter;\n\t\t}',
   );
   return code;
 }
@@ -622,8 +623,8 @@ function fixCompoundFileHelper(code) {
 function changeBondOrderCalculator(code) {
   code = replaceChecked(
     code,
-    'isAromaticBond.clone()',
-    'Arrays.copyOf(isAromaticBond, isAromaticBond.length)',
+    'mIsAromaticBond.clone()',
+    'Arrays.copyOf(mIsAromaticBond, mIsAromaticBond.length)',
   );
   return code;
 }
