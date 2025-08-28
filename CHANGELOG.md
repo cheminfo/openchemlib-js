@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.7.1](https://github.com/cheminfo/openchemlib-js/compare/v9.7.0...v9.7.1) (2025-08-28)
+
+
+### Bug Fixes
+
+* **types:** get/setAtomCustomLabel support `null` ([412363d](https://github.com/cheminfo/openchemlib-js/commit/412363daaba2db54b410015cab81ff234e097dd7))
+
 ## [9.7.0](https://github.com/cheminfo/openchemlib-js/compare/v9.6.0...v9.7.0) (2025-08-13)
 
 
