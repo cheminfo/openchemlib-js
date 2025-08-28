@@ -5,7 +5,7 @@ import java.util.Date;
 import org.cheminfo.utils.JSException;
 
 public class DateFormat {
-  public Date parse(String text) {
+  public Date parse(String text) throws ParseException {
     JSException.throwUnimplemented();
     return null;
   }
