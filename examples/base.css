@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 body {
   @apply font-sans m-4;
@@ -11,11 +9,11 @@ a {
 }
 
 button {
-  @apply bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white py-1 px-2 rounded;
+  @apply bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white py-1 px-2 rounded-sm;
 }
 
 select {
-  @apply bg-white border border-gray-400 hover:border-gray-500 py-1 px-2 rounded;
+  @apply bg-white border border-gray-400 hover:border-gray-500 py-1 px-2 rounded-sm;
 }
 
 h1 {
