@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 const examples: string[] = fs.globSync('examples/**/*.html', {
@@ -8,6 +9,7 @@ const examples: string[] = fs.globSync('examples/**/*.html', {
 });
 
 export default defineConfig({
+  plugins: [tailwindcss()],
   build: {
     outDir: 'distbuild',
     rollupOptions: {
