@@ -987,7 +987,7 @@ export declare class Molecule {
    * @param atom
    * @returns null or previously defined atom custom label
    */
-  getAtomCustomLabel(atom: number): string;
+  getAtomCustomLabel(atom: number): string | null;
 
   /**
    *
@@ -1642,12 +1642,11 @@ export declare class Molecule {
    * Canonizer.encodeAtomCustomLabels(). If a custom label start with ']' then the
    * label without the ']' symbol is shown at the top left of the original atom
    * label rather than replacing the original atom label. If label is null or
-   * equals the normal atom label, then the custom label is removed. This method
-   * is less efficient than the byte[] version: setAtomCustomLabel(int, byte[])
+   * equals the normal atom label, then the custom label is removed.
    * @param atom
    * @param label - null to remove custom label
    */
-  setAtomCustomLabel(atom: number, label: string): void;
+  setAtomCustomLabel(atom: number, label: string | null): void;
 
   /**
    * This is MDL's enhanced stereo representation (ESR). Stereo atoms and bonds
