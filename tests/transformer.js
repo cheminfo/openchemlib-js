@@ -22,5 +22,5 @@ for (let i = 0; i < nbFound; i++) {
 
   transformer.applyTransformation(copy, i);
   console.log(copy.getMolecularFormula().formula);
-  console.log(copy.toSmiles());
+  console.log(copy.toIsomericSmiles());
 }

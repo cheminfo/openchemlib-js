@@ -359,7 +359,10 @@ System.out.println();
 	 */
 	private int tryAddCandidate(int current, int highest, int i, boolean[] fragmentAtomUsed, boolean[] fragmentBondUsed, int excludeGroupNo) {
 		int candidate = mFragment.getConnAtom(mFragmentGraphAtom[current], i);
-		if ((!mIsExcludeAtom[candidate] || mExcludeGroupNo[candidate] == excludeGroupNo)	// always allow non-exclude atoms, because it may be a ring closure from exclude group to main fragment
+		// exclude plain hydrogen (candidate >= mIsExcludeAtom.length)
+		// always allow non-exclude atoms, because it may be a ring closure from exclude group to main fragment
+		if (candidate < mIsExcludeAtom.length
+		 && (!mIsExcludeAtom[candidate] || mExcludeGroupNo[candidate] == excludeGroupNo)
 		 && candidate != mFragmentGraphParentAtom[current]) {
 			int candidateBond = mFragment.getConnBond(mFragmentGraphAtom[current], i);
 
@@ -1199,10 +1202,8 @@ System.out.println();
 			}
 			else {
 				// skip plain hydrogens
-				if (mMolecule.getConnAtom(mMatchTable[mFragmentGraphParentAtom[current]], index[current]) >= mMolecule.getAtoms()) {
-					index[current]++;
+				if (mMolecule.getConnAtom(mMatchTable[mFragmentGraphParentAtom[current]], index[current]) >= mMolecule.getAtoms())
 					continue;
-					}
 
 				int candidate = mMolecule.getConnAtom(mMatchTable[mFragmentGraphParentAtom[current]], index[current]);
 				if (!mFragmentGraphIsRingClosure[current]) {	// current graph position is not an anchor

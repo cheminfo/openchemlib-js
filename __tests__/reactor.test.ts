@@ -38,11 +38,11 @@ describe('Reactor class', () => {
     const smiles: string[] = [];
     for (const line of products) {
       for (const product of line) {
-        smiles.push(product.toSmiles());
+        smiles.push(product.toIsomericSmiles());
       }
     }
 
-    expect(smiles).toStrictEqual(['C(CCCO)=C', 'C(C)=CCCO', 'OC(C)CC=C']);
+    expect(smiles).toStrictEqual(['C=CCCCO', 'CC=CCCO', 'CC(CC=C)O']);
   });
 
   it('protonation, we add a H+ on the O', () => {
@@ -86,10 +86,10 @@ M  END`;
     const smiles: string[] = [];
     for (const line of products) {
       for (const product of line) {
-        smiles.push(product.toSmiles());
+        smiles.push(product.toIsomericSmiles());
       }
     }
-    expect(smiles).toStrictEqual(['[OH2+]C(CCCO)C', 'OC(C)CCC[OH2+]']);
+    expect(smiles).toStrictEqual(['CC(CCCO)[OH2+]', 'CC(CCC[OH2+])O']);
   });
 
   it('charge O and break bond', () => {
@@ -142,7 +142,7 @@ M  END
     const mfs: string[] = [];
     for (const line of products) {
       for (const product of line) {
-        smiles.push(product.toSmiles());
+        smiles.push(product.toIsomericSmiles());
         mfs.push(product.getMolecularFormula().formula);
       }
     }

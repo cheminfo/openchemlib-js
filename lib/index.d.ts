@@ -546,6 +546,9 @@ export declare class Molecule {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getOCL(): any;
 
+  /**
+   * @deprecated Use {@link toIsomericSmiles} instead.
+   */
   toSmiles(): string;
 
   toSmarts(): string;

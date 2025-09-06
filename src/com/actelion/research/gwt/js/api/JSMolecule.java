@@ -77,8 +77,7 @@ public class JSMolecule {
   }-*/;
 
   public String toSmiles() {
-    // we still allow to old code that do not care about stereo features and provide another SMILES
-    return new SmilesCreator().generateSmiles(oclMolecule);
+    return toIsomericSmilesInternal(false, false, false);
   }
 
   public native String toIsomericSmiles(JavaScriptObject options)

@@ -50,9 +50,9 @@ describe('Reaction class', () => {
     expect(newReaction.getProducts()).toBe(1);
     expect(newReaction.getCatalysts()).toBe(1);
 
-    expect(newReaction.getReactant(0).toSmiles()).toBe('C.O');
-    expect(newReaction.getProduct(0).toSmiles()).toBe('CO');
-    expect(newReaction.getCatalyst(0).toSmiles()).toBe('[Fe]');
+    expect(newReaction.getReactant(0).toIsomericSmiles()).toBe('C.O');
+    expect(newReaction.getProduct(0).toIsomericSmiles()).toBe('CO');
+    expect(newReaction.getCatalyst(0).toIsomericSmiles()).toBe('[Fe]');
   });
 
   it('should load and create RXN files', () => {

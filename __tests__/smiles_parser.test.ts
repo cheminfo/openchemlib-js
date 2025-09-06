@@ -109,7 +109,7 @@ it('should parse into the passed molecule', () => {
   const parser = new SmilesParser();
   const molecule = new Molecule(0, 0);
   const mol = parser.parseMolecule('COCO', { molecule });
-  expect(mol.toSmiles()).toBe('COCO');
+  expect(mol.toIsomericSmiles()).toBe('COCO');
   expect(mol).toBe(molecule);
 });
 
