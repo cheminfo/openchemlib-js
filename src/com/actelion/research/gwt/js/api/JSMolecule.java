@@ -77,7 +77,7 @@ public class JSMolecule {
   }-*/;
 
   public String toSmiles() {
-    return toIsomericSmilesInternal(false, false, false);
+    return toIsomericSmilesInternal(false, false, true);
   }
 
   public native String toIsomericSmiles(JavaScriptObject options)

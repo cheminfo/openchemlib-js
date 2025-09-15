@@ -547,6 +547,7 @@ export declare class Molecule {
   getOCL(): any;
 
   /**
+   * Returns a kekulized SMILES string.
    * @deprecated Use {@link toIsomericSmiles} instead.
    */
   toSmiles(): string;

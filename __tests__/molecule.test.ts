@@ -37,6 +37,7 @@ describe('from and to SMILES', () => {
 
   it('smiles options', () => {
     const mol = Molecule.fromSmiles('C1=CC=CC=C1');
+    expect(mol.toSmiles()).toBe('C1=CC=CC=C1');
     expect(mol.toIsomericSmiles()).toBe('c1ccccc1');
     expect(mol.toIsomericSmiles({ kekulizedOutput: true })).toBe('C1=CC=CC=C1');
     expect(mol.toIsomericSmiles({ createSmarts: true })).toBe('c1ccccc1');
