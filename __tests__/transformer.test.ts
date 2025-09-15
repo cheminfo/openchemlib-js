@@ -23,9 +23,9 @@ describe('Transformer', () => {
     for (let i = 0; i < nbTransforms; i++) {
       const copy = molecule.getCompactCopy();
       transformer.applyTransformation(copy, i);
-      smiles.push(copy.toSmiles());
+      smiles.push(copy.toIsomericSmiles());
     }
 
-    expect(smiles).toStrictEqual(['C=CCC', 'CC=CC', 'CCC=C']);
+    expect(smiles).toStrictEqual(['CCC=C', 'CC=CC', 'CCC=C']);
   });
 });

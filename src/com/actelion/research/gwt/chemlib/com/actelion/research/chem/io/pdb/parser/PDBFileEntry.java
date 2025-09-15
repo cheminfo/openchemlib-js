@@ -36,30 +36,20 @@ package com.actelion.research.chem.io.pdb.parser;
 
 import com.actelion.research.chem.Molecule3D;
 import com.actelion.research.chem.io.pdb.mmcif.MMCIFParser;
+import com.actelion.research.util.IntArrayComparator;
 import com.actelion.research.util.SortedList;
 
 import java.util.*;
 
 /**
- * PDBCoordEntryFile
+ * PDBFileEntry
  * Created by korffmo1 on 20.03.18.
  */
-public class PDBCoordEntryFile {
-	
+public class PDBFileEntry {
 	/**
 	 *  description of pdb-file format: http://www.wwpdb.org/documentation/file-format
 	 */
 
-    //
-    // Header information
-    //
-	
-	/**
-	*  Classification may be based on function, metabolic role, molecule type, cellular location, etc.
-	*  This record can describe dual functions of a molecules, and when applicable, separated by a
-	*  comma “
-	*/
-	
     private String classification;
 
     private String pdbID;
@@ -134,11 +124,10 @@ public class PDBCoordEntryFile {
     private List<String> liMtrix2;
     private List<String> liMtrix3;
     
-    private List<AtomRecord> protAtomRecords;
-    private List<AtomRecord> hetAtomRecords;
+    private List<AtomRecord> atomRecords;
 
-    private SortedList<int[]> connections1;
-    private ArrayList<String[]> connections2;
+    private SortedList<int[]> templateConnections;
+    private ArrayList<String[]> mmcifConnections;
 
     private String master;
 
@@ -176,22 +165,13 @@ public class PDBCoordEntryFile {
         this.title = title;
     }
     
-    public List<AtomRecord> getProtAtomRecords() {
-    	return protAtomRecords;
+    public List<AtomRecord> getAtomRecords() {
+        return atomRecords;
     }
-    
-    public void setProteinAtoms(List<AtomRecord> protAtomRecords) {
-    	this.protAtomRecords = protAtomRecords;
+
+    public void setAtoms(List<AtomRecord> atomRecords) {
+        this.atomRecords = atomRecords;
     }
-    
-    public List<AtomRecord> getHetAtomRecords() {
-    	return hetAtomRecords;
-    }
-    
-    public void setHetAtoms(List<AtomRecord> hetAtomRecords) {
-    	this.hetAtomRecords = hetAtomRecords;
-    }
-  
 
     public String getObsolete() {
         return obsolete;
@@ -317,16 +297,13 @@ public class PDBCoordEntryFile {
         return hmNo_Remark.get(0);
     }
 
-
     public String getRemark1() {
         return hmNo_Remark.get(1);
     }
 
-
     public String getRemark2() {
         return hmNo_Remark.get(2);
     }
-
 
     public String getRemark3() {
         return hmNo_Remark.get(3);
@@ -339,7 +316,6 @@ public class PDBCoordEntryFile {
     public String getRemark(int n) {
         return hmNo_Remark.get(n);
     }
-
 
     public List<Integer> getRemarks(){
         List<Integer> liRemarkNo = new ArrayList<>(hmNo_Remark.keySet());
@@ -577,12 +553,12 @@ public class PDBCoordEntryFile {
         this.liMtrix3 = liMtrix3;
     }
 
-    public void setConnections(SortedList<int[]> connections) {
-        this.connections1 = connections;
+    public void setTemplateConnections(SortedList<int[]> templateConnections) {
+        this.templateConnections = templateConnections;
     }
 
-    public void setConnections(ArrayList<String[]> connections) {
-        this.connections2 = connections;
+    public void setNonStandardConnections(ArrayList<String[]> connections) {
+        this.mmcifConnections = connections;
     }
 
     public String getMaster() {
@@ -606,21 +582,33 @@ public class PDBCoordEntryFile {
     }
 
     public Map<String,List<Molecule3D>> extractMols(boolean detachCovalentLigands) {
-        // translate connections defined by atom names to global atom indexes
-        if (connections2 != null && !connections2.isEmpty()) {
+        if (templateConnections == null)
+            templateConnections = new SortedList<>(new IntArrayComparator());
+
+        SortedList<int[]> nonStandardConnections = new SortedList<>(new IntArrayComparator());
+        // If we have the data from a mmcif file, then translate connections defined by atom names to global atom indexes
+        if (mmcifConnections != null && !mmcifConnections.isEmpty()) {
             TreeMap<String,Integer> atomNameToIDMap = new TreeMap<>();
-            for (AtomRecord atom : protAtomRecords)
-                atomNameToIDMap.put(MMCIFParser.atomDescription(atom.getAtomName(), atom.getResName(), Integer.toString(atom.getResNum()), atom.getChainID()), atom.getSerialId());
-            for (AtomRecord atom : hetAtomRecords)
-                atomNameToIDMap.put(MMCIFParser.atomDescription(atom.getAtomName(), atom.getResName(), Integer.toString(atom.getResNum()), atom.getChainID()), atom.getSerialId());
-            for (String[] connection : connections2) {
-                int[] bond = new int[2];
-                bond[0] = atomNameToIDMap.get(connection[0]);
-                bond[1] = atomNameToIDMap.get(connection[1]);
-                connections1.add(bond);
+            for (AtomRecord atom : atomRecords)
+                atomNameToIDMap.put(MMCIFParser.atomDescription(atom.getLabelAtomName(), Integer.toString(atom.getLabelSeqID()), atom.getResName(), Integer.toString(atom.getAuthSeqID()), atom.getChainID()), atom.getSerialId());
+
+            for (String[] connection : mmcifConnections) {
+                Integer atom1 = atomNameToIDMap.get(connection[0]);
+                Integer atom2 = atomNameToIDMap.get(connection[1]);
+                if (atom1 == null)
+                    System.out.println("Bond atom '"+connection[0]+"' not found");
+                else if (atom2 == null)
+                    System.out.println("Bond atom '"+connection[1]+"' not found");
+                else {
+                    int[] bond = new int[2];
+                    bond[0] = atom1;
+                    bond[1] = atom2;
+                    nonStandardConnections.add(bond);
+                }
             }
         }
-        return new StructureAssembler(connections1, protAtomRecords, hetAtomRecords, detachCovalentLigands).assemble();
+
+        return new StructureAssembler(templateConnections, nonStandardConnections, atomRecords, detachCovalentLigands).assemble();
     }
 
     @Override

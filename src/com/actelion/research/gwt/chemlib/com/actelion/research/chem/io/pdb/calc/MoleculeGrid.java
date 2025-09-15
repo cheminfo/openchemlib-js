@@ -32,7 +32,7 @@
  * @author Joel Freyss
  */
 
-package com.actelion.research.chem.io.pdb.converter;
+package com.actelion.research.chem.io.pdb.calc;
 
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.Coordinates;
@@ -47,14 +47,12 @@ import java.util.TreeSet;
  * 
  */
 public class MoleculeGrid {
-	
 	protected final StereoMolecule mol;
 	protected final double gridWidth;
 	protected final Coordinates min;
 	protected final Coordinates max;
 	protected final int[] gridSize = new int[3];
 	protected final Set<Integer>[][][] grid;
-	
 
 	
 	public MoleculeGrid(StereoMolecule mol) {
@@ -128,7 +126,6 @@ public class MoleculeGrid {
 		return res;
 	}
 
-	
 	public Set<Integer> getNeighbours(Coordinates c, double maxDist, boolean enforceDist) {
 		return getNeighbours(c, maxDist, enforceDist, -1);
 	}
@@ -157,7 +154,7 @@ public class MoleculeGrid {
 // TODO check whether this was used somewhere
 //                  			if(requiredFlags>=0 && !mol.isAtomFlag(elt, requiredFlags)) continue;
 
-								if(mol.getCoordinates(elt).distSquareTo(c)>maxDist*maxDist ) continue;
+								if(mol.getAtomCoordinates(elt).distSquareTo(c)>maxDist*maxDist ) continue;
 								res.add(elt);
 							}
 						} else {
@@ -181,7 +178,7 @@ public class MoleculeGrid {
 				for (int k = Math.max(0, z-radius); k<= Math.min(gridSize[2]-1, z+radius); k++) {
 					if(grid[i][j][k]!=null) {						
 						for(int a : grid[i][j][k]) {
-							if(mol.getCoordinates(a).distSquareTo(c)<=maxDist*maxDist ) {
+							if(mol.getAtomCoordinates(a).distSquareTo(c)<=maxDist*maxDist ) {
 								return true;
 							}
 						}
@@ -243,7 +240,7 @@ public class MoleculeGrid {
 		int closest = -1;
 		double bestDist = maxDist;
 		for (int a : set) {
-			double d = mol.getCoordinates(a).distanceSquared(c);
+			double d = mol.getAtomCoordinates(a).distanceSquared(c);
 			if(d<bestDist) {
 				closest = a;
 				bestDist = d;
@@ -283,12 +280,12 @@ public class MoleculeGrid {
 		
 	}
 	
-	public     Set<Integer> getNeighbours(Molecule mol, int atom, double maxDist) {
+	public Set<Integer> getNeighbours(Molecule mol, int atom, double maxDist) {
         return getNeighbours(mol, atom, maxDist, false);
     }
 	
 	 public Set<Integer> getNeighbours(Molecule mol, int atom, double maxDist, boolean enforceDist) {
-	        Set<Integer> res = getNeighbours(mol.getCoordinates(atom), maxDist, enforceDist);
+	        Set<Integer> res = getNeighbours(mol.getAtomCoordinates(atom), maxDist, enforceDist);
 	        res.remove(Integer.valueOf(atom));
 	        return res;
 	    }
@@ -316,5 +313,4 @@ public class MoleculeGrid {
 	public int[] getGridSize() {
 		return gridSize;
 	}
-
 }

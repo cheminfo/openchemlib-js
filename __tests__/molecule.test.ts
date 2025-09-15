@@ -37,7 +37,7 @@ describe('from and to SMILES', () => {
 
   it('smiles options', () => {
     const mol = Molecule.fromSmiles('C1=CC=CC=C1');
-    expect(mol.toSmiles()).toBe('C1(=CC=CC=C1)');
+    expect(mol.toSmiles()).toBe('C1=CC=CC=C1');
     expect(mol.toIsomericSmiles()).toBe('c1ccccc1');
     expect(mol.toIsomericSmiles({ kekulizedOutput: true })).toBe('C1=CC=CC=C1');
     expect(mol.toIsomericSmiles({ createSmarts: true })).toBe('c1ccccc1');
@@ -138,7 +138,7 @@ describe('Molecule', () => {
     mol = Molecule.fromMolfile(molfile);
     expect(mol.getIDCode()).toBe(idcode);
 
-    const smiles = mol.toSmiles();
+    const smiles = mol.toIsomericSmiles();
     mol = Molecule.fromSmiles(smiles);
     expect(mol.getIDCode()).toBe(idcode);
   });
@@ -164,7 +164,7 @@ describe('Molecule', () => {
     );
     const result = Molecule.fromMolfileWithAtomMap(molfile);
     expect(result.molecule).toBeInstanceOf(Molecule);
-    expect(result.molecule.toSmiles()).toBe('CCCCC');
+    expect(result.molecule.toIsomericSmiles()).toBe('CCCCC');
     expect(result.map).toHaveLength(result.molecule.getAllAtoms());
     expect(new Set(result.map).size).toBe(result.molecule.getAllAtoms());
   });
@@ -255,7 +255,7 @@ describe('fromText', () => {
       `${import.meta.dirname}/data/molfile_v2000.mol`,
       'utf8',
     );
-    expect(Molecule.fromText(molfile)?.toSmiles()).toBe('COCO');
+    expect(Molecule.fromText(molfile)?.toIsomericSmiles()).toBe('COCO');
   });
 
   it('should parse molfile V3000', () => {
@@ -263,11 +263,11 @@ describe('fromText', () => {
       `${import.meta.dirname}/data/molfile_v3000.mol`,
       'utf8',
     );
-    expect(Molecule.fromText(molfile)?.toSmiles()).toBe('COCO');
+    expect(Molecule.fromText(molfile)?.toIsomericSmiles()).toBe('COCO');
   });
 
   it('should parse SMILES', () => {
-    expect(Molecule.fromText('COCO')?.toSmiles()).toBe('COCO');
+    expect(Molecule.fromText('COCO')?.toIsomericSmiles()).toBe('COCO');
   });
 
   it('should parse ID code and coordinates', () => {
