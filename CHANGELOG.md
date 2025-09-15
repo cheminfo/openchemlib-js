@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.8.0](https://github.com/cheminfo/openchemlib-js/compare/v9.7.0...v9.8.0) (2025-09-15)
+
+
+### Features
+
+* update OCL to v2025.9.1 and deprecate `toSmiles` ([#312](https://github.com/cheminfo/openchemlib-js/issues/312)) ([48a6d8f](https://github.com/cheminfo/openchemlib-js/commit/48a6d8f3019bb2594dabd0d107c962e8aa3dffdd))
+
+
+### Bug Fixes
+
+* **types:** get/setAtomCustomLabel support `null` ([412363d](https://github.com/cheminfo/openchemlib-js/commit/412363daaba2db54b410015cab81ff234e097dd7))
+
 ## [9.7.0](https://github.com/cheminfo/openchemlib-js/compare/v9.6.0...v9.7.0) (2025-08-13)
 
 
