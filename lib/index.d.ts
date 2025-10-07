@@ -36,6 +36,39 @@ export interface MoleculeFromSmilesOptions {
   noStereo?: boolean;
 }
 
+interface FromMolfileOptions {
+  /**
+   * If set to 'superscript', it will add a ']' at the beginning of the custom label to be
+   * compatible with the way to represent superscript in OCL
+   * If set to 'normal', it will remove the ']' at the beginning of the custom label if present
+   * If set to 'auto', it will set normal for 'C' and superscript for everything else
+   * If not set, it will keep the label as is
+   * Default: undefined (keep as is)
+   * @default undefined
+   */
+  customLabelPosition?: 'normal' | 'superscript' | 'auto' | undefined;
+}
+
+interface ToMolfileOptions {
+  /**
+   * Include custom atom labels as A lines
+   */
+  includeCustomAtomLabelsAsALines?: boolean;
+  /**
+   * Include custom atom labels as V lines
+   */
+  includeCustomAtomLabelsAsVLines?: boolean;
+  /**
+   * If set to 'superscript', it will add a ']' at the beginning of the custom label to be
+   * compatible with the way to represent superscript in OCL
+   * If set to 'normal', it will remove the ']' at the beginning of the custom label if present
+   * If not set, it will keep the label as is
+   * Default: undefined (keep as is)
+   * @default undefined
+   */
+  customLabelPosition?: 'normal' | 'superscript' | 'auto' | undefined;
+}
+
 export interface AtomQueryFeatures {
   aromatic: boolean;
   notAromatic: boolean;
@@ -480,7 +513,7 @@ export declare class Molecule {
    * Parse the provided `molfile` and return a `Molecule`.
    * @param molfile - MDL Molfile string in V2000 or V3000
    */
-  static fromMolfile(molfile: string): Molecule;
+  static fromMolfile(molfile: string, options: FromMolfileOptions): Molecule;
 
   /**
    * Parse the provided `molfile` and return an object with `Molecule` and map.
@@ -557,9 +590,13 @@ export declare class Molecule {
   toIsomericSmiles(options?: SmilesGeneratorOptions): string;
 
   /**
-   * Returns a MDL Molfile V2000 string.
+   * Returns a molfile V2000 with the possibility to add A and V lines to set custom atom labels
+   * Those fileds only exists in molfiles V2000
+   * @param molecule - the molecule to convert
+   * @param options - options to include A or V lines
+   * @returns the molfile as a string
    */
-  toMolfile(): string;
+  toMolfile(options: ToMolfileOptions): string;
 
   /**
    * Returns a MDL Molfile V3000 string.
