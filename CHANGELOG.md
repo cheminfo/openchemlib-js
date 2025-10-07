@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.9.0](https://github.com/cheminfo/openchemlib-js/compare/v9.8.0...v9.9.0) (2025-10-07)
+
+
+### Features
+
+* add options to fromMolfile and toMolfile ([#313](https://github.com/cheminfo/openchemlib-js/issues/313)) ([ec1a7b6](https://github.com/cheminfo/openchemlib-js/commit/ec1a7b6a20deaf9d8bdfaed0a6d9deeaacbb75a8))
+
 ## [9.8.0](https://github.com/cheminfo/openchemlib-js/compare/v9.7.0...v9.8.0) (2025-09-15)
 
 
