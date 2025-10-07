@@ -513,7 +513,7 @@ export declare class Molecule {
    * Parse the provided `molfile` and return a `Molecule`.
    * @param molfile - MDL Molfile string in V2000 or V3000
    */
-  static fromMolfile(molfile: string, options: FromMolfileOptions): Molecule;
+  static fromMolfile(molfile: string, options?: FromMolfileOptions): Molecule;
 
   /**
    * Parse the provided `molfile` and return an object with `Molecule` and map.
@@ -596,7 +596,7 @@ export declare class Molecule {
    * @param options - options to include A or V lines
    * @returns the molfile as a string
    */
-  toMolfile(options: ToMolfileOptions): string;
+  toMolfile(options?: ToMolfileOptions): string;
 
   /**
    * Returns a MDL Molfile V3000 string.
