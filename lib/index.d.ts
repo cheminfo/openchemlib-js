@@ -67,6 +67,11 @@ interface ToMolfileOptions {
    * @default undefined
    */
   customLabelPosition?: 'normal' | 'superscript' | 'auto' | undefined;
+  /**
+   * Remove custom atom labels
+   * @default false
+   */
+  removeCustomAtomLabels?: boolean;
 }
 
 export interface AtomQueryFeatures {
