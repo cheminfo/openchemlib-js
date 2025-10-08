@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.10.0](https://github.com/cheminfo/openchemlib-js/compare/v9.9.0...v9.10.0) (2025-10-08)
+
+
+### Features
+
+* add option to remove custom labels in molfile v2000 ([#315](https://github.com/cheminfo/openchemlib-js/issues/315)) ([91d5f70](https://github.com/cheminfo/openchemlib-js/commit/91d5f70504862cd24ba846c78752115bb04876a9))
+
 ## [9.9.0](https://github.com/cheminfo/openchemlib-js/compare/v9.8.0...v9.9.0) (2025-10-07)
 
 
