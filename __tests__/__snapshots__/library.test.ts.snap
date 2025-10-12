@@ -185,6 +185,7 @@ exports[`class prototypes > prototype properties of Molecule 1`] = `
   "getMoleculeColor",
   "getMolweight",
   "getName",
+  "getNextCustomAtomLabel",
   "getNonHydrogenNeighbourCount",
   "getNumberOfHydrogens",
   "getOCL",
