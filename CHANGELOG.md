@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.11.0](https://github.com/cheminfo/openchemlib-js/compare/v9.10.0...v9.11.0) (2025-10-13)
+
+
+### Features
+
+* add Molecule.prototype.getNextCustomAtomLabel ([#317](https://github.com/cheminfo/openchemlib-js/issues/317)) ([d0050d1](https://github.com/cheminfo/openchemlib-js/commit/d0050d14c435c70a6ad04629e610f1326e90ea1f))
+
 ## [9.10.0](https://github.com/cheminfo/openchemlib-js/compare/v9.9.0...v9.10.0) (2025-10-08)
 
 
