@@ -1286,6 +1286,17 @@ export declare class Molecule {
   getName(): string;
 
   /**
+   * This method will return the next custom label that can be used for an atom
+   * If the provided label is already used, it will try to increment it
+   * If no label is provided, it will start from '1'
+   * The incrementing works for numbers and letters (lower and uppercase)
+   * If the label contains both letters and numbers, only the number part is incremented
+   * If the label ends with Z or z, it will return '1' as next label
+   * @param label - optional label to start from
+   */
+  getNextCustomAtomLabel(label?: string): string;
+
+  /**
    * The stereo problem flag is set by the stereo recognition (available
    * equal/above helper level cHelperParities) if an atom has over- or
    * under-specified stereo bonds attached, i.e. a stereo center with less or more
