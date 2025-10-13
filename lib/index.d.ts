@@ -1286,7 +1286,6 @@ export declare class Molecule {
   getName(): string;
 
   /**
-   * Will add the method getNextCustomAtomLabel to Molecule prototype
    * This method will return the next custom label that can be used for an atom
    * If the provided label is already used, it will try to increment it
    * If no label is provided, it will start from '1'
