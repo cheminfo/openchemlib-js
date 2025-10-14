@@ -36,4 +36,17 @@ describe('SSSearcher', () => {
     searcher.setMol(allicin, benzene);
     expect(searcher.isFragmentInMolecule()).toBe(false);
   });
+
+  it.only('find all matches', () => {
+    const searcher = new SSSearcher();
+    const diketone = Molecule.fromSmiles('CCC(=O)CCC(=O)CC');
+    const ketoneFragment = Molecule.fromSmiles('C(=O)');
+    ketoneFragment.setFragment(true);
+    searcher.setMolecule(diketone);
+    searcher.setFragment(ketoneFragment);
+    searcher.findFragmentInMolecule();
+    const matchList = searcher.getMatchList();
+    console.log(matchList);
+    expect(matchList.length).toBe(2);
+  });
 });
