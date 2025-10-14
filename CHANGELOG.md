@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.11.1](https://github.com/cheminfo/openchemlib-js/compare/v9.11.0...v9.11.1) (2025-10-14)
+
+
+### Bug Fixes
+
+* toMolfile was not taking into account the customLabelPosition option ([3452bc1](https://github.com/cheminfo/openchemlib-js/commit/3452bc178dcd9ed079413dbbf5faef85a71e6ffc))
+
 ## [9.11.0](https://github.com/cheminfo/openchemlib-js/compare/v9.10.0...v9.11.0) (2025-10-13)
 
 
