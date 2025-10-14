@@ -3370,7 +3370,38 @@ export declare class SSSearcher {
   /**
    * Creates a new substructure searcher.
    */
-  constructor();
+  constructor(matchMode?: number);
+
+  // CONSTANTS TO DEFINE KIND OF SIMILARITY BETWEEN ATOMS AND BONDS
+  static cMatchAtomCharge: number;
+  static cMatchAtomMass: number;
+  static cMatchDBondToDelocalized: number;
+  static cMatchAromDBondToDelocalized: number;
+
+  /**
+   * check only, don't create matchList
+   */
+  static cCountModeExistence: number;
+  /**
+   * create matchList with just one match
+   */
+  static cCountModeFirstMatch: number;
+  /**
+   * create list of all non-overlapping matches / not optimized for maximum match count
+   */
+  static cCountModeSeparated: number;
+  /**
+   * create list not containing multiple matches sharing exactly the same atoms
+   */
+  static cCountModeOverlapping: number;
+  /**
+   * create list of all possible matches neglecting any symmetries
+   */
+  static cCountModeRigorous: number;
+  /**
+   * create list of all distinguishable matches considering symmetries
+   */
+  static cCountModeUnique: number;
 
   /**
    * Set the `fragment` to search.
@@ -3396,6 +3427,20 @@ export declare class SSSearcher {
    * Returns whether the current fragment is in the target molecule.
    */
   isFragmentInMolecule(): boolean;
+
+  /**
+   * Check whether the fragment
+   * @param countMode
+   * @param matchMode
+   * @returns number of matches found
+   */
+  findFragmentInMolecule(countMode?: number, matchMode?: number): number;
+
+  /**
+   * Returns the list of matches found in the last search. It is an array of arrays of atoms.
+   * This method can only be called after findFragmentInMolecule.
+   */
+  getMatchList(): number[][];
 }
 
 /**

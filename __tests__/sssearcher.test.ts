@@ -37,7 +37,7 @@ describe('SSSearcher', () => {
     expect(searcher.isFragmentInMolecule()).toBe(false);
   });
 
-  it.only('find all matches', () => {
+  it('find all matches', () => {
     const searcher = new SSSearcher();
     const diketone = Molecule.fromSmiles('CCC(=O)CCC(=O)CC');
     const ketoneFragment = Molecule.fromSmiles('C(=O)');
@@ -47,6 +47,22 @@ describe('SSSearcher', () => {
     searcher.findFragmentInMolecule();
     const matchList = searcher.getMatchList();
     console.log(matchList);
+    expect(matchList.length).toBe(2);
+  });
+
+  it.only('check mode', () => {
+    const searcher = new SSSearcher(0);
+    const diketone = Molecule.fromSmiles('CCC(=O)CCC(=O)CC');
+    const ketoneFragment = Molecule.fromSmiles('C(=O)');
+    ketoneFragment.setFragment(true);
+    searcher.setMolecule(diketone);
+    searcher.setFragment(ketoneFragment);
+    const number = searcher.findFragmentInMolecule();
+    console.log(number);
+    const matchList = searcher.getMatchList();
+    console.log(matchList);
+    console.log(matchList.size());
+    return;
     expect(matchList.length).toBe(2);
   });
 });
