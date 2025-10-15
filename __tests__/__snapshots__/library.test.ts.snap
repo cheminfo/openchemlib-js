@@ -352,6 +352,8 @@ exports[`class prototypes > prototype properties of SDFileParser 1`] = `
 
 exports[`class prototypes > prototype properties of SSSearcher 1`] = `
 [
+  "findFragmentInMolecule",
+  "getMatchList",
   "isFragmentInMolecule",
   "setFragment",
   "setMol",

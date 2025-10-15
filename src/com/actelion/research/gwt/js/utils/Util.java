@@ -6,6 +6,7 @@ import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.prediction.ParameterizedStringList;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import java.util.ArrayList;
 
 public class Util {
   private static SSSearcherWithIndex searcher = null;
@@ -25,6 +26,20 @@ public class Util {
     }
     return array;
   }
+
+  public static JavaScriptObject convertIntArrayArrayList(ArrayList<int[]> list) {
+    int size = list.size();
+    JsArray<JavaScriptObject> array = newJsArray(size);
+    for (int i = 0; i < size; i++) {
+      array.set(i, convertIntArray(list.get(i)));
+    }
+    return array;
+  }
+
+  public static native JavaScriptObject convertIntArray(int[] source)
+  /*-{
+    return Array.from(source);
+  }-*/;
 
   public static native JsArray<JavaScriptObject> newJsArray(int length)
   /*-{

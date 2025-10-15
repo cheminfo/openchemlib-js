@@ -3363,6 +3363,47 @@ export declare class SDFileParser {
   getField(name: string): string;
 }
 
+export interface SSSearcherOptions {
+  /**
+   * @default false
+   */
+  matchAtomCharge?: boolean;
+  /**
+   * @default false
+   */
+  matchAtomMass?: boolean;
+  /**
+   * @default false
+   */
+  matchDBondToDelocalized?: boolean;
+  /**
+   * @default true
+   */
+  matchAromDBondToDelocalized?: boolean;
+}
+
+export type SSSearcherCountMode =
+  | 'existence'
+  | 'firstMatch'
+  | 'separated'
+  | 'overlapping'
+  | 'rigorous'
+  | 'unique';
+
+export interface SSSearcherFindFragmentInMoleculeOptions {
+  /**
+   * Count mode.
+   * overlapping: create list not containing multiple matches sharing exactly the same atoms
+   * existence: check only, don't create matchList
+   * firstMatch: create matchList with just one match
+   * separated: create list of all non-overlapping matches / not optimized for maximum match count
+   * rigorous: create list of all possible matches neglecting any symmetries
+   * unique: create list of all distinguishable matches considering symmetries
+   * @default overlapping
+   */
+  countMode: SSSearcherCountMode;
+}
+
 /**
  * Basic substructure searcher.
  */
@@ -3370,7 +3411,7 @@ export declare class SSSearcher {
   /**
    * Creates a new substructure searcher.
    */
-  constructor();
+  constructor(options?: SSSearcherOptions);
 
   /**
    * Set the `fragment` to search.
@@ -3396,6 +3437,30 @@ export declare class SSSearcher {
    * Returns whether the current fragment is in the target molecule.
    */
   isFragmentInMolecule(): boolean;
+
+  /**
+   * Locates all matches of the fragment in the molecule that result in distinguishable
+   * sets of molecule atoms. Multiple matches involving the same atoms, e.g. with a benzene ring,
+   * are counted and listed only once. If count mode is different from 'existence',
+   * then an atom mapping from fragment to molecule is collected and can be retrieved with getMatchList().
+   * @param options
+   * @returns count of sub-structure matches of fragment in molecule
+   */
+  findFragmentInMolecule(
+    options?: SSSearcherFindFragmentInMoleculeOptions,
+  ): number;
+
+  /**
+   * If the match count mode is one of 'firstMatch', 'overlapping',
+   * 'rigorous' then this method returns an array of all counted matches,
+   * i.e. int arrays mapping fragment atoms to molecule atoms. Atoms being part of a
+   * matched bridge bond are naturally not covered by the mapping. Atoms being part of a
+   * matching bridge bond are available with getBridgeBondAtomList().
+   * Note: If some query fragment atoms are marked as exclude group, then the respective
+   * matchlist values are -1.
+   * @returns list of distinct counted matches.
+   */
+  getMatchList(): number[][];
 }
 
 /**
