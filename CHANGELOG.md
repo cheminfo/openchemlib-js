@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.12.0](https://github.com/cheminfo/openchemlib-js/compare/v9.11.1...v9.12.0) (2025-10-15)
+
+
+### Features
+
+* add getMatchList and findFragmentInMolecule on SSSearcher ([#319](https://github.com/cheminfo/openchemlib-js/issues/319)) ([7d90ec2](https://github.com/cheminfo/openchemlib-js/commit/7d90ec24e26b6c0e36ce10145d6c38ea6ff789c9))
+
 ## [9.11.1](https://github.com/cheminfo/openchemlib-js/compare/v9.11.0...v9.11.1) (2025-10-14)
 
 
