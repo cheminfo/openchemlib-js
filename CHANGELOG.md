@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.12.1](https://github.com/cheminfo/openchemlib-js/compare/v9.12.0...v9.12.1) (2025-10-22)
+
+
+### Bug Fixes
+
+* toMolfile and fromMolfile deals with CR LF or LF correctly with custom atom labels ([eb0c9a9](https://github.com/cheminfo/openchemlib-js/commit/eb0c9a9a7184bf0266ac0a49ef828f20e301cf0d))
+
 ## [9.12.0](https://github.com/cheminfo/openchemlib-js/compare/v9.11.1...v9.12.0) (2025-10-15)
 
 
