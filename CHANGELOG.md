@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.13.0](https://github.com/cheminfo/openchemlib-js/compare/v9.12.1...v9.13.0) (2025-10-28)
+
+
+### Features
+
+* convert ZZC molfile lines to atomCustomLabels ([#328](https://github.com/cheminfo/openchemlib-js/issues/328)) ([aa214e3](https://github.com/cheminfo/openchemlib-js/commit/aa214e36a886a7357574eaaa3831832b1b750d93))
+
 ## [9.12.1](https://github.com/cheminfo/openchemlib-js/compare/v9.12.0...v9.12.1) (2025-10-22)
 
 
