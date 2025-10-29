@@ -2995,6 +2995,7 @@ export interface DepictorOptions {
   suppressChiralText?: boolean;
   suppressCIPParity?: boolean;
   suppressESR?: boolean;
+  noCarbonLabelWithCustomLabel?: boolean;
 
   showSymmetryAny?: boolean;
   showSymmetrySimple?: boolean;
