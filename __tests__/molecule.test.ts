@@ -9,7 +9,7 @@ describe('from and to SMILES', () => {
     'fromSmiles: %s',
     (smiles) => {
       const mol = Molecule.fromSmiles(smiles);
-      expect(Molecule.fromSmiles(mol.toSmiles()).getIDCode()).toBe(
+      expect(Molecule.fromSmiles(mol.toIsomericSmiles()).getIDCode()).toBe(
         mol.getIDCode(),
       );
     },
@@ -37,6 +37,7 @@ describe('from and to SMILES', () => {
 
   it('smiles options', () => {
     const mol = Molecule.fromSmiles('C1=CC=CC=C1');
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     expect(mol.toSmiles()).toBe('C1=CC=CC=C1');
     expect(mol.toIsomericSmiles()).toBe('c1ccccc1');
     expect(mol.toIsomericSmiles({ kekulizedOutput: true })).toBe('C1=CC=CC=C1');
