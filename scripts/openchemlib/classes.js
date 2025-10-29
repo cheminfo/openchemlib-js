@@ -50,7 +50,7 @@ const changedClasses = [
   ['chem/forcefield/mmff/Separation', replaceHashTable],
   ['chem/forcefield/mmff/Vector3', changeVector3],
   [
-    'chem/interactionstatistics/InteractionDistanceStatistics',
+    'chem/interactions/statistics/InteractionDistanceStatistics',
     changeInteractionDistanceStatistics,
   ],
   ['chem/io/CompoundFileHelper', fixCompoundFileHelper],
