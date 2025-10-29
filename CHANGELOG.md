@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.14.1](https://github.com/cheminfo/openchemlib-js/compare/v9.14.0...v9.14.1) (2025-10-29)
+
+
+### Bug Fixes
+
+* `noCarbonLabelWithCustomLabel` depictor option ([#333](https://github.com/cheminfo/openchemlib-js/issues/333)) ([177b669](https://github.com/cheminfo/openchemlib-js/commit/177b6696c15aa6de817b5dd01ff10cb7b60a5610))
+
 ## [9.14.0](https://github.com/cheminfo/openchemlib-js/compare/v9.13.0...v9.14.0) (2025-10-29)
 
 
