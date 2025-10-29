@@ -127,6 +127,21 @@ describe('toSVG', () => {
 
     expect(mol.toSVG(0, 0)).toMatchSnapshot();
   });
+
+  it('should support noCarbonLabelWithCustomLabel option', () => {
+    const mol = Molecule.fromSmiles('OCO');
+    mol.setAtomCustomLabel(1, ']test');
+
+    const normalSvg = mol.toSVG(300, 300, 'myId', {});
+    const noLabelSvg = mol.toSVG(300, 300, 'myId', {
+      noCarbonLabelWithCustomLabel: true,
+    });
+
+    expect(normalSvg).toContain('>C<');
+    expect(noLabelSvg).not.toContain('>C<');
+
+    expect(noLabelSvg).toMatchSnapshot();
+  });
 });
 
 describe('Molecule', () => {
