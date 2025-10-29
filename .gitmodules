@@ -1,3 +1,4 @@
 [submodule "openchemlib"]
 	path = openchemlib
 	url = https://github.com/cheminfo/openchemlib
+	branch = main

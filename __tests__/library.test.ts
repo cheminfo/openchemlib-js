@@ -3,10 +3,10 @@ import { assert, describe, expect, test } from 'vitest';
 import debugOCL from '../lib/index.debug.js';
 import OCL from '../lib/index.js';
 
-const allAPI = Object.keys(OCL).sort();
+const allAPI = Object.keys(OCL).toSorted();
 
 test('debug build should have the same exports', () => {
-  expect(allAPI).toStrictEqual(Object.keys(debugOCL).sort());
+  expect(allAPI).toStrictEqual(Object.keys(debugOCL).toSorted());
 });
 
 test('top-level API', () => {
@@ -40,5 +40,5 @@ function getFilteredKeys(obj: Record<string, unknown>) {
       // Filter out GWT-specific properties.
       return key.length > 2;
     })
-    .sort();
+    .toSorted();
 }
