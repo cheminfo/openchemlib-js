@@ -54,18 +54,26 @@ public class Util {
   	};
   }-*/;
 
-  public static native int getDisplayMode(JavaScriptObject options)
+  public static native int getDepictorViewMode(JavaScriptObject options)
+    /*-{
+    	if (!options) return @com.actelion.research.chem.AbstractDepictor::cModeInflateToMaxAVBL;
+    	var viewMode = 0;
+
+    	if (options.inflateToMaxAVBL !== false) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToMaxAVBL;
+    	if (options.inflateToHighResAVBL) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToHighResAVBL;
+    	if (options.chiralTextBelowMolecule) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextBelowMolecule;
+    	if (options.chiralTextAboveMolecule) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextAboveMolecule;
+    	if (options.chiralTextOnFrameTop) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextOnFrameTop;
+    	if (options.chiralTextOnFrameBottom) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextOnFrameBottom;
+
+    	return viewMode;
+    }-*/;
+
+  public static native int getDepictorDisplayMode(JavaScriptObject options)
   /*-{
   	if (!options) return 0;
   	var displayMode = 0;
-  
-  	if (options.inflateToMaxAVBL) displayMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToMaxAVBL;
-  	if (options.inflateToHighResAVBL) displayMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToHighResAVBL;
-  	if (options.chiralTextBelowMolecule) displayMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextBelowMolecule;
-  	if (options.chiralTextAboveMolecule) displayMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextAboveMolecule;
-  	if (options.chiralTextOnFrameTop) displayMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextOnFrameTop;
-  	if (options.chiralTextOnFrameBottom) displayMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextOnFrameBottom;
-  
+
   	if (options.noTabus) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoTabus;
   	if (options.showAtomNumber) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeAtomNo;
   	if (options.showBondNumber) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeBondNo;
