@@ -56,12 +56,20 @@ public class Util {
 
   public static native int getDepictorViewMode(JavaScriptObject options)
     /*-{
-    	if (!options) return @com.actelion.research.chem.AbstractDepictor::cModeInflateToMaxAVBL;
+        options = options || {};
+
     	var viewMode = 0;
 
-    	if (options.inflateToMaxAVBL !== false) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToMaxAVBL;
+        if (options.maxAVBL) {
+          if (!Number.isInteger(options.maxAVBL) || options.maxAVBL < 0 || options.maxAVBL > 0xFFFF) {
+            throw new Error('maxAVBL must be an integer between 0 and 65535');
+          }
+          viewMode |= options.maxAVBL;
+        }
+
+    	if (options.inflateToMaxAVBL === true || (options.inflateToMaxAVBL === undefined && options.inflateToHighResAVBL !== true)) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToMaxAVBL;
     	if (options.inflateToHighResAVBL) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeInflateToHighResAVBL;
-    	if (options.chiralTextBelowMolecule) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextBelowMolecule;
+    	if (options.chiralTextBelowMolecule !== false) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextBelowMolecule;
     	if (options.chiralTextAboveMolecule) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextAboveMolecule;
     	if (options.chiralTextOnFrameTop) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextOnFrameTop;
     	if (options.chiralTextOnFrameBottom) viewMode |= @com.actelion.research.chem.AbstractDepictor::cModeChiralTextOnFrameBottom;

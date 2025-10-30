@@ -2977,18 +2977,52 @@ export declare class Canonizer {
 }
 
 /**
- * All depictor options default to `false`.
+ * All boolean depictor options except `inflateToMaxAVBL` and `chiralTextBelowMolecule` default to `false`.
  */
 export interface DepictorOptions {
-  // Please keep groups and ordering the same as in AbstractDepictor.java
+  /**
+   * Must be an integer between 0 and 65535.
+   *
+   * If 0 is passed, a constant value of 24 will be used regardless of `inflateToHighResAVBL`.
+   * @default 0
+   */
+  maxAVBL?: number;
+
+  // Please keep the next groups and ordering the same as in AbstractDepictor.java
   // We reserve the right to improve / fix names if it makes them easier to understand.
   // Examples: hilite -> highlight, atomNo -> showAtomNumber
 
+  /**
+   * Mutually exclusive with `inflateToHighResAVBL`.
+   * @default true (if inflateToHighResAVBL is not set)
+   */
   inflateToMaxAVBL?: boolean;
+  /**
+   * Mutually exclusive with `inflateToMaxAVBL`.
+   *
+   * Only has an effect if `maxAVBL` has a value different from 0.
+   * @default false
+   */
   inflateToHighResAVBL?: boolean;
+  /**
+   * Put the chiral text just below the molecule.
+   * @default true
+   */
   chiralTextBelowMolecule?: boolean;
+  /**
+   * Put the chiral text just above the molecule.
+   * @default false
+   */
   chiralTextAboveMolecule?: boolean;
+  /**
+   * Put the chiral text at the top of the frame.
+   * @default false
+   */
   chiralTextOnFrameTop?: boolean;
+  /**
+   * Put the chiral text at the bottom of the frame.
+   * @default false
+   */
   chiralTextOnFrameBottom?: boolean;
 
   noTabus?: boolean;
