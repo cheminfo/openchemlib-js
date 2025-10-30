@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="stylesheet" href="../base.css" />
+
+    <title>OpenChemLib JS - SVG renderer</title>
+  </head>
+  <body>
+    <h1>OpenChemLib JS - SVG renderer</h1>
+    <div class="flex flex-row gap-4">
+      <div>
+        <h2>Demo molecule</h2>
+        <form id="form" class="space-y-2">
+          <div>
+            <textarea
+              id="moleculeText"
+              name="moleculeText"
+              class="p-1 border border-gray-500 font-mono"
+              rows="10"
+              cols="80"
+            ></textarea>
+            <div class="text-gray-800 mt-1">
+              You can test with a Molfile, SMILES, or ID code.
+            </div>
+          </div>
+          <div>
+            <button type="submit">Render</button>
+          </div>
+          <div class="space-y-0.5">
+            <label class="block">
+              Width
+              <input
+                type="number"
+                name="width"
+                value="600"
+                class="p-0.5 border border-gray-500"
+              />
+            </label>
+            <label class="block">
+              Height
+              <input
+                type="number"
+                name="height"
+                value="400"
+                class="p-0.5 border border-gray-500"
+              />
+            </label>
+          </div>
+          <div id="checkboxes" class="flex flex-col gap-0.5"></div>
+        </form>
+      </div>
+      <div class="space-y-2">
+        <h2>Result</h2>
+        <div id="result" class="border"></div>
+      </div>
+    </div>
+
+    <script type="module" src="index.ts"></script>
+  </body>
+</html>

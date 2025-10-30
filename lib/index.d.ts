@@ -2980,6 +2980,10 @@ export declare class Canonizer {
  * All depictor options default to `false`.
  */
 export interface DepictorOptions {
+  // Please keep groups and ordering the same as in AbstractDepictor.java
+  // We reserve the right to improve / fix names if it makes them easier to understand.
+  // Examples: hilite -> highlight, atomNo -> showAtomNumber
+
   inflateToMaxAVBL?: boolean;
   inflateToHighResAVBL?: boolean;
   chiralTextBelowMolecule?: boolean;
@@ -2995,7 +2999,6 @@ export interface DepictorOptions {
   suppressChiralText?: boolean;
   suppressCIPParity?: boolean;
   suppressESR?: boolean;
-  noCarbonLabelWithCustomLabel?: boolean;
 
   showSymmetryAny?: boolean;
   showSymmetrySimple?: boolean;
@@ -3005,6 +3008,7 @@ export interface DepictorOptions {
   noColorOnESRAndCIP?: boolean;
   noImplicitHydrogen?: boolean;
   drawBondsInGray?: boolean;
+  noCarbonLabelWithCustomLabel?: boolean;
 }
 
 export declare class Reaction {
