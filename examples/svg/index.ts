@@ -2,13 +2,13 @@ import { DepictorOptions, Molecule } from '../../lib/index.js';
 import molfile from '../seeds/molfile.ts';
 
 // All keys are required so that if we add a new option in the type, it has to be added to the demo.
-const allOptions: Record<keyof DepictorOptions, string> = {
+const allOptions: Record<Exclude<keyof DepictorOptions, 'maxAVBL'>, string> = {
   inflateToMaxAVBL: 'Inflate to max average bond length',
-  inflateToHighResAVBL: 'Multiply average bond length by 256 before encoding',
+  inflateToHighResAVBL: 'Inflate to max average bond length (high resolution)',
   chiralTextBelowMolecule: 'Put chiral text below the molecule',
   chiralTextAboveMolecule: 'Put chiral text above the molecule',
-  chiralTextOnFrameTop: 'Put chiral text xxx',
-  chiralTextOnFrameBottom: 'Put chiral text yyy',
+  chiralTextOnFrameTop: 'Put chiral text at the top of the frame',
+  chiralTextOnFrameBottom: 'Put chiral text at the bottom of the frame',
   noTabus: 'No tabus',
   showAtomNumber: 'Show atom numbers',
   showBondNumber: 'Show bond numbers',
@@ -25,8 +25,16 @@ const allOptions: Record<keyof DepictorOptions, string> = {
   noColorOnESRAndCIP: 'Disable coloring of ESR and CIP',
   noImplicitHydrogen: 'Do not draw implicit hydrogens',
   drawBondsInGray: 'Draw bonds in gray',
-  noCarbonLabelWithCustomLabel: 'Do not draw carbon labels with custom labels',
+  noCarbonLabelWithCustomLabel:
+    'Do not draw carbon symbol with superscript custom labels',
 };
+
+type BooleanDepictorOptions = Exclude<keyof DepictorOptions, 'maxAVBL'>;
+
+const optionsWithDefaultTrue: BooleanDepictorOptions[] = [
+  'inflateToMaxAVBL',
+  'chiralTextBelowMolecule',
+];
 
 const checkboxesContainer = document.getElementById(
   'checkboxes',
@@ -39,6 +47,9 @@ for (const [name, label] of Object.entries(allOptions)) {
   checkbox.id = name;
   checkbox.name = name;
   checkbox.className = 'mr-1';
+  if (optionsWithDefaultTrue.includes(name as BooleanDepictorOptions)) {
+    checkbox.checked = true;
+  }
   const labelElement = document.createElement('label');
   labelElement.htmlFor = name;
   labelElement.textContent = label;
@@ -53,19 +64,31 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
   const formData = new FormData(form);
   const allData = Object.fromEntries(formData);
-  const { moleculeText, width, height, ...checkedBoxes } = allData;
+  const { moleculeText, width, height, maxAVBL, ...checkedBoxes } = allData;
   const molecule = Molecule.fromText(moleculeText as string);
   if (molecule) {
-    const depictorOptions = Object.fromEntries(
+    const depictorOptions: DepictorOptions = Object.fromEntries(
       Object.entries(checkedBoxes).map(([key]) => [key, true]),
     );
-    console.log(depictorOptions);
-    result.innerHTML = molecule.toSVG(
-      Number(width),
-      Number(height),
-      undefined,
-      depictorOptions,
-    );
+    depictorOptions.maxAVBL = Number(maxAVBL);
+    for (const option of optionsWithDefaultTrue) {
+      if (!depictorOptions[option]) {
+        // If the option is not checked, set it explicitly to false so it doesn't inherit the default value.
+        depictorOptions[option] = false;
+      }
+    }
+    try {
+      result.innerHTML = molecule.toSVG(
+        Number(width),
+        Number(height),
+        undefined,
+        depictorOptions,
+      );
+    } catch (error) {
+      const errorParagraph = document.createElement('p');
+      errorParagraph.textContent = `Error: ${error}`;
+      result.replaceChildren(errorParagraph);
+    }
   } else {
     result.innerHTML = '<p>Invalid molecule text</p>';
   }
