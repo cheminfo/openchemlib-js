@@ -12,7 +12,7 @@ export function resetChangeCount() {
 const idcodeDiv = document.getElementById('idcode') as HTMLElement;
 
 export function updateIDCode(idCode: string) {
-  idcodeDiv.innerText = idCode.replaceAll('\x7f', '?');
+  idcodeDiv.innerText = idCode.replaceAll('\x7f', '\x3f');
 }
 
 const molfileArea = document.getElementById('molfile') as HTMLTextAreaElement;

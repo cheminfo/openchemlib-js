@@ -1,6 +1,7 @@
 import {
   CanvasEditor,
   CanvasEditorMode,
+  Molecule,
   ReactionEncoder,
 } from '../../../lib/index.js';
 import {
@@ -48,7 +49,11 @@ export function resetEditor() {
       const mode = newEditor.getMode();
       if (mode === 'molecule') {
         const molecule = newEditor.getMolecule();
-        updateIDCode(molecule.getIDCode());
+        const idCode = molecule.getCanonizedIDCode(
+          Molecule.CANONIZER_ENCODE_ATOM_CUSTOM_LABELS,
+        );
+        const coordinates = molecule.getIDCoordinates();
+        updateIDCode(`${idCode} ${coordinates}`);
         updateMolfileOrRxn(molecule.toMolfile());
         updateMolfileOrRxnV3(molecule.toMolfileV3());
       } else {
