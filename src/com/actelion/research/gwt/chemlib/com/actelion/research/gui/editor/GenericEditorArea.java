@@ -55,6 +55,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@SuppressWarnings("rawtypes")
 public class GenericEditorArea implements GenericEventListener {
 	public static final int MODE_MULTIPLE_FRAGMENTS = 1;
 	public static final int MODE_MARKUSH_STRUCTURE = 2;
@@ -176,6 +177,7 @@ public class GenericEditorArea implements GenericEventListener {
 	private AbstractDrawingObject mCurrentHiliteObject;
 	private GenericPolygon mLassoRegion;
 	private ArrayList<GenericEventListener> mListeners;
+	private GenericEventListener<GenericKeyEvent> mUnusedKeyEventConsumer;
 	private IClipboardHandler mClipboardHandler;
 	private final StringBuilder mAtomKeyStrokeBuffer;
 	private final GenericUIHelper mUIHelper;
@@ -262,6 +264,15 @@ public class GenericEditorArea implements GenericEventListener {
 	 */
 	public void setClipboardHandler(IClipboardHandler h) {
 		mClipboardHandler = h;
+	}
+
+	/**
+	 * Any key events that are not handled by the draw area are sent to this consumer,
+	 * which typically is a toolbar. Key events sent are meant to change the current tool.
+	 * @param consumer
+	 */
+	public void setUnusedKeyEventConsumer(GenericEventListener<GenericKeyEvent> consumer) {
+		mUnusedKeyEventConsumer = consumer;
 	}
 
 	private void update(int mode) {
@@ -1239,31 +1250,29 @@ public class GenericEditorArea implements GenericEventListener {
 		if (mMouseIsDown)
 			return;
 
+		int key = e.getKey();
+
 		if (e.getWhat() == GenericKeyEvent.KEY_PRESSED) {
-			if (e.getKey() == GenericKeyEvent.KEY_SHIFT) {
+			if (key == GenericKeyEvent.KEY_SHIFT) {
 				mShiftIsDown = true;
 				updateCursor();
-			}
-			if (e.getKey() == GenericKeyEvent.KEY_ALT) {
+			} else if (key == GenericKeyEvent.KEY_ALT) {
 				mAltIsDown = true;
 				updateCursor();
-			}
-			if (e.getKey() == GenericKeyEvent.KEY_CTRL) {
+			} else if (key == GenericKeyEvent.KEY_CTRL) {
 				updateCursor();
-			}
-
-			if (e.isMenuShortcut()) {
-				if (e.getKey() == 'z') {
+			} else if (e.isMenuShortcut()) {
+				if (key == 'z') {
 					restoreState();
 					updateAndFireEvent(UPDATE_CHECK_VIEW);
 				}
-				else if (e.getKey() == 'c') {
+				else if (key == 'c') {
 					copy();
 				}
-				else if (e.getKey() == 'v') {
+				else if (key == 'v') {
 					paste();
 				}
-			} else if (e.getKey() == GenericKeyEvent.KEY_DELETE) {
+			} else if (key == GenericKeyEvent.KEY_DELETE) {
 				if (mCurrentTool != GenericEditorToolbar.cToolMapper) {
 					storeState();
 					if (!deleteHilited()) {
@@ -1272,46 +1281,44 @@ public class GenericEditorArea implements GenericEventListener {
 						}
 					}
 				}
-			} else if (e.getKey() == GenericKeyEvent.KEY_HELP || (mCurrentHiliteAtom == -1 && e.getKey() == '?')) {
+			} else if (key == GenericKeyEvent.KEY_HELP || (mCurrentHiliteAtom == -1 && key == '?')) {
 				showHelpDialog();
 				return;
-			} else if (e.getKey() == GenericKeyEvent.KEY_ENTER) {
+			} else if (key == GenericKeyEvent.KEY_ENTER) {
 				if (mAtomKeyStrokeBuffer.length() != 0) {
 					expandAtomKeyStrokes(mAtomKeyStrokeBuffer.toString());
 					mAtomKeyStrokeBuffer.setLength(0);
 				}
 			} else if (mCurrentHiliteBond != -1) {
-				int ch = e.getKey();
-				if (ch == 'q' && mMol.isFragment()) {
+				if (key == 'q' && mMol.isFragment()) {
 					showBondQFDialog(mCurrentHiliteBond);
-				} else if (ch == 'v') { // ChemDraw uses the same key
+				} else if (key == 'v') { // ChemDraw uses the same key
 					if (mMol.addRingToBond(mCurrentHiliteBond, 3, false, getScaledAVBL()))
 						updateAndFireEvent(UPDATE_CHECK_COORDS);
-				} else if (ch>='4' && ch<='7') {
-					if (mMol.addRingToBond(mCurrentHiliteBond, ch - '0', false, getScaledAVBL()))
+				} else if (key>='4' && key<='7') {
+					if (mMol.addRingToBond(mCurrentHiliteBond, key - '0', false, getScaledAVBL()))
 						updateAndFireEvent(UPDATE_CHECK_COORDS);
-				} else if (ch == 'a' || ch == 'b') {    // ChemDraw uses 'a', we use 'b' since a long time
+				} else if (key == 'a' || key == 'b') {    // ChemDraw uses 'a', we use 'b' since a long time
 					if (mMol.addRingToBond(mCurrentHiliteBond, 6, true, getScaledAVBL()))
 						updateAndFireEvent(UPDATE_CHECK_COORDS);
 				} else {
 					boolean bondChanged =
-							(ch == '0') ? changeHighlightedBond(Molecule.cBondTypeMetalLigand)
-						  : (ch == '1') ? changeHighlightedBond(Molecule.cBondTypeSingle)
-						  : (ch == '2') ? changeHighlightedBond(Molecule.cBondTypeDouble)
-						  : (ch == '3') ? changeHighlightedBond(Molecule.cBondTypeTriple)
-						  : (ch == 'u') ? changeHighlightedBond(Molecule.cBondTypeUp)
-						  : (ch == 'd') ? changeHighlightedBond(Molecule.cBondTypeDown)
-						  : (ch == 'c') ? changeHighlightedBond(Molecule.cBondTypeCross)
-						  : (ch == 'm') ? changeHighlightedBond(Molecule.cBondTypeMetalLigand)
+							(key == '0') ? changeHighlightedBond(Molecule.cBondTypeMetalLigand)
+						  : (key == '1') ? changeHighlightedBond(Molecule.cBondTypeSingle)
+						  : (key == '2') ? changeHighlightedBond(Molecule.cBondTypeDouble)
+						  : (key == '3') ? changeHighlightedBond(Molecule.cBondTypeTriple)
+						  : (key == 'u') ? changeHighlightedBond(Molecule.cBondTypeUp)
+						  : (key == 'd') ? changeHighlightedBond(Molecule.cBondTypeDown)
+						  : (key == 'c') ? changeHighlightedBond(Molecule.cBondTypeCross)
+						  : (key == 'm') ? changeHighlightedBond(Molecule.cBondTypeMetalLigand)
 						  : false;
 					if (bondChanged)
 						updateAndFireEvent(UPDATE_REDRAW);
 				}
 			} else if (mCurrentHiliteAtom != -1) {
-				int ch = e.getKey();
 				boolean isFirst = (mAtomKeyStrokeBuffer.length() == 0);
 				if (isFirst)
-					mFirstAtomKey = ch;
+					mFirstAtomKey = key;
 				else {
 					if (mFirstAtomKey == 'l') { // if we don't want first 'l' to be a chlorine
 						mAtomKeyStrokeBuffer.setLength(0);
@@ -1320,41 +1327,41 @@ public class GenericEditorArea implements GenericEventListener {
 					mFirstAtomKey = -1;
 					}
 
-				if (isFirst && ch == 'l') { // if no chars are following, we interpret 'l' as chlorine analog to ChemDraw
+				if (isFirst && key == 'l') { // if no chars are following, we interpret 'l' as chlorine analog to ChemDraw
 					mAtomKeyStrokeBuffer.append("Cl");
 					update(UPDATE_REDRAW);
-				} else if (isFirst && (ch == '+' || ch == '-')) {
+				} else if (isFirst && (key == '+' || key == '-')) {
 					storeState();
-					if (mMol.changeAtomCharge(mCurrentHiliteAtom, ch == '+'))
+					if (mMol.changeAtomCharge(mCurrentHiliteAtom, key == '+'))
 						updateAndFireEvent(UPDATE_CHECK_COORDS);
-				} else if (isFirst && ch == '.') {
+				} else if (isFirst && key == '.') {
 					storeState();
 					int newRadical = (mMol.getAtomRadical(mCurrentHiliteAtom) == Molecule.cAtomRadicalStateD) ?
 							0 : Molecule.cAtomRadicalStateD;
 					mMol.setAtomRadical(mCurrentHiliteAtom, newRadical);
 					updateAndFireEvent(UPDATE_CHECK_COORDS);
-				} else if (isFirst && ch == ':') {
+				} else if (isFirst && key == ':') {
 					storeState();
 					int newRadical = (mMol.getAtomRadical(mCurrentHiliteAtom) == Molecule.cAtomRadicalStateT) ? Molecule.cAtomRadicalStateS
 							: (mMol.getAtomRadical(mCurrentHiliteAtom) == Molecule.cAtomRadicalStateS) ? 0 : Molecule.cAtomRadicalStateT;
 					mMol.setAtomRadical(mCurrentHiliteAtom, newRadical);
 					updateAndFireEvent(UPDATE_CHECK_COORDS);
-				} else if (isFirst && ch == 'q' && mMol.isFragment()) {
+				} else if (isFirst && key == 'q' && mMol.isFragment()) {
 					showAtomQFDialog(mCurrentHiliteAtom);
 
-				} else if (isFirst && mMol.isFragment() && (ch == 'x' || ch == 'X')) {
+				} else if (isFirst && mMol.isFragment() && (key == 'x' || key == 'X')) {
 					int[] list = { 9, 17, 35, 53 };
 					mMol.setAtomList(mCurrentHiliteAtom, list);
 					updateAndFireEvent(UPDATE_CHECK_COORDS);
-				} else if (isFirst && ch == '?') {
+				} else if (isFirst && key == '?') {
 					storeState();
 					if (mMol.changeAtom(mCurrentHiliteAtom, 0, 0, -1, 0)) {
 						updateAndFireEvent(UPDATE_CHECK_COORDS);
 					}
-				} else if (isFirst && ch>48 && ch<=57) {
+				} else if (isFirst && key>48 && key<=57) {
 					if (mMol.getFreeValence(mCurrentHiliteAtom)>0) {
 						storeState();
-						int chainAtoms = ch - 47;
+						int chainAtoms = key - 47;
 						int atom1 = mCurrentHiliteAtom;
 						int hydrogenCount = mMol.getAllAtoms() - mMol.getAtoms();
 						for (int i = 1; i<chainAtoms; i++) {
@@ -1370,42 +1377,39 @@ public class GenericEditorArea implements GenericEventListener {
 						}
 						updateAndFireEvent(UPDATE_CHECK_COORDS);
 					}
-				} else if (!isFirst && e.getKey() == GenericKeyEvent.KEY_ESCAPE) {
+				} else if (!isFirst && key == GenericKeyEvent.KEY_ESCAPE) {
 					mAtomKeyStrokeBuffer.setLength(0);
 					update(UPDATE_REDRAW);
-				} else if (!isFirst && e.getKey() == GenericKeyEvent.KEY_BACK_SPACE) {
+				} else if (!isFirst && key == GenericKeyEvent.KEY_BACK_SPACE) {
 					mAtomKeyStrokeBuffer.setLength(mAtomKeyStrokeBuffer.length() - 1);
 					update(UPDATE_REDRAW);
-				} else if ((ch>=65 && ch<=90)
-						|| (ch>=97 && ch<=122)
-						|| (ch>=48 && ch<=57)
-						|| (ch == '-')) {
-					mAtomKeyStrokeBuffer.append((char)ch);
+				} else if ((key>=65 && key<=90)
+						|| (key>=97 && key<=122)
+						|| (key>=48 && key<=57)
+						|| (key == '-')) {
+					mAtomKeyStrokeBuffer.append((char)key);
 					update(UPDATE_REDRAW);
-				} else if (ch == '\n' || ch == '\r') {
+				} else if (key == '\n' || key == '\r') {
 					expandAtomKeyStrokes(mAtomKeyStrokeBuffer.toString());
 				}
-			} else {
-				if ((mMode & (MODE_REACTION | MODE_MARKUSH_STRUCTURE | MODE_MULTIPLE_FRAGMENTS)) == 0) {
-					int ch = e.getKey();
-					if (ch == 'h')
-						flip(true);
-					if (ch == 'v')
-						flip(false);
-				}
+			} else if (key == 'h' || key == 'v') {
+				if ((mMode & (MODE_REACTION | MODE_MARKUSH_STRUCTURE | MODE_MULTIPLE_FRAGMENTS)) == 0)
+					flip(key == 'h');
+			} else if (mUnusedKeyEventConsumer != null) {
+				mUnusedKeyEventConsumer.eventHappened(e);
 			}
 		}
 		if (e.getWhat() == GenericKeyEvent.KEY_RELEASED) {
-			if (e.getKey() == GenericKeyEvent.KEY_SHIFT) {
+			if (key == GenericKeyEvent.KEY_SHIFT) {
 				mShiftIsDown = false;
 				updateCursor();
-			}
-			if (e.getKey() == GenericKeyEvent.KEY_ALT) {
+			} else if (key == GenericKeyEvent.KEY_ALT) {
 				mAltIsDown = false;
 				updateCursor();
-			}
-			if (e.getKey() == GenericKeyEvent.KEY_CTRL) {
+			} else if (key == GenericKeyEvent.KEY_CTRL) {
 				updateCursor();
+			} else if (mUnusedKeyEventConsumer != null) {
+				mUnusedKeyEventConsumer.eventHappened(e);
 			}
 		}
 	}
@@ -1744,30 +1748,51 @@ public class GenericEditorArea implements GenericEventListener {
 					break;
 				}
 
-				// is lasso- or rectangle-selecting
-				mIsSelectedAtom = new boolean[mMol.getAllAtoms()];
-				if (mDrawingObjectList != null) {
-					mIsSelectedObject = new boolean[mDrawingObjectList.size()];
-				}
-
-				mIsAddingToSelection = gme.isShiftDown();
-				for (int i = 0; i<mMol.getAllAtoms(); i++) {
-					mIsSelectedAtom[i] = mMol.isSelectedAtom(i);
-				}
-				if (mDrawingObjectList != null) {
-					for (int i = 0; i<mDrawingObjectList.size(); i++) {
-						mIsSelectedObject[i] = mDrawingObjectList.get(i).isSelected();
-					}
-				}
-
 				if (gme.isAltDown()) {
 					mPendingRequest = cRequestSelectRect;
-				} else {
+					}
+				else {
 					mLassoRegion = new GenericPolygon();
 					mLassoRegion.addPoint(mX1, mY1);
 					mLassoRegion.addPoint(mX1, mY1);
 					mPendingRequest = cRequestLassoSelect;
-				}
+					}
+
+				// is lasso- or rectangle-selecting
+				mIsSelectedAtom = new boolean[mMol.getAllAtoms()];
+				if (mDrawingObjectList != null)
+					mIsSelectedObject = new boolean[mDrawingObjectList.size()];
+
+				mIsAddingToSelection = gme.isShiftDown();
+				if (mIsAddingToSelection) {
+					for (int i=0; i<mMol.getAllAtoms(); i++)
+						mIsSelectedAtom[i] = mMol.isSelectedAtom(i);
+					if (mDrawingObjectList != null)
+						for (int i=0; i<mDrawingObjectList.size(); i++)
+							mIsSelectedObject[i] = mDrawingObjectList.get(i).isSelected();
+					}
+				else {
+					boolean selectionChanged = false;
+					for (int i=0; i<mMol.getAllAtoms(); i++) {
+						if (mMol.isSelectedAtom(i)) {
+							mMol.setAtomSelection(i, false);
+							selectionChanged = true;
+							}
+						}
+					if (mDrawingObjectList != null) {
+						for (int i=0; i<mDrawingObjectList.size(); i++) {
+							if (mDrawingObjectList.get(i).isSelected()) {
+								mDrawingObjectList.get(i).setSelected(false);
+								selectionChanged = true;
+								}
+							}
+						}
+					if (selectionChanged) {
+						mUpdateMode = UPDATE_REDRAW;
+						mCanvas.repaint();
+						}
+					}
+
 				break;
 			case GenericEditorToolbar.cToolDelete:
 				storeState();
@@ -1950,7 +1975,10 @@ public class GenericEditorArea implements GenericEventListener {
 	private void changeAtomicNo(int atomicNo) {
 		storeState();
 		if (mMol.addOrChangeAtom(mX1, mY1, atomicNo, 0, -1, 0, null)) {
-			mCurrentHiliteAtom = -1;
+			if (mCurrentHiliteAtom != -1) {
+				mCurrentHiliteAtom = -1;
+				fireEventLater(new EditorEvent(this, EditorEvent.WHAT_HILITE_ATOM_CHANGED, true));
+			}
 			updateAndFireEvent(UPDATE_CHECK_COORDS);
 		}
 	}
@@ -2621,12 +2649,14 @@ public class GenericEditorArea implements GenericEventListener {
 				|| hiliteObject != null);
 
 		if (mCurrentHiliteAtom != theAtom) {
-			if (mCurrentHiliteAtom != -1 && mAtomKeyStrokeBuffer.length() != 0)
+			if (mCurrentHiliteAtom != -1 && mAtomKeyStrokeBuffer.length() != 0) {
 				expandAtomKeyStrokes(mAtomKeyStrokeBuffer.toString());
-
-			mCurrentHiliteAtom = theAtom;
-			mAtomKeyStrokeBuffer.setLength(0);
-			fireEventLater(new EditorEvent(this, EditorEvent.WHAT_HILITE_ATOM_CHANGED, true));
+			}
+			else {
+				mCurrentHiliteAtom = theAtom;
+				mAtomKeyStrokeBuffer.setLength(0);
+				fireEventLater(new EditorEvent(this, EditorEvent.WHAT_HILITE_ATOM_CHANGED, true));
+			}
 		}
 		if (mCurrentHiliteBond != theBond) {
 			mCurrentHiliteBond = theBond;
@@ -2651,7 +2681,7 @@ public class GenericEditorArea implements GenericEventListener {
 
 	/**
 	 * @param s
-	 * @return true if adding one or more chars may still create a valid key stroke sequence
+	 * @return true if adding one or more chars may still create a valid keystroke sequence
 	 */
 	private boolean isValidAtomKeyStrokeStart(String s){
 		if (s.length()<3)
@@ -2668,12 +2698,17 @@ public class GenericEditorArea implements GenericEventListener {
 		int atomicNo = Molecule.getAtomicNoFromLabel(keyStrokes, mAllowedPseudoAtoms);
 		if (atomicNo != 0) {
 			storeState();
+			boolean mayChangeAtomOrder = (atomicNo == 1 ^ mMol.getAtomicNo(mCurrentHiliteAtom) == 1);
 			if (mMol.changeAtom(mCurrentHiliteAtom, atomicNo, 0, -1, 0)) {
+				if (mayChangeAtomOrder) {
+					mCurrentHiliteAtom = -1;
+					fireEventLater(new EditorEvent(this, EditorEvent.WHAT_HILITE_ATOM_CHANGED, true));
+				}
 				updateAndFireEvent(UPDATE_CHECK_COORDS);
 				return;
-			} else {
-				update(UPDATE_NONE);
 			}
+
+			update(UPDATE_NONE);
 		}
 
 		if (mAtomKeyStrokeSuggestion != null && !mAtomKeyStrokeSuggestion.isEmpty())
@@ -2683,7 +2718,7 @@ public class GenericEditorArea implements GenericEventListener {
 		if (substituent != null) {
 			storeState();
 
-			// Copy the the fragment containing the attachment point into a new molecule.
+			// Copy the fragment containing the attachment point into a new molecule.
 			// Then attach the substituent, create new atom coordinates for the substituent,
 			// while retaining coordinates of the fragment.
 			StereoMolecule fragment = new StereoMolecule();
