@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.16.0](https://github.com/cheminfo/openchemlib-js/compare/v9.15.0...v9.16.0) (2025-10-31)
+
+
+### Features
+
+* **svg:** add `noAtomCustomLabels` depictor option ([#342](https://github.com/cheminfo/openchemlib-js/issues/342)) ([56125d5](https://github.com/cheminfo/openchemlib-js/commit/56125d5babecd841c3325204d0f4f8319f6d4adf))
+
+
+### Bug Fixes
+
+* **svg:** avoid stereo problems on nitrogen ([#341](https://github.com/cheminfo/openchemlib-js/issues/341)) ([5c2b9f3](https://github.com/cheminfo/openchemlib-js/commit/5c2b9f327e0389fea6c8c72fb366ee21bed1355d))
+
 ## [9.15.0](https://github.com/cheminfo/openchemlib-js/compare/v9.14.1...v9.15.0) (2025-10-31)
 
 
