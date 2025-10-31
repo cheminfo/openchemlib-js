@@ -3,8 +3,10 @@ import { cocaine } from '../seeds/molfile.ts';
 import { moleculeFragment } from '../seeds/id_code.ts';
 import { smilesWithStereoProblem } from '../seeds/smiles.ts';
 
+type BooleanDepictorOptions = Exclude<keyof DepictorOptions, 'maxAVBL'>;
+
 // All keys are required so that if we add a new option in the type, it has to be added to the demo.
-const allOptions: Record<Exclude<keyof DepictorOptions, 'maxAVBL'>, string> = {
+const booleanOptions: Record<BooleanDepictorOptions, string> = {
   inflateToMaxAVBL: 'Inflate to max average bond length',
   inflateToHighResAVBL: 'Inflate to max average bond length (high resolution)',
   chiralTextBelowMolecule: 'Put chiral text below the molecule',
@@ -31,7 +33,7 @@ const allOptions: Record<Exclude<keyof DepictorOptions, 'maxAVBL'>, string> = {
     'Do not draw carbon symbol with superscript custom labels',
 };
 
-type BooleanDepictorOptions = Exclude<keyof DepictorOptions, 'maxAVBL'>;
+const allBooleanOptionKeys = new Set(Object.keys(booleanOptions));
 
 const optionsWithDefaultTrue: BooleanDepictorOptions[] = [
   'inflateToMaxAVBL',
@@ -42,7 +44,7 @@ const checkboxesContainer = document.getElementById(
   'checkboxes',
 ) as HTMLDivElement;
 
-for (const [name, label] of Object.entries(allOptions)) {
+for (const [name, label] of Object.entries(booleanOptions)) {
   const div = document.createElement('div');
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
@@ -65,7 +67,7 @@ const result = document.getElementById('result') as HTMLDivElement;
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const formData = new FormData(form);
-  const allData = Object.fromEntries(formData);
+  const allData = Object.fromEntries(formData) as Record<string, string>;
   const { moleculeText, width, height, maxAVBL, ...checkedBoxes } = allData;
   const molecule = Molecule.fromText(moleculeText as string);
   if (molecule) {
@@ -86,6 +88,7 @@ form.addEventListener('submit', (event) => {
         undefined,
         depictorOptions,
       );
+      serializeStateToHash(allData);
     } catch (error) {
       const errorParagraph = document.createElement('p');
       errorParagraph.textContent = `Error: ${error}`;
@@ -128,4 +131,26 @@ const loadSmilesButton = document.getElementById(
 ) as HTMLButtonElement;
 loadSmilesButton.onclick = loadSmiles;
 
-loadMolfile();
+function serializeStateToHash(data: Record<string, string>) {
+  location.hash = `#state=${btoa(JSON.stringify(data))}`;
+}
+
+function loadStateFromHash() {
+  const hash = location.hash;
+  if (hash.startsWith('#state=')) {
+    const state: Record<string, string> = JSON.parse(atob(hash.slice(7)));
+    for (const [name, value] of Object.entries(state)) {
+      const element = document.getElementById(name) as HTMLElement;
+      if (allBooleanOptionKeys.has(name)) {
+        (element as HTMLInputElement).checked = true;
+      } else if (name === 'moleculeText') {
+        (element as HTMLTextAreaElement).innerText = value;
+      } else {
+        (element as HTMLInputElement).value = value;
+      }
+    }
+    form.requestSubmit();
+  }
+}
+
+loadStateFromHash();
