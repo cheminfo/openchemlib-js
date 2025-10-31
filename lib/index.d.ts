@@ -1701,9 +1701,10 @@ export declare class Molecule {
    * label rather than replacing the original atom label. If label is null or
    * equals the normal atom label, then the custom label is removed.
    * @param atom
-   * @param label - null to remove custom label
+   * @param label - `null` to remove custom label.
+   * @returns Whether the label was changed.
    */
-  setAtomCustomLabel(atom: number, label: string | null): void;
+  setAtomCustomLabel(atom: number, label: string | null): boolean;
 
   /**
    * This is MDL's enhanced stereo representation (ESR). Stereo atoms and bonds
