@@ -1,1 +1,1 @@
-export const smilesWithStereoProblem = 'FN(Cl)Br';
+export const smilesWithStereoProblem = 'F[N@@](Cl)Br';
