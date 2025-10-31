@@ -161,7 +161,7 @@ public class JSMolecule {
       new CoordinateInventor(0).invent(mol);
     }
 
-    mol.ensureHelperArrays(Molecule.cHelperAll);
+    mol.ensureHelperArrays(Molecule.cHelperSymmetryStereoHeterotopicity);
 
     int viewMode = Util.getDepictorViewMode(options);
     int displayMode = Util.getDepictorDisplayMode(options);
