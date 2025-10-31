@@ -10,6 +10,7 @@ import {
   updateIDCode,
   updateMolfileOrRxn,
   updateMolfileOrRxnV3,
+  updateSmiles,
 } from './result.ts';
 
 let editor: CanvasEditor | undefined;
@@ -38,6 +39,7 @@ export function resetEditor() {
 
   resetChangeCount();
   updateIDCode('');
+  updateSmiles('');
   updateMolfileOrRxn('');
   updateMolfileOrRxnV3('');
 
@@ -54,12 +56,14 @@ export function resetEditor() {
         );
         const coordinates = molecule.getIDCoordinates();
         updateIDCode(`${idCode} ${coordinates}`);
+        updateSmiles(molecule.toIsomericSmiles());
         updateMolfileOrRxn(molecule.toMolfile());
         updateMolfileOrRxnV3(molecule.toMolfileV3());
       } else {
         const reaction = newEditor.getReaction();
         const idCode = ReactionEncoder.encode(reaction);
         updateIDCode(idCode ?? '');
+        updateSmiles(reaction.toSmiles());
         updateMolfileOrRxn(reaction.toRxn());
         updateMolfileOrRxnV3(reaction.toRxnV3());
       }

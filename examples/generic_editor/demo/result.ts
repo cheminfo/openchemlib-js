@@ -15,6 +15,12 @@ export function updateIDCode(idCode: string) {
   idcodeDiv.innerText = idCode.replaceAll('\x7f', '\x3f');
 }
 
+const smilesDiv = document.getElementById('smiles') as HTMLElement;
+
+export function updateSmiles(smiles: string) {
+  smilesDiv.innerText = smiles;
+}
+
 const molfileArea = document.getElementById('molfile') as HTMLTextAreaElement;
 
 export function updateMolfileOrRxn(value: string) {

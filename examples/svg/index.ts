@@ -1,5 +1,7 @@
 import { DepictorOptions, Molecule } from '../../lib/index.js';
-import molfile from '../seeds/molfile.ts';
+import { cocaine } from '../seeds/molfile.ts';
+import { moleculeFragment } from '../seeds/id_code.ts';
+import { smilesWithStereoProblem } from '../seeds/smiles.ts';
 
 // All keys are required so that if we add a new option in the type, it has to be added to the demo.
 const allOptions: Record<Exclude<keyof DepictorOptions, 'maxAVBL'>, string> = {
@@ -95,6 +97,35 @@ form.addEventListener('submit', (event) => {
 });
 
 const textarea = document.getElementById('moleculeText') as HTMLTextAreaElement;
-textarea.value = molfile;
 
-form.requestSubmit();
+function loadMolfile() {
+  textarea.value = cocaine;
+  form.requestSubmit();
+}
+
+const loadMolfileButton = document.getElementById(
+  'loadMolfile',
+) as HTMLButtonElement;
+loadMolfileButton.onclick = loadMolfile;
+
+function loadFragment() {
+  textarea.value = moleculeFragment;
+  form.requestSubmit();
+}
+
+const loadFragmentButton = document.getElementById(
+  'loadFragment',
+) as HTMLButtonElement;
+loadFragmentButton.onclick = loadFragment;
+
+function loadSmiles() {
+  textarea.value = smilesWithStereoProblem;
+  form.requestSubmit();
+}
+
+const loadSmilesButton = document.getElementById(
+  'loadSmiles',
+) as HTMLButtonElement;
+loadSmilesButton.onclick = loadSmiles;
+
+loadMolfile();
