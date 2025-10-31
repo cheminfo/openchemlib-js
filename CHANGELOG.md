@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.15.0](https://github.com/cheminfo/openchemlib-js/compare/v9.14.1...v9.15.0) (2025-10-31)
+
+
+### Features
+
+* improve handling of SVG depictor options ([#336](https://github.com/cheminfo/openchemlib-js/issues/336)) ([f08c5f6](https://github.com/cheminfo/openchemlib-js/commit/f08c5f6210a63aceb1e8e92397ff12cb4958c659))
+* update OCL to master 2025-10-31 ([#338](https://github.com/cheminfo/openchemlib-js/issues/338)) ([2d55424](https://github.com/cheminfo/openchemlib-js/commit/2d55424bcb9cdb32f7c75cf080cb2e7b88249700))
+
 ## [9.14.1](https://github.com/cheminfo/openchemlib-js/compare/v9.14.0...v9.14.1) (2025-10-29)
 
 
