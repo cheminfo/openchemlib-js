@@ -1,7 +1,8 @@
 import { Molecule, Reaction, ReactionEncoder } from '../../../lib/index.js';
 import { getEditor, resetEditor } from './editor.ts';
-import rxn from './seeds/rxn.ts';
-import molfile from './seeds/molfile.ts';
+import { rxn } from '../../seeds/rxn.ts';
+import { cocaine } from '../../seeds/molfile.ts';
+import { moleculeFragment, reactionFragment } from '../../seeds/id_code.ts';
 
 resetEditor();
 
@@ -19,7 +20,7 @@ const loadMolecule = document.getElementById(
   'loadMolecule',
 ) as HTMLButtonElement;
 loadMolecule.onclick = () => {
-  const molecule = Molecule.fromMolfile(molfile);
+  const molecule = Molecule.fromMolfile(cocaine);
   getEditor().setMolecule(molecule);
 };
 
@@ -27,8 +28,7 @@ const loadFragment = document.getElementById(
   'loadFragment',
 ) as HTMLButtonElement;
 loadFragment.onclick = () => {
-  const molecule = Molecule.fromMolfile(molfile);
-  molecule.setFragment(true);
+  const molecule = Molecule.fromIDCode(moleculeFragment);
   getEditor().setMolecule(molecule);
 };
 
@@ -44,9 +44,8 @@ const loadReactionFragment = document.getElementById(
   'loadReactionFragment',
 ) as HTMLButtonElement;
 loadReactionFragment.onclick = () => {
-  const reaction = Reaction.fromRxn(rxn);
-  reaction.setFragment(true);
-  getEditor().setReaction(reaction);
+  const reaction = ReactionEncoder.decode(reactionFragment);
+  getEditor().setReaction(reaction as Reaction);
 };
 
 const idcodeForm = document.getElementById('idcodeForm') as HTMLFormElement;

@@ -161,11 +161,13 @@ public class JSMolecule {
       new CoordinateInventor(0).invent(mol);
     }
 
-    int mode = Util.getDisplayMode(options);
-    SVGDepictor d = new SVGDepictor(mol, mode, id);
+    mol.ensureHelperArrays(Molecule.cHelperAll);
+
+    int viewMode = Util.getDepictorViewMode(options);
+    int displayMode = Util.getDepictorDisplayMode(options);
+    SVGDepictor d = new SVGDepictor(mol, displayMode, id);
     d.setFactorTextSize(factorTextSize);
-    d.validateView(null, new GenericRectangle(0, 0, width, height),
-        AbstractDepictor.cModeInflateToMaxAVBL);
+    d.validateView(null, new GenericRectangle(0, 0, width, height), viewMode);
     GenericRectangle b = d.getBoundingRect();
     d.paint(null);
     String result = d.toString();

@@ -68,5 +68,3 @@ M  V30 END BOND
 M  V30 END CTAB
 M  V30 END PRODUCT
 M  END`;
-
-export default rxn;

@@ -2,8 +2,12 @@
 
 <html lang="en">
   <head>
-    <title>Generic editor - &lt;openchemlib-editor> (Web Component) demo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="stylesheet" href="../base.css" />
+
+    <title>OpenChemLib JS - &lt;openchemlib-editor> (Web Component) demo</title>
+
     <script type="module">
       import OCL from '../../lib/index.js';
 
@@ -14,60 +18,73 @@
       openchemlib-editor:defined {
         width: 50vw;
       }
+      code {
+        background-color: #eee;
+      }
     </style>
   </head>
   <body>
-    <h1>Generic editor - &lt;openchemlib-editor> (Web Component) demo</h1>
+    <h1>OpenChemLib JS - &lt;openchemlib-editor> (Web Component) demo</h1>
 
     <p>Empty editor</p>
     <openchemlib-editor></openchemlib-editor>
 
-    <p>Molecule <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code></p>
+    <p>
+      Molecule
+      <code
+        >ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@
+        !BKkwuyRHiWUXno_KjsTTIpbHiHbfAo]NR_s[rzftyT`VFhFoyZ?fAoPZR</code
+      >
+    </p>
     <openchemlib-editor
-      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@ !BKkwuyRHiWUXno_KjsTTIpbHiHbfAo]NR_s[rzftyT`VFhFoyZ?fAoPZR"
     ></openchemlib-editor>
 
     <p>
       Molecule Fragment
-      <code>
-        ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp
-      </code>
+      <code> dmt@@LdbRTQk``bh@OhgLqK?|Hr@ !B?g~H@k\BbOvH?[]}b@K~_x`Bm?t </code>
     </p>
     <openchemlib-editor
-      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUhCyqHiCHy@leBhMEh]B\sa^kp"
+      idcode="dmt@@LdbRTQk``bh@OhgLqK?|Hr@ !B?g~H@k\BbOvH?[]}b@K~_x`Bm?t"
       fragment
     ></openchemlib-editor>
 
     <p>
       Molecule readonly
-      <code>ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@</code>
+      <code
+        >ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@
+        !BKkwuyRHiWUXno_KjsTTIpbHiHbfAo]NR_s[rzftyT`VFhFoyZ?fAoPZR</code
+      >
     </p>
     <openchemlib-editor
       readonly
-      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@"
+      idcode="ffc`P@H`QxNQQJJIJIZJHiSkQSejB`jFjhhaEqFUh@ !BKkwuyRHiWUXno_KjsTTIpbHiHbfAo]NR_s[rzftyT`VFhFoyZ?fAoPZR"
     ></openchemlib-editor>
 
-    <p>Reaction <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@</code></p>
+    <p>Reaction <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@#IGiYP</code></p>
     <openchemlib-editor
-      idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
+      idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@#IGiYP"
       mode="reaction"
     ></openchemlib-editor>
 
     <p>
       Reaction Fragment
-      <code>gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B</code>
+      <code
+        >gC`@Dij@qbS`D@!eMHAIhO?pi@ eF@HpZq`##!B_qL@Dw}l !B_vq?Dp !B@AL</code
+      >
     </p>
     <openchemlib-editor
-      idcode="gJX@@eKU@P gGQHDHaImfhB!defH@DAIfUVjj`B"
+      idcode="gC`@Dij@qbS`D@!eMHAIhO?pi@ eF@HpZq`##!B_qL@Dw}l !B_vq?Dp !B@AL"
       mode="reaction"
       fragment
     ></openchemlib-editor>
 
     <p>
-      Reaction readonly <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@</code>
+      Reaction readonly
+      <code>gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@#IGiYP</code>
     </p>
     <openchemlib-editor
-      idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@"
+      idcode="gJX@@eKU@@ gGQHDHaImfh@!defH@DAIfUVjj`@#IGiYP"
       mode="reaction"
       readonly
     ></openchemlib-editor>
