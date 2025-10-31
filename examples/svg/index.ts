@@ -1,5 +1,5 @@
 import { DepictorOptions, Molecule } from '../../lib/index.js';
-import { cocaine } from '../seeds/molfile.ts';
+import { cocaine, heroin } from '../seeds/molfile.ts';
 import { moleculeFragment } from '../seeds/id_code.ts';
 import { smilesWithStereoProblem } from '../seeds/smiles.ts';
 
@@ -31,6 +31,7 @@ const booleanOptions: Record<BooleanDepictorOptions, string> = {
   drawBondsInGray: 'Draw bonds in gray',
   noCarbonLabelWithCustomLabel:
     'Do not draw carbon symbol with superscript custom labels',
+  noAtomCustomLabels: 'Do not draw atom custom labels',
 };
 
 const allBooleanOptionKeys = new Set(Object.keys(booleanOptions));
@@ -110,6 +111,16 @@ const loadMolfileButton = document.getElementById(
   'loadMolfile',
 ) as HTMLButtonElement;
 loadMolfileButton.onclick = loadMolfile;
+
+function loadMolfileCustomLabels() {
+  textarea.value = heroin;
+  form.requestSubmit();
+}
+
+const loadMolfileCustomLabelsButton = document.getElementById(
+  'loadMolfileCustomLabels',
+) as HTMLButtonElement;
+loadMolfileCustomLabelsButton.onclick = loadMolfileCustomLabels;
 
 function loadFragment() {
   textarea.value = moleculeFragment;

@@ -91,6 +91,7 @@ public class Util {
   	if (options.suppressCIPParity) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeSuppressCIPParity;
   	if (options.suppressESR) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeSuppressESR;
   	if (options.noCarbonLabelWithCustomLabel) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoCarbonLabelWithCustomLabel;
+  	if (options.noAtomCustomLabels) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeNoAtomCustomLabels;
   
   	if (options.showSymmetryAny) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeShowSymmetryAny;
   	if (options.showSymmetrySimple) displayMode |= @com.actelion.research.chem.AbstractDepictor::cDModeShowSymmetrySimple;
