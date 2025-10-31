@@ -3044,6 +3044,7 @@ export interface DepictorOptions {
   noImplicitHydrogen?: boolean;
   drawBondsInGray?: boolean;
   noCarbonLabelWithCustomLabel?: boolean;
+  noAtomCustomLabels?: boolean;
 }
 
 export declare class Reaction {
