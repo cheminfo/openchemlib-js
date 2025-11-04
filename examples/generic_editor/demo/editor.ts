@@ -61,7 +61,14 @@ export function resetEditor() {
         updateMolfileOrRxnV3(molecule.toMolfileV3());
       } else {
         const reaction = newEditor.getReaction();
-        const idCode = ReactionEncoder.encode(reaction);
+        const idCode = ReactionEncoder.encode(reaction, {
+          keepAbsoluteCoordinates: true,
+          mode:
+            ReactionEncoder.INCLUDE_MAPPING |
+            ReactionEncoder.INCLUDE_COORDS |
+            ReactionEncoder.INCLUDE_CATALYSTS |
+            ReactionEncoder.RETAIN_REACTANT_AND_PRODUCT_ORDER,
+        });
         updateIDCode(idCode ?? '');
         updateSmiles(reaction.toSmiles());
         updateMolfileOrRxn(reaction.toRxn());
