@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.16.1](https://github.com/cheminfo/openchemlib-js/compare/v9.16.0...v9.16.1) (2025-11-05)
+
+
+### Bug Fixes
+
+* update OCL to fix custom label change event ([4ab0fdd](https://github.com/cheminfo/openchemlib-js/commit/4ab0fddf60ea65df742c882f725b2b45317e2fb0))
+* update OCL to fix ReactionEncoder with only reactants ([f88874f](https://github.com/cheminfo/openchemlib-js/commit/f88874f6564a45724d24eb4824ac4db2d3b0b194))
+
 ## [9.16.0](https://github.com/cheminfo/openchemlib-js/compare/v9.15.0...v9.16.0) (2025-10-31)
 
 
