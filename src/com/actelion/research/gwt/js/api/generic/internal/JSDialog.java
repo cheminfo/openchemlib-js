@@ -1,9 +1,8 @@
 package com.actelion.research.gwt.js.api.generic.internal;
 
-import com.google.gwt.core.client.JavaScriptObject;
-
 import com.actelion.research.gui.generic.*;
 import com.actelion.research.gwt.js.api.generic.JSEditorArea;
+import com.google.gwt.core.client.JavaScriptObject;
 
 public class JSDialog implements GenericDialog {
   private JavaScriptObject mJsDialog;
@@ -92,10 +91,12 @@ public class JSDialog implements GenericDialog {
   }-*/;
 
   @Override
-  public native void showDialog()
+  public native void showDialog(GenericDialogCallback cb)
   /*-{
     var jsDialog = this.@com.actelion.research.gwt.js.api.generic.internal.JSDialog::getJsDialog()();
-    jsDialog.showDialog();
+    jsDialog.showDialog(function onClose() {
+      cb.@com.actelion.research.gui.generic.GenericDialogCallback::onClose()();
+    });
   }-*/;
 
   @Override
@@ -116,7 +117,6 @@ public class JSDialog implements GenericDialog {
     if (mConsumer != null) {
       mConsumer.eventHappened(new GenericActionEvent(this, GenericActionEvent.WHAT_OK, 0));
     }
-    mEditorArea.getGenericEditorArea().updateAndFireEvent(1);
   }
 
   private void fireCancel() {
