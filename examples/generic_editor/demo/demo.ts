@@ -1,4 +1,4 @@
-import { Molecule, Reaction, ReactionEncoder } from '../../../lib/index.js';
+import { Molecule, Reaction, ReactionEncoder } from '../../ocl.ts';
 import { getEditor, resetEditor } from './editor.ts';
 import { rxn } from '../../seeds/rxn.ts';
 import { cocaine } from '../../seeds/molfile.ts';

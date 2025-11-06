@@ -1,4 +1,4 @@
-import { DepictorOptions, Molecule } from '../../lib/index.js';
+import { DepictorOptions, Molecule } from '../ocl.ts';
 import { cocaine, heroin } from '../seeds/molfile.ts';
 import { moleculeFragment } from '../seeds/id_code.ts';
 import { smilesWithStereoProblem } from '../seeds/smiles.ts';
