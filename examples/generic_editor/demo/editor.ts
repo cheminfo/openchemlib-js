@@ -3,7 +3,7 @@ import {
   CanvasEditorMode,
   Molecule,
   ReactionEncoder,
-} from '../../../lib/index.js';
+} from '../../ocl.ts';
 import {
   incrementChangeCount,
   resetChangeCount,
