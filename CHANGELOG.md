@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.17.0](https://github.com/cheminfo/openchemlib-js/compare/v9.16.1...v9.17.0) (2025-11-06)
+
+
+### Features
+
+* **canvas_editor:** allow to submit dialog forms ([aeb6fa2](https://github.com/cheminfo/openchemlib-js/commit/aeb6fa27297a9a02a004db19073e916e32f2f7db))
+
+
+### Bug Fixes
+
+* **canvas_editor:** use asynchronous dialog callbacks ([839f972](https://github.com/cheminfo/openchemlib-js/commit/839f972da6bd6080919c88bb1040748810b00d6a))
+
 ## [9.16.1](https://github.com/cheminfo/openchemlib-js/compare/v9.16.0...v9.16.1) (2025-11-05)
 
 
