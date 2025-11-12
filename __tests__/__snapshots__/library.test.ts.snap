@@ -327,6 +327,43 @@ exports[`class prototypes > prototype properties of Molecule 1`] = `
 
 exports[`class prototypes > prototype properties of MoleculeProperties 1`] = `[]`;
 
+exports[`class prototypes > prototype properties of Reaction 1`] = `
+[
+  "addCatalyst",
+  "addCatalystAt",
+  "addProduct",
+  "addProductAt",
+  "addReactant",
+  "addReactantAt",
+  "clear",
+  "clone",
+  "getAverageBondLength",
+  "getCatalyst",
+  "getCatalysts",
+  "getHighestMapNo",
+  "getMergedCopy",
+  "getMolecule",
+  "getMolecules",
+  "getName",
+  "getProduct",
+  "getProducts",
+  "getReactant",
+  "getReactants",
+  "getReactionCenterMapNos",
+  "isEmpty",
+  "isFragment",
+  "isPerfectlyMapped",
+  "isReactionLayoutRequired",
+  "removeCatalysts",
+  "setFragment",
+  "setName",
+  "toRxn",
+  "toRxnV3",
+  "toSmiles",
+  "validateMapping",
+]
+`;
+
 exports[`class prototypes > prototype properties of ReactionEncoder 1`] = `[]`;
 
 exports[`class prototypes > prototype properties of Reactor 1`] = `
@@ -699,6 +736,15 @@ exports[`class prototypes > static properties of Molecule 1`] = `
 `;
 
 exports[`class prototypes > static properties of MoleculeProperties 1`] = `[]`;
+
+exports[`class prototypes > static properties of Reaction 1`] = `
+[
+  "create",
+  "fromMolecules",
+  "fromRxn",
+  "fromSmiles",
+]
+`;
 
 exports[`class prototypes > static properties of ReactionEncoder 1`] = `
 [

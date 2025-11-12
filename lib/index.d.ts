@@ -3047,8 +3047,25 @@ export interface DepictorOptions {
   noAtomCustomLabels?: boolean;
 }
 
+interface ToRxnOptions {
+  /**
+   * Should we add th idCode of the reaction as a comment line in the RXN
+   * @default false
+   */
+  keepIdCode?: boolean;
+  /**
+   * Program name to include in the RXN file header
+   * @default ''
+   */
+  programName?: string;
+}
+
 export declare class Reaction {
-  private constructor();
+  /**
+   * Create a new empty reaction.
+   * @param name - Initial name.
+   */
+  constructor(name?: string | null);
 
   /**
    * Create a new empty `Reaction`.
@@ -3084,12 +3101,12 @@ export declare class Reaction {
   /**
    * Serialize the `Reaction` to a MDL V2000 Reaction file.
    */
-  toRxn(programName?: string): string;
+  toRxn(options?: ToRxnOptions): string;
 
   /**
    * Serialize the `Reaction` to a MDL V3000 Reaction file.
    */
-  toRxnV3(programName?: string): string;
+  toRxnV3(options?: ToRxnOptions): string;
 
   /**
    * Returns a new copy of the `Reaction`.
