@@ -126,4 +126,42 @@ M  END
 
     expect(reaction.toRxnV3()).toMatchSnapshot();
   });
+
+  it('empty rxn read / write', () => {
+    const rxn = `$RXN
+
+
+
+  0  0
+`;
+    const reaction = Reaction.fromRxn(rxn);
+    const rxnWithIdCode = reaction.toRxn();
+    const reaction2 = Reaction.fromRxn(rxnWithIdCode);
+    expect(reaction2.getReactants()).toBe(0);
+    expect(reaction2.getProducts()).toBe(0);
+  });
+
+  it('add one reagent, no product', () => {
+    const reagent = Molecule.fromSmiles('C');
+    const rxn = `$RXN
+
+
+
+  0  0
+`;
+    const reaction = Reaction.fromRxn(rxn);
+    const rxnWithIdCode = reaction.toRxn();
+
+    reaction.addReactant(reagent);
+    expect(reaction.getReactants()).toBe(1);
+    expect(reaction.getProducts()).toBe(0);
+
+    // if we create the reaction from the rxnWithIdCode we should have the same behavior
+    const reaction2 = Reaction.fromRxn(rxnWithIdCode);
+    expect(reaction2.getReactants()).toBe(0);
+    expect(reaction2.getProducts()).toBe(0);
+    reaction2.addReactant(reagent);
+    expect(reaction2.getReactants()).toBe(1);
+    expect(reaction2.getProducts()).toBe(0);
+  });
 });
