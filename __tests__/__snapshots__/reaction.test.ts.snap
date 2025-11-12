@@ -4,7 +4,7 @@ exports[`Reaction class > should load and create RXN files 1`] = `
 "$RXN
 
 
-OCL_RXN_V1.0:gGQHDHaInfh@ gJX@@eKU@@!gJX@@eKU@@ fHdP@@##!R_\`CW?Hc|_\`BH_Ykh@@ !ROvp@[C}c@FNZz@@ !ROvp@[C}c@FNZz@@ !RGP@@##
+
   2  2
 $MOL
 CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
@@ -67,7 +67,7 @@ exports[`Reaction class > should load and create RXN files 2`] = `
 "$RXN V3000
 
 
-OCL_RXN_V1.0:gJX@@eKU@@ gGQHDHaInfh@!gJX@@eKU@@ fHdP@@##!ROvp@[C}c@FNZz@@ !R_\`CW?Hc|_\`BH_Ykh@@ !ROvp@[C}c@FNZz@@ !RGP@@##
+
 M  V30 COUNTS 2 2
 M  V30 BEGIN REACTANT
 M  V30 BEGIN CTAB
@@ -132,5 +132,23 @@ M  V30 END BOND
 M  V30 END CTAB
 M  V30 END PRODUCT
 M  END
+"
+`;
+
+exports[`Reaction class > toRXN options 1`] = `
+"$RXN
+
+
+
+  0  0
+"
+`;
+
+exports[`Reaction class > toRXN options 2`] = `
+"$RXN
+Hello world!
+
+OCL_RXN_V1.0:!####
+  0  0
 "
 `;

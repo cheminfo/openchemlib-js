@@ -28,13 +28,23 @@ describe('Reaction class', () => {
     expect(reaction.getCatalysts()).toBe(0);
   });
 
-  it.only('toRXN options', () => {
+  it('toRXN options', () => {
     const reaction = Reaction.create();
     expect(reaction.getReactants()).toBe(0);
     expect(reaction.getProducts()).toBe(0);
     expect(reaction.getCatalysts()).toBe(0);
     const rxn = reaction.toRxn();
-    console.log(rxn);
+    expect(rxn).toMatchSnapshot();
+    const reaction2 = Reaction.fromRxn(rxn);
+    expect(reaction2.getReactants()).toBe(0);
+    expect(reaction2.getProducts()).toBe(0);
+    expect(reaction2.getCatalysts()).toBe(0);
+    const rxn2 = reaction2.toRxn({
+      keepIdCode: true,
+      programName: 'Hello world!',
+    });
+    // this test could fail once this bug is fixed: https://github.com/Actelion/openchemlib/issues/158
+    expect(rxn2).toMatchSnapshot();
   });
 
   it('should be able to add molecules', () => {
