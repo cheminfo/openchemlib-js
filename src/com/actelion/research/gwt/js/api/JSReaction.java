@@ -32,9 +32,17 @@ public class JSReaction {
     return new JSReaction(parser.getReaction(rxn));
   }
 
+  public JSReaction(String name, Reaction reaction) {
+    if (reaction != null) {
+      oclReaction = reaction;
+    } else {
+      oclReaction = new Reaction(name);
+    }
+  }
+
   @JsIgnore
   public JSReaction(Reaction reaction) {
-    oclReaction = reaction;
+    this(null, reaction);
   }
 
   @JsIgnore

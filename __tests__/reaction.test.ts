@@ -3,6 +3,24 @@ import { describe, expect, it } from 'vitest';
 import { Molecule, Reaction } from '../lib/index.js';
 
 describe('Reaction class', () => {
+  it('work as a constructor (no name)', () => {
+    const reaction = new Reaction();
+    expect(reaction.isEmpty()).toBe(true);
+    expect(reaction.getName()).toBe('');
+  });
+
+  it('work as a constructor (null name)', () => {
+    const reaction = new Reaction(null);
+    expect(reaction.isEmpty()).toBe(true);
+    expect(reaction.getName()).toBe('');
+  });
+
+  it('work as a constructor (initial name)', () => {
+    const reaction = new Reaction('NAME');
+    expect(reaction.isEmpty()).toBe(true);
+    expect(reaction.getName()).toBe('NAME');
+  });
+
   it('should create an empty Reaction', () => {
     const reaction = Reaction.create();
     expect(reaction.getReactants()).toBe(0);

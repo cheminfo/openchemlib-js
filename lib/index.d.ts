@@ -3048,7 +3048,11 @@ export interface DepictorOptions {
 }
 
 export declare class Reaction {
-  private constructor();
+  /**
+   * Create a new empty reaction.
+   * @param name - Initial name.
+   */
+  constructor(name?: string | null);
 
   /**
    * Create a new empty `Reaction`.
