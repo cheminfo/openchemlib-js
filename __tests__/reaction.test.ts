@@ -10,6 +10,15 @@ describe('Reaction class', () => {
     expect(reaction.getCatalysts()).toBe(0);
   });
 
+  it.only('toRXN options', () => {
+    const reaction = Reaction.create();
+    expect(reaction.getReactants()).toBe(0);
+    expect(reaction.getProducts()).toBe(0);
+    expect(reaction.getCatalysts()).toBe(0);
+    const rxn = reaction.toRxn();
+    console.log(rxn);
+  });
+
   it('should be able to add molecules', () => {
     const reaction = Reaction.create();
     const reactant1 = Molecule.fromSmiles('C');
