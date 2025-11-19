@@ -35,6 +35,7 @@
     "vite-build": "vite build",
     "vite-preview": "vite preview"
   },
+  "types": "./dist/openchemlib.d.ts",
   "exports": {
     ".": {
       "types": "./dist/openchemlib.d.ts",
