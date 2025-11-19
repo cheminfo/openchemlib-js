@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.18.1](https://github.com/cheminfo/openchemlib-js/compare/v9.18.0...v9.18.1) (2025-11-19)
+
+
+### Bug Fixes
+
+* **ts:** make library work with TypeScript's CommonJS resolution ([#354](https://github.com/cheminfo/openchemlib-js/issues/354)) ([eba54de](https://github.com/cheminfo/openchemlib-js/commit/eba54de24826f53a7827a8edbc0c80b3b7c234ef))
+
 ## [9.18.0](https://github.com/cheminfo/openchemlib-js/compare/v9.17.0...v9.18.0) (2025-11-12)
 
 
