@@ -152,3 +152,167 @@ OCL_RXN_V1.0:!####
   0  0
 "
 `;
+
+exports[`Reaction class > toRXN options keepIdCode one product 1`] = `
+"$RXN
+
+
+
+  0  1
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  3  2  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  2  0  0  0  0
+M  END
+"
+`;
+
+exports[`Reaction class > toRXN options keepIdCode one product 2`] = `
+"$RXN
+Hello world!
+
+OCL_RXN_V1.0:!eMDARU@##!R_?y??kH@@@##
+  0  1
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  3  2  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  2  0  0  0  0
+M  END
+"
+`;
+
+exports[`Reaction class > toRXN options keepIdCode one reagent 1`] = `
+"$RXN
+
+
+
+  1  0
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+"
+`;
+
+exports[`Reaction class > toRXN options keepIdCode one reagent 2`] = `
+"$RXN
+Hello world!
+
+OCL_RXN_V1.0:fH@@!##!RGP@@##
+  1  0
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+"
+`;
+
+exports[`Reaction class > toRXN options keepIdCode two products 1`] = `
+"$RXN
+
+
+
+  0  2
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+"
+`;
+
+exports[`Reaction class > toRXN options keepIdCode two products 2`] = `
+"$RXN
+Hello world!
+
+OCL_RXN_V1.0:!fH@@ fI@@##!RGP@@ !RGP@@##
+  0  2
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+"
+`;
+
+exports[`Reaction class > toRXN options keepIdCode two reagents 1`] = `
+"$RXN
+
+
+
+  2  0
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+"
+`;
+
+exports[`Reaction class > toRXN options keepIdCode two reagents 2`] = `
+"$RXN
+Hello world!
+
+OCL_RXN_V1.0:fH@@ fI@@!##!RGP@@ !RGP@@##
+  2  0
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+$MOL
+
+Actelion Java MolfileCreator 1.0
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+M  END
+"
+`;

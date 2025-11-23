@@ -43,7 +43,90 @@ describe('Reaction class', () => {
       keepIdCode: true,
       programName: 'Hello world!',
     });
-    // this test could fail once this bug is fixed: https://github.com/Actelion/openchemlib/issues/158
+    expect(rxn2).toMatchSnapshot();
+  });
+
+  it('toRXN options keepIdCode one reagent', () => {
+    const reaction = Reaction.create();
+    const methane = Molecule.fromSmiles('C');
+    reaction.addReactant(methane);
+    expect(reaction.getReactants()).toBe(1);
+    expect(reaction.getProducts()).toBe(0);
+    expect(reaction.getCatalysts()).toBe(0);
+    const rxn = reaction.toRxn();
+    expect(rxn).toMatchSnapshot();
+    const reaction2 = Reaction.fromRxn(rxn);
+    expect(reaction2.getReactants()).toBe(1);
+    expect(reaction2.getProducts()).toBe(0);
+    expect(reaction2.getCatalysts()).toBe(0);
+    const rxn2 = reaction2.toRxn({
+      keepIdCode: true,
+      programName: 'Hello world!',
+    });
+    expect(rxn2).toMatchSnapshot();
+  });
+
+  it('toRXN options keepIdCode two reagents', () => {
+    const reaction = Reaction.create();
+    const methane = Molecule.fromSmiles('C');
+    const oxygen = Molecule.fromSmiles('O');
+    reaction.addReactant(methane);
+    reaction.addReactant(oxygen);
+    expect(reaction.getReactants()).toBe(2);
+    expect(reaction.getProducts()).toBe(0);
+    expect(reaction.getCatalysts()).toBe(0);
+    const rxn = reaction.toRxn();
+    expect(rxn).toMatchSnapshot();
+    const reaction2 = Reaction.fromRxn(rxn);
+    expect(reaction2.getReactants()).toBe(2);
+    expect(reaction2.getProducts()).toBe(0);
+    expect(reaction2.getCatalysts()).toBe(0);
+    const rxn2 = reaction2.toRxn({
+      keepIdCode: true,
+      programName: 'Hello world!',
+    });
+    expect(rxn2).toMatchSnapshot();
+  });
+
+  it('toRXN options keepIdCode one product', () => {
+    const reaction = Reaction.create();
+    const carbonDioxide = Molecule.fromSmiles('O=C=O');
+    reaction.addProduct(carbonDioxide);
+    expect(reaction.getReactants()).toBe(0);
+    expect(reaction.getProducts()).toBe(1);
+    expect(reaction.getCatalysts()).toBe(0);
+    const rxn = reaction.toRxn();
+    expect(rxn).toMatchSnapshot();
+    const reaction2 = Reaction.fromRxn(rxn);
+    expect(reaction2.getReactants()).toBe(0);
+    expect(reaction2.getProducts()).toBe(1);
+    expect(reaction2.getCatalysts()).toBe(0);
+    const rxn2 = reaction2.toRxn({
+      keepIdCode: true,
+      programName: 'Hello world!',
+    });
+    expect(rxn2).toMatchSnapshot();
+  });
+
+  it('toRXN options keepIdCode two products', () => {
+    const reaction = Reaction.create();
+    const carbon = Molecule.fromSmiles('C');
+    reaction.addProduct(carbon);
+    const oxygen = Molecule.fromSmiles('O');
+    reaction.addProduct(oxygen);
+    expect(reaction.getReactants()).toBe(0);
+    expect(reaction.getProducts()).toBe(2);
+    expect(reaction.getCatalysts()).toBe(0);
+    const rxn = reaction.toRxn();
+    expect(rxn).toMatchSnapshot();
+    const reaction2 = Reaction.fromRxn(rxn);
+    expect(reaction2.getReactants()).toBe(0);
+    expect(reaction2.getProducts()).toBe(2);
+    expect(reaction2.getCatalysts()).toBe(0);
+    const rxn2 = reaction2.toRxn({
+      keepIdCode: true,
+      programName: 'Hello world!',
+    });
     expect(rxn2).toMatchSnapshot();
   });
 
