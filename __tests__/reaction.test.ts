@@ -9,7 +9,7 @@ describe('Reaction class', () => {
     expect(reaction.getName()).toBe('');
   });
 
-  it.only('work as a constructor (null name)', () => {
+  it('work as a constructor (null name)', () => {
     const reaction = new Reaction(null);
     expect(reaction.isEmpty()).toBe(true);
     expect(reaction.getName()).toBe('');
