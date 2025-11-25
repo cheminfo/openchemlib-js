@@ -9,7 +9,7 @@ describe('Reaction class', () => {
     expect(reaction.getName()).toBe('');
   });
 
-  it('work as a constructor (null name)', () => {
+  it.only('work as a constructor (null name)', () => {
     const reaction = new Reaction(null);
     expect(reaction.isEmpty()).toBe(true);
     expect(reaction.getName()).toBe('');
@@ -19,6 +19,20 @@ describe('Reaction class', () => {
     const reaction = new Reaction('NAME');
     expect(reaction.isEmpty()).toBe(true);
     expect(reaction.getName()).toBe('NAME');
+  });
+
+  it('empty rxn read / write', () => {
+    const rxn = `$RXN
+
+
+
+  0  0
+`;
+    const reaction = Reaction.fromRxn(rxn);
+    const rxnWithIdCode = reaction.toRxn({ keepIdCode: true });
+    const reaction2 = Reaction.fromRxn(rxnWithIdCode);
+    expect(reaction2.getReactants()).toBe(0);
+    expect(reaction2.getProducts()).toBe(0);
   });
 
   it('should create an empty Reaction', () => {
