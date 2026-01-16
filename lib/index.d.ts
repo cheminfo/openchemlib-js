@@ -62,6 +62,7 @@ interface ToMolfileOptions {
    * If set to 'superscript', it will add a ']' at the beginning of the custom label to be
    * compatible with the way to represent superscript in OCL
    * If set to 'normal', it will remove the ']' at the beginning of the custom label if present
+   * If set to 'auto', it will set normal for 'C' and superscript for everything else
    * If not set, it will keep the label as is
    * Default: undefined (keep as is)
    * @default undefined
