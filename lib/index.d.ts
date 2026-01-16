@@ -36,6 +36,8 @@ export interface MoleculeFromSmilesOptions {
   noStereo?: boolean;
 }
 
+type CustomLabelPosition = 'normal' | 'superscript' | 'auto' | undefined;
+
 interface FromMolfileOptions {
   /**
    * If set to 'superscript', it will add a ']' at the beginning of the custom label to be
@@ -46,7 +48,7 @@ interface FromMolfileOptions {
    * Default: undefined (keep as is)
    * @default undefined
    */
-  customLabelPosition?: 'normal' | 'superscript' | 'auto' | undefined;
+  customLabelPosition?: CustomLabelPosition;
 }
 
 interface ToMolfileOptions {
@@ -67,7 +69,7 @@ interface ToMolfileOptions {
    * Default: undefined (keep as is)
    * @default undefined
    */
-  customLabelPosition?: 'normal' | 'superscript' | 'auto' | undefined;
+  customLabelPosition?: CustomLabelPosition;
   /**
    * Remove custom atom labels
    * @default false
@@ -768,6 +770,14 @@ export declare class Molecule {
    * @return atom mapping from substituent to this molecule after addition of substituent
    */
   addSubstituent(substituent: Molecule, connectionAtom: number): number[];
+
+  /**
+   * Change the position of custom labels according to the provided option
+   * - 'superscript' will add a ] at the beginning of the custom label
+   * - 'normal' will remove a leading ] if present
+   * - 'auto' will set the label as superscript for non-carbon atoms and normal for carbon atoms
+   */
+  changeCustomLabelPosition(position?: CustomLabelPosition): string;
 
   /**
    * Copies this molecule including parity settings, if valid. The original
