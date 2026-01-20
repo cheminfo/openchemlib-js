@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.19.0](https://github.com/cheminfo/openchemlib-js/compare/v9.18.2...v9.19.0) (2026-01-20)
+
+
+### Features
+
+* add changeCustomLabelPosition method on Molecule instance ([#358](https://github.com/cheminfo/openchemlib-js/issues/358)) ([71516e2](https://github.com/cheminfo/openchemlib-js/commit/71516e288fc0ff2d5f71c407a8225fd0db973e72))
+* update OCL to v2026.1.2 + fix ([1ab2e53](https://github.com/cheminfo/openchemlib-js/commit/1ab2e53e0686c85e4c551e8e5882f8d109936591))
+
 ## [9.18.2](https://github.com/cheminfo/openchemlib-js/compare/v9.18.1...v9.18.2) (2025-11-25)
 
 
