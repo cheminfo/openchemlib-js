@@ -574,10 +574,10 @@ public class Matrix {
 
     /**
      * 
-     * @param vecIndices
-     * @return
-     * @deprecated use getColumns(List<Integer> vecIndices) instead
-     */
+     * param vecIndices
+     * return
+     * deprecated use getColumns(List<Integer> vecIndices) instead
+     *
     public Matrix getColumns(Vector<Integer> vecIndices) {
         Matrix maReduced = new Matrix(getRowDim(), vecIndices.size());
         for (int i = 0; i < vecIndices.size(); i++) {
@@ -586,7 +586,7 @@ public class Matrix {
         }
 
         return maReduced;
-    }
+    }*/
 
     public Matrix getColumns(List<Integer> liIndex) {
         Matrix maReduced = new Matrix(getRowDim(), liIndex.size());
@@ -3506,6 +3506,82 @@ public class Matrix {
         }
 
         return sb.toString();
+    }
+
+    public String toStringRowColNumbers(int digits, int width) {
+        return toStringRowColNumbers(rows(), cols(), digits, width);
+
+    }
+    public String toStringRowColNumbers(int rowEnd, int colEnd, int digits, int width) {
+
+        int iRequireDigits = 20;
+
+        String sFormat = "";
+
+        sFormat += "0";
+        int iCounter = 0;
+        if (digits > 0)
+            sFormat += ".";
+
+        while (iCounter < digits) {
+            sFormat += "0";
+            iCounter++;
+        }
+
+        DecimalFormat nf = new DecimalFormat(sFormat, new DecimalFormatSymbols(Locale.US));
+
+        int len = getRowDim() * getColDim() * iRequireDigits;
+        StringBuilder sb = new StringBuilder(len);
+        sb.append(toStringVal(0, width).replace('0',' '));
+        sb.append(OUT_SEPARATOR_COL);
+        for (int j = 0; j < colEnd; j++) {
+            sb.append(toStringVal(j,width));
+            if (j < data[0].length - 1)
+                sb.append(OUT_SEPARATOR_COL);
+        }
+        sb.append(OUT_SEPARATOR_ROW);
+        for (int i = 0; i < rowEnd; i++) {
+            sb.append(toStringVal(i,width));
+            sb.append(OUT_SEPARATOR_COL);
+            for (int j = 0; j < colEnd; j++) {
+                String sVal = toStringVal(data[i][j],nf, width);
+                sb.append(sVal);
+                if (j < data[0].length - 1)
+                    sb.append(OUT_SEPARATOR_COL);
+            }
+
+            if (i < data.length - 1)
+                sb.append(OUT_SEPARATOR_ROW);
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     *
+     * @param v
+     * @param nf
+     * @param w total width
+     * @return
+     */
+    private static String toStringVal(double v, NumberFormat nf, int w){
+        String sVal = nf.format(v);
+        if(v==Double.MAX_VALUE)
+            sVal = "Max";
+
+        StringBuilder sbVal = new StringBuilder(sVal);
+        while (sbVal.length()<w){
+            sbVal.insert(0, " ");
+        }
+        return sbVal.toString();
+    }
+    private static String toStringVal(int v, int w){
+        StringBuilder sbVal = new StringBuilder();
+        sbVal.append(v);
+        while (sbVal.length()<w){
+            sbVal.insert(0, " ");
+        }
+        return sbVal.toString();
     }
 
     public String toStringRow(int row, int iDigits) {

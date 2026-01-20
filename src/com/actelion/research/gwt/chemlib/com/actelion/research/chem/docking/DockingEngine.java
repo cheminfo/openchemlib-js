@@ -55,19 +55,19 @@ public class DockingEngine {
 	public static final int MCS_EXHAUSTIVENESS = 3; //MCS docking requires more starting positions, but less MC sampling (reduced DOF)
 	
 
-	private Rotation rotation; //for initial prealignment to native ligand
-	private Coordinates origCOM;
-	private int mcSteps;
-	private Random random;
+	private final Rotation rotation; //for initial prealignment to native ligand
+	private final Coordinates origCOM;
+	private final int mcSteps;
+	private final Random random;
+	private final int startPositions;
+	private final StereoMolecule nativeLigand;
+	private final ShapeDocking shapeDocking;
+	private double mGlobalConformerEnergyMin;
 	private AbstractScoringEngine engine;
-	private int startPositions;
-	private StereoMolecule nativeLigand;
-	private ShapeDocking shapeDocking;
 	private ThreadMaster threadMaster;
 	private StereoMolecule mcsRef;
 	private List<Integer> mcsConstrainedBonds;
 	private List<Integer> mcsConstrainedAtoms;
-	private double gridDimension;
 
 	
 	public DockingEngine(StereoMolecule rec, StereoMolecule nativeLig, int mcSteps, int startPositions, double gridDimension,
@@ -108,8 +108,6 @@ public class DockingEngine {
 		
 		this.mcSteps = mcSteps;
 		this.random = new Random(LigandPose.SEED);
-
-
 	}
 	
 	public DockingEngine(StereoMolecule receptor, StereoMolecule nativeLigand, double gridDimension) throws DockingFailedException {
@@ -122,30 +120,28 @@ public class DockingEngine {
 	
 	public void setThreadMaster(ThreadMaster tm) {
 		threadMaster = tm;
-		shapeDocking.setThreadMaster(tm);
 	}
-	
 
-	
 	/**
 	 * generate initial poses: 
 	 * 1) shape docking into the negative receptor image
 	 * 2) constrained optimization of initial poses to reduce strain energy
 	 * @param mol
 	 * @param initialPos
+	 * @param eMin
 	 * @return
 	 * @throws DockingFailedException
 	 */
-	private double getStartingPositions(StereoMolecule mol, List<Conformer> initialPos) throws DockingFailedException {
-
-		double eMin = Double.MAX_VALUE;
-		Map<String, Object> ffOptions = new HashMap<String, Object>();
+	private double getStartingPositions(StereoMolecule mol, List<Conformer> initialPos, double eMin) throws DockingFailedException {
+		Map<String, Object> ffOptions = new HashMap<>();
 		ffOptions.put("dielectric constant", 80.0);
 
-		ConformerSet confSet = new ConformerSet();
-		List<StereoMolecule> alignedMol = shapeDocking.dock(mol);
-		alignedMol.stream().forEach(e -> confSet.add(new Conformer(e)));
-		for(Conformer c : confSet) {
+//		ConformerSet confSet = new ConformerSet();
+//		List<StereoMolecule> alignedMol = shapeDocking.dock(mol);
+//		alignedMol.stream().forEach(e -> confSet.add(new Conformer(e)));
+//		for(Conformer c : confSet) {
+
+		for(Conformer c : shapeDocking.dock(mol, threadMaster)) {
 			if(c!=null) {
 				StereoMolecule conf = c.toMolecule();
 				conf.ensureHelperArrays(Molecule.cHelperParities);
@@ -171,18 +167,16 @@ public class DockingEngine {
 					break;
 			}
 		}
-		
-		
+
 		return eMin;
-		
 	}
+
 	/**
 	 * 1) find MCS between reference molecule and candidate molecule
 	 * 2) 
 	 * @param mol
 	 */
-	private double getStartingPositionsMCS(StereoMolecule mol, List<Conformer> initialPos) {
-		double eMin = Double.MAX_VALUE;
+	private double getStartingPositionsMCS(StereoMolecule mol, List<Conformer> initialPos, double eMin) {
 		int rotBondsMol = mol.getRotatableBondCount();
 		int rotBondsRef = nativeLigand.getRotatableBondCount();
 		MCS mcs = new MCS();
@@ -303,41 +297,77 @@ public class DockingEngine {
 				eMin = e;
 		}
 		return eMin;
-	
 	}
-	
-	
+
+	/**
+	 * @return the global conformer minimum energy applied during scoring of the previously docked molecule
+	 */
+	public double getMinConformerEnergy() {
+		return mGlobalConformerEnergyMin;
+	}
+
+	public static double calculateMinConformerEnergy(StereoMolecule mol) {
+		ConformerSetGenerator confSetGen = new ConformerSetGenerator(64, ConformerGenerator.STRATEGY_LIKELY_RANDOM, false, LigandPose.SEED);
+		ConformerSet confSet = confSetGen.generateConformerSet(new StereoMolecule(mol));
+		double eMin = Double.MAX_VALUE;
+
+		ForceFieldMMFF94.initialize(ForceFieldMMFF94.MMFF94SPLUS);
+		Map<String, Object> mmffOptions = new HashMap<>();
+		mmffOptions.put("dielectric constant", 80.0);
+
+		for (Conformer conformer : confSet) {
+			StereoMolecule conf = conformer.toMolecule();
+			ForceFieldMMFF94 mmff = new ForceFieldMMFF94(conf, ForceFieldMMFF94.MMFF94SPLUS, mmffOptions);
+			mmff.minimise();
+			double e = mmff.getTotalEnergy();
+			if (eMin > e)
+				eMin = e;
+		}
+
+		return eMin;
+	}
+
+	/**
+	 * TLS 8Jan2026: Originally, eMin was determined during generation of the starting conformers,
+	 * which were minimized with a position constraint, thus, eMin was not really the energy of the
+	 * lowest unconstrained conformer. Now, we precalculate and use the lowest energy of a bunch of
+	 * diverse minimized conformers with DockingEngine.getMinConformerEnergy(mol).
+	 * @param mol
+	 * @return
+	 * @throws DockingFailedException
+	 */
 	public DockingResult dockMolecule(StereoMolecule mol) throws DockingFailedException {
+//		mGlobalConformerEnergyMin = Double.MAX_VALUE;	// this was the old handling
+		mGlobalConformerEnergyMin = calculateMinConformerEnergy(mol);
+
 		Conformer bestPose = null;
 		double bestEnergy = Double.MAX_VALUE;
 		if(ForceFieldMMFF94.table(ForceFieldMMFF94.MMFF94SPLUS)==null)
 			ForceFieldMMFF94.initialize(ForceFieldMMFF94.MMFF94SPLUS);
 		List<Conformer> startPoints = new ArrayList<>();
-		double eMin = 0.0;
 		int steps = mcSteps;
 		if(mcsRef!=null) {
-			eMin = getStartingPositionsMCS(mol, startPoints);
+			mGlobalConformerEnergyMin = getStartingPositionsMCS(mol, startPoints, mGlobalConformerEnergyMin);
 			steps=steps/MCS_EXHAUSTIVENESS;
 		}
 		else {
-			eMin = getStartingPositions(mol, startPoints);
+			mGlobalConformerEnergyMin = getStartingPositions(mol, startPoints, mGlobalConformerEnergyMin);
 		}
 
 		Map<String,Double> contributions = null;
 		for(Conformer ligConf : startPoints) {
-			Conformer newLigConf = new Conformer(ligConf);		
-			LigandPose pose = initiate(newLigConf,eMin);
+			Conformer newLigConf = new Conformer(ligConf);
+			LigandPose pose = new LigandPose(newLigConf, engine, mGlobalConformerEnergyMin);
 			if(mcsRef!=null) {
 				pose.setMCSBondConstraints(mcsConstrainedBonds);
 				for(int a : mcsConstrainedAtoms) {
 					PositionConstraint constr = new PositionConstraint(newLigConf,a,50,1.0);
 					pose.addConstraint(constr);
 				}
-				
 			}
 			double energy = mcSearch(pose,steps);
 			if(energy<bestEnergy) {
-				bestEnergy = pose.getScore();
+				bestEnergy = energy;
 				bestPose = pose.getLigConf();
 				contributions = pose.getContributions();
 			}
@@ -351,15 +381,12 @@ public class DockingEngine {
 			Translation translate = new Translation(new double[] {origCOM.x, origCOM.y, origCOM.z});
 			rot.apply(best);
 			translate.apply(best);
-			return new DockingResult(mol, best,bestEnergy,contributions);
+			return new DockingResult(mol, best,bestEnergy, contributions);
 		}
 		else {
 			throw new DockingFailedException("docking failed");
 		}
-		
 	}
-	
-	
 
 	/**
 	 * use monte carlo steps to permute molecular rotation, translation, torsion angles
@@ -383,53 +410,37 @@ public class DockingEngine {
 		for(int i=0;i<steps;i++) {
 			pose.randomPerturbation();
 			double energyMC = pose.getFGValue(new double[bestState.length]);
-			if(energyMC<MINI_CUTOFF) {
-				state = optimizer.optimize(pose);	
+			if (energyMC<MINI_CUTOFF) {
+				state = optimizer.optimize(pose);
 				energy = pose.getFGValue(new double[bestState.length]);
-			}
-			else {
+			} else {
 				state = pose.getState();
-				energy=energyMC;
+				energy = energyMC;
 			}
 
-
-			if(energy<oldEnergy) { //accept new pose
+			if (energy<oldEnergy) { //accept new pose
 				oldEnergy = energy;
 				oldState = state;
-				if(energy<bestEnergy) {
+				if (energy<bestEnergy) {
 					bestEnergy = energy;
 					bestState = state;
 				}
-			}
-			else {
-				double dE = energy-oldEnergy;
+			} else {
+				double dE = energy - oldEnergy;
 				double randNr = random.nextDouble();
-				double probability = Math.exp(-dE/BOLTZMANN_FACTOR); // Metropolis-Hastings
-				if(randNr<probability) { //accept
+				double probability = Math.exp(-dE / BOLTZMANN_FACTOR); // Metropolis-Hastings
+				if (randNr<probability) { //accept
 					oldEnergy = energy;
 					oldState = state;
-				}
-				else { //reject
+				} else { //reject
 					pose.setState(oldState);
 				}
-				
 			}
-			
 		}
 
 		pose.setState(bestState);
 		pose.removeConstraints();
-		bestEnergy = pose.getScore();
-		return bestEnergy;
-		
-	}
-	
-	private LigandPose initiate(Conformer ligConf, double e0) {
-		LigandPose pose = new LigandPose(ligConf, engine, e0);
-		
-		return pose;
-		
-		
+		return pose.getScore();
 	}
 	
 	public void setMCSReference(StereoMolecule referencePose) {
@@ -453,10 +464,9 @@ public class DockingEngine {
 					if(z>0 && z<gridSize[2]) {
 						bindingSiteAtoms.add(i);
 					}
+				}
 			}
 		}
-		}
-		
 	}
 	
 	public static int[] getReceptorAtomTypes(StereoMolecule receptor) {
@@ -465,9 +475,8 @@ public class DockingEngine {
 			receptorAtomTypes[i] = InteractionAtomTypeCalculator.getAtomType(receptor, i);
 		}
 		return receptorAtomTypes;
-		
-		
 	}
+
 	/**
 	 * rotates receptor and ligand to principal moments of inertia of ligand, for efficient grid creation
 	 * @param receptor
@@ -480,7 +489,6 @@ public class DockingEngine {
 		rotation.apply(ligand);
 		translate.apply(receptor);
 		rotation.apply(receptor);
-		
 	}
 
 	/**
@@ -552,10 +560,10 @@ public class DockingEngine {
 	}
 	
 	public static class DockingResult implements Comparable<DockingResult>  {
-		private double score;
+		private final double score;
+		private final StereoMolecule pose;
+		private final Map<String,Double> contributions;
 		private StereoMolecule input; //might be a different enantiomer/protomer than the pose
-		private StereoMolecule pose;
-		private Map<String,Double> contributions;
 		private static final String DELIMITER = ";";
 		private static final String DELIMITER2 = ":";
 		private static final String DELIMITER3 = "%";
@@ -568,9 +576,7 @@ public class DockingEngine {
 			this.contributions = contributions;
 			this.input = input;
 		}
-		
-		
-		
+
 		public void setInput(StereoMolecule input) {
 			this.input = input;
 		}
@@ -578,7 +584,6 @@ public class DockingEngine {
 		public StereoMolecule getInput() {
 			return input;
 		}
-
 
 		public double getScore() {
 			return score;
@@ -591,7 +596,6 @@ public class DockingEngine {
 		public Map<String,Double> getContributions() {
 			return contributions;
 		}
-		
 		
 		public String encode() {
 			Encoder encoder = Base64.getEncoder();
@@ -607,7 +611,7 @@ public class DockingEngine {
 			sb.append(DELIMITER);
 			sb.append(encoder.encodeToString(EncodeFunctions.doubleToByteArray(score)));
 			sb.append(DELIMITER);
-			if(contributions==null || contributions.keySet().size()==0)
+			if(contributions==null || contributions.isEmpty())
 				sb.append(NULL_CONTRIBUTION);
 			else {
 				for(String name : contributions.keySet()) {
@@ -646,9 +650,8 @@ public class DockingEngine {
 					contributions.put(name, value);
 				}
 			}
-				
-			DockingResult dockingResult = new DockingResult(input,pose,score,contributions);
-			return dockingResult;
+
+			return new DockingResult(input,pose,score,contributions);
 		}
 
 		@Override
@@ -656,18 +659,7 @@ public class DockingEngine {
             if(Double.isNaN(this.score)&& Double.isNaN(o.score)) { return 0; }
             if(Double.isNaN(this.score)) { return -1; }
             if(Double.isNaN(o.score)) { return  1; }
-
             return Double.compare( this.score, o.score);
-           
 		}
-		
 	}
-	
-
-
-	
-	
-	
-	
-
 }

@@ -70,6 +70,7 @@ import com.actelion.research.calc.statistics.StatisticsOverview;
 import com.actelion.research.calc.statistics.median.MedianStatisticFunctions;
 import com.actelion.research.chem.descriptor.DescriptorEncoder;
 import com.actelion.research.chem.descriptor.DescriptorHandler;
+import com.actelion.research.chem.descriptor.flexophore.redgraph.SubGraphIndices;
 import com.actelion.research.chem.mcs.ListWithIntVec;
 import com.actelion.research.util.BurtleHasher;
 import com.actelion.research.util.Formatter;
@@ -510,6 +511,17 @@ public class ExtendedMoleculeFunctions {
 		}
 		return biggest;
 	}
+	public static StereoMolecule getFragment(StereoMolecule mol, SubGraphIndices sgi) {
+		StereoMolecule frag = new StereoMolecule();
+		int [] a = sgi.getAtomIndices();
+		boolean [] b = new boolean[mol.getAtoms()];
+		for (int at : a) {
+			b[at]=true;
+		}
+		mol.copyMoleculeByAtoms(frag, b, true, null);
+		frag.ensureHelperArrays(Molecule.cHelperRings);
+		return frag;
+	}
 
 	/**
 	 * Replaces all hetero-atoms, except hydrogen, with carbon.
@@ -648,6 +660,20 @@ public class ExtendedMoleculeFunctions {
 
 	public static double [][] getDistanceArray(ExtendedMolecule mol) {
 		double arr[][]= new double[mol.getAllAtoms()][mol.getAllAtoms()];
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = i+1; j < arr.length; j++) {
+				double dx = mol.getAtomX(i) - mol.getAtomX(j);
+				double dy = mol.getAtomY(i) - mol.getAtomY(j);
+				double dz = mol.getAtomZ(i) - mol.getAtomZ(j);
+				double v= Math.sqrt(dx*dx+dy*dy+dz*dz);
+				arr[i][j] = v;
+				arr[j][i] = v;
+			}
+		}
+		return arr;
+	}
+	public static double [][] getDistanceArrayNonHAts(ExtendedMolecule mol) {
+		double arr[][]= new double[mol.getAtoms()][mol.getAtoms()];
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = i+1; j < arr.length; j++) {
 				double dx = mol.getAtomX(i) - mol.getAtomX(j);
