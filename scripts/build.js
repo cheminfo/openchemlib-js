@@ -53,11 +53,11 @@ try {
   process.exit(1);
 }
 
-const classpathList = ['src'];
-classpathList.push(
+const classpathList = [
+  'src',
   path.resolve(config.gwt, 'gwt-dev.jar'),
   path.resolve(config.gwt, 'gwt-user.jar'),
-);
+];
 
 const sep = os.platform() === 'win32' ? ';' : ':';
 const classpath = classpathList.join(sep);
