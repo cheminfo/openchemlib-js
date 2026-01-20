@@ -3296,8 +3296,7 @@ interface ReactionEncoderEncodeOptionsBase {
  * Bound to Java ReactionEncoder `String[] encode(Reaction reaction, boolean keepAbsoluteCoordinates, boolean sortByIDCode)`
  * result will be joined with Java `ReactionEncoder.OBJECT_DELIMITER`
  */
-export interface ReactionEncoderEncodeOptionsSort
-  extends ReactionEncoderEncodeOptionsBase {
+export interface ReactionEncoderEncodeOptionsSort extends ReactionEncoderEncodeOptionsBase {
   /**
    * @default false
    */
@@ -3307,8 +3306,7 @@ export interface ReactionEncoderEncodeOptionsSort
 /**
  * Bound to Java ReactionEncoder `String encode(Reaction reaction, boolean keepAbsoluteCoordinates, int mode)`
  */
-export interface ReactionEncoderEncodeOptionsMode
-  extends ReactionEncoderEncodeOptionsBase {
+export interface ReactionEncoderEncodeOptionsMode extends ReactionEncoderEncodeOptionsBase {
   /**
    * @default ReactionEncoder.INCLUDE_DEFAULT
    * @see ReactionEncoder.INCLUDE_DEFAULT
