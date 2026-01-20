@@ -295,6 +295,7 @@ export declare class Molecule {
   static cAtomQFStereoStateShift: number;
   static cAtomQFSimpleFeatures: number;
   static cAtomQFNarrowing: number;
+  static cAtomQFDepictedFeatures: number;
   static cAtomQFAny: number;
   static cAtomQFAromState: number;
   static cAtomQFAromatic: number;
@@ -402,6 +403,7 @@ export declare class Molecule {
   static cBondQFAromStateShift: number;
   static cBondQFAllFeatures: number;
   static cBondQFSimpleFeatures: number;
+  static cBondQFDepictedFeatures: number;
   static cBondQFNarrowing: number;
   static cBondQFBondTypes: number;
   static cBondQFRareBondTypes: number;

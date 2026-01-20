@@ -163,6 +163,24 @@ public class DoubleArray implements INumericalDataColumn {
 		return avr/size;
 	}
 
+	public double geometricMean(){
+		if(size==0)return 0.0;
+
+		double prod = data[0];
+		for (int i = 1; i < size; i++) {
+			prod *= data[i];
+		}
+		return Math.pow(prod, 1.0/size);
+	}
+
+	public double rootMeanSquareDeviation(){
+		double sq = 0;
+		for (int i = 0; i < size; i++) {
+			sq += data[i] * data[i];
+		}
+		return Math.sqrt(sq/size);
+	}
+
 	public double median(){
 		double [] arr = get();
 		double [] arrNew = new double[arr.length];

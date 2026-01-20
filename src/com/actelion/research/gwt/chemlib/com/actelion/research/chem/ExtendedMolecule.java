@@ -3967,8 +3967,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		}
 
 	/**
-	 * Removes all plain explicit hydrogens atoms from the molecule, converting them effectively to implicit ones.
-	 * If the molecules has 2D-coordinates (hasValid2DCoords==true), then this method initially perceives stereo
+	 * Removes all plain explicit hydrogen atoms from the molecule, converting them effectively to implicit ones.
+	 * If the molecule has 2D-coordinates (hasValid2DCoords==true), then this method initially perceives stereo
 	 * configurations E/Z/R/S from coordinates and up/down-bonds to explicit hydrogens before deleting them
 	 * and turns another bond into a stereo bond to indicate the proper configuration.
 	 * If the removal of a hydrogen atom would change an atom's implicit valence, the atom's abnormal valence is set accordingly.
@@ -4032,25 +4032,31 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			}
 
 		boolean metalBondFound = false;
-		for(int bnd=0; bnd<mBonds; bnd++) {
-			int order = getBondOrder(bnd);
+		for(int bond=0; bond<mBonds; bond++) {
+			int order = getBondOrder(bond);
 			if (order == 0) {
 				metalBondFound = true;
 				continue;
 				}
 
 			for (int i=0; i<2; i++) {
-				int atom = mBondAtom[i][bnd];
+				int atom = mBondAtom[i][bond];
 				int allConnAtoms = mAllConnAtoms[atom];
 				mConnBondOrder[atom][allConnAtoms] = order;
-				mConnAtom[atom][allConnAtoms] = mBondAtom[1 - i][bnd];
-				mConnBond[atom][allConnAtoms] = bnd;
+				mConnAtom[atom][allConnAtoms] = mBondAtom[1 - i][bond];
+				mConnBond[atom][allConnAtoms] = bond;
 				mAllConnAtoms[atom]++;	// all non metal-bonded neighbours (non-H, H)
 				mConnAtoms[atom]++;	// non-H and non-metal-bonded neighbours
-				if (atom < mAtoms) {
-					if (order > 1)
-						mPi[atom] += order - 1;
-					else if (mBondType[bnd] == cBondTypeDelocalized)
+				if (atom < mAtoms && order > 1)
+					mPi[atom] += order - 1;
+				}
+			}
+
+		for(int bond=0; bond<mBonds; bond++) {
+			if (mBondType[bond] == cBondTypeDelocalized) {
+				for (int i=0; i<2; i++) {
+					int atom = mBondAtom[i][bond];
+					if (atom < mAtoms && mPi[atom] == 0)
 						mPi[atom] = 1;
 					}
 				}
