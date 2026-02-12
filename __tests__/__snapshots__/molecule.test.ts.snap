@@ -2,7 +2,7 @@
 
 exports[`toSVG > should autoCrop 1`] = `
 "<svg id="myId" xmlns="http://www.w3.org/2000/svg" version="1.1" width="135px" height="41px" viewBox="74 55 135 41">
-  <style> text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
+  <style> #myId text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } #myId line { stroke-linecap:round; } #myId polygon { stroke-linejoin:round; } </style>
   <text x="154.95" y="73.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
   <text x="92.59" y="85.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
   <text x="82.48" y="85.67" stroke="none" font-size="14" fill="rgb(255,13,13)">H</text>
@@ -27,7 +27,7 @@ exports[`toSVG > should autoCrop 1`] = `
 
 exports[`toSVG > should autoCrop 2`] = `
 "<svg id="myId" xmlns="http://www.w3.org/2000/svg" version="1.1" width="175px" height="81px" viewBox="54 35 175 81">
-  <style> text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
+  <style> #myId text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } #myId line { stroke-linecap:round; } #myId polygon { stroke-linejoin:round; } </style>
   <text x="154.95" y="73.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
   <text x="92.59" y="85.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
   <text x="82.48" y="85.67" stroke="none" font-size="14" fill="rgb(255,13,13)">H</text>
@@ -52,7 +52,7 @@ exports[`toSVG > should autoCrop 2`] = `
 
 exports[`toSVG > should not throw with zero size 1`] = `
 "<svg id="mol6" xmlns="http://www.w3.org/2000/svg" version="1.1" width="0px" height="0px" viewBox="0 0 0 0">
-  <style> text {font-family: sans-serif;} #mol6 { pointer-events:none; } #mol6 .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
+  <style> #mol6 text {font-family: sans-serif;} #mol6 { pointer-events:none; } #mol6 .event  { pointer-events:all; } #mol6 line { stroke-linecap:round; } #mol6 polygon { stroke-linejoin:round; } </style>
   <text x="0" y="0" stroke="none" font-size="0" fill="rgb(255,13,13)">O</text>
   <text x="0" y="0" stroke="none" font-size="0" fill="rgb(255,13,13)">O</text>
   <text x="0" y="0" stroke="none" font-size="0" fill="rgb(255,13,13)">H</text>
@@ -72,7 +72,7 @@ exports[`toSVG > should not throw with zero size 1`] = `
 
 exports[`toSVG > should support noCarbonLabelWithCustomLabel option 1`] = `
 "<svg id="myId" xmlns="http://www.w3.org/2000/svg" version="1.1" width="300px" height="300px" viewBox="0 0 300 300">
-  <style> text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } line { stroke-linecap:round; } polygon { stroke-linejoin:round; } </style>
+  <style> #myId text {font-family: sans-serif;} #myId { pointer-events:none; } #myId .event  { pointer-events:all; } #myId line { stroke-linecap:round; } #myId polygon { stroke-linejoin:round; } </style>
   <text x="165.34" y="160.67" stroke="none" font-size="14" fill="rgb(255,13,13)">O</text>
   <text x="176.23" y="160.67" stroke="none" font-size="14" fill="rgb(255,13,13)">H</text>
   <text x="132.27" y="142.67" stroke="none" font-size="11" fill="rgb(0,0,0)">test</text>
