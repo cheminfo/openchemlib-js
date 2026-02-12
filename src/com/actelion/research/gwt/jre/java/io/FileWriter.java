@@ -8,4 +8,9 @@ public class FileWriter extends Writer {
 
   public FileWriter(String tabOutputFilename) {}
 
+  public void close() {}
+
+  public void write(char[] cbuf, int off, int len) {}
+
+  public void flush() {}
 }

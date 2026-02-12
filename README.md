@@ -32,8 +32,8 @@ npm install openchemlib
 To build this project, you need:
 
 - Java JDK (Tested with version 21)
-- GWT (Tested with version 2.12.2, [Download build here](http://www.gwtproject.org/download.html))
-- Node.js (Tested with version 22, [Download here](https://nodejs.org/en/download/))
+- GWT (Tested with version 2.13.0, [Download build here](http://www.gwtproject.org/download.html))
+- Node.js (Tested with version 24, [Download here](https://nodejs.org/en/download/))
 
 ### Install dependencies
 
