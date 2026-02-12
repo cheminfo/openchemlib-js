@@ -120,31 +120,7 @@ public class JSMolecule {
     return creator.getMolfile();
   }
 
-  public native String toSVG(int width, int height, String id, JavaScriptObject options)
-  /*-{
-  	//todo: re-enable this check once it becomes possible to change the font
-  	//if (!$doc.createElement) {
-  	//	throw new Error('Molecule#toSVG cannot be used outside of a browser\'s Window environment');
-  	//}
-    if (typeof width !== 'number' || typeof height !== 'number') {
-      throw new Error('Molecule#toSVG requires width and height to be specified');
-    }
-  	options = options || {};
-  	var factorTextSize = options.factorTextSize || 1;
-    var autoCrop = options.autoCrop === true;
-    var autoCropMargin = typeof options.autoCropMargin === 'undefined' ? 5 : options.autoCropMargin;
-  	var svg =  this.@com.actelion.research.gwt.js.api.JSMolecule::getSVG(IIFZILjava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(width, height, factorTextSize, autoCrop, autoCropMargin, id, options);
-    svg = svg.replace('<style>', '<style> text {font-family: sans-serif;}');
-  	if (options.fontWeight) {
-      svg = svg.replace(/font-size=/g, 'font-weight="' + options.fontWeight + '" font-size=');
-    }
-    if (options.strokeWidth) {
-     svg = svg.replace(/stroke-width="[^"]+"/g, 'stroke-width="' + options.strokeWidth + '"');
-    }
-    return svg;
-  }-*/;
-
-  private String getSVG(int width, int height, float factorTextSize, boolean autoCrop,
+  public String toSVG(int width, int height, float factorTextSize, boolean autoCrop,
       int autoCropMargin, String id, JavaScriptObject options) {
 
     boolean degenerated = true;
