@@ -9,4 +9,10 @@ public class BufferedWriter extends Writer {
   public void newLine() {
     JSException.throwUnimplemented();
   }
+
+  public void close() {}
+
+  public void write(char[] cbuf, int off, int len) {}
+
+  public void flush() {}
 }
