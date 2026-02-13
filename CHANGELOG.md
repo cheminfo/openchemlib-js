@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.20.0](https://github.com/cheminfo/openchemlib-js/compare/v9.19.0...v9.20.0) (2026-02-13)
+
+
+### Features
+
+* update GWT to v2.13.0 ([54bc5fe](https://github.com/cheminfo/openchemlib-js/commit/54bc5fe899fc6e9584dc92123fdfbad58fed652d))
+
+
+### Bug Fixes
+
+* do not leak SVG styles ([0ed05fc](https://github.com/cheminfo/openchemlib-js/commit/0ed05fc2aaacab7b0df867290eb4c82a26d87b54))
+
 ## [9.19.0](https://github.com/cheminfo/openchemlib-js/compare/v9.18.2...v9.19.0) (2026-01-20)
 
 
