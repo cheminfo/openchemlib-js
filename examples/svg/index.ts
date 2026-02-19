@@ -65,6 +65,7 @@ for (const [name, label] of Object.entries(booleanOptions)) {
 
 const form = document.getElementById('form') as HTMLFormElement;
 const result = document.getElementById('result') as HTMLDivElement;
+form.addEventListener('change', () => form.requestSubmit());
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const formData = new FormData(form);
