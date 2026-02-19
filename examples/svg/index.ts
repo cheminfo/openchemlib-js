@@ -154,10 +154,8 @@ function loadStateFromHash() {
       const element = document.getElementById(name) as HTMLElement;
       if (allBooleanOptionKeys.has(name)) {
         (element as HTMLInputElement).checked = true;
-      } else if (name === 'moleculeText') {
-        (element as HTMLTextAreaElement).innerText = value;
       } else {
-        (element as HTMLInputElement).value = value;
+        (element as HTMLInputElement | HTMLTextAreaElement).value = value;
       }
     }
     form.requestSubmit();
