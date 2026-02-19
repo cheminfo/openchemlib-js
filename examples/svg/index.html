@@ -39,39 +39,36 @@
           <div>
             <button type="submit">Render</button>
           </div>
-          <div class="space-y-0.5">
-            <label class="block">
-              Width
-              <input
-                type="number"
-                id="width"
-                name="width"
-                value="600"
-                class="p-0.5 border border-gray-500"
-              />
-            </label>
-            <label class="block">
-              Height
-              <input
-                type="number"
-                id="height"
-                name="height"
-                value="400"
-                class="p-0.5 border border-gray-500"
-              />
-            </label>
-            <label class="block">
-              Max AVBL
-              <input
-                type="number"
-                id="maxAVBL"
-                name="maxAVBL"
-                value="0"
-                class="p-0.5 border border-gray-500"
-              />
-            </label>
+          <div
+            class="grid grid-template gap-y-0.5 gap-x-2 w-fit items-center"
+            style="grid-template-columns: fit-content(100%) 1fr"
+          >
+            <label for="width"> Width </label>
+            <input
+              type="number"
+              id="width"
+              name="width"
+              value="600"
+              class="p-0.5 border border-gray-500"
+            />
+            <label for="height"> Height </label>
+            <input
+              type="number"
+              id="height"
+              name="height"
+              value="400"
+              class="p-0.5 border border-gray-500"
+            />
+            <label for="maxAVBL"> Max AVBL </label>
+            <input
+              type="number"
+              id="maxAVBL"
+              name="maxAVBL"
+              value="0"
+              class="p-0.5 border border-gray-500"
+            />
           </div>
-          <div id="checkboxes" class="flex flex-col gap-0.5"></div>
+          <div id="checkboxes" class="grid grid-cols-2 gap-x-4 gap-y-0.5"></div>
         </form>
       </div>
       <div class="space-y-2">
