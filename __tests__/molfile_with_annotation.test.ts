@@ -5,7 +5,7 @@ import { expect, test } from 'vitest';
 
 import { Canonizer, Molecule } from '../lib';
 
-test.fails('Molecule with annotation', () => {
+test('Molecule with annotation', () => {
   const filename = join(import.meta.dirname, 'data', 'molfile_annotated.mol');
   const molfile = readFileSync(filename, 'utf8');
   const molecule = Molecule.fromMolfile(molfile);
@@ -44,5 +44,24 @@ test.fails('Molecule with annotation', () => {
   for (let i = 0; i < 16; i++) {
     customLabels2.push(molecule2.getAtomCustomLabel(i));
   }
-  expect(customLabels2).toStrictEqual(expected);
+
+  const expected2 = [
+    null,
+    ']9',
+    ']9α',
+    ']8α',
+    ']4α',
+    ']1',
+    ']10α',
+    ']8',
+    ']10',
+    ']4',
+    ']2',
+    ']5',
+    ']7',
+    null,
+    ']3',
+    ']6',
+  ];
+  expect(customLabels2).toStrictEqual(expected2);
 });
