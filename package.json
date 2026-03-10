@@ -24,7 +24,7 @@
     "check-types": "tsc --noEmit",
     "clean": "node scripts/clean.js",
     "copy-openchemlib": "node scripts/build.js copy:openchemlib",
-    "eslint": "eslint .",
+    "eslint": "eslint . --max-warnings=15",
     "eslint-fix": "npm run eslint -- --fix",
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
@@ -63,26 +63,26 @@
   },
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "@types/node": "^25.0.9",
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/node": "^25.4.0",
     "benchmark": "^2.1.4",
-    "esbuild": "^0.27.2",
+    "esbuild": "^0.27.3",
     "eslint": "^9.39.2",
     "eslint-config-cheminfo-typescript": "^21.1.0",
     "fast-png": "^8.0.0",
-    "globals": "^17.0.0",
+    "globals": "^17.4.0",
     "gwt-api-exporter": "^3.1.0",
-    "image-js": "^1.3.0",
-    "openchemlib-utils": "^8.12.1",
-    "postcss": "^8.5.6",
-    "prettier": "^3.8.0",
-    "tailwindcss": "^4.1.18",
+    "image-js": "^1.4.0",
+    "openchemlib-utils": "^8.13.2",
+    "postcss": "^8.5.8",
+    "prettier": "^3.8.1",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "vitest": "^4.0.17",
+    "vitest": "^4.0.18",
     "yargs": "^18.0.0"
   },
   "volta": {
-    "node": "24.13.1"
+    "node": "24.14.0"
   }
 }

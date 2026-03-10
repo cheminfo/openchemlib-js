@@ -37,6 +37,7 @@ export default defineConfig(
     files: ['benchmark/**'],
     rules: {
       'no-console': 'off',
+      'import/no-named-as-default-member': 'off',
     },
   },
   {
