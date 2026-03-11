@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.21.0](https://github.com/cheminfo/openchemlib-js/compare/v9.20.1...v9.21.0) (2026-03-11)
+
+
+### Features
+
+* support RGROUPS in Molfile V3000 ([#375](https://github.com/cheminfo/openchemlib-js/issues/375)) ([ea78fcc](https://github.com/cheminfo/openchemlib-js/commit/ea78fcccecad6fd88c39d7e450a5ce643c86e2b1))
+
 ## [9.20.1](https://github.com/cheminfo/openchemlib-js/compare/v9.20.0...v9.20.1) (2026-03-10)
 
 
