@@ -4090,3 +4090,8 @@ declare interface CanvasEditorElement extends HTMLElement {
  * register `<openchemlib-editor>` element with `CanvasEditorElementConstructor` if not already defined.
  */
 declare function registerCustomElement(): CanvasEditorElementConstructor;
+
+export declare namespace System {
+  export function setErr(cb: (x: string) => void): void;
+  export function setOut(cb: (x: string) => void): void;
+}
