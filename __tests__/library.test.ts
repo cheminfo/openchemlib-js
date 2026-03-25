@@ -1,7 +1,7 @@
 import { assert, describe, expect, test } from 'vitest';
 
-import debugOCL from '../lib/index.debug.js';
-import OCL from '../lib/index.js';
+import OCL from '#lib';
+import debugOCL from '#lib_debug';
 
 const allAPI = Object.keys(OCL).toSorted();
 

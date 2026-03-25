@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { Molecule, Resources, ToxicityPredictor } from '../lib/index.js';
+import { Molecule, Resources, ToxicityPredictor } from '#lib';
 
 let fetchBefore: typeof globalThis.fetch;
 beforeAll(() => {

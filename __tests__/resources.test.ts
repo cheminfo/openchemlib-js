@@ -6,7 +6,7 @@ import {
   ForceFieldMMFF94,
   Molecule,
   ToxicityPredictor,
-} from '../lib/index.js';
+} from '#lib';
 
 describe('Resources', () => {
   it('should throw if resources have not been registered', () => {

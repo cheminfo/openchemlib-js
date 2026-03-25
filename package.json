@@ -46,6 +46,10 @@
       "default": "./dist/openchemlib.debug.js"
     }
   },
+  "imports": {
+    "#lib": "./lib/index.js",
+    "#lib_debug": "./lib/index.debug.js"
+  },
   "files": [
     "dist"
   ],
