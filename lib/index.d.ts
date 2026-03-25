@@ -159,6 +159,37 @@ export interface MoleculeToSVGOptions extends DepictorOptions {
   autoCropMargin?: number;
 }
 
+export interface MoleculeInventCoordinatesOptions {
+  /**
+   * Unless this is set to `true`, the CoordinateInventor uses templates of the InventorDefaultTemplateList
+   * to create 3D-projection derived coordinates for polycyclic structures from these templates (adamantanes, cubane, etc.).
+   */
+  skipDefaultTemplates?: boolean;
+
+  /**
+   * Whether to keep implicit hydrogens in the molecule.
+   * By default, they are removed.
+   */
+  keepHydrogens?: boolean;
+
+  /**
+   * Whether marked atoms keep their coordinates.
+   */
+  keepMarkedAtomCoordinates?: boolean;
+
+  /**
+   * Whether coordinates of marked atoms are changed only if perfect coordinates are not possible without.
+   */
+  preferMarkedAtomCoordinates?: boolean;
+
+  /**
+   * Seed used to initialize the random number generator.
+   * Pass -1 to use a non-deterministic seed.
+   * @default 0
+   */
+  seed?: number;
+}
+
 export interface HoseCodesOptions {
   /**
    * Maximum number of atoms from the center.
@@ -654,7 +685,7 @@ export declare class Molecule {
   /**
    * Compute and set atom coordinates for this molecule.
    */
-  inventCoordinates(): void;
+  inventCoordinates(options?: MoleculeInventCoordinatesOptions): void;
 
   /**
    * Expand and find a position for all the hydrogens of the 2D molecule. If

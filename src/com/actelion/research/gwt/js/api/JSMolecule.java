@@ -189,9 +189,24 @@ public class JSMolecule {
     return Util.createSSSearcherIndex(oclMolecule);
   }
 
-  public void inventCoordinates() {
-    CoordinateInventor inventor = new CoordinateInventor();
-    inventor.setRandomSeed(0);
+  public native void inventCoordinates(JavaScriptObject options)
+  /*-{
+    options = options || {};
+    var mode = 0;
+    if (options.skipDefaultTemplates) mode |= @com.actelion.research.chem.coords.CoordinateInventor::MODE_SKIP_DEFAULT_TEMPLATES;
+    if (options.keepHydrogens !== true) mode |= @com.actelion.research.chem.coords.CoordinateInventor::MODE_REMOVE_HYDROGEN;
+    if (options.keepMarkedAtomCoordinates) mode |= @com.actelion.research.chem.coords.CoordinateInventor::MODE_KEEP_MARKED_ATOM_COORDS;
+    if (options.preferMarkedAtomCoordinates) mode |= @com.actelion.research.chem.coords.CoordinateInventor::MODE_PREFER_MARKED_ATOM_COORDS;
+    var seed = options.seed || 0;
+    this.@com.actelion.research.gwt.js.api.JSMolecule::inventCoordinates(II)(mode, seed);
+  }-*/;
+
+  @JsIgnore
+  public void inventCoordinates(int mode, int seed) {
+    CoordinateInventor inventor = new CoordinateInventor(mode);
+    if (seed >= 0) {
+      inventor.setRandomSeed((long)seed);
+    }
     inventor.invent(oclMolecule);
     oclMolecule.setStereoBondsFromParity();
   }
