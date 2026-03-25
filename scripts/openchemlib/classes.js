@@ -1,4 +1,4 @@
-import { generateImageData } from './generateImageData.js';
+import { generateImageData } from './generate_image_data.js';
 import { removedClasses } from './removed.js';
 
 const modifiedClasses = [
