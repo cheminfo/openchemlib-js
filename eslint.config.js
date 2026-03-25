@@ -1,6 +1,7 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
 import cheminfo from 'eslint-config-cheminfo-typescript/base';
 import unicorn from 'eslint-config-cheminfo-typescript/unicorn';
+import vitest from 'eslint-config-cheminfo-typescript/vitest';
 import globals from 'globals';
 
 export default defineConfig(
@@ -15,8 +16,14 @@ export default defineConfig(
     'src/resources/**',
     'war/**',
   ]),
-  ...cheminfo,
-  ...unicorn,
+  cheminfo,
+  unicorn,
+  vitest,
+  {
+    rules: {
+      'unicorn/filename-case': ['error', { case: 'snakeCase' }],
+    },
+  },
   {
     files: ['lib/canvas_editor/**'],
     languageOptions: {
@@ -29,7 +36,7 @@ export default defineConfig(
     files: ['lib/register_resources.js'],
     languageOptions: {
       globals: {
-        ...globals.node,
+        ...globals.nodeBuiltin,
       },
     },
   },
@@ -44,7 +51,7 @@ export default defineConfig(
     files: ['scripts/**'],
     languageOptions: {
       globals: {
-        ...globals.node,
+        ...globals.nodeBuiltin,
       },
     },
     rules: {
