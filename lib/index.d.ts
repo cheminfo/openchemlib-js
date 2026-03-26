@@ -22,7 +22,7 @@ export declare const Resources: {
   registerFromNodejs(path?: string): void;
 };
 
-export interface MoleculeFromSmilesOptions {
+export interface MoleculeFromSmilesOptions extends SmilesParserOptions {
   /**
    * Disable coordinate invention.
    * @default false
