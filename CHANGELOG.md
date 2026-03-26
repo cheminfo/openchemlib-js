@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.22.0](https://github.com/cheminfo/openchemlib-js/compare/v9.21.0...v9.22.0) (2026-03-26)
+
+
+### Features
+
+* expose options to `inventCoordinates` method ([1d1f073](https://github.com/cheminfo/openchemlib-js/commit/1d1f073a77a980a3f1e0047dbdec86caec3cb778))
+* expose SmilesParser options in Molecule.fromSmiles ([#378](https://github.com/cheminfo/openchemlib-js/issues/378)) ([91b1ee6](https://github.com/cheminfo/openchemlib-js/commit/91b1ee69cd15526836cc85cbcb1c325f4fd1bdc7))
+
 ## [9.21.0](https://github.com/cheminfo/openchemlib-js/compare/v9.20.1...v9.21.0) (2026-03-11)
 
 
