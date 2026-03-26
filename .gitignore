@@ -12,5 +12,6 @@
 /node_modules
 /war
 
+.claude
 .DS_Store
 *.log

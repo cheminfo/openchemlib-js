@@ -41,9 +41,8 @@ public class JSMolecule {
       throws Exception
   /*-{
   	options = options || {};
-  	var createCoordinates = !options.noCoordinates;
-  	var readStereoFeatures = !options.noStereo;
-  	return @com.actelion.research.gwt.js.api.JSMolecule::fromSmiles(Ljava/lang/String;ZZ)(smiles, createCoordinates, readStereoFeatures);
+  	var parser = @com.actelion.research.gwt.js.api.JSSmilesParser::new(Lcom/google/gwt/core/client/JavaScriptObject;)(options);
+  	return parser.@com.actelion.research.gwt.js.api.JSSmilesParser::parseMolecule(Ljava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(smiles, options);
   }-*/;
 
   public static JSMolecule fromMolfile(String molfile) throws Exception {
@@ -266,15 +265,6 @@ public class JSMolecule {
 
   private void addImplicitHydrogens(int atomNumber) {
     HydrogenHandler.addImplicitHydrogens(oclMolecule, atomNumber);
-  }
-
-  @JsIgnore
-  public static JSMolecule fromSmiles(String smiles, boolean createCoordinates,
-      boolean readStereoFeatures) throws Exception {
-    SmilesParser parser = new SmilesParser();
-    JSMolecule mol = new JSMolecule();
-    parser.parse(mol.oclMolecule, smiles.getBytes(), createCoordinates, readStereoFeatures);
-    return mol;
   }
 
   @JsIgnore
