@@ -124,7 +124,7 @@ export const removedClasses = [
   'util/datamodel/ModelXYIndexHelper.java',
   'util/DateAnalysis.java',
   'util/EncoderIntegerNumbers.java',
-  'util/IO.java',
+  'util/IOCL.java',
   'util/LittleEndianDataInputStream.java',
   'util/LittleEndianDataOutputStream.java',
   'util/MatrixSparse.java',
