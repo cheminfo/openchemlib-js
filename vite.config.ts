@@ -12,7 +12,7 @@ export default defineConfig({
   plugins: [tailwindcss()],
   build: {
     outDir: 'distbuild',
-    rollupOptions: {
+    rolldownOptions: {
       input: {
         main: path.join(import.meta.dirname, 'index.html'),
         ...Object.fromEntries(
