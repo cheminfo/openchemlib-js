@@ -34,7 +34,7 @@ const argv = yargs(process.argv.slice(2))
     description: 'Optional suffix to the exported filename',
   }).argv;
 
-const { mode, verbose } = argv;
+const { mode, verbose, _ } = argv;
 
 let suffix = '';
 if (argv.suffix) {
@@ -62,7 +62,7 @@ const classpathList = [
 const sep = os.platform() === 'win32' ? ';' : ':';
 const classpath = classpathList.join(sep);
 
-run(argv._[0]);
+run(_[0]);
 
 function run(command) {
   if (command === 'copy:openchemlib') {
