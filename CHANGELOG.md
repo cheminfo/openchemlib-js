@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.23.0](https://github.com/cheminfo/openchemlib-js/compare/v9.22.1...v9.23.0) (2026-06-12)
+
+
+### Features
+
+* expose 3D coordinate methods on Molecule ([#383](https://github.com/cheminfo/openchemlib-js/issues/383)) ([c7dc925](https://github.com/cheminfo/openchemlib-js/commit/c7dc92562ea426891aa465a6f67d6d141bee4cc2))
+
 ## [9.22.1](https://github.com/cheminfo/openchemlib-js/compare/v9.22.0...v9.22.1) (2026-05-02)
 
 
