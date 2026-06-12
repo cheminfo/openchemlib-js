@@ -7,6 +7,7 @@ import java.util.Vector;
 import jsinterop.annotations.*;
 
 import com.actelion.research.chem.*;
+import com.actelion.research.chem.alignment3d.transformation.Rotation;
 import com.actelion.research.chem.contrib.*;
 import com.actelion.research.chem.coords.CoordinateInventor;
 import com.actelion.research.gui.generic.GenericRectangle;
@@ -1281,6 +1282,68 @@ public class JSMolecule {
   public void scaleCoords(double f) {
     oclMolecule.scaleCoords(f);
   }
+
+  // Returns a copy of the atom's 3D coordinates as a plain { x, y, z } object.
+  // Mutating it does not change the molecule; use setCoordinates (or
+  // setAtomX/Y/Z) to write the values back.
+  public JavaScriptObject getCoordinates(int atom) {
+    return makeCoordinates(
+        oclMolecule.getAtomX(atom),
+        oclMolecule.getAtomY(atom),
+        oclMolecule.getAtomZ(atom));
+  }
+
+  public void setCoordinates(int atom, JavaScriptObject coordinates) {
+    oclMolecule.setAtomX(atom, getCoordinateX(coordinates));
+    oclMolecule.setAtomY(atom, getCoordinateY(coordinates));
+    oclMolecule.setAtomZ(atom, getCoordinateZ(coordinates));
+  }
+
+  // 3D translation of every atom by a { x, y, z } vector (the 2D translateCoords
+  // above ignores z).
+  public void translate(JavaScriptObject coordinates) {
+    oclMolecule.translate(
+        getCoordinateX(coordinates),
+        getCoordinateY(coordinates),
+        getCoordinateZ(coordinates));
+  }
+
+  // Rotates every atom in 3D by a 3x3 matrix. OpenChemLib uses the row-vector
+  // convention: x' = x*m[0][0] + y*m[1][0] + z*m[2][0] (and likewise for y, z).
+  public void rotate(double[][] matrix) {
+    new Rotation(matrix).apply(oclMolecule);
+  }
+
+  public void center() {
+    oclMolecule.center();
+  }
+
+  public JavaScriptObject getCenterOfGravity() {
+    Coordinates c = oclMolecule.getCenterOfGravity();
+    return c == null
+        ? makeCoordinates(0, 0, 0)
+        : makeCoordinates(c.x, c.y, c.z);
+  }
+
+  private native JavaScriptObject makeCoordinates(double x, double y, double z)
+  /*-{
+    return { x: x, y: y, z: z };
+  }-*/;
+
+  private native double getCoordinateX(JavaScriptObject coordinates)
+  /*-{
+    return coordinates.x;
+  }-*/;
+
+  private native double getCoordinateY(JavaScriptObject coordinates)
+  /*-{
+    return coordinates.y;
+  }-*/;
+
+  private native double getCoordinateZ(JavaScriptObject coordinates)
+  /*-{
+    return coordinates.z;
+  }-*/;
 
   public void zoomAndRotateInit(double x, double y) {
     oclMolecule.zoomAndRotateInit(x, y);
