@@ -44,11 +44,27 @@ test('setCoordinates writes a { x, y, z } object back to the atom', () => {
 
 test('translate moves every atom in 3D', () => {
   const molecule = buildMolecule();
-  molecule.translate(1, 2, 3);
+  molecule.translate({ x: 1, y: 2, z: 3 });
 
   expect(molecule.getAtomX(0)).toBeCloseTo(2);
   expect(molecule.getAtomZ(0)).toBeCloseTo(3);
   expect(molecule.getAtomZ(2)).toBeCloseTo(3);
+});
+
+test('rotate rotates every atom in 3D', () => {
+  const molecule = buildMolecule();
+  // 90° about Z in OpenChemLib's row-vector convention:
+  // (1, 0, 0) -> (0, 1, 0) and (-1, 0, 0) -> (0, -1, 0).
+  molecule.rotate([
+    [0, 1, 0],
+    [-1, 0, 0],
+    [0, 0, 1],
+  ]);
+
+  expect(molecule.getAtomX(0)).toBeCloseTo(0);
+  expect(molecule.getAtomY(0)).toBeCloseTo(1);
+  expect(molecule.getAtomX(2)).toBeCloseTo(0);
+  expect(molecule.getAtomY(2)).toBeCloseTo(-1);
 });
 
 test('center and getCenterOfGravity', () => {

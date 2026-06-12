@@ -1824,8 +1824,17 @@ export declare class Molecule {
 
   setCoordinates(atom: number, coordinates: Coordinates): void;
 
-  /** 3D translation of every atom (`translateCoords` is 2D and ignores z). */
-  translate(dx: number, dy: number, dz: number): void;
+  /**
+   * 3D translation of every atom by a `{ x, y, z }` vector (`translateCoords` is
+   * 2D and ignores z).
+   */
+  translate(coordinates: Coordinates): void;
+
+  /**
+   * Rotates every atom in 3D by a 3x3 matrix. OpenChemLib uses the row-vector
+   * convention: `x' = x*m[0][0] + y*m[1][0] + z*m[2][0]` (and likewise for y, z).
+   */
+  rotate(matrix: number[][]): void;
 
   /** Translate the molecule so its center of gravity is at the origin. */
   center(): void;

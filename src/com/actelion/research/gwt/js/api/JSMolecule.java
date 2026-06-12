@@ -7,6 +7,7 @@ import java.util.Vector;
 import jsinterop.annotations.*;
 
 import com.actelion.research.chem.*;
+import com.actelion.research.chem.alignment3d.transformation.Rotation;
 import com.actelion.research.chem.contrib.*;
 import com.actelion.research.chem.coords.CoordinateInventor;
 import com.actelion.research.gui.generic.GenericRectangle;
@@ -1298,9 +1299,19 @@ public class JSMolecule {
     oclMolecule.setAtomZ(atom, getCoordinateZ(coordinates));
   }
 
-  // 3D translation of every atom (the 2D translateCoords above ignores z).
-  public void translate(double dx, double dy, double dz) {
-    oclMolecule.translate(dx, dy, dz);
+  // 3D translation of every atom by a { x, y, z } vector (the 2D translateCoords
+  // above ignores z).
+  public void translate(JavaScriptObject coordinates) {
+    oclMolecule.translate(
+        getCoordinateX(coordinates),
+        getCoordinateY(coordinates),
+        getCoordinateZ(coordinates));
+  }
+
+  // Rotates every atom in 3D by a 3x3 matrix. OpenChemLib uses the row-vector
+  // convention: x' = x*m[0][0] + y*m[1][0] + z*m[2][0] (and likewise for y, z).
+  public void rotate(double[][] matrix) {
+    new Rotation(matrix).apply(oclMolecule);
   }
 
   public void center() {
