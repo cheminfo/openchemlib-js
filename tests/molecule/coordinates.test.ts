@@ -71,12 +71,18 @@ test('center and getCenterOfGravity', () => {
   const molecule = buildMolecule();
 
   // (1 + 0 + -1) / 3 = 0
-  expect(molecule.getCenterOfGravity()?.x).toBeCloseTo(0);
+  expect(molecule.getCenterOfGravity().x).toBeCloseTo(0);
 
   molecule.center();
   const centered = molecule.getCenterOfGravity();
 
-  expect(centered?.x).toBeCloseTo(0);
-  expect(centered?.y).toBeCloseTo(0);
-  expect(centered?.z).toBeCloseTo(0);
+  expect(centered.x).toBeCloseTo(0);
+  expect(centered.y).toBeCloseTo(0);
+  expect(centered.z).toBeCloseTo(0);
+});
+
+test('getCenterOfGravity returns the origin for an empty molecule', () => {
+  const molecule = new Molecule(0, 0);
+
+  expect(molecule.getCenterOfGravity()).toStrictEqual({ x: 0, y: 0, z: 0 });
 });

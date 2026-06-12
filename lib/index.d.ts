@@ -1839,8 +1839,8 @@ export declare class Molecule {
   /** Translate the molecule so its center of gravity is at the origin. */
   center(): void;
 
-  /** Center of gravity (all atoms with equal weight), or null if there are no atoms. */
-  getCenterOfGravity(): Coordinates | null;
+  /** Center of gravity (all atoms with equal weight); `{ x: 0, y: 0, z: 0 }` if there are no atoms. */
+  getCenterOfGravity(): Coordinates;
 
   zoomAndRotateInit(x: number, y: number): void;
 

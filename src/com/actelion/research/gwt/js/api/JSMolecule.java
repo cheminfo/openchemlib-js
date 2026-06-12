@@ -1320,7 +1320,9 @@ public class JSMolecule {
 
   public JavaScriptObject getCenterOfGravity() {
     Coordinates c = oclMolecule.getCenterOfGravity();
-    return c == null ? null : makeCoordinates(c.x, c.y, c.z);
+    return c == null
+        ? makeCoordinates(0, 0, 0)
+        : makeCoordinates(c.x, c.y, c.z);
   }
 
   private native JavaScriptObject makeCoordinates(double x, double y, double z)
