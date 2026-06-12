@@ -246,6 +246,17 @@ export interface Rectangle {
   height: number;
 }
 
+export interface Coordinates {
+  /** X-coordinate. */
+  x: number;
+
+  /** Y-coordinate. */
+  y: number;
+
+  /** Z-coordinate. */
+  z: number;
+}
+
 export declare class Molecule {
   /**
    * Construct a new molecule.
@@ -1803,6 +1814,24 @@ export declare class Molecule {
   translateCoords(dx: number, dy: number): void;
 
   scaleCoords(f: number): void;
+
+  /**
+   * Returns a copy of the atom's 3D coordinates. Mutating it does not change the
+   * molecule; use `setCoordinates` (or `setAtomX`/`setAtomY`/`setAtomZ`) to
+   * write the values back.
+   */
+  getCoordinates(atom: number): Coordinates;
+
+  setCoordinates(atom: number, coordinates: Coordinates): void;
+
+  /** 3D translation of every atom (`translateCoords` is 2D and ignores z). */
+  translate(dx: number, dy: number, dz: number): void;
+
+  /** Translate the molecule so its center of gravity is at the origin. */
+  center(): void;
+
+  /** Center of gravity (all atoms with equal weight), or null if there are no atoms. */
+  getCenterOfGravity(): Coordinates | null;
 
   zoomAndRotateInit(x: number, y: number): void;
 

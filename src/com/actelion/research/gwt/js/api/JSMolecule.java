@@ -1282,6 +1282,56 @@ public class JSMolecule {
     oclMolecule.scaleCoords(f);
   }
 
+  // Returns a copy of the atom's 3D coordinates as a plain { x, y, z } object.
+  // Mutating it does not change the molecule; use setCoordinates (or
+  // setAtomX/Y/Z) to write the values back.
+  public JavaScriptObject getCoordinates(int atom) {
+    return makeCoordinates(
+        oclMolecule.getAtomX(atom),
+        oclMolecule.getAtomY(atom),
+        oclMolecule.getAtomZ(atom));
+  }
+
+  public void setCoordinates(int atom, JavaScriptObject coordinates) {
+    oclMolecule.setAtomX(atom, getCoordinateX(coordinates));
+    oclMolecule.setAtomY(atom, getCoordinateY(coordinates));
+    oclMolecule.setAtomZ(atom, getCoordinateZ(coordinates));
+  }
+
+  // 3D translation of every atom (the 2D translateCoords above ignores z).
+  public void translate(double dx, double dy, double dz) {
+    oclMolecule.translate(dx, dy, dz);
+  }
+
+  public void center() {
+    oclMolecule.center();
+  }
+
+  public JavaScriptObject getCenterOfGravity() {
+    Coordinates c = oclMolecule.getCenterOfGravity();
+    return c == null ? null : makeCoordinates(c.x, c.y, c.z);
+  }
+
+  private native JavaScriptObject makeCoordinates(double x, double y, double z)
+  /*-{
+    return { x: x, y: y, z: z };
+  }-*/;
+
+  private native double getCoordinateX(JavaScriptObject coordinates)
+  /*-{
+    return coordinates.x;
+  }-*/;
+
+  private native double getCoordinateY(JavaScriptObject coordinates)
+  /*-{
+    return coordinates.y;
+  }-*/;
+
+  private native double getCoordinateZ(JavaScriptObject coordinates)
+  /*-{
+    return coordinates.z;
+  }-*/;
+
   public void zoomAndRotateInit(double x, double y) {
     oclMolecule.zoomAndRotateInit(x, y);
   }
