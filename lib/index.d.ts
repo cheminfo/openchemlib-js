@@ -3655,6 +3655,60 @@ export declare class SSSearcherWithIndex {
   createIndex(molecule: Molecule): number[];
 }
 
+export type MCSRingMatchMode =
+  | 'cleaveRings'
+  | 'keepRings'
+  | 'keepAromaticRings';
+
+export interface MCSOptions {
+  /**
+   * How rings of the fragment are handled when building common substructures.
+   * - `cleaveRings`: rings may be broken, so a partial ring can be part of the result.
+   * - `keepRings`: a ring is only kept if it is entirely part of the common substructure.
+   * - `keepAromaticRings`: same as `keepRings` but restricted to aromatic rings.
+   * @default 'cleaveRings'
+   */
+  ringMatchMode?: MCSRingMatchMode;
+}
+
+/**
+ * Computes the maximum common substructure (MCS) between two molecules.
+ */
+export declare class MCS {
+  /**
+   * Creates a new maximum common substructure finder.
+   */
+  constructor(options?: MCSOptions);
+
+  /**
+   * Sets the pair of molecules to compare. `molecule` should contain at least
+   * as many bonds as `fragment`. If `fragment` contains more than one disconnected
+   * structure, only the biggest one is considered.
+   * @param molecule - the (usually larger) target molecule.
+   * @param fragment - the molecule whose common substructure with `molecule` is searched.
+   */
+  set(molecule: Molecule, fragment: Molecule): void;
+
+  /**
+   * Returns the maximum common substructure as a `Molecule`, or `null` if no
+   * common substructure was found.
+   */
+  getMCS(): Molecule | null;
+
+  /**
+   * Returns the score of the maximum common substructure, defined as the number
+   * of bonds of the MCS divided by the larger bond count of the two input molecules.
+   * `getMCS()` (or `getAllCommonSubstructures()`) must be called first.
+   */
+  getScore(): number;
+
+  /**
+   * Returns all distinct common substructures (the largest first), or `null` if
+   * none was found.
+   */
+  getAllCommonSubstructures(): Molecule[] | null;
+}
+
 export declare class Transformer {
   constructor(reactant: Molecule, product: Molecule, name: string);
   setMolecule(molecule: Molecule, countMode: number): number;

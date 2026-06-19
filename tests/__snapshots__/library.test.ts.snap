@@ -51,6 +51,15 @@ exports[`class prototypes > prototype properties of ForceFieldMMFF94 1`] = `
 ]
 `;
 
+exports[`class prototypes > prototype properties of MCS 1`] = `
+[
+  "getAllCommonSubstructures",
+  "getMCS",
+  "getScore",
+  "set",
+]
+`;
+
 exports[`class prototypes > prototype properties of Molecule 1`] = `
 [
   "addAtom",
@@ -485,6 +494,8 @@ exports[`class prototypes > static properties of ForceFieldMMFF94 1`] = `
 ]
 `;
 
+exports[`class prototypes > static properties of MCS 1`] = `[]`;
+
 exports[`class prototypes > static properties of Molecule 1`] = `
 [
   "CANONIZER_ASSIGN_PARITIES_TO_TETRAHEDRAL_N",
@@ -834,6 +845,7 @@ exports[`top-level API 1`] = `
   "DrugScoreCalculator",
   "DruglikenessPredictor",
   "ForceFieldMMFF94",
+  "MCS",
   "Molecule",
   "MoleculeProperties",
   "Reaction",
