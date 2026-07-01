@@ -1,6 +1,7 @@
 package com.actelion.research.gwt.js.utils;
 
 public class ThreadMaster implements com.actelion.research.calc.ThreadMaster {
+
   private static ThreadMaster instance = null;
 
   public static ThreadMaster getInstance() {

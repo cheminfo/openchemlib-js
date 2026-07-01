@@ -8,6 +8,7 @@ import jsinterop.annotations.*;
 
 @JsType(name = "MCS")
 public class JSMCS {
+
   private MCS mcs;
 
   public JSMCS(JavaScriptObject options) {
@@ -15,8 +16,9 @@ public class JSMCS {
     mcs = new MCS(ringStatus);
   }
 
-  private native int getRingStatus(JavaScriptObject options)
-  /*-{
+  private native int getRingStatus(
+    JavaScriptObject options
+  ) /*-{
     options = options || {};
     var ringMatchMode = options.ringMatchMode || 'cleaveRings';
     switch (ringMatchMode) {

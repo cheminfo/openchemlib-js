@@ -29,5 +29,4 @@ public class ObjectOutputStream extends OutputStream {
   public void writeObject(Object b) throws IOException {
     JSException.throwUnimplemented();
   }
-
 }

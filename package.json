@@ -80,6 +80,7 @@
     "openchemlib-utils": "^8.15.0",
     "postcss": "^8.5.13",
     "prettier": "^3.8.3",
+    "prettier-plugin-java": "^2.10.2",
     "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3",
     "vite": "^8.0.10",

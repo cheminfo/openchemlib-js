@@ -1,8 +1,7 @@
 package com.actelion.research.gwt.js.api;
 
-import jsinterop.annotations.*;
-
 import com.actelion.research.chem.CanonizerUtil;
+import jsinterop.annotations.*;
 
 @JsType(name = "CanonizerUtil")
 public class JSCanonizerUtil {
@@ -16,23 +15,41 @@ public class JSCanonizerUtil {
   public static String getIDCode(JSMolecule mol, int type) {
     switch (type) {
       case 0:
-        return CanonizerUtil.getIDCode(mol.getStereoMolecule(), CanonizerUtil.IDCODE_TYPE.NORMAL,
-            false);
+        return CanonizerUtil.getIDCode(
+          mol.getStereoMolecule(),
+          CanonizerUtil.IDCODE_TYPE.NORMAL,
+          false
+        );
       case 1:
-        return CanonizerUtil.getIDCode(mol.getStereoMolecule(), CanonizerUtil.IDCODE_TYPE.NOSTEREO,
-            false);
+        return CanonizerUtil.getIDCode(
+          mol.getStereoMolecule(),
+          CanonizerUtil.IDCODE_TYPE.NOSTEREO,
+          false
+        );
       case 2:
-        return CanonizerUtil.getIDCode(mol.getStereoMolecule(), CanonizerUtil.IDCODE_TYPE.BACKBONE,
-            false);
+        return CanonizerUtil.getIDCode(
+          mol.getStereoMolecule(),
+          CanonizerUtil.IDCODE_TYPE.BACKBONE,
+          false
+        );
       case 3:
-        return CanonizerUtil.getIDCode(mol.getStereoMolecule(), CanonizerUtil.IDCODE_TYPE.TAUTOMER,
-            false);
+        return CanonizerUtil.getIDCode(
+          mol.getStereoMolecule(),
+          CanonizerUtil.IDCODE_TYPE.TAUTOMER,
+          false
+        );
       case 4:
-        return CanonizerUtil.getIDCode(mol.getStereoMolecule(),
-            CanonizerUtil.IDCODE_TYPE.NOSTEREO_TAUTOMER, false);
+        return CanonizerUtil.getIDCode(
+          mol.getStereoMolecule(),
+          CanonizerUtil.IDCODE_TYPE.NOSTEREO_TAUTOMER,
+          false
+        );
       default:
-        return CanonizerUtil.getIDCode(mol.getStereoMolecule(), CanonizerUtil.IDCODE_TYPE.NORMAL,
-            false);
+        return CanonizerUtil.getIDCode(
+          mol.getStereoMolecule(),
+          CanonizerUtil.IDCODE_TYPE.NORMAL,
+          false
+        );
     }
   }
 }

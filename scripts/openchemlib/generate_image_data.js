@@ -12,11 +12,9 @@ const images = ['editorButtons.png', 'esrButtons.png'];
 
 const start = `package com.actelion.research.gwt.js.api.generic.internal;
 
-public class ImageData {
-`;
+public class ImageData {`;
 
-const end = `
-}
+const end = `}
 `;
 
 export function generateImageData() {
@@ -36,12 +34,14 @@ export function generateImageData() {
     }
     imageData.push(
       `
-public static final int ${name}Width = ${png.width};
-public static final int ${name}Height = ${png.height};
+  public static final int ${name}Width = ${png.width};
+  public static final int ${name}Height = ${png.height};
 ${compressedSplit
-  .map((s, i) => `public static final String ${name}Data${i} = "${s}";`)
-  .join('\n')}
-`,
+  .map(
+    (s, i) =>
+      `  // prettier-ignore\n  public static final String ${name}Data${i} = "${s}";`,
+  )
+  .join('\n')}`,
     );
   }
   imageData.push(end);

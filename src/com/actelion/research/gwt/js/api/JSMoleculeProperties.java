@@ -1,10 +1,9 @@
 package com.actelion.research.gwt.js.api;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import jsinterop.annotations.*;
-
 import com.actelion.research.chem.prediction.PropertyCalculator;
 import com.actelion.research.gwt.js.utils.Util;
+import com.google.gwt.core.client.JavaScriptObject;
+import jsinterop.annotations.*;
 
 @JsType(name = "MoleculeProperties")
 public class JSMoleculeProperties extends PropertyCalculator {
@@ -55,7 +54,9 @@ public class JSMoleculeProperties extends PropertyCalculator {
 
   @JsProperty
   public JavaScriptObject getPolarSurfaceAreaString() {
-    return Util.convertParameterizedStringList(super.getPolarSurfaceAreaDetail());
+    return Util.convertParameterizedStringList(
+      super.getPolarSurfaceAreaDetail()
+    );
   }
 
   @Override
@@ -69,5 +70,4 @@ public class JSMoleculeProperties extends PropertyCalculator {
   public int getStereoCenterCount() {
     return super.getStereoCenterCount();
   }
-
 }

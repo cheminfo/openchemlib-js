@@ -4,26 +4,27 @@ import java.io.*;
 
 public class ODEFileParser extends CompoundFileParser {
 
-	public ODEFileParser(String fileName) {}
-	public ODEFileParser(File file) {}
+  public ODEFileParser(String fileName) {}
 
-	public String[] getFieldNames() {
-		return null;
-	}
+  public ODEFileParser(File file) {}
 
-	public String getFieldData(int column) {
-		return null;
-	}
+  public String[] getFieldNames() {
+    return null;
+  }
 
-	public int getRowCount() {
-		return -1;
-	}
+  public String getFieldData(int column) {
+    return null;
+  }
 
-	protected boolean advanceToNext() {
-		return false;
-	}
+  public int getRowCount() {
+    return -1;
+  }
 
-	public String getMoleculeName() {
-		return null;
-	}
+  protected boolean advanceToNext() {
+    return false;
+  }
+
+  public String getMoleculeName() {
+    return null;
+  }
 }

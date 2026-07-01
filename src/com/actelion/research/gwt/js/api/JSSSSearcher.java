@@ -8,6 +8,7 @@ import jsinterop.annotations.*;
 
 @JsType(name = "SSSearcher")
 public class JSSSSearcher {
+
   private SSSearcher searcher;
   private int mMatchMode;
 
@@ -17,8 +18,9 @@ public class JSSSSearcher {
     searcher = new SSSearcher(matchMode);
   }
 
-  private native int getMatchMode(JavaScriptObject options)
-  /*-{
+  private native int getMatchMode(
+    JavaScriptObject options
+  ) /*-{
     options = options || {};
     var matchMode = 0;
     if (options.matchAtomCharge === true) matchMode |= @com.actelion.research.chem.SSSearcher::cMatchAtomCharge;
@@ -40,8 +42,9 @@ public class JSSSSearcher {
     return this.searcher.findFragmentInMolecule(countMode, mMatchMode);
   }
 
-  private native int getCountMode(JavaScriptObject options)
-  /*-{
+  private native int getCountMode(
+    JavaScriptObject options
+  ) /*-{
     options = options || {};
     var countMode = options.countMode || 'overlapping';
     switch (countMode) {

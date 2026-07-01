@@ -32,5 +32,4 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package java.awt;
 
-public abstract class Image {
-}
+public abstract class Image {}

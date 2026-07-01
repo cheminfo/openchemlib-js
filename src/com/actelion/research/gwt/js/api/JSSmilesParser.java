@@ -1,20 +1,21 @@
 package com.actelion.research.gwt.js.api;
 
+import com.actelion.research.chem.*;
 import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
-import com.actelion.research.chem.*;
-
 @JsType(name = "SmilesParser")
 public class JSSmilesParser {
+
   private SmilesParser oclParser;
 
   public JSSmilesParser(JavaScriptObject options) {
     init(options);
   }
 
-  private native void init(JavaScriptObject options)
-  /*-{
+  private native void init(
+    JavaScriptObject options
+  ) /*-{
     options = options || {};
 
     var smartsMode = options.smartsMode || 'smiles';
@@ -26,9 +27,14 @@ public class JSSmilesParser {
     this.@com.actelion.research.gwt.js.api.JSSmilesParser::init(Ljava/lang/String;ZZZZZ)(smartsMode, skipCoordinateTemplates, makeHydrogenExplicit, noCactvs, singleDotSeparator, createSmartsWarnings);
   }-*/;
 
-  private void init(String smartsMode,
-    boolean skipCoordinateTemplates, boolean makeHydrogenExplicit,
-    boolean noCactvs, boolean singleDotSeparator, boolean createSmartsWarnings) {
+  private void init(
+    String smartsMode,
+    boolean skipCoordinateTemplates,
+    boolean makeHydrogenExplicit,
+    boolean noCactvs,
+    boolean singleDotSeparator,
+    boolean createSmartsWarnings
+  ) {
     int mode = SmilesParser.SMARTS_MODE_IS_SMILES;
     switch (smartsMode) {
       case "smarts":
@@ -57,11 +63,13 @@ public class JSSmilesParser {
   }
 
   public void setRandomSeed(int seed) {
-    oclParser.setRandomSeed((long)seed);
+    oclParser.setRandomSeed((long) seed);
   }
 
-  public native JSMolecule parseMolecule(String smiles, JavaScriptObject options)
-  /*-{
+  public native JSMolecule parseMolecule(
+    String smiles,
+    JavaScriptObject options
+  ) /*-{
     options = options || {};
 
     var molecule = options.molecule || @com.actelion.research.gwt.js.api.JSMolecule::new()();
@@ -70,9 +78,18 @@ public class JSSmilesParser {
     return this.@com.actelion.research.gwt.js.api.JSSmilesParser::parseMolecule(Lcom/actelion/research/gwt/js/api/JSMolecule;Ljava/lang/String;ZZ)(molecule, smiles, createCoordinates, readStereoFeatures);
   }-*/;
 
-  private JSMolecule parseMolecule(JSMolecule molecule, String smiles,
-    boolean createCoordinates, boolean readStereoFeatures) throws Exception {
-    oclParser.parse(molecule.getStereoMolecule(), smiles.getBytes(), createCoordinates, readStereoFeatures);
+  private JSMolecule parseMolecule(
+    JSMolecule molecule,
+    String smiles,
+    boolean createCoordinates,
+    boolean readStereoFeatures
+  ) throws Exception {
+    oclParser.parse(
+      molecule.getStereoMolecule(),
+      smiles.getBytes(),
+      createCoordinates,
+      readStereoFeatures
+    );
     return molecule;
   }
 

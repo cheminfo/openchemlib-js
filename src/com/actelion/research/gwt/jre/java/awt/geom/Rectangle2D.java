@@ -37,19 +37,20 @@ package java.awt.geom;
  */
 
 public abstract class Rectangle2D extends RectangularShape {
+
   public static final int OUT_LEFT = 1;
   public static final int OUT_TOP = 2;
   public static final int OUT_RIGHT = 4;
   public static final int OUT_BOTTOM = 8;
 
   public static class Float extends Rectangle2D {
+
     public float x;
     public float y;
     public float width;
     public float height;
 
-    public Float() {
-    }
+    public Float() {}
 
     public double getX() {
       return (double) x;
@@ -68,7 +69,7 @@ public abstract class Rectangle2D extends RectangularShape {
     }
 
     public boolean isEmpty() {
-      return (width <= 0.0f) || (height <= 0.0f);
+      return width <= 0.0f || height <= 0.0f;
     }
 
     public void setRect(double x, double y, double w, double h) {
@@ -88,7 +89,6 @@ public abstract class Rectangle2D extends RectangularShape {
       Rectangle2D.union(this, r, dest);
       return dest;
     }
-
   }
 
   public static class Double extends Rectangle2D {
@@ -101,8 +101,7 @@ public abstract class Rectangle2D extends RectangularShape {
 
     public double height;
 
-    public Double() {
-    }
+    public Double() {}
 
     public Double(double x, double y, double w, double h) {
       setRect(x, y, w, h);
@@ -125,7 +124,7 @@ public abstract class Rectangle2D extends RectangularShape {
     }
 
     public boolean isEmpty() {
-      return (width <= 0.0) || (height <= 0.0);
+      return width <= 0.0 || height <= 0.0;
     }
 
     public void setRect(double x, double y, double w, double h) {
@@ -140,11 +139,9 @@ public abstract class Rectangle2D extends RectangularShape {
       Rectangle2D.union(this, r, dest);
       return dest;
     }
-
   }
 
-  protected Rectangle2D() {
-  }
+  protected Rectangle2D() {}
 
   public abstract void setRect(double x, double y, double w, double h);
 
@@ -155,7 +152,7 @@ public abstract class Rectangle2D extends RectangularShape {
   public boolean contains(double x, double y) {
     double x0 = getX();
     double y0 = getY();
-    return (x >= x0 && y >= y0 && x < x0 + getWidth() && y < y0 + getHeight());
+    return x >= x0 && y >= y0 && x < x0 + getWidth() && y < y0 + getHeight();
   }
 
   public boolean intersects(double x, double y, double w, double h) {
@@ -164,7 +161,9 @@ public abstract class Rectangle2D extends RectangularShape {
     }
     double x0 = getX();
     double y0 = getY();
-    return (x + w > x0 && y + h > y0 && x < x0 + getWidth() && y < y0 + getHeight());
+    return (
+      x + w > x0 && y + h > y0 && x < x0 + getWidth() && y < y0 + getHeight()
+    );
   }
 
   public boolean contains(double x, double y, double w, double h) {
@@ -173,10 +172,19 @@ public abstract class Rectangle2D extends RectangularShape {
     }
     double x0 = getX();
     double y0 = getY();
-    return (x >= x0 && y >= y0 && (x + w) <= x0 + getWidth() && (y + h) <= y0 + getHeight());
+    return (
+      x >= x0 &&
+      y >= y0 &&
+      x + w <= x0 + getWidth() &&
+      y + h <= y0 + getHeight()
+    );
   }
 
-  public static void intersect(Rectangle2D src1, Rectangle2D src2, Rectangle2D dest) {
+  public static void intersect(
+    Rectangle2D src1,
+    Rectangle2D src2,
+    Rectangle2D dest
+  ) {
     double x1 = Math.max(src1.getMinX(), src2.getMinX());
     double y1 = Math.max(src1.getMinY(), src2.getMinY());
     double x2 = Math.min(src1.getMaxX(), src2.getMaxX());
@@ -186,7 +194,11 @@ public abstract class Rectangle2D extends RectangularShape {
 
   public abstract Rectangle2D createUnion(Rectangle2D r);
 
-  public static void union(Rectangle2D src1, Rectangle2D src2, Rectangle2D dest) {
+  public static void union(
+    Rectangle2D src1,
+    Rectangle2D src2,
+    Rectangle2D dest
+  ) {
     double x1 = Math.min(src1.getMinX(), src2.getMinX());
     double y1 = Math.min(src1.getMinY(), src2.getMinY());
     double x2 = Math.max(src1.getMaxX(), src2.getMaxX());
@@ -219,7 +231,7 @@ public abstract class Rectangle2D extends RectangularShape {
     bits += java.lang.Double.doubleToLongBits(getY()) * 37;
     bits += java.lang.Double.doubleToLongBits(getWidth()) * 43;
     bits += java.lang.Double.doubleToLongBits(getHeight()) * 47;
-    return (((int) bits) ^ ((int) (bits >> 32)));
+    return (int) bits ^ (int) (bits >> 32);
   }
 
   public boolean equals(Object obj) {
@@ -228,8 +240,12 @@ public abstract class Rectangle2D extends RectangularShape {
     }
     if (obj instanceof Rectangle2D) {
       Rectangle2D r2d = (Rectangle2D) obj;
-      return ((getX() == r2d.getX()) && (getY() == r2d.getY()) && (getWidth() == r2d.getWidth())
-          && (getHeight() == r2d.getHeight()));
+      return (
+        getX() == r2d.getX() &&
+        getY() == r2d.getY() &&
+        getWidth() == r2d.getWidth() &&
+        getHeight() == r2d.getHeight()
+      );
     }
     return false;
   }

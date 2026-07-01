@@ -3,6 +3,7 @@ package java.io;
 import org.cheminfo.utils.JSException;
 
 public class File {
+
   public static char separatorChar = 10;
 
   public File(String sFile) {}

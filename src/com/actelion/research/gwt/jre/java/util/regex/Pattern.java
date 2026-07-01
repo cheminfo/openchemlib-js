@@ -5,6 +5,7 @@ import org.cheminfo.utils.JSRegexMatcher;
 import org.cheminfo.utils.JSRegexPattern;
 
 public class Pattern {
+
   private JSRegexPattern jsPattern;
 
   private Pattern(JSRegexPattern jsPattern) {

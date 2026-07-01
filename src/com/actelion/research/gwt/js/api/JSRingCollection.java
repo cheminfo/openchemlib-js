@@ -1,22 +1,24 @@
 package com.actelion.research.gwt.js.api;
 
-import jsinterop.annotations.*;
-
 import com.actelion.research.chem.RingCollection;
 import com.actelion.research.chem.StereoMolecule;
+import jsinterop.annotations.*;
 
 @JsType(name = "RingCollection")
 public class JSRingCollection {
+
   public static final int MAX_SMALL_RING_SIZE = 7;
 
   private static final int MODE_SMALL_RINGS = 1;
   private static final int MODE_LARGE_RINGS = 2;
   private static final int MODE_AROMATICITY = 4;
   public static final int MODE_SMALL_RINGS_ONLY = MODE_SMALL_RINGS;
-  public static final int MODE_SMALL_AND_LARGE_RINGS = MODE_SMALL_RINGS | MODE_LARGE_RINGS;
-  public static final int MODE_SMALL_RINGS_AND_AROMATICITY = MODE_SMALL_RINGS | MODE_AROMATICITY;
-  public static final int MODE_SMALL_AND_LARGE_RINGS_AND_AROMATICITY = MODE_SMALL_RINGS | MODE_LARGE_RINGS
-      | MODE_AROMATICITY;
+  public static final int MODE_SMALL_AND_LARGE_RINGS =
+    MODE_SMALL_RINGS | MODE_LARGE_RINGS;
+  public static final int MODE_SMALL_RINGS_AND_AROMATICITY =
+    MODE_SMALL_RINGS | MODE_AROMATICITY;
+  public static final int MODE_SMALL_AND_LARGE_RINGS_AND_AROMATICITY =
+    MODE_SMALL_RINGS | MODE_LARGE_RINGS | MODE_AROMATICITY;
 
   private RingCollection coll;
 
@@ -85,9 +87,18 @@ public class JSRingCollection {
     return coll.getSharedRing(bond1, bond2);
   }
 
-  public void determineAromaticity(boolean[] isAromatic, boolean[] isDelocalized, int[] heteroPosition,
-      boolean includeTautomericBonds) {
-    coll.determineAromaticity(isAromatic, isDelocalized, heteroPosition, includeTautomericBonds);
+  public void determineAromaticity(
+    boolean[] isAromatic,
+    boolean[] isDelocalized,
+    int[] heteroPosition,
+    boolean includeTautomericBonds
+  ) {
+    coll.determineAromaticity(
+      isAromatic,
+      isDelocalized,
+      heteroPosition,
+      includeTautomericBonds
+    );
   }
 
   public boolean qualifiesAsAmideTypeBond(int bond) {

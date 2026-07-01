@@ -3,6 +3,7 @@ package java.io;
 import java.nio.charset.Charset;
 
 public class InputStreamReader extends Reader {
+
   private InputStream mStream;
 
   public InputStreamReader(InputStream in, Charset cs) {
@@ -25,7 +26,7 @@ public class InputStreamReader extends Reader {
     byte[] b = new byte[length];
     int read = mStream.read(b);
     for (int i = 0; i < read; i++) {
-      cbuf[offset + i] = (char)b[i];
+      cbuf[offset + i] = (char) b[i];
     }
     return read;
   }

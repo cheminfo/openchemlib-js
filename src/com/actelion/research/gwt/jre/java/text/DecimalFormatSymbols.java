@@ -4,10 +4,7 @@ import java.util.Locale;
 
 public class DecimalFormatSymbols {
 
-  public DecimalFormatSymbols() {
-  };
+  public DecimalFormatSymbols() {}
 
-  public DecimalFormatSymbols(Locale locale) {
-  };
-
+  public DecimalFormatSymbols(Locale locale) {}
 }

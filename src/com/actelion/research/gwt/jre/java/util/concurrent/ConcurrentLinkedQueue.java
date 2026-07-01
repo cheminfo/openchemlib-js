@@ -3,6 +3,7 @@ package java.util.concurrent;
 import org.cheminfo.utils.JSException;
 
 public class ConcurrentLinkedQueue<E> {
+
   public ConcurrentLinkedQueue() {}
 
   public boolean add(E e) {
@@ -11,7 +12,7 @@ public class ConcurrentLinkedQueue<E> {
   }
 
   public void clear() {
-   JSException.throwUnimplemented();
+    JSException.throwUnimplemented();
   }
 
   public E poll() {

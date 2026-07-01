@@ -1,11 +1,11 @@
 package com.actelion.research.gwt.js.api.generic.internal;
 
-import jsinterop.annotations.*;
-
 import com.actelion.research.gui.generic.*;
+import jsinterop.annotations.*;
 
 @JsType
 public class JSPolygon {
+
   private GenericPolygon mPolygon;
 
   @JsIgnore

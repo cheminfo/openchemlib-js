@@ -34,6 +34,7 @@ import jsinterop.annotations.JsMethod;
  * Added: System.lineSeparator().
  */
 public final class System {
+
   public static String lineSeparator() {
     return "\n";
   }
@@ -52,7 +53,13 @@ public final class System {
    */
   public static PrintStream out = new PrintStream(null);
 
-  public static void arraycopy(Object src, int srcOfs, Object dest, int destOfs, int len) {
+  public static void arraycopy(
+    Object src,
+    int srcOfs,
+    Object dest,
+    int destOfs,
+    int len
+  ) {
     checkNotNull(src, "src");
     checkNotNull(dest, "dest");
 
@@ -70,7 +77,10 @@ public final class System {
 
     Class<?> srcComp = srcType.getComponentType();
     Class<?> destComp = destType.getComponentType();
-    checkArrayType(arrayTypeMatch(srcComp, destComp), "Array types don't match");
+    checkArrayType(
+      arrayTypeMatch(srcComp, destComp),
+      "Array types don't match"
+    );
 
     checkArrayCopyIndicies(src, srcOfs, dest, destOfs, len);
 
@@ -102,10 +112,21 @@ public final class System {
   }
 
   private static void checkArrayCopyIndicies(
-      Object src, int srcOfs, Object dest, int destOfs, int len) {
+    Object src,
+    int srcOfs,
+    Object dest,
+    int destOfs,
+    int len
+  ) {
     int srclen = ArrayHelper.getLength(src);
     int destlen = ArrayHelper.getLength(dest);
-    if (srcOfs < 0 || destOfs < 0 || len < 0 || srcOfs + len > srclen || destOfs + len > destlen) {
+    if (
+      srcOfs < 0 ||
+      destOfs < 0 ||
+      len < 0 ||
+      srcOfs + len > srclen ||
+      destOfs + len > destlen
+    ) {
       throw new IndexOutOfBoundsException();
     }
   }
@@ -123,8 +144,7 @@ public final class System {
    *
    * @skip
    */
-  public static void gc() {
-  }
+  public static void gc() {}
 
   /**
    * The compiler replaces getProperty by the actual value of the property.

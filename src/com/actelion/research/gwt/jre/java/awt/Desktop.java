@@ -1,10 +1,10 @@
 package java.awt;
 
 import java.io.File;
-
 import org.cheminfo.utils.JSException;
 
 public class Desktop {
+
   public static boolean isDesktopSupported() {
     JSException.throwUnimplemented();
     return false;

@@ -39,8 +39,8 @@ package java.awt.geom;
 import java.awt.Shape;
 
 public abstract class RectangularShape implements Shape {
-  protected RectangularShape() {
-  }
+
+  protected RectangularShape() {}
 
   public abstract double getX();
 
@@ -95,5 +95,4 @@ public abstract class RectangularShape implements Shape {
   public boolean contains(Rectangle2D r) {
     return contains(r.getX(), r.getY(), r.getWidth(), r.getHeight());
   }
-
 }

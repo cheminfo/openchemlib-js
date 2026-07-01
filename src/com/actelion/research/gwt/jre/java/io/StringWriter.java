@@ -19,8 +19,14 @@ public class StringWriter extends Writer {
     buf.append((char) c);
   }
 
-  public void write(char cbuf[], int off, int len) {
-    if ((off < 0) || (off > cbuf.length) || (len < 0) || ((off + len) > cbuf.length) || ((off + len) < 0)) {
+  public void write(char[] cbuf, int off, int len) {
+    if (
+      off < 0 ||
+      off > cbuf.length ||
+      len < 0 ||
+      off + len > cbuf.length ||
+      off + len < 0
+    ) {
       throw new IndexOutOfBoundsException();
     } else if (len == 0) {
       return;
@@ -37,15 +43,13 @@ public class StringWriter extends Writer {
   }
 
   public StringWriter append(CharSequence csq) {
-    if (csq == null)
-      write("null");
-    else
-      write(csq.toString());
+    if (csq == null) write("null");
+    else write(csq.toString());
     return this;
   }
 
   public StringWriter append(CharSequence csq, int start, int end) {
-    CharSequence cs = (csq == null ? "null" : csq);
+    CharSequence cs = csq == null ? "null" : csq;
     write(cs.subSequence(start, end).toString());
     return this;
   }
@@ -63,10 +67,7 @@ public class StringWriter extends Writer {
     return buf;
   }
 
-  public void flush() {
-  }
+  public void flush() {}
 
-  public void close() throws IOException {
-  }
-
+  public void close() throws IOException {}
 }

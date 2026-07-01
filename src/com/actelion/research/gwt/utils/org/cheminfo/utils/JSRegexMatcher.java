@@ -3,6 +3,7 @@ package org.cheminfo.utils;
 import com.google.gwt.core.client.JavaScriptObject;
 
 public class JSRegexMatcher {
+
   private JavaScriptObject regex;
   private String input;
 
@@ -20,8 +21,10 @@ public class JSRegexMatcher {
     }
   }
 
-  public native JavaScriptObject findNative(JavaScriptObject regex, String input)
-  /*-{
+  public native JavaScriptObject findNative(
+    JavaScriptObject regex,
+    String input
+  ) /*-{
     return regex.exec(input);
   }-*/;
 }

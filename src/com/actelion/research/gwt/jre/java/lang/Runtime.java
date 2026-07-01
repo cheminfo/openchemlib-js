@@ -1,6 +1,7 @@
 package java.lang;
 
 public class Runtime {
+
   private static Runtime runtime = new Runtime();
 
   public static Runtime getRuntime() {

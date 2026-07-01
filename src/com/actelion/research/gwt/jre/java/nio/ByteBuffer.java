@@ -3,6 +3,7 @@ package java.nio;
 import org.cheminfo.utils.JSException;
 
 public class ByteBuffer {
+
   public static ByteBuffer allocate(int capacity) {
     JSException.throwUnimplemented();
     return null;

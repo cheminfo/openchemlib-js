@@ -3,6 +3,7 @@ package java.util;
 import com.google.gwt.core.client.JavaScriptObject;
 
 public class StringTokenizer {
+
   private JavaScriptObject tokens;
   private int currentToken;
   private int totalTokens;
@@ -19,7 +20,11 @@ public class StringTokenizer {
     createTokens(str, delim, returnDelims);
   }
 
-  private native JavaScriptObject createTokens(String str, String delim, boolean returnDelims) /*-{
+  private native JavaScriptObject createTokens(
+    String str,
+    String delim,
+    boolean returnDelims
+  ) /*-{
     delim = delim.split('');
     // TODO: create the tokens.
     throw new Error('unimplemented');
@@ -39,7 +44,10 @@ public class StringTokenizer {
     return token;
   }
 
-  private native String getToken(JavaScriptObject tokens, int index) /*-{
+  private native String getToken(
+    JavaScriptObject tokens,
+    int index
+  ) /*-{
     return tokens[index];
   }-*/;
 }

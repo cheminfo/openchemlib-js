@@ -1,13 +1,13 @@
 package com.actelion.research.gwt.js.api;
 
-import jsinterop.annotations.*;
-
 import com.actelion.research.chem.*;
 import com.actelion.research.chem.io.*;
 import com.actelion.research.chem.reaction.*;
+import jsinterop.annotations.*;
 
 @JsType(name = "Reaction")
 public class JSReaction {
+
   private Reaction oclReaction;
 
   public static JSReaction create() {

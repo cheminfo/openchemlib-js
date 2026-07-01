@@ -1,20 +1,23 @@
 package com.actelion.research.gwt.js.api;
 
-import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.Canonizer;
+import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.gwt.js.api.JSMolecule;
 import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
 @JsType(name = "Canonizer")
 public class JSCanonizer {
-    private Canonizer canonizer;
 
-    public JSCanonizer(JSMolecule mol, JavaScriptObject options) {
-        canonizer = new Canonizer(mol.getStereoMolecule(), getMode(options));
-    }
+  private Canonizer canonizer;
 
-    private native int getMode(JavaScriptObject options) /*-{
+  public JSCanonizer(JSMolecule mol, JavaScriptObject options) {
+    canonizer = new Canonizer(mol.getStereoMolecule(), getMode(options));
+  }
+
+  private native int getMode(
+    JavaScriptObject options
+  ) /*-{
         options = options || {};
         var mode = 0;
         if (options.createSymmetryRank) mode |= @com.actelion.research.chem.Canonizer::CREATE_SYMMETRY_RANK;
@@ -31,56 +34,56 @@ public class JSCanonizer {
         return mode;
     }-*/;
 
-    public boolean hasCIPParityDistinctionProblem() {
-        return canonizer.hasCIPParityDistinctionProblem();
-    }
+  public boolean hasCIPParityDistinctionProblem() {
+    return canonizer.hasCIPParityDistinctionProblem();
+  }
 
-    public JSMolecule getCanMolecule(boolean includeExplicitHydrogen) {
-        StereoMolecule mol = canonizer.getCanMolecule(includeExplicitHydrogen);
-        return new JSMolecule(mol);
-    }
+  public JSMolecule getCanMolecule(boolean includeExplicitHydrogen) {
+    StereoMolecule mol = canonizer.getCanMolecule(includeExplicitHydrogen);
+    return new JSMolecule(mol);
+  }
 
-    public String getIDCode() {
-        return canonizer.getIDCode();
-    }
+  public String getIDCode() {
+    return canonizer.getIDCode();
+  }
 
-    public int[] getFinalRank() {
-        return canonizer.getFinalRank();
-    }
+  public int[] getFinalRank() {
+    return canonizer.getFinalRank();
+  }
 
-    public int getSymmetryRank(int atom) {
-        return canonizer.getSymmetryRank(atom);
-    }
+  public int getSymmetryRank(int atom) {
+    return canonizer.getSymmetryRank(atom);
+  }
 
-    public int[] getSymmetryRanks() {
-        return canonizer.getSymmetryRanks();
-    }
+  public int[] getSymmetryRanks() {
+    return canonizer.getSymmetryRanks();
+  }
 
-    public void invalidateCoordinates() {
-        canonizer.invalidateCoordinates();
-    }
+  public void invalidateCoordinates() {
+    canonizer.invalidateCoordinates();
+  }
 
-    public String getEncodedCoordinates(boolean keepPositionAndScale) {
-        return canonizer.getEncodedCoordinates(keepPositionAndScale);
-    }
+  public String getEncodedCoordinates(boolean keepPositionAndScale) {
+    return canonizer.getEncodedCoordinates(keepPositionAndScale);
+  }
 
-    public String getEncodedMapping() {
-        return canonizer.getEncodedMapping();
-    }
+  public String getEncodedMapping() {
+    return canonizer.getEncodedMapping();
+  }
 
-    public boolean normalizeEnantiomer() {
-        return canonizer.normalizeEnantiomer();
-    }
+  public boolean normalizeEnantiomer() {
+    return canonizer.normalizeEnantiomer();
+  }
 
-    public void setParities() {
-        canonizer.setParities();
-    }
+  public void setParities() {
+    canonizer.setParities();
+  }
 
-    public int[] getGraphAtoms() {
-        return canonizer.getGraphAtoms();
-    }
+  public int[] getGraphAtoms() {
+    return canonizer.getGraphAtoms();
+  }
 
-    public int[] getGraphIndexes() {
-        return canonizer.getGraphIndexes();
-    }
+  public int[] getGraphIndexes() {
+    return canonizer.getGraphIndexes();
+  }
 }

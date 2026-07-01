@@ -1,18 +1,16 @@
 package com.actelion.research.gwt.js.api;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import jsinterop.annotations.*;
-
 import com.actelion.research.chem.SSSearcherWithIndex;
 import com.actelion.research.chem.StereoMolecule;
+import com.google.gwt.core.client.JavaScriptObject;
+import jsinterop.annotations.*;
 
 @JsType(name = "SSSearcherWithIndex")
 public class JSSSSearcherWithIndex {
 
   private SSSearcherWithIndex searcher = new SSSearcherWithIndex();
 
-  public JSSSSearcherWithIndex() {
-  }
+  public JSSSSearcherWithIndex() {}
 
   public static String[] getKeyIDCode() {
     return com.actelion.research.chem.SSSearcherWithIndex.cKeyIDCode;
@@ -53,5 +51,4 @@ public class JSSSSearcherWithIndex {
   public static int bitCount(int x) {
     return Integer.bitCount(x);
   }
-
 }

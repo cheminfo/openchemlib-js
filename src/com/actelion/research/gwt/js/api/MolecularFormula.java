@@ -1,11 +1,12 @@
 package com.actelion.research.gwt.js.api;
 
+import com.actelion.research.chem.ExtendedMolecule;
 import jsinterop.annotations.*;
 
-import com.actelion.research.chem.ExtendedMolecule;
-
 @JsType
-public class MolecularFormula extends com.actelion.research.chem.MolecularFormula {
+public class MolecularFormula
+  extends com.actelion.research.chem.MolecularFormula
+{
 
   @JsIgnore
   public MolecularFormula(ExtendedMolecule mol) {
@@ -29,5 +30,4 @@ public class MolecularFormula extends com.actelion.research.chem.MolecularFormul
   public String getFormula() {
     return super.getFormula();
   }
-
 }

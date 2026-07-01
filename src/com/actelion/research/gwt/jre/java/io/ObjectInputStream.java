@@ -34,5 +34,4 @@ public class ObjectInputStream extends InputStream {
   public void close() {
     JSException.throwUnimplemented();
   }
-
 }

@@ -36,26 +36,26 @@ import org.cheminfo.utils.JSException;
 
 public class Color {
 
-  public final static Color white = new Color(255, 255, 255);
-  public final static Color WHITE = white;
-  public final static Color gray = new Color(128, 128, 128);
-  public final static Color GRAY = gray;
-  public final static Color black = new Color(0, 0, 0);
-  public final static Color BLACK = black;
-  public final static Color green = new Color(0, 255, 0);
-  public final static Color GREEN = green;
-  public final static Color yellow = new Color(255, 255, 0);
-  public final static Color YELLOW = yellow;
-  public final static Color orange = new Color(255, 200, 0);
-  public final static Color ORANGE = orange;
-  public final static Color red = new Color(255, 0, 0);
-  public final static Color RED = red;
-  public final static Color cyan = new Color(0, 255, 255);
-  public final static Color CYAN = cyan;
-  public final static Color blue = new Color(0, 0, 255);
-  public final static Color BLUE = blue;
-  public final static Color magenta = new Color(255, 0, 255);
-  public final static Color MAGENTA = magenta;
+  public static final Color white = new Color(255, 255, 255);
+  public static final Color WHITE = white;
+  public static final Color gray = new Color(128, 128, 128);
+  public static final Color GRAY = gray;
+  public static final Color black = new Color(0, 0, 0);
+  public static final Color BLACK = black;
+  public static final Color green = new Color(0, 255, 0);
+  public static final Color GREEN = green;
+  public static final Color yellow = new Color(255, 255, 0);
+  public static final Color YELLOW = yellow;
+  public static final Color orange = new Color(255, 200, 0);
+  public static final Color ORANGE = orange;
+  public static final Color red = new Color(255, 0, 0);
+  public static final Color RED = red;
+  public static final Color cyan = new Color(0, 255, 255);
+  public static final Color CYAN = cyan;
+  public static final Color blue = new Color(0, 0, 255);
+  public static final Color BLUE = blue;
+  public static final Color magenta = new Color(255, 0, 255);
+  public static final Color MAGENTA = magenta;
 
   private int rgbValue;
   private float realRGBValues[] = null;
@@ -66,7 +66,11 @@ public class Color {
   }
 
   public Color(int red, int green, int blue, int alpha) {
-    rgbValue = ((alpha & 0xFF) << 24) | ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | ((blue & 0xFF) << 0);
+    rgbValue =
+      ((alpha & 0xFF) << 24) |
+      ((red & 0xFF) << 16) |
+      ((green & 0xFF) << 8) |
+      ((blue & 0xFF) << 0);
   }
 
   public Color(int rgb) {
@@ -74,7 +78,12 @@ public class Color {
   }
 
   public Color(float red, float green, float blue, float alpha) {
-    this((int) (red * 255 + 0.5), (int) (green * 255 + 0.5), (int) (blue * 255 + 0.5), (int) (alpha * 255 + 0.5));
+    this(
+      (int) (red * 255 + 0.5),
+      (int) (green * 255 + 0.5),
+      (int) (blue * 255 + 0.5),
+      (int) (alpha * 255 + 0.5)
+    );
     realRGBValues = new float[3];
     realRGBValues[0] = red;
     realRGBValues[1] = green;
@@ -103,7 +112,9 @@ public class Color {
   }
 
   private static float[] RGBtoHSV(float r, float g, float b, float[] hsbvals) {
-    float hue = 0, saturation = 0, brightness = 0;
+    float hue = 0,
+      saturation = 0,
+      brightness = 0;
     if (hsbvals == null) {
       hsbvals = new float[3];
     }
@@ -123,8 +134,7 @@ public class Color {
       return hsbvals;
     }
 
-    if (max != 0)
-      saturation = delta / max;
+    if (max != 0) saturation = delta / max;
     else {
       saturation = 0;
       hue = 0;
@@ -133,15 +143,11 @@ public class Color {
       hsbvals[2] = brightness;
       return hsbvals;
     }
-    if (r == max)
-      hue = (g - b) / delta;
-    else if (g == max)
-      hue = 2 + (b - r) / delta;
-    else
-      hue = 4 + (r - g) / delta;
+    if (r == max) hue = (g - b) / delta;
+    else if (g == max) hue = 2 + (b - r) / delta;
+    else hue = 4 + (r - g) / delta;
     hue *= 60;
-    if (hue < 0)
-      hue += 360;
+    if (hue < 0) hue += 360;
     hsbvals[0] = hue / 360.0f;
     hsbvals[1] = saturation;
     hsbvals[2] = brightness;
@@ -160,10 +166,10 @@ public class Color {
       f = compArray;
     }
     if (realRGBValues == null) {
-      f[0] = ((float) getRed()) / 255f;
-      f[1] = ((float) getGreen()) / 255f;
-      f[2] = ((float) getBlue()) / 255f;
-      f[3] = ((float) getAlpha()) / 255f;
+      f[0] = (float) getRed() / 255f;
+      f[1] = (float) getGreen() / 255f;
+      f[2] = (float) getBlue() / 255f;
+      f[3] = (float) getAlpha() / 255f;
     } else {
       f[0] = realRGBValues[0];
       f[1] = realRGBValues[1];
@@ -181,9 +187,9 @@ public class Color {
       f = compArray;
     }
     if (realRGBValues == null) {
-      f[0] = ((float) getRed()) / 255f;
-      f[1] = ((float) getGreen()) / 255f;
-      f[2] = ((float) getBlue()) / 255f;
+      f[0] = (float) getRed() / 255f;
+      f[1] = (float) getGreen() / 255f;
+      f[2] = (float) getBlue() / 255f;
     } else {
       f[0] = realRGBValues[0];
       f[1] = realRGBValues[1];

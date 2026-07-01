@@ -1,14 +1,14 @@
 package com.actelion.research.gwt.js.api.generic.internal;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import java.util.ArrayList;
-
 import com.actelion.research.chem.MolfileParser;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.gui.clipboard.IClipboardHandler;
+import com.google.gwt.core.client.JavaScriptObject;
+import java.util.ArrayList;
 
 public class JSClipboardHandler implements IClipboardHandler {
+
   private JavaScriptObject mJsHandler;
 
   public JSClipboardHandler(JavaScriptObject jsHandler) {
@@ -19,8 +19,7 @@ public class JSClipboardHandler implements IClipboardHandler {
     return mJsHandler;
   }
 
-  public native StereoMolecule pasteMolecule()
-  /*-{
+  public native StereoMolecule pasteMolecule() /*-{
     var handler = this.@com.actelion.research.gwt.js.api.generic.internal.JSClipboardHandler::getJsHandler()();
     var jsMolecule = handler.pasteMolecule();
     if (jsMolecule) {
@@ -57,8 +56,9 @@ public class JSClipboardHandler implements IClipboardHandler {
     return copyMolecule(m);
   }
 
-  public native boolean copyMolecule(StereoMolecule mol)
-  /*-{
+  public native boolean copyMolecule(
+    StereoMolecule mol
+  ) /*-{
     var handler = this.@com.actelion.research.gwt.js.api.generic.internal.JSClipboardHandler::getJsHandler()();
     var jsMolecule = @com.actelion.research.gwt.js.api.JSMolecule::new(Lcom/actelion/research/chem/StereoMolecule;)(mol);
     return handler.copyMolecule(jsMolecule);

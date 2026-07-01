@@ -1,10 +1,10 @@
 package java.text;
 
 import java.math.RoundingMode;
-
 import org.cheminfo.utils.JSException;
 
 public class DecimalFormat extends java.text.NumberFormat {
+
   private int numDigits;
 
   public DecimalFormat() {
@@ -19,8 +19,9 @@ public class DecimalFormat extends java.text.NumberFormat {
     numDigits = parsePattern(pattern);
   }
 
-  private native int parsePattern(String pattern)
-  /*-{
+  private native int parsePattern(
+    String pattern
+  ) /*-{
     var result = /^#?0\.(0+)$/.exec(pattern);
     if (!result) {
       throw new Error('unimplemented DecimalFormat with pattern ' + pattern);
@@ -36,8 +37,10 @@ public class DecimalFormat extends java.text.NumberFormat {
     return formatNative((double) number, numDigits);
   }
 
-  private native String formatNative(double number, int numDigits)
-  /*-{
+  private native String formatNative(
+    double number,
+    int numDigits
+  ) /*-{
     return number.toFixed(numDigits);
   }-*/;
 

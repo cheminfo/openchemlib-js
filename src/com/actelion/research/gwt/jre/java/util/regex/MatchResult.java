@@ -3,6 +3,7 @@ package java.util.regex;
 import org.cheminfo.utils.JSException;
 
 public class MatchResult {
+
   public int start() {
     JSException.throwUnimplemented();
     return -1;

@@ -35,6 +35,7 @@ package java.awt;
 import java.awt.geom.Point2D;
 
 public class Point extends Point2D {
+
   public int x;
   public int y;
 
@@ -67,7 +68,7 @@ public class Point extends Point2D {
   public boolean equals(Object obj) {
     if (obj instanceof Point) {
       Point pt = (Point) obj;
-      return (x == pt.x) && (y == pt.y);
+      return x == pt.x && y == pt.y;
     }
     return super.equals(obj);
   }

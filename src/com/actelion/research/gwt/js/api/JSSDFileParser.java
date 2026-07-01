@@ -1,10 +1,9 @@
 package com.actelion.research.gwt.js.api;
 
+import com.actelion.research.chem.io.SDFileParser;
 import com.google.gwt.core.client.JavaScriptObject;
 import java.io.StringReader;
 import jsinterop.annotations.*;
-
-import com.actelion.research.chem.io.SDFileParser;
 
 @JsType(name = "SDFileParser")
 public class JSSDFileParser {

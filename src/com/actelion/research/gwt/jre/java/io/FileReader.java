@@ -4,13 +4,9 @@ import org.cheminfo.utils.JSException;
 
 public class FileReader extends Reader {
 
-  public FileReader(File file) throws FileNotFoundException {
+  public FileReader(File file) throws FileNotFoundException {}
 
-  }
-
-  public FileReader(String filename) throws FileNotFoundException {
-
-  }
+  public FileReader(String filename) throws FileNotFoundException {}
 
   @Override
   public void close() throws IOException {
@@ -28,5 +24,4 @@ public class FileReader extends Reader {
     JSException.throwUnimplemented();
     return 0;
   }
-
 }

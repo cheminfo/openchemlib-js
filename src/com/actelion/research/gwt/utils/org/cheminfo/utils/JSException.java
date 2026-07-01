@@ -1,7 +1,10 @@
 package org.cheminfo.utils;
 
 public class JSException {
-  public static native void throwError(String message) /*-{
+
+  public static native void throwError(
+    String message
+  ) /*-{
     throw new Error(message);
   }-*/;
 

@@ -3,6 +3,7 @@ package java.util;
 import org.cheminfo.utils.JSException;
 
 public class Base64 {
+
   public static Encoder getEncoder() {
     JSException.throwUnimplemented();
     return null;
@@ -14,6 +15,7 @@ public class Base64 {
   }
 
   public class Decoder {
+
     public byte[] decode(byte[] src) {
       JSException.throwUnimplemented();
       return null;
@@ -26,6 +28,7 @@ public class Base64 {
   }
 
   public class Encoder {
+
     public byte[] encode(byte[] src) {
       JSException.throwUnimplemented();
       return null;

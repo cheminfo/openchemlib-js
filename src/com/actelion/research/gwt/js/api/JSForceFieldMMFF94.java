@@ -1,14 +1,14 @@
 package com.actelion.research.gwt.js.api;
 
+import com.actelion.research.chem.*;
+import com.actelion.research.chem.forcefield.mmff.ForceFieldMMFF94;
 import com.google.gwt.core.client.JavaScriptObject;
 import java.util.HashMap;
 import jsinterop.annotations.*;
 
-import com.actelion.research.chem.*;
-import com.actelion.research.chem.forcefield.mmff.ForceFieldMMFF94;
-
 @JsType(name = "ForceFieldMMFF94")
 public class JSForceFieldMMFF94 {
+
   private ForceFieldMMFF94 oclMmff;
 
   public static final String MMFF94 = "MMFF94";
@@ -19,10 +19,18 @@ public class JSForceFieldMMFF94 {
   private static boolean isMMFF94SInit = false;
   private static boolean isMMFF94SPLUSInit = false;
 
-  public JSForceFieldMMFF94(JSMolecule molecule, String tablename, JavaScriptObject options) {
+  public JSForceFieldMMFF94(
+    JSMolecule molecule,
+    String tablename,
+    JavaScriptObject options
+  ) {
     JSResources.checkHasRegistered();
     initializeTables(tablename);
-    oclMmff = new ForceFieldMMFF94(molecule.getStereoMolecule(), tablename, new HashMap<String, Object>());
+    oclMmff = new ForceFieldMMFF94(
+      molecule.getStereoMolecule(),
+      tablename,
+      new HashMap<String, Object>()
+    );
   }
 
   public int size() {

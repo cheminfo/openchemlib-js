@@ -37,12 +37,14 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
 
 public class Font {
+
   public static final int PLAIN = 0;
   public static final int BOLD = 1;
   public static final int ITALIC = 2;
   private String name;
   private int size;
 
+  // prettier-ignore
   private static final double[] helveticaSizes = { 5.55, 15, 15, 15, 15, 15, 15, 15, 15, 5.56, 5.56, 5.56, 5.56, 5.56,
       15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 5.56, 5.56, 7.1, 11.12, 11.12, 17.78,
       13.34, 3.82, 6.66, 6.66, 7.78, 11.68, 5.56, 6.66, 5.56, 5.56, 11.12, 11.12, 11.12, 11.12, 11.12, 11.12, 11.12,
@@ -67,7 +69,10 @@ public class Font {
     return size;
   }
 
-  public Rectangle2D getStringBounds(String theString, FontRenderContext fontRenderContext) {
+  public Rectangle2D getStringBounds(
+    String theString,
+    FontRenderContext fontRenderContext
+  ) {
     double width = getStringWidth(theString);
     return new Rectangle.Double(0, 0, width, 0);
   }
@@ -79,7 +84,7 @@ public class Font {
     } else {
       width = 5.56;
     }
-    return width * size / 20;
+    return (width * size) / 20;
   }
 
   private double getStringWidth(String text) {
@@ -95,16 +100,18 @@ public class Font {
     }
   }
 
-  private native double getStringWidthCanvas(String text) /*-{
-                                                          var canvas = @java.awt.Font::canvas;
-                                                          if (!canvas) {
-                                                          canvas = $doc.createElement("canvas");
-                                                          @java.awt.Font::canvas = canvas;
-                                                          }
-                                                          var f = "" + this.@java.awt.Font::size + "px " + this.@java.awt.Font::name;
-                                                          var ctx = canvas.getContext("2d");
-                                                          ctx.font = f;
-                                                          var text = ctx.measureText(text); // TextMetrics object
-                                                          return text.width;
-                                                          }-*/;
+  private native double getStringWidthCanvas(
+    String text
+  ) /*-{
+    var canvas = @java.awt.Font::canvas;
+    if (!canvas) {
+      canvas = $doc.createElement("canvas");
+      @java.awt.Font::canvas = canvas;
+    }
+    var f = "" + this.@java.awt.Font::size + "px " + this.@java.awt.Font::name;
+    var ctx = canvas.getContext("2d");
+    ctx.font = f;
+    var text = ctx.measureText(text); // TextMetrics object
+    return text.width;
+  }-*/;
 }

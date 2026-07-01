@@ -1,10 +1,10 @@
 package java.net;
 
 import java.io.InputStream;
-
 import org.cheminfo.utils.JSException;
 
 public class URL {
+
   public URL(String url) {}
 
   public URLConnection openConnection() {

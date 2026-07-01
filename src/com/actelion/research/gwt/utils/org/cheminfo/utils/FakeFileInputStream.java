@@ -5,6 +5,7 @@ import java.io.*;
 import java.lang.Math;
 
 public class FakeFileInputStream extends InputStream {
+
   private static PlainJSObject registeredResources = null;
 
   public static FakeFileInputStream getResourceAsStream(String path) {
@@ -18,13 +19,15 @@ public class FakeFileInputStream extends InputStream {
     return new FakeFileInputStream(contents);
   }
 
-  private static native void throwError(String path)
-  /*-{
+  private static native void throwError(
+    String path
+  ) /*-{
     throw new Error('missing static resource: ' + path);
   }-*/;
 
-  public static native void registerResources(JavaScriptObject contents)
-  /*-{
+  public static native void registerResources(
+    JavaScriptObject contents
+  ) /*-{
     @org.cheminfo.utils.FakeFileInputStream::registeredResources = contents;
   }-*/;
 
@@ -38,8 +41,9 @@ public class FakeFileInputStream extends InputStream {
     length = getLength(contents);
   }
 
-  private native int getLength(JavaScriptObject contents)
-  /*-{
+  private native int getLength(
+    JavaScriptObject contents
+  ) /*-{
     return contents.length;
   }-*/;
 
@@ -58,8 +62,10 @@ public class FakeFileInputStream extends InputStream {
     return readByte(mContents, currentByte++);
   }
 
-  private native int readByte(JavaScriptObject contents, int index)
-  /*-{
+  private native int readByte(
+    JavaScriptObject contents,
+    int index
+  ) /*-{
     return contents[index];
   }-*/;
 
@@ -73,8 +79,12 @@ public class FakeFileInputStream extends InputStream {
     return bytes;
   }
 
-  private native void readBytes(byte[] b, JavaScriptObject contents, int offset, int bytes)
-  /*-{
+  private native void readBytes(
+    byte[] b,
+    JavaScriptObject contents,
+    int offset,
+    int bytes
+  ) /*-{
     for (var i = 0; i <=  bytes; i++) {
       b[i] = contents[offset + i];
     }

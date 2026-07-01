@@ -1,11 +1,11 @@
 package java.util;
 
 import java.io.InputStream;
-
 import org.cheminfo.utils.JSException;
 import org.cheminfo.utils.JSHashMap;
 
 public class Properties {
+
   private JSHashMap map = new JSHashMap();
 
   public String getProperty(String key) {

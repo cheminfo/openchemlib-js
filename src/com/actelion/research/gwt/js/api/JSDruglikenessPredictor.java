@@ -1,17 +1,18 @@
 package com.actelion.research.gwt.js.api;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import jsinterop.annotations.*;
-
 import com.actelion.research.chem.prediction.DruglikenessPredictor;
 import com.actelion.research.chem.prediction.ParameterizedStringList;
 import com.actelion.research.gwt.js.utils.*;
+import com.google.gwt.core.client.JavaScriptObject;
+import jsinterop.annotations.*;
 
 @JsType(name = "DruglikenessPredictor")
 public class JSDruglikenessPredictor {
+
   private DruglikenessPredictor predictor;
 
-  public static double DRUGLIKENESS_UNKNOWN = DruglikenessPredictor.cDruglikenessUnknown;
+  public static double DRUGLIKENESS_UNKNOWN =
+    DruglikenessPredictor.cDruglikenessUnknown;
 
   public JSDruglikenessPredictor() {
     JSResources.checkHasRegistered();
@@ -19,7 +20,10 @@ public class JSDruglikenessPredictor {
   }
 
   public double assessDruglikeness(JSMolecule molecule) {
-    return predictor.assessDruglikeness(molecule.getStereoMolecule(), ThreadMaster.getInstance());
+    return predictor.assessDruglikeness(
+      molecule.getStereoMolecule(),
+      ThreadMaster.getInstance()
+    );
   }
 
   public String getDruglikenessString(JSMolecule molecule) {
@@ -34,8 +38,7 @@ public class JSDruglikenessPredictor {
     return Util.convertParameterizedStringList(detail);
   }
 
-  private native void throwDetailError()
-  /*-{
+  private native void throwDetailError() /*-{
     throw new Error('drug likeness must be assessed first');
   }-*/;
 }

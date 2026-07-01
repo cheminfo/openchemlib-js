@@ -1,10 +1,11 @@
 package java.util.regex;
 
 import org.cheminfo.utils.JSException;
-import org.cheminfo.utils.JSRegexMatcher;
 import org.cheminfo.utils.JSRegexMatchResult;
+import org.cheminfo.utils.JSRegexMatcher;
 
 public class Matcher {
+
   private JSRegexMatcher jsMatcher;
   // To simplify emulation for now, `find` can only be called once.
   private boolean wasCalled = false;

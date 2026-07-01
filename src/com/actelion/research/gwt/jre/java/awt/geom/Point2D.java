@@ -41,6 +41,7 @@ import java.io.Serializable;
 public abstract class Point2D {
 
   public static class Float extends Point2D {
+
     public float x;
     public float y;
 
@@ -59,11 +60,11 @@ public abstract class Point2D {
   }
 
   public static class Double extends Point2D implements Serializable {
+
     public double x;
     public double y;
 
-    public Double() {
-    }
+    public Double() {}
 
     public Double(double x, double y) {
       this.x = x;
@@ -77,11 +78,9 @@ public abstract class Point2D {
     public double getY() {
       return y;
     }
-
   }
 
-  protected Point2D() {
-  }
+  protected Point2D() {}
 
   public abstract double getX();
 
@@ -111,11 +110,10 @@ public abstract class Point2D {
   }
 
   public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
+    if (this == obj) return true;
     if (obj instanceof Point2D) {
       Point2D p2d = (Point2D) obj;
-      return (getX() == p2d.getX()) && (getY() == p2d.getY());
+      return getX() == p2d.getX() && getY() == p2d.getY();
     }
     return super.equals(obj);
   }

@@ -9,6 +9,7 @@ import com.google.gwt.core.client.JsArray;
 import java.util.ArrayList;
 
 public class Util {
+
   private static SSSearcherWithIndex searcher = null;
 
   public static int[] createSSSearcherIndex(StereoMolecule molecule) {
@@ -18,16 +19,23 @@ public class Util {
     return searcher.createIndex(molecule);
   }
 
-  public static JavaScriptObject convertParameterizedStringList(ParameterizedStringList list) {
+  public static JavaScriptObject convertParameterizedStringList(
+    ParameterizedStringList list
+  ) {
     int size = list.getSize();
     JsArray<JavaScriptObject> array = newJsArray(size);
     for (int i = 0; i < size; i++) {
-      array.set(i, getParameterizedString(list.getStringAt(i), list.getStringTypeAt(i)));
+      array.set(
+        i,
+        getParameterizedString(list.getStringAt(i), list.getStringTypeAt(i))
+      );
     }
     return array;
   }
 
-  public static JavaScriptObject convertIntArrayArrayList(ArrayList<int[]> list) {
+  public static JavaScriptObject convertIntArrayArrayList(
+    ArrayList<int[]> list
+  ) {
     int size = list.size();
     JsArray<JavaScriptObject> array = newJsArray(size);
     for (int i = 0; i < size; i++) {
@@ -36,26 +44,31 @@ public class Util {
     return array;
   }
 
-  public static native JavaScriptObject convertIntArray(int[] source)
-  /*-{
+  public static native JavaScriptObject convertIntArray(
+    int[] source
+  ) /*-{
     return Array.from(source);
   }-*/;
 
-  public static native JsArray<JavaScriptObject> newJsArray(int length)
-  /*-{
+  public static native JsArray<JavaScriptObject> newJsArray(
+    int length
+  ) /*-{
   	return new Array(length);
   }-*/;
 
-  private static native JavaScriptObject getParameterizedString(String string, int stringType)
-  /*-{
+  private static native JavaScriptObject getParameterizedString(
+    String string,
+    int stringType
+  ) /*-{
   	return {
   		type: stringType,
   		value: string
   	};
   }-*/;
 
-  public static native int getDepictorViewMode(JavaScriptObject options)
-    /*-{
+  public static native int getDepictorViewMode(
+    JavaScriptObject options
+  ) /*-{
         options = options || {};
 
     	var viewMode = 0;
@@ -77,8 +90,9 @@ public class Util {
     	return viewMode;
     }-*/;
 
-  public static native int getDepictorDisplayMode(JavaScriptObject options)
-  /*-{
+  public static native int getDepictorDisplayMode(
+    JavaScriptObject options
+  ) /*-{
   	if (!options) return 0;
   	var displayMode = 0;
 
