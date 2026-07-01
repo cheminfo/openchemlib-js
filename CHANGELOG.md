@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.24.0](https://github.com/cheminfo/openchemlib-js/compare/v9.23.0...v9.24.0) (2026-07-01)
+
+
+### Features
+
+* expose MCS (maximum common substructure) ([#385](https://github.com/cheminfo/openchemlib-js/issues/385)) ([ecc90b8](https://github.com/cheminfo/openchemlib-js/commit/ecc90b877fcb7087893c82c1a9a41c889f788430))
+
+
+### Bug Fixes
+
+* keep labelled explicit hydrogens in getCanonizedIDCode ([#387](https://github.com/cheminfo/openchemlib-js/issues/387)) ([751af3f](https://github.com/cheminfo/openchemlib-js/commit/751af3f6843614fbffb1064896168da6d678ae36))
+
 ## [9.23.0](https://github.com/cheminfo/openchemlib-js/compare/v9.22.1...v9.23.0) (2026-06-12)
 
 
