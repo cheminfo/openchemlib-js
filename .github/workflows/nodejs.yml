@@ -7,16 +7,16 @@ on:
   pull_request:
 
 env:
-  NODE_VERSION_INTEGRATION: 24.x
+  NODE_VERSION_INTEGRATION: 26.x
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.x
+          node-version: 26.x
       - name: Install dependencies
         run: npm ci
       - name: Check types
@@ -32,11 +32,11 @@ jobs:
         node-version: [22.x, 24.x, 26.x]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '25'
       - name: Install GWT
         run: ./scripts/get-gwt.sh
       - name: Use Node.js ${{ matrix.node-version }}
@@ -51,7 +51,7 @@ jobs:
         run: npm run test-only
       - name: Upload build to test integration with openchemlib-utils
         if: matrix.node-version == env.NODE_VERSION_INTEGRATION
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: build-integration
           path: dist
@@ -60,7 +60,7 @@ jobs:
         run: npm run build-java-debug-verbose
       - name: Upload debug build and logs
         if: failure()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: debug-build-${{ matrix.node-version }}
           path: |
@@ -72,7 +72,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           repository: 'cheminfo/openchemlib-utils'
       - name: Use Node.js ${{ env.NODE_VERSION_INTEGRATION }}
@@ -82,7 +82,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Download OCL build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build-integration
           path: ocl-dist

@@ -8,16 +8,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '25'
       - name: Install GWT
         run: ./scripts/get-gwt.sh
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.x
+          node-version: 26.x
       - name: Install dependencies
         run: npm ci
       - name: Build project

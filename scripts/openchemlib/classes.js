@@ -196,7 +196,7 @@ function changeInventorFragment(code) {
 }
 
 function changeFingerPrintGenerator(code) {
-  code = code.replace(methodRegExp('main', { indent: '    ' }), '');
+  code = code.replace(methodRegExp('main', { indent: ' '.repeat(4) }), '');
   code = replaceChecked(
     code,
     'import java.util.Hashtable',

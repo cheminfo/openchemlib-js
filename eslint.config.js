@@ -21,6 +21,7 @@ export default defineConfig(
   vitest,
   {
     rules: {
+      'unicorn/no-this-outside-of-class': 'off',
       'unicorn/filename-case': ['error', { case: 'snakeCase' }],
     },
   },

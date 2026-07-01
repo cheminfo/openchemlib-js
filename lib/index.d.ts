@@ -1183,7 +1183,7 @@ export declare class Molecule {
    * 4-atom strand. Looking along the central bond, the torsion angle is 0.0, if
    * the projection of front and rear bonds point in the same direction. If the
    * front bond is rotated in the clockwise direction, the angle increases, i.e.
-   * has a positive value. http://en.wikipedia.org/wiki/Dihedral_angle
+   * has a positive value. https://en.wikipedia.org/wiki/Dihedral_angle
    * @param atom 4 valid atom indices defining a connected atom sequence
    * @returns torsion in the range: -pi <= torsion <= pi
    */
@@ -3386,8 +3386,7 @@ export interface ReactionEncoderEncodeOptionsMode extends ReactionEncoderEncodeO
 }
 
 export type ReactionEncoderEncodeOptions =
-  | ReactionEncoderEncodeOptionsSort
-  | ReactionEncoderEncodeOptionsMode;
+  ReactionEncoderEncodeOptionsSort | ReactionEncoderEncodeOptionsMode;
 
 export interface ReactionEncoderDecodeOptionsCoordinates {
   /**
@@ -3405,8 +3404,7 @@ export interface ReactionEncoderDecodeOptionsMode {
 }
 
 export type ReactionEncoderDecodeOptions =
-  | ReactionEncoderDecodeOptionsCoordinates
-  | ReactionEncoderDecodeOptionsMode;
+  ReactionEncoderDecodeOptionsCoordinates | ReactionEncoderDecodeOptionsMode;
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export declare class ReactionEncoder {
@@ -3656,9 +3654,7 @@ export declare class SSSearcherWithIndex {
 }
 
 export type MCSRingMatchMode =
-  | 'cleaveRings'
-  | 'keepRings'
-  | 'keepAromaticRings';
+  'cleaveRings' | 'keepRings' | 'keepAromaticRings';
 
 export interface MCSOptions {
   /**
@@ -3974,10 +3970,7 @@ export declare class ForceFieldMMFF94 {
 }
 
 export type OnChangeEventType =
-  | 'molecule'
-  | 'selection'
-  | 'highlight-atom'
-  | 'highlight-bond';
+  'molecule' | 'selection' | 'highlight-atom' | 'highlight-bond';
 
 export interface OnChangeEvent {
   type: OnChangeEventType;
