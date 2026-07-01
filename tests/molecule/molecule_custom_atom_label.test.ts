@@ -17,6 +17,29 @@ test('Custom atom labels should be supported in molfiles', () => {
   expect(mol2.getAtomCustomLabel(2)).toBeNull();
 });
 
+test('Custom atom labels on explicit hydrogens survive the canonized idcode', () => {
+  const molecule = Molecule.fromSmiles('C=O');
+  molecule.addImplicitHydrogens();
+
+  // formaldehyde: C(0), O(1) and the two explicit hydrogens on the carbon
+  molecule.setAtomCustomLabel(2, 'r');
+  molecule.setAtomCustomLabel(3, 's');
+
+  const idCode = molecule.getCanonizedIDCode(
+    Molecule.CANONIZER_ENCODE_ATOM_CUSTOM_LABELS,
+  );
+  const molecule2 = Molecule.fromIDCode(idCode, false);
+
+  const labels = [];
+  for (let i = 0; i < molecule2.getAllAtoms(); i++) {
+    const label = molecule2.getAtomCustomLabel(i);
+    if (label !== null) labels.push(label);
+  }
+
+  expect(molecule2.getAllAtoms()).toBe(4);
+  expect(labels.toSorted()).toStrictEqual(['r', 's']);
+});
+
 test('Custom atom labels should not break molfile syntax', () => {
   const molecule = Molecule.fromSmiles('C');
   const specialText = 'special: "\'-_/chars';
