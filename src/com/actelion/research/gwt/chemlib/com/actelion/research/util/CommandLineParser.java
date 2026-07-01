@@ -55,6 +55,7 @@ public class CommandLineParser {
 
     private final HashMap<String,String> hmCommandValue;
 
+
     public CommandLineParser() {
         hmCommandValue=new HashMap<>();
     }
@@ -93,6 +94,13 @@ public class CommandLineParser {
         return hmCommandValue.get(command);
     }
 
+    public boolean getOrDefault(String command, boolean defaultVal){
+        boolean v=defaultVal;
+        if(contains(command)){
+            v=true;
+        }
+        return v;
+    }
     public int getOrDefault(String command, int defaultVal){
         int v=defaultVal;
         if(contains(command)){

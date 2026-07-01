@@ -68,7 +68,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	public static final int cMaxConnAtoms = 16; // ExtendedMolecule is not restricted anymore
 											   // However, this is a suggestion for editors and other classes
-	transient private int mAtoms,mBonds;
+	transient private int mAtoms,mBonds,mAromaticityMode;
 	transient private RingCollection mRingSet;
 
 	transient private int[] mPi;
@@ -91,6 +91,15 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			mol.copyMolecule(this);
 		}
 
+	/**
+	 * This changes the aromaticity model to reflect the Daylight concept, where amide bonds
+	 * within a ring are considered a double bond when determining aromaticity.
+	 * @param b
+	 */
+	public void setDaylightAromaticityMode(boolean b) {
+		mAromaticityMode = b ? RingCollection.MODE_INCLUDE_TAUTOMERIC_BONDS : 0;
+		mValidHelperArrays &= cHelperBitNeighbours;
+	}
 
 	/**
 	 * Clears destmol and then copies a part of this Molecule into destMol, being defined by a mask of atoms to be included.
@@ -714,13 +723,14 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The free valence is the number of potential additional single bonded
-	 * neighbours to reach the atom's maximum valence. Atomic numbers that have
+	 * neighbors to reach the atom's maximum valence. Atomic numbers that have
 	 * multiple possible valences, the highest value is taken.
-	 * Atom charges are considered. Implicit hydrogens are not considered.
+	 * Atom charges are considered. Implicit hydrogen atoms are not considered.
 	 * Thus, the oxygen in a R-O(-) has a free valence of 0, the nitrogen in R3N(+)
 	 * has a free valence of 1. Chlorine in Cl(-) has a free valence of 6. If you need
 	 * the free valence taking the lowest possible valence into account, use
 	 * getLowestFreeValence(), which would return 0 for Cl(-).
+	 * Atoms with higher occupied valence than the allowed maximum, a negative value is returned.
 	 * @param atom
 	 * @return
 	 */
@@ -4117,7 +4127,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	private void findRings(int mode) {
-		mRingSet = new RingCollection(this, mode);
+		mRingSet = new RingCollection(this, mode | mAromaticityMode);
 
 		int[] atomRingBondCount = new int[mAtoms];
 		for (int bond=0; bond<mBonds; bond++) {

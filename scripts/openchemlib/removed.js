@@ -1,6 +1,7 @@
 export const removedClasses = [
   '@info/clearthought',
   '@org/machinelearning',
+  '@org/openmolecules/chem/interaction',
   'calc/BoxCox.java',
   'calc/classification',
   'calc/filter',

@@ -163,13 +163,6 @@ public class JSMolecule {
   }
 
   public String getCanonizedIDCode(int flag) {
-    // Workaround for https://github.com/Actelion/openchemlib/issues/171:
-    // setAtomCustomLabel() does not invalidate the helper arrays, so a custom
-    // label added to an explicit hydrogen can leave it stranded in the trailing
-    // simple-hydrogen block and be silently dropped from the idcode. Clearing all
-    // helper arrays forces handleHydrogens() to re-run so the labelled hydrogen is
-    // kept. Remove once the upstream issue is fixed and released.
-    oclMolecule.invalidateHelperArrays(Molecule.cHelperAll);
     Canonizer canonizer = new Canonizer(oclMolecule, flag);
     return canonizer.getIDCode();
   }
