@@ -114,7 +114,6 @@ export const removedClasses = [
   'util/Base64.java',
   'util/BinaryEncoder.java',
   'util/BrowserControl.java',
-  'util/ConstantsDWAR.java',
   'util/concurrent',
   'util/datamodel/IdentifiedObject.java',
   'util/datamodel/ModelXY.java',

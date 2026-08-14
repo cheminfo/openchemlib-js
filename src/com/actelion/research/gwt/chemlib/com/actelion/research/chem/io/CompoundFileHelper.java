@@ -72,9 +72,11 @@ public abstract class CompoundFileHelper {
 	public static final int cFileTypePDB = 0x00100000;
 	public static final int cFileTypeMMCIF = 0x00200000;
 	public static final int cFileTypeMMTF = 0x00400000;
-	public static final int cFileTypeProtein = cFileTypePDB | cFileTypeMMCIF | cFileTypeMMTF;
 	public static final int cFileTypeSDGZ = 0x00800000;
 	public static final int cFileTypeSDZIP = 0x01000000;
+	public static final int cFileTypePDBGZ = 0x02000000;
+	public static final int cFileTypeMMCIFGZ = 0x04000000;
+	public static final int cFileTypeProtein = cFileTypePDB | cFileTypeMMCIF | cFileTypeMMTF | cFileTypePDBGZ | cFileTypeMMCIFGZ;
     public static final int cFileTypeUnknown = -1;
 	public static final int cFileTypeDirectory = -2;
 
@@ -88,7 +90,7 @@ public abstract class CompoundFileHelper {
 	public static final String cGZipExtention = ".gz";
 	public static final String cZipExtention = ".zip";
 
-	public static final int cFileTypeDataWarriorCompatibleData = cFileTypeDataWarrior | cFileTypeTextAny | cFileTypeRD | cFileTypeSD | cFileTypeSDGZ | cFileTypeSDZIP;
+	public static final int cFileTypeDataWarriorCompatibleData = cFileTypeDataWarrior | cFileTypeTextAny | cFileTypeRD | cFileTypeSD | cFileTypeSDGZ | cFileTypeSDZIP | cFileTypeMOL2 | cFileTypeProtein;
 	public static final int cFileTypeDataWarriorTemplateContaining = cFileTypeDataWarrior | cFileTypeDataWarriorQuery | cFileTypeDataWarriorTemplate;
 
 	private static File sCurrentDirectory;
@@ -206,7 +208,7 @@ public abstract class CompoundFileHelper {
 	    	return;
 		    }
 
-	    CompoundFileParser parser = (extention.equals(".sdf")) ?
+	    CompoundFileParser parser = (extention.equals(".sdf") || extention.equals(".sdf.gz") || extention.equals(".sdf.zip")) ?
 	                                           new SDFileParser(file)
 	                              : (extention.equals(".dwar")) ?
 	                                           new DWARFileParser(file)
@@ -404,6 +406,10 @@ public abstract class CompoundFileHelper {
 			return cFileTypePDB;
 		if (extension.equals(".cif") || extension.equals(".mmcif"))
 			return cFileTypeMMCIF;
+		if (extension.equals(".pdb.gz"))
+			return cFileTypePDBGZ;
+		if (extension.equals(".cif.gz") || extension.equals(".mmcif.gz"))
+			return cFileTypeMMCIFGZ;
 		if (extension.equals(".mmtf"))
 			return cFileTypeMMTF;
 
@@ -508,6 +514,13 @@ public abstract class CompoundFileHelper {
 			extensions.add(".cif");
 			extensions.add(".mmcif");
 			break;
+		case cFileTypePDBGZ:
+			extensions.add(".pdb.gz");
+			break;
+		case cFileTypeMMCIFGZ:
+			extensions.add(".cif.gz");
+			extensions.add(".mmcif.gz");
+			break;
 		case cFileTypeMMTF:
 			extensions.add(".mmtf");
 			break;
@@ -515,6 +528,9 @@ public abstract class CompoundFileHelper {
 			extensions.add(".pdb");
 			extensions.add(".cif");
 			extensions.add(".mmcif");
+			extensions.add(".pdb.gz");
+			extensions.add(".cif.gz");
+			extensions.add(".mmcif.gz");
 			extensions.add(".mmtf");
 			break;
 		case cFileTypeSDGZ:

@@ -2,7 +2,7 @@
 
 exports[`Custom atom labels should be supported in molfiles 1`] = `
 "
-Actelion Java MolfileCreator 2.0
+OCL MolfileCreator  2D
 
   0  0  0  0  0  0              0 V3000
 M  V30 BEGIN CTAB
@@ -35,7 +35,7 @@ M  END
 
 exports[`Custom atom labels should not break molfile syntax 1`] = `
 "
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -51,7 +51,7 @@ M  END
 
 exports[`Custom atom labels should not break molfile syntax 2`] = `
 "
-Actelion Java MolfileCreator 2.0
+OCL MolfileCreator  2D
 
   0  0  0  0  0  0              0 V3000
 M  V30 BEGIN CTAB
@@ -72,7 +72,7 @@ M  END
 
 exports[`Custom atom labels should support unicode 1`] = `
 "
-Actelion Java MolfileCreator 2.0
+OCL MolfileCreator  2D
 
   0  0  0  0  0  0              0 V3000
 M  V30 BEGIN CTAB

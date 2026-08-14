@@ -8,7 +8,7 @@ exports[`Reaction class > should load and create RXN files 1`] = `
   2  2
 $MOL
 CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   6  5  0  0  0  0  0  0  0  0999 V2000
     1.7471    0.0000    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -25,7 +25,7 @@ Actelion Java MolfileCreator 1.0
 M  END
 $MOL
 CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   5  4  0  0  0  0  0  0  0  0999 V2000
     1.7476    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
@@ -40,7 +40,7 @@ Actelion Java MolfileCreator 1.0
 M  END
 $MOL
 CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   5  4  0  0  0  0  0  0  0  0999 V2000
     1.7476    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
@@ -55,7 +55,7 @@ Actelion Java MolfileCreator 1.0
 M  END
 $MOL
 CC(C)C(=O)Cl.CCNCC>>CCNCC.Cl
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0
@@ -161,7 +161,7 @@ exports[`Reaction class > toRXN options keepIdCode one product 1`] = `
   0  1
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   3  2  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
@@ -181,7 +181,7 @@ OCL_RXN_V1.0:!eMDARU@##!R_?y??kH@@@##
   0  1
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   3  2  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
@@ -201,7 +201,7 @@ exports[`Reaction class > toRXN options keepIdCode one reagent 1`] = `
   1  0
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -217,7 +217,7 @@ OCL_RXN_V1.0:fH@@!##!RGP@@##
   1  0
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -233,14 +233,14 @@ exports[`Reaction class > toRXN options keepIdCode two products 1`] = `
   0  2
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
 M  END
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
@@ -256,14 +256,14 @@ OCL_RXN_V1.0:!fH@@ fI@@##!RGP@@ !RGP@@##
   0  2
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
 M  END
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
@@ -279,14 +279,14 @@ exports[`Reaction class > toRXN options keepIdCode two reagents 1`] = `
   2  0
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
 M  END
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
@@ -302,14 +302,14 @@ OCL_RXN_V1.0:fH@@ fI@@!##!RGP@@ !RGP@@##
   2  0
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
 M  END
 $MOL
 
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
     0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0

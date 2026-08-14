@@ -6,7 +6,6 @@ const modifiedClasses = [
   'chem/io/ODEFileParser',
   'gui/hidpi/HiDPIHelper',
   'gui/hidpi/HiDPIIcon',
-  'util/ConstantsDWAR',
   '@smile/clustering/KMeans',
 ];
 

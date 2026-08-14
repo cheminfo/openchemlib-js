@@ -2,7 +2,7 @@
 
 exports[`ConformerGenerator > should generate conformers 1`] = `
 "#1
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  3D
 
  15 14  0  0  0  0  0  0  0  0999 V2000
     4.6113    0.4611   -0.5340 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -40,7 +40,7 @@ M  END
 
 exports[`ConformerGenerator > should generate conformers 2`] = `
 "#2
-Actelion Java MolfileCreator 1.0
+OCL MolfileCreator  3D
 
  15 14  0  0  0  0  0  0  0  0999 V2000
     3.3997    1.5180   -1.6878 C   0  0  0  0  0  0  0  0  0  0  0  0

@@ -11,7 +11,7 @@ test('default encode atom labels', () => {
 
   expect(molfile).toMatchInlineSnapshot(`
     "
-    Actelion Java MolfileCreator 1.0
+    OCL MolfileCreator  2D
 
       3  2  0  0  0  0  0  0  0  0999 V2000
         1.7321   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -54,7 +54,7 @@ test('encode in V', () => {
 
   expect(molfile).toMatchInlineSnapshot(`
     "
-    Actelion Java MolfileCreator 1.0
+    OCL MolfileCreator  2D
 
       3  2  0  0  0  0  0  0  0  0999 V2000
         1.7321   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -99,7 +99,7 @@ test('encode in A', () => {
 
   expect(molfile).toMatchInlineSnapshot(`
     "
-    Actelion Java MolfileCreator 1.0
+    OCL MolfileCreator  2D
 
       3  2  0  0  0  0  0  0  0  0999 V2000
         1.7321   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -147,7 +147,7 @@ test('remove custom atom labels', () => {
 
   expect(molfile).toMatchInlineSnapshot(`
     "
-    Actelion Java MolfileCreator 1.0
+    OCL MolfileCreator  2D
 
       3  2  0  0  0  0  0  0  0  0999 V2000
         1.7321   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
