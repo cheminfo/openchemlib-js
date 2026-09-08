@@ -68,26 +68,26 @@
   "homepage": "https://github.com/cheminfo/openchemlib-js",
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.5.0",
     "benchmark": "^2.1.4",
     "esbuild": "^0.28.2",
     "eslint": "^9.39.4",
     "eslint-config-cheminfo-typescript": "^22.1.0",
     "fast-png": "^8.0.0",
-    "globals": "^17.11.0",
+    "globals": "^17.12.0",
     "gwt-api-exporter": "^3.1.0",
     "image-js": "^1.7.0",
-    "openchemlib-utils": "^8.17.1",
-    "postcss": "^8.5.26",
+    "openchemlib-utils": "^8.18.0",
+    "postcss": "^8.5.28",
     "prettier": "^3.9.6",
     "prettier-plugin-java": "^2.10.3",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
-    "vite": "^8.2.1",
-    "vitest": "^4.1.10",
+    "vite": "^8.2.2",
+    "vitest": "^5.0.0",
     "yargs": "^18.1.0"
   },
   "volta": {
-    "node": "26.7.0"
+    "node": "26.8.1"
   }
 }
