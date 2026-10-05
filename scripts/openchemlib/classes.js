@@ -61,7 +61,6 @@ const changedClasses = [
   ['chem/Molecule', changeMolecule],
   ['chem/MolfileParser', replaceStandardCharsets(1)],
   ['chem/Molecule3D', removeCloneInfos],
-  ['chem/PeriodicTable', replaceHashTable],
   ['chem/phesaflex/EvaluableFlexibleOverlap', changeEvaluableFlexibleOverlap],
   ['chem/prediction/IncrementTable', changeIncrementTable],
   ['chem/prediction/IncrementTableWithIndex', changeIncrementTableWithIndex],
