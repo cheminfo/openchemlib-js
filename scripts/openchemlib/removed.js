@@ -113,6 +113,7 @@ export const removedClasses = [
   'util/AnimatedGIFWriter.java',
   'util/Base64.java',
   'util/BinaryEncoder.java',
+  'util/BlockingPipe.java',
   'util/BrowserControl.java',
   'util/concurrent',
   'util/datamodel/IdentifiedObject.java',
