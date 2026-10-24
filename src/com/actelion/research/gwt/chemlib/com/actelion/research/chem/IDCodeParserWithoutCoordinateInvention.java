@@ -1268,7 +1268,9 @@ public class IDCodeParserWithoutCoordinateInvention {
 		int data = 0;
 		while (bits != 0) {
 			if (mIDCodeBitsAvail == 0) {
-				mIDCodeTempData = (mDecodingBytes[++mIDCodeBufferIndex] & 0x3F) << 11;
+				if (++mIDCodeBufferIndex >= mDecodingBytes.length)
+					throw new ArrayIndexOutOfBoundsException("IDCodeParser: unexpected end of ID code");
+				mIDCodeTempData = (mDecodingBytes[mIDCodeBufferIndex] & 0x3F) << 11;
 				mIDCodeBitsAvail = 6;
 				}
 			data |= ((0x00010000 & mIDCodeTempData) >> (16 - allBits + bits));
