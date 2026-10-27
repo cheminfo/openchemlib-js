@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.25.2](https://github.com/cheminfo/openchemlib-js/compare/v9.25.1...v9.25.2) (2026-10-27)
+
+
+### Bug Fixes
+
+* throw on invalid ID codes instead of freezing ([#394](https://github.com/cheminfo/openchemlib-js/issues/394)) ([ba0d0ca](https://github.com/cheminfo/openchemlib-js/commit/ba0d0cacb13b5e1e33d461fc1c6bfe5692ef46be))
+
 ## [9.25.1](https://github.com/cheminfo/openchemlib-js/compare/v9.25.0...v9.25.1) (2026-10-05)
 
 

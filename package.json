@@ -1,6 +1,6 @@
 {
   "name": "openchemlib",
-  "version": "9.25.1",
+  "version": "9.25.2",
   "type": "module",
   "description": "Manipulate molecules",
   "keywords": [
