@@ -332,4 +332,18 @@ describe('fromText', () => {
     expect(Molecule.fromText('')).toBeNull();
     expect(Molecule.fromText('BAD')).toBeNull();
   });
+
+  it('should return null on invalid SMILES without freezing', () => {
+    expect(Molecule.fromText('O=Cc1cccc')).toBeNull();
+  });
+});
+
+test('fromIDCode should throw when the ID code ends prematurely', () => {
+  expect(() => Molecule.fromIDCode('O=Cc1cccc')).toThrow(
+    'IDCodeParser: unexpected end of ID code',
+  );
+  // 'gC``Adij@@' truncated
+  expect(() => Molecule.fromIDCode('gC``Ad')).toThrow(
+    'IDCodeParser: unexpected end of ID code',
+  );
 });

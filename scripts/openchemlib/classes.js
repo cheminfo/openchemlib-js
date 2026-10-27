@@ -49,6 +49,10 @@ const changedClasses = [
   ['chem/forcefield/mmff/Separation', replaceHashTable],
   ['chem/forcefield/mmff/Vector3', changeVector3],
   [
+    'chem/IDCodeParserWithoutCoordinateInvention',
+    changeIDCodeParserWithoutCoordinateInvention,
+  ],
+  [
     'chem/interactions/statistics/InteractionDistanceStatistics',
     changeInteractionDistanceStatistics,
   ],
@@ -593,6 +597,18 @@ function replaceStandardCharsets(times) {
 
 function replaceHashTable(code) {
   return code.replaceAll('Hashtable', 'HashMap');
+}
+
+// GWT does not check array bounds: reading past the end of an invalid ID code
+// yields zeros instead of throwing, and can decode into a huge molecule.
+function changeIDCodeParserWithoutCoordinateInvention(code) {
+  return replaceChecked(
+    code,
+    'mIDCodeTempData = (mDecodingBytes[++mIDCodeBufferIndex] & 0x3F) << 11;',
+    `if (++mIDCodeBufferIndex >= mDecodingBytes.length)
+					throw new ArrayIndexOutOfBoundsException("IDCodeParser: unexpected end of ID code");
+				mIDCodeTempData = (mDecodingBytes[mIDCodeBufferIndex] & 0x3F) << 11;`,
+  );
 }
 
 function changeVector3(code) {
