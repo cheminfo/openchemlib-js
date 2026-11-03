@@ -432,6 +432,15 @@ exports[`class prototypes > prototype properties of SmilesParser 1`] = `
 ]
 `;
 
+exports[`class prototypes > prototype properties of StereoIsomerEnumerator 1`] = `
+[
+  "getStereoIsomer",
+  "getStereoIsomerCount",
+  "isCorrectStereoIsomer",
+  "isSkippingEnantiomers",
+]
+`;
+
 exports[`class prototypes > prototype properties of ToxicityPredictor 1`] = `
 [
   "assessRisk",
@@ -812,6 +821,8 @@ exports[`class prototypes > static properties of SSSearcherWithIndex 1`] = `
 
 exports[`class prototypes > static properties of SmilesParser 1`] = `[]`;
 
+exports[`class prototypes > static properties of StereoIsomerEnumerator 1`] = `[]`;
+
 exports[`class prototypes > static properties of ToxicityPredictor 1`] = `
 [
   "RISK_HIGH",
@@ -857,6 +868,7 @@ exports[`top-level API 1`] = `
   "SSSearcher",
   "SSSearcherWithIndex",
   "SmilesParser",
+  "StereoIsomerEnumerator",
   "ToxicityPredictor",
   "Transformer",
   "Util",

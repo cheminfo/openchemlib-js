@@ -3543,6 +3543,57 @@ export interface SSSearcherFindFragmentInMoleculeOptions {
 /**
  * Basic substructure searcher.
  */
+export interface StereoIsomerEnumeratorOptions {
+  /**
+   * Whether to give one stereoisomer of each pair of enantiomers, when the
+   * molecule has no absolute stereo centre: its set of stereoisomers is then
+   * made of enantiomeric pairs, and the other member of each is the mirror
+   * image.
+   * @default false
+   */
+  skipEnantiomers?: boolean;
+}
+
+/**
+ * Every stereoisomer of a molecule whose configurations are not all given:
+ * stereo centres and double bonds left undefined, and AND or OR groups of
+ * relative configuration.
+ */
+export declare class StereoIsomerEnumerator {
+  /**
+   * @param molecule - The molecule; it is copied, never changed.
+   * @param options
+   */
+  constructor(molecule: Molecule, options?: StereoIsomerEnumeratorOptions);
+
+  /**
+   * Whether enantiomers are skipped: true when `skipEnantiomers` was asked.
+   */
+  isSkippingEnantiomers(): boolean;
+
+  /**
+   * How many stereoisomers `getStereoIsomer` gives.
+   */
+  getStereoIsomerCount(): number;
+
+  /**
+   * One stereoisomer. When a double bond's configuration is set, new 2D
+   * coordinates are invented to draw it; otherwise only the parities and the
+   * stereo bonds change. Isomers impossible because of ring strain are not
+   * sorted out.
+   * @param index - From 0 to `getStereoIsomerCount() - 1`.
+   */
+  getStereoIsomer(index: number): Molecule;
+
+  /**
+   * Whether a molecule still has the configurations of a stereoisomer, such as
+   * a conformer generated from it, which strain may have forced to another.
+   * @param molecule - The molecule to check.
+   * @param index - The stereoisomer it should be.
+   */
+  isCorrectStereoIsomer(molecule: Molecule, index: number): boolean;
+}
+
 export declare class SSSearcher {
   /**
    * Creates a new substructure searcher.
