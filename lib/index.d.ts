@@ -206,6 +206,29 @@ export interface HoseCodesOptions {
   type: 0 | 1;
 }
 
+export interface LocateDelocalizedDoubleBondsOptions {
+  /**
+   * The bonds to treat as delocalized, one flag per bond; they are expected to
+   * be single bonds. When omitted, the bonds of type `cBondTypeDelocalized`
+   * are.
+   * @default null
+   */
+  bonds?: boolean[] | null;
+  /**
+   * Whether atom charges may be added to make the delocalized part consistent,
+   * such as the positive nitrogen of a pyridinium, for a molecule whose charges
+   * were not given.
+   * @default false
+   */
+  mayChangeAtomCharges?: boolean;
+  /**
+   * Whether every hydrogen of the molecule is explicit, so that an atom's
+   * hydrogens can be counted rather than deduced.
+   * @default false
+   */
+  allHydrogensAreExplicit?: boolean;
+}
+
 export interface SmilesGeneratorOptions {
   /**
    * Whether to create SMILES with SMARTS capabilities.
@@ -2610,6 +2633,18 @@ export declare class Molecule {
    * @returns true if the molecule was changed
    */
   normalizeAmbiguousBonds(): boolean;
+
+  /**
+   * Turns the delocalized bonds of the molecule into alternating single and
+   * double bonds: one Kekulé structure. By default, the delocalized bonds are
+   * those of type `cBondTypeDelocalized`, as an aromatic bond (type 4) of a
+   * molfile is read.
+   * @param options
+   * @returns true if every delocalized bond could be given an order
+   */
+  locateDelocalizedDoubleBonds(
+    options?: LocateDelocalizedDoubleBondsOptions,
+  ): boolean;
 
   /**
    *

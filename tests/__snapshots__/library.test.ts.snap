@@ -259,6 +259,7 @@ exports[`class prototypes > prototype properties of Molecule 1`] = `
   "isSmallRingBond",
   "isStabilizedAtom",
   "isStereoBond",
+  "locateDelocalizedDoubleBonds",
   "markAtomForDeletion",
   "markBondForDeletion",
   "normalizeAmbiguousBonds",

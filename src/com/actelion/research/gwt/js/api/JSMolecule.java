@@ -1796,6 +1796,29 @@ public class JSMolecule {
     return oclMolecule.normalizeAmbiguousBonds();
   }
 
+  public native boolean locateDelocalizedDoubleBonds(
+    JavaScriptObject options
+  ) /*-{
+    options = options || {};
+    var bonds = options.bonds || null;
+    var mayChangeAtomCharges = options.mayChangeAtomCharges === true;
+    var allHydrogensAreExplicit = options.allHydrogensAreExplicit === true;
+    return this.@com.actelion.research.gwt.js.api.JSMolecule::locateDelocalizedDoubleBondsInternal([ZZZ)(bonds, mayChangeAtomCharges, allHydrogensAreExplicit);
+  }-*/;
+
+  @JsIgnore
+  public boolean locateDelocalizedDoubleBondsInternal(
+    boolean[] isDelocalizedBond,
+    boolean mayChangeAtomCharges,
+    boolean allHydrogensAreExplicit
+  ) {
+    return new AromaticityResolver(oclMolecule).locateDelocalizedDoubleBonds(
+      isDelocalizedBond,
+      mayChangeAtomCharges,
+      allHydrogensAreExplicit
+    );
+  }
+
   public boolean isAlkaliMetal(int atom) {
     return oclMolecule.isAlkaliMetal(atom);
   }
