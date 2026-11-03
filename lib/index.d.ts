@@ -3142,6 +3142,18 @@ interface ToRxnOptions {
   programName?: string;
 }
 
+export interface ReactionMapping {
+  /**
+   * The score of the mapping found: higher is better.
+   */
+  score: number;
+  /**
+   * The name of the chemical rule the mapper applied to reach that mapping,
+   * such as `Diels-Alder`, or null when none was needed.
+   */
+  rule: string | null;
+}
+
 export declare class Reaction {
   /**
    * Create a new empty reaction.
@@ -3204,6 +3216,15 @@ export declare class Reaction {
    * Remove all catalysts from the `Reaction`.
    */
   removeCatalysts(): void;
+
+  /**
+   * Maps the atoms of the reactants onto those of the products with
+   * OpenChemLib's chemical-rule enhanced mapper, setting the atom map numbers
+   * of every molecule. Atoms already paired by hand stay paired, though their
+   * map numbers may be renumbered.
+   * @returns The score of the mapping and the chemical rule applied, if any.
+   */
+  autoMap(): ReactionMapping;
 
   /**
    * Returns whether the reaction is empty.

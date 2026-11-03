@@ -3,6 +3,8 @@ package com.actelion.research.gwt.js.api;
 import com.actelion.research.chem.*;
 import com.actelion.research.chem.io.*;
 import com.actelion.research.chem.reaction.*;
+import com.actelion.research.chem.reaction.mapping.*;
+import com.google.gwt.core.client.JavaScriptObject;
 import jsinterop.annotations.*;
 
 @JsType(name = "Reaction")
@@ -75,6 +77,24 @@ public class JSReaction {
   public void removeCatalysts() {
     oclReaction.removeCatalysts();
   }
+
+  public JavaScriptObject autoMap() {
+    ChemicalRuleEnhancedReactionMapper mapper =
+      new ChemicalRuleEnhancedReactionMapper();
+    mapper.map(oclReaction);
+    ChemicalRule rule = mapper.getAppliedRule();
+    return createMapping(
+      mapper.getScore(),
+      rule == null ? null : rule.getName()
+    );
+  }
+
+  private static native JavaScriptObject createMapping(
+    float score,
+    String rule
+  ) /*-{
+  	return { score: score, rule: rule };
+  }-*/;
 
   public boolean isEmpty() {
     return oclReaction.isEmpty();

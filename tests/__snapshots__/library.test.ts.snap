@@ -351,6 +351,7 @@ exports[`class prototypes > prototype properties of Reaction 1`] = `
   "addProductAt",
   "addReactant",
   "addReactantAt",
+  "autoMap",
   "clear",
   "clone",
   "getAverageBondLength",
