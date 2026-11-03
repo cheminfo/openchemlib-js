@@ -188,3 +188,58 @@ test('Mestrec format from windows', () => {
     '2OCH3',
   ]);
 });
+
+test('labels go to the right atom when explicit hydrogens are moved last', () => {
+  const labelled = [
+    molfileWithLabel('A    4\nAlias'),
+    molfileWithLabel('V    4 Value'),
+    molfileWithLabel('M  ZZC   4 Zzc'),
+  ].map((molfile) => {
+    const molecule = Molecule.fromMolfile(molfile);
+    const atoms = [];
+    for (let i = 0; i < molecule.getAllAtoms(); i++) {
+      atoms.push([molecule.getAtomLabel(i), molecule.getAtomCustomLabel(i)]);
+    }
+    return atoms;
+  });
+
+  expect(labelled).toStrictEqual([
+    [
+      ['C', null],
+      ['O', 'Alias'],
+      ['C', null],
+      ['H', null],
+    ],
+    [
+      ['C', null],
+      ['O', 'Value'],
+      ['C', null],
+      ['H', null],
+    ],
+    [
+      ['C', null],
+      ['O', 'Zzc'],
+      ['C', null],
+      ['H', null],
+    ],
+  ]);
+});
+
+// Atom 2 is an explicit hydrogen, which the parser moves after the other
+// atoms; every label names atom 4, the oxygen.
+function molfileWithLabel(label: string) {
+  return `
+  probe
+
+  4  3  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    1.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0
+  1  3  1  0
+  3  4  1  0
+${label}
+M  END
+`;
+}
