@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/name-replacements */
 import { describe, expect, it } from 'vitest';
 
 import { CanonizerUtil, Molecule } from '#lib';

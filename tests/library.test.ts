@@ -23,24 +23,25 @@ describe('class prototypes', () => {
   for (const key of allAPI) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const api = (OCL as any)[key];
-    if (typeof api === 'function') {
-      // eslint-disable-next-line vitest/no-conditional-tests
-      it(`static properties of ${key}`, () => {
-        expect(getFilteredKeys(api)).toMatchSnapshot();
-      });
+    if (typeof api !== 'function') {
+      continue;
+    }
 
-      if (typeof api.prototype === 'object') {
-        // eslint-disable-next-line vitest/no-conditional-tests
-        it(`prototype properties of ${key}`, () => {
-          expect(getFilteredKeys(api.prototype)).toMatchSnapshot();
-        });
-      }
+    it(`static properties of ${key}`, () => {
+      expect(getFilteredKeys(api)).toMatchSnapshot();
+    });
+
+    if (typeof api.prototype === 'object') {
+      // eslint-disable-next-line vitest/no-conditional-tests
+      it(`prototype properties of ${key}`, () => {
+        expect(getFilteredKeys(api.prototype)).toMatchSnapshot();
+      });
     }
   }
 });
 
-function getFilteredKeys(obj: Record<string, unknown>) {
-  return Object.keys(obj)
+function getFilteredKeys(object: Record<string, unknown>) {
+  return Object.keys(object)
     .filter((key) => {
       // Filter out GWT-specific properties.
       return key.length > 2;

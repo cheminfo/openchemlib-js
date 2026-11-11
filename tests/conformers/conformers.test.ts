@@ -35,26 +35,26 @@ describe('ConformerGenerator', () => {
 
     expect(gen.getPotentialConformerCount()).toBeGreaterThan(1);
 
-    const conf1 = gen.getNextConformerAsMolecule();
+    const conformer1 = gen.getNextConformerAsMolecule();
 
     expect(gen.getConformerCount()).toBe(1);
 
-    assert(conf1);
-    const conf1Molfile = conf1.toMolfile();
+    assert(conformer1);
+    const config1Molfile = conformer1.toMolfile();
 
-    expect(conf1Molfile).toMatchSnapshot();
+    expect(config1Molfile).toMatchSnapshot();
 
-    const conf2 = gen.getNextConformerAsMolecule();
+    const conformer2 = gen.getNextConformerAsMolecule();
 
     expect(gen.getConformerCount()).toBe(2);
 
-    assert(conf2);
-    const conf2Molfile = conf2.toMolfile();
+    assert(conformer2);
+    const conformer2Molfile = conformer2.toMolfile();
 
-    expect(conf2Molfile).toMatchSnapshot();
+    expect(conformer2Molfile).toMatchSnapshot();
 
-    expect(conf2).not.toBe(conf1);
-    expect(conf2Molfile).not.toBe(conf1Molfile);
+    expect(conformer2).not.toBe(conformer1);
+    expect(conformer2Molfile).not.toBe(config1Molfile);
   });
 
   it('should use and return the passed molecule', () => {
@@ -65,9 +65,9 @@ describe('ConformerGenerator', () => {
 
     expect(mol.getAtomZ(0)).toBe(0);
 
-    const conf = gen.getNextConformerAsMolecule(mol);
+    const config = gen.getNextConformerAsMolecule(mol);
 
-    expect(conf).toBe(mol);
+    expect(config).toBe(mol);
     expect(mol.getAtomZ(0)).not.toBe(0);
   });
 
@@ -86,6 +86,8 @@ describe('ConformerGenerator', () => {
 
     expect(allConformers[0].getAtomZ(0)).not.toBe(allConformers[1].getAtomZ(1));
 
-    expect(allConformers.every((conf) => conf instanceof Molecule)).toBe(true);
+    expect(allConformers.every((config) => config instanceof Molecule)).toBe(
+      true,
+    );
   });
 });

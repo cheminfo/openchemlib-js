@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { decode } from 'fast-png';
 
-const resourcesDir = path.join(
+const resourcesDirectory = path.join(
   import.meta.dirname,
   '../../src/resources/images',
 );
@@ -20,7 +20,7 @@ const end = `}
 export function generateImageData() {
   const imageData = [start];
   for (const image of images) {
-    const contents = fs.readFileSync(path.join(resourcesDir, image));
+    const contents = fs.readFileSync(path.join(resourcesDirectory, image));
     const png = decode(contents);
     const name = image.replace('.png', '');
     const base64 = Buffer.from(png.data).toString('base64');

@@ -4,14 +4,12 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 const homedir = new URL('../src/resources/html/', import.meta.url);
 
 // loading the images
-const pngNames = await readdir(new URL('editor', homedir)).then((files) =>
-  files.filter((file) => file.endsWith('.png')),
-);
+const files = await readdir(new URL('editor', homedir));
+const pngNames = files.filter((file) => file.endsWith('.png'));
 const images = {};
 for (const pngName of pngNames) {
   const blob = await readFile(new URL(`editor/${pngName}`, homedir), 'base64');
-  const encoded = toBase64URL(blob, 'image/png');
-  images[pngName] = encoded;
+  images[pngName] = toBase64URL(blob, 'image/png');
 }
 
 // loading the html file

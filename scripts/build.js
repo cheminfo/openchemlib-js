@@ -43,8 +43,8 @@ if (argv.suffix) {
 
 let config;
 try {
-  const cfgJson = await import('../config.json', { with: { type: 'json' } });
-  config = cfgJson.default;
+  const configJson = await import('../config.json', { with: { type: 'json' } });
+  config = configJson.default;
 } catch {
   // eslint-disable-next-line no-console
   console.error(
@@ -59,103 +59,108 @@ const classpathList = [
   path.resolve(config.gwt, 'gwt-user.jar'),
 ];
 
-const sep = os.platform() === 'win32' ? ';' : ':';
-const classpath = classpathList.join(sep);
+const separator = os.platform() === 'win32' ? ';' : ':';
+const classpath = classpathList.join(separator);
 
-run(_[0]);
+await run(_[0]);
 
-function run(command) {
+async function run(command) {
   if (command === 'copy:openchemlib') {
     copyOpenchemlib();
   } else if (command === 'compile') {
-    compile(mode);
+    compile();
   } else if (command === 'export') {
-    build().catch(handleCatch);
+    await build();
   } else if (command === 'build') {
-    compile(mode);
-    build().catch(handleCatch);
+    compile();
+    await build();
   }
 }
 
 function copyOpenchemlib() {
-  const chemlibDir = path.join(
+  const chemlibDirector = path.join(
     import.meta.dirname,
     '../openchemlib/src/main/java/com',
   );
-  const outDir = path.join(
+  const outDirectory = path.join(
     import.meta.dirname,
     '../src/com/actelion/research/gwt/chemlib/com',
   );
-  const modifiedDir = path.join(
+  const modifiedDirectory = path.join(
     import.meta.dirname,
     './openchemlib/modified/com',
   );
 
-  const resourcesSrcDir = path.join(
+  const resourcesSourceDirectory = path.join(
     import.meta.dirname,
     '../openchemlib/src/main/resources',
   );
-  const resourcesOutDir = path.join(import.meta.dirname, '../src/resources');
-  fs.rmSync(resourcesOutDir, { recursive: true, force: true });
-  fs.cpSync(resourcesSrcDir, resourcesOutDir, { recursive: true });
+  const resourcesOutDirectory = path.join(
+    import.meta.dirname,
+    '../src/resources',
+  );
+  fs.rmSync(resourcesOutDirectory, { recursive: true, force: true });
+  fs.cpSync(resourcesSourceDirectory, resourcesOutDirectory, {
+    recursive: true,
+  });
 
-  fs.rmSync(outDir, { recursive: true, force: true });
-  fs.cpSync(chemlibDir, outDir, { recursive: true });
+  fs.rmSync(outDirectory, { recursive: true, force: true });
+  fs.cpSync(chemlibDirector, outDirectory, { recursive: true });
 
-  copyAdditionalDir('org');
-  copyAdditionalDir('info');
+  copyAdditionalDirectory('org');
+  copyAdditionalDirectory('info');
 
-  const removed = chemlibClasses.removed;
-  for (const removedFile of removed) {
-    fs.rmSync(path.join(outDir, removedFile), { recursive: true });
+  for (const removedFile of chemlibClasses.removed) {
+    fs.rmSync(path.join(outDirectory, removedFile), { recursive: true });
   }
 
   const modified = chemlibClasses.modified;
   log(`Copying ${modified.length} modified classes`);
   for (let i = 0; i < modified.length; i++) {
     fs.cpSync(
-      path.join(modifiedDir, modified[i]),
-      path.join(outDir, modified[i]),
+      path.join(modifiedDirectory, modified[i]),
+      path.join(outDirectory, modified[i]),
       { recursive: true },
     );
   }
 
-  const changed = chemlibClasses.changed;
-  for (const [file, transformers] of changed) {
-    let data = fs.readFileSync(path.join(outDir, file), 'utf8');
+  for (const [file, transformers] of chemlibClasses.changed) {
+    let data = fs.readFileSync(path.join(outDirectory, file), 'utf8');
     for (const transformer of transformers) {
       data = transformer(data);
     }
-    fs.writeFileSync(path.join(outDir, file), data);
+    fs.writeFileSync(path.join(outDirectory, file), data);
   }
 
-  const generated = chemlibClasses.generated;
-  for (const generatedFile of generated) {
-    fs.writeFileSync(path.join(outDir, generatedFile[0]), generatedFile[1]());
+  for (const generatedFile of chemlibClasses.generated) {
+    fs.writeFileSync(
+      path.join(outDirectory, generatedFile[0]),
+      generatedFile[1](),
+    );
   }
 }
 
-function copyAdditionalDir(name) {
-  const sourceDir = path.join(
+function copyAdditionalDirectory(name) {
+  const sourceDirectory = path.join(
     import.meta.dirname,
     '../openchemlib/src/main/java',
     name,
   );
-  const destDir = path.join(
+  const destinationDirectory = path.join(
     import.meta.dirname,
     '../src/com/actelion/research/gwt/chemlib',
     name,
   );
 
-  fs.rmSync(destDir, { recursive: true, force: true });
-  fs.cpSync(sourceDir, destDir, { recursive: true });
+  fs.rmSync(destinationDirectory, { recursive: true, force: true });
+  fs.cpSync(sourceDirectory, destinationDirectory, { recursive: true });
 }
 
-function compile(mode) {
-  let min = mode === 'min';
+function compile() {
+  let isMin = mode === 'min';
   let PATH = process.env.PATH;
   if (config.jdk) {
-    PATH = `${path.resolve(config.jdk, 'bin')}${sep}${PATH}`;
+    PATH = `${path.resolve(config.jdk, 'bin')}${separator}${PATH}`;
   }
   log('Compiling module');
   let args = [
@@ -166,15 +171,15 @@ function compile(mode) {
     'com.actelion.research.gwt.Js',
     '-logLevel',
     verbose ? 'DEBUG' : 'ERROR',
-    min ? '-XnocheckCasts' : '-XcheckCasts',
+    isMin ? '-XnocheckCasts' : '-XcheckCasts',
     '-XnoclassMetadata',
     verbose ? '-draftCompile' : '-nodraftCompile',
     '-nocheckAssertions',
     '-generateJsInteropExports',
     '-optimize',
-    min ? '9' : '0',
+    isMin ? '9' : '0',
     '-style',
-    min ? 'OBFUSCATED' : 'PRETTY',
+    isMin ? 'OBFUSCATED' : 'PRETTY',
     '-sourceLevel',
     '17',
     '-failOnError',
@@ -201,12 +206,12 @@ async function build() {
   let prom = [];
   fs.mkdirSync('lib/java', { recursive: true });
   log('Exporting module');
-  let warDir = path.join('war', 'oclJs');
-  let files = fs.readdirSync(warDir);
+  let warDirectory = path.join('war', 'oclJs');
+  let files = fs.readdirSync(warDirectory);
   let file;
   for (let i = 0; i < files.length; i++) {
     if (files[i].indexOf('.cache.js') > 0) {
-      file = path.join(warDir, files[i]);
+      file = path.join(warDirectory, files[i]);
       break;
     }
   }
@@ -230,10 +235,4 @@ function log(value) {
     // eslint-disable-next-line no-console
     console.log(value);
   }
-}
-
-function handleCatch(err) {
-  // eslint-disable-next-line no-console
-  console.error(err);
-  process.exit(1);
 }
