@@ -110,19 +110,18 @@ function getFilename(file) {
   }
   if (file.startsWith('@gwt/')) {
     return `../../${file.replace('@gwt/', '')}.java`;
-  } else {
-    return `actelion/research/${file}.java`;
   }
+  return `actelion/research/${file}.java`;
 }
 
 function getFolderName(file) {
   if (file.startsWith('@org/')) {
     return `../org/${file.replace('@org/', '')}`;
-  } else if (file.startsWith('@info/')) {
-    return `../info/${file.replace('@info/', '')}`;
-  } else {
-    return `actelion/research/${file}`;
   }
+  if (file.startsWith('@info/')) {
+    return `../info/${file.replace('@info/', '')}`;
+  }
+  return `actelion/research/${file}`;
 }
 
 function methodRegExp(methodName, options = {}) {
@@ -178,15 +177,15 @@ function replaceChecked(code, from, to, times = 1) {
 }
 
 function removeSlice(code, start, end) {
-  const startIdx = code.indexOf(start);
-  if (startIdx === -1) {
+  const startIndex = code.indexOf(start);
+  if (startIndex === -1) {
     throw new Error(`did not find index for: ${start}`);
   }
-  const endIdx = code.indexOf(end, startIdx + start.length);
-  if (endIdx === -1) {
+  const endIndex = code.indexOf(end, startIndex + start.length);
+  if (endIndex === -1) {
     throw new Error(`did not find index for: ${end}`);
   }
-  return code.slice(0, startIdx) + code.slice(endIdx + end.length);
+  return code.slice(0, startIndex) + code.slice(endIndex + end.length);
 }
 
 function changeInventorFragment(code) {
@@ -421,6 +420,7 @@ function changeGenericDialog(code) {
   return code;
 }
 
+// eslint-disable-next-line unicorn/name-replacements
 function changeArrayUtils(code) {
   code = replaceChecked(
     code,

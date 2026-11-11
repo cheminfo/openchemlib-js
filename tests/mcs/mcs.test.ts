@@ -53,11 +53,9 @@ describe('MCS', () => {
 
     const idCodes = all?.map((molecule) => molecule.getIDCode()).toSorted();
 
-    expect(idCodes).toStrictEqual(
-      [
-        'daD@@DjUZxHH@B', // ethylbenzene fragment (8 atoms)
-        'gOx@@eJyh@PA@', // methylpyridine fragment (7 atoms)
-      ].toSorted(),
-    );
+    expect(idCodes).toStrictEqual([
+      'daD@@DjUZxHH@B', // ethylbenzene fragment (8 atoms)
+      'gOx@@eJyh@PA@', // methylpyridine fragment (7 atoms)
+    ]);
   });
 });

@@ -136,17 +136,17 @@ test('custom seeds', () => {
 
   // Random seed should eventually generate different coordinates.
   const randomCoordinates1 = getMolAndInventCoordinates(-1);
-  let found = false;
+  let isFound = false;
   for (let i = 0; i < 100; i++) {
     const randomCoordinates2 = getMolAndInventCoordinates(-1);
     if (!isDeepStrictEqual(randomCoordinates1, randomCoordinates2)) {
       console.log(i);
-      found = true;
+      isFound = true;
       break;
     }
   }
   assert(
-    found,
+    isFound,
     'did not find differing coordinates after trying 100 random seeds',
   );
 });

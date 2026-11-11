@@ -15,9 +15,12 @@ describe('Reactor class', () => {
 
     const reactor = new Reactor(reaction);
 
-    const match = reactor.setReactant(0, Molecule.fromSmiles('C=C(O)C(C)(C)C'));
+    const isMatch = reactor.setReactant(
+      0,
+      Molecule.fromSmiles('C=C(O)C(C)(C)C'),
+    );
 
-    expect(match).toBe(true);
+    expect(isMatch).toBe(true);
 
     const products = reactor.getProducts();
 
@@ -146,6 +149,15 @@ M  END
         mfs.push(product.getMolecularFormula().formula);
       }
     }
+
+    expect(smiles).toStrictEqual([
+      '[CH3]',
+      'OCCCC[OH2+]',
+      '[CH2]CCO',
+      'CC[OH2+]',
+      'CC(C[CH2])O',
+      'C[OH2+]',
+    ]);
 
     expect(mfs).toStrictEqual([
       'CH3',

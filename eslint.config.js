@@ -21,8 +21,10 @@ export default defineConfig(
   vitest,
   {
     rules: {
-      'unicorn/no-this-outside-of-class': 'off',
       'unicorn/filename-case': ['error', { case: 'snakeCase' }],
+      'unicorn/no-this-outside-of-class': 'off',
+      'unicorn/no-unsafe-string-replacement': 'off',
+      'unicorn/require-array-sort-compare': 'off',
     },
   },
   {
@@ -69,6 +71,8 @@ export default defineConfig(
     files: ['lib/index.d.ts'],
     rules: {
       '@typescript-eslint/naming-convention': 'off',
+      'unicorn/consistent-boolean-name': 'off',
+      'unicorn/name-replacements': 'off',
     },
   },
 );

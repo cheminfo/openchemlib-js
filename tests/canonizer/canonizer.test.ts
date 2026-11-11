@@ -70,10 +70,10 @@ test('getIDCode returns expected value', () => {
 test('hasCIPParityDistinctionProblem returns a boolean', () => {
   const moleculeChiral = Molecule.fromSmiles('C[C@H](Cl)CC');
   const canonizer = new Canonizer(moleculeChiral);
-  const result = canonizer.hasCIPParityDistinctionProblem();
+  const hasProblem = canonizer.hasCIPParityDistinctionProblem();
 
-  expect(typeof result).toBe('boolean');
-  expect(result).toBe(false);
+  expect(typeof hasProblem).toBe('boolean');
+  expect(hasProblem).toBe(false);
 });
 
 test('getCanMolecule returns a canonical molecule', () => {
@@ -81,12 +81,12 @@ test('getCanMolecule returns a canonical molecule', () => {
   moleculeChiral.addImplicitHydrogens();
   const canonizer = new Canonizer(moleculeChiral);
 
-  const canMolDefault = canonizer.getCanMolecule(false);
-  const canMolWithH = canonizer.getCanMolecule(true);
+  const canonizedMolDefault = canonizer.getCanMolecule(false);
+  const canonizedMolWithH = canonizer.getCanMolecule(true);
 
-  expect(canMolDefault.getIDCode()).toBe(canMolWithH.getIDCode());
-  expect(canMolDefault.getAllAtoms()).toBe(5);
-  expect(canMolWithH.getAllAtoms()).toBe(14);
+  expect(canonizedMolDefault.getIDCode()).toBe(canonizedMolWithH.getIDCode());
+  expect(canonizedMolDefault.getAllAtoms()).toBe(5);
+  expect(canonizedMolWithH.getAllAtoms()).toBe(14);
 });
 
 test('getFinalRank returns an array with expected length', () => {
@@ -159,10 +159,10 @@ test('getEncodedMapping returns a non-empty string', () => {
 test('normalizeEnantiomer returns a boolean value', () => {
   const moleculeChiral = Molecule.fromSmiles('C[C@H](Cl)CC');
   const canonizer = new Canonizer(moleculeChiral);
-  const normalized = canonizer.normalizeEnantiomer();
+  const isNormalized = canonizer.normalizeEnantiomer();
 
-  expect(typeof normalized).toBe('boolean');
-  expect(normalized).toBe(true);
+  expect(typeof isNormalized).toBe('boolean');
+  expect(isNormalized).toBe(true);
 });
 
 test('setParities, getGraphAtoms, and getGraphIndexes produce consistent results', () => {

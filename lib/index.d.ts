@@ -247,24 +247,23 @@ export interface Rectangle {
 }
 
 export interface Coordinates {
-  /** X-coordinate. */
+  /**
+   * X-coordinate.
+   */
   x: number;
 
-  /** Y-coordinate. */
+  /**
+   * Y-coordinate.
+   */
   y: number;
 
-  /** Z-coordinate. */
+  /**
+   * Z-coordinate.
+   */
   z: number;
 }
 
 export declare class Molecule {
-  /**
-   * Construct a new molecule.
-   * @param maxAtoms - Maximum number of initialized atoms. Default: 256.
-   * @param maxBonds - Maximum number of initialized bonds. Default: 256.
-   */
-  constructor(maxAtoms: number, maxBonds: number);
-
   // based on JSMolecule.java you can do a regexp ".*static.* (int|long|double)(.*) = .*;" and replace with "$2: number;"
 
   // bonds to represent aromaticity
@@ -449,19 +448,33 @@ export declare class Molecule {
   static cBondQFNarrowing: number;
   static cBondQFBondTypes: number;
   static cBondQFRareBondTypes: number;
-  /* @deprecated Use `cBondTypeSingle` instead */
+  /*
+   * @deprecated Use `cBondTypeSingle` instead
+   */
   static cBondQFSingle: number;
-  /* @deprecated Use `cBondTypeDouble` instead */
+  /*
+   * @deprecated Use `cBondTypeDouble` instead
+   */
   static cBondQFDouble: number;
-  /* @deprecated Use `cBondTypeTriple` instead */
+  /*
+  @deprecated Use `cBondTypeTriple` instead
+  */
   static cBondQFTriple: number;
-  /* @deprecated Use `cBondTypeDelocalized` instead */
+  /*
+   * @deprecated Use `cBondTypeDelocalized` instead
+   */
   static cBondQFDelocalized: number;
-  /* @deprecated Use `cBondTypeMetalLigand` instead */
+  /*
+   * @deprecated Use `cBondTypeMetalLigand` instead
+   */
   static cBondQFMetalLigand: number;
-  /* @deprecated Use `cBondTypeQuadruple` instead */
+  /*
+   * @deprecated Use `cBondTypeQuadruple` instead
+   */
   static cBondQFQuadruple: number;
-  /* @deprecated Use `cBondTypeQuintuple` instead */
+  /*
+   * @deprecated Use `cBondTypeQuintuple` instead
+   */
   static cBondQFQuintuple: number;
   static cBondQFRingState: number;
   static cBondQFNotRing: number;
@@ -624,6 +637,13 @@ export declare class Molecule {
   static isAtomicNoElectronegative(atomicNo: number): boolean;
 
   static isAtomicNoElectropositive(atomicNo: number): boolean;
+
+  /**
+   * Construct a new molecule.
+   * @param maxAtoms - Maximum number of initialized atoms. Default: 256.
+   * @param maxBonds - Maximum number of initialized bonds. Default: 256.
+   */
+  constructor(maxAtoms: number, maxBonds: number);
 
   /**
    * Returns the OCL object.
@@ -1836,10 +1856,14 @@ export declare class Molecule {
    */
   rotate(matrix: number[][]): void;
 
-  /** Translate the molecule so its center of gravity is at the origin. */
+  /**
+   * Translate the molecule so its centre of gravity is at the origin.
+   */
   center(): void;
 
-  /** Center of gravity (all atoms with equal weight); `{ x: 0, y: 0, z: 0 }` if there are no atoms. */
+  /**
+   * Centre of gravity (all atoms with equal weight); `{ x: 0, y: 0, z: 0 }` if there are no atoms.
+   */
   getCenterOfGravity(): Coordinates;
 
   zoomAndRotateInit(x: number, y: number): void;
@@ -3006,13 +3030,13 @@ export declare class CanonizerUtil {
   static TAUTOMER: 3;
   static NOSTEREO_TAUTOMER: 4;
 
-  private constructor();
-
   /**
    * @param mol
    * @param type NORMAL, NOSTEREO, BACKBONE, TAUTOMER, NOSTEREO_TAUTOMER
    */
   static getIDCode(mol: Molecule, type: number): string;
+
+  private constructor();
 }
 
 export interface CanonizerOptions {
@@ -3144,12 +3168,6 @@ interface ToRxnOptions {
 
 export declare class Reaction {
   /**
-   * Create a new empty reaction.
-   * @param name - Initial name.
-   */
-  constructor(name?: string | null);
-
-  /**
    * Create a new empty `Reaction`.
    */
   static create(): Reaction;
@@ -3174,6 +3192,12 @@ export declare class Reaction {
    * @param rxn - The RXN file's contents
    */
   static fromRxn(rxn: string): Reaction;
+
+  /**
+   * Create a new empty reaction.
+   * @param name - Initial name.
+   */
+  constructor(name?: string | null);
 
   /**
    * Serialize the `Reaction` to a reaction SMILES string.
@@ -3604,11 +3628,6 @@ export declare class SSSearcher {
  */
 export declare class SSSearcherWithIndex {
   /**
-   * Create a new substructure searcher with index.
-   */
-  constructor();
-
-  /**
    * Returns an array of the 512 idcodes that are used for computing indexes.
    */
   static getKeyIDCode(): string[];
@@ -3627,6 +3646,11 @@ export declare class SSSearcherWithIndex {
   static getHexStringFromIndex(index: number[]): string;
 
   static bitCount(x: number): number;
+
+  /**
+   * Create a new substructure searcher with index.
+   */
+  constructor();
 
   /**
    * Set the `fragment` to search.
@@ -3736,8 +3760,6 @@ export interface ParameterizedString {
 }
 
 export declare class MoleculeProperties {
-  constructor(molecule: Molecule);
-
   acceptorCount: number;
 
   donorCount: number;
@@ -3757,15 +3779,17 @@ export declare class MoleculeProperties {
   rotatableBondCount: number;
 
   stereoCenterCount: number;
+
+  constructor(molecule: Molecule);
 }
 
 export declare class DruglikenessPredictor {
+  static DRUGLIKENESS_UNKNOWN: number;
+
   /**
    * Create a new predictor.
    */
   constructor();
-
-  static DRUGLIKENESS_UNKNOWN: number;
 
   /**
    * Returns the calculated drug likeness as a double.
@@ -3792,8 +3816,6 @@ export declare namespace DrugScoreCalculator {
 }
 
 export declare class ToxicityPredictor {
-  constructor();
-
   static RISK_UNKNOWN: number;
   static RISK_NO: number;
   static RISK_LOW: number;
@@ -3805,6 +3827,8 @@ export declare class ToxicityPredictor {
   static TYPE_REPRODUCTIVE_EFFECTIVE: number;
 
   static RISK_NAMES: string[];
+
+  constructor();
 
   /**
    * Returns the calculated risk as an integer.
@@ -4083,7 +4107,7 @@ interface CanvasEditorElementConstructor extends CustomElementConstructor {
   readonly observedAttributes: ['idcode', 'fragment', 'mode', 'readonly'];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...params: any[]): CanvasEditorElement;
+  new (...parameters: any[]): CanvasEditorElement;
 }
 
 /**

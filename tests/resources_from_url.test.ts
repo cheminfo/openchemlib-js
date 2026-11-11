@@ -1,27 +1,23 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { Molecule, Resources, ToxicityPredictor } from '#lib';
 
-let fetchBefore: typeof globalThis.fetch;
-
 beforeAll(() => {
-  fetchBefore = globalThis.fetch;
-  // @ts-expect-error Simplified version for the test.
-  globalThis.fetch = (url: string) => {
+  vi.stubGlobal('fetch', (url: string) => {
     return {
       async json() {
         const data = await readFile(url, 'utf8');
         return JSON.parse(data);
       },
     };
-  };
+  });
 });
 
 afterAll(() => {
-  globalThis.fetch = fetchBefore;
+  vi.unstubAllGlobals();
 });
 
 describe('Resources registered from URL', () => {
