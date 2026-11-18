@@ -190,6 +190,16 @@ export interface MoleculeInventCoordinatesOptions {
   seed?: number;
 }
 
+export interface MoleculeCreateBondsFromCoordinatesOptions {
+  /**
+   * Whether a bond that would exceed an atom's maximum neighbour count is
+   * skipped. When `false`, such a bond throws instead, and the bonds added
+   * before it stay.
+   * @default true
+   */
+  lenient?: boolean;
+}
+
 export interface HoseCodesOptions {
   /**
    * Maximum number of atoms from the center.
@@ -717,6 +727,34 @@ export declare class Molecule {
    * Compute and set atom coordinates for this molecule.
    */
   inventCoordinates(options?: MoleculeInventCoordinatesOptions): void;
+
+  /**
+   * Adds a single bond between every two organic atoms (no metal, no noble
+   * gas) whose distance is below the sum of their covalent radii plus 0.45 Å.
+   * Requires 3D coordinates, e.g. from a crystal structure. Atom pairs that
+   * are already bonded keep their bond. Bond orders are not assigned: see
+   * `assignBondOrdersFromCoordinates`.
+   * @param options
+   */
+  createBondsFromCoordinates(
+    options?: MoleculeCreateBondsFromCoordinatesOptions,
+  ): void;
+
+  /**
+   * Perceives bond orders, and the formal charges that follow, from the 3D
+   * coordinates: bond lengths, angles and planarity. Every bond the molecule
+   * already has is kept and only gets an order; when it has no bond at all,
+   * bonds are first created with `createBondsFromCoordinates`. Hydrogens may
+   * be present, partly present or absent. Metal–ligand bonds
+   * (`cBondTypeMetalLigand`) are left unchanged, and their ligands and metal
+   * take the charges of a coordinated ligand; any other bond to a metal is
+   * perceived like an organic bond. A quaternary nitrogen is charged only when
+   * its hydrogens are present, and a deprotonated acid cannot be told from one
+   * whose hydrogen is missing: carboxylates come out as acids. Static resources
+   * must be registered first. Like other methods needing neighbours, this moves
+   * explicit hydrogens to the end of the atom list (see `getHandleHydrogenMap`).
+   */
+  assignBondOrdersFromCoordinates(): void;
 
   /**
    * Expand and find a position for all the hydrogens of the 2D molecule. If
