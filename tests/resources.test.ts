@@ -18,5 +18,8 @@ describe('Resources', () => {
       errorMessage,
     );
     expect(() => new ToxicityPredictor()).toThrow(errorMessage);
+    expect(() => new Molecule(0, 0).assignBondOrdersFromCoordinates()).toThrow(
+      errorMessage,
+    );
   });
 });

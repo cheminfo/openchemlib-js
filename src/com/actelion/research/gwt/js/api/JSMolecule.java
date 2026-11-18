@@ -4,6 +4,8 @@ import com.actelion.research.chem.*;
 import com.actelion.research.chem.alignment3d.transformation.Rotation;
 import com.actelion.research.chem.contrib.*;
 import com.actelion.research.chem.coords.CoordinateInventor;
+import com.actelion.research.chem.io.pdb.calc.BondOrderCalculator;
+import com.actelion.research.chem.io.pdb.calc.BondsCalculator;
 import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gwt.js.utils.*;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -245,6 +247,32 @@ public class JSMolecule {
     }
     inventor.invent(oclMolecule);
     oclMolecule.setStereoBondsFromParity();
+  }
+
+  public native void createBondsFromCoordinates(
+    JavaScriptObject options
+  ) /*-{
+    options = options || {};
+    var lenient = options.lenient !== false;
+    this.@com.actelion.research.gwt.js.api.JSMolecule::createBondsFromCoordinates(Z)(lenient);
+  }-*/;
+
+  @JsIgnore
+  public void createBondsFromCoordinates(boolean lenient) throws Exception {
+    BondsCalculator.createBonds(oclMolecule, lenient, null);
+  }
+
+  public void assignBondOrdersFromCoordinates() throws Exception {
+    JSResources.checkHasRegistered();
+    Molecule3D molecule = new Molecule3D(oclMolecule);
+    // BondOrderCalculator expects single and metal-ligand bonds only.
+    for (int bond = 0; bond < molecule.getAllBonds(); bond++) {
+      if (molecule.getBondType(bond) != Molecule.cBondTypeMetalLigand) {
+        molecule.setBondType(bond, Molecule.cBondTypeSingle);
+      }
+    }
+    new BondOrderCalculator(molecule).calculateBondOrders();
+    molecule.copyMolecule(oclMolecule);
   }
 
   public native void addImplicitHydrogens(
